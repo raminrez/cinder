@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "types": ["bun", "react", "react-dom"],
+    "paths": {
+      "@cinder/react": ["./packages/react/src/index.ts"],
+      "@cinder/tokens": ["./packages/tokens/src/index.ts"]
+    }
+  },
+  "include": ["apps", "packages", "scripts", "tests"],
+  "exclude": ["node_modules", "**/dist", ".research", ".tools"]
+}

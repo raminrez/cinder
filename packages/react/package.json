@@ -1,0 +1,31 @@
+{
+  "name": "@cinder/react",
+  "version": "0.1.0",
+  "description": "Carbon-aligned React components, built on React Aria Components.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
+  "sideEffects": ["**/*.css"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0 <20",
+    "react-dom": ">=19.0.0 <20",
+    "react-aria-components": ">=1.22.0 <2"
+  },
+  "dependencies": {
+    "@cinder/tokens": "workspace:*",
+    "@internationalized/date": "catalog:"
+  },
+  "devDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-aria-components": "catalog:",
+    "@types/react": "catalog:"
+  }
+}

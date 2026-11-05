@@ -1,0 +1,24 @@
+{
+  "name": "@cinder/tokens",
+  "version": "0.1.0",
+  "description": "Carbon-derived semantic design tokens for Cinder.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
+  "sideEffects": ["**/*.css"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.json": "./dist/tokens.json"
+  },
+  "devDependencies": {
+    "@carbon/themes": "11.85.0",
+    "@carbon/layout": "11.63.0",
+    "@carbon/type": "11.71.0",
+    "@carbon/motion": "11.56.0",
+    "@carbon/colors": "11.62.0"
+  }
+}

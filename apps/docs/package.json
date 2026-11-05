@@ -1,0 +1,16 @@
+{
+  "name": "@cinder/docs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@cinder/react": "workspace:*",
+    "@cinder/tokens": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-aria-components": "catalog:",
+    "@internationalized/date": "catalog:",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0"
+  }
+}
