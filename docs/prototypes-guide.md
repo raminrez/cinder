@@ -1,6 +1,6 @@
 # A guide to the Cinder prototypes
 
-Field, Relay, Index, and Frame are four proposed designs for Cinder. They use the same
+Field, Relay, Index, and Frame are four design studies for Cinder. They use the same
 components and fictional review data. Their names describe different choices about
 layout, emphasis, and spacing.
 
@@ -22,12 +22,12 @@ records these later library decisions; the comparisons below remain prototype ev
 
 ## The main difference
 
-| Design    | What it puts first                         | When that helps                                                       | What you give up                                                              |
-| --------- | ------------------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **Field** | The whole workspace stays easy to scan.    | You alternate between forms, settings, and reviewing several records. | The table gives less guidance about the next task.                            |
-| **Relay** | The next review gets a prominent action.   | People usually complete one task at a time.                           | Larger controls and more space mean fewer records on screen.                  |
-| **Index** | A selected record stays close to its list. | People repeatedly inspect and compare structured records.             | More information competes for attention, and the desktop targets are tighter. |
-| **Frame** | Instructions, input, and recovery read as one unit. | People need clear forms and familiar table-based work. | Reserving validation space makes valid forms taller. |
+| Design    | What it puts first                                  | When that helps                                                       | What you give up                                                              |
+| --------- | --------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Field** | The whole workspace stays easy to scan.             | You alternate between forms, settings, and reviewing several records. | The table gives less guidance about the next task.                            |
+| **Relay** | The next review gets a prominent action.            | People usually complete one task at a time.                           | Larger controls and more space mean fewer records on screen.                  |
+| **Index** | A selected record stays close to its list.          | People repeatedly inspect and compare structured records.             | More information competes for attention, and the desktop targets are tighter. |
+| **Frame** | Instructions, input, and recovery read as one unit. | People need clear forms and familiar table-based work.                | Reserving validation space makes valid forms taller.                          |
 
 The queue makes the first three layout choices easiest to see. Frame's distinction
 is clearest in settings; it shares Field's table workflow with a horizontal shell.
@@ -93,11 +93,11 @@ twelve fictional reviews. “Select all” applies to the current six-record pag
 Choose **Edit in a dialog**. Each design shows the same reviewer, status, note, and
 Cancel and Save actions.
 
-| Proposal | Desktop controls | Dialog corners | Reason for the choice                                                 |
-| -------- | ---------------- | -------------- | --------------------------------------------------------------------- |
-| Field    | 40px             | 16px           | The temporary editing surface is softer than its small controls.      |
-| Relay    | 48px             | 20px           | More room makes the editing step distinct from the surrounding queue. |
-| Index    | 32px             | 6px            | A compact surface suits frequent, short edits.                        |
+| Proposal | Desktop controls | Dialog corners | Reason for the choice                                                  |
+| -------- | ---------------- | -------------- | ---------------------------------------------------------------------- |
+| Field    | 40px             | 16px           | The temporary editing surface is softer than its small controls.       |
+| Relay    | 48px             | 20px           | More room makes the editing step distinct from the surrounding queue.  |
+| Index    | 32px             | 6px            | A compact surface suits frequent, short edits.                         |
 | Frame    | 44px             | 18px           | The temporary editing step keeps the same field treatment as settings. |
 
 Use a **Try … dialog** button to open the working dialog over the comparison.
@@ -128,7 +128,7 @@ these small tasks. They use **Carbon React 1.120.0 / Styles 1.119.0** and
 | Primary action           | The ordinary button is 48px high and square.                                          | The desktop default button is 36px high and pill-shaped.                    | Relay is softer than Index, but its 48px action is larger than HeroUI's default.           |
 | Invalid field            | The error replaces the helper text in the captured TextInput.                         | The error replaces the visible description in the captured TextField.       | These Cinder prototypes retain both, at the cost of more vertical space.                   |
 | Dialog actions           | A full-width footer uses 64px buttons in this configuration.                          | Separate rounded buttons sit inside the dialog.                             | The Cinder proposals keep separate actions and vary control size and surface corners.      |
-| Review table             | A strong header band and continuous rows emphasize alignment.                         | A softer table surface and rounded chips give a different visual treatment. | Field, Index, and Frame emphasize the list; Relay adds explicit next-task guidance.                |
+| Review table             | A strong header band and continuous rows emphasize alignment.                         | A softer table surface and rounded chips give a different visual treatment. | Field, Index, and Frame emphasize the list; Relay adds explicit next-task guidance.        |
 
 These are observations about the displayed versions and configurations. They are
 not a claim that either library supports only one size, layout, or error treatment.
@@ -175,6 +175,10 @@ is an accepted tradeoff for a stable Save action. [DESIGN.md](../DESIGN.md)
 records the implemented rules and their prototype scope. Relay's earlier reusable
 slice remains documented in [the component specification](relay.md).
 
+The [design-system specification](design-system.md) and
+[ordered library plan](component-library-plan.md) define the next code-based work.
+Figma is the final handoff from the completed library, tokens, and documentation.
+
 Useful feedback names the part and the task. For example:
 
 > I prefer Frame's guidance because I can read it before typing, Relay's next-review
@@ -187,6 +191,113 @@ have not been tested with representative users and do not establish a new public
 component API.
 
 ## Verification
+
+### Frame and the four-direction comparison
+
+The following Chromium passes completed on **6 November 2026**, using
+`agent-browser` and its bundled axe-core **4.12.1**. Every recorded assertion
+passed; the scans reported no violations. The passes overlap, and the settings
+follow-up refreshed captures from the first run.
+
+| Pass                      | Checks | Axe scans | Captures | Scope                                                                                                          |
+| ------------------------- | -----: | --------: | -------: | -------------------------------------------------------------------------------------------------------------- |
+| Frame introduction        |    153 |        16 |       36 | Settings, workspace, dialog, and nested Select at 1440, 768, 390, and 320px in both themes                     |
+| Settings follow-up        |     93 |         4 |       16 | Single-column summary, validation, Save placement, recovery, and the keyboard path                             |
+| Four-direction comparison |     83 |        14 |       14 | All 50 reference images, all 13 Try actions, four dialog focus-return paths, and narrow layouts                |
+| Workflow follow-up        |     42 |         3 |        5 | Filtering, sorting, selection, edits, copying, dependencies, recovery, preserved state, and text/layout stress |
+
+The settings checks establish separate error and focus treatments, persistent
+helper text, first-invalid focus, corrected submission, and unchanged Save
+coordinates for the example's expected errors. An eight-control keyboard path
+remains visible above the development switcher. The reserved space is a budget
+for these messages; longer errors must be allowed to grow.
+
+The workflow pass covered trimmed, case-insensitive search combined with a status
+filter; sorting; six-record page selection; bulk assignment; saved and cancelled
+edits; failed-load recovery; a copyable but noneditable workspace ID; dependent
+summary settings; pending repeat prevention; failed-save retry; and state carried
+across all four directions. The settings, invalid states, comparison, and workflow
+captures were visually inspected alongside the geometry and keyboard evidence.
+
+**Reviewed automated-scan limitation:** axe could not infer the background behind
+`.review-modal-context` in the 390px dark bulk-assignment dialog because it reported
+an overlap. A follow-up viewport capture and text-line hit testing showed the
+paragraph unobscured on the dialog surface. Computed `#b1b6c3` text on `#22242a`
+has **7.644:1** contrast. This resolves that specific incomplete result; it does
+not turn the automated scans into a complete accessibility assessment.
+
+The two other original incomplete results concerned the ascending sort arrow in
+the 1440px workspace: axe could not classify the non-text character. The visible
+indicator uses `#606674` on `#eef1f6` in light mode (**5.082:1**) and `#b1b6c3` on
+`#2c2f38` in dark mode (**6.588:1**), exceeding the 3:1 non-text requirement.
+Viewport hit testing and reviewed captures confirm it is unobscured. The header
+exposes `aria-sort="ascending"`; the matching arrow is `aria-hidden="true"` to avoid
+duplicating that information. These bounded reviews resolve the three incomplete
+results recorded across the Frame passes.
+
+The structured local evidence is in
+`.research/astryx-2026-11-06/{frame-ui-checks,frame-settings-checks,comparison-checks,flow-checks}.json`;
+review captures are in `.impeccable/review/`. Both directories are ignored working
+evidence. The comparison's committed images and source/version boundaries are
+documented in [capture provenance](../apps/docs/src/prototypes/references/README.md).
+
+### Written system, previews, and report delivery
+
+The final specification checks cover YAML/JSON structure, component references,
+narrative synchronization, all **38 Frame color values**, inherited motion,
+recipe breakpoints, and local links/anchors across the eight core design and
+guide documents. The plan assigns all **45 catalog entries exactly once** in
+groups of **14 + 11 + 9 + 11**. All fifteen static check groups pass.
+
+The eight [Impeccable previews](../.impeccable/design.json) passed **27 checks**, four
+axe scans, and six reviewed captures. Each snippet was rendered in an isolated
+shadow root at 1440px and 320px in both themes. Checks include seven keyboard
+targets, visible focus, label/help/error relationships, attached recovery,
+geometry, text containment, and live inherited/scoped token changes. A 390px
+fallback pass used no project stylesheet or inherited tokens. These are visual
+snippets; their native controls do not establish the reusable RAC library contract.
+
+The final page pass completed **27 checks**, four axe scans, and six reviewed
+captures. It covered the sort-indicator reviews above, selected-direction copy,
+the working **Try Frame settings** entry, and `/research` in development and the
+production preview at 1440px/Gray 10 and 320px/Gray 100. The research-page and
+preview scans have no reported violations or incomplete results; the final pages
+have no reported runtime errors.
+
+All three Markdown reports were downloaded through the actual browser links in
+both environments: **six downloads matched their current source bytes exactly**.
+A further mounted-page check confirmed that saving an edited report immediately
+changes its downloaded bytes. This caught a Bun 1.4.4 hot-reload issue that changed
+file-asserted Markdown imports into rendered HTML. Downloads now use explicit
+`/reports/` file routes in development and copied source files in production,
+sharing the finite filename list in `apps/docs/reports.ts`.
+
+`bun run build`, `bun run lint`, and `bun run typecheck` passed; type checking
+covered 52 files. The two prototype data tests passed with six assertions.
+Formatting and local-link checks cover the touched deliverables. The production
+build still uses `apps/docs/index.html`; the Frame comparison remains available
+through the development entry.
+
+Local evidence under `.research/astryx-2026-11-06/` is recorded in
+`design-docs-checks.json`, `design-preview-checks.json`, `final-docs-checks.json`,
+`development-download-checks.json`, `production-download-checks.json`, and
+`report-save-check.json`. Screenshots and download bytes are retained with the
+ignored working evidence.
+
+### Localization and remaining evaluation
+
+The prototype's provider is fixed to `locale="en-US"`. The workflow checks preserve
+accented and Japanese text, exercise long values, and apply synthetic RTL at
+320px. That DOM-only RTL injection does not change RAC's locale or the original
+writing context of detached overlays. It proves a bounded layout case, not RTL
+keyboard behavior or complete localization.
+
+Manual screen-reader tasks, Firefox/WebKit, physical touch devices, real IME,
+translation quality, non-default locale/calendar behavior, 200% text resizing,
+400% zoom/reflow, and representative-user evaluation remain incomplete. The
+[library plan](component-library-plan.md) assigns those checks to the reusable
+slices before support is claimed. Automated scans do not inspect text inside
+reference images.
 
 ### Earlier three-direction baseline
 

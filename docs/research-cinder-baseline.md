@@ -11,6 +11,12 @@ This is a historical audit: “current” below refers to the recorded source sn
 The later Relay implementation is documented in the [Relay specification](relay.md)
 and [Relay verification](verification.md#relay-follow-up).
 
+**Phase 1 follow-up · 6 November 2026:** the approved Frame foundations extend
+this baseline with portable appearance/language, named Modal part access, stable
+field hooks, and a single cascade layer. See the [current styling contract](design-system.md#8-styling-and-customization)
+and [Phase 1 verification](verification.md#frame-phase-1). Those later decisions
+do not change the source snapshot or evidence described by this audit.
+
 ## Executive finding
 
 **Cinder is a useful, already functioning static-CSS and RAC foundation. Its main limitation for

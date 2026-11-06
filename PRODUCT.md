@@ -49,10 +49,16 @@ Research reports live in `docs/`. The comparison at `/prototypes` includes worki
 forms, review data, and nested overlays. Reference captures identify their sources
 and versions in `apps/docs/src/prototypes/references/README.md`.
 
-## Open Decisions
+## Implementation Decisions
 
 Frame's visual direction is selected. The specification is in `docs/design-system.md`;
-`docs/component-library-plan.md` orders the reusable library work. Native prebuilt
-CSS with semantic variables and stable BEM-style hooks is the styling recommendation;
-public theme, size-default, and portable customization contracts require resolution
-before implementation. Figma follows the completed web system as the final step.
+`docs/component-library-plan.md` orders the reusable library work.
+
+The user approved the Phase 1 contract bundle on 6 November 2026: native prebuilt
+CSS with one stylesheet import, semantic variables and stable BEM-style hooks;
+additive `frame-light` / `frame-dark` themes; Frame controls at 44px by default and
+32/44/48px for explicit `sm` / `md` / `lg`; and `Theme appearanceClassName` for
+portable appearance on ordinary and detached roots. Preserve existing theme
+defaults and APIs. Phase 1 implementation and consumer proof are in progress.
+
+Figma follows the completed web system as the final step.

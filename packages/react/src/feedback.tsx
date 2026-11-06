@@ -207,11 +207,15 @@ const ToastContext = createContext<ToastApi | null>(null);
 /** Experimental: built on RAC's explicitly UNSTABLE toast API. */
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [queue] = useState(() => new ToastQueue<ToastMessage>({ maxVisibleToasts: 3 }));
-  const theme = useOverlayTheme();
+  const { appearanceClassName, ...theme } = useOverlayTheme();
   return (
     <ToastContext.Provider value={queue}>
       {children}
-      <ToastRegion queue={queue} {...theme} className="cinder-toast-region">
+      <ToastRegion
+        queue={queue}
+        {...theme}
+        className={classes("cinder-toast-region", appearanceClassName)}
+      >
         {({ toast }) => (
           <Toast toast={toast} className="cinder-toast" data-kind={toast.content.kind ?? "info"}>
             <Icon name={toast.content.kind ?? "info"} size={20} />

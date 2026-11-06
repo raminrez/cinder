@@ -1,17 +1,40 @@
 # Cinder implementation coverage
 
 **Baseline:** Cinder 0.1.0, 6 November 2026. Carbon v11 visual rules, RAC 1.22.1
-interaction, React 19.3.1, and Bun 1.4.4. This describes the shipped source and
-examples. Final execution results are in [verification](verification.md).
+interaction, React 19.3.1, and Bun 1.4.4. This describes the implemented source and
+examples. Dated execution results are in [verification](verification.md).
 
-## Selected direction: Frame
+## Frame foundations — Phase 1
 
-Frame is the preferred direction. Its [visual rules](../DESIGN.md),
-[system specification](design-system.md), and [ordered library plan](component-library-plan.md)
-define the next implementation work. The working Frame prototype uses local CSS;
-the package still exports the four Carbon themes and two Relay themes. Prototype
-verification is recorded in the [prototype guide](prototypes-guide.md#verification),
-and does not promote these 45 entries to Frame-verified status.
+Frame's [visual rules](../DESIGN.md), [system specification](design-system.md),
+and [ordered library plan](component-library-plan.md) define the implemented
+foundations and remaining component slices. The package adds `frame-light` and
+`frame-dark` alongside the four Carbon and two Relay themes: eight themes in total.
+Representative installed-package proof has passed. See the
+[Phase 1 evidence](verification.md#frame-phase-1) for the executed checks.
+
+| Area                 | Phase 1 scope                                                                                                                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Foundations          | Semantic light/dark roles, system sans type, 10/14/18px corners, 44px ordinary default, explicit 32/44/48px controls                                                                     |
+| Styling              | One prebuilt stylesheet; one `cinder` layer; native CSS, real Bun CSS Modules, and Tailwind 4.3.5 preflight/utilities; scoped raw RAC styles                                             |
+| Parts                | Cinder-owned default label/help/description/error hooks across twelve field callers; control hooks where applicable; Select value/listbox hooks; existing classes, refs, values retained |
+| Themes and portals   | Inherited/replaced/cleared appearance and effective language on Popover, ModalOverlay, Tooltip, ToastRegion; nested themes/layers; independent Modal part access                         |
+| Representative proof | Installed Button, TextField, and dialog → Select in Frame light/dark; native CSS/CSS Modules and isolated Tailwind consumers pass strict types, builds, and browser contracts            |
+
+The workspace suite passed **126 browser tests across five files**, including
+**44 contracts/fidelity tests**. Unit checks passed **22 tests with 1,945
+expectations**; type checking covered **53 files**. Lint and the production build
+also passed. These counts describe the workspace suite; the installed-consumer
+gate separately verifies the two isolated apps above.
+
+The full fourteen-entry Frame slice is **Phase 2**. In particular, persistent
+guidance, attached recovery, and the default field reading-order change still
+belong there. Phase 1 hooks also reach later date/grouped-field callers without
+promoting those families to complete Frame coverage. The following catalog remains
+the baseline capability inventory; its Frame work is allocated exactly once as
+14 + 11 + 9 + 11 entries in the plan. The development-only `/prototypes` comparison
+has its own evidence in the
+[prototype guide](prototypes-guide.md#verification).
 
 ## Relay web slice
 
@@ -31,8 +54,9 @@ records the authored values, API conventions, customization, and usage guidance.
 **R** is [`relay.test.ts`](../tests/browser/relay.test.ts): real interaction,
 pending accessible names/repeat prevention, validation, selection, nested portals,
 responsive widths, reduced motion, forced colors, and automated accessibility in
-both Relay themes. P includes an installed Relay consumer. The remaining evidence
-letters below continue to describe the Carbon reference baseline.
+both Relay themes. P includes an installed Relay consumer. The Carbon crosswalk
+below remains a baseline inventory; the evidence key also identifies shared
+contracts and representative Frame checks.
 
 The other catalog families have not completed Relay-specific review. They receive
 available theme tokens and shared anatomy styles, while keeping baseline geometry.
@@ -64,7 +88,7 @@ DateField, and RAC composition parts do not add to the 45-page count.
 
 ## Evidence key
 
-- **B — catalog browser checks:** all 45 examples render in the four themes. The
+- **B — catalog browser checks:** all 45 examples render in the four Carbon themes. The
   whole reference page receives an axe scan in g10; each example receives a scoped
   scan in white, g90, and g100. The document is checked for horizontal overflow at
   1440, 768, and 390px. This does not exercise every state or viewport/theme pair.
@@ -72,17 +96,22 @@ DateField, and RAC composition parts do not add to the 45-page count.
   normally in g100. The specific behavior is named in the table.
 - **C — consumer contract checks:** controlled state, dynamic collections, custom
   DOM rendering, render props, refs, locale, layers, and portals in [contracts.test.ts][contracts].
-  Theme/portal coverage includes all six themes and nested Carbon isolation.
-- **F — fidelity checks:** 16 focused browser tests in [fidelity.test.ts][fidelity]
-  measure compound sizes, toggle/slider geometry, supporting typography, and
-  button/notification/calendar states. The color assertions cover all four themes;
-  geometry and typography checks use the fixture's specified viewports and states.
-- **U — unit checks:** pinned token samples, CSS references, layer bounds,
+  Theme/portal coverage includes all eight themes, nested Carbon isolation, live
+  appearance/language changes, and independent Modal surface/backdrop targets.
+- **F — fidelity checks:** 27 focused browser tests in [fidelity.test.ts][fidelity]
+  cover Carbon geometry, typography, and states; shared field-part/ref/validation
+  contracts; legacy size defaults; and Frame light/dark geometry, typography,
+  invalid focus, pending, and forced colors. Carbon color assertions cover all four
+  original themes; geometry and typography use the fixture's specified viewports and states.
+- **U — unit checks:** pinned token samples, authored Frame values, unchanged legacy
+  maps/foundations/type objects, deterministic generation, CSS references, layer bounds,
   complete selected type definitions, pagination normalization, and file acceptance
   in [tests/unit][unit].
-- **P — packed consumer:** strict declarations and an independent production app
-  installed from both tarballs in [verify-package.ts][package-check]. Its interactions
-  cover representative controls; it is not an exhaustive export-by-export test.
+- **P — packed consumers:** strict declarations and two isolated production apps
+  installed from both tarballs in [verify-package.ts][package-check]. Native CSS and
+  real Bun CSS Modules share one app; pinned Tailwind 4.3.5 uses the other. Browser
+  interactions cover representative Carbon/Relay and Frame controls, customization,
+  and nested portals; this is not an exhaustive export-by-export test.
 
 The table names implemented variants separately from verified journeys. A variant
 without a dedicated interaction assertion may still be styled and typechecked;
@@ -140,16 +169,16 @@ Reference entries below resolve at `/components/<slug>` on the running site.
 
 ## Foundations and package-level scope
 
-| Area                  | Shipped implementation                                                                                                                                     | Proof and boundary                                                                                                                                                                                                      |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Theme data            | Official `@carbon/themes` 11.85.0, four themes, 313 entries per theme: 234 semantic colors, one color-scheme entry, and 78 component tokens.               | Generator reads the installed official packages; U compares selected semantic/component samples and key sets. Generated data is broader than implemented component scope.                                               |
-| Other foundations     | 191 scalar values derived from `@carbon/layout` 11.63.0, `@carbon/type` 11.71.0, `@carbon/motion` 11.56.0, plus named Cinder conveniences.                 | U samples spacing, control geometry, typography, and motion; checks every literal `--cinder-*` reference has a definition. This is not a proof for arbitrary dynamically constructed CSS.                               |
-| Structured typography | `typeStyles` and `TypeStyleName` expose 36 selected Carbon type definitions with complete, sparse breakpoint overrides; token JSON contains the same data. | U compares complete compact/fluid/display objects with the pinned source; P consumes the export and JSON metadata. Scalar CSS variables remain base values: responsive changes and interpolation are application-owned. |
-| Contextual layers     | Levels 0/1/2, saturating at 2. Most families select 01/02/03; `border-subtle` selects 00/01/02. `layer-background` identifies the containing surface.      | C measures separators/fields in every theme, nesting, and nested portals. Theme resets layer 0; Layer both advances context and paints its surface.                                                                     |
-| Locale/direction      | Theme uses RAC locale inheritance and sets `lang`/`dir`; its API omits native `dir` to avoid contradictory keyboard direction.                             | C checks inherited locale and RTL portals. There is no translated Cinder documentation UI or broad language/calendar audit.                                                                                             |
-| CSS and fonts         | Carbon-aligned component CSS, IBM Plex font-family references, reduced-motion states, and compositional class hooks. The site bundles Plex via Fontsource. | P checks distributed CSS/token JSON and decoded font faces. Library tarballs contain no font binaries. Direct RAC exports need their `react-aria-*` class retained when customizing `className`.                        |
-| Distribution          | ESM, declaration graph, stylesheet and token JSON exports, LICENSE/NOTICE, token peer, and tarballs with SHA-256 manifest.                                 | P installs outside the repo with no source aliases and `skipLibCheck=false`, then bundles and drives real controls. Only the pinned dependency combination is independently tested.                                     |
-| Documentation         | Homepage, live four-theme workbench, 45-entry reference, foundation explorer, setup and research pages, global search, and mobile navigation.              | Route/interaction browser checks and final screenshot inspection. Examples use labeled local sample data.                                                                                                               |
+| Area                  | Shipped implementation                                                                                                                                                                                                    | Proof and boundary                                                                                                                                                                                                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Theme data            | Eight maps: four Carbon from `@carbon/themes` 11.85.0 (313 entries each), two Relay (318 each), and two Frame (343 each, including 25 Frame-owned typography/size foundations).                                           | U verifies all six legacy maps are unchanged, Frame semantic samples/contrast pairs, and key completeness. Generated data is broader than implemented component scope.                                                                                    |
+| Other foundations     | 191 unchanged global scalar values derived from `@carbon/layout` 11.63.0, `@carbon/type` 11.71.0, `@carbon/motion` 11.56.0, plus named Cinder conveniences.                                                               | Frame's 25 foundation overrides live in its theme maps. U verifies the global map is unchanged and every literal `--cinder-*` reference is defined; dynamically constructed CSS is outside that check.                                                    |
+| Structured typography | `typeStyles` and `TypeStyleName` expose 36 unchanged selected Carbon type definitions with complete, sparse breakpoint overrides; token JSON contains the same data.                                                      | U verifies the full export is unchanged and compares complete compact/fluid/display objects with the pinned source; P consumes the export and JSON metadata. Scalar CSS variables remain base values; responsive interpolation is application-owned.      |
+| Contextual layers     | Levels 0/1/2, saturating at 2. Most families select 01/02/03; `border-subtle` selects 00/01/02. `layer-background` identifies the containing surface.                                                                     | C measures separators/fields in every theme, nesting, and nested portals. Theme resets layer 0; Layer both advances context and paints its surface.                                                                                                       |
+| Locale/direction      | Theme uses RAC locale inheritance and sets `lang`/`dir`; its API omits native `dir` to avoid contradictory keyboard direction.                                                                                            | C checks inherited locale and RTL portals. There is no translated Cinder documentation UI or broad language/calendar audit.                                                                                                                               |
+| CSS and fonts         | One static stylesheet in top-level `cinder`, ordered `tokens`, `reset`, `components`, `themes`, `accessibility`. Frame uses system sans; Carbon/Relay use IBM Plex Sans with fallbacks. Plex Mono is separately optional. | P checks distributed CSS/token JSON, real Bun CSS Modules, Tailwind 4.3.5 preflight/utilities, and bundled Plex faces. Tarballs contain no font binaries. Custom raw RAC classes replace default hooks; Cinder BEM hooks belong to owned default anatomy. |
+| Distribution          | ESM, declaration graph, stylesheet and token JSON exports, LICENSE/NOTICE, token peer, and tarballs with SHA-256 manifest.                                                                                                | P installs outside the repo with no source aliases and `skipLibCheck=false`, then bundles and drives real controls. Only the pinned dependency combination is independently tested.                                                                       |
+| Documentation         | Homepage, live four-theme Carbon workbench, 45-entry reference, Relay gallery, foundation explorer, setup/research, search, and mobile navigation; development-only `/prototypes`.                                        | Route/interaction browser checks and screenshot inspection. Examples use labeled local sample data.                                                                                                                                                       |
 
 Sources and implementation: [token generator][generator], [tokens][tokens],
 [theme][theme], [buttons][buttons], [fields][fields], [selection][selection],

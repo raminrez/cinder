@@ -1,6 +1,7 @@
 import { mkdir, rm, copyFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { siteLicenses } from "./licenses";
+import { researchReports } from "../apps/docs/reports";
 
 const root = resolve(import.meta.dir, "..");
 const run = async (...command: string[]) => {
@@ -47,7 +48,7 @@ for (const name of ["tokens", "react"]) {
 }
 
 await rm(`${root}/dist/site`, { recursive: true, force: true });
-await mkdir(`${root}/dist/site`, { recursive: true });
+await mkdir(`${root}/dist/site/reports`, { recursive: true });
 const site = await Bun.build({
   entrypoints: [`${root}/apps/docs/index.html`],
   outdir: `${root}/dist/site`,
@@ -61,6 +62,9 @@ const site = await Bun.build({
 });
 if (!site.success) throw new AggregateError(site.logs, "Could not build the documentation site");
 await Promise.all([
+  ...Object.values(researchReports).map((filename) =>
+    copyFile(`${root}/docs/${filename}`, `${root}/dist/site/reports/${filename}`),
+  ),
   copyFile(`${root}/LICENSE`, `${root}/dist/site/LICENSE.txt`),
   copyFile(`${root}/NOTICE`, `${root}/dist/site/NOTICE.txt`),
   Bun.write(`${root}/dist/site/THIRD_PARTY_LICENSES.txt`, await siteLicenses(root)),

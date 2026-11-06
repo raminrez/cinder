@@ -160,6 +160,8 @@ for (const theme of themeNames) {
     await expect(overlay).toHaveAttribute("data-cinder-theme", theme);
     await expect(overlay).toHaveAttribute("data-cinder-layer", "2");
     await expect(overlay).toHaveAttribute("dir", "rtl");
+    await expect(overlay).toHaveAttribute("lang", "ar-AE");
+    await expect(overlay).not.toHaveClass(/\bcinder-theme\b/);
     await expect(overlay).toHaveCSS("animation-name", "none");
     expect(await overlay.evaluate((element) => element.closest(".inner-theme"))).toBeNull();
     const inside = page.getByRole("textbox", { name: "Inside dialog" });
@@ -171,6 +173,8 @@ for (const theme of themeNames) {
     await expect(popover).toHaveAttribute("data-cinder-theme", theme);
     await expect(popover).toHaveAttribute("data-cinder-layer", "2");
     await expect(popover).toHaveAttribute("dir", "rtl");
+    await expect(popover).toHaveAttribute("lang", "ar-AE");
+    await expect(popover).not.toHaveClass(/\bcinder-theme\b/);
     await expect(popover).toHaveCSS("animation-name", "none");
     await page.keyboard.press("Escape");
     await expect(nested).toBeFocused();
@@ -181,5 +185,255 @@ for (const theme of themeNames) {
     await expect(page.getByRole("tooltip")).toHaveAttribute("data-cinder-theme", theme);
     await expect(page.getByRole("tooltip")).toHaveAttribute("data-cinder-layer", "2");
     await expect(page.getByRole("tooltip")).toHaveAttribute("dir", "rtl");
+    await expect(page.getByRole("tooltip")).toHaveAttribute("lang", "ar-AE");
   });
 }
+
+const portalSelectors = [
+  ".cinder-modal-overlay",
+  ".cinder-popover",
+  ".cinder-tooltip",
+  ".cinder-toast-region",
+];
+
+async function openAppearanceOverlays() {
+  await page.getByRole("button", { name: "Show provider toast" }).click();
+  await page.getByRole("button", { name: "Open appearance dialog" }).click();
+  await page.getByRole("button", { name: "Open appearance settings" }).click();
+  const roots = portalSelectors.map((selector) => page.locator(selector));
+  for (const root of roots) await expect(root).toBeVisible();
+  return roots;
+}
+
+test("appearance recipes inherit, replace, and clear on all four portal roots without copying root props", async () => {
+  await page.goto("/?appearance");
+  await page.addStyleTag({
+    content: `
+      .brand-a { --cinder-focus: rgb(120, 40, 180); --cinder-font-sans: Georgia, serif; }
+      .brand-b { --cinder-focus: rgb(0, 90, 100); --cinder-font-sans: Verdana, sans-serif; }
+    `,
+  });
+  const child = page.locator(".appearance-child");
+  await expect(child).toHaveClass(/\bbrand-a recipe-common\b/);
+  await expect(child).toHaveAttribute("data-cinder-theme", "white");
+  await expect(child).toHaveAttribute("data-cinder-layer", "0");
+  await expect(page.locator(".local-language-layer")).toHaveAttribute("data-cinder-layer", "1");
+
+  const siblingTrigger = page.getByRole("button", { name: "Open sibling popover" });
+  await siblingTrigger.click();
+  const sibling = page.locator(".cinder-popover");
+  await expect(sibling).toHaveClass(/\bbrand-b\b/);
+  await expect(sibling).not.toHaveClass(/brand-a|recipe-common/);
+  await expect(sibling).toHaveCSS("--cinder-focus", "rgb(0, 90, 100)");
+  await expect(sibling).toHaveCSS("font-family", "Verdana, sans-serif");
+  await expect(sibling).toHaveAttribute("lang", "de-DE");
+  await page.keyboard.press("Escape");
+  await expect(siblingTrigger).toBeFocused();
+
+  const roots = await openAppearanceOverlays();
+  for (const root of roots) {
+    await expect(root).toHaveClass(/\bbrand-a recipe-common\b/);
+    await expect(root).toHaveCSS("--cinder-focus", "rgb(120, 40, 180)");
+    await expect(root).toHaveCSS("font-family", "Georgia, serif");
+    await expect(root).not.toHaveClass(/cinder-theme|layout-only|appearance-child/);
+    expect(await root.getAttribute("data-theme-only")).toBeNull();
+    expect(await root.getAttribute("title")).toBeNull();
+    expect(await root.getAttribute("appearanceclassname")).toBeNull();
+    expect(await root.evaluate((element) => (element as HTMLElement).style.paddingTop)).toBe("");
+  }
+  await expect(page.locator("#appearance-root-only")).toHaveCount(1);
+  await expect(page.locator(".cinder-modal-overlay")).toHaveClass(/consumer-overlay/);
+  await expect(page.locator(".cinder-modal")).not.toHaveClass(/brand-a|recipe-common/);
+  await expect(page.locator(".cinder-popover")).toHaveClass(
+    /consumer-popover-(top|bottom|left|right)/,
+  );
+  await expect(page.locator(".cinder-tooltip")).toHaveClass(
+    /consumer-tooltip-(top|bottom|left|right)/,
+  );
+  await expect(page.locator(".cinder-tooltip")).toContainText("Live appearance hint");
+
+  await page.getByRole("button", { name: "Use brand B", exact: true }).click();
+  for (const root of [child, ...roots]) {
+    await expect(root).toHaveClass(/\bbrand-b\b/);
+    await expect(root).not.toHaveClass(/brand-a|recipe-common/);
+    await expect(root).toHaveCSS("--cinder-focus", "rgb(0, 90, 100)");
+  }
+  await page.getByRole("button", { name: "Clear appearance", exact: true }).click();
+  for (const root of [child, ...roots]) {
+    await expect(root).not.toHaveClass(/brand-a|brand-b|recipe-common/);
+  }
+  await page.getByRole("button", { name: "Inherit appearance", exact: true }).click();
+  for (const root of [child, ...roots]) await expect(root).toHaveClass(/\bbrand-a recipe-common\b/);
+  await expect(page.locator(".appearance-sibling")).toHaveClass(/\bbrand-b\b/);
+  await expect(page.locator(".cinder-toast")).toHaveCount(1);
+  await expect(page.locator(".cinder-toast")).toContainText("Provider-owned toast");
+});
+
+test("open portals track same-direction language changes, RTL, explicit Theme language, and theme without remounting", async () => {
+  await page.goto("/?appearance");
+  const child = page.locator(".appearance-child");
+  await expect(page.locator(".appearance-parent")).toHaveAttribute("lang", "it-IT");
+  await expect(child).toHaveAttribute("lang", "en-US");
+  await expect(page.locator(".local-language-layer")).toHaveAttribute("lang", "ja-JP");
+  await expect(page.locator(".local-language-layer")).toHaveAttribute("dir", "rtl");
+
+  const roots = await openAppearanceOverlays();
+  const mounted = await Promise.all(roots.map((root) => root.elementHandle()));
+  for (const root of roots) {
+    await expect(root).toHaveAttribute("lang", "en-US");
+    await expect(root).toHaveAttribute("dir", "ltr");
+    await expect(root).toHaveAttribute("data-cinder-theme", "white");
+    await expect(root).toHaveAttribute("data-cinder-layer", "1");
+  }
+
+  for (const [action, lang, direction] of [
+    ["Use French locale", "fr-FR", "ltr"],
+    ["Use Arabic locale", "ar-AE", "rtl"],
+    ["Use German language", "de-DE", "rtl"],
+    ["Clear content language", "", "rtl"],
+  ] as const) {
+    await page.getByRole("button", { name: action, exact: true }).click();
+    for (const root of [child, ...roots]) {
+      await expect(root).toHaveAttribute("lang", lang);
+      await expect(root).toHaveAttribute("dir", direction);
+    }
+    for (const node of mounted)
+      expect(await node!.evaluate((element) => element.isConnected)).toBe(true);
+  }
+
+  await page.getByRole("button", { name: "Use g10 theme" }).click();
+  for (const root of roots) {
+    await expect(root).toHaveAttribute("data-cinder-theme", "g10");
+    await expect(root).toHaveAttribute("data-cinder-layer", "1");
+  }
+  await expect(page.locator(".cinder-toast")).toHaveCount(1);
+  await expect(page.locator(".cinder-toast")).toContainText("Provider-owned toast");
+  await expect(page.locator(".local-language-layer")).toHaveAttribute("lang", "ja-JP");
+  await expect(page.locator(".appearance-parent")).toHaveAttribute("lang", "it-IT");
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".cinder-tooltip")).toHaveCount(0);
+  await expect(page.locator(".cinder-popover")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".cinder-popover")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Open appearance settings" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".cinder-modal-overlay")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Open appearance dialog" })).toBeFocused();
+  await page.locator(".cinder-toast").getByRole("button", { name: "Dismiss notification" }).click();
+  await expect(page.locator(".cinder-toast")).toHaveCount(0);
+});
+
+for (const [themeLang, overlayLang] of [
+  ["de-DE", ""],
+  ["", "he-IL"],
+] as const) {
+  test(`overlay lang=${JSON.stringify(overlayLang)} overrides Theme lang=${JSON.stringify(themeLang)} while direction and toast stay provider-owned`, async () => {
+    await page.goto(`/?appearance&themeLang=${themeLang}&overlayLang=${overlayLang}`);
+    const roots = await openAppearanceOverlays();
+    for (const root of roots) {
+      const isToast = await root.evaluate((element) =>
+        element.classList.contains("cinder-toast-region"),
+      );
+      await expect(root).toHaveAttribute("lang", isToast ? themeLang : overlayLang);
+      await expect(root).toHaveAttribute("dir", "ltr");
+    }
+    await page.getByRole("button", { name: "Use French locale" }).click();
+    await expect(page.locator(".appearance-child")).toHaveAttribute("lang", themeLang);
+    await expect(page.locator(".cinder-toast-region")).toHaveAttribute("lang", themeLang);
+    for (const selector of portalSelectors.slice(0, 3)) {
+      await expect(page.locator(selector)).toHaveAttribute("lang", overlayLang);
+    }
+  });
+}
+
+test("a branded dialog Select keeps keyboard selection, disabled skipping, inner-first Escape, and focus restoration", async () => {
+  await page.goto("/?appearance");
+  const trigger = page.getByRole("button", { name: "Open appearance dialog" });
+  await trigger.click();
+  const choice = page.getByRole("button", { name: "Alpha Dialog choice" });
+  await choice.press("ArrowDown");
+  const popover = page.locator(".cinder-select-popover");
+  await expect(popover).toHaveClass(/\bbrand-a recipe-common\b/);
+  await expect(popover).toHaveAttribute("lang", "en-US");
+  await expect(popover).toHaveAttribute("dir", "ltr");
+  await expect(page.getByRole("option", { name: "Alpha", exact: true })).toBeFocused();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByRole("option", { name: "Gamma", exact: true })).toBeFocused();
+  await page.keyboard.press("Enter");
+  const selected = page.getByRole("button", { name: "Gamma Dialog choice" });
+  await expect(selected).toBeFocused();
+  await selected.press("ArrowDown");
+  await expect(popover).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(popover).toBeHidden();
+  await expect(selected).toBeFocused();
+  await expect(page.getByRole("dialog", { name: "Appearance dialog" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".cinder-modal-overlay")).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+
+test("Modal independently targets backdrop and surface classes, styles, refs, and render callbacks without duplicating ordinary props", async () => {
+  await page.goto("/?modal-parts");
+  const trigger = page.getByRole("button", { name: "Open parts dialog" });
+  await trigger.click();
+  const overlay = page.locator(".cinder-modal-overlay");
+  const modal = page.locator(".cinder-modal");
+  await expect(overlay).toHaveClass(/consumer-overlay-open/);
+  await expect(modal).toHaveClass(/consumer-modal-open/);
+  await expect(overlay).not.toHaveClass(/consumer-modal-open/);
+  await expect(modal).not.toHaveClass(/consumer-overlay-open/);
+  await expect(overlay).toHaveCSS("padding", "32px");
+  await expect(modal).toHaveCSS("max-width", "480px");
+  expect(await overlay.evaluate((element) => (element as HTMLElement).style.maxWidth)).toBe("");
+  expect(await modal.evaluate((element) => (element as HTMLElement).style.padding)).toBe("");
+  for (const [attribute, value] of [
+    ["lang", "fr-CA"],
+    ["data-consumer-part", "overlay"],
+    ["data-custom-overlay", "open"],
+    ["data-enter-target", "true"],
+    ["data-cinder-theme", "white"],
+  ] as const) {
+    await expect(overlay).toHaveAttribute(attribute, value);
+    expect(await modal.getAttribute(attribute)).toBeNull();
+  }
+  await expect(modal).toHaveAttribute("data-size", "md");
+  await expect(page.locator('[aria-label="Modal lifecycle"]')).toHaveText("1,0");
+  await page.getByRole("button", { name: "Inspect part refs" }).click();
+  await expect(overlay).toHaveAttribute("data-overlay-ref", "true");
+  await expect(modal).toHaveAttribute("data-modal-ref", "true");
+  expect(await overlay.getAttribute("data-modal-ref")).toBeNull();
+  expect(await modal.getAttribute("data-overlay-ref")).toBeNull();
+  // RAC Button presses stop propagation; an ordinary DOM click reaches the overlay once.
+  await page.getByRole("heading", { name: "Modal parts" }).click();
+  await expect(page.locator('[aria-label="Overlay clicks"]')).toHaveText("1");
+
+  await page.getByRole("button", { name: "Close via modal state" }).click();
+  await expect(overlay).toHaveCount(0);
+  await expect(page.locator('[aria-label="Modal changes"]')).toHaveText("false");
+  await expect(page.locator('[aria-label="Modal lifecycle"]')).toHaveText("1,1");
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await expect(overlay).toBeVisible();
+  await page.mouse.click(2, 2);
+  await expect(overlay).toHaveCount(0);
+  await expect(page.locator('[aria-label="Modal changes"]')).toHaveText("false,false");
+  await expect(page.locator('[aria-label="Modal lifecycle"]')).toHaveText("2,2");
+  await expect(trigger).toBeFocused();
+});
+
+test("all four portal consumers leave lang absent outside Theme", async () => {
+  await page.goto("/?unscoped");
+  await page.getByRole("button", { name: "Show provider toast" }).click();
+  await page.getByRole("button", { name: "Open unscoped dialog" }).click();
+  await page.getByRole("button", { name: "Open unscoped popover" }).click();
+  for (const selector of portalSelectors) {
+    const root = page.locator(selector);
+    await expect(root).toBeVisible();
+    expect(await root.getAttribute("lang")).toBeNull();
+    await expect(root).toHaveAttribute("dir", "ltr");
+    await expect(root).toHaveAttribute("data-cinder-theme", "white");
+    await expect(root).toHaveAttribute("data-cinder-layer", "0");
+    await expect(root).not.toHaveClass(/\bcinder-theme\b/);
+  }
+});

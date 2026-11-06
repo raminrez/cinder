@@ -1,21 +1,25 @@
 # Cinder
 
-A React component library built on React Aria Components (**RAC**), with the
-selected Frame direction, working Carbon/Relay themes, and interactive documentation.
+A React component library built on React Aria Components (**RAC**), with
+Frame foundations, Carbon/Relay themes, and interactive documentation.
 
 **0.1.0 · working name and package scope.** The library has 45 documented component
-families, four Carbon themes, a first Relay light/dark component slice, contextual
-layers, and typed compositional APIs. The packages are available as local tarballs.
+families, eight themes (four Carbon, two Relay, two Frame), contextual layers, and
+typed compositional APIs. The packages are available as local tarballs.
 
 **[Open Relay](http://127.0.0.1:3000/relay)** for buttons and fields across sizes and
 states, live validation, selection controls, an invitation dialog, tokens, and API
 guidance. See the [Relay specification](docs/relay.md) for its implemented scope.
 
 **[Try Frame settings](http://127.0.0.1:3000/prototypes?variant=frame&view=settings)**
-for the selected visual direction. Start with the [design system](docs/design-system.md),
+in the development-only `/prototypes` comparison. Start with the [design system](docs/design-system.md),
 [visual foundations](DESIGN.md), and [ordered library plan](docs/component-library-plan.md).
-Frame's current implementation is prototype-local; the plan promotes it into the
-packages. Figma is the final handoff after the code-based system is complete.
+Frame foundations are implemented in the packages under Phase 1, including
+additive `frame-light` / `frame-dark` themes and public customization contracts.
+Representative installed-package proof has passed; see the
+[Phase 1 verification](docs/verification.md#frame-phase-1) for its scope.
+The complete fourteen-entry Frame slice belongs to Phase 2. Figma is the final
+handoff after the code-based system is complete.
 
 ## Run the site
 
@@ -56,7 +60,8 @@ bun add /absolute/path/to/cinder/dist/packages/cinder-react-0.1.0.tgz \
 
 Packing resolves the source workspace/catalog protocols to registry-compatible
 versions. `dist/packages/manifest.json` records the archive hashes. React/RAC stay
-external, and the React package's CSS includes the token definitions.
+external. One static `@cinder/react/styles.css` import includes all tokens, themes,
+and component styles; no Cinder CSS compiler is required.
 
 ```tsx
 import { Button, Form, TextField, Theme } from "@cinder/react";
@@ -64,7 +69,7 @@ import "@cinder/react/styles.css";
 
 export function Profile() {
   return (
-    <Theme theme="relay-light" locale="en-US">
+    <Theme theme="frame-light" locale="en-US">
       <Form
         onSubmit={(event) => {
           event.preventDefault();
@@ -72,7 +77,7 @@ export function Profile() {
           console.log(data.get("email"));
         }}
       >
-        <TextField name="email" label="Email" type="email" isRequired size="lg" />
+        <TextField name="email" label="Email" type="email" isRequired />
         <Button type="submit">Save profile</Button>
       </Form>
     </Theme>
@@ -80,16 +85,27 @@ export function Profile() {
 }
 ```
 
-Supply IBM Plex yourself, or use the CSS fallback stack. The site uses:
+Frame uses a system sans-serif stack and needs no web-font installation. Carbon
+and Relay retain IBM Plex Sans with CSS fallbacks. To match their example typography:
 
 ```sh
-bun add @fontsource/ibm-plex-sans@5.3.0 @fontsource/ibm-plex-mono@5.3.0
+bun add @fontsource/ibm-plex-sans@5.3.0
 ```
 
 ```tsx
 import "@fontsource/ibm-plex-sans/latin-400.css";
 import "@fontsource/ibm-plex-sans/latin-500.css";
 import "@fontsource/ibm-plex-sans/latin-600.css";
+```
+
+For code and other monospace roles, IBM Plex Mono is a separate optional install;
+otherwise the monospace fallback is used:
+
+```sh
+bun add @fontsource/ibm-plex-mono@5.3.0
+```
+
+```tsx
 import "@fontsource/ibm-plex-mono/latin-400.css";
 ```
 
@@ -102,9 +118,10 @@ and [token guide](packages/tokens/README.md).
 
 Carbon supplies the reference tokens, 2x grid, IBM Plex, and original four themes.
 Relay adds authored light/dark palettes, neutral actions, rounded controls, and
-separate error borders and focus rings. RAC supplies accessible interaction,
-focus management, collections, and forms. Cinder owns the component API, static
-CSS, documentation, and examples.
+separate error borders and focus rings. Frame adds its selected light/dark roles,
+system typography, and 44px ordinary controls. RAC supplies accessible interaction,
+focus management, collections, and forms. Cinder owns the component API, static CSS,
+documentation, and examples.
 
 The `/components` reference retains Carbon's v11 vocabulary with explicit RAC
 adaptations. `/relay` demonstrates the first reusable slice using the same components.
@@ -112,15 +129,29 @@ Relay's first verified slice covers Button, TextField, Select, Checkbox, Radio,
 Switch, ContentSwitcher, and Dialog/Popover composition. Other families retain
 their baseline styling; the [coverage matrix](docs/coverage.md) records the scope.
 
-- `Theme` selects `white`, `g10`, `g90`, `g100`, `relay-light`, or `relay-dark`;
-  `locale` controls reading and keyboard direction. `Layer` advances contextual
-  surfaces. Portals retain theme, layer, and direction.
+- Phase 1 adds `frame-light` and `frame-dark` alongside `white`, `g10`, `g90`,
+  `g100`, `relay-light`, and `relay-dark`. The six existing themes keep their defaults.
+  Frame's ordinary Button/field height is 44px with omitted size; explicit
+  `sm`/`md`/`lg` is 32/44/48px. Button's `xl`/`2xl` remains 64/80px.
+- `Theme` defaults to `white` and resets the contextual layer to 0. `locale` owns
+  formatting and reading/keyboard direction; `Layer` advances to 1 and 2, then
+  saturates. Detached overlays retain the effective theme, layer, direction, and
+  language. `appearanceClassName` carries an explicit appearance recipe to their
+  roots: omission inherits, a string replaces, and `""` clears it. Ordinary Theme
+  `className` and `style` stay local.
 - RAC-native differences include Space-only Switch activation, radio-group
   ContentSwitcher, grid/treegrid collections, segmented date fields, and modal-default
   dialog popovers. They are documented with each component.
 - Toast uses RAC's experimental API. The API is initial, and full Carbon React API
   compatibility is not a goal of this version. Manual assistive-technology auditing
   remains outstanding.
+
+The [React package guide](packages/react/README.md#composition-contracts) documents
+field root/part hooks, default and custom RAC composition, and Modal's distinct
+surface/backdrop targets. Its [styling guide](packages/react/README.md#css-integration)
+covers the single top-level `cinder` cascade layer, plain CSS, CSS Modules, and the
+pinned Tailwind fixture. Native CSS nesting, cascade layers, and `@scope` require
+a modern browser; current browser evidence is Chromium-only.
 
 ## Verify
 
@@ -129,9 +160,10 @@ bun run check
 ```
 
 This runs formatting, Oxlint, type checking, unit tests, the production build, browser tests,
-packing, and an independent tarball consumer. The consumer uses strict declaration
-checking, builds outside this workspace, and exercises the installed packages in
-a real browser. It needs registry access for its isolated dependency install.
+packing, and two independent tarball consumers. They use strict declaration
+checking, build outside this workspace, and exercise native CSS, Bun CSS Modules,
+and pinned Tailwind 4.3.5 in a real browser. Their isolated dependency installs need
+registry access.
 
 Browser checks default to installed Google Chrome. To install it through Playwright:
 
@@ -163,7 +195,8 @@ intentional accessibility exceptions.
 
 The individual test commands are `bun test tests/unit`, `bun run test:browser`,
 and (after packing) `bun run test:package`.
-See [verification results](docs/verification.md) and the [visual critique](docs/visual-review.md).
+See the [consumer fixture commands](tests/fixtures/consumer/README.md),
+[verification results](docs/verification.md#frame-phase-1), and the [visual critique](docs/visual-review.md).
 
 ## Research
 
@@ -185,7 +218,7 @@ primary-source archives are in the ignored `.research/` directory.
 
 ## Project layout
 
-- `packages/tokens` — Carbon-derived foundations, authored Relay values, and theme generation.
+- `packages/tokens` — Carbon-derived foundations, authored Relay/Frame values, and theme generation.
 - `packages/react` — styled RAC components and composition patterns.
 - `apps/docs` — the Cinder website and interactive component reference.
 - `scripts` — build, production preview, packing, and distribution verification.

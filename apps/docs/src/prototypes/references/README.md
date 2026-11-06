@@ -7,15 +7,15 @@ examples. All are static images; use the “Try” buttons for working Cinder fl
 
 ## Sources
 
-| Image prefix | Component source                                                  | Styles and theme                                                                         |
-| ------------ | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `field`      | Local `@cinder/react` components on `research/base-heroui-cinder` | The prototype stylesheet's Field variables, in light and dark mode                       |
-| `relay`      | The same local Cinder components                                  | The prototype stylesheet's Relay variables, in light and dark mode                       |
-| `index`      | The same local Cinder components                                  | The prototype stylesheet's Index variables, in light and dark mode                       |
-| `frame`      | Local Cinder components after the Relay baseline `8481028` | `../frame.css`, with cool-neutral light/dark palettes and attached field recovery |
-| `astryx`     | Public [Field documentation](https://astryx.atmeta.com/components/Field), displaying **0.7.9** | The rendered documentation's light/dark treatment and Figtree typography |
-| `carbon`     | Published `@carbon/react` **1.120.0**                             | Published `@carbon/styles` **1.119.0**, `css/styles.css`, with `white` and `g100` themes |
-| `heroui`     | Published `@heroui/react` **3.2.7**                               | Published `@heroui/styles` **3.2.7**, `dist/heroui.min.css`, with light and dark themes  |
+| Image prefix | Component source                                                                               | Styles and theme                                                                         |
+| ------------ | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `field`      | Local `@cinder/react` components on `research/base-heroui-cinder`                              | The prototype stylesheet's Field variables, in light and dark mode                       |
+| `relay`      | The same local Cinder components                                                               | The prototype stylesheet's Relay variables, in light and dark mode                       |
+| `index`      | The same local Cinder components                                                               | The prototype stylesheet's Index variables, in light and dark mode                       |
+| `frame`      | Local Cinder components after the Relay baseline `8481028`                                     | `../frame.css`, with cool-neutral light/dark palettes and attached field recovery        |
+| `astryx`     | Public [Field documentation](https://astryx.atmeta.com/components/Field), displaying **0.7.9** | The rendered documentation's light/dark treatment and Figtree typography                 |
+| `carbon`     | Published `@carbon/react` **1.120.0**                                                          | Published `@carbon/styles` **1.119.0**, `css/styles.css`, with `white` and `g100` themes |
+| `heroui`     | Published `@heroui/react` **3.2.7**                                                            | Published `@heroui/styles` **3.2.7**, `dist/heroui.min.css`, with light and dark themes  |
 
 The earlier Field, Relay, and Index captures began at commit `a901da8`, including
 the prototype-only validation spacing adjustment in `../styles.css`. They remain

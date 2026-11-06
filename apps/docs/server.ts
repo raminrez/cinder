@@ -2,6 +2,7 @@ import index from "./index.html";
 import prototypes from "./prototypes.html";
 import { resolve } from "node:path";
 import { siteLicenses } from "../../scripts/licenses";
+import { researchReports } from "./reports";
 
 const root = resolve(import.meta.dir, "../..");
 
@@ -18,6 +19,15 @@ const server = Bun.serve({
     "/relay": index,
     "/relay/": index,
     "/prototypes": prototypes,
+    ...Object.fromEntries(
+      Object.values(researchReports).map((filename) => [
+        `/reports/${filename}`,
+        () =>
+          new Response(Bun.file(`${root}/docs/${filename}`), {
+            headers: { "Content-Type": "text/markdown; charset=utf-8" },
+          }),
+      ]),
+    ),
     "/LICENSE.txt": () =>
       new Response(Bun.file(`${root}/LICENSE`), {
         headers: { "Content-Type": "text/plain; charset=utf-8" },

@@ -59,13 +59,19 @@ export default function GetStarted() {
               </p>
               <CodeSnippet label="Complete interface example" language="tsx">
                 {
-                  'import { Button, Form, TextField, Theme } from "@cinder/react";\nimport "@cinder/react/styles.css";\n\nexport function Profile() {\n  return (\n    <Theme theme="g10" locale="en-US">\n      <Form onSubmit={(event) => {\n        event.preventDefault();\n        const data = new FormData(event.currentTarget);\n        console.log(data.get("email"));\n      }}>\n        <TextField name="email" label="Email"\n          type="email" isRequired />\n        <Button type="submit">Save profile</Button>\n      </Form>\n    </Theme>\n  );\n}'
+                  'import { Button, Form, TextField, Theme } from "@cinder/react";\nimport "@cinder/react/styles.css";\n\nexport function Profile() {\n  return (\n    <Theme theme="frame-light" locale="en-US">\n      <Form onSubmit={(event) => {\n        event.preventDefault();\n        const data = new FormData(event.currentTarget);\n        console.log(data.get("email"));\n      }}>\n        <TextField name="email" label="Email"\n          type="email" isRequired />\n        <Button type="submit">Save profile</Button>\n      </Form>\n    </Theme>\n  );\n}'
                 }
               </CodeSnippet>
               <p>
                 Use <code>onPress</code> for actions, <code>onChange</code> for field values, and
                 RAC's render props for state-aware customization. The wrappers preserve refs and the
                 underlying RAC types.
+              </p>
+              <p>
+                Frame's light and dark foundations use 44px ordinary controls. The four Carbon
+                themes and Relay keep their existing defaults; omitting <code>theme</code> still
+                selects <code>white</code>. The component reference shows Carbon, while the Frame
+                library is being completed in ordered slices.
               </p>
               <Link href="/components/form">
                 Try the complete form <Icon name="arrowRight" />
@@ -85,12 +91,14 @@ export default function GetStarted() {
               </CodeSnippet>
               <p>
                 The React package ships ESM, TypeScript declarations, and a single stylesheet that
-                includes the tokens. React and RAC stay external peer dependencies. Token CSS and
-                JSON are also available separately.
+                includes tokens and all eight themes. React and RAC stay external peer dependencies.
+                Token CSS and JSON are also available separately. Plain CSS needs no Cinder
+                compiler.
               </p>
               <p>
-                Load IBM Plex in your application. The documentation uses locally bundled Fontsource
-                files; the component CSS supplies a fallback font stack.
+                Frame uses the system sans-serif stack. For Carbon and Relay, load IBM Plex or use
+                the supplied fallback stack. The documentation bundles these Fontsource files
+                locally.
               </p>
               <CodeSnippet label="Install IBM Plex" language="sh">
                 {"bun add @fontsource/ibm-plex-sans@5.3.0 @fontsource/ibm-plex-mono@5.3.0"}
@@ -109,8 +117,8 @@ export default function GetStarted() {
             <section id="verify">
               <h2>Build & verify.</h2>
               <p>
-                The build regenerates Carbon-derived tokens, bundles both libraries, emits their
-                declarations, and creates the production site.
+                The build regenerates the Carbon, Relay, and Frame tokens, bundles both libraries,
+                emits their declarations, and creates the production site.
               </p>
               <CodeSnippet label="Verification commands" language="sh">
                 {"bun run check\n\n# Serve the built site:\nbun start"}

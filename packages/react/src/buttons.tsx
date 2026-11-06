@@ -26,19 +26,21 @@ export interface ButtonProps extends RACButtonProps {
 
 export function Button({
   variant = "primary",
-  size = "lg",
+  size: requestedSize,
   iconOnly = false,
   pendingLabel = "Pending",
   className,
   children,
   ...props
 }: ButtonProps) {
+  const size = requestedSize === undefined ? "lg" : requestedSize;
   return (
     <RACButton
       {...props}
       className={classes("cinder-button", className)}
       data-variant={variant}
       data-size={size}
+      data-cinder-size-default={requestedSize === undefined ? "" : undefined}
       data-icon-only={iconOnly || undefined}
     >
       {composeRenderProps(children, (content, { isPending }) => (

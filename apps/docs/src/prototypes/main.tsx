@@ -880,9 +880,7 @@ function Settings({
                   isRequired
                   isDisabled={saving}
                   description="Allow 1 to 24 reviews per person."
-                  errorMessage={
-                    <ValidationMessage>Enter a number from 1 to 24.</ValidationMessage>
-                  }
+                  errorMessage={<ValidationMessage>Enter a number from 1 to 24.</ValidationMessage>}
                 />
               </div>
             </section>

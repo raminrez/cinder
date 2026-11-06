@@ -26,14 +26,20 @@ export interface FieldContentProps {
 }
 
 export function FieldLabel({ label }: Pick<FieldContentProps, "label">) {
-  return label != null ? <Label>{label}</Label> : null;
+  return label != null ? (
+    <Label className="cinder-field__label react-aria-Label">{label}</Label>
+  ) : null;
 }
 
 export function FieldHelp({ description, errorMessage }: Omit<FieldContentProps, "label">) {
   return (
-    <div className="cinder-field-help">
-      {description != null && <Text slot="description">{description}</Text>}
-      <FieldError>{errorMessage}</FieldError>
+    <div className="cinder-field__help cinder-field-help">
+      {description != null && (
+        <Text className="cinder-field__description react-aria-Text" slot="description">
+          {description}
+        </Text>
+      )}
+      <FieldError className="cinder-field__error react-aria-FieldError">{errorMessage}</FieldError>
     </div>
   );
 }
@@ -65,7 +71,11 @@ export function TextField({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <Input placeholder={placeholder} ref={inputRef} />
+          <Input
+            className="cinder-field__control react-aria-Input"
+            placeholder={placeholder}
+            ref={inputRef}
+          />
           <FieldHelp description={description} errorMessage={errorMessage} />
         </>
       )}
@@ -96,7 +106,12 @@ export function TextArea({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <RACTextArea rows={rows} placeholder={placeholder} ref={inputRef} />
+          <RACTextArea
+            className="cinder-field__control react-aria-TextArea"
+            rows={rows}
+            placeholder={placeholder}
+            ref={inputRef}
+          />
           <FieldHelp description={description} errorMessage={errorMessage} />
         </>
       )}
@@ -127,7 +142,7 @@ export function NumberField({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <Group className="cinder-input-group">
+          <Group className="cinder-field__control cinder-input-group">
             <Input />
             <Button slot="decrement" variant="ghost" size={size} iconOnly>
               <Icon name="minus" />
@@ -170,7 +185,7 @@ export function SearchField({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <Group className="cinder-input-group">
+          <Group className="cinder-field__control cinder-input-group">
             <Icon name="search" />
             <Input placeholder={placeholder} {...inputProps} />
             <Button variant="ghost" size={size} iconOnly>

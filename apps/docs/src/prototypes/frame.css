@@ -1,6 +1,12 @@
 /* Frame is an experimental direction scoped to the comparison document. */
 :root[data-prototype="frame"] {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   --p-ground: #f5f6f8;
   --p-surface: #ffffff;
   --p-raised: #eef1f6;
@@ -57,7 +63,8 @@
   }
 
   [data-cinder-theme] {
-    --cinder-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --cinder-font-sans:
+      ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --cinder-support-success: var(--p-success);
     --cinder-overlay: rgb(18 22 32 / 50%);
   }
@@ -144,7 +151,8 @@
     line-height: 20px;
   }
 
-  .cinder-field > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group, .cinder-select-trigger) {
+  .cinder-field
+    > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group, .cinder-select-trigger) {
     grid-area: 3 / 1;
     margin-block-start: 8px;
     caret-color: var(--p-accent);
@@ -458,7 +466,6 @@
     .field-register {
       padding: 16px 16px 0;
     }
-
   }
 
   @media (forced-colors: active) {

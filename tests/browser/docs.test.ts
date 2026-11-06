@@ -4,7 +4,6 @@ import { expect } from "playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { mkdir } from "node:fs/promises";
 import { components } from "../../apps/docs/src/catalog";
-import { themeNames } from "@cinder/tokens";
 import { startPreview } from "../../scripts/preview";
 
 let server: Awaited<ReturnType<typeof startPreview>>;
@@ -12,13 +11,11 @@ let browser: Browser;
 let context: BrowserContext;
 let page: Page;
 let errors: string[];
-const labels = {
+const carbonThemes = {
   white: "White",
   g10: "Gray 10",
   g90: "Gray 90",
   g100: "Gray 100",
-  "relay-light": "Relay light",
-  "relay-dark": "Relay dark",
 };
 
 beforeAll(async () => {
@@ -149,12 +146,11 @@ describe("complete component catalog", () => {
         "Choose a component from the navigation.",
       );
       await accessible(`${entry.slug}-g10`);
-      for (const theme of themeNames.filter(
-        (theme) => theme !== "g10" && !theme.startsWith("relay-"),
-      )) {
+      for (const [theme, label] of Object.entries(carbonThemes)) {
+        if (theme === "g10") continue;
         await page
           .getByRole("radiogroup", { name: "Preview theme" })
-          .getByRole("radio", { name: labels[theme], exact: true })
+          .getByRole("radio", { name: label, exact: true })
           .click();
         await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", theme);
         await accessible(`${entry.slug}-${theme}`, ".example-canvas");

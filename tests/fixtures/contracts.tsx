@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { themeNames } from "@cinder/tokens";
 import {
   Button,
   Checkbox,
@@ -9,6 +10,7 @@ import {
   FieldError,
   Form,
   Heading,
+  I18nProvider,
   Input,
   Label,
   Layer,
@@ -22,8 +24,10 @@ import {
   Stack,
   TextField,
   Theme,
+  ToastProvider,
   Tooltip,
   TooltipTrigger,
+  useToast,
   type Key,
   type ThemeName,
 } from "@cinder/react";
@@ -123,12 +127,9 @@ function PortalContracts() {
           value={theme}
           onChange={(event) => setTheme(event.target.value as ThemeName)}
         >
-          <option>white</option>
-          <option>g10</option>
-          <option>g90</option>
-          <option>g100</option>
-          <option>relay-light</option>
-          <option>relay-dark</option>
+          {themeNames.map((name) => (
+            <option key={name}>{name}</option>
+          ))}
         </select>
       </label>
       <label>
@@ -185,13 +186,219 @@ function PortalContracts() {
   );
 }
 
+function ToastAction() {
+  const toast = useToast();
+  return (
+    <Button onPress={() => toast.add({ title: "Provider-owned toast" })}>
+      Show provider toast
+    </Button>
+  );
+}
+
+function AppearanceContracts() {
+  const params = new URLSearchParams(location.search);
+  const [locale, setLocale] = useState("en-US");
+  const [lang, setLang] = useState<string | undefined>(params.get("themeLang") ?? undefined);
+  const [appearance, setAppearance] = useState<string>();
+  const [theme, setTheme] = useState<ThemeName>();
+  const overlayLang = params.get("overlayLang") ?? undefined;
+  return (
+    <I18nProvider locale={locale}>
+      <Theme
+        theme="g100"
+        lang="it-IT"
+        appearanceClassName="brand-a recipe-common"
+        className="appearance-parent"
+      >
+        <Layer level={2}>
+          <Theme
+            theme={theme}
+            lang={lang}
+            appearanceClassName={appearance}
+            className="appearance-child layout-only"
+            id="appearance-root-only"
+            data-theme-only="true"
+            title="Theme root only"
+            style={{ paddingTop: "19px" }}
+          >
+            <Layer lang="ja-JP" dir="rtl" className="local-language-layer">
+              <ToastProvider>
+                <Theme appearanceClassName="brand-b" locale="es-MX">
+                  <ToastAction />
+                </Theme>
+                <DialogTrigger>
+                  <Button>Open appearance dialog</Button>
+                  <Modal lang={overlayLang} dir="rtl" overlayClassName="consumer-overlay">
+                    <Dialog>
+                      <Heading slot="title">Appearance dialog</Heading>
+                      <Select label="Dialog choice" defaultValue="alpha" disabledKeys={["beta"]}>
+                        {items.map((item) => (
+                          <ListBoxItem key={item.id} id={item.id}>
+                            {item.name}
+                          </ListBoxItem>
+                        ))}
+                      </Select>
+                      <DialogTrigger>
+                        <Button>Open appearance settings</Button>
+                        <Popover
+                          lang={overlayLang}
+                          dir="rtl"
+                          className={({ placement }) => `consumer-popover-${placement}`}
+                        >
+                          <Dialog aria-label="Appearance settings">
+                            <Stack gap={3}>
+                              <Button onPress={() => setLocale("fr-FR")}>Use French locale</Button>
+                              <Button onPress={() => setLocale("ar-AE")}>Use Arabic locale</Button>
+                              <Button onPress={() => setLang("de-DE")}>Use German language</Button>
+                              <Button onPress={() => setLang("")}>Clear content language</Button>
+                              <Button onPress={() => setAppearance("brand-b")}>Use brand B</Button>
+                              <Button onPress={() => setAppearance("")}>Clear appearance</Button>
+                              <Button onPress={() => setAppearance(undefined)}>
+                                Inherit appearance
+                              </Button>
+                              <Button onPress={() => setTheme("g10")}>Use g10 theme</Button>
+                              <TooltipTrigger defaultOpen>
+                                <Button>Appearance hint</Button>
+                                <Tooltip
+                                  lang={overlayLang}
+                                  dir="rtl"
+                                  className={({ placement }) => `consumer-tooltip-${placement}`}
+                                >
+                                  {({ state }) => (state.isOpen ? "Live appearance hint" : null)}
+                                </Tooltip>
+                              </TooltipTrigger>
+                            </Stack>
+                          </Dialog>
+                        </Popover>
+                      </DialogTrigger>
+                      <Button slot="close">Close appearance dialog</Button>
+                    </Dialog>
+                  </Modal>
+                </DialogTrigger>
+              </ToastProvider>
+            </Layer>
+          </Theme>
+        </Layer>
+      </Theme>
+      <Theme
+        theme="g10"
+        locale="de-DE"
+        appearanceClassName="brand-b"
+        className="appearance-sibling"
+      >
+        <DialogTrigger>
+          <Button>Open sibling popover</Button>
+          <Popover>
+            <Dialog aria-label="Sibling appearance">Independent brand B</Dialog>
+          </Popover>
+        </DialogTrigger>
+      </Theme>
+    </I18nProvider>
+  );
+}
+
+function ModalPartContracts() {
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [clicks, setClicks] = useState(0);
+  const [enters, setEnters] = useState(0);
+  const [exits, setExits] = useState(0);
+  const [changes, setChanges] = useState<string[]>([]);
+  return (
+    <>
+      <Button onPress={() => setOpen(true)}>Open parts dialog</Button>
+      <output aria-label="Overlay clicks">{clicks}</output>
+      <output aria-label="Modal lifecycle">{`${enters},${exits}`}</output>
+      <output aria-label="Modal changes">{changes.join(",")}</output>
+      <Modal
+        isOpen={open}
+        onOpenChange={(next) => {
+          setOpen(next);
+          setChanges((values) => [...values, String(next)]);
+        }}
+        isDismissable
+        ref={modalRef}
+        overlayRef={overlayRef}
+        className={({ state }) => (state.isOpen ? "consumer-modal-open" : "consumer-modal-closed")}
+        overlayClassName={({ state }) =>
+          state.isOpen ? "consumer-overlay-open" : "consumer-overlay-closed"
+        }
+        style={({ state }) => ({ padding: state.isOpen ? "32px" : "16px" })}
+        modalStyle={({ state }) => ({ maxWidth: state.isOpen ? "480px" : "400px" })}
+        render={(domProps, { state }) => (
+          <div {...domProps} data-custom-overlay={state.isOpen ? "open" : "closed"} />
+        )}
+        lang="fr-CA"
+        data-consumer-part="overlay"
+        onClick={() => setClicks((count) => count + 1)}
+        onEnter={(element) => {
+          element.dataset.enterTarget = "true";
+          setEnters((count) => count + 1);
+        }}
+        onExit={() => setExits((count) => count + 1)}
+      >
+        {({ state }) => (
+          <Dialog>
+            <Heading slot="title">Modal parts</Heading>
+            <Button
+              onPress={() => {
+                overlayRef.current?.setAttribute("data-overlay-ref", "true");
+                modalRef.current?.setAttribute("data-modal-ref", "true");
+              }}
+            >
+              Inspect part refs
+            </Button>
+            <Button onPress={() => state.close()}>Close via modal state</Button>
+          </Dialog>
+        )}
+      </Modal>
+    </>
+  );
+}
+
+function UnscopedContracts() {
+  return (
+    <ToastProvider>
+      <ToastAction />
+      <DialogTrigger>
+        <Button>Open unscoped dialog</Button>
+        <Modal>
+          <Dialog aria-label="Unscoped dialog">
+            <DialogTrigger>
+              <Button>Open unscoped popover</Button>
+              <Popover>
+                <Dialog aria-label="Unscoped popover">
+                  <TooltipTrigger isOpen>
+                    <Button>Unscoped hint</Button>
+                    <Tooltip>Unscoped tooltip</Tooltip>
+                  </TooltipTrigger>
+                </Dialog>
+              </Popover>
+            </DialogTrigger>
+          </Dialog>
+        </Modal>
+      </DialogTrigger>
+    </ToastProvider>
+  );
+}
+
 function App() {
-  const portals = new URLSearchParams(location.search).has("portals");
+  const params = new URLSearchParams(location.search);
+  if (params.has("unscoped")) return <UnscopedContracts />;
   return (
     <Theme theme="white">
       <main style={{ padding: "2rem", maxWidth: "48rem" }}>
         <h1>Cinder public API contracts</h1>
-        {portals ? <PortalContracts /> : <StateContracts />}
+        {params.has("portals") ? (
+          <PortalContracts />
+        ) : params.has("appearance") ? (
+          <AppearanceContracts />
+        ) : params.has("modal-parts") ? (
+          <ModalPartContracts />
+        ) : (
+          <StateContracts />
+        )}
       </main>
     </Theme>
   );

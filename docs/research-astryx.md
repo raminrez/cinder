@@ -20,14 +20,14 @@ cancellation, partial translations, and recorded accessibility debt.
 
 ## 1. Scope and source authority
 
-| Evidence | Treatment in this report |
-| --- | --- |
-| Consumer `.doc.mjs` and shipped CLI guides | Builder-facing promises and examples; not proof that every path implements them |
-| Current architecture/component contracts | Intended ownership and invariants; recorded gaps remain gaps |
-| TypeScript/JavaScript implementation | Source-observed behavior at the pinned snapshot |
-| Test bodies and bindings | Assertions present in the repository; no upstream test execution claimed |
-| Catalog inventory | Read-only JSON/key-set calculation; not a translation-quality review |
-| Cinder source and verification document | Current Relay comparison; previously recorded results distinguished from this research |
+| Evidence                                   | Treatment in this report                                                               |
+| ------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Consumer `.doc.mjs` and shipped CLI guides | Builder-facing promises and examples; not proof that every path implements them        |
+| Current architecture/component contracts   | Intended ownership and invariants; recorded gaps remain gaps                           |
+| TypeScript/JavaScript implementation       | Source-observed behavior at the pinned snapshot                                        |
+| Test bodies and bindings                   | Assertions present in the repository; no upstream test execution claimed               |
+| Catalog inventory                          | Read-only JSON/key-set calculation; not a translation-quality review                   |
+| Cinder source and verification document    | Current Relay comparison; previously recorded results distinguished from this research |
 
 Coverage: Button, Field/TextInput, Selector, Dialog, NumberInput, DateInput,
 shared interactions, localization, theme/color resolution, and relevant CLI
@@ -46,14 +46,14 @@ preserved supported DOM/ARIA inputs, and complete styling triplets for named par
 It admits family exceptions and protects released behavior during migration. [API][api]
 Use this checklist to clarify Cinder's established RAC props.
 
-| Representative component | Source-observed contract | Useful Cinder lesson |
-| --- | --- | --- |
-| Button | Required string `label`; `children` can replace visible text; `href`/`as` select link rendering; `clickAction` adds pending behavior. [Types][button-api] | State clearly whether content, accessible name, and DOM/ref type have one owner. |
-| TextInput | Required controlled `value: string`; excludes `defaultValue`; value-first `onChange`; ref reaches the native input. [Types][text-api], [render][text-paths] | Preserve Cinder's controlled/uncontrolled support and document its wrapper ref versus `inputRef`. |
-| Field-composed inputs | Root `xstyle`/`className`/`style` are forbidden; `container*` styles the Field box and `control*` the visual control box, never the native input. [Owner][parts] | Name the actual target of every customization input. |
-| Selector | Trigger-button ref; `hasClear` discriminates string versus nullable values; adaptive presentation changes popup semantics. [Ref][selector-api], [values][selector-values], [contract][selector-contract] | Show clear-value types and the focus/role consequences of each presentation. |
-| Dialog | Native modal lifecycle, controlled opening, explicit focus work, and purpose-derived Escape/backdrop behavior. [Runtime][dialog-runtime] | Document modal ownership and focus outcomes alongside the composition example. |
-| NumberInput / DateInput | NumberInput owns typed drafts and numeric commits; DateInput's shared owner parses and displays calendar-localized text around ISO date values. [Number][number-edit], [date][date-edit] | Document value representation, validation timing, and submission boundaries. |
+| Representative component | Source-observed contract                                                                                                                                                                                 | Useful Cinder lesson                                                                              |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Button                   | Required string `label`; `children` can replace visible text; `href`/`as` select link rendering; `clickAction` adds pending behavior. [Types][button-api]                                                | State clearly whether content, accessible name, and DOM/ref type have one owner.                  |
+| TextInput                | Required controlled `value: string`; excludes `defaultValue`; value-first `onChange`; ref reaches the native input. [Types][text-api], [render][text-paths]                                              | Preserve Cinder's controlled/uncontrolled support and document its wrapper ref versus `inputRef`. |
+| Field-composed inputs    | Root `xstyle`/`className`/`style` are forbidden; `container*` styles the Field box and `control*` the visual control box, never the native input. [Owner][parts]                                         | Name the actual target of every customization input.                                              |
+| Selector                 | Trigger-button ref; `hasClear` discriminates string versus nullable values; adaptive presentation changes popup semantics. [Ref][selector-api], [values][selector-values], [contract][selector-contract] | Show clear-value types and the focus/role consequences of each presentation.                      |
+| Dialog                   | Native modal lifecycle, controlled opening, explicit focus work, and purpose-derived Escape/backdrop behavior. [Runtime][dialog-runtime]                                                                 | Document modal ownership and focus outcomes alongside the composition example.                    |
+| NumberInput / DateInput  | NumberInput owns typed drafts and numeric commits; DateInput's shared owner parses and displays calendar-localized text around ISO date values. [Number][number-edit], [date][date-edit]                 | Document value representation, validation timing, and submission boundaries.                      |
 
 The field exception is material: `container*` has no effect inside InputGroup or
 horizontal-label FormLayout because no Field box exists there. The shared resolver
@@ -121,15 +121,15 @@ the fourth prototype explores its own visual treatment.
 
 ### Tests inspected: presence is not a passing run
 
-| Inspected evidence | What its assertions actually address | Boundary |
-| --- | --- | --- |
-| Button DOM binding | Role exclusions and explicit `unrunLayers` for accessibility-tree/real-browser checks. [Test][button-dom] | jsdom cannot establish native browser behavior. |
-| Button Chromium binding | Reads rendered labels and compares declared applicability with computed disabled/description state and actual Tab reachability. [Test][button-browser] | Inspected source; no Chromium run here. |
-| TextInput IME cases | Both composition signals suppress `onEnter`; normal Enter still calls it; raw `onKeyDown` still receives composing events. [Tests][text-ime] | Synthetic key events, not a real IME/OS session. |
-| Selector combobox debt | Exact sheet-open failure: `aria-controls` names the inner listbox while popup semantics name a dialog. [Ledger][selector-debt] | Known upstream debt, not newly reproduced here. |
-| Dialog Chromium binding | Verifies native `:modal`, records whether focus entered after modality, binds related focus/background targets, and rejects unrun layers. [Test][dialog-browser] | Binding code is evidence of intended checks, not their results. |
-| NumberInput DOM binding | Exercises the Spinbutton contract and explicitly leaves browser-owned disabled/focus checks unrun. [Test][number-a11y] | Separates state declarations from browser exposure. |
-| Numeric/date tests | Numeric locale/rejection corpus; localized calendar input, ISO callbacks, incomplete drafts, errors, and absent-Temporal fallback. [Numbers][number-tests], [dates][date-tests], [fallback][date-fallback] | Unit/DOM assertions; runtime/browser assumptions are bounded. |
+| Inspected evidence      | What its assertions actually address                                                                                                                                                                       | Boundary                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Button DOM binding      | Role exclusions and explicit `unrunLayers` for accessibility-tree/real-browser checks. [Test][button-dom]                                                                                                  | jsdom cannot establish native browser behavior.                 |
+| Button Chromium binding | Reads rendered labels and compares declared applicability with computed disabled/description state and actual Tab reachability. [Test][button-browser]                                                     | Inspected source; no Chromium run here.                         |
+| TextInput IME cases     | Both composition signals suppress `onEnter`; normal Enter still calls it; raw `onKeyDown` still receives composing events. [Tests][text-ime]                                                               | Synthetic key events, not a real IME/OS session.                |
+| Selector combobox debt  | Exact sheet-open failure: `aria-controls` names the inner listbox while popup semantics name a dialog. [Ledger][selector-debt]                                                                             | Known upstream debt, not newly reproduced here.                 |
+| Dialog Chromium binding | Verifies native `:modal`, records whether focus entered after modality, binds related focus/background targets, and rejects unrun layers. [Test][dialog-browser]                                           | Binding code is evidence of intended checks, not their results. |
+| NumberInput DOM binding | Exercises the Spinbutton contract and explicitly leaves browser-owned disabled/focus checks unrun. [Test][number-a11y]                                                                                     | Separates state declarations from browser exposure.             |
+| Numeric/date tests      | Numeric locale/rejection corpus; localized calendar input, ISO callbacks, incomplete drafts, errors, and absent-Temporal fallback. [Numbers][number-tests], [dates][date-tests], [fallback][date-fallback] | Unit/DOM assertions; runtime/browser assumptions are bounded.   |
 
 The transferable practice is **contract → observable outcome → capable evidence
 layer**. Astryx rejects test volume as a coverage measure and calls for assertions
@@ -246,11 +246,11 @@ the field anatomy, not Neutral's whole token map.**
 Some “accepted but unshipped” paragraphs lag behind the same pinned checkout.
 The source takes precedence for these implementation observations:
 
-| Architecture note | What the pinned source actually contains | Evidence boundary |
-| --- | --- | --- |
-| Prefix-independent local-token names are unshipped. [Note][theme-authoring-gaps] | The public input accepts arbitrary custom-property names; the core validator checks CSS-name validity and records exact ownership, collision, cycle, and lineage information without requiring the theme-name prefix. [Input][theme-local-input], [validator][theme-local-validation] | Core source inspection; no CLI build/parity run. |
-| Declaration-boundary refusal and a warnings collector are unshipped. [Note][theme-compilation-gaps] | `joinDeclarations` calls the name/value boundary checks, drops refused entries, and reports through a warnings array or runtime console sink. [Generator][theme-declarations] | A present implementation path, not a reproduced adversarial CSS test. |
-| No spring reads the motion knobs yet. [Note][theme-authoring-gaps] | `resolveMotion` reads the theme tempo and scales default springs. `resolveThemeMotion` returns knobs, durations, and easings, not the proposed unified role tables; theme-controlled `reducedMotion: 'always'` is still absent from the public knobs. [Spring path][theme-springs], [resolved shape][theme-motion], [knobs][theme-knobs] | Partial implementation matters; do not turn one landed path into a claim that all motion obligations shipped. |
+| Architecture note                                                                                   | What the pinned source actually contains                                                                                                                                                                                                                                                                                                 | Evidence boundary                                                                                             |
+| --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Prefix-independent local-token names are unshipped. [Note][theme-authoring-gaps]                    | The public input accepts arbitrary custom-property names; the core validator checks CSS-name validity and records exact ownership, collision, cycle, and lineage information without requiring the theme-name prefix. [Input][theme-local-input], [validator][theme-local-validation]                                                    | Core source inspection; no CLI build/parity run.                                                              |
+| Declaration-boundary refusal and a warnings collector are unshipped. [Note][theme-compilation-gaps] | `joinDeclarations` calls the name/value boundary checks, drops refused entries, and reports through a warnings array or runtime console sink. [Generator][theme-declarations]                                                                                                                                                            | A present implementation path, not a reproduced adversarial CSS test.                                         |
+| No spring reads the motion knobs yet. [Note][theme-authoring-gaps]                                  | `resolveMotion` reads the theme tempo and scales default springs. `resolveThemeMotion` returns knobs, durations, and easings, not the proposed unified role tables; theme-controlled `reducedMotion: 'always'` is still absent from the public knobs. [Spring path][theme-springs], [resolved shape][theme-motion], [knobs][theme-knobs] | Partial implementation matters; do not turn one landed path into a claim that all motion obligations shipped. |
 
 The compilation contract also records private-variable authoring, nested-pseudo
 lowering, and guaranteed-property coverage gaps. Those remain **recorded upstream
@@ -278,14 +278,14 @@ comparison; its current implementation is prototype-local.
 
 ## 6. Cinder comparison and recommendations
 
-| Current Relay/Cinder evidence | Recommendation for this direction |
-| --- | --- |
-| RAC `onPress`, controlled/uncontrolled values, retained wrapper classes, wrapper/input refs, and differing `children` meanings are documented. [Relay](relay.md#L158-L188) | Preserve those APIs while the fourth prototype establishes its own appearance; show real state changes and composed examples. |
-| TextField's convenience anatomy is replaceable; SearchField separately exposes `inputProps`. [Fields](../packages/react/src/fields.tsx#L41-L74), [Search](../packages/react/src/fields.tsx#L146-L185) | Publish a per-family anatomy/ref table; extend an existing part seam only when the prototype demonstrates a concrete need. |
-| Button owns the English default `Pending`; SearchField owns `Search`. [Button](../packages/react/src/buttons.tsx#L18-L49), [Search](../packages/react/src/fields.tsx#L153-L175) | Next library slice: one small library-message owner using the existing locale, with component overrides for product wording. |
-| Date dialogs own English names; range thumbs default to `Minimum`/`Maximum`. [Dates](../packages/react/src/dates.tsx#L103-L159), [Slider](../packages/react/src/selection.tsx#L256-L263) | Include assistive labels in that inventory; translated RAC internals cannot translate these Cinder literals. |
-| Theme writes `lang`/`dir`; `useOverlayTheme` forwards direction but not language. [Theme](../packages/react/src/theme.tsx#L18-L43), [overlay metadata](../packages/react/src/theme.tsx#L71-L75) | Check actual portal language, nested locale changes, and explicit `lang` overrides before choosing a fix. |
-| Portal tests assert wrapper language and overlay direction/focus, but not overlay language. [Contracts](../tests/browser/contracts.test.ts#L110-L183) | Add a language assertion when addressing that specific boundary; do not describe current RTL evidence as complete localization proof. |
+| Current Relay/Cinder evidence                                                                                                                                                                         | Recommendation for this direction                                                                                                     |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| RAC `onPress`, controlled/uncontrolled values, retained wrapper classes, wrapper/input refs, and differing `children` meanings are documented. [Relay](relay.md#L158-L188)                            | Preserve those APIs while the fourth prototype establishes its own appearance; show real state changes and composed examples.         |
+| TextField's convenience anatomy is replaceable; SearchField separately exposes `inputProps`. [Fields](../packages/react/src/fields.tsx#L41-L74), [Search](../packages/react/src/fields.tsx#L146-L185) | Publish a per-family anatomy/ref table; extend an existing part seam only when the prototype demonstrates a concrete need.            |
+| Button owns the English default `Pending`; SearchField owns `Search`. [Button](../packages/react/src/buttons.tsx#L18-L49), [Search](../packages/react/src/fields.tsx#L153-L175)                       | Next library slice: one small library-message owner using the existing locale, with component overrides for product wording.          |
+| Date dialogs own English names; range thumbs default to `Minimum`/`Maximum`. [Dates](../packages/react/src/dates.tsx#L103-L159), [Slider](../packages/react/src/selection.tsx#L256-L263)              | Include assistive labels in that inventory; translated RAC internals cannot translate these Cinder literals.                          |
+| Theme writes `lang`/`dir`; `useOverlayTheme` forwards direction but not language. [Theme](../packages/react/src/theme.tsx#L18-L43), [overlay metadata](../packages/react/src/theme.tsx#L71-L75)       | Check actual portal language, nested locale changes, and explicit `lang` overrides before choosing a fix.                             |
+| Portal tests assert wrapper language and overlay direction/focus, but not overlay language. [Contracts](../tests/browser/contracts.test.ts#L110-L183)                                                 | Add a language assertion when addressing that specific boundary; do not describe current RTL evidence as complete localization proof. |
 
 For the prototype, show a working RAC composition with documented root/part
 targets and ordinary CSS overrides whose effects remain understandable.
@@ -313,15 +313,15 @@ Cinder's separate Frame interaction results are recorded in the
 real IME, and translation-quality verification remain unperformed.
 Accessibility requirements, source code, and checked-in tests are not certification.
 
-| Reading area | Inventory |
-| --- | --- |
-| Component/API owners | Button implementation/doc; Field and field-part owner; TextInput; targeted Selector implementation/contract; Dialog lifecycle |
-| Interaction evidence | Button DOM/Chromium bindings; TextInput IME/clear assertions; Selector exact debt; Dialog Chromium; NumberInput binding/corpus; DateInput calendar/fallback assertions |
-| Internationalization | Provider/resolver/context/direction helpers; current provider/i18n contracts; typed-date and number owners; typeahead/filter and portal-writing paths |
-| Authored catalogs | `af-ZA`, `ar-SA`, `ca-ES`, `cs-CZ`, `da-DK`, `de-DE`, `el-GR`, `en`, `es-ES`, `fi-FI`, `fr-FR`, `he-IL`, `hu-HU`, `it-IT`, `ja-JP`, `ko-KR`, `nl-NL`, `no-NO`, `pl-PL`, `pt-BR`, `pt-PT`, `ro-RO`, `ru-RU`, `sr-SP`, `sv-SE`, `tr-TR`, `uk-UA`, `vi-VN`, `zh-CN`, `zh-TW`; key sets only |
-| Documentation/tooling | Typed component records; docs dispatcher; internationalization namespace; swizzle import rewriting/build requirement; upgrade entry point; recorded API/test-sufficiency gaps |
-| Themes and color | Core manifest; `defineTheme`, value resolution and HCT expansion; Neutral semantic roles and all seven theme descriptors; local-token/declaration boundaries; motion knobs and spring-tempo path; architecture/source reconciliation |
-| Cinder baseline | `docs/relay.md`; relevant `packages/react/src/` wrappers; `tests/browser/contracts.test.ts`; recorded `docs/verification.md` results |
+| Reading area          | Inventory                                                                                                                                                                                                                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Component/API owners  | Button implementation/doc; Field and field-part owner; TextInput; targeted Selector implementation/contract; Dialog lifecycle                                                                                                                                                            |
+| Interaction evidence  | Button DOM/Chromium bindings; TextInput IME/clear assertions; Selector exact debt; Dialog Chromium; NumberInput binding/corpus; DateInput calendar/fallback assertions                                                                                                                   |
+| Internationalization  | Provider/resolver/context/direction helpers; current provider/i18n contracts; typed-date and number owners; typeahead/filter and portal-writing paths                                                                                                                                    |
+| Authored catalogs     | `af-ZA`, `ar-SA`, `ca-ES`, `cs-CZ`, `da-DK`, `de-DE`, `el-GR`, `en`, `es-ES`, `fi-FI`, `fr-FR`, `he-IL`, `hu-HU`, `it-IT`, `ja-JP`, `ko-KR`, `nl-NL`, `no-NO`, `pl-PL`, `pt-BR`, `pt-PT`, `ro-RO`, `ru-RU`, `sr-SP`, `sv-SE`, `tr-TR`, `uk-UA`, `vi-VN`, `zh-CN`, `zh-TW`; key sets only |
+| Documentation/tooling | Typed component records; docs dispatcher; internationalization namespace; swizzle import rewriting/build requirement; upgrade entry point; recorded API/test-sufficiency gaps                                                                                                            |
+| Themes and color      | Core manifest; `defineTheme`, value resolution and HCT expansion; Neutral semantic roles and all seven theme descriptors; local-token/declaration boundaries; motion knobs and spring-tempo path; architecture/source reconciliation                                                     |
+| Cinder baseline       | `docs/relay.md`; relevant `packages/react/src/` wrappers; `tests/browser/contracts.test.ts`; recorded `docs/verification.md` results                                                                                                                                                     |
 
 ### Pinned upstream references
 

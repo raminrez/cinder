@@ -1,9 +1,10 @@
+@import "./layers.css";
 @import "../../tokens/src/tokens.css";
 @import "./relay.css";
+@import "./frame.css";
 
-/* Cinder's CSS is authored independently. Semantic values are generated from
-   Carbon; RAC owns interaction states and the underlying accessible semantics. */
-@layer cinder {
+/* Cinder owns appearance; RAC owns interaction and accessible semantics. */
+@layer cinder.reset {
   :where(.cinder-theme, [data-cinder-theme]) {
     font-family: var(--cinder-font-sans);
     font-size: var(--cinder-body-01-font-size);
@@ -31,22 +32,46 @@
   :where([data-cinder-theme]) [hidden] {
     display: none !important;
   }
+}
+
+@layer cinder.components {
   .cinder-layer {
     background: var(--cinder-layer-background, var(--cinder-layer-01));
   }
-  [data-size="sm"] {
+  :where(
+    .cinder-button,
+    .cinder-field,
+    .cinder-content-switcher,
+    .cinder-toggle-button,
+    .cinder-accordion,
+    .cinder-table
+  )[data-size="sm"] {
     --control-height: var(--cinder-size-sm);
   }
-  [data-size="md"] {
+  :where(
+    .cinder-button,
+    .cinder-field,
+    .cinder-content-switcher,
+    .cinder-toggle-button,
+    .cinder-accordion,
+    .cinder-table
+  )[data-size="md"] {
     --control-height: var(--cinder-size-md);
   }
-  [data-size="lg"] {
+  :where(
+    .cinder-button,
+    .cinder-field,
+    .cinder-content-switcher,
+    .cinder-toggle-button,
+    .cinder-accordion,
+    .cinder-table
+  )[data-size="lg"] {
     --control-height: var(--cinder-size-lg);
   }
-  [data-size="xl"] {
+  :where(.cinder-button, .cinder-table)[data-size="xl"] {
     --control-height: var(--cinder-size-xl);
   }
-  [data-size="2xl"] {
+  .cinder-button[data-size="2xl"] {
     --control-height: var(--cinder-size-2xl);
   }
   .cinder-visually-hidden {
@@ -773,89 +798,91 @@
     min-width: var(--trigger-width);
     max-height: 20rem;
   }
-  .react-aria-ListBox,
-  .react-aria-Menu {
-    outline: none;
-    margin: 0;
-    padding: 0.25rem 0;
-    overflow: auto;
-    min-width: 10rem;
-    max-height: inherit;
-  }
-  .react-aria-ListBoxItem,
-  .react-aria-MenuItem {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    min-height: 2.5rem;
-    padding: 0.625rem 2.5rem 0.625rem 1rem;
-    color: var(--cinder-text-primary);
-    outline: none;
-    cursor: pointer;
-    line-height: 1.25rem;
-    text-decoration: none;
-  }
-  .react-aria-ListBoxItem[data-focused],
-  .react-aria-MenuItem[data-focused] {
-    background: var(--cinder-layer-hover);
-  }
-  .react-aria-ListBoxItem[data-focus-visible],
-  .react-aria-MenuItem[data-focus-visible] {
-    outline: 2px solid var(--cinder-focus);
-    outline-offset: -2px;
-  }
-  .react-aria-ListBoxItem[data-selected],
-  .react-aria-MenuItem[data-selected] {
-    background: var(--cinder-layer-selected);
-  }
-  .react-aria-ListBoxItem[data-selected]::after,
-  .react-aria-MenuItem[data-selected]:not([data-has-submenu])::after {
-    content: "";
-    position: absolute;
-    inset-inline-end: 1.125rem;
-    width: 0.375rem;
-    height: 0.625rem;
-    border: solid currentColor;
-    border-width: 0 1.5px 1.5px 0;
-    transform: rotate(45deg);
-  }
-  .react-aria-ListBoxItem[data-disabled],
-  .react-aria-MenuItem[data-disabled] {
-    color: var(--cinder-text-disabled);
-    cursor: not-allowed;
-  }
-  .react-aria-MenuItem[data-has-submenu]::after {
-    content: "›";
-    position: absolute;
-    inset-inline-end: 1rem;
-  }
-  .react-aria-ListBoxItem:has(> [slot="description"]) {
-    display: grid;
-    gap: var(--cinder-spacing-01);
-  }
-  .react-aria-MenuItem [slot="description"],
-  .react-aria-ListBoxItem [slot="description"] {
-    display: block;
-    color: var(--cinder-text-secondary);
-    font-size: 0.75rem;
-  }
-  .react-aria-MenuItem .react-aria-Keyboard {
-    margin-inline-start: auto;
-    color: var(--cinder-text-secondary);
-    font: inherit;
-  }
-  .react-aria-Separator {
-    height: 1px;
-    background: var(--cinder-border-subtle);
-    border: 0;
-    margin: 0.25rem 1rem;
-  }
-  .react-aria-ListBoxSection > header,
-  .react-aria-MenuSection > header {
-    padding: 0.5rem 1rem;
-    color: var(--cinder-text-secondary);
-    font-size: 0.75rem;
+  @scope ([data-cinder-theme]) {
+    .react-aria-ListBox,
+    .react-aria-Menu {
+      outline: none;
+      margin: 0;
+      padding: 0.25rem 0;
+      overflow: auto;
+      min-width: 10rem;
+      max-height: inherit;
+    }
+    .react-aria-ListBoxItem,
+    .react-aria-MenuItem {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 2.5rem;
+      padding: 0.625rem 2.5rem 0.625rem 1rem;
+      color: var(--cinder-text-primary);
+      outline: none;
+      cursor: pointer;
+      line-height: 1.25rem;
+      text-decoration: none;
+    }
+    .react-aria-ListBoxItem[data-focused],
+    .react-aria-MenuItem[data-focused] {
+      background: var(--cinder-layer-hover);
+    }
+    .react-aria-ListBoxItem[data-focus-visible],
+    .react-aria-MenuItem[data-focus-visible] {
+      outline: 2px solid var(--cinder-focus);
+      outline-offset: -2px;
+    }
+    .react-aria-ListBoxItem[data-selected],
+    .react-aria-MenuItem[data-selected] {
+      background: var(--cinder-layer-selected);
+    }
+    .react-aria-ListBoxItem[data-selected]::after,
+    .react-aria-MenuItem[data-selected]:not([data-has-submenu])::after {
+      content: "";
+      position: absolute;
+      inset-inline-end: 1.125rem;
+      width: 0.375rem;
+      height: 0.625rem;
+      border: solid currentColor;
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg);
+    }
+    .react-aria-ListBoxItem[data-disabled],
+    .react-aria-MenuItem[data-disabled] {
+      color: var(--cinder-text-disabled);
+      cursor: not-allowed;
+    }
+    .react-aria-MenuItem[data-has-submenu]::after {
+      content: "›";
+      position: absolute;
+      inset-inline-end: 1rem;
+    }
+    .react-aria-ListBoxItem:has(> [slot="description"]) {
+      display: grid;
+      gap: var(--cinder-spacing-01);
+    }
+    .react-aria-MenuItem [slot="description"],
+    .react-aria-ListBoxItem [slot="description"] {
+      display: block;
+      color: var(--cinder-text-secondary);
+      font-size: 0.75rem;
+    }
+    .react-aria-MenuItem .react-aria-Keyboard {
+      margin-inline-start: auto;
+      color: var(--cinder-text-secondary);
+      font: inherit;
+    }
+    .react-aria-Separator {
+      height: 1px;
+      background: var(--cinder-border-subtle);
+      border: 0;
+      margin: 0.25rem 1rem;
+    }
+    .react-aria-ListBoxSection > header,
+    .react-aria-MenuSection > header {
+      padding: 0.5rem 1rem;
+      color: var(--cinder-text-secondary);
+      font-size: 0.75rem;
+    }
   }
 
   .cinder-modal-overlay {
@@ -1123,21 +1150,23 @@
     padding: 3rem 1rem;
     text-align: center;
   }
-  .react-aria-ResizableTableContainer {
-    overflow: auto;
-  }
-  .react-aria-ColumnResizer {
-    position: absolute;
-    inset-inline-end: 0;
-    top: 0;
-    height: 100%;
-    width: 5px;
-    background: transparent;
-    cursor: col-resize;
-  }
-  .react-aria-ColumnResizer[data-resizing],
-  .react-aria-ColumnResizer[data-focus-visible] {
-    background: var(--cinder-border-interactive);
+  @scope ([data-cinder-theme]) {
+    .react-aria-ResizableTableContainer {
+      overflow: auto;
+    }
+    .react-aria-ColumnResizer {
+      position: absolute;
+      inset-inline-end: 0;
+      top: 0;
+      height: 100%;
+      width: 5px;
+      background: transparent;
+      cursor: col-resize;
+    }
+    .react-aria-ColumnResizer[data-resizing],
+    .react-aria-ColumnResizer[data-focus-visible] {
+      background: var(--cinder-border-interactive);
+    }
   }
   .cinder-pagination {
     display: flex;
@@ -1175,69 +1204,71 @@
     border-inline-start: 1px solid var(--cinder-border-subtle);
   }
 
-  .react-aria-Tree {
-    outline: none;
-  }
-  .react-aria-TreeItem {
-    --tree-item-padding: calc((var(--tree-item-level, 1) - 1) * 1rem);
-    padding-inline-start: var(--tree-item-padding);
-    min-height: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    outline: none;
-    cursor: pointer;
-  }
-  .react-aria-TreeItem[data-selected] {
-    background: var(--cinder-layer-selected);
-    box-shadow: inset 3px 0 var(--cinder-border-interactive);
-  }
-  .react-aria-TreeItem[data-hovered] {
-    background: var(--cinder-layer-hover);
-  }
-  .react-aria-TreeItem[data-focus-visible] {
-    outline: 2px solid var(--cinder-focus);
-    outline-offset: -2px;
-  }
-  .react-aria-TreeItem[data-disabled] {
-    color: var(--cinder-text-disabled);
-  }
-  .react-aria-TreeItem .cinder-button[slot="chevron"] {
-    color: inherit;
-  }
-  .react-aria-TreeItem[data-expanded] .cinder-button[slot="chevron"] svg {
-    transform: rotate(90deg);
-  }
-  .react-aria-TreeItem:not([data-has-child-items]) .cinder-button[slot="chevron"] {
-    visibility: hidden;
-  }
-  .react-aria-GridList {
-    outline: none;
-    background: var(--cinder-layer);
-  }
-  .react-aria-GridListItem {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-height: 3rem;
-    padding: 0.75rem 1rem;
-    border-block-end: 1px solid var(--cinder-border-subtle);
-    outline: none;
-  }
-  .react-aria-GridListItem[data-hovered] {
-    background: var(--cinder-layer-hover);
-  }
-  .react-aria-GridListItem[data-selected] {
-    background: var(--cinder-layer-selected);
-  }
-  .react-aria-GridListItem[data-focus-visible] {
-    outline: 2px solid var(--cinder-focus);
-    outline-offset: -2px;
-  }
-  .react-aria-Toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
+  @scope ([data-cinder-theme]) {
+    .react-aria-Tree {
+      outline: none;
+    }
+    .react-aria-TreeItem {
+      --tree-item-padding: calc((var(--tree-item-level, 1) - 1) * 1rem);
+      padding-inline-start: var(--tree-item-padding);
+      min-height: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      outline: none;
+      cursor: pointer;
+    }
+    .react-aria-TreeItem[data-selected] {
+      background: var(--cinder-layer-selected);
+      box-shadow: inset 3px 0 var(--cinder-border-interactive);
+    }
+    .react-aria-TreeItem[data-hovered] {
+      background: var(--cinder-layer-hover);
+    }
+    .react-aria-TreeItem[data-focus-visible] {
+      outline: 2px solid var(--cinder-focus);
+      outline-offset: -2px;
+    }
+    .react-aria-TreeItem[data-disabled] {
+      color: var(--cinder-text-disabled);
+    }
+    .react-aria-TreeItem .cinder-button[slot="chevron"] {
+      color: inherit;
+    }
+    .react-aria-TreeItem[data-expanded] .cinder-button[slot="chevron"] svg {
+      transform: rotate(90deg);
+    }
+    .react-aria-TreeItem:not([data-has-child-items]) .cinder-button[slot="chevron"] {
+      visibility: hidden;
+    }
+    .react-aria-GridList {
+      outline: none;
+      background: var(--cinder-layer);
+    }
+    .react-aria-GridListItem {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-height: 3rem;
+      padding: 0.75rem 1rem;
+      border-block-end: 1px solid var(--cinder-border-subtle);
+      outline: none;
+    }
+    .react-aria-GridListItem[data-hovered] {
+      background: var(--cinder-layer-hover);
+    }
+    .react-aria-GridListItem[data-selected] {
+      background: var(--cinder-layer-selected);
+    }
+    .react-aria-GridListItem[data-focus-visible] {
+      outline: 2px solid var(--cinder-focus);
+      outline-offset: -2px;
+    }
+    .react-aria-Toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
   }
 
   .cinder-date-field .react-aria-DateInput,
@@ -1257,27 +1288,29 @@
     flex: 1;
     padding-inline-end: 0.5rem;
   }
-  .react-aria-DateSegment {
-    padding: 1px 2px;
-    font-variant-numeric: tabular-nums;
-    outline: none;
-  }
-  .react-aria-DateSegment[contenteditable="true"] {
-    min-width: 1.5rem;
-    min-height: 1.5rem;
-    line-height: 1.5rem;
-    padding-block: 0;
-    text-align: center;
-  }
-  .react-aria-DateSegment[data-type="literal"] {
-    padding: 0;
-  }
-  .react-aria-DateSegment[data-placeholder] {
-    color: var(--cinder-text-placeholder);
-  }
-  .react-aria-DateSegment[data-focused] {
-    background: var(--cinder-background-inverse);
-    color: var(--cinder-text-inverse);
+  @scope ([data-cinder-theme]) {
+    .react-aria-DateSegment {
+      padding: 1px 2px;
+      font-variant-numeric: tabular-nums;
+      outline: none;
+    }
+    .react-aria-DateSegment[contenteditable="true"] {
+      min-width: 1.5rem;
+      min-height: 1.5rem;
+      line-height: 1.5rem;
+      padding-block: 0;
+      text-align: center;
+    }
+    .react-aria-DateSegment[data-type="literal"] {
+      padding: 0;
+    }
+    .react-aria-DateSegment[data-placeholder] {
+      color: var(--cinder-text-placeholder);
+    }
+    .react-aria-DateSegment[data-focused] {
+      background: var(--cinder-background-inverse);
+      color: var(--cinder-text-inverse);
+    }
   }
   .cinder-calendar {
     padding: 0.25rem 0.25rem 0.5rem;
@@ -1441,22 +1474,22 @@
     color: var(--cinder-text-primary);
     border-inline-start: 3px solid var(--notification-color, var(--cinder-support-info));
   }
-  [data-kind="info"] {
+  :where(.cinder-notification, .cinder-toast)[data-kind="info"] {
     --notification-bg: var(--cinder-notification-background-info);
     --notification-color: var(--cinder-support-info);
     --notification-color-inverse: var(--cinder-support-info-inverse);
   }
-  [data-kind="success"] {
+  :where(.cinder-notification, .cinder-toast)[data-kind="success"] {
     --notification-bg: var(--cinder-notification-background-success);
     --notification-color: var(--cinder-support-success);
     --notification-color-inverse: var(--cinder-support-success-inverse);
   }
-  [data-kind="warning"] {
+  :where(.cinder-notification, .cinder-toast)[data-kind="warning"] {
     --notification-bg: var(--cinder-notification-background-warning);
     --notification-color: var(--cinder-support-warning);
     --notification-color-inverse: var(--cinder-support-warning-inverse);
   }
-  [data-kind="error"] {
+  :where(.cinder-notification, .cinder-toast)[data-kind="error"] {
     --notification-bg: var(--cinder-notification-background-error);
     --notification-color: var(--cinder-support-error);
     --notification-color-inverse: var(--cinder-support-error-inverse);
@@ -1956,6 +1989,9 @@
       transform: translateY(0);
     }
   }
+}
+
+@layer cinder.accessibility {
   @media (prefers-reduced-motion: reduce) {
     :where([data-cinder-theme]),
     :where([data-cinder-theme])::before,

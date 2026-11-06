@@ -169,13 +169,15 @@ export function Select<T extends object, M extends SelectionMode = "single">({
       className={classes("cinder-field cinder-select", className)}
     >
       <FieldLabel label={label} />
-      <Button className="cinder-select-trigger" variant="ghost" size={size}>
-        <SelectValue />
+      <Button className="cinder-field__control cinder-select-trigger" variant="ghost" size={size}>
+        <SelectValue className="cinder-select__value react-aria-SelectValue" />
         <Icon name="chevronDown" />
       </Button>
       <FieldHelp description={description} errorMessage={errorMessage} />
       <Popover className="cinder-select-popover" offset={0}>
-        <ListBox items={items}>{children}</ListBox>
+        <ListBox className="cinder-select__listbox react-aria-ListBox" items={items}>
+          {children}
+        </ListBox>
       </Popover>
     </RACSelect>
   );
@@ -206,7 +208,7 @@ export function ComboBox<T extends object, M extends SelectionMode = "single">({
       className={classes("cinder-field cinder-combobox", className)}
     >
       <FieldLabel label={label} />
-      <Group className="cinder-input-group">
+      <Group className="cinder-field__control cinder-input-group">
         <Input placeholder={placeholder} />
         <Button variant="ghost" size={size} iconOnly>
           <Icon name="chevronDown" />

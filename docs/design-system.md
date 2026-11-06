@@ -9,30 +9,32 @@ and verified.
 
 ## 1. Authority and implementation status
 
-| Artifact | Responsibility |
-| --- | --- |
-| [PRODUCT.md](../PRODUCT.md) | People, goals, constraints, and selected direction |
-| [DESIGN.md](../DESIGN.md) | Frame's visual language and measured values |
-| This specification | Component, interaction, content, inclusion, and customization requirements |
-| [Library plan](component-library-plan.md) | Dependencies, implementation order, acceptance conditions, and migration |
-| [Coverage](coverage.md) and [verification](verification.md) | What the packages actually implement and what has been checked |
-| [Prototype guide](prototypes-guide.md) | Working comparison tasks and their bounded evidence |
-| Research reports | Rationale and versioned source observations |
+| Artifact                                                    | Responsibility                                                             |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [PRODUCT.md](../PRODUCT.md)                                 | People, goals, constraints, and selected direction                         |
+| [DESIGN.md](../DESIGN.md)                                   | Frame's visual language and measured values                                |
+| This specification                                          | Component, interaction, content, inclusion, and customization requirements |
+| [Library plan](component-library-plan.md)                   | Dependencies, implementation order, acceptance conditions, and migration   |
+| [Coverage](coverage.md) and [verification](verification.md) | What the packages actually implement and what has been checked             |
+| [Prototype guide](prototypes-guide.md)                      | Working comparison tasks and their bounded evidence                        |
+| Research reports                                            | Rationale and versioned source observations                                |
 
-**Read requirements as the target contract, not as shipped features.** The current
-`@cinder/react` and `@cinder/tokens` packages expose four Carbon themes and
-`relay-light` / `relay-dark`. Frame currently uses those React Aria-based components
-with prototype-local CSS. `frame-light`, `frame-dark`, new styling parts, and new
-theme customization props are not available yet.
+**Phase 1 establishes the foundations and styling contract.** The user approved
+native prebuilt CSS, additive `frame-light` / `frame-dark`, Frame's 44px default,
+and `Theme appearanceClassName` on 6 November 2026. The four Carbon themes and
+`relay-light` / `relay-dark` retain their defaults. The remaining component and
+inclusion requirements below are the target for the later library slices;
+foundation work alone does not complete the Frame catalog. See the
+[Phase 1 verification](verification.md#frame-phase-1) for executed evidence.
 
-| State | Established today | Remaining library work |
-| --- | --- | --- |
-| Direction | User-selected Frame; Astryx leads visual references, HeroUI v3 informs visuals and DX, Carbon informs UX and coverage | Apply that language consistently across the catalog |
-| Foundations | Measured prototype colors, type, corners, field geometry, light/dark states | Author reusable Frame tokens and theme-aware defaults |
-| Components | Existing RAC wrappers, six themes, 45 catalog entries; a verified Relay slice | Frame-specific anatomy, state, composition, and customization review |
-| Interaction | Working prototype forms, tables, selection, recovery, and nested overlays | Package-level contracts and portable consumer examples |
-| Inclusion | Bounded Chromium, keyboard, responsive, axe, and synthetic-text evidence | Real locale/portal checks, manual AT, cross-browser, zoom, devices, and representative users |
-| Design assets | Code, reference captures, written decisions | Editable Figma assets only after the implemented system is settled |
+| State         | Established today                                                                                                     | Remaining library work                                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Direction     | User-selected Frame; Astryx leads visual references, HeroUI v3 informs visuals and DX, Carbon informs UX and coverage | Apply that language consistently across the catalog                                              |
+| Foundations   | Frame semantic tokens, type/geometry roles, additive light/dark themes, and scoped CSS                                | Apply and verify the roles across the remaining families                                         |
+| Components    | Existing RAC wrappers, eight themes, 45 catalog entries; Frame foundation hooks and a verified Relay slice            | Phase 2 field anatomy, persistent guidance, attached recovery, and complete fourteen-entry slice |
+| Interaction   | Portable appearance/language bridge, Modal part access, and representative installed consumers                        | Complete Frame settings/submission journeys and each later family's behavior matrix              |
+| Inclusion     | Bounded Chromium, keyboard, responsive, axe, and live locale/portal evidence                                          | Manual AT, cross-browser, zoom, devices, real IME, translation, and representative users         |
+| Design assets | Code, reference captures, written decisions                                                                           | Editable Figma assets only after the implemented system is settled                               |
 
 For implemented facts, source and current verification win over an outdated
 description. For intentional visual changes, update the authored code, DESIGN.md,
@@ -79,16 +81,16 @@ explicit recipe, including selected + focused and invalid + focused.
 
 Selected opaque color-pair arithmetic, using the WCAG sRGB luminance method:
 
-| Pair | Light | Dark | Intended use |
-| --- | ---: | ---: | --- |
-| Main text / surface | 14.94:1 | 13.87:1 | Ordinary reading |
-| Muted text / surface | 5.75:1 | 7.64:1 | Guidance and secondary text |
-| Text on primary / primary | 14.35:1 | 13.87:1 | Primary action |
-| Focus blue / surface | 5.91:1 | 8.43:1 | Focus and links on this surface |
-| Control border / surface | 3.62:1 | 4.13:1 | Editable boundary |
-| Error text / error surface | 5.90:1 | 7.38:1 | Attached recovery |
-| Warning text / warning surface | 6.40:1 | 7.37:1 | Attention |
-| Success text / success surface | 6.14:1 | 7.75:1 | Result feedback |
+| Pair                           |   Light |    Dark | Intended use                    |
+| ------------------------------ | ------: | ------: | ------------------------------- |
+| Main text / surface            | 14.94:1 | 13.87:1 | Ordinary reading                |
+| Muted text / surface           |  5.75:1 |  7.64:1 | Guidance and secondary text     |
+| Text on primary / primary      | 14.35:1 | 13.87:1 | Primary action                  |
+| Focus blue / surface           |  5.91:1 |  8.43:1 | Focus and links on this surface |
+| Control border / surface       |  3.62:1 |  4.13:1 | Editable boundary               |
+| Error text / error surface     |  5.90:1 |  7.38:1 | Attached recovery               |
+| Warning text / warning surface |  6.40:1 |  7.37:1 | Attention                       |
+| Success text / success surface |  6.14:1 |  7.75:1 | Result feedback                 |
 
 These calculations have black/white and identical-color self-checks. They do not
 cover every rendered state, translucent composition, custom theme, or WCAG
@@ -107,10 +109,10 @@ interactive boundary.
 - The chosen comfortable control is 44px with 10px corners. Group/popover corners
   are 14px and dialog corners 18px. The prototype deliberately maps all ordinary
   sizes to 44px; that is not a reusable size API.
-- Recommended Frame sizing: `sm` 32px, `md` 44px, `lg` 48px; use 44px for omitted
-  sizes in Frame's ordinary buttons and fields. Keep explicit larger Button sizes
-  and all existing theme defaults compatible. This mapping requires the foundation
-  phase's API and geometry proof before it becomes public.
+- Frame sizing: `sm` 32px, `md` 44px, `lg` 48px; omitted ordinary Buttons and
+  size-bearing fields use 44px. Explicit Button `xl` / `2xl` stay 64/80px. Older
+  themes keep their 48px omitted Button and 40px medium-field defaults. These are
+  scalable minimum control sizes, not a fixed-height rule for all component types.
 - Hit target and painted mark are separate. A small check mark can sit in a larger
   label target. Aim for 44px targets in ordinary forms and coarse-pointer use;
   document and test intentional compact cases. Current checkbox/switch targets
@@ -135,19 +137,19 @@ visible pending/focus/status cues. Progress must not depend on animation alone.
 
 ## 4. Shared interaction contract
 
-| State | Visible and behavioral requirement |
-| --- | --- |
-| Default | Purpose, value, and available action are understandable without hovering |
-| Hover | A small response on enabled controls; no movement of surrounding content |
-| Pressed | Immediate feedback without changing the control's meaning or hit target |
-| Focus-visible | A distinct indicator on the actual active control; visible over error/selection |
-| Selected / mixed / current | Correct checked/selected/current semantics plus an identifiable visual signal |
-| Invalid | Associated recovery text and invalid semantics; retain applicable instructions |
-| Read-only | Legible and copyable where the control supports it; no mutation |
-| Disabled | Unavailable interaction and correct native/ARIA semantics; explain dependencies nearby |
-| Pending | Prevent repeat activation, retain useful focus, announce the operation, preserve content dimensions |
-| Success | Confirm the completed task without stealing focus or coloring every valid input |
-| Empty / failed / unavailable | Explain the state and a relevant next action; preserve drafts and recoverable state |
+| State                        | Visible and behavioral requirement                                                                  |
+| ---------------------------- | --------------------------------------------------------------------------------------------------- |
+| Default                      | Purpose, value, and available action are understandable without hovering                            |
+| Hover                        | A small response on enabled controls; no movement of surrounding content                            |
+| Pressed                      | Immediate feedback without changing the control's meaning or hit target                             |
+| Focus-visible                | A distinct indicator on the actual active control; visible over error/selection                     |
+| Selected / mixed / current   | Correct checked/selected/current semantics plus an identifiable visual signal                       |
+| Invalid                      | Associated recovery text and invalid semantics; retain applicable instructions                      |
+| Read-only                    | Legible and copyable where the control supports it; no mutation                                     |
+| Disabled                     | Unavailable interaction and correct native/ARIA semantics; explain dependencies nearby              |
+| Pending                      | Prevent repeat activation, retain useful focus, announce the operation, preserve content dimensions |
+| Success                      | Confirm the completed task without stealing focus or coloring every valid input                     |
+| Empty / failed / unavailable | Explain the state and a relevant next action; preserve drafts and recoverable state                 |
 
 Only applicable states belong to a family: a static tag does not need a pending
 state, and Select must not acquire a fake read-only prop. Use normal text for a
@@ -175,14 +177,14 @@ moves the description above the input with CSS grid; extraction should establish
 that order in the reusable composition as well. Keep RAC `Label`, description and
 error slots, IDs, native controls, and ref connections intact.
 
-| Part | Rule |
-| --- | --- |
-| Label | Visible, sentence case, concise; clicking it reaches the control when supported |
+| Part                | Rule                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Label               | Visible, sentence case, concise; clicking it reaches the control when supported                                    |
 | Required indication | `isRequired` supplies behavior; visible wording is localizable, never a substitute for programmatic required state |
-| Description | Necessary format, limit, or consequence before entry; an example is not the label |
-| Control | Readable value, caret and focus; preserve paste, autofill, password managers, and IME |
-| Recovery | What needs changing and, when useful, an example; text remains available until resolved |
-| Supporting icon | Reinforces meaning without duplicate screen-reader announcements |
+| Description         | Necessary format, limit, or consequence before entry; an example is not the label                                  |
+| Control             | Readable value, caret and focus; preserve paste, autofill, password managers, and IME                              |
+| Recovery            | What needs changing and, when useful, an example; text remains available until resolved                            |
+| Supporting icon     | Reinforces meaning without duplicate screen-reader announcements                                                   |
 
 The attached band applies to a single bounded control or control group. A checkbox
 or radio group gets associated group-level guidance and recovery; it should not
@@ -227,24 +229,24 @@ The [45-entry catalog](coverage.md#what-the-number-45-means) is the inventory, n
 a claim that every variant is complete. Additional primitives do not inflate that
 count. Each promoted family must document its applicable states and exceptions.
 
-| Family | Choice and behavior contract |
-| --- | --- |
-| Button / Link | Button performs an action; Link navigates. Use one primary action per decision, explicit destructive wording, localizable pending and icon-only names |
-| Text / number / search | Choose the value model deliberately. Text returns a string; NumberField uses localized numeric editing; search has a clear action and query-state ownership |
-| Checkbox / radio / switch | Independent/mixed choices, one-of-many, and on/off setting respectively. Group labels and descriptions remain associated; label target exceeds the painted mark |
-| Select / ComboBox / NativeSelect | Closed set, editable query, or native platform selection. Keep collection keys distinct from labels, rich-option `textValue`, disabled skipping, and single/multiple value types |
-| Slider | Label every thumb, expose formatted values, support keyboard and pointer, retain bounds/order, and provide a non-drag input alternative when the task requires precise entry |
-| Date / time / calendar | Preserve typed date values, locale/calendar/time-zone meaning, segments, range endpoints, unavailable dates, and nested calendar focus |
-| Menu / overflow / tooltip | Menu contains actions; tooltip explains a trigger and remains noninteractive. Essential instructions are visible. Interactive supplementary content needs the appropriate popover/dialog pattern |
-| Dialog / modal / popover | Named task, purposeful initial focus, containment when modal, reachable actions, inner-first Escape, return focus, scrolling, and matching portal appearance/locale |
-| Tabs / switcher / accordion | Tabs own panels; ContentSwitcher retains its radio-group model; accordion headings and expansion have meaningful structure. Do not style navigation as tabs without panel semantics |
-| Table / grid list / tree | Declare the actual grid/treegrid keyboard model, row names, selection scope, sorting, and action access. Preserve important data and relationships through responsive changes |
-| Pagination | State whether paging is local/server-owned and what a count means. Announce results appropriately; define empty and stale-page normalization |
-| Tag / list / tile / structure | Distinguish static meaning from interactive selection/removal. Use semantic lists and description lists; a surface is not automatically an interactive card |
-| Notifications / toast | Critical recovery persists near the task. Passive acknowledgement avoids focus stealing. Timing, dismissal, queue, and live-region behavior are documented; Toast remains experimental |
-| Loading / skeleton / progress | Identify what is loading, preserve useful content, expose determinate progress only when known, and keep skeleton decoration out of the accessibility tree |
-| Files | Local selection, validation, and removal are component work. Transfer, server validation, retry, cancellation, and request errors are application work unless explicitly added later |
-| Shell / breadcrumb / code | Landmarks, current destination, skip path, mobile navigation and focus; code remains selectable, copy reports success/failure, and technical values remain complete |
+| Family                           | Choice and behavior contract                                                                                                                                                                     |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Button / Link                    | Button performs an action; Link navigates. Use one primary action per decision, explicit destructive wording, localizable pending and icon-only names                                            |
+| Text / number / search           | Choose the value model deliberately. Text returns a string; NumberField uses localized numeric editing; search has a clear action and query-state ownership                                      |
+| Checkbox / radio / switch        | Independent/mixed choices, one-of-many, and on/off setting respectively. Group labels and descriptions remain associated; label target exceeds the painted mark                                  |
+| Select / ComboBox / NativeSelect | Closed set, editable query, or native platform selection. Keep collection keys distinct from labels, rich-option `textValue`, disabled skipping, and single/multiple value types                 |
+| Slider                           | Label every thumb, expose formatted values, support keyboard and pointer, retain bounds/order, and provide a non-drag input alternative when the task requires precise entry                     |
+| Date / time / calendar           | Preserve typed date values, locale/calendar/time-zone meaning, segments, range endpoints, unavailable dates, and nested calendar focus                                                           |
+| Menu / overflow / tooltip        | Menu contains actions; tooltip explains a trigger and remains noninteractive. Essential instructions are visible. Interactive supplementary content needs the appropriate popover/dialog pattern |
+| Dialog / modal / popover         | Named task, purposeful initial focus, containment when modal, reachable actions, inner-first Escape, return focus, scrolling, and matching portal appearance/locale                              |
+| Tabs / switcher / accordion      | Tabs own panels; ContentSwitcher retains its radio-group model; accordion headings and expansion have meaningful structure. Do not style navigation as tabs without panel semantics              |
+| Table / grid list / tree         | Declare the actual grid/treegrid keyboard model, row names, selection scope, sorting, and action access. Preserve important data and relationships through responsive changes                    |
+| Pagination                       | State whether paging is local/server-owned and what a count means. Announce results appropriately; define empty and stale-page normalization                                                     |
+| Tag / list / tile / structure    | Distinguish static meaning from interactive selection/removal. Use semantic lists and description lists; a surface is not automatically an interactive card                                      |
+| Notifications / toast            | Critical recovery persists near the task. Passive acknowledgement avoids focus stealing. Timing, dismissal, queue, and live-region behavior are documented; Toast remains experimental           |
+| Loading / skeleton / progress    | Identify what is loading, preserve useful content, expose determinate progress only when known, and keep skeleton decoration out of the accessibility tree                                       |
+| Files                            | Local selection, validation, and removal are component work. Transfer, server validation, retry, cancellation, and request errors are application work unless explicitly added later             |
+| Shell / breadcrumb / code        | Landmarks, current destination, skip path, mobile navigation and focus; code remains selectable, copy reports success/failure, and technical values remain complete                              |
 
 ### Canonical compositions
 
@@ -291,18 +293,18 @@ a new event wrapper to make those contracts appear uniform.
 
 The current practical API is:
 
-| Component | Value / action | `className`, `style`, and ref target today | Meaning of `children` |
-| --- | --- | --- | --- |
-| Button | `onPress`; `isPending` with `pendingLabel` | Button element; wrapper retains its class | Action content, including upstream render function |
-| TextField / TextArea | String `value` / `defaultValue` / `onChange` | Field root; `inputRef` reaches input/textarea | Replaces convenience anatomy |
-| NumberField | Numeric value and localized editing | Field root | Replaces convenience anatomy |
-| SearchField | Query value; upstream search/clear behavior | Field root; existing `inputProps` reaches Input | Replaces convenience anatomy |
-| Checkbox / Radio / Switch | Boolean or group-owned selection | Label root; the native input owns actual focus | Label content inside fixed control anatomy |
-| Select / ComboBox | Typed single/multiple value and collection | Field root; trigger/value/popover are currently fixed | Options, not replacement field anatomy |
-| Popover | Upstream overlay state and placement | Portalled popover root | Popup content |
-| Modal | Upstream open/dismiss state | Class/ref reach inner Modal; `style` currently reaches ModalOverlay | Inner content; dialog semantics are composed |
-| Dialog | Upstream dialog contract | Dialog element | Title, body, and actions |
-| Direct RAC exports | Exact upstream contract | Supplying a class can replace the default `react-aria-*` hook | Family-specific upstream composition |
+| Component                 | Value / action                               | `className`, `style`, and ref target today                                                                                                      | Meaning of `children`                              |
+| ------------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Button                    | `onPress`; `isPending` with `pendingLabel`   | Button element; wrapper retains its class                                                                                                       | Action content, including upstream render function |
+| TextField / TextArea      | String `value` / `defaultValue` / `onChange` | Field root; `inputRef` reaches input/textarea                                                                                                   | Replaces convenience anatomy                       |
+| NumberField               | Numeric value and localized editing          | Field root                                                                                                                                      | Replaces convenience anatomy                       |
+| SearchField               | Query value; upstream search/clear behavior  | Field root; existing `inputProps` reaches Input                                                                                                 | Replaces convenience anatomy                       |
+| Checkbox / Radio / Switch | Boolean or group-owned selection             | Label root; the native input owns actual focus                                                                                                  | Label content inside fixed control anatomy         |
+| Select / ComboBox         | Typed single/multiple value and collection   | Field root; trigger/value/popover are currently fixed                                                                                           | Options, not replacement field anatomy             |
+| Popover                   | Upstream overlay state and placement         | Portalled popover root                                                                                                                          | Popup content                                      |
+| Modal                     | Upstream open/dismiss state                  | Class/ref reach inner Modal; `style`/`render` reach ModalOverlay; `modalStyle`, `overlayClassName`, and `overlayRef` provide independent access | Inner content; dialog semantics are composed       |
+| Dialog                    | Upstream dialog contract                     | Dialog element                                                                                                                                  | Title, body, and actions                           |
+| Direct RAC exports        | Exact upstream contract                      | Supplying a class can replace the default `react-aria-*` hook                                                                                   | Family-specific upstream composition               |
 
 Source owners: [fields](../packages/react/src/fields.tsx),
 [selection](../packages/react/src/selection.tsx),
@@ -315,9 +317,11 @@ Source owners: [fields](../packages/react/src/fields.tsx),
   relationship slots, state attributes, and exposed semantic variables.
 - Keep useful convenience props. A composed version should use the same
   behavior-bearing parts and preserve the short default path.
-- Stable Cinder hooks survive custom classes; support upstream render-state class
-  and style functions where the primitive supports them. Verify collection
-  registration and generic inference before wrapping a direct RAC export.
+- Cinder-owned wrapper hooks survive custom classes. Raw RAC re-exports retain
+  their exact upstream class-replacement contract: explicitly retain their
+  `react-aria-*` class when keeping Cinder styling. Label/Text accept string
+  classes; Input/FieldError and other stateful primitives support their own
+  upstream render functions. Do not assume all parts have the same state shape.
 - Preserve existing hook names and ref targets. Resolve exceptions such as Modal's
   split targets through additive named part access before deprecation; do not
   silently retarget an existing prop.
@@ -332,31 +336,42 @@ Source owners: [fields](../packages/react/src/fields.tsx),
 
 ## 8. Styling and customization
 
-**Recommendation, pending implementation approval: native prebuilt CSS, semantic
-CSS variables, stable BEM-style names, RAC states, native nesting, cascade layers,
-and scoped themes.** This extends the current delivery model. A styling-engine
-switch is not required to achieve Frame.
+**Approved contract: native prebuilt CSS, semantic CSS variables, stable BEM-style
+names, RAC states, native nesting, cascade layers, and scoped themes.** Import
+`@cinder/react/styles.css` once for tokens and component/theme styles. Consumption
+does not require a Cinder compiler or styling runtime.
 
-| Choice | Role and tradeoff |
-| --- | --- |
-| Native CSS + variables | Recommended foundation: ordinary browser CSS, no consumer compiler requirement, direct theming and devtools inspection |
-| BEM-style naming | Recommended contract for block/part identity. Retain useful `cinder-*` names; punctuation alone does not create encapsulation or accessibility |
-| Sass | Can compile authoring conveniences, but adds little to the current token generator, native nesting, and custom-property model |
-| Tailwind | Optional in applications. Generate utilities there and document cascade/preflight interaction; do not require it to consume Cinder |
-| StyleX | A different compiler, style-authoring API, and integration contract. The current task does not justify that migration; any future choice needs its own consumer proof |
+| Choice                 | Role and tradeoff                                                                                                                                                     |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Native CSS + variables | Implemented foundation: ordinary browser CSS, no consumer compiler requirement, direct theming and devtools inspection                                                |
+| BEM-style naming       | Stable block/part identity alongside existing `cinder-*` hooks; punctuation alone does not create encapsulation or accessibility                                      |
+| Sass                   | Can compile authoring conveniences, but adds little to the current token generator, native nesting, and custom-property model                                         |
+| Tailwind               | Optional in applications. Generate utilities there and document cascade/preflight interaction; do not require it to consume Cinder                                    |
+| StyleX                 | A different compiler, style-authoring API, and integration contract. The current task does not justify that migration; any future choice needs its own consumer proof |
 
 ### Naming, states, and ownership
 
 Use `.cinder-button`, `.cinder-field`, `.cinder-input-group`, and existing useful
-part hooks. Add a namespaced part only where it has a stable purpose. Document
-the current `react-aria-*` exceptions until migrated. Do not mechanically rename
-the public surface into double-underscore BEM syntax.
+part hooks. Default field anatomy adds `.cinder-field__label`, `__control`,
+`__help`, `__description`, and `__error`; Select adds `.cinder-select__value` and
+`__listbox`. The existing classes remain alongside them. These hooks identify
+real elements: `__control` is the bordered input, compound Group, Select trigger,
+or standalone DateInput. It is not a new wrapper or a relationship slot.
+
+The twelve shared label/help callers retain their current reading order and
+help/error presentation in Phase 1. Phase 2 changes the Frame default anatomy.
+Custom composition remains caller-owned; the [React guide](../packages/react/README.md)
+shows explicit raw-part hooks and root/control refs.
 
 Use `data-variant` and `data-size` for appearance choices, RAC `data-hovered`,
 `data-pressed`, `data-focus-visible`, `data-selected`, `data-indeterminate`,
 `data-invalid`, and related attributes on their actual owners for state. Not every
 attribute exists on every family. Native inputs may use `:focus`, `:disabled`,
 and `:read-only`; focus-within belongs to a compound group.
+
+TextField's root owns required/invalid/disabled/read-only states, while its Input
+owns focus/hover. FieldError receives validation results but does not emit its
+own `data-invalid`; style the error hook or use the field's invalid state.
 
 ### Token structure
 
@@ -375,17 +390,15 @@ cannot express them. DESIGN.md's descriptive keys are not parallel runtime token
 
 ### Cascade and overrides
 
-The current implementation has unlayered generated tokens, a `cinder` component
-layer, and later Relay layers. The target is one documented top-level `cinder`
-position, with internal ordering for tokens, limited reset, components, theme
-recipes, and forced-color/accessibility rules. Consolidating that order is a
-compatibility change, not an incidental reformat.
+The stylesheet has one top-level `cinder` layer, with sublayers in this order:
+`tokens`, `reset`, `components`, `themes`, `accessibility`. Phase 1 consolidates the
+formerly unlayered tokens and separate Relay layers. Applications that ordered
+the old layer names should place `cinder` instead; token overrides that formerly
+lost to unlayered generated CSS now follow the normal documented cascade.
 
-After that contract is implemented and verified, a Tailwind application can place
-the library deliberately, for example:
+A Tailwind application can place the library deliberately:
 
 ```css
-/* Proposed integration order; not the current generated-token contract. */
 @layer theme, base, cinder, components, utilities;
 @import "tailwindcss";
 @import "@cinder/react/styles.css";
@@ -406,29 +419,45 @@ inheritance or portal ownership by itself.
 ### Theme, language, and portals
 
 React context crosses a portal; DOM inheritance follows its physical parent.
-Today's `useOverlayTheme` copies theme, layer, and direction, but not `lang` or
-arbitrary custom properties. The target bridge must carry the declared appearance,
-effective language, locale/keyboard direction, and contextual layer consistently.
+`Theme appearanceClassName` establishes a portable class recipe on the Theme root
+and the appearance-bearing roots of Popover, ModalOverlay, Tooltip, and ToastRegion.
+Omission inherits the nearest recipe, a supplied string replaces it, and `""`
+clears it. Layer carries the same recipe. Ordinary `className`, `style`, IDs, and
+arbitrary props stay on their original element. Define portable variables on the
+recipe itself rather than relying on an unrelated DOM ancestor.
 
-Recommend an explicit, reusable appearance-class recipe that can be applied to a
-Theme root and its detached overlays. Confirm the public hook in the foundation
-phase using two differently branded subtrees and a nested dialog/select. Do not
-forward every root class, layout style, ID, or event, or snapshot all computed CSS.
+The bridge carries theme, layer, effective HTML language, and locale-owned direction.
+Theme computes language as `lang ?? locale`, including explicit `lang=""`. A
+nested Theme without `lang` recomputes it from its effective RAC locale; its omitted
+theme still means `white` and its layer resets to zero. Popover, Modal, and Tooltip
+can override bridged language with their own `lang`, including an empty string.
+Theme changes update open portals. Toast appearance belongs to ToastProvider,
+not the component that enqueues a message.
+
+Use Theme for a locale boundary that must travel through successive portals.
+Layer's native `lang`/`dir` and ordinary HTML overrides are DOM-local; a raw
+I18nProvider nested inside Theme does not update that Theme's DOM metadata.
 
 An in-scope portal host is an advanced inheritance option only after checking
 clipping, stacking, transformed ancestors, modal background hiding, and focus.
 Document exactly which values cross the default bridge. A consumer's arbitrary
 inline override does not become portable merely because it is a CSS variable.
 
-Use scoped theme recipes that stop at nested Theme boundaries. Existing Relay uses
-native `@scope`; publish a tested browser support matrix before promising broader
-compatibility. Ordinary styles must not leak to unrelated RAC components or host
-application elements carrying generic `data-size` attributes.
+Built-in Frame and Relay recipes use native `@scope` and stop at nested Theme
+boundaries. Native nesting, cascade layers, and `@scope` support are required;
+the current execution matrix is Chromium. A custom appearance recipe intentionally
+inherits until replaced or cleared. Scope limits selector matching, not custom
+property inheritance; theme-varying foundations are resolved at each theme boundary.
+
+Raw RAC selector groups are limited to `[data-cinder-theme]`. Neighboring RAC
+controls outside that boundary and unrelated generic `data-size` elements keep
+their own styling. Inside the boundary, a direct RAC import is indistinguishable
+from the same raw part re-exported by Cinder.
 
 ### Supported consumer recipes
 
-Plain CSS is the first documented path, followed by CSS Modules and an actual
-pinned Tailwind consumer. Emotion and styled-components can supply classes, but
+Plain CSS, real CSS Modules, and a pinned Tailwind 4.3.5 preflight/utility consumer
+are the Phase 1 proof paths. Emotion and styled-components can supply classes, but
 complete integration claims require their own prop/ref, insertion-order, portal,
 and SSR proof. A behavior-only/headless distribution is a separate commitment;
 omitting all CSS can also remove essential visually hidden treatment.

@@ -2,7 +2,7 @@
 version: 1
 slug: "apps-docs-src-prototypes-main-tsx"
 primary_target: "apps/docs/src/prototypes/main.tsx"
-related_targets: ["apps/docs/src/prototypes/frame.css","apps/docs/src/prototypes/comparison.tsx"]
+related_targets: ["apps/docs/src/prototypes/frame.css", "apps/docs/src/prototypes/comparison.tsx"]
 ---
 
 # Frame: preferred Cinder direction

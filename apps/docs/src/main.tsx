@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Theme, ToastProvider, type ThemeName } from "@cinder/react";
 import { isThemeName } from "@cinder/tokens";
 import Home from "./home";
-import { SiteHeader, ThemePreference } from "./site";
+import { referenceThemeNames, SiteHeader, ThemePreference } from "./site";
 
 const ComponentReference = lazy(() => import("./reference"));
 const Foundations = lazy(() => import("./foundations"));
@@ -13,11 +13,13 @@ const Relay = lazy(() => import("./relay"));
 
 function initialTheme(): ThemeName {
   const relay = window.location.pathname.replace(/\/+$/, "") === "/relay";
+  const allowed = (name: unknown): name is ThemeName =>
+    isThemeName(name) && (relay ? name.startsWith("relay-") : referenceThemeNames.includes(name));
   const requested = new URLSearchParams(window.location.search).get("theme");
-  if (isThemeName(requested) && requested.startsWith("relay-") === relay) return requested;
+  if (allowed(requested)) return requested;
   try {
     const saved = localStorage.getItem("cinder-theme");
-    if (isThemeName(saved) && saved.startsWith("relay-") === relay) return saved;
+    if (allowed(saved)) return saved;
   } catch {
     /* Storage is optional. */
   }

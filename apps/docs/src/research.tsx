@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { Icon, Link, Tag } from "@cinder/react";
 import { components } from "./catalog";
 import { PageIntro, SiteFooter } from "./site";
-import astryxReport from "../../../docs/research-astryx.md" with { type: "file" };
-import herouiReport from "../../../docs/research-heroui.md" with { type: "file" };
-import directionReport from "../../../docs/research-cinder-direction.md" with { type: "file" };
+import { researchReports } from "../reports";
 
 export default function Research() {
   useEffect(() => {
@@ -14,8 +12,8 @@ export default function Research() {
     <>
       <main id="main" className="reading-page page-frame">
         <PageIntro title="Every decision has a source.">
-          Frame is the preferred visual direction, led by Astryx alongside HeroUI v3. Carbon informs UX,
-          accessibility, layout, and coverage. React Aria Components supplies the interaction
+          Frame is the preferred visual direction, led by Astryx alongside HeroUI v3. Carbon informs
+          UX, accessibility, layout, and coverage. React Aria Components supplies the interaction
           foundation. The findings and their limits live with the code.
         </PageIntro>
         <div className="research-sources">
@@ -41,7 +39,7 @@ export default function Research() {
               </div>
             </dl>
             <p>
-              <Link href={astryxReport} download="research-astryx.md">
+              <Link href={`/reports/${researchReports.astryx}`} download={researchReports.astryx}>
                 Astryx findings (Markdown)
               </Link>
             </p>
@@ -71,7 +69,7 @@ export default function Research() {
               </div>
             </dl>
             <p>
-              <Link href={herouiReport} download="research-heroui.md">
+              <Link href={`/reports/${researchReports.heroui}`} download={researchReports.heroui}>
                 HeroUI findings (Markdown)
               </Link>
             </p>
@@ -216,12 +214,20 @@ export default function Research() {
             stored in the ignored <code>.research/</code> directory.
           </p>
           <p>
-            <Link href={directionReport} download="research-cinder-direction.md" inline>
+            <Link
+              href={`/reports/${researchReports.direction}`}
+              download={researchReports.direction}
+              inline
+            >
               Download the architecture comparison (Markdown)
             </Link>
             . It records the earlier assessment of Base design documentation, Base Web, HeroUI, and
-            Cinder; the Astryx report adds the current field and theme findings. Frame is a prototype;
-            the reusable Relay slice is available in its <Link href="/relay" inline>component gallery</Link>.
+            Cinder; the Astryx report adds the current field and theme findings. Frame is a
+            prototype; the reusable Relay slice is available in its{" "}
+            <Link href="/relay" inline>
+              component gallery
+            </Link>
+            .
           </p>
           <p>
             The upstream checkouts are read-only references. Component examples contain labeled
@@ -230,11 +236,10 @@ export default function Research() {
           <h3>Attribution</h3>
           <p>
             Astryx is a Meta project; its inspected core declares MIT. HeroUI is a NextUI Inc.
-            project; its inspected v3.2.7 React and Styles packages declare Apache-2.0. Carbon Design
-            System is an IBM project, and React Aria is an Adobe project.
-            Carbon-derived tokens and source references retain Apache-2.0 attribution. IBM Plex is
-            distributed under the SIL Open Font License. Cinder is a working name for this
-            independent library.
+            project; its inspected v3.2.7 React and Styles packages declare Apache-2.0. Carbon
+            Design System is an IBM project, and React Aria is an Adobe project. Carbon-derived
+            tokens and source references retain Apache-2.0 attribution. IBM Plex is distributed
+            under the SIL Open Font License. Cinder is a working name for this independent library.
           </p>
           <p>
             The production build includes{" "}

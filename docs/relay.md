@@ -191,15 +191,19 @@ RAC re-exports replace their default class when given `className`; retain their
 
 `Layer` changes contextual aliases such as `--cinder-field` and
 `--cinder-border-subtle`. React locale context crosses portals; the overlay bridge
-copies theme, layer, and direction to detached roots, but currently omits `lang`.
-Arbitrary inline CSS overrides only follow DOM inheritance. Put overlay overrides
-on the actual Popover/Modal or a selector matching its theme root.
+copies theme, layer, effective language, direction, and the selected
+`Theme appearanceClassName` recipe to detached roots. The recipe inherits when
+omitted, is replaced by a supplied string, and clears with `""`. Arbitrary inline
+CSS overrides follow DOM inheritance. For portable customization, declare variables
+on the appearance class itself. See the [React guide](../packages/react/README.md)
+for Modal's independent backdrop/surface props and language precedence.
 
 Native CSS `@scope` stops Relay selectors at each nested Theme. A nested Carbon
-Theme keeps its baseline styling. The stylesheet declares `cinder`, `cinder-relay`,
-and `cinder-relay-forced-colors` in order so variant colors cannot override system
-colors. Use a browser with `@scope` support. Reduced motion disables transitions
-and animations while leaving progress and focus indicators visible.
+Theme keeps its baseline styling. The stylesheet now uses one `cinder` layer with
+`tokens`, `reset`, `components`, `themes`, and `accessibility` sublayers. Replace
+old `cinder-relay` / `cinder-relay-forced-colors` ordering declarations with
+`cinder`. Use a browser with native nesting, layers, and `@scope` support. Reduced
+motion disables transitions and animations while leaving progress and focus visible.
 
 ## Usage guidance
 
@@ -219,7 +223,7 @@ and animations while leaving progress and focus indicators visible.
 production gallery in both themes: real button states, pending repeat prevention,
 field validation/recovery, selection, nested dialog focus, responsive overflow,
 token overrides, reduced motion, forced colors, and automated accessibility.
-The existing contract tests cover six themes, nested boundaries, and RTL portals.
+The shared contract tests cover every exported theme, nested boundaries, and RTL portals.
 The external tarball consumer checks Relay's distributed types, tokens, geometry,
 and a Select inside a portalled dialog. See [verification](verification.md) for
 the latest executed results and remaining coverage limits.

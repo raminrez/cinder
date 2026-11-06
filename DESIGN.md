@@ -166,18 +166,25 @@ consistent relationships between type, borders, spacing, and corners.
 - The same visual language in light and dark themes.
 
 **Authority and scope · 6 November 2026.** Frame is the selected direction in
-[PRODUCT.md](PRODUCT.md). This is an extraction of the working Frame prototype,
-not a claim that the package already exports Frame themes. Its values are the
-visual baseline for new Frame work. Existing Carbon and Relay surfaces retain
-their documented contracts until deliberately migrated.
+[PRODUCT.md](PRODUCT.md). Phase 1 promotes the measured colors, scalar type roles,
+control geometry, and representative field/action/overlay styling into
+`frame-light` and `frame-dark`. The authored values live in
+[`packages/tokens/src/frame.ts`](packages/tokens/src/frame.ts), with their
+[public mapping](packages/tokens/README.md); the reusable appearance lives in
+[`packages/react/src/frame.css`](packages/react/src/frame.css). Existing Carbon
+and Relay surfaces retain their defaults.
 
-The frontmatter records values used by
-[`frame.css`](apps/docs/src/prototypes/frame.css) and its
-[shared prototype styles](apps/docs/src/prototypes/styles.css), at the default
-font scale. The [system specification](docs/design-system.md) covers behavior,
-accessibility, internationalization, and customization. The
-[library plan](docs/component-library-plan.md) orders the implementation. Surface
-composition belongs in the [Frame brief](apps/docs/.impeccable/surfaces/apps-docs-src-prototypes-main-tsx.md).
+The frontmatter remains the visual authority at the default font scale. Guidance
+before the control, attached recovery, and the complete fourteen-entry component
+slice are Phase 2 work. The [Phase 1 evidence](docs/verification.md#frame-phase-1)
+records the foundation proof. The [system specification](docs/design-system.md)
+covers behavior, accessibility, internationalization, and customization, and the
+[library plan](docs/component-library-plan.md) orders the remaining implementation.
+
+The [prototype styles](apps/docs/src/prototypes/frame.css) and
+[shared prototype styles](apps/docs/src/prototypes/styles.css) remain dated visual
+references. Page composition belongs in the
+[Frame brief](apps/docs/.impeccable/surfaces/apps-docs-src-prototypes-main-tsx.md).
 Figma is the final handoff from the completed code-based system.
 
 The [Impeccable sidecar](.impeccable/design.json) adds inherited motion, depth,
@@ -258,10 +265,10 @@ The prototype demonstrates a centered 1208px shell, 24px wide-screen gutters and
 settings recipes, not to every component. The library must fit its container;
 small components should not infer their available space from the viewport.
 
-Controls use a comfortable 44px minimum in the selected specimens. Minimums may
-grow with content and text scaling. This does not describe every current hit
-target: some checkbox, switch, option, and embedded-button targets are smaller.
-The system specification defines the target-size work before library promotion.
+Frame's ordinary Button and size-bearing fields default to a comfortable 44px
+minimum. Explicit `sm` / `md` / `lg` map to 32/44/48px; larger Button sizes retain
+64/80px. Minimums may grow with content and text scaling. Checkbox, switch, and
+embedded-button hit targets need their own review in the later component slices.
 
 **The Stable Recovery Rule.** Reserve enough space for the form's expected errors
 to keep its commit action stable, while allowing longer messages to grow.
@@ -288,7 +295,7 @@ Controls have gently curved corners; grouped surfaces are a little softer;
 temporary dialogs are softer again. The three frontmatter roles express this
 relationship. Use a full one-pixel input border, not the subtler surface divider.
 
-An invalid input keeps its upper control corners. Its lower corners tighten to
+The Phase 2 recovery anatomy keeps an invalid input's upper control corners. Its lower corners tighten to
 3px, joining a recovery band with the control's lower corner radius. The band has
 side and bottom borders and overlaps the shared edge by one pixel. The focus
 outline remains a separate two-pixel line with a two-pixel offset. Action focus
@@ -315,9 +322,11 @@ when an error appears. The error icon is supporting information; the words expla
 how to recover. Required status is visible and programmatic. A read-only value
 stays legible, focusable, and copyable; it is different from an unavailable value.
 
-The current prototype uses CSS grid to place guidance above the input while RAC
-maintains its description/error relationships. Library extraction must also make
-the intended reading order explicit in the default composition.
+The prototype uses CSS grid to place guidance above the input while RAC maintains
+its description/error relationships. Phase 1 preserves the existing library's
+label → control → help/error order and adds stable part hooks. Phase 2 makes the
+intended reading order, persistent guidance, and attached recovery explicit in
+the default composition.
 
 ### Selection
 

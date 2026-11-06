@@ -103,7 +103,7 @@ export function DatePicker<T extends DateValue>({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <Group className="cinder-input-group">
+          <Group className="cinder-field__control cinder-input-group">
             <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
             <Button variant="ghost" size={size} iconOnly>
               <Icon name="calendar" />
@@ -144,7 +144,7 @@ export function DateRangePicker<T extends DateValue>({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <Group className="cinder-input-group">
+          <Group className="cinder-field__control cinder-input-group">
             <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
             <span aria-hidden="true">–</span>
             <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
@@ -187,7 +187,9 @@ export function DateField<T extends DateValue>({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+          <DateInput className="cinder-field__control react-aria-DateInput">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
           <FieldHelp description={description} errorMessage={errorMessage} />
         </>
       )}
@@ -218,7 +220,9 @@ export function TimeField<T extends TimeValue>({
       {children ?? (
         <>
           <FieldLabel label={label} />
-          <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+          <DateInput className="cinder-field__control react-aria-DateInput">
+            {(segment) => <DateSegment segment={segment} />}
+          </DateInput>
           <FieldHelp description={description} errorMessage={errorMessage} />
         </>
       )}

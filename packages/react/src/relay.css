@@ -1,6 +1,5 @@
 /* A nested Theme is a styling boundary, including when its root is a portal. */
-@layer cinder, cinder-relay, cinder-relay-forced-colors;
-@layer cinder-relay {
+@layer cinder.themes {
   @scope ([data-cinder-theme="relay-light"], [data-cinder-theme="relay-dark"]) to ([data-cinder-theme]) {
     .cinder-button {
       --relay-button-ink: var(--cinder-text-on-color);
@@ -315,7 +314,7 @@
 }
 
 /* System colors must outrank variant and interaction-state colors. */
-@layer cinder-relay-forced-colors {
+@layer cinder.accessibility {
   @media (forced-colors: active) {
     @scope ([data-cinder-theme="relay-light"], [data-cinder-theme="relay-dark"]) to ([data-cinder-theme]) {
       .cinder-button,

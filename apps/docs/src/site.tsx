@@ -23,8 +23,10 @@ export const themeLabels: Record<ThemeName, string> = {
   g100: "Gray 100",
   "relay-light": "Relay light",
   "relay-dark": "Relay dark",
+  "frame-light": "Frame light",
+  "frame-dark": "Frame dark",
 };
-export const referenceThemeNames = themeNames.filter((name) => !name.startsWith("relay-"));
+export const referenceThemeNames: readonly ThemeName[] = ["white", "g10", "g90", "g100"];
 export const ThemePreference = createContext<{
   theme: ThemeName;
   setTheme: (theme: ThemeName) => void;

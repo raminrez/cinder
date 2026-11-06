@@ -776,16 +776,37 @@ export const components: ComponentEntry[] = [
     category: "Overlays",
     description: "A focused decision with a clear return path.",
     anatomy:
-      "RAC modal overlay, dialog, title, and actions. Focus is contained, background scrolling is blocked, and the theme survives the portal.",
+      "An outer cinder-modal-overlay carries the backdrop and Theme's appearance, layer, direction, and language through the portal. An inner cinder-modal holds the named Dialog, title, and actions. RAC contains focus and blocks background scrolling. className/ref target the inner surface; style/render/native props target the outer overlay.",
     keyboard:
       "Opening moves focus into the dialog. Tab stays inside. Escape closes; focus returns to the trigger.",
     carbon: carbon("modal"),
     rac: rac("Modal"),
     code: '<DialogTrigger>\n  <Button>Open dialog</Button>\n  <Modal isDismissable>\n    <Dialog>\n      <Heading slot="title">Workspace settings</Heading>\n      <Button slot="close">Done</Button>\n    </Dialog>\n  </Modal>\n</DialogTrigger>',
     props: [
-      ["size", '"xs" | "sm" | "md" | "lg"', "Dialog maximum width."],
+      ["size", '"xs" | "sm" | "md" | "lg"', "Inner modal maximum width."],
       ["isDismissable", "boolean", "Allow dismissal by clicking the overlay."],
       ["isOpen / onOpenChange", "boolean / handler", "Controlled visibility."],
+      [
+        "className / ref",
+        "string | render function / Ref<HTMLDivElement>",
+        "Class and ref for the inner cinder-modal surface; the base class is retained.",
+      ],
+      [
+        "style / render / native props",
+        "RAC ModalOverlayProps",
+        "Target the outer cinder-modal-overlay, preserving the existing contract.",
+      ],
+      [
+        "overlayClassName / overlayRef",
+        'ModalOverlayProps["className"] / Ref<HTMLDivElement>',
+        "Class and ref for the outer overlay. The class merges with its base and Theme appearance classes.",
+      ],
+      ["modalStyle", "CSSProperties | render function", "Style the inner modal surface."],
+      [
+        "lang",
+        "string",
+        "Override Theme's HTML language on the outer overlay, including an empty string; locale and direction stay separate.",
+      ],
     ],
   },
   {
@@ -828,7 +849,7 @@ export const components: ComponentEntry[] = [
     category: "Overlays",
     description: "Contextual information with room for interaction.",
     anatomy:
-      "An anchored RAC surface with automatic positioning, dismissal, and theme propagation. The default dialog moves and contains focus and makes outside content unavailable, unlike Carbon's trigger-retaining disclosure. Use Dialog inside for interactive content and a visible title or aria-label.",
+      "An anchored, portalled cinder-popover surface with automatic positioning and dismissal. className, style, and ref target this same surface, which receives Theme's appearance class, layer, direction, and language. The default dialog moves and contains focus and makes outside content unavailable, unlike Carbon's trigger-retaining disclosure. Use Dialog inside for interactive content and a visible title or aria-label.",
     keyboard:
       "Trigger opens the dialog and moves focus inside. Tab stays within its controls. Escape closes and restores focus. RAC manages non-modal focus for selection popovers such as ComboBox.",
     carbon: carbon("popover"),
@@ -838,6 +859,18 @@ export const components: ComponentEntry[] = [
       ["placement", "RAC Placement", "Preferred position relative to the trigger."],
       ["offset", "number", "Distance from trigger; defaults to 8 px."],
       ["isOpen / onOpenChange", "boolean / handler", "Controlled visibility."],
+      [
+        "className",
+        "string | render function",
+        "Extend the base and Theme appearance classes on the portalled surface.",
+      ],
+      ["style", "CSSProperties | render function", "Inline styles on the portalled surface."],
+      ["ref", "Ref<HTMLElement>", "DOM ref to the same portalled surface."],
+      [
+        "lang",
+        "string",
+        "Override Theme's HTML language, including an empty string; locale and direction stay separate.",
+      ],
     ],
   },
   {
@@ -846,7 +879,7 @@ export const components: ComponentEntry[] = [
     category: "Overlays",
     description: "A short description when a label needs more context.",
     anatomy:
-      "A compact inverse surface and arrow, connected to its trigger. Tooltips contain descriptive text; use a Popover for interactive content.",
+      "A compact inverse cinder-tooltip surface and arrow, connected to its trigger. className, style, and ref target the same portalled surface, which receives Theme's appearance class, layer, direction, and language. Tooltips contain descriptive text; use a Popover for interactive content.",
     keyboard:
       "Keyboard focus reveals the description. Escape dismisses it. The tooltip itself is not focusable.",
     carbon: carbon("tooltip"),
@@ -855,6 +888,18 @@ export const components: ComponentEntry[] = [
     props: [
       ["placement", "RAC Placement", "Preferred tooltip position."],
       ["delay", "number (TooltipTrigger)", "Hover delay; focus is immediate."],
+      [
+        "className",
+        "string | render function",
+        "Extend the base and Theme appearance classes on the portalled surface.",
+      ],
+      ["style", "CSSProperties | render function", "Inline styles on the portalled surface."],
+      ["ref", "Ref<HTMLDivElement>", "DOM ref to the same portalled surface."],
+      [
+        "lang",
+        "string",
+        "Override Theme's HTML language, including an empty string; locale and direction stay separate.",
+      ],
     ],
   },
 ];

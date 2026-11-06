@@ -12,6 +12,7 @@ import * as motion from "@carbon/motion";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { relayThemes } from "../src/relay";
+import { frameThemes } from "../src/frame";
 
 const destination = resolve(import.meta.dir, "../src");
 
@@ -30,7 +31,7 @@ const componentGroups = [
   contentSwitcherTokens,
 ];
 
-const semantic = Object.fromEntries(
+const semantic: Record<string, Record<string, string | number>> = Object.fromEntries(
   Object.entries(themes).map(([theme, values]) => {
     const entries: [string, string][] = Object.entries(values)
       .filter((entry): entry is [string, string] => typeof entry[1] === "string")
@@ -56,9 +57,9 @@ const semantic = Object.fromEntries(
   }),
 );
 
-for (const [name, values] of Object.entries(relayThemes)) {
+for (const [name, values] of Object.entries({ ...relayThemes, ...frameThemes })) {
   semantic[name] = {
-    ...semantic[name === "relay-light" ? "white" : "g100"],
+    ...semantic[name.endsWith("-light") ? "white" : "g100"],
     ...values,
   };
 }
@@ -102,6 +103,28 @@ const declarations = (values: Record<string, string | number>) =>
     .map(([name, value]) => `  --cinder-${name}: ${value};`)
     .join("\n");
 
+// Capture only the document baseline outside Frame. A same-element alias would
+// otherwise resolve to Frame's winning value, not the earlier legacy declaration.
+const foundationNames = [
+  ...new Set(
+    Object.values(frameThemes).flatMap((values) =>
+      Object.keys(values).filter((name) => Object.hasOwn(global, name)),
+    ),
+  ),
+].sort();
+const themeSelector = (names: string[]) =>
+  `:where(${names.map((name) => `[data-cinder-theme="${name}"]`).join(", ")})`;
+const frameSelector = themeSelector(Object.keys(frameThemes));
+const legacySelector = themeSelector(
+  Object.keys(semantic).filter((name) => !Object.hasOwn(frameThemes, name)),
+);
+const documentBaseline = foundationNames
+  .map((name) => `  --cinder-internal-legacy-${name}: var(--cinder-${name});`)
+  .join("\n");
+const legacyFoundations = foundationNames
+  .map((name) => `  --cinder-${name}: var(--cinder-internal-legacy-${name}, ${global[name]});`)
+  .join("\n");
+
 // A layer changes contextual aliases, not the source theme. A new Theme resets
 // its layer context. Portalled overlays carry both attributes from React context.
 const layeredTokens = [
@@ -131,19 +154,24 @@ const aliases = (layer: number) =>
     .join("\n");
 
 const css = `/* Carbon-derived tokens. Copyright IBM Corp. Apache-2.0.
- * Cinder changes: namespace, contextual layer aliases, and authored Relay themes.
+ * Cinder changes: namespace, scoped foundations, layer aliases, and Relay/Frame themes.
  * Regenerate with: bun run build:tokens
  */
+@layer cinder.tokens {
 :root {\n${declarations(global)}\n}
+:root:not(${frameSelector}),
+:root:not(${frameSelector}) > body:not(${frameSelector}) {\n${documentBaseline}\n}
 ${Object.entries(semantic)
   .map(
     ([name, values]) =>
       `${name === "white" ? ":root,\n" : ""}[data-cinder-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${values["color-scheme"]};\n}`,
   )
   .join("\n")}
+${frameSelector} ${legacySelector} {\n${legacyFoundations}\n}
 :root, [data-cinder-theme], [data-cinder-layer="0"] {\n${aliases(0)}\n}
 [data-cinder-layer="1"] {\n${aliases(1)}\n}
 [data-cinder-layer="2"], [data-cinder-layer="3"] {\n${aliases(2)}\n}
+}
 `;
 
 await mkdir(destination, { recursive: true });

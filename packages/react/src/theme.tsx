@@ -2,7 +2,13 @@ import { createContext, useContext, useMemo, type ComponentPropsWithRef } from "
 import { I18nProvider, useLocale } from "react-aria-components";
 import { nextLayer, type LayerLevel, type ThemeName } from "@cinder/tokens";
 
-type ThemeContextValue = { theme: ThemeName; layer: LayerLevel; direction: "ltr" | "rtl" };
+type ThemeContextValue = {
+  theme: ThemeName;
+  layer: LayerLevel;
+  direction: "ltr" | "rtl";
+  lang?: string;
+  appearanceClassName?: string;
+};
 const ThemeContext = createContext<ThemeContextValue>({
   theme: "white",
   layer: 0,
@@ -13,6 +19,8 @@ export interface ThemeProps extends Omit<ComponentPropsWithRef<"div">, "dir"> {
   theme?: ThemeName;
   /** Controls formatting, translated RAC labels, and reading/keyboard direction. */
   locale?: string;
+  /** Portable root/portal recipe. Omit to inherit; a string replaces it; "" clears it. */
+  appearanceClassName?: string;
 }
 
 export function Theme({ locale, ...props }: ThemeProps) {
@@ -24,18 +32,30 @@ export function Theme({ locale, ...props }: ThemeProps) {
   );
 }
 
-function ThemeRoot({ theme = "white", className, children, ...props }: Omit<ThemeProps, "locale">) {
+function ThemeRoot({
+  theme = "white",
+  appearanceClassName,
+  className,
+  children,
+  ...props
+}: Omit<ThemeProps, "locale">) {
+  const parent = useTheme();
   const { locale, direction } = useLocale();
-  const value = useMemo(() => ({ theme, layer: 0 as const, direction }), [theme, direction]);
+  const appearance = appearanceClassName ?? parent.appearanceClassName;
+  const lang = props.lang ?? locale;
+  const value = useMemo(
+    () => ({ theme, layer: 0 as const, direction, lang, appearanceClassName: appearance }),
+    [theme, direction, lang, appearance],
+  );
   return (
     <ThemeContext.Provider value={value}>
       <div
         {...props}
-        lang={props.lang ?? locale}
+        lang={lang}
         dir={direction}
         data-cinder-theme={theme}
         data-cinder-layer="0"
-        className={["cinder-theme", className].filter(Boolean).join(" ")}
+        className={["cinder-theme", appearance, className].filter(Boolean).join(" ")}
       >
         {children}
       </div>
@@ -70,6 +90,12 @@ export function useTheme() {
 
 /** CSS inheritance stops at a portal; React context does not. */
 export function useOverlayTheme() {
-  const { theme, layer, direction } = useTheme();
-  return { "data-cinder-theme": theme, "data-cinder-layer": layer, dir: direction };
+  const { theme, layer, direction, lang, appearanceClassName } = useTheme();
+  return {
+    "data-cinder-theme": theme,
+    "data-cinder-layer": layer,
+    dir: direction,
+    lang,
+    appearanceClassName,
+  };
 }

@@ -4,6 +4,12 @@
 **Target:** React Aria Components (RAC) **1.22.1**, React/React DOM **19.3.1**, and Bun **1.4.4**.
 **Purpose:** define the behavioral and composition contracts behind Cinder's Carbon-aligned React library, including deliberate differences from Carbon's React implementation.
 
+**Phase 1 follow-up · 6 November 2026:** the later Frame foundation work adds
+portable appearance and effective HTML language to the shared portal bridge, plus
+additive Modal part access and field hooks. The snapshot observations below retain
+their original scope. Use the [current React contract](../packages/react/README.md)
+and [Phase 1 verification](verification.md#frame-phase-1) for the new behavior.
+
 ## 1. Implementation decisions
 
 - Keep RAC responsible for interaction, focus, collection state, accessible relationships, and internationalization. Apply Cinder's tokens, geometry, icons, and state styling around those contracts.

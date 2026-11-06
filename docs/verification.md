@@ -1,8 +1,12 @@
 # Cinder 0.1.0 — verification
 
+**Latest work: [Frame Phase 1](#frame-phase-1), 6 November 2026.**
+The foundation, compatibility, and installed-package gates pass; the final rendered
+review is being recorded below. These are scoped runs, not a new aggregate run.
+
 **Latest aggregate: passed, 6 November 2026, 16:31:13–16:33:38 UTC.**
-The [Relay follow-up](#relay-follow-up) verifies the first light/dark component
-slice, its production gallery, and the distributed packages.
+The historical [Relay follow-up](#relay-follow-up) verifies its first light/dark
+component slice, production gallery, and distributed packages.
 
 **Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
@@ -14,6 +18,100 @@ The local site is **http://127.0.0.1:3000**, with Relay at **/relay**. The sourc
 are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
+
+## Frame Phase 1
+
+Phase 1 implements reusable Frame foundations and public styling contracts. The
+representative installed composition is **Button, TextField, and Select inside a
+Dialog**. The complete fourteen-entry Frame slice and its default guidance/recovery
+anatomy remain [Phase 2](component-library-plan.md#phase-2--first-complete-frame-slice).
+
+### Executed gates
+
+| Gate | Result and scope |
+| --- | --- |
+| Tokens | Eight generated themes; deterministic output; all six legacy theme maps, 191 global foundations, and 36 structured typography definitions unchanged |
+| Unit tests | **22 passed, 1,945 assertions** across two files |
+| Focused browser contracts | **44 passed**: 17 consumer contracts and 27 fidelity cases |
+| Full browser suite | **126 passed** across five files, including existing Carbon and Relay coverage |
+| Workspace types and lint | **53 files** typechecked; Oxlint passed |
+| Formatting and whitespace | 117-file formatting check and `git diff --check` passed before the final documentation pass |
+| Production build | Both packages, declarations, generated CSS/JSON, and the documentation build passed |
+| Installed consumers | Native CSS, compiled Bun CSS Modules, and pinned Tailwind **4.3.5** passed installation, strict declaration checking, production bundling, and browser contracts |
+
+The six legacy hashes are asserted directly in
+[`tests/unit/tokens.test.ts`](../tests/unit/tokens.test.ts); the regression tests
+do not depend on an ignored research capture. Both Frame maps contain **343
+entries**, including **25 Frame-owned foundation overrides**. Frame's scalable
+default is 44px for ordinary controls; explicit `sm/md/lg` is 32/44/48px and
+Button `xl/2xl` remains 64/80px. The public mapping is documented in the
+[token package](../packages/tokens/README.md#frame-foundations).
+
+### Installed styling and behavior
+
+The [consumer record](../test-results/package-consumer.json) and
+[final command output](../test-results/frame-phase1-package.log) identify the
+archives and executed checks. The
+[fixture guide](../tests/fixtures/consumer/README.md) documents repeatable commands.
+The two apps are installed outside the repository, with no Cinder workspace links
+or TypeScript path aliases; both use `strict: true` and `skipLibCheck: false`.
+
+- Plain CSS and a real CSS Module exercise root, part, state, font, token, and
+  detached-overlay overrides. Default and custom-composed fields retain native
+  values, accessible relationships, class callbacks, and root/control refs.
+- The Tailwind app installs both `tailwindcss` and `@tailwindcss/cli` at **4.3.5**.
+  Real preflight runs before Cinder; generated utilities run after it. A corner
+  utility and padding utility beat normal Cinder rules. Tailwind remains confined
+  to the consumer's build dependencies.
+- Light/dark and nested Frame → Carbon → Frame boundaries preserve their type and
+  size owners. Document-level font, size, and type overrides reach Carbon while
+  Frame retains its own defaults. Direct appearance recipes win on their roots.
+- Dialog → Select carries theme, layer, language, direction, and portable
+  appearance. Live theme/locale changes and inherited/replaced/cleared recipes
+  update open portals. Ordinary root classes, styles, and IDs remain local.
+- Modal's outer/inner classes, styles, and refs reach their documented elements.
+  Rich Select options retain names/descriptions, disabled-option skipping, selected
+  keys, inner-first Escape, and focus return.
+- Unrelated raw RAC controls outside a Cinder boundary retain their host-owned
+  styling. Frame action/focus precedence passes Chromium-emulated forced colors.
+
+Integration found and resolved two product-level defects: Bun had inlined theme
+rules before the layer-order declaration, and raw-part disabled labels missed the
+Frame disabled override. The first imported `layers.css` now establishes order;
+raw and default-owned field parts receive consistent disabled treatment. Frame
+typography rules consume their public weight, size, and tracking variables.
+
+The custom consumer's validation recovery also exposed a fixture layout shift:
+removing an error on blur moved the submit button between pointer-down and
+pointer-up. Its concise error now occupies a reserved feedback row. The verifier
+still requires a real corrected pointer submission. The forced-color probe now
+inherits the tested Theme's color scheme, and Tailwind verification checks emitted
+utilities and browser precedence rather than an optimizer-specific layer string.
+
+### Rendered review
+
+Retained-consumer screenshots, keyboard paths, responsive bounds, and axe findings
+are being recorded with `agent-browser` before the final completion status.
+
+### Distribution cost and boundary
+
+| Distributed React CSS | Size |
+| --- | ---: |
+| Before Phase 1 | 173,342 bytes |
+| With Frame foundations | **225,620 bytes** |
+| Increase | **52,278 bytes / 30.16%** |
+| Current gzip | **22,041 bytes** |
+
+CSS SHA-256:
+`c8c1dc98141a028a36a13ec579fd1019dc824a5eb965fffb22792a25d37c10d5`.
+The added theme maps, boundary aliases, and appearance rules stay in the same
+prebuilt stylesheet. No styling engine or runtime dependency was added.
+
+This proof covers foundation contracts, not complete Frame catalog parity.
+Manual screen-reader work, Firefox/WebKit, physical devices, real IME and
+translation, representative-user evaluation, text resizing, and zoom/reflow
+remain outstanding. Figma follows the completed library and release proof in
+[Phase 7](component-library-plan.md#phase-7--figma-last).
 
 ## Relay follow-up
 
@@ -76,10 +174,10 @@ No further visual defects were found in these captures. Impeccable's mechanical
 scan of the Relay gallery, both Relay stylesheets, and Button source returned no
 findings.
 
-The [installed-package consumer](../test-results/package-consumer.json), completed
+The installed-package consumer in the [Relay aggregate](../test-results/check-relay.log), completed
 at **16:33:37 UTC**, verifies both Relay themes, corner tokens, pending labels,
 Plex faces including weight 500, and Select inside a themed dialog. The separate
-[README installation check](../test-results/readme-install.json) and
+[README installation check](../test-results/readme-install-before-frame.json) and
 [output](../test-results/readme-install-relay.log) also pass using the exact
 tarball/font commands and every root README TSX snippet. Final documentation
 formatting and local links are recorded in
@@ -210,21 +308,22 @@ structured typography serialization, pagination normalization, and file acceptan
 The structured-type assertions compare full selected objects, including sparse
 breakpoint overrides, with the pinned Carbon package.
 
-There are **313 entries per Carbon theme**, **318 per Relay theme**, **191 scalar
-foundations**, and **36 selected structured type definitions**. Relay adds five
-geometry/focus roles. The scalar values are base values. Responsive type
+There are **313 entries per Carbon theme**, **318 per Relay theme**, **343 per Frame
+theme**, **191 scalar foundations**, and **36 selected structured type definitions**.
+Relay adds five geometry/focus roles; Frame also owns 25 foundation overrides.
+The scalar values are base values. Responsive type
 changes and fluid interpolation remain application-owned. The tests sample
 upstream values and selected structured objects; the catalog count does not imply
 an exhaustive pixel comparison.
 
-### Browser tests: 53 + 18 + 8 + 16 + 11 = 106
+### Browser tests: 53 + 18 + 17 + 27 + 11 = 126
 
 | File                                                     | Tests | Exercised behavior                                                                                                                                                                                                                       |
 | -------------------------------------------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Documentation](../tests/browser/docs.test.ts)           | 53    | Six principal routes, production motion/reduced motion, preview-server behavior, and every one of the 45 catalog entries                                                                                                                 |
 | [Interactions](../tests/browser/interactions.test.ts)    | 18    | Keyboard activation/selection, invalid and corrected form submission, search, collections, bounded values, date/time changes, clipboard success/denial, file selection/native mixed-file drop, overlays, navigation, and persisted theme |
-| [Consumer contracts](../tests/browser/contracts.test.ts) | 8     | Refs, custom DOM rendering, render props, controlled fields, generic single/multiple collections, and six theme/RTL/nested-portal cases                                                                                                  |
-| [Carbon fidelity](../tests/browser/fidelity.test.ts)     | 16    | Compound sizes, switcher boundaries, toggle/slider geometry, supporting typography, and button/notification/calendar states in four themes                                                                                               |
+| [Consumer contracts](../tests/browser/contracts.test.ts) | 17    | Refs/render props, controlled fields and collections, eight themes, live appearance/language on four portal families, nested boundaries, and Modal part targets |
+| [Fidelity](../tests/browser/fidelity.test.ts)     | 27    | Shared field anatomy, values/refs, Carbon size/state contracts, Frame default/explicit sizes, typography overrides, raw disabled/invalid fields, and forced colors |
 | [Relay](../tests/browser/relay.test.ts)                  | 11    | Button/field states and sizes, selection, validation/recovery, nested overlays, accessible names, token overrides, responsive bounds, reduced motion, forced colors, and route theme preferences                                         |
 
 Documentation and interaction tests drive the built site. Contract and fidelity
@@ -283,20 +382,23 @@ LICENSE/NOTICE, ESM/CSS/JSON exports, strict declarations with `skipLibCheck=fal
 structured type metadata, theme/layer portals, refs/render props, keyboard state,
 form validation/submission, selection, loaded Plex faces, and browser errors.
 
-The current Relay archives are identified by the
+The current Frame-foundation archives are identified by the
 [manifest](../dist/packages/manifest.json),
 [package-consumer record](../test-results/package-consumer.json), and
 [README-install record](../test-results/readme-install.json):
 
 | Archive                                                               | Bytes  | SHA-256                                                            |
 | --------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
-| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 36,741 | `200bf419f59bdf08495ab9c045d8b6578b2de5571b72ffa67e0d75ef7484f597` |
-| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 71,850 | `30acf221d4b907258865e5666947ff445574c8b85db7ea3d5d1bea3c74cd0754` |
+| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 46,331 | `ec741687d4fad05c440b56d2b5028b30b05ba0be628770990405f8488a263841` |
+| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 81,833 | `9b33628ba5a84f0a1ef7b9a7b4680bd502bff37e94d4be98b1413a12d33afd61` |
 
 The manifest, actual archive bytes, package-consumer record, and README-install
 record agree on these hashes. `@cinder/tokens@0.1.0` is an explicit React-package
 peer; workspace development retains `workspace:*`. Library consumers supply their
-fonts. The README demonstrates the pinned Fontsource packages and imports.
+fonts when needed; Frame uses the system sans-serif stack. The README demonstrates
+separate optional pinned Plex Sans and Mono installs. Its
+[current installation output](../test-results/frame-phase1-readme.log) checks the
+tarball commands and all three TSX snippets verbatim in another isolated app.
 
 The [baseline README installation check](../test-results/readme-install-before-native-tooling.json) independently
 runs its exact tarball/font commands, adds the TypeScript tooling, copies every

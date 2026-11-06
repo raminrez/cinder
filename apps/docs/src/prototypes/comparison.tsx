@@ -205,8 +205,8 @@ export function ComparisonGuide({
       <header className="comparison-intro">
         <h1>Compare the designs</h1>
         <p>
-          Four proposals, the same jobs. Frame is the preferred direction, drawing on Astryx’s
-          field clarity. Compare it with Field, Relay, and Index. HeroUI remains a visual reference;
+          Four proposals, the same jobs. Frame is the preferred direction, drawing on Astryx’s field
+          clarity. Compare it with Field, Relay, and Index. HeroUI remains a visual reference;
           Carbon helps us reason about the work.
         </p>
         <Button variant="tertiary" onPress={() => onTry("frame", "form")}>
@@ -411,8 +411,8 @@ export function ComparisonGuide({
         <div>
           <h3>Useful feedback names the part</h3>
           <p>
-            For example: “I prefer Frame’s guidance, Relay’s next-review action, and Index’s persistent
-            details.” Specific feedback helps refine Frame as the selected direction.
+            For example: “I prefer Frame’s guidance, Relay’s next-review action, and Index’s
+            persistent details.” Specific feedback helps refine Frame as the selected direction.
           </p>
         </div>
       </section>

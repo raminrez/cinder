@@ -1,6 +1,6 @@
 # Cinder component-library implementation plan
 
-**6 November 2026 · proposed implementation sequence.** Build the selected Frame
+**6 November 2026 · approved code-first sequence.** Build the selected Frame
 direction into the existing code-based system, prove a small complete slice, then
 extend the same contracts through the catalog. **Figma is the final step**, derived
 from the implemented library and documentation.
@@ -16,16 +16,16 @@ The result is a reusable React Aria-based Cinder library with Frame light/dark
 themes, dependable defaults, documented root/part/state styling, coherent locale
 and portal behavior, working examples, and evidence from installed packages.
 
-| Phase | Deliverable | Depends on | Completion condition |
-| --- | --- | --- | --- |
-| 0 | Selected direction and written system | Completed prototype comparison | DESIGN.md, system specification, evidence boundaries, and this plan agree |
-| 1 | Foundation and public styling contracts | 0 | Frame theme/size proposal resolved; tokens, scope, parts, locale, and representative consumer proof agree |
-| 2 | First complete Frame slice | 1 | Settings and nested-dialog tasks use packaged components with documented states and verified behavior |
-| 3 | Selection and navigation expansion | 2 | Eleven additional catalog entries meet the same contract |
-| 4 | Data and structure expansion | 2; relevant choices from 3 | Nine additional entries preserve data, selection, responsive, and focus semantics |
-| 5 | Dates, files, and feedback expansion | 2; shared contracts from 3–4 | Eleven additional entries have their specialized value, locale, and lifecycle evidence |
-| 6 | Whole-library documentation and release proof | 2–5 | Coverage is reconciled, supported integrations are demonstrated, packages install cleanly, and migration guidance is complete |
-| 7 | Final Figma handoff | 6 | Design assets match the settled token, anatomy, state, and package versions |
+| Phase | Deliverable                                   | Depends on                     | Completion condition                                                                                                          |
+| ----- | --------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Selected direction and written system         | Completed prototype comparison | DESIGN.md, system specification, evidence boundaries, and this plan agree                                                     |
+| 1     | Foundation and public styling contracts       | 0                              | Frame theme/size proposal resolved; tokens, scope, parts, locale, and representative consumer proof agree                     |
+| 2     | First complete Frame slice                    | 1                              | Settings and nested-dialog tasks use packaged components with documented states and verified behavior                         |
+| 3     | Selection and navigation expansion            | 2                              | Eleven additional catalog entries meet the same contract                                                                      |
+| 4     | Data and structure expansion                  | 2; relevant choices from 3     | Nine additional entries preserve data, selection, responsive, and focus semantics                                             |
+| 5     | Dates, files, and feedback expansion          | 2; shared contracts from 3–4   | Eleven additional entries have their specialized value, locale, and lifecycle evidence                                        |
+| 6     | Whole-library documentation and release proof | 2–5                            | Coverage is reconciled, supported integrations are demonstrated, packages install cleanly, and migration guidance is complete |
+| 7     | Final Figma handoff                           | 6                              | Design assets match the settled token, anatomy, state, and package versions                                                   |
 
 The phases are dependency order, not calendar estimates. A phase may contain
 several small changes, each with its own meaningful proof. No family becomes
@@ -50,27 +50,30 @@ verified simply because its colors inherit from the new theme.
 [Impeccable sidecar](../.impeccable/design.json), [system specification](design-system.md),
 and the [prototype verification record](prototypes-guide.md#verification).
 
-Frame is selected. The static-CSS architecture is the recommended continuation,
-not a recorded user approval of a new engine or API. Confirm material public API
-choices during phase 1 before implementing them. Keep the prototype as a dated
-visual and behavioral reference.
+Frame is selected. The user approved the Phase 1 contract bundle on
+6 November 2026: native prebuilt CSS, additive Frame themes, the 44px ordinary
+default, and portable appearance through Theme. Keep the prototype as a dated
+visual and behavioral reference; its task-specific CSS is not the package contract.
 
 ## Phase 1 — Foundations, scope, and customization contracts
 
 ### 1.1 Resolve the small set of public choices
 
-| Choice | Recommendation | Required decision/proof |
-| --- | --- | --- |
-| Styling | Native prebuilt CSS + semantic variables + stable BEM-style hooks + RAC states | Confirm the recommendation; retain one stylesheet import and no consumer compiler requirement |
-| Theme names | Add `frame-light` and `frame-dark` to the existing typed theme model | Additive exports and `isThemeName` coverage; keep existing six names |
-| Default size | Frame ordinary controls use 44px when size is omitted; explicit `sm/md/lg` map to 32/44/48px | Distinguish omitted from explicit size; preserve all older-theme defaults and explicit large Button sizes |
-| Custom theme recipe | One explicit appearance-class hook on Theme, repeated on its portal roots | Settle its public name and exact scope with a two-brand nested-overlay fixture; do not copy arbitrary root props |
-| Meaningful parts | Extend existing RAC composition and Cinder hooks | Add an exported part only for independently rendered/styled/referenced anatomy; verify upstream type and collection behavior |
-| CSS order | One documented top-level `cinder` layer with internal token/reset/component/theme/accessibility order | Prove normal overrides, preflight, nested scopes, and forced-color precedence before changing the distributed cascade |
+**Decisions resolved; implementation and consumer proof in progress.**
 
-These are recommendations for the new release, not copyable new APIs today.
-Scope the change coherently: a theme-specific default belongs to the appearance
-owner; the same conditional must not be copied into every application example.
+| Choice              | Approved contract                                                                                     | Required proof                                                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Styling             | Native prebuilt CSS + semantic variables + stable BEM-style hooks + RAC states                        | One stylesheet import and no consumer compiler requirement                                                                   |
+| Theme names         | Add `frame-light` and `frame-dark` to the existing typed theme model                                  | Additive exports and `isThemeName` coverage; keep existing six names                                                         |
+| Default size        | Frame ordinary controls use 44px when size is omitted; explicit `sm/md/lg` map to 32/44/48px          | Distinguish omitted from explicit size; preserve all older-theme defaults and explicit large Button sizes                    |
+| Custom theme recipe | `Theme appearanceClassName`, repeated on its four portal-root families                                | Omitted inherits, string replaces, empty string clears; two-brand nested overlays; ordinary root props remain local          |
+| Meaningful parts    | Extend existing RAC composition and Cinder hooks                                                      | Add an exported part only for independently rendered/styled/referenced anatomy; verify upstream type and collection behavior |
+| CSS order           | One documented top-level `cinder` layer with internal token/reset/component/theme/accessibility order | Prove normal overrides, preflight, nested scopes, and forced-color precedence before changing the distributed cascade        |
+
+Theme-specific defaults belong to the appearance owner. Button retains its
+resolved `data-size="lg"` for compatibility and privately distinguishes omission;
+fields retain their existing `md` default. The Frame recipe resolves the public
+geometry without conditional sizing in application examples.
 
 ### 1.2 Author and generate Frame foundations
 
@@ -85,7 +88,7 @@ Frame value source, `packages/tokens/scripts/generate.ts`, and
    scalable minimum sizes, and focus. Record any inherited baseline roles that
    belong to later families.
 3. Generate CSS and JSON through the existing generator. Update typed names and
-   token-key inference, which currently derives `ThemeToken` from Relay alone.
+   token-key inference to include each authored theme's semantic keys.
 4. Preserve structured Carbon typography exports. Frame's working scale must not
    accidentally replace the baseline's public type definitions or imply that a
    scalar variable implements responsive interpolation.
@@ -138,7 +141,8 @@ Owners: `utils.ts`'s existing class composition, `fields.tsx`, `selection.tsx`,
    `inputProps`, and Select's option-children contract. Add independent part access
    only for a demonstrated use case; keep default composition concise.
 5. Resolve Modal's split class/ref versus style targets through additive, named
-   part access. Preserve the existing targets until an explicit migration.
+   part access: `overlayClassName` and `overlayRef` for the backdrop, `modalStyle`
+   for the inner surface. Existing class/ref remain inner; style/render remain outer.
 6. Document which part owns each actual state attribute. Keep appearance hooks
    distinct from RAC relationship slots and behavior-owned geometry.
 

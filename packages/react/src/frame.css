@@ -1,0 +1,351 @@
+/* Keep Frame appearance within its Theme, including detached overlay roots. */
+@layer cinder.themes {
+  @scope ([data-cinder-theme="frame-light"], [data-cinder-theme="frame-dark"]) to ([data-cinder-theme]) {
+    :scope {
+      font-weight: var(--cinder-body-01-font-weight);
+      letter-spacing: var(--cinder-body-01-letter-spacing);
+    }
+    .cinder-button {
+      --frame-button-ink: var(--cinder-text-on-color);
+      justify-content: center;
+      gap: var(--cinder-spacing-03);
+      padding: var(--cinder-spacing-02) var(--cinder-spacing-05);
+      border-radius: var(--cinder-control-radius);
+      color: var(--frame-button-ink);
+      font-size: var(--cinder-body-compact-01-font-size);
+      font-weight: var(--cinder-body-compact-01-font-weight);
+      line-height: var(--cinder-body-compact-01-line-height);
+      letter-spacing: var(--cinder-body-compact-01-letter-spacing);
+    }
+    .cinder-button[data-cinder-size-default] {
+      --control-height: var(--cinder-size-md);
+    }
+    .cinder-button > svg:last-child {
+      margin-inline-end: 0;
+    }
+    .cinder-button[data-icon-only] {
+      padding: 0;
+    }
+    .cinder-button:is([data-size="xl"], [data-size="2xl"]) {
+      align-items: center;
+    }
+    .cinder-button:is(
+      [data-variant="secondary"],
+      [data-variant="tertiary"],
+      [data-variant="ghost"]
+    ) {
+      --frame-button-ink: var(--cinder-text-primary);
+      color: var(--frame-button-ink);
+    }
+    .cinder-button[data-variant="tertiary"] {
+      background: transparent;
+      border-color: var(--cinder-border-strong);
+    }
+    .cinder-button[data-variant="tertiary"][data-hovered] {
+      background: var(--cinder-button-tertiary-hover);
+    }
+    .cinder-button[data-variant="tertiary"][data-pressed] {
+      background: var(--cinder-button-tertiary-active);
+    }
+    .cinder-button[data-variant="ghost"]:not([data-icon-only]) {
+      padding-inline: var(--cinder-spacing-04);
+    }
+    .cinder-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]) {
+      --frame-button-ink: var(--cinder-button-danger-secondary);
+      color: var(--frame-button-ink);
+      background: transparent;
+    }
+    .cinder-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]):is(
+        [data-hovered],
+        [data-pressed]
+      ) {
+      --frame-button-ink: var(--cinder-text-on-color);
+      background: var(--button-hover);
+    }
+    .cinder-button:is(
+        [data-variant="danger-tertiary"],
+        [data-variant="danger-ghost"]
+      )[data-pressed] {
+      background: var(--button-active);
+    }
+    .cinder-button[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: calc(var(--cinder-focus-offset) + 1px);
+      box-shadow: none;
+    }
+    .cinder-button[data-disabled] {
+      --frame-button-ink: var(--cinder-text-disabled);
+      color: var(--frame-button-ink);
+      background: var(--cinder-button-disabled);
+      border-color: transparent;
+    }
+    .cinder-button[data-disabled][data-variant*="tertiary"] {
+      background: transparent;
+      border-color: var(--cinder-border-disabled);
+    }
+    .cinder-button[data-disabled][data-variant*="ghost"] {
+      background: transparent;
+    }
+    .cinder-button[data-pending] {
+      color: transparent;
+    }
+    .cinder-button[data-pending] > svg {
+      visibility: hidden;
+    }
+    .cinder-button > .cinder-spinner {
+      position: absolute;
+      color: var(--frame-button-ink);
+      margin: 0;
+    }
+
+    .cinder-field > :is(.cinder-field__label, .react-aria-Label) {
+      color: var(--cinder-text-primary);
+      font-size: var(--cinder-label-01-font-size);
+      font-weight: var(--cinder-label-01-font-weight);
+      line-height: var(--cinder-label-01-line-height);
+      letter-spacing: var(--cinder-label-01-letter-spacing);
+    }
+    .cinder-field
+      > :is(
+        .cinder-field__control,
+        .react-aria-Input,
+        .react-aria-TextArea,
+        .cinder-input-group,
+        .cinder-select-trigger
+      ) {
+      min-height: var(--control-height, var(--cinder-size-md));
+      height: auto;
+      border: 1px solid var(--cinder-border-strong);
+      border-radius: var(--cinder-control-radius);
+      background: var(--cinder-field);
+      color: var(--cinder-text-primary);
+      caret-color: var(--cinder-focus);
+      font-size: var(--cinder-body-02-font-size);
+      font-weight: var(--cinder-body-02-font-weight);
+      line-height: var(--cinder-body-02-line-height);
+      letter-spacing: var(--cinder-body-02-letter-spacing);
+    }
+    .cinder-field > :is(.react-aria-Input, .react-aria-TextArea),
+    .cinder-input-group > .react-aria-Input {
+      padding: calc(var(--cinder-spacing-02) - 1px) var(--cinder-spacing-04);
+      font-size: var(--cinder-body-02-font-size);
+      line-height: var(--cinder-body-02-line-height);
+    }
+    .cinder-field > .react-aria-TextArea {
+      min-height: 5rem;
+      padding-block: var(--cinder-spacing-04);
+    }
+    .cinder-field
+      > :is(.react-aria-Input, .react-aria-TextArea):hover:not(:disabled):not(:read-only),
+    .cinder-input-group[data-hovered]:not([data-disabled], [data-readonly]),
+    .cinder-select-trigger[data-hovered]:not([data-disabled]) {
+      border-color: var(--cinder-text-primary);
+      background: var(--cinder-field-hover);
+    }
+    .cinder-field[data-readonly]
+      > :is(.cinder-field__control, .react-aria-Input, .react-aria-TextArea, .cinder-input-group) {
+      background: var(--cinder-layer-accent);
+      border-style: dashed;
+    }
+    .cinder-field[data-invalid]
+      > :is(
+        .cinder-field__control,
+        .react-aria-Input,
+        .react-aria-TextArea,
+        .cinder-input-group,
+        .cinder-select-trigger
+      ) {
+      border-color: var(--cinder-support-error);
+      outline: none;
+    }
+    .cinder-field > :is(.react-aria-Input, .react-aria-TextArea):focus,
+    .cinder-field > .cinder-field__control[data-focus-within],
+    .cinder-input-group[data-focus-within],
+    .cinder-select-trigger[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+      box-shadow: none;
+    }
+    .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea):focus,
+    .cinder-field[data-invalid] > .cinder-field__control[data-focus-within],
+    .cinder-field[data-invalid] > .cinder-input-group[data-focus-within],
+    .cinder-field[data-invalid] > .cinder-select-trigger[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+    }
+    .cinder-field[data-disabled]
+      > :is(
+        .cinder-field__control,
+        .react-aria-Input,
+        .react-aria-TextArea,
+        .cinder-input-group,
+        .cinder-select-trigger
+      ) {
+      background: var(--cinder-button-disabled);
+      border-color: var(--cinder-border-disabled);
+      color: var(--cinder-text-disabled);
+    }
+    .cinder-field[data-disabled] > :is(.cinder-field__label, .react-aria-Label),
+    .cinder-field[data-disabled] .react-aria-SelectValue {
+      color: var(--cinder-text-disabled);
+    }
+    .cinder-input-group > .react-aria-Input {
+      min-height: 0;
+      height: auto;
+      border: 0;
+      background: transparent;
+    }
+    .cinder-input-group > .cinder-button {
+      min-height: calc(var(--control-height, var(--cinder-size-md)) - 2px);
+      width: calc(var(--control-height, var(--cinder-size-md)) - 2px);
+      border-radius: calc(var(--cinder-control-radius) - 2px);
+    }
+    .cinder-input-group > svg {
+      margin-inline-start: var(--cinder-spacing-04);
+      color: var(--cinder-text-secondary);
+    }
+    .cinder-select-trigger {
+      justify-content: space-between;
+      padding: calc(var(--cinder-spacing-02) - 1px) var(--cinder-spacing-04);
+      font-weight: var(--cinder-body-02-font-weight);
+      text-align: start;
+    }
+    .cinder-field__help {
+      min-block-size: var(--cinder-helper-text-01-line-height);
+    }
+
+    :scope.cinder-popover {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-popover-radius);
+      box-shadow: 0 8px 24px var(--cinder-shadow);
+    }
+    .react-aria-ListBox,
+    .react-aria-Menu {
+      padding: var(--cinder-spacing-02);
+    }
+    .react-aria-ListBoxItem,
+    .react-aria-MenuItem {
+      min-height: var(--cinder-size-md);
+      padding: var(--cinder-spacing-03) var(--cinder-spacing-07) var(--cinder-spacing-03)
+        var(--cinder-spacing-04);
+      border-radius: var(--cinder-control-radius);
+    }
+    .react-aria-ListBoxItem[data-focus-visible],
+    .react-aria-MenuItem[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: -2px;
+    }
+    .cinder-modal {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-overlay-radius);
+      box-shadow: 0 16px 48px var(--cinder-shadow);
+    }
+    .cinder-dialog {
+      padding: var(--cinder-spacing-06);
+    }
+    .cinder-dialog .react-aria-Heading[slot="title"] {
+      font-size: var(--cinder-heading-03-font-size);
+      font-weight: var(--cinder-heading-03-font-weight);
+      line-height: var(--cinder-heading-03-line-height);
+      letter-spacing: var(--cinder-heading-03-letter-spacing);
+      margin: 0;
+      margin-inline-end: 2.75rem;
+      margin-block-end: var(--cinder-spacing-05);
+    }
+    .cinder-dialog > .cinder-button[slot="close"] {
+      top: var(--cinder-spacing-03);
+      inset-inline-end: var(--cinder-spacing-03);
+    }
+    .cinder-dialog-footer {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: var(--cinder-spacing-03);
+      margin: var(--cinder-spacing-06) 0 0;
+    }
+    .cinder-dialog-footer .cinder-button {
+      width: auto;
+      min-height: var(--control-height, var(--cinder-size-md));
+      align-items: center;
+      padding-block: var(--cinder-spacing-02);
+    }
+    :scope.cinder-tooltip {
+      border-radius: var(--cinder-control-radius);
+    }
+  }
+}
+
+@layer cinder.accessibility {
+  @media (forced-colors: active) {
+    @scope ([data-cinder-theme="frame-light"], [data-cinder-theme="frame-dark"]) to ([data-cinder-theme]) {
+      .cinder-button {
+        --frame-button-ink: ButtonText;
+        --button-icon: currentColor;
+        background: ButtonFace;
+        color: ButtonText;
+        border-color: ButtonText;
+      }
+      .cinder-button[data-disabled] {
+        --frame-button-ink: GrayText;
+        background: ButtonFace;
+        color: GrayText;
+        border-color: GrayText;
+      }
+      .cinder-button[data-pending] {
+        color: transparent;
+      }
+      .cinder-field
+        > :is(
+          .cinder-field__control,
+          .react-aria-Input,
+          .react-aria-TextArea,
+          .cinder-input-group,
+          .cinder-select-trigger
+        ) {
+        color: FieldText;
+        background: Field;
+        border-color: ButtonText;
+      }
+      .cinder-field[data-disabled]
+        > :is(
+          .cinder-field__control,
+          .react-aria-Input,
+          .react-aria-TextArea,
+          .cinder-input-group,
+          .cinder-select-trigger,
+          .cinder-field__label,
+          .react-aria-Label
+        ),
+      .cinder-field[data-disabled] .react-aria-SelectValue,
+      .cinder-select-trigger .react-aria-SelectValue[data-placeholder] {
+        color: GrayText;
+        border-color: GrayText;
+      }
+      .cinder-field[data-invalid]
+        > :is(
+          .cinder-field__control,
+          .react-aria-Input,
+          .react-aria-TextArea,
+          .cinder-input-group,
+          .cinder-select-trigger
+        ) {
+        border-style: dashed;
+      }
+      .cinder-button[data-focus-visible],
+      .cinder-field > :is(.react-aria-Input, .react-aria-TextArea):focus,
+      .cinder-field > .cinder-field__control[data-focus-within],
+      .cinder-input-group[data-focus-within],
+      .cinder-select-trigger[data-focus-visible] {
+        outline-color: Highlight;
+      }
+      .react-aria-ListBoxItem[data-selected],
+      .react-aria-MenuItem[data-selected] {
+        color: HighlightText;
+        background: Highlight;
+      }
+      .react-aria-ListBoxItem[data-focus-visible],
+      .react-aria-MenuItem[data-focus-visible] {
+        outline-color: Highlight;
+      }
+    }
+  }
+}

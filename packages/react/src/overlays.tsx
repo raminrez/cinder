@@ -18,19 +18,54 @@ export interface PopoverProps extends RACPopoverProps {
   ref?: Ref<HTMLElement>;
 }
 export function Popover({ className, ...props }: PopoverProps) {
-  const theme = useOverlayTheme();
-  return <RACPopover {...props} {...theme} className={classes("cinder-popover", className)} />;
+  const { appearanceClassName, ...theme } = useOverlayTheme();
+  return (
+    <RACPopover
+      {...props}
+      {...theme}
+      lang={props.lang ?? theme.lang}
+      className={classes("cinder-popover", classes(appearanceClassName ?? "", className))}
+    />
+  );
 }
 
 export interface ModalProps extends ModalOverlayProps {
   size?: "xs" | "sm" | "md" | "lg";
   ref?: Ref<HTMLDivElement>;
+  /** Class for the backdrop; className continues to target the inner modal. */
+  overlayClassName?: ModalOverlayProps["className"];
+  overlayRef?: Ref<HTMLDivElement>;
+  /** Style for the inner modal; style continues to target the backdrop. */
+  modalStyle?: ModalOverlayProps["style"];
 }
-export function Modal({ size = "md", children, className, ref, ...props }: ModalProps) {
-  const theme = useOverlayTheme();
+export function Modal({
+  size = "md",
+  children,
+  className,
+  ref,
+  overlayClassName,
+  overlayRef,
+  modalStyle,
+  ...props
+}: ModalProps) {
+  const { appearanceClassName, ...theme } = useOverlayTheme();
   return (
-    <ModalOverlay {...props} {...theme} className="cinder-modal-overlay">
-      <RACModal ref={ref} data-size={size} className={classes("cinder-modal", className)}>
+    <ModalOverlay
+      {...props}
+      {...theme}
+      lang={props.lang ?? theme.lang}
+      ref={overlayRef}
+      className={classes(
+        "cinder-modal-overlay",
+        classes(appearanceClassName ?? "", overlayClassName),
+      )}
+    >
+      <RACModal
+        ref={ref}
+        data-size={size}
+        className={classes("cinder-modal", className)}
+        style={modalStyle}
+      >
         {children}
       </RACModal>
     </ModalOverlay>
@@ -50,9 +85,15 @@ export interface TooltipProps extends RACTooltipProps {
   ref?: Ref<HTMLDivElement>;
 }
 export function Tooltip({ children, className, ...props }: TooltipProps) {
-  const theme = useOverlayTheme();
+  const { appearanceClassName, ...theme } = useOverlayTheme();
   return (
-    <RACTooltip offset={8} {...props} {...theme} className={classes("cinder-tooltip", className)}>
+    <RACTooltip
+      offset={8}
+      {...props}
+      {...theme}
+      lang={props.lang ?? theme.lang}
+      className={classes("cinder-tooltip", classes(appearanceClassName ?? "", className))}
+    >
       {(state) => (
         <>
           <OverlayArrow>
