@@ -53,7 +53,11 @@ function VariantButtons(args: ButtonProps) {
         <Fragment key={variant}>
           <dt><code>{variant}</code></dt>
           <dd>
-            <Button {...args} variant={variant}>
+            <Button
+              {...args}
+              variant={variant}
+              pendingLabel={args.pendingLabel ?? (variant.startsWith("danger") ? "Deleting draft" : "Saving changes")}
+            >
               {variant.startsWith("danger") ? "Delete draft" : "Save changes"}
             </Button>
           </dd>
@@ -126,7 +130,7 @@ export const Disabled: Story = {
 };
 
 export const Pending: Story = {
-  args: { isPending: true, pendingLabel: "Saving changes" },
+  args: { isPending: true },
   render: VariantButtons,
   parameters: {
     controls: { exclude: ["variant", "children", "isPending"] },
@@ -143,7 +147,9 @@ export const Pending: Story = {
     for (const button of buttons) {
       await expect(button).toHaveAttribute("aria-disabled", "true");
       await expect(button).not.toBeDisabled();
-      await expect(within(button).getByRole("progressbar", { name: "Saving changes" })).toBeInTheDocument();
+      await expect(within(button).getByRole("progressbar")).toHaveAccessibleName(
+        button.textContent?.startsWith("Delete") ? "Deleting draft" : "Saving changes",
+      );
       await userEvent.click(button);
       await userEvent.keyboard("{Enter} ");
     }
@@ -312,6 +318,7 @@ function LongLabelExample(args: ButtonProps) {
 }
 
 export const LongLabel: Story = {
+  args: { pendingLabel: "Änderungen werden gespeichert" },
   render: LongLabelExample,
   parameters: { controls: { exclude: ["children", "iconOnly"] } },
 };

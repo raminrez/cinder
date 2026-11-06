@@ -143,7 +143,7 @@ function CustomLink(args: LinkProps) {
         className={({ isPressed }) => `action-story-custom-link${isPressed ? " action-story-custom-link--pressed" : ""}`}
         style={({ isHovered, defaultStyle }) => ({ ...defaultStyle, textUnderlineOffset: isHovered ? "0.3em" : "0.2em" })}
         render={(domProps) => "href" in domProps
-          ? <a {...domProps} data-custom-render="true" />
+          ? <a {...domProps} data-custom-render="true">{domProps.children}</a>
           : <span {...domProps} data-custom-render="true" />}
       >
         {({ isPressed }) => <>Publishing guidelines <Icon name={isPressed ? "check" : "arrowRight"} /></>}
