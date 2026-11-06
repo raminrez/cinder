@@ -1,4 +1,5 @@
 import index from "./index.html";
+import prototypes from "./prototypes.html";
 import { resolve } from "node:path";
 import { siteLicenses } from "../../scripts/licenses";
 
@@ -14,6 +15,7 @@ const server = Bun.serve({
     "/foundations": index,
     "/get-started": index,
     "/research": index,
+    "/prototypes": prototypes,
     "/LICENSE.txt": () =>
       new Response(Bun.file(`${root}/LICENSE`), {
         headers: { "Content-Type": "text/plain; charset=utf-8" },
