@@ -20,5 +20,5 @@
     }
   },
   "include": ["apps", "packages", "scripts", "tests"],
-  "exclude": ["node_modules", "**/dist", ".research", ".tools"]
+  "exclude": ["node_modules", "**/dist", ".research", ".tools", "tests/fixtures/consumer"]
 }

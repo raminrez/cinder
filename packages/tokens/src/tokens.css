@@ -78,6 +78,52 @@
   --cinder-display-04-font-weight: 300;
   --cinder-display-04-line-height: 1.19;
   --cinder-display-04-letter-spacing: 0;
+  --cinder-fluid-display-01-font-size: 2.625rem;
+  --cinder-fluid-display-01-font-weight: 300;
+  --cinder-fluid-display-01-line-height: 1.19;
+  --cinder-fluid-display-01-letter-spacing: 0;
+  --cinder-fluid-display-02-font-size: 2.625rem;
+  --cinder-fluid-display-02-font-weight: 600;
+  --cinder-fluid-display-02-line-height: 1.19;
+  --cinder-fluid-display-02-letter-spacing: 0;
+  --cinder-fluid-display-03-font-size: 2.625rem;
+  --cinder-fluid-display-03-font-weight: 300;
+  --cinder-fluid-display-03-line-height: 1.19;
+  --cinder-fluid-display-03-letter-spacing: 0;
+  --cinder-fluid-display-04-font-size: 2.625rem;
+  --cinder-fluid-display-04-font-weight: 300;
+  --cinder-fluid-display-04-line-height: 1.19;
+  --cinder-fluid-display-04-letter-spacing: 0;
+  --cinder-fluid-heading-03-font-size: 1.25rem;
+  --cinder-fluid-heading-03-font-weight: 400;
+  --cinder-fluid-heading-03-line-height: 1.4;
+  --cinder-fluid-heading-03-letter-spacing: 0;
+  --cinder-fluid-heading-04-font-size: 1.75rem;
+  --cinder-fluid-heading-04-font-weight: 400;
+  --cinder-fluid-heading-04-line-height: 1.28572;
+  --cinder-fluid-heading-04-letter-spacing: 0;
+  --cinder-fluid-heading-05-font-size: 2rem;
+  --cinder-fluid-heading-05-font-weight: 400;
+  --cinder-fluid-heading-05-line-height: 1.25;
+  --cinder-fluid-heading-05-letter-spacing: 0;
+  --cinder-fluid-heading-06-font-size: 2rem;
+  --cinder-fluid-heading-06-font-weight: 600;
+  --cinder-fluid-heading-06-line-height: 1.25;
+  --cinder-fluid-heading-06-letter-spacing: 0;
+  --cinder-fluid-paragraph-01-font-size: 1.5rem;
+  --cinder-fluid-paragraph-01-font-weight: 300;
+  --cinder-fluid-paragraph-01-line-height: 1.334;
+  --cinder-fluid-paragraph-01-letter-spacing: 0;
+  --cinder-fluid-quotation-01-font-family: 'IBM Plex Serif', 'Georgia', Times, serif;
+  --cinder-fluid-quotation-01-font-size: 1.25rem;
+  --cinder-fluid-quotation-01-font-weight: 400;
+  --cinder-fluid-quotation-01-line-height: 1.3;
+  --cinder-fluid-quotation-01-letter-spacing: 0;
+  --cinder-fluid-quotation-02-font-family: 'IBM Plex Serif', 'Georgia', Times, serif;
+  --cinder-fluid-quotation-02-font-size: 2rem;
+  --cinder-fluid-quotation-02-font-weight: 300;
+  --cinder-fluid-quotation-02-line-height: 1.25;
+  --cinder-fluid-quotation-02-letter-spacing: 0;
   --cinder-heading-01-font-size: 0.875rem;
   --cinder-heading-01-font-weight: 600;
   --cinder-heading-01-line-height: 1.42857;
@@ -106,6 +152,14 @@
   --cinder-heading-07-font-weight: 300;
   --cinder-heading-07-line-height: 1.199;
   --cinder-heading-07-letter-spacing: 0;
+  --cinder-heading-compact-01-font-size: 0.875rem;
+  --cinder-heading-compact-01-font-weight: 600;
+  --cinder-heading-compact-01-line-height: 1.28572;
+  --cinder-heading-compact-01-letter-spacing: 0.16px;
+  --cinder-heading-compact-02-font-size: 1rem;
+  --cinder-heading-compact-02-font-weight: 600;
+  --cinder-heading-compact-02-line-height: 1.375;
+  --cinder-heading-compact-02-letter-spacing: 0;
   --cinder-helper-text-01-font-size: 0.75rem;
   --cinder-helper-text-01-line-height: 1.33333;
   --cinder-helper-text-01-letter-spacing: 0.32px;
@@ -120,6 +174,14 @@
   --cinder-label-02-font-weight: 400;
   --cinder-label-02-line-height: 1.28572;
   --cinder-label-02-letter-spacing: 0.16px;
+  --cinder-legal-01-font-size: 0.75rem;
+  --cinder-legal-01-font-weight: 400;
+  --cinder-legal-01-line-height: 1.33333;
+  --cinder-legal-01-letter-spacing: 0.32px;
+  --cinder-legal-02-font-size: 0.875rem;
+  --cinder-legal-02-font-weight: 400;
+  --cinder-legal-02-line-height: 1.28572;
+  --cinder-legal-02-letter-spacing: 0.16px;
   --cinder-duration-fast-01: 70ms;
   --cinder-duration-fast-02: 110ms;
   --cinder-duration-moderate-01: 150ms;
@@ -907,6 +969,7 @@
   --cinder-link-primary-hover: #a6c8ff;
   --cinder-link-secondary: #a6c8ff;
   --cinder-link-visited: #be95ff;
+  --cinder-notification-action-hover: var(--cinder-layer-hover);
   --cinder-notification-action-tertiary-inverse: #0f62fe;
   --cinder-notification-action-tertiary-inverse-active: #002d9c;
   --cinder-notification-action-tertiary-inverse-hover: #0050e6;
@@ -925,9 +988,11 @@
   --cinder-status-gray: #8d8d8d;
   --cinder-status-green: #42be65;
   --cinder-status-orange: #ff832b;
+  --cinder-status-orange-outline: #ff832b;
   --cinder-status-purple: #a56eff;
   --cinder-status-red: #fa4d56;
   --cinder-status-yellow: #f1c21b;
+  --cinder-status-yellow-outline: #f1c21b;
   --cinder-support-caution-major: #ff832b;
   --cinder-support-caution-minor: #f1c21b;
   --cinder-support-caution-undefined: #a56eff;
@@ -1220,6 +1285,7 @@
   --cinder-link-primary-hover: #a6c8ff;
   --cinder-link-secondary: #a6c8ff;
   --cinder-link-visited: #be95ff;
+  --cinder-notification-action-hover: var(--cinder-layer-hover);
   --cinder-notification-action-tertiary-inverse: #0f62fe;
   --cinder-notification-action-tertiary-inverse-active: #002d9c;
   --cinder-notification-action-tertiary-inverse-hover: #0050e6;
@@ -1238,9 +1304,11 @@
   --cinder-status-gray: #8d8d8d;
   --cinder-status-green: #42be65;
   --cinder-status-orange: #ff832b;
+  --cinder-status-orange-outline: #ff832b;
   --cinder-status-purple: #a56eff;
   --cinder-status-red: #fa4d56;
   --cinder-status-yellow: #f1c21b;
+  --cinder-status-yellow-outline: #f1c21b;
   --cinder-support-caution-major: #ff832b;
   --cinder-support-caution-minor: #f1c21b;
   --cinder-support-caution-undefined: #a56eff;
@@ -1394,6 +1462,7 @@
 }
 :root, [data-cinder-theme], [data-cinder-layer="0"] {
   --cinder-layer: var(--cinder-layer-01);
+  --cinder-layer-background: var(--cinder-layer-background-01);
   --cinder-layer-hover: var(--cinder-layer-hover-01);
   --cinder-layer-active: var(--cinder-layer-active-01);
   --cinder-layer-selected: var(--cinder-layer-selected-01);
@@ -1403,13 +1472,14 @@
   --cinder-layer-accent-active: var(--cinder-layer-accent-active-01);
   --cinder-field: var(--cinder-field-01);
   --cinder-field-hover: var(--cinder-field-hover-01);
-  --cinder-border-subtle: var(--cinder-border-subtle-01);
+  --cinder-border-subtle: var(--cinder-border-subtle-00);
   --cinder-border-strong: var(--cinder-border-strong-01);
   --cinder-border-tile: var(--cinder-border-tile-01);
   --cinder-border-subtle-selected: var(--cinder-border-subtle-selected-01);
 }
 [data-cinder-layer="1"] {
   --cinder-layer: var(--cinder-layer-02);
+  --cinder-layer-background: var(--cinder-layer-background-02);
   --cinder-layer-hover: var(--cinder-layer-hover-02);
   --cinder-layer-active: var(--cinder-layer-active-02);
   --cinder-layer-selected: var(--cinder-layer-selected-02);
@@ -1419,13 +1489,14 @@
   --cinder-layer-accent-active: var(--cinder-layer-accent-active-02);
   --cinder-field: var(--cinder-field-02);
   --cinder-field-hover: var(--cinder-field-hover-02);
-  --cinder-border-subtle: var(--cinder-border-subtle-02);
+  --cinder-border-subtle: var(--cinder-border-subtle-01);
   --cinder-border-strong: var(--cinder-border-strong-02);
   --cinder-border-tile: var(--cinder-border-tile-02);
   --cinder-border-subtle-selected: var(--cinder-border-subtle-selected-02);
 }
 [data-cinder-layer="2"], [data-cinder-layer="3"] {
   --cinder-layer: var(--cinder-layer-03);
+  --cinder-layer-background: var(--cinder-layer-background-03);
   --cinder-layer-hover: var(--cinder-layer-hover-03);
   --cinder-layer-active: var(--cinder-layer-active-03);
   --cinder-layer-selected: var(--cinder-layer-selected-03);
@@ -1435,7 +1506,7 @@
   --cinder-layer-accent-active: var(--cinder-layer-accent-active-03);
   --cinder-field: var(--cinder-field-03);
   --cinder-field-hover: var(--cinder-field-hover-03);
-  --cinder-border-subtle: var(--cinder-border-subtle-03);
+  --cinder-border-subtle: var(--cinder-border-subtle-02);
   --cinder-border-strong: var(--cinder-border-strong-03);
   --cinder-border-tile: var(--cinder-border-tile-03);
   --cinder-border-subtle-selected: var(--cinder-border-subtle-selected-03);

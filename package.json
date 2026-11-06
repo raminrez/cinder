@@ -4,9 +4,14 @@
   "version": "0.1.0",
   "type": "module",
   "packageManager": "bun@1.4.4",
-  "engines": { "bun": ">=1.4.4" },
+  "engines": {
+    "bun": ">=1.4.4"
+  },
   "workspaces": {
-    "packages": ["packages/*", "apps/*"],
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ],
     "catalog": {
       "react": "19.3.1",
       "react-dom": "19.3.1",
@@ -20,16 +25,21 @@
     "dev": "bun run build:tokens && bun --hot apps/docs/server.ts",
     "build": "bun scripts/build.ts",
     "build:tokens": "bun packages/tokens/scripts/generate.ts",
+    "pack": "bun run build && bun scripts/pack.ts",
     "start": "bun scripts/preview.ts",
     "typecheck": "tsc --noEmit",
     "test": "bun test tests/unit",
     "test:browser": "bun test --timeout 60000 tests/browser",
+    "test:package": "bun scripts/verify-package.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "bun run typecheck && bun run test && bun run build && bun run test:browser"
+    "check": "bun run format:check && bun run typecheck && bun run test && bun run build && bun run test:browser && bun scripts/pack.ts && bun run test:package"
   },
   "devDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "@axe-core/playwright": "4.14.0",
+    "@internationalized/date": "catalog:",
     "@types/bun": "1.4.4",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -38,5 +48,7 @@
     "prettier": "3.9.10",
     "typescript": "7.0.2"
   },
-  "trustedDependencies": ["bun"]
+  "trustedDependencies": [
+    "bun"
+  ]
 }

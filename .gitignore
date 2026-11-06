@@ -11,3 +11,6 @@ playwright-report/
 .env
 .env.*
 !.env.example
+# Copied from the root by the package build.
+packages/*/LICENSE
+packages/*/NOTICE

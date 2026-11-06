@@ -1,0 +1,173 @@
+import { createContext, useContext, type ReactNode, type Ref } from "react";
+import {
+  Table as RACTable,
+  Column as RACColumn,
+  Tabs as RACTabs,
+  DisclosureGroup,
+  Disclosure,
+  DisclosurePanel,
+  Heading,
+  Breadcrumbs as RACBreadcrumbs,
+  Breadcrumb,
+  TagGroup as RACTagGroup,
+  TagList,
+  Tag as RACTag,
+  Label,
+  composeRenderProps,
+  type TableProps as RACTableProps,
+  type ColumnProps as RACColumnProps,
+  type TabsProps as RACTabsProps,
+  type DisclosureGroupProps,
+  type DisclosureProps,
+  type BreadcrumbsProps as RACBreadcrumbsProps,
+  type TagGroupProps as RACTagGroupProps,
+  type TagListProps,
+  type TagProps as RACTagProps,
+} from "react-aria-components";
+import { Button, Link } from "./buttons";
+import { Icon } from "./icons";
+import { classes, type ControlSize } from "./utils";
+
+export interface TableProps extends RACTableProps {
+  size?: ControlSize | "xl";
+  ref?: Ref<HTMLDivElement | HTMLTableElement>;
+}
+export function Table({ className, size = "lg", ...props }: TableProps) {
+  return <RACTable {...props} data-size={size} className={classes("cinder-table", className)} />;
+}
+
+export interface ColumnProps extends RACColumnProps {
+  ref?: Ref<HTMLTableCellElement | HTMLDivElement>;
+}
+export function Column({ className, children, ...props }: ColumnProps) {
+  return (
+    <RACColumn {...props} className={classes("cinder-column", className)}>
+      {composeRenderProps(children, (content, { allowsSorting, sortDirection }) => (
+        <>
+          {content}
+          {allowsSorting && (
+            <span className="cinder-sort-icon" aria-hidden="true" data-direction={sortDirection}>
+              {sortDirection === "ascending" ? "↑" : "↓"}
+            </span>
+          )}
+        </>
+      ))}
+    </RACColumn>
+  );
+}
+
+export interface TabsProps extends RACTabsProps {
+  variant?: "line" | "contained";
+  ref?: Ref<HTMLDivElement>;
+}
+export function Tabs({ variant = "line", className, ...props }: TabsProps) {
+  return (
+    <RACTabs {...props} data-variant={variant} className={classes("cinder-tabs", className)} />
+  );
+}
+
+export interface AccordionProps extends DisclosureGroupProps {
+  size?: ControlSize;
+  ref?: Ref<HTMLDivElement>;
+}
+const AccordionSizeContext = createContext<ControlSize>("md");
+
+export function Accordion({ size = "md", className, ...props }: AccordionProps) {
+  return (
+    <AccordionSizeContext.Provider value={size}>
+      <DisclosureGroup
+        {...props}
+        data-size={size}
+        className={classes("cinder-accordion", className)}
+      />
+    </AccordionSizeContext.Provider>
+  );
+}
+
+export interface AccordionItemProps extends Omit<DisclosureProps, "children"> {
+  title: ReactNode;
+  children: ReactNode;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  ref?: Ref<HTMLDivElement>;
+}
+export function AccordionItem({
+  title,
+  children,
+  headingLevel = 3,
+  className,
+  ...props
+}: AccordionItemProps) {
+  const size = useContext(AccordionSizeContext);
+  return (
+    <Disclosure {...props} className={classes("cinder-accordion-item", className)}>
+      <Heading level={headingLevel}>
+        <Button slot="trigger" variant="ghost" size={size} className="cinder-accordion-trigger">
+          <Icon name="chevronRight" />
+          <span>{title}</span>
+        </Button>
+      </Heading>
+      <DisclosurePanel>{children}</DisclosurePanel>
+    </Disclosure>
+  );
+}
+
+export interface BreadcrumbsProps<T> extends RACBreadcrumbsProps<T> {
+  ref?: Ref<HTMLOListElement>;
+}
+export function Breadcrumbs<T>({ className, ...props }: BreadcrumbsProps<T>) {
+  return (
+    <RACBreadcrumbs
+      {...props}
+      className={["cinder-breadcrumbs", className].filter(Boolean).join(" ")}
+    />
+  );
+}
+export interface BreadcrumbItemProps {
+  children: ReactNode;
+  href?: string;
+  isCurrent?: boolean;
+}
+export function BreadcrumbItem({ children, href, isCurrent }: BreadcrumbItemProps) {
+  return (
+    <Breadcrumb>
+      <Link href={href} aria-current={isCurrent ? "page" : undefined}>
+        {children}
+      </Link>
+    </Breadcrumb>
+  );
+}
+
+export interface TagGroupProps<T> extends Omit<RACTagGroupProps, "children"> {
+  label?: ReactNode;
+  items?: Iterable<T>;
+  children: TagListProps<T>["children"];
+  ref?: Ref<HTMLDivElement>;
+}
+export function TagGroup<T>({ label, items, children, className, ...props }: TagGroupProps<T>) {
+  return (
+    <RACTagGroup {...props} className={["cinder-tag-group", className].filter(Boolean).join(" ")}>
+      {label && <Label>{label}</Label>}
+      <TagList items={items}>{children}</TagList>
+    </RACTagGroup>
+  );
+}
+
+export interface FilterTagProps extends RACTagProps {
+  ref?: Ref<HTMLDivElement>;
+}
+export function FilterTag({ className, children, ...props }: FilterTagProps) {
+  return (
+    <RACTag {...props} className={classes("cinder-filter-tag", className)}>
+      {composeRenderProps(children, (content, { allowsRemoving }) => (
+        <>
+          {content}
+          {allowsRemoving && (
+            <Button slot="remove" size="sm" iconOnly variant="ghost">
+              <Icon name="close" />
+            </Button>
+          )}
+        </>
+      ))}
+    </RACTag>
+  );
+}

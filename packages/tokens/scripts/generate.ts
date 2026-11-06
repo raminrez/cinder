@@ -41,6 +41,16 @@ const semantic = Object.fromEntries(
         if (value !== undefined) entries.push([kebab(name), value]);
       }
     }
+    // Carbon resolves these sparse component maps in its styles package:
+    // components/notification/_tokens.scss and icon-indicator/_tokens.scss.
+    // Preserve those dark-theme aliases rather than inheriting white's values.
+    if (theme === "g90" || theme === "g100") {
+      entries.push(
+        ["notification-action-hover", "var(--cinder-layer-hover)"],
+        ["status-orange-outline", statusTokens.statusOrange[theme]],
+        ["status-yellow-outline", statusTokens.statusYellow[theme]],
+      );
+    }
     return [theme, Object.fromEntries(entries.sort(([a], [b]) => a.localeCompare(b)))];
   }),
 );
@@ -54,12 +64,21 @@ for (const [key, value] of Object.entries(layout)) {
     if (typeof value === "string") global[kebab(key)] = value;
   }
 }
-for (const [key, value] of Object.entries(typography)) {
-  if (/^(body|bodyCompact|label|helperText|heading|code|display)\d/.test(key)) {
-    for (const [property, setting] of Object.entries(value)) {
-      if (typeof setting === "number" || typeof setting === "string") {
-        global[`${kebab(key)}-${kebab(property)}`] = setting;
-      }
+// Scalar CSS variables describe the base styles. Preserve the complete source
+// objects too, including sparse breakpoint overrides, for responsive consumers.
+const typeStyles = Object.fromEntries(
+  Object.entries(typography)
+    .filter(([key]) =>
+      /^(body|bodyCompact|label|helperText|heading|headingCompact|code|display|legal|fluidHeading|fluidParagraph|fluidQuotation|fluidDisplay)\d+$/.test(
+        key,
+      ),
+    )
+    .map(([key, value]) => [kebab(key), value]),
+);
+for (const [key, value] of Object.entries(typeStyles)) {
+  for (const [property, setting] of Object.entries(value)) {
+    if (typeof setting === "number" || typeof setting === "string") {
+      global[`${key}-${kebab(property)}`] = setting;
     }
   }
 }
@@ -78,13 +97,29 @@ const declarations = (values: Record<string, string | number>) =>
 // A layer changes contextual aliases, not the source theme. A new Theme resets
 // its layer context. Portalled overlays carry both attributes from React context.
 const layeredTokens = [
-  "layer", "layer-hover", "layer-active", "layer-selected", "layer-selected-hover",
-  "layer-accent", "layer-accent-hover", "layer-accent-active", "field", "field-hover",
-  "border-subtle", "border-strong", "border-tile", "border-subtle-selected",
+  "layer",
+  "layer-background",
+  "layer-hover",
+  "layer-active",
+  "layer-selected",
+  "layer-selected-hover",
+  "layer-accent",
+  "layer-accent-hover",
+  "layer-accent-active",
+  "field",
+  "field-hover",
+  "border-subtle",
+  "border-strong",
+  "border-tile",
+  "border-subtle-selected",
 ];
 const aliases = (layer: number) =>
   layeredTokens
-    .map((name) => `  --cinder-${name}: var(--cinder-${name}-0${Math.min(layer + 1, 3)});`)
+    // Carbon's subtle separators start at 00; the other sets start at 01.
+    .map(
+      (name) =>
+        `  --cinder-${name}: var(--cinder-${name}-0${Math.min(layer, 2) + (name === "border-subtle" ? 0 : 1)});`,
+    )
     .join("\n");
 
 const css = `/* Generated from Carbon Design System. Copyright IBM Corp.
@@ -93,7 +128,10 @@ const css = `/* Generated from Carbon Design System. Copyright IBM Corp.
  */
 :root {\n${declarations(global)}\n}
 ${Object.entries(semantic)
-  .map(([name, values]) => `${name === "white" ? ":root,\n" : ""}[data-cinder-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${name === "white" || name === "g10" ? "light" : "dark"};\n}`)
+  .map(
+    ([name, values]) =>
+      `${name === "white" ? ":root,\n" : ""}[data-cinder-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${name === "white" || name === "g10" ? "light" : "dark"};\n}`,
+  )
   .join("\n")}
 :root, [data-cinder-theme], [data-cinder-layer="0"] {\n${aliases(0)}\n}
 [data-cinder-layer="1"] {\n${aliases(1)}\n}
@@ -103,6 +141,15 @@ ${Object.entries(semantic)
 await mkdir(destination, { recursive: true });
 await Promise.all([
   Bun.write(`${destination}/tokens.css`, css),
-  Bun.write(`${destination}/tokens.json`, JSON.stringify({ themes: semantic, global, breakpoints: layout.breakpoints }, null, 2) + "\n"),
+  Bun.write(
+    `${destination}/tokens.json`,
+    JSON.stringify(
+      { themes: semantic, global, breakpoints: layout.breakpoints, typeStyles },
+      null,
+      2,
+    ) + "\n",
+  ),
 ]);
-console.log(`Generated ${Object.keys(semantic.white ?? {}).length} theme tokens × 4 themes, ${Object.keys(global).length} foundations.`);
+console.log(
+  `Generated ${Object.keys(semantic.white ?? {}).length} theme tokens × 4 themes, ${Object.keys(global).length} foundations.`,
+);

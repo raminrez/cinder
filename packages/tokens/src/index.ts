@@ -6,6 +6,9 @@ export type LayerLevel = 0 | 1 | 2;
 export const themes = data.themes;
 export const foundations = data.global;
 export const breakpoints = data.breakpoints;
+/** Carbon's complete type definitions, with unmodified breakpoint overrides. */
+export const typeStyles = data.typeStyles;
+export type TypeStyleName = keyof typeof typeStyles;
 export type ThemeToken = keyof typeof themes.white;
 export type FoundationToken = keyof typeof foundations;
 export type TokenName = ThemeToken | FoundationToken;

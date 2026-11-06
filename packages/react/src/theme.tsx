@@ -3,27 +3,40 @@ import { I18nProvider, useLocale } from "react-aria-components";
 import { nextLayer, type LayerLevel, type ThemeName } from "@cinder/tokens";
 
 type ThemeContextValue = { theme: ThemeName; layer: LayerLevel; direction: "ltr" | "rtl" };
-const ThemeContext = createContext<ThemeContextValue>({ theme: "white", layer: 0, direction: "ltr" });
+const ThemeContext = createContext<ThemeContextValue>({
+  theme: "white",
+  layer: 0,
+  direction: "ltr",
+});
 
-export interface ThemeProps extends ComponentPropsWithRef<"div"> {
+export interface ThemeProps extends Omit<ComponentPropsWithRef<"div">, "dir"> {
   theme?: ThemeName;
+  /** Controls formatting, translated RAC labels, and reading/keyboard direction. */
   locale?: string;
 }
 
 export function Theme({ locale, ...props }: ThemeProps) {
+  const inherited = useLocale();
   return (
-    <I18nProvider locale={locale}>
+    <I18nProvider locale={locale ?? inherited.locale}>
       <ThemeRoot {...props} />
     </I18nProvider>
   );
 }
 
 function ThemeRoot({ theme = "white", className, children, ...props }: Omit<ThemeProps, "locale">) {
-  const { direction } = useLocale();
+  const { locale, direction } = useLocale();
   const value = useMemo(() => ({ theme, layer: 0 as const, direction }), [theme, direction]);
   return (
     <ThemeContext.Provider value={value}>
-      <div {...props} dir={props.dir ?? direction} data-cinder-theme={theme} data-cinder-layer="0" className={["cinder-theme", className].filter(Boolean).join(" ")}>
+      <div
+        {...props}
+        lang={props.lang ?? locale}
+        dir={direction}
+        data-cinder-theme={theme}
+        data-cinder-layer="0"
+        className={["cinder-theme", className].filter(Boolean).join(" ")}
+      >
         {children}
       </div>
     </ThemeContext.Provider>
@@ -40,7 +53,11 @@ export function Layer({ level, className, children, ...props }: LayerProps) {
   const value = useMemo(() => ({ ...parent, layer }), [parent, layer]);
   return (
     <ThemeContext.Provider value={value}>
-      <div {...props} data-cinder-layer={layer} className={["cinder-layer", className].filter(Boolean).join(" ")}>
+      <div
+        {...props}
+        data-cinder-layer={layer}
+        className={["cinder-layer", className].filter(Boolean).join(" ")}
+      >
         {children}
       </div>
     </ThemeContext.Provider>

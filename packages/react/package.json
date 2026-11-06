@@ -4,8 +4,15 @@
   "description": "Carbon-aligned React components, built on React Aria Components.",
   "type": "module",
   "license": "Apache-2.0",
-  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
-  "sideEffects": ["**/*.css"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -14,15 +21,16 @@
     "./styles.css": "./dist/styles.css"
   },
   "peerDependencies": {
+    "@cinder/tokens": "0.1.0",
     "react": ">=19.0.0 <20",
     "react-dom": ">=19.0.0 <20",
     "react-aria-components": ">=1.22.0 <2"
   },
   "dependencies": {
-    "@cinder/tokens": "workspace:*",
     "@internationalized/date": "catalog:"
   },
   "devDependencies": {
+    "@cinder/tokens": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-aria-components": "catalog:",

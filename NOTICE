@@ -1,0 +1,38 @@
+Cinder
+Copyright 2026 Cinder contributors
+Licensed under the Apache License, Version 2.0.
+
+Carbon Design System
+Copyright 2015 IBM Corp.
+https://github.com/carbon-design-system/carbon
+Licensed under the Apache License, Version 2.0.
+
+Cinder's generated tokens derive from the official @carbon/themes,
+@carbon/layout, @carbon/type, and @carbon/motion packages. Cinder changes the
+CSS namespace, serializes the values as CSS/JSON, and adds contextual layer
+aliases and typography/control conveniences. Component CSS is Cinder's
+implementation of the referenced Carbon visual rules. The generated source
+files identify these modifications. Carbon's original attribution is retained.
+
+React Aria Components (RAC)
+Copyright 2019 Adobe
+https://github.com/adobe/react-spectrum
+Licensed under the Apache License, Version 2.0.
+
+RAC supplies interaction behavior. React, React DOM, RAC, and internationalized
+date code remain external to Cinder's library JavaScript bundles and are
+installed as dependencies or peers with their own licenses.
+
+IBM Plex
+Copyright 2019 IBM Corp. All rights reserved.
+https://github.com/IBM/plex
+Licensed under the SIL Open Font License, Version 1.1.
+
+Font binaries are supplied separately by the consumer. The documentation site
+bundles unmodified IBM Plex Sans and IBM Plex Mono fonts from Fontsource and
+ships their complete upstream license texts in THIRD_PARTY_LICENSES.txt.
+That generated file also retains licenses from the site's runtime dependency
+tree. The package tarballs do not contain font binaries.
+
+Cinder is an independent project. Its working name and package scope are
+provisional. Upstream names identify the source projects, not an endorsement.

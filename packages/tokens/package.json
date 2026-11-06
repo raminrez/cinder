@@ -4,8 +4,15 @@
   "description": "Carbon-derived semantic design tokens for Cinder.",
   "type": "module",
   "license": "Apache-2.0",
-  "files": ["dist", "README.md", "LICENSE", "NOTICE"],
-  "sideEffects": ["**/*.css"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

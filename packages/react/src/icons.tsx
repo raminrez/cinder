@@ -38,7 +38,18 @@ export interface IconProps extends SVGProps<SVGSVGElement> {
 /** Small structural glyphs on a 16 px grid. Label the enclosing control. */
 export function Icon({ name, size = 16, ...props }: IconProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={name === "overflow" ? 2.5 : 1.25} strokeLinecap={name === "overflow" ? "round" : "square"} aria-hidden="true" focusable="false" {...props}>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={name === "overflow" ? 2.5 : 1.25}
+      strokeLinecap={name === "overflow" ? "round" : "square"}
+      aria-hidden="true"
+      focusable="false"
+      {...props}
+    >
       <path d={paths[name]} />
     </svg>
   );
