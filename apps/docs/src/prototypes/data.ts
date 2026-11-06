@@ -26,10 +26,18 @@ export const directions = {
     tradeoff: "The compact layout asks more of the reader and can feel less welcoming.",
     reason: "Choose this if you spend more time scanning records than filling out forms.",
   },
+  frame: {
+    name: "Frame",
+    summary: "Guidance above the input, with recovery attached directly below it.",
+    geometry: "44 px controls · 10 px corners",
+    goodFor: "Products where clear forms and everyday data work need to feel equally approachable.",
+    tradeoff: "Persistent guidance and reserved feedback space make long forms taller.",
+    reason: "Explore Astryx’s field clarity with Cinder’s existing React Aria behavior.",
+  },
 } as const;
 
 export type Direction = keyof typeof directions;
-export const directionOrder: Direction[] = ["field", "relay", "index"];
+export const directionOrder: Direction[] = ["field", "relay", "index", "frame"];
 
 export const reviewers = {
   maya: { name: "Maya Chen", initials: "MC", role: "Design" },

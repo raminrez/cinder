@@ -1,0 +1,475 @@
+/* Frame is an experimental direction scoped to the comparison document. */
+:root[data-prototype="frame"] {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --p-ground: #f5f6f8;
+  --p-surface: #ffffff;
+  --p-raised: #eef1f6;
+  --p-text: #25272c;
+  --p-muted: #606674;
+  --p-border: #dde1e8;
+  --p-control: #7f8795;
+  --p-accent: #365ccb;
+  --p-primary: #272a32;
+  --p-primary-hover: #434754;
+  --p-on-primary: #ffffff;
+  --p-active: #e7edff;
+  --p-tint: #edf2ff;
+  --p-error: #aa2735;
+  --p-error-bg: #ffe8eb;
+  --p-warning: #75500d;
+  --p-warning-bg: #fff0ce;
+  --p-success: #246343;
+  --p-success-bg: #e1f2e8;
+  --p-control-height: 44px;
+  --p-radius-control: 10px;
+  --p-radius-group: 14px;
+  --p-radius-overlay: 18px;
+  --p-bar: #272a32;
+  --p-bar-ink: #f5f6fa;
+  --p-bar-muted: #c0c6d3;
+  --p-bar-hover: #434754;
+  scrollbar-color: var(--p-control) var(--p-ground);
+
+  &[data-mode="dark"] {
+    --p-ground: #18191d;
+    --p-surface: #22242a;
+    --p-raised: #2c2f38;
+    --p-text: #f1f2f6;
+    --p-muted: #b1b6c3;
+    --p-border: #3e424d;
+    --p-control: #7d8493;
+    --p-accent: #a9bdff;
+    --p-primary: #f1f2f6;
+    --p-primary-hover: #d2d7e4;
+    --p-on-primary: #22242a;
+    --p-active: #333f62;
+    --p-tint: #2c354e;
+    --p-error: #ffacb3;
+    --p-error-bg: #452830;
+    --p-warning: #e7c383;
+    --p-warning-bg: #3e3321;
+    --p-success: #a4d9b8;
+    --p-success-bg: #203a2b;
+    --p-bar: #eef0f7;
+    --p-bar-ink: #25272c;
+    --p-bar-muted: #586071;
+    --p-bar-hover: #d5dbe8;
+  }
+
+  [data-cinder-theme] {
+    --cinder-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --cinder-support-success: var(--p-success);
+    --cinder-overlay: rgb(18 22 32 / 50%);
+  }
+
+  .prototype-brand {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+
+  .frame-header {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    max-width: 1208px;
+    margin-inline: auto;
+    padding: 20px 24px;
+    border-block-end: 1px solid var(--p-border);
+  }
+
+  .frame-header .workspace-name {
+    margin-inline-start: auto;
+    max-width: 30%;
+    font-size: 13px;
+  }
+
+  .prototype-navigation .cinder-button[aria-current="page"] {
+    color: var(--p-accent);
+    background: var(--p-active);
+  }
+
+  .frame-main {
+    max-width: 1208px;
+    margin-inline: auto;
+    padding: 36px 24px 120px;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .workspace-title {
+    margin-block-end: 32px;
+  }
+
+  .cinder-button {
+    gap: 8px;
+  }
+
+  .cinder-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    align-content: start;
+  }
+
+  .cinder-field > :is(label, .react-aria-Label) {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    font-weight: 600;
+  }
+
+  .prototype-required {
+    display: inline;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--p-muted);
+  }
+
+  /* Only the layout wrapper is flattened; RAC keeps description and error IDs. */
+  .cinder-field > .cinder-field-help {
+    display: contents;
+  }
+
+  .cinder-field > .cinder-field-help > [slot="description"] {
+    grid-area: 2 / 1;
+    margin-block-start: 4px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .cinder-field > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group, .cinder-select-trigger) {
+    grid-area: 3 / 1;
+    margin-block-start: 8px;
+    caret-color: var(--p-accent);
+  }
+
+  .review-filters .cinder-field > :is(.cinder-input-group, .cinder-select-trigger) {
+    margin-block-start: 0;
+  }
+
+  .cinder-field > :is(.react-aria-Input, .react-aria-TextArea):hover:not(:disabled):not(:read-only),
+  .cinder-input-group:hover:not([data-disabled]),
+  .cinder-select-trigger[data-hovered]:not([data-disabled]) {
+    border-color: var(--p-text);
+  }
+
+  .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group),
+  .cinder-field[data-invalid] .cinder-select-trigger {
+    border-color: var(--p-error);
+    border-end-start-radius: 3px;
+    border-end-end-radius: 3px;
+    outline: none;
+  }
+
+  .cinder-field > :is(.react-aria-Input, .react-aria-TextArea):focus,
+  .cinder-input-group[data-focus-within],
+  .cinder-select-trigger[data-focus-visible] {
+    outline: 2px solid var(--p-accent);
+    outline-offset: 2px;
+  }
+
+  .cinder-field > .cinder-field-help > .react-aria-FieldError {
+    grid-area: 4 / 1;
+    align-self: start;
+    padding: 9px 12px;
+    margin-block-start: -1px;
+    border: 1px solid var(--p-error);
+    border-block-start: 0;
+    border-radius: 0 0 var(--p-radius-control) var(--p-radius-control);
+    background: var(--p-error-bg);
+    font-size: 13px;
+    line-height: 20px;
+    overflow-wrap: anywhere;
+  }
+
+  .prototype-validation-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .prototype-validation-message > svg {
+    display: block;
+    margin-block-start: 2px;
+    flex-shrink: 0;
+  }
+
+  .workspace-form .cinder-field[data-required] {
+    grid-template-rows: auto auto auto minmax(58px, auto);
+  }
+
+  .cinder-field[data-readonly] .react-aria-Input {
+    color: var(--p-text);
+    border-style: dashed;
+  }
+
+  .cinder-input-group > .cinder-button {
+    border-radius: 8px;
+    margin-inline-end: 2px;
+  }
+
+  .cinder-checkbox-control {
+    border-radius: 5px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .cinder-checkbox[data-selected] .cinder-checkbox-control,
+  .cinder-switch[data-selected] .cinder-switch-track {
+    background: var(--p-accent);
+    border-color: var(--p-accent);
+  }
+
+  .cinder-checkbox[data-selected] .cinder-checkbox-control svg {
+    color: var(--p-surface);
+  }
+
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr) 288px;
+    gap: 40px;
+  }
+
+  .workspace-form {
+    padding: 28px;
+    background: var(--p-surface);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-group);
+  }
+
+  .settings-section {
+    display: block;
+    padding-block: 28px;
+  }
+
+  .settings-section:first-of-type {
+    padding-block-start: 0;
+  }
+
+  .settings-section-copy {
+    margin-block-end: 20px;
+  }
+
+  .settings-section-copy h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-block-end: 6px;
+  }
+
+  .settings-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .settings-fields-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .settings-save[data-state="saved"] > span,
+  .review-notice {
+    color: var(--p-success);
+  }
+
+  .review-notice {
+    background: var(--p-success-bg);
+    border-color: var(--p-success);
+  }
+
+  .summary-preview {
+    display: block;
+    padding: 4px 0;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .summary-preview h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-block-end: 16px;
+  }
+
+  .summary-preview dl,
+  .summary-preview .preview-note {
+    margin-block-start: 20px;
+  }
+
+  .summary-message {
+    padding: 20px;
+    background: var(--p-tint);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-group);
+  }
+
+  .summary-message > span,
+  .summary-message .summary-limit {
+    color: var(--p-accent);
+  }
+
+  .prototype-state-note {
+    color: var(--p-warning);
+    background: var(--p-warning-bg);
+    border-radius: var(--p-radius-control);
+  }
+
+  .field-register {
+    padding: 24px 24px 0;
+    background: var(--p-surface);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius-group);
+  }
+
+  .prototype-table .cinder-column {
+    background: var(--p-raised);
+  }
+
+  .prototype-table .react-aria-Cell {
+    height: 68px;
+  }
+
+  .review-status[data-status="review"] {
+    color: var(--p-warning);
+    background: var(--p-warning-bg);
+  }
+
+  .review-status[data-status="ready"] {
+    color: var(--p-success);
+  }
+
+  .field-handoff {
+    padding: 0;
+    margin-block-start: 28px;
+    background: transparent;
+  }
+
+  .cinder-popover .react-aria-ListBoxItem[data-focused],
+  .cinder-popover .react-aria-MenuItem[data-focused] {
+    color: var(--p-text);
+    background: var(--p-active);
+  }
+
+  .review-modal .cinder-dialog .react-aria-Heading[slot="title"] {
+    font-weight: 600;
+    margin-inline: 0 44px;
+  }
+
+  .review-modal .cinder-dialog > .cinder-button[slot="close"] {
+    inset-inline: auto 16px;
+  }
+
+  .review-modal-context {
+    padding-inline: 0 24px;
+  }
+
+  .review-modal .react-aria-Form {
+    gap: 24px;
+  }
+
+  .prototype-table .review-name-cell > .cinder-button,
+  .review-list-copy > .cinder-button {
+    text-align: start;
+  }
+
+  .prototype-table .cinder-column.due-column,
+  .prototype-table .react-aria-Cell:last-child,
+  .due-cell {
+    text-align: end;
+  }
+
+  @media (max-width: 900px) {
+    .settings-layout {
+      grid-template-columns: minmax(0, 1fr) 232px;
+      gap: 24px;
+    }
+
+    .settings-fields-pair {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .frame-main .desktop-records {
+      display: none;
+    }
+
+    .frame-main .mobile-records {
+      display: block;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .frame-header {
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .frame-header .workspace-name {
+      max-width: 55%;
+      font-size: 12px;
+    }
+
+    .frame-header .prototype-navigation {
+      order: 3;
+      width: 100%;
+    }
+
+    .frame-header .prototype-navigation svg {
+      display: none;
+    }
+
+    .frame-main {
+      padding: 24px 16px 120px;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    .settings-layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .workspace-form {
+      padding: 20px;
+    }
+
+    .workspace-form .cinder-field[data-required] {
+      grid-template-rows: auto auto auto minmax(78px, auto);
+    }
+
+    .settings-save {
+      flex-wrap: wrap;
+    }
+
+    .settings-save > span {
+      max-width: none;
+    }
+
+    .settings-save > .cinder-button {
+      width: 100%;
+    }
+
+    .field-register {
+      padding: 16px 16px 0;
+    }
+
+  }
+
+  @media (forced-colors: active) {
+    --p-warning: CanvasText;
+    --p-warning-bg: Canvas;
+    --p-success: CanvasText;
+    --p-success-bg: Canvas;
+
+    .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group),
+    .cinder-field[data-invalid] .cinder-select-trigger {
+      border-style: dashed;
+    }
+  }
+}

@@ -49,6 +49,7 @@ import {
   type WorkspaceSettings,
 } from "./data";
 import { ComparisonGuide } from "./comparison";
+import { RequiredLabel, ValidationMessage } from "./fields";
 
 type View = "workspace" | "settings" | "guide";
 type Route = { variant: Direction; view: View; mode: "light" | "dark" };
@@ -60,7 +61,7 @@ function readRoute(): Route {
   const variant = params.get("variant");
   const view = params.get("view");
   return {
-    variant: variant === "relay" || variant === "index" ? variant : "field",
+    variant: variant === "relay" || variant === "index" || variant === "frame" ? variant : "field",
     view: view === "settings" || view === "workspace" ? view : "guide",
     mode: params.get("mode") === "dark" ? "dark" : "light",
   };
@@ -197,6 +198,20 @@ function Shell({
     );
   }
   const navigation = <Navigation route={route} onView={onView} />;
+  if (route.variant === "frame") {
+    return (
+      <div className="frame-shell">
+        <section className="frame-header" aria-label="Workspace overview">
+          <Brand />
+          {navigation}
+          <span className="workspace-name">{name}</span>
+        </section>
+        <main id="main" className="frame-main" tabIndex={-1}>
+          {children}
+        </main>
+      </div>
+    );
+  }
   if (route.variant === "relay") {
     return (
       <div className="relay-shell">
@@ -776,7 +791,8 @@ function Settings({
       </header>
       {failNextSave ? (
         <p className="prototype-state-note" role="status">
-          The next save will fail once. Your entries will stay in the form.
+          <Icon name="warning" />
+          <span>The next save will fail once. Your entries will stay in the form.</span>
         </p>
       ) : null}
       <div className="settings-layout">
@@ -796,7 +812,7 @@ function Settings({
               </div>
               <div className="settings-fields">
                 <TextField
-                  label="Workspace name"
+                  label={<RequiredLabel>Workspace name</RequiredLabel>}
                   name="workspaceName"
                   value={settings.name}
                   onChange={(name) => onChange({ ...settings, name })}
@@ -808,10 +824,12 @@ function Settings({
                     value.trim().length < 2 ? "Enter a name with at least 2 characters." : null
                   }
                   description="This name appears in review invitations."
-                  errorMessage="Enter a name with 2 to 60 characters."
+                  errorMessage={
+                    <ValidationMessage>Enter a name with 2 to 60 characters.</ValidationMessage>
+                  }
                 />
                 <TextField
-                  label="Reply-to email"
+                  label={<RequiredLabel>Reply-to email</RequiredLabel>}
                   name="replyTo"
                   type="email"
                   value={settings.email}
@@ -819,7 +837,11 @@ function Settings({
                   isRequired
                   isDisabled={saving}
                   description="Replies to review summaries go to this address."
-                  errorMessage="Enter an email address, such as reviews@cinder.example."
+                  errorMessage={
+                    <ValidationMessage>
+                      Enter an email address, such as reviews@cinder.example.
+                    </ValidationMessage>
+                  }
                 />
                 <TextField
                   label="Workspace ID"
@@ -849,7 +871,7 @@ function Settings({
                   <ReviewerOptions />
                 </Select>
                 <NumberField
-                  label="Daily review limit"
+                  label={<RequiredLabel>Daily review limit</RequiredLabel>}
                   name="reviewLimit"
                   value={settings.limit}
                   onChange={(limit) => onChange({ ...settings, limit })}
@@ -858,7 +880,9 @@ function Settings({
                   isRequired
                   isDisabled={saving}
                   description="Allow 1 to 24 reviews per person."
-                  errorMessage="Enter a number from 1 to 24."
+                  errorMessage={
+                    <ValidationMessage>Enter a number from 1 to 24.</ValidationMessage>
+                  }
                 />
               </div>
             </section>
@@ -901,8 +925,9 @@ function Settings({
               </div>
             </div>
           ) : null}
-          <div className="settings-save">
+          <div className="settings-save" data-state={saveState}>
             <span role="status">
+              {saveState === "saved" ? <Icon name="check" /> : null}
               {saveState === "saved"
                 ? "Changes saved in this demo."
                 : saving
@@ -1005,7 +1030,7 @@ function EditReview({
             onChange={(reviewer) => {
               if (isReviewer(reviewer)) onChange({ ...draft, reviewer });
             }}
-            description="Open this dropdown to compare a popup inside a dialog."
+            description="Choose who will check this component."
           >
             <ReviewerOptions />
           </Select>

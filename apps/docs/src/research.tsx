@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { Icon, Link, Tag } from "@cinder/react";
 import { components } from "./catalog";
 import { PageIntro, SiteFooter } from "./site";
+import astryxReport from "../../../docs/research-astryx.md" with { type: "file" };
+import herouiReport from "../../../docs/research-heroui.md" with { type: "file" };
+import directionReport from "../../../docs/research-cinder-direction.md" with { type: "file" };
 
 export default function Research() {
   useEffect(() => {
@@ -11,16 +14,77 @@ export default function Research() {
     <>
       <main id="main" className="reading-page page-frame">
         <PageIntro title="Every decision has a source.">
-          Cinder brings Carbon's visual system and RAC's accessible behavior together. The
-          implementation, research, and remaining gaps are recorded alongside the code.
+          Astryx leads the current visual exploration, alongside HeroUI v3. Carbon informs UX,
+          accessibility, layout, and coverage. React Aria Components supplies the interaction
+          foundation. The findings and their limits live with the code.
         </PageIntro>
         <div className="research-sources">
+          <section aria-labelledby="astryx-heading">
+            <h2 id="astryx-heading">Astryx</h2>
+            <p>
+              Frame explores its field anatomy: guidance before the input, attached recovery, and
+              distinct focus. Source research also covers theme ownership, API exceptions, and
+              localization gaps.
+            </p>
+            <dl>
+              <div>
+                <dt>Inspected core</dt>
+                <dd>0.7.10</dd>
+              </div>
+              <div>
+                <dt>Captured public docs</dt>
+                <dd>0.7.9</dd>
+              </div>
+              <div>
+                <dt>Research date</dt>
+                <dd>6 November 2026</dd>
+              </div>
+            </dl>
+            <p>
+              <Link href={astryxReport} download="research-astryx.md">
+                Astryx findings (Markdown)
+              </Link>
+            </p>
+            <Link href="https://astryx.atmeta.com/components/Field">
+              Field documentation <Icon name="external" />
+            </Link>
+          </section>
+          <section aria-labelledby="heroui-heading">
+            <h2 id="heroui-heading">HeroUI v3</h2>
+            <p>
+              A reference for softer controls, composition, and customization. The comparison uses
+              real HeroUI components in shared tasks. The report distinguishes its React Aria
+              behavior from its Tailwind-based styling setup.
+            </p>
+            <dl>
+              <div>
+                <dt>React and Styles</dt>
+                <dd>3.2.7</dd>
+              </div>
+              <div>
+                <dt>Compared tasks</dt>
+                <dd>Forms, tables, dialogs</dd>
+              </div>
+              <div>
+                <dt>Research date</dt>
+                <dd>6 November 2026</dd>
+              </div>
+            </dl>
+            <p>
+              <Link href={herouiReport} download="research-heroui.md">
+                HeroUI findings (Markdown)
+              </Link>
+            </p>
+            <Link href="https://heroui.com/en/docs/react/components/text-field">
+              TextField documentation <Icon name="external" />
+            </Link>
+          </section>
           <section>
             <h2>Carbon</h2>
             <p>
-              The source of semantic colors, themes, layers, spacing, geometry, typography, and
-              motion. Cinder generates its values from the official packages and checks component
-              rules against the documentation and source.
+              The original baseline's tokens, typography, and geometry come from Carbon. Its
+              guidance continues to inform UX, accessibility, layout, component coverage, and AI
+              patterns as Cinder explores its own visual identity.
             </p>
             <dl>
               <div>
@@ -107,7 +171,7 @@ export default function Research() {
             <div>
               <h3>Implemented</h3>
               <ul>
-                <li>Four themes and contextual layers</li>
+                <li>Four Carbon baseline themes, Relay, and contextual layers</li>
                 <li>Core inputs, selection, collections, and overlays</li>
                 <li>Validation, sorting, filtering, pagination, and file selection</li>
                 <li>Theme-aware portalled menus and dialogs</li>
@@ -146,21 +210,31 @@ export default function Research() {
         <section className="research-notes" aria-labelledby="notes-heading">
           <h2 id="notes-heading">Research lives with the work.</h2>
           <p>
-            The <code>docs/</code> directory contains the Bun, Carbon, and RAC findings, a design
-            direction, implementation plan, coverage matrix, and verification notes. Downloaded
-            source material is stored in the ignored <code>.research/</code> directory. Reports
-            distinguish pages read from pages only archived.
+            The <code>docs/</code> directory contains Astryx, HeroUI, Carbon, RAC, and Bun findings,
+            design decisions, coverage, and verification notes. Reports distinguish source
+            inspection, executed checks, and public-documentation captures. Downloaded material is
+            stored in the ignored <code>.research/</code> directory.
           </p>
           <p>
-            The user-provided Carbon and Carbon MCP source repositories are read-only references.
-            Component examples contain labeled sample data; local actions demonstrate behavior
-            without sending data to a service.
+            <Link href={directionReport} download="research-cinder-direction.md" inline>
+              Download the architecture comparison (Markdown)
+            </Link>
+            . It records the earlier assessment of Base design documentation, Base Web, HeroUI, and
+            Cinder; the Astryx report adds the current field and theme findings. Frame is a prototype;
+            the reusable Relay slice is available in its <Link href="/relay" inline>component gallery</Link>.
+          </p>
+          <p>
+            The upstream checkouts are read-only references. Component examples contain labeled
+            sample data; local actions demonstrate behavior without sending data to a service.
           </p>
           <h3>Attribution</h3>
           <p>
-            Carbon Design System is an IBM project. React Aria is an Adobe project. Carbon-derived
-            tokens and source references retain Apache-2.0 attribution. IBM Plex is distributed
-            under the SIL Open Font License. Cinder is a working name for this independent library.
+            Astryx is a Meta project; its inspected core declares MIT. HeroUI is a NextUI Inc.
+            project; its inspected v3.2.7 React and Styles packages declare Apache-2.0. Carbon Design
+            System is an IBM project, and React Aria is an Adobe project.
+            Carbon-derived tokens and source references retain Apache-2.0 attribution. IBM Plex is
+            distributed under the SIL Open Font License. Cinder is a working name for this
+            independent library.
           </p>
           <p>
             The production build includes{" "}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Icon, Switch } from "@cinder/react";
 import { directions, directionOrder, type Direction } from "./data";
-import { referenceImages } from "./references";
+import { astryxFieldImages, referenceImages } from "./references";
 
 type Example = "form" | "queue" | "dialog";
 type Observation = { choice: string; reason: string; tradeoff: string };
@@ -25,9 +25,9 @@ const examples: Record<
     question:
       "Compare the fields and Save button. Then show an invalid email and look for the instructions.",
     lesson:
-      "All three Cinder forms use the same field order and validation behavior. Field and Index both use 40px controls here. Relay uses 48px controls. The form comparison is mostly about shape, emphasis, and space.",
+      "All four Cinder forms use the same fields and validation behavior. Field and Index use 40px controls here, Relay uses 48px, and Frame uses 44px. Frame also changes the reading order: guidance first, then the input, then attached recovery.",
     relation:
-      "Field keeps a structured form with modest rounding. Index is closer to Carbon’s square geometry, but uses full field outlines. Relay is softer, like HeroUI, yet its 48px button is larger than HeroUI’s 36px desktop default.",
+      "Frame takes its field anatomy from the Astryx reference below. Relay explores softer, roomier controls alongside HeroUI. Index is closer to Carbon’s square geometry, while Field takes a middle ground. All four use full field outlines.",
     candidates: {
       field: {
         choice: "The fields and button are 40px high, with 4px corners and a green primary action.",
@@ -46,6 +46,14 @@ const examples: Record<
         reason: "The form stays precise while leaving enough space for typing.",
         tradeoff: "Its compact character is clearer in the review queue than in this form.",
       },
+      frame: {
+        choice:
+          "44px controls have 10px corners. Guidance sits above the input; a tinted recovery message joins its lower edge.",
+        reason:
+          "You can read the instructions before typing and see exactly which field needs attention.",
+        tradeoff:
+          "Reserving room for the recovery message keeps the next action stable, but leaves more space in a valid form.",
+      },
     },
     carbon:
       "The published TextInput uses a filled field with an underline and a 12px label. This default input is 40px high; the ordinary primary button is 48px. In the invalid capture, the error replaces the helper text.",
@@ -58,7 +66,7 @@ const examples: Record<
     question:
       "Would you rather scan the whole queue, follow a suggested next action, or inspect one record in context?",
     lesson:
-      "This is the largest difference between the proposals. Field prioritizes an overview. Relay prioritizes the next task. Index prioritizes the relationship between a list and its selected record.",
+      "Field and Frame prioritize an overview. Relay prioritizes the next task. Index prioritizes the relationship between a list and its selected record. Frame’s distinction is clearest in forms, rather than a different queue workflow.",
     relation:
       "Carbon and HeroUI both supply tables. Neither library decides that a product needs Relay’s next-task panel or Index’s persistent detail pane. Those are workflow choices made by the application.",
     candidates: {
@@ -80,6 +88,14 @@ const examples: Record<
         tradeoff:
           "There is more information to read at once. Narrow screens use a separate detail view.",
       },
+      frame: {
+        choice:
+          "An aligned table sits in a bordered work area, with 44px filters and warm review-status labels.",
+        reason:
+          "The familiar overview carries Frame’s control and state language into everyday data work.",
+        tradeoff:
+          "It gives less next-task guidance than Relay and less persistent detail than Index.",
+      },
     },
     carbon:
       "The published table has a strong header band and continuous rows. Its alignment makes the columns easy to compare. The two-column arrangement and review-status tags here are choices made for this specimen.",
@@ -92,7 +108,7 @@ const examples: Record<
     question:
       "Look at the field grouping and the separation between Cancel and Save. Open a working version to try the dropdown and Escape key.",
     lesson:
-      "The three Cinder dialogs have the same controls and dismissal behavior. Their differences are the size of the controls, the corners, and the emphasis of the actions. Open a dropdown, press Escape once, then press it again.",
+      "The four Cinder dialogs share controls and dismissal behavior. Their differences are field grouping, control size, corners, and action emphasis. In a working example, open a dropdown, press Escape once, then press it again.",
     relation:
       "Carbon’s action footer spans the dialog edge. HeroUI uses separate rounded actions inside the surface. The Cinder proposals keep separate actions and vary the surface geometry. Corner shape does not determine keyboard behavior.",
     candidates: {
@@ -113,6 +129,14 @@ const examples: Record<
         tradeoff:
           "Targets are tighter on desktop. The working prototype expands controls on narrow screens.",
       },
+      frame: {
+        choice:
+          "44px controls and 18px dialog corners frame a single editing step, with separate Cancel and Save actions.",
+        reason:
+          "The fields keep the same treatment as settings, including guidance above the reviewer dropdown in the working dialog.",
+        tradeoff:
+          "Extra guidance makes the dialog taller. Long notes still need room to scroll on a small screen.",
+      },
     },
     carbon:
       "The published modal is square and has a full-width action footer. That footer uses 64px buttons in this configuration, rather than the ordinary 48px button shown in the form. The footer makes the commitment visually prominent.",
@@ -125,6 +149,7 @@ const purposes: Record<Direction, string> = {
   field: "Keep the whole workspace understandable.",
   relay: "Make the next action obvious.",
   index: "Keep a record and its context close.",
+  frame: "Keep instructions, input, and recovery together.",
 };
 
 const referenceDocs = {
@@ -180,9 +205,12 @@ export function ComparisonGuide({
       <header className="comparison-intro">
         <h1>Compare the designs</h1>
         <p>
-          Field, Relay, and Index are three proposed Cinder designs. See how each handles the same
-          job, then compare it with Carbon and HeroUI.
+          Four proposals, the same jobs. Frame explores Astryx’s field clarity alongside Field,
+          Relay, and Index. HeroUI remains a visual reference; Carbon helps us reason about the work.
         </p>
+        <Button variant="tertiary" onPress={() => onTry("frame", "form")}>
+          Try Frame settings <Icon name="arrowRight" />
+        </Button>
       </header>
 
       <div className="comparison-controls" role="group" aria-label="Choose a comparison task">
@@ -262,16 +290,74 @@ export function ComparisonGuide({
         </div>
       </section>
 
+      <section className="comparison-astryx" aria-labelledby="astryx-reference-title">
+        <header className="comparison-section-heading">
+          <h2 id="astryx-reference-title">Frame’s starting point: Astryx</h2>
+          <p>
+            These are Astryx’s own Field documentation examples: an invalid email, a username
+            warning, and a valid API key. The public docs displayed version 0.7.9 when captured.
+          </p>
+        </header>
+        <div className="comparison-astryx-body">
+          <figure className="comparison-specimen">
+            <a
+              href={astryxFieldImages[mode]}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Enlarge Astryx field states (opens in a new tab)"
+            >
+              <img
+                src={astryxFieldImages[mode]}
+                width={252}
+                height={368}
+                loading="lazy"
+                alt={`Astryx, ${mode} theme: email error, username warning, and API key success, with status messages attached below each input.`}
+              />
+            </a>
+            <figcaption>Actual documentation crop · 252 × 368px.</figcaption>
+          </figure>
+          <div className="comparison-reading">
+            <dl className="comparison-observations">
+              <div>
+                <dt>What carries into Frame</dt>
+                <dd>
+                  Guidance precedes the control. Recovery stays attached to the field, with an icon
+                  and words as well as color. Focus has its own outline.
+                </dd>
+              </div>
+              <div>
+                <dt>What Cinder decides</dt>
+                <dd>
+                  Frame uses its own cool-neutral palette, 44px controls, and reserved error space.
+                  The working flow uses React Aria and shows success after saving, rather than
+                  validating every field with a green state.
+                </dd>
+              </div>
+              <div>
+                <dt>Read this as anatomy</dt>
+                <dd>
+                  Astryx’s content and dimensions differ from the task specimens. This crop shows
+                  the visual idea; the working Cinder examples let you test the resulting behavior.
+                </dd>
+              </div>
+            </dl>
+            <a href="https://astryx.atmeta.com/components/Field" target="_blank" rel="noreferrer">
+              Read Astryx’s Field documentation <Icon name="external" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="comparison-references" aria-labelledby="published-references-title">
         <header className="comparison-section-heading">
-          <h2 id="published-references-title">Compare with the published systems</h2>
+          <h2 id="published-references-title">Compare the other published references</h2>
           <p>
-            These are captures of actual Carbon and HeroUI components, assembled into the same small
-            tasks. They show the versions below.
+            Actual HeroUI and Carbon components, assembled into the same small tasks as the Cinder
+            specimens. Their versions are shown below.
           </p>
         </header>
         <div className="comparison-reference-grid">
-          {(["carbon", "heroui"] as const).map((system) => {
+          {(["heroui", "carbon"] as const).map((system) => {
             const name = system === "carbon" ? "Carbon v11" : "HeroUI v3";
             return (
               <article className="comparison-reference" key={system}>
@@ -313,17 +399,18 @@ export function ComparisonGuide({
 
       <section className="comparison-decision" aria-labelledby="comparison-decision-title">
         <div>
-          <h2 id="comparison-decision-title">Preferred direction: Relay</h2>
+          <h2 id="comparison-decision-title">Current exploration: Frame</h2>
           <p>
-            Relay is the preferred starting point for the next design pass. Its larger controls,
-            softer corners, and clear next-review action set the direction. The main tradeoff is
-            more vertical space and fewer records on screen.
+            Astryx now leads the visual exploration. Frame tests its field clarity in a complete
+            settings and review flow. Relay’s <a href="/relay">reusable component gallery</a> records
+            the earlier library work. Frame is a proposal to evaluate before a new library direction
+            is adopted.
           </p>
         </div>
         <div>
           <h3>Useful feedback names the part</h3>
           <p>
-            For example: “I prefer Field’s form, Relay’s next-review action, and Index’s persistent
+            For example: “I prefer Frame’s guidance, Relay’s next-review action, and Index’s persistent
             details.” You can choose those parts independently before deciding on a final identity.
           </p>
         </div>
@@ -337,9 +424,10 @@ export function ComparisonGuide({
             forms, search, selection, editing, and recovery states.
           </li>
           <li>
-            Every specimen is 380px wide, captured at a 1200px desktop viewport on 6 November 2026.
-            They shrink to fit a narrow page. The lists use the same three fictional records; the
-            working workspace has twelve.
+            Task specimens are 380px wide, captured at a 1200px desktop viewport on 6 November 2026.
+            Astryx’s 252px-wide documentation crop came from a 1440px viewport. Images shrink to fit
+            a narrow page. The lists use the same three fictional records; the working workspace has
+            twelve.
           </li>
           <li>
             The specimen composition is ours. Carbon and HeroUI provide their published component
@@ -347,8 +435,8 @@ export function ComparisonGuide({
             the common specimen width.
           </li>
           <li>
-            Cinder and Carbon use IBM Plex Sans. HeroUI uses the local system font in these
-            captures; its documentation site uses Inter.
+            Field, Relay, Index, and Carbon use IBM Plex Sans. Frame and the HeroUI specimens use
+            the local system font. Astryx’s documentation uses Figtree.
           </li>
           <li>
             Use the theme button at the top to compare light and dark captures. In the working
@@ -356,8 +444,8 @@ export function ComparisonGuide({
             Index’s 32px desktop controls are not its mobile target size.
           </li>
           <li>
-            All Cinder edits stay in the current tab until reload or “Reset demo”. No design,
-            palette, or component interface has been adopted.
+            All Cinder edits stay in the current tab until reload or “Reset demo”. These comparison
+            themes remain prototype-local; the reusable Relay slice is documented separately.
           </li>
         </ul>
       </details>

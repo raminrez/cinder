@@ -1,8 +1,27 @@
 # Cinder — design direction
 
-## Current direction: Relay
+## Current exploration: Frame
 
-Relay is the preferred direction. Its first reusable web slice is available at
+**Astryx now leads Cinder's visual exploration**, especially its clear fields,
+instructions, and validation. HeroUI v3 remains a visual and developer-experience
+reference. Carbon chiefly informs UX reasoning, accessibility, layout, coverage,
+and AI-related guidance.
+
+The fourth proposal, **Frame**, is available at
+[`/prototypes?variant=frame&view=settings`](http://127.0.0.1:3000/prototypes?variant=frame&view=settings).
+It puts guidance above inputs and attaches recovery below them. Cool neutrals,
+neutral actions, blue focus/selection, 44px controls, and 10/14/18px corners make
+the direction concrete. The cost is more vertical space for persistent guidance
+and reserved validation messages.
+
+Frame uses the existing React Aria behavior and shared review flows. Its CSS is
+prototype-local; adopting a new reusable theme remains a decision after evaluation.
+See the [prototype guide](prototypes-guide.md), [Astryx findings](research-astryx.md),
+and the scoped visual rules in [DESIGN.md](../DESIGN.md).
+
+## Implemented library slice: Relay
+
+Relay's first reusable web slice is available at
 [`/relay`](http://127.0.0.1:3000/relay): neutral actions, full field borders,
 8/12/20px corners, comfortable control sizes, and authored light/dark palettes.
 The [Relay specification](relay.md) records the implemented tokens, APIs, states,
@@ -12,7 +31,11 @@ The main website and `/components` catalog retain the Carbon reference identity
 described below. Those pages document the baseline rather than imply that all 45
 families have completed the Relay treatment.
 
-## Carbon reference brief
+## Original Carbon reference brief
+
+The remainder records the original homepage and component-catalog brief. Its
+palette and typography constraints apply to those baseline surfaces, not to Frame
+or future Cinder proposals. [PRODUCT.md](../PRODUCT.md) records the current goals.
 
 Build a reusable React component library that implements Carbon's design rules
 using RAC behavior, with a distinctive public website and useful live documentation.

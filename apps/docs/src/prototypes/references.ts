@@ -22,6 +22,16 @@ import indexFormDark from "./references/index-form-dark.webp";
 import indexErrorDark from "./references/index-error-dark.webp";
 import indexQueueDark from "./references/index-queue-dark.webp";
 import indexDialogDark from "./references/index-dialog-dark.webp";
+import frameFormLight from "./references/frame-form-light.webp";
+import frameErrorLight from "./references/frame-error-light.webp";
+import frameQueueLight from "./references/frame-queue-light.webp";
+import frameDialogLight from "./references/frame-dialog-light.webp";
+import frameFormDark from "./references/frame-form-dark.webp";
+import frameErrorDark from "./references/frame-error-dark.webp";
+import frameQueueDark from "./references/frame-queue-dark.webp";
+import frameDialogDark from "./references/frame-dialog-dark.webp";
+import astryxFieldLight from "./references/astryx-field-light.webp";
+import astryxFieldDark from "./references/astryx-field-dark.webp";
 import carbonFormLight from "./references/carbon-form-light.webp";
 import carbonErrorLight from "./references/carbon-error-light.webp";
 import carbonQueueLight from "./references/carbon-queue-light.webp";
@@ -86,6 +96,21 @@ export const referenceImages = {
     },
     heights: { form: 468, error: 468, queue: 483, dialog: 502 },
   },
+  frame: {
+    light: {
+      form: frameFormLight,
+      error: frameErrorLight,
+      queue: frameQueueLight,
+      dialog: frameDialogLight,
+    },
+    dark: {
+      form: frameFormDark,
+      error: frameErrorDark,
+      queue: frameQueueDark,
+      dialog: frameDialogDark,
+    },
+    heights: { form: 522, error: 522, queue: 409, dialog: 543 },
+  },
   carbon: {
     light: {
       form: carbonFormLight,
@@ -117,3 +142,6 @@ export const referenceImages = {
     heights: { form: 364, error: 380, queue: 403, dialog: 442 },
   },
 };
+
+// Astryx's own Field documentation examples, at their original 252×368px crop.
+export const astryxFieldImages = { light: astryxFieldLight, dark: astryxFieldDark };

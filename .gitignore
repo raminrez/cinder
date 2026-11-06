@@ -2,6 +2,8 @@ node_modules/
 dist/
 .research/
 .tools/
+.impeccable/review/
+.impeccable/config.local.json
 .taste-skill/inspect/
 .taste-skill/before/
 test-results/
