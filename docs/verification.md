@@ -38,6 +38,7 @@ anatomy remain [Phase 2](component-library-plan.md#phase-2--first-complete-frame
 | Formatting and whitespace | 117-file formatting check and `git diff --check` passed before the final documentation pass |
 | Production build | Both packages, declarations, generated CSS/JSON, and the documentation build passed |
 | Installed consumers | Native CSS, compiled Bun CSS Modules, and pinned Tailwind **4.3.5** passed installation, strict declaration checking, production bundling, and browser contracts |
+| README installation | Exact tarball commands, both optional font commands, and all three TSX snippets passed strict declaration checking and bundling in another isolated app |
 
 The six legacy hashes are asserted directly in
 [`tests/unit/tokens.test.ts`](../tests/unit/tokens.test.ts); the regression tests
@@ -49,7 +50,8 @@ Button `xl/2xl` remains 64/80px. The public mapping is documented in the
 
 ### Installed styling and behavior
 
-The [consumer record](../test-results/package-consumer.json) and
+The [consumer record](../test-results/package-consumer.json), completed at
+**21:20:03 UTC**, and
 [final command output](../test-results/frame-phase1-package.log) identify the
 archives and executed checks. The
 [fixture guide](../tests/fixtures/consumer/README.md) documents repeatable commands.
@@ -109,7 +111,7 @@ prebuilt stylesheet. No styling engine or runtime dependency was added.
 
 This proof covers foundation contracts, not complete Frame catalog parity.
 Manual screen-reader work, Firefox/WebKit, physical devices, real IME and
-translation, representative-user evaluation, text resizing, and zoom/reflow
+translation, representative-user evaluation, text resizing, zoom/reflow, and SSR/hydration
 remain outstanding. Figma follows the completed library and release proof in
 [Phase 7](component-library-plan.md#phase-7--figma-last).
 
@@ -301,8 +303,9 @@ and `PLAYWRIGHT_CHANNEL` selects an installed alternative channel.
 ### Unit and type checks
 
 [Unit tests](../tests/unit/) cover selected official Carbon semantic/component
-colors in all four Carbon themes, both Relay contracts and selected contrast pairs,
-consistent token key sets, spacing/type/motion samples,
+colors in all four Carbon themes, Relay and Frame contracts and selected contrast
+pairs, unchanged legacy hashes, scoped Frame foundations, consistent token key
+sets, spacing/type/motion samples,
 layer saturation, theme-name validation, literal CSS variable references,
 structured typography serialization, pagination normalization, and file acceptance.
 The structured-type assertions compare full selected objects, including sparse
@@ -392,8 +395,10 @@ The current Frame-foundation archives are identified by the
 | [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 46,331 | `ec741687d4fad05c440b56d2b5028b30b05ba0be628770990405f8488a263841` |
 | [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 81,833 | `9b33628ba5a84f0a1ef7b9a7b4680bd502bff37e94d4be98b1413a12d33afd61` |
 
-The manifest, actual archive bytes, package-consumer record, and README-install
-record agree on these hashes. `@cinder/tokens@0.1.0` is an explicit React-package
+The [identity check](../test-results/frame-phase1-identities.json) confirms that
+the manifest, actual archive bytes, package-consumer record, and README-install
+record agree on these hashes, and that the checked README is current.
+`@cinder/tokens@0.1.0` is an explicit React-package
 peer; workspace development retains `workspace:*`. Library consumers supply their
 fonts when needed; Frame uses the system sans-serif stack. The README demonstrates
 separate optional pinned Plex Sans and Mono installs. Its
