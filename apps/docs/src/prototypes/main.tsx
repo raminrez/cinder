@@ -1,4 +1,4 @@
-// Throwaway comparison of Field, Relay, and Index at /prototypes?variant=field.
+// Throwaway design comparison and working examples at /prototypes.
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type Ref } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -48,6 +48,7 @@ import {
   type StatusFilter,
   type WorkspaceSettings,
 } from "./data";
+import { ComparisonGuide } from "./comparison";
 
 type View = "workspace" | "settings" | "guide";
 type Route = { variant: Direction; view: View; mode: "light" | "dark" };
@@ -60,7 +61,7 @@ function readRoute(): Route {
   const view = params.get("view");
   return {
     variant: variant === "relay" || variant === "index" ? variant : "field",
-    view: view === "settings" || view === "guide" ? view : "workspace",
+    view: view === "settings" || view === "workspace" ? view : "guide",
     mode: params.get("mode") === "dark" ? "dark" : "light",
   };
 }
@@ -154,7 +155,7 @@ function Navigation({ route, onView }: { route: Route; onView: (view: View) => v
         onPress={() => onView("guide")}
       >
         <Icon name="info" />
-        <span>Guide</span>
+        <span>Compare</span>
       </Button>
     </nav>
   );
@@ -188,15 +189,22 @@ function Shell({
   name: string;
   children: ReactNode;
 }) {
+  if (route.view === "guide") {
+    return (
+      <main id="main" className="comparison-main" tabIndex={-1}>
+        {children}
+      </main>
+    );
+  }
   const navigation = <Navigation route={route} onView={onView} />;
   if (route.variant === "relay") {
     return (
       <div className="relay-shell">
-        <header className="relay-header">
+        <section className="relay-header" aria-label="Workspace overview">
           <Brand />
           {navigation}
           <span className="workspace-name">{name}</span>
-        </header>
+        </section>
         <main id="main" className="relay-main" tabIndex={-1}>
           {children}
         </main>
@@ -206,12 +214,12 @@ function Shell({
   if (route.variant === "index") {
     return (
       <div className="index-shell">
-        <header className="index-header">
+        <section className="index-header" aria-label="Workspace overview">
           <Brand />
           <span className="workspace-name">{name}</span>
           <span className="index-context">Component review register</span>
-        </header>
-        <aside className="index-rail">{navigation}</aside>
+        </section>
+        <div className="index-rail">{navigation}</div>
         <main id="main" className="index-main" tabIndex={-1}>
           {children}
         </main>
@@ -220,7 +228,7 @@ function Shell({
   }
   return (
     <div className="field-shell">
-      <aside className="field-sidebar">
+      <aside className="field-sidebar" aria-label="Workspace overview">
         <Brand />
         <div className="workspace-heading">
           <span>Sample workspace</span>
@@ -232,10 +240,10 @@ function Shell({
           A review brings the component, its owner, and the next decision together.
         </p>
       </aside>
-      <div className="field-mobile-header">
+      <section className="field-mobile-header" aria-label="Workspace overview">
         <Brand />
         {navigation}
-      </div>
+      </section>
       <main id="main" className="field-main" tabIndex={-1}>
         {children}
       </main>
@@ -908,8 +916,8 @@ function Settings({
             </Button>
           </div>
         </Form>
-        <aside className="summary-preview">
-          <h2>Summary preview</h2>
+        <aside className="summary-preview" aria-labelledby="summary-preview-title">
+          <h2 id="summary-preview-title">Summary preview</h2>
           {settings.digest ? (
             <>
               <div className="summary-message">
@@ -1031,96 +1039,6 @@ function EditReview({
   );
 }
 
-function Guide({
-  onChoose,
-  onView,
-}: {
-  onChoose: (variant: Direction) => void;
-  onView: (view: View) => void;
-}) {
-  return (
-    <div className="prototype-guide">
-      <header className="workspace-title">
-        <div>
-          <h1>Compare the designs</h1>
-          <p>The same work, arranged in three different ways.</p>
-        </div>
-      </header>
-      <section className="guide-current">
-        <h2>Where we are</h2>
-        <p>
-          The Carbon, Base, and HeroUI research is complete. The recommendation is to keep Cinder's
-          existing React controls and keyboard behavior, choose an original visual direction, and
-          make custom styling more consistent.
-        </p>
-        <p>
-          These prototypes help with the visual choice. The workspace and its people are fictional.
-          Changes stay in this tab until you reload or reset the demo.
-        </p>
-      </section>
-      <div className="guide-directions">
-        {directionOrder.map((variant) => (
-          <section className="guide-direction" key={variant} data-direction={variant}>
-            <div>
-              <h2>{directions[variant].name}</h2>
-              <span>{directions[variant].geometry}</span>
-            </div>
-            <div>
-              <p>{directions[variant].summary}</p>
-              <p>{directions[variant].goodFor}</p>
-              <p className="guide-tradeoff">{directions[variant].tradeoff}</p>
-            </div>
-            <Button variant="tertiary" onPress={() => onChoose(variant)}>
-              Try {directions[variant].name}
-              <Icon name="arrowRight" />
-            </Button>
-          </section>
-        ))}
-      </div>
-      <section className="guide-try">
-        <h2>What to try</h2>
-        <ol>
-          <li>
-            In Reviews, search for "dialog", then clear the search. Select two reviews and use
-            "Assign selected".
-          </li>
-          <li>
-            Switch designs with the bottom bar. Your edits, search, and selection carry across.
-          </li>
-          <li>
-            Open Settings. Clear the workspace name and save. Check that the error explains the fix
-            and the helper text remains visible.
-          </li>
-          <li>Use "Try a state" to preview a save error or a failed load. Retry the action.</li>
-          <li>
-            Switch to dark mode. Open a review and its Reviewer dropdown. Press Escape once to close
-            the dropdown, then again to close the dialog.
-          </li>
-        </ol>
-        <Button variant="tertiary" onPress={() => onView("settings")}>
-          Try the settings form
-          <Icon name="arrowRight" />
-        </Button>
-      </section>
-      <section className="guide-decision">
-        <h2>My starting recommendation</h2>
-        <p>
-          Start with Field. It fits Cinder's mix of forms and data work. Relay makes the next action
-          more obvious, while Index gives more space to records and their details.
-        </p>
-        <p>
-          A useful choice can combine parts of these designs. Compare how easily you find the next
-          action, read a row, and recover from an error.
-        </p>
-        <a href="/components" target="_blank" rel="noreferrer">
-          Open the current Cinder controls in a new tab
-          <Icon name="external" />
-        </a>
-      </section>
-    </div>
-  );
-}
-
 function PrototypeSwitcher({
   route,
   onRoute,
@@ -1180,7 +1098,7 @@ function PrototypeSwitcher({
         variant="ghost"
         onPress={() => onRoute({ view: route.view === "guide" ? "workspace" : "guide" })}
       >
-        {route.view === "guide" ? "Reviews" : "Guide"}
+        {route.view === "guide" ? "Reviews" : "Compare"}
       </Button>
     </nav>
   );
@@ -1210,6 +1128,14 @@ function Demo({
   const [failNextSave, setFailNextSave] = useState(false);
   const [draft, setDraft] = useState<ReviewDraft | null>(null);
   const [notice, setNotice] = useState("");
+  const previousView = useRef(route.view);
+
+  useLayoutEffect(() => {
+    if (previousView.current !== route.view) {
+      document.getElementById("main")?.focus({ preventScroll: true });
+      previousView.current = route.view;
+    }
+  }, [route.view]);
 
   useEffect(() => {
     if (loadState !== "loading") return;
@@ -1347,35 +1273,48 @@ function Demo({
       className="prototype-app"
     >
       <a className="prototype-skip" href="#main">
-        Skip to workspace
+        {route.view === "guide" ? "Skip to comparisons" : "Skip to workspace"}
       </a>
       <header className="study-header">
         <div>
           <strong>Cinder prototypes</strong>
-          <span className="study-note">Sample data. Changes last until reload.</span>
+          <span className="study-note">
+            {route.view === "guide"
+              ? "Design proposals and published references"
+              : "Sample data. Changes last until reload."}
+          </span>
         </div>
         <div className="study-actions">
-          <MenuTrigger>
-            <Button
-              variant="ghost"
-              isDisabled={saveState === "saving"}
-              aria-label="Try a prototype state"
-            >
-              Try a state
-              <Icon name="chevronDown" />
+          {route.view === "guide" ? (
+            <Button variant="ghost" onPress={() => onRoute({ view: "workspace" })}>
+              Open workspace
+              <Icon name="arrowRight" />
             </Button>
-            <Popover placement="bottom end">
-              <Menu aria-label="Prototype states" onAction={tryState}>
-                <MenuItem id="empty">Empty results</MenuItem>
-                <MenuItem id="loading">Loading reviews</MenuItem>
-                <MenuItem id="load-error">Failed load</MenuItem>
-                <MenuItem id="save-error">Failed save</MenuItem>
-              </Menu>
-            </Popover>
-          </MenuTrigger>
-          <Button variant="ghost" onPress={onReset}>
-            Reset demo
-          </Button>
+          ) : (
+            <>
+              <MenuTrigger>
+                <Button
+                  variant="ghost"
+                  isDisabled={saveState === "saving"}
+                  aria-label="Try a prototype state"
+                >
+                  Try a state
+                  <Icon name="chevronDown" />
+                </Button>
+                <Popover placement="bottom end">
+                  <Menu aria-label="Prototype states" onAction={tryState}>
+                    <MenuItem id="empty">Empty results</MenuItem>
+                    <MenuItem id="loading">Loading reviews</MenuItem>
+                    <MenuItem id="load-error">Failed load</MenuItem>
+                    <MenuItem id="save-error">Failed save</MenuItem>
+                  </Menu>
+                </Popover>
+              </MenuTrigger>
+              <Button variant="ghost" onPress={onReset}>
+                Reset demo
+              </Button>
+            </>
+          )}
           <Button
             variant="ghost"
             iconOnly
@@ -1407,9 +1346,16 @@ function Demo({
           </div>
         ) : null}
         {route.view === "guide" ? (
-          <Guide
-            onChoose={(variant) => onRoute({ variant, view: "workspace" })}
-            onView={(view) => onRoute({ view })}
+          <ComparisonGuide
+            mode={route.mode}
+            onTry={(variant, example) => {
+              if (example === "dialog") {
+                onRoute({ variant });
+                openReview(active);
+              } else {
+                onRoute({ variant, view: example === "form" ? "settings" : "workspace" });
+              }
+            }}
           />
         ) : route.view === "settings" ? (
           <Settings
@@ -1441,7 +1387,7 @@ function Demo({
           onSave={saveReview}
         />
       ) : null}
-      {process.env.NODE_ENV !== "production" ? (
+      {process.env.NODE_ENV !== "production" && route.view !== "guide" ? (
         <PrototypeSwitcher route={route} onRoute={onRoute} />
       ) : null}
     </Theme>
@@ -1455,8 +1401,8 @@ function App() {
     document.documentElement.dataset.prototype = route.variant;
     document.documentElement.dataset.mode = route.mode;
     document.documentElement.style.colorScheme = route.mode;
-    document.title = `Cinder prototypes | ${directions[route.variant].name}`;
-  }, [route.variant, route.mode]);
+    document.title = `Cinder prototypes | ${route.view === "guide" ? "Compare the designs" : directions[route.variant].name}`;
+  }, [route.variant, route.mode, route.view]);
   useEffect(() => {
     const onPopState = () => setRoute(readRoute());
     window.addEventListener("popstate", onPopState);

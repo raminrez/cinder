@@ -158,6 +158,8 @@ See [verification results](docs/verification.md) and the [visual critique](docs/
 - [Carbon](docs/research-carbon.md): foundations, component rules, visual/source
   comparisons, and the read-only Carbon and Carbon MCP reference repositories.
 - [RAC](docs/research-rac.md): current APIs, composition contracts, and adaptations.
+- [Prototype guide](docs/prototypes-guide.md): compare Field, Relay, and Index with
+  Carbon and HeroUI using the development-only `/prototypes` page.
 - [Design direction](docs/design-direction.md) and [implementation plan](docs/superpowers/plans/2026-11-05-cinder.md).
 
 Reports distinguish full reads, targeted reads, and archived material. Downloaded

@@ -21,7 +21,7 @@ export const directions = {
   index: {
     name: "Index",
     summary: "Compact rows and a detail pane keep the selected record in view.",
-    geometry: "32 px controls · square corners",
+    geometry: "32 px tools · 40 px forms",
     goodFor: "Developer tools and long sessions with structured records.",
     tradeoff: "The compact layout asks more of the reader and can feel less welcoming.",
     reason: "Choose this if you spend more time scanning records than filling out forms.",

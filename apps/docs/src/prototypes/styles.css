@@ -1241,6 +1241,10 @@ h4 {
 .workspace-form {
   min-width: 0;
 }
+.workspace-form .cinder-field[data-required] > .cinder-field-help {
+  /* Keep Save under the pointer when blur reveals a wrapped validation message. */
+  grid-template-rows: auto minmax(36px, auto);
+}
 .workspace-form fieldset {
   border: 0;
   padding: 0;
@@ -1372,7 +1376,6 @@ h4 {
   padding: 12px 16px;
   background: var(--p-raised);
   margin-bottom: 24px;
-  border-left: 3px solid var(--p-accent);
 }
 .save-feedback {
   display: flex;
@@ -1567,82 +1570,283 @@ h4 {
   padding-left: 16px;
 }
 
-.prototype-guide {
-  max-width: 1080px;
+.comparison-main {
+  padding: 44px 32px 72px;
+}
+.comparison-guide {
+  --p-control-height: 44px;
+  --p-radius-control: 4px;
+  max-width: 1204px;
   margin-inline: auto;
+  font-size: 15px;
+  line-height: 1.6;
 }
-.prototype-guide p {
-  line-height: 1.7;
+.comparison-intro h1 {
+  font-size: 36px;
+  line-height: 1.2;
 }
-.guide-current {
-  max-width: 78ch;
-  margin-bottom: 32px;
-}
-.guide-current h2 {
-  margin-bottom: 12px;
-}
-.guide-current p + p {
+.comparison-intro p {
+  max-width: 72ch;
   margin-top: 12px;
+  font-size: 18px;
   color: var(--p-muted);
 }
-.guide-directions {
-  border-top: 1px solid var(--p-border);
-}
-.guide-direction {
-  display: grid;
-  grid-template-columns: 176px minmax(0, 1fr) auto;
-  gap: 24px;
-  align-items: start;
-  padding: 28px 0;
+.comparison-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 28px 32px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--p-border);
 }
-.guide-direction h2 {
-  font-size: 24px;
-  margin-bottom: 8px;
+.comparison-controls .cinder-button {
+  border-bottom: 2px solid transparent;
+  border-radius: 4px 4px 0 0;
+  font-weight: 400;
 }
-.guide-direction > div:first-child > span {
-  display: block;
-  color: var(--p-muted);
-  font-size: 12px;
+.comparison-controls .cinder-button[aria-pressed="true"] {
+  color: var(--p-text);
+  background: var(--p-active);
+  border-bottom-color: var(--p-accent);
+  font-weight: 500;
 }
-.guide-direction p + p {
+.comparison-task {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.comparison-task h2 {
+  font-size: 22px;
+  line-height: 1.3;
+}
+.comparison-task p {
+  max-width: 70ch;
   margin-top: 8px;
 }
-.guide-direction .guide-tradeoff {
+.comparison-task .cinder-switch {
+  flex-shrink: 0;
+  min-height: 44px;
+}
+.comparison-candidates,
+.comparison-reference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 32px;
+}
+.comparison-candidate,
+.comparison-reference {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+}
+.comparison-candidate > header h3,
+.comparison-reference > header h3 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+.comparison-candidate > header p,
+.comparison-reference > header p {
+  font-size: 14px;
   color: var(--p-muted);
 }
-.guide-direction .cinder-button {
-  align-self: center;
+.comparison-specimen {
+  min-width: 0;
+  margin: 0;
+  align-self: start;
 }
-.guide-try {
-  margin-block: 32px;
-  max-width: 78ch;
+.comparison-specimen > a {
+  display: block;
+  max-width: 380px;
+  border: 1px solid var(--p-border);
+  cursor: zoom-in;
 }
-.guide-try ol {
-  margin: 16px 0 24px;
-  padding-left: 22px;
+.comparison-specimen img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.guide-try li {
-  padding-left: 6px;
-  margin-block: 12px;
-  line-height: 1.7;
+.comparison-specimen figcaption {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--p-muted);
 }
-.guide-decision {
-  padding: 24px;
-  background: var(--p-raised);
-  border-radius: var(--p-radius-group);
+.comparison-reading {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
 }
-.guide-decision h2 {
-  margin-bottom: 12px;
+.comparison-observations {
+  display: grid;
+  gap: 16px;
 }
-.guide-decision p + p {
+.comparison-observations dt {
+  font-size: 14px;
+  font-weight: 600;
+}
+.comparison-observations dd {
+  margin-top: 4px;
+}
+.comparison-reading > .cinder-button {
+  margin-top: auto;
+}
+.comparison-reading > a,
+.comparison-relationship > a {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.comparison-reading > a > svg,
+.comparison-relationship > a > svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.comparison-lesson {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 12px 32px;
+  margin-top: 36px;
+  padding-block: 24px;
+  border-block: 1px solid var(--p-border);
+}
+.comparison-lesson h3 {
+  grid-row: span 2;
+  font-size: 18px;
+}
+.comparison-lesson p {
+  max-width: 75ch;
+}
+.comparison-references {
+  margin-top: 48px;
+}
+.comparison-section-heading {
+  margin-bottom: 28px;
+}
+.comparison-section-heading h2,
+.comparison-decision h2 {
+  font-size: 24px;
+  line-height: 1.3;
+}
+.comparison-section-heading p {
+  max-width: 75ch;
+  margin-top: 8px;
+}
+.comparison-relationship {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+  align-self: start;
+}
+.comparison-relationship p {
   margin-top: 12px;
 }
-.guide-decision a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.comparison-relationship h4 {
+  margin-top: 28px;
+  font-size: 16px;
+}
+.comparison-relationship > a {
   margin-top: 20px;
+}
+.comparison-decision {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 64px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--p-border);
+}
+.comparison-decision p {
+  margin-top: 12px;
+}
+.comparison-method {
+  margin-top: 36px;
+  padding-top: 16px;
+  border-top: 1px solid var(--p-border);
+}
+.comparison-method summary {
+  width: fit-content;
+  min-height: 44px;
+  padding-block: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.comparison-method summary:focus-visible {
+  outline: 2px solid var(--p-accent);
+  outline-offset: 3px;
+}
+.comparison-method ul {
+  max-width: 80ch;
+  margin: 12px 0 0;
+  padding-left: 24px;
+}
+.comparison-method li {
+  margin-block: 8px;
+  padding-left: 4px;
+}
+
+@media (max-width: 1268px) {
+  .comparison-guide {
+    max-width: 920px;
+  }
+  .comparison-candidates,
+  .comparison-reference-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .comparison-candidate,
+  .comparison-reference {
+    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-row: auto;
+    gap: 16px 32px;
+  }
+  .comparison-candidate > header,
+  .comparison-reference > header {
+    grid-column: 1 / -1;
+  }
+  .comparison-reading {
+    align-self: start;
+  }
+  .comparison-relationship {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 75ch;
+  }
+  .comparison-decision {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 720px) {
+  .comparison-guide {
+    max-width: 560px;
+  }
+  .comparison-task {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .comparison-candidate,
+  .comparison-reference {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+  .comparison-candidate + .comparison-candidate,
+  .comparison-reference + .comparison-reference {
+    padding-top: 28px;
+    border-top: 1px solid var(--p-border);
+  }
+  .comparison-lesson,
+  .comparison-decision {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .comparison-lesson h3 {
+    grid-row: auto;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -1771,13 +1975,6 @@ h4 {
   }
   .prototype-table .review-avatar {
     display: none;
-  }
-  .guide-direction {
-    grid-template-columns: 140px minmax(0, 1fr);
-  }
-  .guide-direction > .cinder-button {
-    grid-column: 2;
-    justify-self: start;
   }
 }
 
@@ -2288,28 +2485,28 @@ h4 {
   .prototype-switcher .switcher-guide {
     padding-inline: 10px;
   }
-  .guide-direction {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding-block: 24px;
+  .comparison-main {
+    padding: 28px 16px 48px;
   }
-  .guide-direction > .cinder-button {
-    grid-column: 1;
+  .comparison-intro h1 {
+    font-size: 28px;
   }
-  .guide-direction h2 {
-    margin-bottom: 6px;
+  .comparison-intro p {
+    font-size: 16px;
   }
-  .guide-current {
-    margin-bottom: 24px;
+  .comparison-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    margin-block: 24px;
   }
-  .guide-decision {
-    padding: 20px;
-  }
-  .guide-decision a {
-    align-items: flex-start;
-  }
-  .guide-decision a svg {
-    margin-top: 3px;
+  .comparison-controls .cinder-button {
+    min-height: 56px;
+    padding: 8px;
+    font-size: 13px;
+    line-height: 18px;
+    white-space: normal;
+    text-wrap: balance;
   }
 }
 
