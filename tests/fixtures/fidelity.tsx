@@ -48,8 +48,10 @@ const variants: ButtonVariant[] = [
   "primary",
   "secondary",
   "tertiary",
+  "outline",
   "ghost",
   "danger",
+  "danger-soft",
   "danger-tertiary",
   "danger-ghost",
 ];
@@ -63,6 +65,37 @@ const choices = [
   { id: 1, name: "Reader", description: "Can view records" },
   { id: 2, name: "Writer", description: "Can edit records" },
 ];
+
+function InactiveButtonContracts() {
+  const [presses, setPresses] = useState(0);
+  return (
+    <Stack gap={4}>
+      {(["disabled", "pending"] as const).map((state) => (
+        <div
+          key={state}
+          data-fixture={`${state}-buttons`}
+          style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
+        >
+          {variants.map((variant) => (
+            <Button
+              key={variant}
+              variant={variant}
+              aria-label={`${state} variant ${variant}`}
+              isDisabled={state === "disabled"}
+              isPending={state === "pending"}
+              pendingLabel={`Pending ${variant}`}
+              onPress={() => setPresses((count) => count + 1)}
+            >
+              <span>Action</span>
+              <Icon name="arrowRight" />
+            </Button>
+          ))}
+        </div>
+      ))}
+      <output aria-label="Inactive button presses">{presses}</output>
+    </Stack>
+  );
+}
 
 function FieldPartContracts() {
   const textRoot = useRef<HTMLDivElement>(null);
@@ -306,7 +339,10 @@ function App() {
         <main style={{ padding: "2rem", maxWidth: "52rem" }}>
           <h1>Cinder visual contracts</h1>
           <Stack gap={7}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+            <div
+              data-fixture="ready-buttons"
+              style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}
+            >
               {variants.map((variant) => (
                 <Button key={variant} variant={variant} aria-label={variant}>
                   <span>Action</span>
@@ -320,6 +356,7 @@ function App() {
                 Disabled ghost
               </Button>
             </div>
+            <InactiveButtonContracts />
             {(["sm", "md", "lg"] as const).map((size) => (
               <section key={size} data-density={size}>
                 <Accordion size={size} defaultExpandedKeys={["first"]}>

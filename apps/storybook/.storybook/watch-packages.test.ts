@@ -115,25 +115,28 @@ test("Vite resolves public CSS after a missing build output is restored", async 
         logLevel: "silent",
         optimizeDeps: { noDiscovery: true, include: [] },
         server: { middlewareMode: true, ws: false, fs: { allow: [directory] } },
-        plugins: [
-          {
-            name: "observe-restored-stylesheet",
-            configureServer(vite) {
-              watching = once(vite.watcher, "ready", { signal: AbortSignal.timeout(3000) });
-              vite.watcher.add(dirname(stylesheet));
-            },
-            hotUpdate({ file }) {
-              if (file === stylesheet) {
-                events.emit("restored");
-                return [];
-              }
-            },
-          },
-        ],
       },
       {} as Parameters<NonNullable<typeof config.viteFinal>>[1],
     );
-    server = await createServer(vite);
+    server = await createServer({
+      ...vite,
+      // Keep package builds and file events confined to this fixture.
+      plugins: [
+        {
+          name: "observe-restored-stylesheet",
+          configureServer(vite) {
+            watching = once(vite.watcher, "ready", { signal: AbortSignal.timeout(3000) });
+            vite.watcher.add(dirname(stylesheet));
+          },
+          hotUpdate({ file }) {
+            if (file === stylesheet) {
+              events.emit("restored");
+              return [];
+            }
+          },
+        },
+      ],
+    });
     await watching;
     await expect(server.transformRequest("/preview.js")).rejects.toThrow(
       'Failed to resolve import "@cinder/react/styles.css"',

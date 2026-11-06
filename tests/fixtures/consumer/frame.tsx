@@ -23,6 +23,7 @@ import {
   Text,
   TextField,
   Theme,
+  type ButtonVariant,
   type Key,
 } from "@cinder/react";
 import { isThemeName, themeNames, themes, token } from "@cinder/tokens";
@@ -305,6 +306,24 @@ export function FrameConsumer({ integration }: { integration: "native" | "tailwi
                 </div>
               );
             })}
+          </div>
+          <h2 className="fixture-heading">Button treatments</h2>
+          <div className="fixture-actions">
+            {(
+              [
+                "primary",
+                "secondary",
+                "tertiary",
+                "outline",
+                "ghost",
+                "danger",
+                "danger-soft",
+              ] as const satisfies readonly ButtonVariant[]
+            ).map((variant) => (
+              <Button key={variant} variant={variant} data-testid={`variant-${variant}`}>
+                {variant.startsWith("danger") ? "Delete draft" : "Save changes"}
+              </Button>
+            ))}
           </div>
           <Button className="rounded-none px-6" data-testid="utility-action">
             Utility override

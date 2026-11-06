@@ -52,8 +52,7 @@ beforeAll(async () => {
       }
       if (path.includes("\0")) return new Response("Bad request", { status: 400 });
       const filename = resolve(root, `.${path === "/" ? "/index.html" : path}`);
-      if (!filename.startsWith(`${root}${sep}`))
-        return new Response("Not found", { status: 404 });
+      if (!filename.startsWith(`${root}${sep}`)) return new Response("Not found", { status: 404 });
       const file = Bun.file(filename);
       return (await file.exists())
         ? new Response(file)
@@ -120,7 +119,7 @@ for (const theme of ["frame-light", "frame-dark"]) {
       expect(finished?.status, JSON.stringify(finished)).toBe("success");
       expect(finished?.reporters.filter(({ status }) => status === "failed")).toEqual([]);
       for (const report of finished?.reporters ?? [])
-        expect(report.result).not.toHaveProperty("error");
+        expect(report).not.toHaveProperty("result.error");
       expect(
         finished?.reporters.find(({ type }) => type === "a11y"),
         "Every story must complete the a11y afterEach check.",

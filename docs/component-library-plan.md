@@ -192,9 +192,9 @@ The full phase still requires all fourteen entries.
 
 ### Implementation order
 
-1. **Actions:** present four core Button choices: `primary`, `secondary`, `ghost`,
-   and `danger`, following the user's Base/HeroUI/Astryx simplification. Retain the
-   three existing additional variants for compatibility. Cover icon-only, disabled,
+1. **Actions:** present the seven user-confirmed treatments: `primary`, `secondary`,
+   `tertiary`, `outline`, `ghost`, `danger`, and `danger-soft`, retaining Frame's
+   palette and corners. Keep the two older destructive variants compatible. Cover icon-only, disabled,
    pending, true hover/press/focus, and explicit sizes. Keep action names stable and
    localize pending feedback. Preserve Link semantics.
 2. **Field anatomy:** make label → guidance → control → recovery the Frame default

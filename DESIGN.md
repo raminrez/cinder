@@ -309,11 +309,18 @@ continuous data rows likewise follow their own anatomy.
 
 ### Actions
 
-A filled neutral primary button leads a decision. An outlined alternative and
-quiet ghost actions support it. Use the action type role, comfortable minimum,
-and control corners. Hover and press give feedback; keyboard focus has an external
-outline. Icon-only actions need a meaningful accessible name and a usable target.
-The existing package's other variants still require Frame-specific review.
+A filled neutral primary button leads a decision. Secondary has a medium neutral
+fill; tertiary is quieter. Outline supplies a visible boundary without a fill,
+and ghost is unfilled until interaction. Danger uses a strong destructive fill;
+danger-soft gives the same explicit destructive meaning a tinted surface.
+These seven treatments follow the user-confirmed reference while keeping Frame's
+palette and 10px corners. Blue remains the focus and selection signal.
+
+Use the action type role and comfortable minimum. Hover and press give distinct
+feedback; keyboard focus has an external outline. Icon-only actions need a
+meaningful accessible name and a usable target. The older `danger-tertiary` and
+`danger-ghost` treatments remain supported; Carbon and Relay retain their original
+outlined `tertiary` appearance.
 
 ### Fields and recovery
 

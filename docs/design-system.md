@@ -235,6 +235,13 @@ The [45-entry catalog](coverage.md#what-the-number-45-means) is the inventory, n
 a claim that every variant is complete. Additional primitives do not inflate that
 count. Each promoted family must document its applicable states and exceptions.
 
+Frame Button uses the seven treatments confirmed from the user's reference:
+`primary`, `secondary`, `tertiary`, `outline`, `ghost`, `danger`, and `danger-soft`.
+Keep the neutral primary, Frame palette, and control corners. Secondary and
+tertiary have decreasing neutral fills; outline and ghost are unfilled. Destructive
+actions use explicit wording at either emphasis. The existing two extra destructive
+treatments remain compatible; older themes keep their outlined tertiary appearance.
+
 | Family                           | Choice and behavior contract                                                                                                                                                                     |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Button / Link                    | Button performs an action; Link navigates. Use one primary action per decision, explicit destructive wording, localizable pending and icon-only names                                            |

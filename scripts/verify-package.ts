@@ -203,6 +203,28 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(page).toHaveURL(/#consumer-sizes$/);
     await page.goBack();
     await expect(page).toHaveURL(beforeNavigation);
+    const treatments = [
+      "primary",
+      "secondary",
+      "tertiary",
+      "outline",
+      "ghost",
+      "danger",
+      "danger-soft",
+    ];
+    const appearances = [];
+    for (const variant of treatments) {
+      const button = page.getByTestId(`variant-${variant}`);
+      await expect(button).toHaveAttribute("data-variant", variant);
+      await expect(button).toHaveCSS("height", "44px");
+      appearances.push(
+        await button.evaluate((element) => {
+          const css = getComputedStyle(element);
+          return [css.color, css.backgroundColor, css.borderTopColor].join("|");
+        }),
+      );
+    }
+    assert.equal(new Set(appearances).size, treatments.length, "Seven distinct Frame treatments");
     const carbon = page.getByTestId("nested-carbon");
     await expect(carbon).toHaveCSS("font-family", /IBM Plex Sans/);
     await expect(page.getByTestId("carbon-button")).toHaveCSS("height", "48px");

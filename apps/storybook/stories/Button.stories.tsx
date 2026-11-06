@@ -7,11 +7,13 @@ import "./actions.css";
 const variants = [
   "primary",
   "secondary",
+  "tertiary",
+  "outline",
   "ghost",
   "danger",
+  "danger-soft",
 ] as const satisfies readonly ButtonVariant[];
 const compatibilityVariants = [
-  "tertiary",
   "danger-tertiary",
   "danger-ghost",
 ] as const satisfies readonly ButtonVariant[];
@@ -37,7 +39,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Four core choices: primary for the main action, secondary for supporting actions, ghost for quiet actions, and danger for destructive actions. Frame defaults to a 44px minimum. Keep the action text mounted while pending and localize pendingLabel alongside it.",
+          "Seven treatments: primary, secondary, tertiary, outline, ghost, danger, and danger-soft. Choose emphasis within a decision; use explicit wording for destructive actions. Frame defaults to a 44px minimum. Keep action text mounted while pending and localize pendingLabel alongside it.",
       },
     },
   },
@@ -89,7 +91,7 @@ export const CompatibilityVariants: Story = {
     docs: {
       description: {
         story:
-          "Existing outlined and quiet-destructive treatments remain supported. Use the four core variants for new Frame interfaces.",
+          "The existing danger-tertiary and danger-ghost treatments remain supported. Use the seven core variants for new Frame interfaces.",
       },
     },
   },
