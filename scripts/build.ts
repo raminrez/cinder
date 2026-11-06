@@ -12,7 +12,9 @@ const run = async (...command: string[]) => {
 await run("bun", "run", "build:tokens");
 for (const name of ["tokens", "react"]) {
   const folder = `${root}/packages/${name}`;
-  await rm(`${folder}/dist`, { recursive: true, force: true });
+  if (!process.argv.includes("--no-clean")) {
+    await rm(`${folder}/dist`, { recursive: true, force: true });
+  }
   const result = await Bun.build({
     entrypoints: [`${folder}/src/index.ts`],
     outdir: `${folder}/dist`,
@@ -46,6 +48,8 @@ for (const name of ["tokens", "react"]) {
   }
   console.log(`Built @cinder/${name}`);
 }
+
+if (process.argv.includes("--packages")) process.exit(0);
 
 await rm(`${root}/dist/site`, { recursive: true, force: true });
 await mkdir(`${root}/dist/site/reports`, { recursive: true });

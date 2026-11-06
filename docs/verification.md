@@ -34,7 +34,7 @@ anatomy remain [Phase 2](component-library-plan.md#phase-2--first-complete-frame
 | Unit tests                | **22 passed, 1,945 assertions** across two files                                                                                                                 |
 | Focused browser contracts | **44 passed**: 17 consumer contracts and 27 fidelity cases                                                                                                       |
 | Full browser suite        | **126 passed** across five files, including existing Carbon and Relay coverage                                                                                   |
-| Workspace types and lint | **53 files** typechecked; [typecheck output](../test-results/frame-phase1-typecheck.log) and [Oxlint output](../test-results/frame-phase1-lint.log) passed |
+| Workspace types and lint  | **53 files** typechecked; [typecheck output](../test-results/frame-phase1-typecheck.log) and [Oxlint output](../test-results/frame-phase1-lint.log) passed       |
 | Formatting and whitespace | Final workspace formatting and `git diff --check` passed; [scoped completion record](../test-results/frame-phase1-final.json) includes local documentation links |
 | Production build          | Both packages, declarations, generated CSS/JSON, and the documentation build passed                                                                              |
 | Installed consumers       | Native CSS, compiled Bun CSS Modules, and pinned Tailwind **4.3.5** passed installation, strict declaration checking, production bundling, and browser contracts |
@@ -46,11 +46,11 @@ do not depend on an ignored research capture. Both Frame maps contain **343
 entries**, including **25 Frame-owned foundation overrides**. Frame's scalable
 default is 44px for ordinary controls; explicit `sm/md/lg` is 32/44/48px and
 Button `xl/2xl` remains 64/80px. The public mapping is documented in the
-[token package](../packages/tokens/README.md#frame-foundations).
+[token package](../packages/tokens/README.md#working-typography-font-scope-and-geometry).
 
 ### Installed styling and behavior
 
-The [consumer record](../test-results/package-consumer.json), completed at
+The [consumer record](../test-results/frame-phase1-package-consumer.json), completed at
 **21:20:03 UTC**, and
 [final command output](../test-results/frame-phase1-package.log) identify the
 archives and executed checks. The

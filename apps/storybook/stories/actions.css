@@ -1,0 +1,65 @@
+.action-story-stack {
+  display: grid;
+  justify-items: start;
+  gap: var(--cinder-spacing-05);
+  max-inline-size: 40rem;
+}
+
+.action-story-stack > p,
+.action-story-feedback > p {
+  margin: 0;
+}
+
+.action-story-matrix {
+  display: grid;
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--cinder-spacing-04) var(--cinder-spacing-05);
+  margin: 0;
+}
+
+.action-story-matrix > dt {
+  color: var(--cinder-text-secondary);
+}
+
+.action-story-matrix > dd {
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.action-story-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cinder-spacing-05);
+}
+
+.action-story-prose {
+  max-inline-size: 65ch;
+  margin: 0;
+}
+
+.action-story-feedback {
+  min-block-size: 4rem;
+}
+
+.action-story-error {
+  color: var(--cinder-support-error);
+}
+
+.action-story-narrow {
+  max-inline-size: 18rem;
+}
+
+.action-story-custom-button {
+  border-radius: 0;
+  border-color: var(--cinder-border-strong);
+}
+
+.action-story-custom-link {
+  font-weight: var(--cinder-label-01-font-weight);
+}
+
+.action-story-custom-link--pressed {
+  text-decoration-style: double;
+}

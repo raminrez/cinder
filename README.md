@@ -1,7 +1,7 @@
 # Cinder
 
 A React component library built on React Aria Components (**RAC**), with
-Frame foundations, Carbon/Relay themes, and interactive documentation.
+Frame components, Carbon/Relay themes, and Storybook for component development.
 
 **0.1.0 · working name and package scope.** The library has 45 documented component
 families, eight themes (four Carbon, two Relay, two Frame), contextual layers, and
@@ -18,8 +18,29 @@ Frame foundations are implemented in the packages under Phase 1, including
 additive `frame-light` / `frame-dark` themes and public customization contracts.
 Representative installed-package proof has passed; see the
 [Phase 1 verification](docs/verification.md#frame-phase-1) for its scope.
-The complete fourteen-entry Frame slice belongs to Phase 2. Figma is the final
-handoff after the code-based system is complete.
+Phase 2 develops the fourteen-entry Frame slice in Storybook, starting with Button
+and Link. The documentation website follows the component work; Figma is the final
+handoff.
+
+## Develop components in Storybook
+
+```sh
+bun install --frozen-lockfile
+bun run storybook
+```
+
+Use the theme toolbar to review Frame light and dark. Stories import the public
+packages, with one library stylesheet in the preview. The workflow builds package
+output before starting and refreshes it when component or token sources change.
+
+Build the static Storybook:
+
+```sh
+bun run build:storybook
+```
+
+See the [Storybook workspace guide](apps/storybook/README.md) for commands, story
+conventions, and the current batch's scope.
 
 ## Run the site
 

@@ -33,6 +33,8 @@ and the built-output directory. Serve that output directory with a static server
 it contains `index.html`, `frame.html`, and `tailwind.html` plus their bundled assets.
 The Frame page includes light/dark and locale controls, two sibling brand recipes,
 and inheritance/replacement/clearing controls for the plain-CSS dialog's appearance.
+Its links exercise native pointer/Enter navigation and disabled-link tab skipping
+in both Frame themes and both integrations.
 Its custom field reserves a feedback row so validation recovery does not move the
 submit action during a pointer click. The unrelated host buttons own their minimum
 target size; Cinder supplies neither their appearance nor size variables.

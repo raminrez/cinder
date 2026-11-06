@@ -16,10 +16,13 @@ import { classes, type ControlSize } from "./utils";
 export type ButtonVariant =
   "primary" | "secondary" | "tertiary" | "ghost" | "danger" | "danger-tertiary" | "danger-ghost";
 export interface ButtonProps extends RACButtonProps {
+  /** Action emphasis; destructive variants still need explicit action wording. */
   variant?: ButtonVariant;
+  /** Frame defaults to 44px; older themes default to 48px. Sizes are minimums. */
   size?: ControlSize | "xl" | "2xl";
+  /** Square target for an icon. Supply an accessible name on the Button. */
   iconOnly?: boolean;
-  /** Accessible progress label while pending; localize alongside the button text. */
+  /** Progress label announced alongside the action while pending. Localize both. */
   pendingLabel?: string;
   ref?: Ref<HTMLButtonElement>;
 }
@@ -56,7 +59,9 @@ export function Button({
 }
 
 export interface LinkProps extends RACLinkProps {
+  /** RAC renders an anchor with an enabled href, otherwise a span with link semantics. */
   ref?: Ref<HTMLAnchorElement>;
+  /** Always underline links within prose; navigation behavior is unchanged. */
   inline?: boolean;
 }
 export function Link({ className, inline, ...props }: LinkProps) {

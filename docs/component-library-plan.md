@@ -16,7 +16,8 @@ The result is a reusable React Aria-based Cinder library with Frame light/dark
 themes, dependable defaults, documented root/part/state styling, coherent locale
 and portal behavior, working examples, and evidence from installed packages.
 
-**Current state:** Phases 0 and 1 are complete. Phase 2 is next. Delivery order:
+**Current state:** Phases 0 and 1 are complete. Phase 2's Storybook/actions batch is
+in progress. Delivery order:
 **components + Storybook (2–5) → documentation website and release proof (6) →
 Figma (7)**. Component README/API contracts and evidence accompany each batch.
 

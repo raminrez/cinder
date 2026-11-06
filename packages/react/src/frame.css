@@ -9,6 +9,9 @@
       --frame-button-ink: var(--cinder-text-on-color);
       justify-content: center;
       gap: var(--cinder-spacing-03);
+      min-inline-size: 0;
+      max-inline-size: 100%;
+      overflow-wrap: anywhere;
       padding: var(--cinder-spacing-02) var(--cinder-spacing-05);
       border-radius: var(--cinder-control-radius);
       color: var(--frame-button-ink);
@@ -72,6 +75,13 @@
       outline: var(--cinder-focus-width) solid var(--cinder-focus);
       outline-offset: calc(var(--cinder-focus-offset) + 1px);
       box-shadow: none;
+      border-color: transparent;
+    }
+    .cinder-button[data-variant="tertiary"][data-focus-visible] {
+      border-color: var(--cinder-border-strong);
+    }
+    .cinder-button[data-variant="danger-tertiary"][data-focus-visible] {
+      border-color: var(--cinder-button-danger-secondary);
     }
     .cinder-button[data-disabled] {
       --frame-button-ink: var(--cinder-text-disabled);
@@ -96,6 +106,19 @@
       position: absolute;
       color: var(--frame-button-ink);
       margin: 0;
+    }
+
+    .cinder-link {
+      overflow-wrap: anywhere;
+      text-underline-offset: 0.15em;
+    }
+    .cinder-link:is([data-hovered], [data-pressed]) {
+      text-decoration: underline;
+      text-decoration-thickness: 0.125em;
+    }
+    .cinder-link[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: calc(var(--cinder-focus-offset) + 1px);
     }
 
     .cinder-field > :is(.cinder-field__label, .react-aria-Label) {
@@ -293,6 +316,9 @@
       .cinder-button[data-pending] {
         color: transparent;
       }
+      .cinder-link[data-disabled] {
+        color: GrayText;
+      }
       .cinder-field
         > :is(
           .cinder-field__control,
@@ -331,6 +357,7 @@
         border-style: dashed;
       }
       .cinder-button[data-focus-visible],
+      .cinder-link[data-focus-visible],
       .cinder-field > :is(.react-aria-Input, .react-aria-TextArea):focus,
       .cinder-field > .cinder-field__control[data-focus-within],
       .cinder-input-group[data-focus-within],

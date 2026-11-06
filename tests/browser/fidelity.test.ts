@@ -283,6 +283,40 @@ test("Button omission marker survives custom rendering, refs, render props, and 
 });
 
 for (const theme of ["frame-light", "frame-dark"] as const) {
+  test(`${theme}: all seven Button variants distinguish real hover, press, and keyboard focus`, async () => {
+    await open(theme);
+    for (const variant of [
+      "primary",
+      "secondary",
+      "tertiary",
+      "ghost",
+      "danger",
+      "danger-tertiary",
+      "danger-ghost",
+    ]) {
+      const button = page.getByRole("button", { name: variant, exact: true });
+      const background = () =>
+        button.evaluate((element) => getComputedStyle(element).backgroundColor);
+      const resting = await background();
+      await button.hover();
+      await expect(button).toHaveAttribute("data-hovered");
+      await expect.poll(background).not.toBe(resting);
+      const hovered = await background();
+      await page.mouse.down();
+      await expect(button).toHaveAttribute("data-pressed");
+      await expect.poll(background).not.toBe(hovered);
+      await page.mouse.move(0, 0);
+      await page.mouse.up();
+      await expect(button).not.toHaveAttribute("data-pressed");
+      await page.keyboard.press("Tab");
+      await button.focus();
+      await expect(button).toHaveAttribute("data-focus-visible");
+      await expect(button).toHaveCSS("outline-color", await color(theme, "focus"));
+      await expect(button).toHaveCSS("outline-width", "2px");
+      await expect(button).toHaveCSS("outline-offset", "3px");
+    }
+  });
+
   test(`${theme}: Frame geometry and typography retain separate invalid and focus signals`, async () => {
     await openFieldParts(theme);
     expect(

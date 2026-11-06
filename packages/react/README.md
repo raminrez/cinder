@@ -76,6 +76,129 @@ owns the fourteen complete entries, persistent field guidance, and attached
 recovery presentation. Phase 1 retains the convenience fields' existing DOM order
 and help/error presentation.
 
+## Button and Link
+
+Use **Button** to perform an action and **Link** to navigate. Choose one primary
+action per decision. Destructive variants need explicit wording such as “Delete
+draft”; color alone does not explain the consequence.
+
+The canonical [Button stories](../../apps/storybook/stories/Button.stories.tsx) and
+[Link stories](../../apps/storybook/stories/Link.stories.tsx) cover appearance,
+keyboard/pointer interaction, pending and recovery, customization, long labels,
+and a Hebrew `Theme locale` boundary. They inherit Frame light/dark from Storybook's
+preview. Story coverage is distinct from the executed browser/AT evidence in
+the [verification record](../../docs/verification.md).
+
+### Button props and behavior
+
+| Prop | Contract |
+| ---- | -------- |
+| `variant` | `primary` (default), `secondary`, `tertiary`, `ghost`, `danger`, `danger-tertiary`, or `danger-ghost` |
+| `size` | Omitted: Frame 44px, Carbon/Relay 48px. Explicit `sm`, `md`, `lg`, `xl`, `2xl` use the [theme minimums](#frame-foundations--phase-1). |
+| `iconOnly` | Defaults to `false`. Gives the icon a square target at the resolved size; supply `aria-label` or `aria-labelledby` on Button. |
+| `isDisabled` | Native disabled button: unavailable, skipped in tab order, and does not activate. |
+| `isPending` | Application-owned pending state. RAC prevents press/hover interaction and repeat activation while retaining focusability. |
+| `pendingLabel` | Accessible progress label; defaults to `"Pending"`. Supply the operation in the application's language, such as `"Saving draft"`. |
+| `onPress` | RAC's normalized mouse, touch, keyboard, and assistive-technology activation callback. Returning a promise does not set `isPending` automatically. |
+| `type`, `name`, `value` | Native form contract. `type` defaults to `"button"`; use `"submit"` explicitly. RAC temporarily changes a pending submit button to `type="button"` to prevent implicit repeat submission. |
+
+Frame's primary action is neutral, secondary is a quiet fill, tertiary is outlined,
+and ghost is unfilled. The three danger variants retain destructive text/fill
+meaning. Hover and press use RAC state; keyboard focus has an external two-pixel
+outline with a three-pixel offset. Minimum heights and labels can grow with text.
+The compact 32px size is intentional; use the ordinary 44px minimum for comfortable
+standalone targets.
+
+#### Pending, naming, and request ownership
+
+Keep the action's children and accessible label stable while pending to preserve
+its identity and dimensions. Frame and Relay visually replace the retained content
+with the centered progress mark. `isPending` keeps focus; adding `isDisabled` also
+applies native disabling and loses that focus-retaining contract.
+
+RAC 1.22.1 includes the progress label in its pending announcement and browser
+accessible name: for example, **“Save draft” → “Save draft Saving draft”**. The action
+text is retained, not replaced by “Saving”. The nested progressbar is independently
+named by `pendingLabel`. Some DOM-based accessible-name helpers omit this embedded
+progress text; the browser accessibility tree is the authority for the combined
+name. Cinder does not freeze or rewrite caller-authored children: a `children`
+render function can still change its text, and the caller owns that label change.
+
+Applications own the request, pending lifetime, failure message, and retry. Keep
+recoverable data in place, announce a consequential failure near the action, and
+let the same action retry. The **Save and retry** story demonstrates this complete
+path with a local simulated request and deterministic interaction checks. It uses
+`isPending` without `isDisabled`, preserves focus and button dimensions, and keeps
+the draft after failure. Localize both the action text and `pendingLabel`; a
+spinner alone cannot name an icon-only action.
+
+```tsx
+<Button isPending={isSaving} pendingLabel="Saving draft" onPress={saveDraft}>
+  Save draft
+</Button>
+
+<Button variant="ghost" iconOnly aria-label="Copy workspace link" onPress={copyLink}>
+  <Icon name="copy" />
+</Button>
+```
+
+### Link props and navigation
+
+An enabled, nonempty `href` renders a native `<a>`, preserving browser navigation,
+Enter activation, open-in-new-tab behavior, and upstream `target`, `rel`, and
+`download` props. Space is not link activation. Use an actual destination rather
+than an `onPress` action disguised as navigation. Applications own any router
+integration and current-page `aria-current` value.
+
+- `inline` defaults to false. Standalone links acquire an underline on interaction;
+  `inline` keeps it visible within prose. It changes decoration, not DOM display
+  or navigation. Frame hover/press strengthens the underline without moving text.
+- `isDisabled` removes navigation and activation, exposes `aria-disabled="true"`,
+  and skips the link in tab order. RAC renders a `<span role="link">` rather than
+  leaving a disabled-looking anchor with a live destination. Explain dependencies
+  in nearby text.
+- Without a nonempty `href`, RAC likewise renders a `<span role="link">`. This
+  upstream behavior is preserved, but it has no native URL to open or copy.
+- Link text names the destination. Name icon-only links explicitly; Cinder `Icon`
+  is decorative by default. If opening a new tab, include that information in the
+  link text when it would otherwise surprise the user.
+
+```tsx
+<p>
+  Read the <Link href="/guidelines" inline>publishing guidelines</Link> before sharing.
+</p>
+```
+
+### DOM, refs, and customization
+
+| Component/part | Actual target and responsibility |
+| -------------- | -------------------------------- |
+| Button | One `<button>` with `cinder-button`; `ref`, `className`, and `style` target it. |
+| Pending progress | A `div.cinder-spinner` with `role="progressbar"` inside Button while pending. RAC supplies the announcement relationship; Cinder supplies the indeterminate appearance and `pendingLabel`. |
+| Link | `cinder-link` on the anchor, or on RAC's fallback span. `className`, `style`, and the ref reach that same element. The inherited ref type is `HTMLAnchorElement`; it is an actual anchor only with an enabled, nonempty `href`. |
+
+Both components preserve RAC `children`, `className`, and `style` render functions.
+Custom classes are appended to the Cinder root hook. A `render` function must
+return one correct native element and pass all supplied DOM props and the ref
+through. Button expects `<button>`; Link's render props distinguish `<a>` from
+`<span>` with `"href" in domProps`. Replacing handlers, IDs, or the element type can
+break the interaction and labeling contracts.
+
+Appearance hooks are `data-variant`, `data-size`, and `data-icon-only` on Button,
+and `data-inline` on Link. RAC owns `data-hovered`, `data-pressed`, `data-focused`,
+`data-focus-visible`, and `data-disabled` on both; Button additionally exposes
+`data-pending`, and Link exposes `data-current`. Drive those states with props and
+real input rather than writing the attributes yourself. Button's omitted-size
+marker remains private.
+
+Use public semantic variables such as `--cinder-button-primary`,
+`--cinder-button-primary-hover`, `--cinder-button-primary-active`,
+`--cinder-text-on-color`, `--cinder-link-primary`, `--cinder-focus`, and
+`--cinder-control-radius`, or an ordinary custom class. The stories show root refs,
+class/style render functions, and a custom DOM render while retaining the base
+classes, labels, and interaction. Private recipe variables are not customization
+contracts. See [CSS integration](#css-integration) for cascade order.
+
 ## Relay themes
 
 Use `theme="relay-light"` or `theme="relay-dark"` on the existing `Theme` component.

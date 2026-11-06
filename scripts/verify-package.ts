@@ -176,6 +176,33 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(page.getByTestId("size-lg-button")).not.toHaveAttribute(
       "data-cinder-size-default",
     );
+    const sizesLink = page.getByRole("link", { name: "Review control sizes", exact: true });
+    const disabledLink = page.getByRole("link", { name: "Unavailable export", exact: true });
+    await expect(sizesLink).toHaveAttribute("href", "#consumer-sizes");
+    await expect(disabledLink).toHaveAttribute("aria-disabled", "true");
+    await expect(disabledLink).not.toHaveAttribute("href");
+    await sizesLink.focus();
+    await page.keyboard.press("Tab");
+    await expect(page.getByTestId("size-default-button")).toBeFocused();
+    const beforeNavigation = page.url();
+    await disabledLink.scrollIntoViewIfNeeded();
+    const disabledBounds = await disabledLink.boundingBox();
+    assert.ok(disabledBounds);
+    await page.mouse.click(
+      disabledBounds.x + disabledBounds.width / 2,
+      disabledBounds.y + disabledBounds.height / 2,
+    );
+    assert.equal(page.url(), beforeNavigation, "Disabled Link must not navigate");
+    await sizesLink.focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/#consumer-sizes$/);
+    await expect(page.locator("#consumer-sizes")).toBeFocused();
+    await page.goBack();
+    await expect(page).toHaveURL(beforeNavigation);
+    await sizesLink.click();
+    await expect(page).toHaveURL(/#consumer-sizes$/);
+    await page.goBack();
+    await expect(page).toHaveURL(beforeNavigation);
     const carbon = page.getByTestId("nested-carbon");
     await expect(carbon).toHaveCSS("font-family", /IBM Plex Sans/);
     await expect(page.getByTestId("carbon-button")).toHaveCSS("height", "48px");
@@ -706,6 +733,7 @@ try {
           "theme and portalled layer",
           "Relay light/dark geometry, tokens, pending state, and nested Select portal",
           "Frame public JS/JSON/CSS tokens and default/explicit sizes in light and dark",
+          "Frame Link native pointer/Enter navigation, disabled blocking, and tab order",
           "nested Frame/Carbon sizing and font boundaries with document-level legacy overrides",
           "plain CSS and compiled CSS Modules root, part, state, and detached portal overrides",
           "controlled native input and wrapper refs, uncontrolled custom field validation",

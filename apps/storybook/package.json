@@ -1,0 +1,24 @@
+{
+  "name": "@cinder/storybook",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --cwd ../.. build:packages && storybook dev --port 6006 --no-open",
+    "build": "bun run --cwd ../.. build:packages && storybook build --output-dir ../../dist/storybook",
+    "typecheck": "bun run --cwd ../.. build:packages && tsc --noEmit --project tsconfig.json && tsc --noEmit --project .storybook/tsconfig.consumer.json"
+  },
+  "devDependencies": {
+    "@cinder/react": "workspace:*",
+    "@cinder/tokens": "workspace:*",
+    "@storybook/addon-a11y": "10.6.6",
+    "@storybook/react-vite": "10.6.6",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-aria-components": "catalog:",
+    "react-dom": "catalog:",
+    "storybook": "10.6.6",
+    "vite": "8.3.6"
+  }
+}

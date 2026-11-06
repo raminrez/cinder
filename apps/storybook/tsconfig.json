@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {},
+    "types": ["bun", "react", "react-dom", "vite/client"]
+  },
+  "include": [".storybook/**/*.ts", ".storybook/**/*.tsx", "stories/**/*.ts", "stories/**/*.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,334 @@
+import { Fragment, useEffect, useRef, useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, waitFor, within } from "storybook/test";
+import { Button, Icon, Theme, useTheme, type ButtonProps, type ButtonVariant } from "@cinder/react";
+import "./actions.css";
+
+const variants = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "ghost",
+  "danger",
+  "danger-tertiary",
+  "danger-ghost",
+] as const satisfies readonly ButtonVariant[];
+
+const meta = {
+  title: "Actions/Button",
+  component: Button,
+  args: {
+    children: "Save changes",
+    onPress: fn(),
+  },
+  argTypes: {
+    variant: { control: "select", options: variants },
+    size: { control: "select", options: [undefined, "sm", "md", "lg", "xl", "2xl"] },
+    children: { control: "text" },
+    iconOnly: { control: "boolean" },
+    isDisabled: { control: "boolean" },
+    isPending: { control: "boolean" },
+    pendingLabel: { control: "text" },
+    "aria-label": { control: "text" },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Use Button for actions. Frame defaults to a 44px minimum; explicit sizes remain available. Keep the action text mounted while pending, and localize pendingLabel alongside it. RAC announces progress with the action and keeps the button focusable.",
+      },
+    },
+  },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {};
+
+function VariantButtons(args: ButtonProps) {
+  return (
+    <dl className="action-story-matrix">
+      {variants.map((variant) => (
+        <Fragment key={variant}>
+          <dt><code>{variant}</code></dt>
+          <dd>
+            <Button {...args} variant={variant}>
+              {variant.startsWith("danger") ? "Delete draft" : "Save changes"}
+            </Button>
+          </dd>
+        </Fragment>
+      ))}
+    </dl>
+  );
+}
+
+export const Variants: Story = {
+  render: VariantButtons,
+  parameters: { controls: { exclude: ["variant", "children"] } },
+};
+
+export const Sizes: Story = {
+  render: (args) => (
+    <dl className="action-story-matrix">
+      {([undefined, "sm", "md", "lg", "xl", "2xl"] as const).map((size) => (
+        <Fragment key={size ?? "default"}>
+          <dt><code>{size ?? "default (omitted)"}</code></dt>
+          <dd><Button {...args} size={size} /></dd>
+        </Fragment>
+      ))}
+    </dl>
+  ),
+  parameters: {
+    controls: { exclude: ["size"] },
+    docs: {
+      description: {
+        story: "Frame: default 44px; sm 32px, md 44px, lg 48px, xl 64px, 2xl 80px. These are scalable minimums, so labels and text resizing can increase the height.",
+      },
+    },
+  },
+};
+
+export const IconOnly: Story = {
+  args: {
+    variant: "ghost",
+    iconOnly: true,
+    "aria-label": "Copy workspace link",
+    children: <Icon name="copy" />,
+  },
+  parameters: { controls: { exclude: ["children"] } },
+  play: async ({ canvasElement, args }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Copy workspace link" });
+    await expect(button).toHaveAccessibleName("Copy workspace link");
+    await userEvent.tab();
+    await expect(button).toHaveFocus();
+    await userEvent.keyboard("{Enter}");
+    await expect(args.onPress).toHaveBeenCalled();
+  },
+};
+
+export const Disabled: Story = {
+  args: { isDisabled: true },
+  render: (args) => (
+    <div className="action-story-stack">
+      <p>These actions are unavailable until you have permission to edit the draft.</p>
+      <VariantButtons {...args} />
+    </div>
+  ),
+  parameters: { controls: { exclude: ["variant", "children", "isDisabled"] } },
+  play: async ({ canvasElement, args }) => {
+    for (const button of within(canvasElement).getAllByRole("button")) {
+      await expect(button).toBeDisabled();
+      await userEvent.click(button);
+    }
+    await expect(args.onPress).not.toHaveBeenCalled();
+  },
+};
+
+export const Pending: Story = {
+  args: { isPending: true, pendingLabel: "Saving changes" },
+  render: VariantButtons,
+  parameters: {
+    controls: { exclude: ["variant", "children", "isPending"] },
+    docs: {
+      description: {
+        story: "Persistent pending states for inspection. isPending blocks activation without native disabling. Save and retry below demonstrates application-owned request state.",
+      },
+    },
+  },
+  play: async ({ canvasElement, args }) => {
+    const buttons = within(canvasElement).getAllByRole("button");
+    await userEvent.tab();
+    await expect(buttons[0]).toHaveFocus();
+    for (const button of buttons) {
+      await expect(button).toHaveAttribute("aria-disabled", "true");
+      await expect(button).not.toBeDisabled();
+      await expect(within(button).getByRole("progressbar", { name: "Saving changes" })).toBeInTheDocument();
+      await userEvent.click(button);
+      await userEvent.keyboard("{Enter} ");
+    }
+    await expect(args.onPress).not.toHaveBeenCalled();
+  },
+};
+
+export const KeyboardAndPointer: Story = {
+  args: { children: "Run action", onPress: fn() },
+  play: async ({ canvasElement, args }) => {
+    const button = within(canvasElement).getByRole("button", { name: "Run action" });
+    await userEvent.tab();
+    await expect(button).toHaveFocus();
+    await expect(button).toHaveAttribute("data-focus-visible");
+    await userEvent.keyboard("[Space>]");
+    await expect(button).toHaveAttribute("data-pressed");
+    await userEvent.keyboard("[/Space]");
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await userEvent.hover(button);
+    await expect(button).toHaveAttribute("data-hovered");
+    await userEvent.pointer({ target: button, keys: "[MouseLeft>]" });
+    await expect(button).toHaveAttribute("data-pressed");
+    await userEvent.pointer({ target: button, keys: "[/MouseLeft]" });
+    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    await userEvent.keyboard("{Enter}");
+    await expect(args.onPress).toHaveBeenCalledTimes(3);
+  },
+};
+
+function simulateSave(attempt: number, signal: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    const abort = () => {
+      clearTimeout(timer);
+      reject(signal.reason);
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener("abort", abort);
+      if (attempt === 1) reject(new Error("The first example request fails."));
+      else resolve();
+    }, 800);
+    signal.addEventListener("abort", abort, { once: true });
+  });
+}
+
+const saveDraft = fn(simulateSave);
+
+function SaveExample(args: ButtonProps) {
+  const [phase, setPhase] = useState<"idle" | "pending" | "error" | "saved">("idle");
+  const attempts = useRef(0);
+  const request = useRef<AbortController | null>(null);
+  useEffect(() => () => request.current?.abort(), []);
+
+  return (
+    <div className="action-story-stack">
+      <p>Local example: the first save fails; the next succeeds. No request leaves this page.</p>
+      <p>Draft: Weekly review notes</p>
+      <Button
+        {...args}
+        isPending={phase === "pending"}
+        onPress={async (event) => {
+          args.onPress?.(event);
+          const controller = new AbortController();
+          request.current = controller;
+          setPhase("pending");
+          try {
+            await saveDraft(++attempts.current, controller.signal);
+            if (!controller.signal.aborted) setPhase("saved");
+          } catch {
+            if (!controller.signal.aborted) setPhase("error");
+          }
+        }}
+      />
+      <div className="action-story-feedback">
+        {phase === "error" && (
+          <p role="alert" className="action-story-error">
+            Draft was not saved. It is still here. Choose Save draft to try again.
+          </p>
+        )}
+        <p role="status">{phase === "saved" ? "Draft saved." : ""}</p>
+      </div>
+    </div>
+  );
+}
+
+export const SaveAndRetry: Story = {
+  args: { children: "Save draft", pendingLabel: "Saving draft", onPress: fn() },
+  render: SaveExample,
+  parameters: { controls: { exclude: ["children", "isPending", "isDisabled"] } },
+  beforeEach: () => { saveDraft.mockReset().mockImplementation(simulateSave); },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button", { name: "Save draft" });
+    let rejectSave: (error: Error) => void = () => {};
+    // Control completion explicitly so pending assertions never race the example delay.
+    saveDraft.mockReturnValueOnce(new Promise<void>((_, reject) => { rejectSave = reject; }));
+    saveDraft.mockResolvedValueOnce();
+    const before = button.getBoundingClientRect();
+    await userEvent.tab();
+    await userEvent.keyboard("{Enter}");
+    await expect(button).toHaveAttribute("data-pending");
+    await expect(button).toHaveTextContent("Save draft");
+    await expect(button).toHaveFocus();
+    await expect(within(button).getByRole("progressbar", { name: "Saving draft" })).toBeInTheDocument();
+    const pending = button.getBoundingClientRect();
+    await expect([pending.width, pending.height]).toEqual([before.width, before.height]);
+    await userEvent.click(button);
+    await userEvent.keyboard("{Enter} ");
+    await expect(saveDraft).toHaveBeenCalledTimes(1);
+    await expect(button).toHaveFocus();
+    rejectSave(new Error("Example save failed."));
+    await expect(await canvas.findByRole("alert")).toHaveTextContent("Draft was not saved.");
+    await expect(button).not.toHaveAttribute("data-pending");
+    await expect(button).toHaveFocus();
+    await expect(canvas.getByText("Draft: Weekly review notes")).toBeInTheDocument();
+    await userEvent.keyboard("{Enter}");
+    await waitFor(() => expect(canvas.getByRole("status")).toHaveTextContent("Draft saved."));
+    await expect(saveDraft).toHaveBeenCalledTimes(2);
+    await expect(button).toHaveFocus();
+  },
+};
+
+function CustomButton(args: ButtonProps) {
+  const ref = useRef<HTMLButtonElement>(null);
+  return (
+    <div className="action-story-row">
+      <Button
+        {...args}
+        ref={ref}
+        className={({ isPressed }) => `action-story-custom-button${isPressed ? " action-story-custom-button--pressed" : ""}`}
+        style={({ isPressed, defaultStyle }) => ({ ...defaultStyle, borderStyle: isPressed ? "dashed" : "solid" })}
+        render={(domProps) => <button {...domProps} data-custom-render="true" />}
+      >
+        {({ isPressed }) => <><Icon name={isPressed ? "check" : "file"} />Save draft</>}
+      </Button>
+      <Button variant="ghost" onPress={() => ref.current?.focus()}>Focus save action</Button>
+    </div>
+  );
+}
+
+export const Customization: Story = {
+  args: { variant: "secondary" },
+  render: CustomButton,
+  parameters: { controls: { exclude: ["children", "iconOnly"] } },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button", { name: "Save draft" });
+    await userEvent.click(canvas.getByRole("button", { name: "Focus save action" }));
+    await expect(button).toHaveFocus();
+    await expect(button).toHaveClass("cinder-button", "action-story-custom-button");
+    await expect(button).toHaveAttribute("data-custom-render", "true");
+    await userEvent.keyboard("[Space>]");
+    await expect(button).toHaveClass("action-story-custom-button--pressed");
+    await expect(button).toHaveStyle({ borderStyle: "dashed" });
+    await expect(button).toHaveAccessibleName("Save draft");
+    await userEvent.keyboard("[/Space]");
+  },
+};
+
+function LongLabelExample(args: ButtonProps) {
+  const { theme } = useTheme();
+  return (
+    <Theme theme={theme} locale="de-DE" className="action-story-narrow">
+      <Button {...args}>Projektbenachrichtigungseinstellungen für diesen Arbeitsbereich speichern</Button>
+    </Theme>
+  );
+}
+
+export const LongLabel: Story = {
+  render: LongLabelExample,
+  parameters: { controls: { exclude: ["children", "iconOnly"] } },
+};
+
+function RightToLeftExample(args: ButtonProps) {
+  const { theme } = useTheme();
+  return (
+    <Theme theme={theme} locale="he-IL" className="action-story-stack action-story-narrow">
+      <p>סביבת עבודה <bdi dir="ltr">WS-1042</bdi></p>
+      <Button {...args} pendingLabel="שמירת השינויים">
+        שמירת השינויים בהגדרות סביבת העבודה <Icon name="chevronLeft" />
+      </Button>
+    </Theme>
+  );
+}
+
+export const RightToLeft: Story = {
+  render: RightToLeftExample,
+  parameters: { controls: { exclude: ["children", "iconOnly", "pendingLabel"] } },
+};

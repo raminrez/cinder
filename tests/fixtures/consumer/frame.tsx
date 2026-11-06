@@ -16,6 +16,7 @@ import {
   Input,
   Label,
   Layer,
+  Link,
   ListBoxItem,
   Modal,
   Select,
@@ -270,7 +271,15 @@ export function FrameConsumer({ integration }: { integration: "native" | "tailwi
               Use Hebrew locale
             </Button>
           </div>
-          <h2 className="fixture-heading">Default and explicit sizes</h2>
+          <div className="fixture-actions">
+            <Link href="#consumer-sizes">Review control sizes</Link>
+            <Link href="#unavailable-export" isDisabled>
+              Unavailable export
+            </Link>
+          </div>
+          <h2 id="consumer-sizes" tabIndex={-1} className="fixture-heading">
+            Default and explicit sizes
+          </h2>
           <div className="fixture-matrix">
             {([undefined, "sm", "md", "lg"] as const).map((size) => {
               const name = size ?? "default";
