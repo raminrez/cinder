@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import { mergeConfig } from "vite";
-import { watchPackages } from "./watch-packages";
+import { watchPackages } from "./watch-packages.ts";
 
 const config: StorybookConfig = {
   stories: ["../stories/**/*.stories.@(ts|tsx)"],
