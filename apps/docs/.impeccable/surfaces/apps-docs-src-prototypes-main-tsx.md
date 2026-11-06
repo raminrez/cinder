@@ -5,14 +5,15 @@ primary_target: "apps/docs/src/prototypes/main.tsx"
 related_targets: ["apps/docs/src/prototypes/frame.css","apps/docs/src/prototypes/comparison.tsx"]
 ---
 
-# Fourth Cinder prototype
+# Frame: preferred Cinder direction
 
 Target: `apps/docs/src/prototypes/main.tsx`, `/prototypes?variant=frame`.
 Mode: Operate. The comparison guide is Read.
 
-The task is to evaluate a field-centered direction against the existing three
-prototypes. The user has pinned Astryx as the primary visual reference, with HeroUI
-v3 secondary. Use existing RAC behavior, fictional review data, and local CSS.
+Frame is the user's preferred visual direction following the fourth-prototype
+comparison on 6 November 2026. Astryx is the primary visual reference, with HeroUI
+v3 secondary. This surface uses existing RAC behavior, fictional review data, and
+local CSS. The selected visual rules are captured in the root DESIGN.md.
 
 ## Direction contract
 

@@ -27,6 +27,9 @@ Working examples let the team evaluate a design before adopting it in the librar
 
 ## Brand Commitments
 
+- Frame is the preferred visual direction, selected after the fourth prototype
+  comparison on 6 November 2026. Its working field treatment is the visual baseline
+  for the next Cinder design work.
 - Astryx is the leading visual reference, especially field anatomy and validation.
 - HeroUI v3 remains a visual and developer-experience reference.
 - Carbon informs UX reasoning, accessibility, layout, coverage, and AI-related
@@ -47,6 +50,7 @@ and versions in `apps/docs/src/prototypes/references/README.md`.
 
 ## Open Decisions
 
-The fourth prototype is an evaluation of field clarity, not an adopted library API
-or final brand. Styling-engine changes, complete component coverage, and the Figma
-handoff remain separate decisions.
+Frame's visual direction is selected. Promoting its prototype-local treatment into
+reusable library tokens and component APIs remains implementation work.
+Styling-engine changes, complete component coverage, and the Figma handoff remain
+separate decisions.

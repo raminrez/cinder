@@ -1,13 +1,14 @@
 # Cinder — design direction
 
-## Current exploration: Frame
+## Preferred visual direction: Frame
 
-**Astryx now leads Cinder's visual exploration**, especially its clear fields,
+**Frame is the preferred visual direction**, selected on 6 November 2026 after the
+four-direction comparison. **Astryx leads the visual reference**, especially its clear fields,
 instructions, and validation. HeroUI v3 remains a visual and developer-experience
 reference. Carbon chiefly informs UX reasoning, accessibility, layout, coverage,
 and AI-related guidance.
 
-The fourth proposal, **Frame**, is available at
+The working **Frame** prototype is available at
 [`/prototypes?variant=frame&view=settings`](http://127.0.0.1:3000/prototypes?variant=frame&view=settings).
 It puts guidance above inputs and attaches recovery below them. Cool neutrals,
 neutral actions, blue focus/selection, 44px controls, and 10/14/18px corners make
@@ -15,7 +16,8 @@ the direction concrete. The cost is more vertical space for persistent guidance
 and reserved validation messages.
 
 Frame uses the existing React Aria behavior and shared review flows. Its CSS is
-prototype-local; adopting a new reusable theme remains a decision after evaluation.
+prototype-local; the next implementation step is to specify the reusable library
+slice using this selected direction.
 See the [prototype guide](prototypes-guide.md), [Astryx findings](research-astryx.md),
 and the scoped visual rules in [DESIGN.md](../DESIGN.md).
 

@@ -142,6 +142,13 @@ The fourth-pass evidence is under `.research/astryx-2026-11-06/`:
 - The corresponding PNGs retain the unconverted captures. All ten new WebPs were
   visually reviewed in addition to the capture assertions.
 
+The fourth-pass capture records were reconciled against those original PNGs on
+6 November 2026. `width` and `height` are raster dimensions; `roundedCssBounds`
+retains the original rounded DOM measurements. Astryx's width changed from 253
+to 252px, and Frame's dialog height from 544 to 543px. The images were not
+regenerated, and their original WebP hashes still match. The capture scripts now
+record raster dimensions and unrounded CSS bounds separately on future runs.
+
 The capture fixtures reuse the archived HeroUI packages and Carbon stylesheet.
 Carbon's React installation is confined to the fixture's own `carbon/` directory.
 The comparison page imports only these image assets through `../references.ts`.

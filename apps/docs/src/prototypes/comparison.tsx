@@ -205,8 +205,9 @@ export function ComparisonGuide({
       <header className="comparison-intro">
         <h1>Compare the designs</h1>
         <p>
-          Four proposals, the same jobs. Frame explores Astryx’s field clarity alongside Field,
-          Relay, and Index. HeroUI remains a visual reference; Carbon helps us reason about the work.
+          Four proposals, the same jobs. Frame is the preferred direction, drawing on Astryx’s
+          field clarity. Compare it with Field, Relay, and Index. HeroUI remains a visual reference;
+          Carbon helps us reason about the work.
         </p>
         <Button variant="tertiary" onPress={() => onTry("frame", "form")}>
           Try Frame settings <Icon name="arrowRight" />
@@ -399,19 +400,19 @@ export function ComparisonGuide({
 
       <section className="comparison-decision" aria-labelledby="comparison-decision-title">
         <div>
-          <h2 id="comparison-decision-title">Current exploration: Frame</h2>
+          <h2 id="comparison-decision-title">Preferred direction: Frame</h2>
           <p>
-            Astryx now leads the visual exploration. Frame tests its field clarity in a complete
-            settings and review flow. Relay’s <a href="/relay">reusable component gallery</a> records
-            the earlier library work. Frame is a proposal to evaluate before a new library direction
-            is adopted.
+            Frame was selected after this comparison. Its guidance, attached recovery, and
+            cool-neutral controls set the visual direction for the next reusable component slice.
+            This working example uses prototype-local styles. Relay’s{" "}
+            <a href="/relay">reusable component gallery</a> records the earlier library work.
           </p>
         </div>
         <div>
           <h3>Useful feedback names the part</h3>
           <p>
             For example: “I prefer Frame’s guidance, Relay’s next-review action, and Index’s persistent
-            details.” You can choose those parts independently before deciding on a final identity.
+            details.” Specific feedback helps refine Frame as the selected direction.
           </p>
         </div>
       </section>

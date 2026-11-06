@@ -8,7 +8,7 @@ layout, emphasis, and spacing.
 task, compare the pictures, and use a “Try” button to open a working example. Each
 picture has an explanation of the choice, why it might help, and its tradeoff.
 
-**The current exploration is [Frame settings](http://127.0.0.1:3000/prototypes?variant=frame&view=settings).**
+**The preferred direction is [Frame settings](http://127.0.0.1:3000/prototypes?variant=frame&view=settings).**
 Astryx leads its visual direction: instructions above the input, attached recovery
 below it, and a focus outline distinct from the error border.
 
@@ -166,12 +166,14 @@ On narrow screens the working forms use a 44px control size, tables become reada
 lists, and Index opens details as a separate view. The comparison pictures remain
 desktop captures, scaled to fit the page. They do not demonstrate mobile targets.
 
-## Current exploration: Frame
+## Preferred direction: Frame
 
-**Frame is the current exploration**, following the Astryx-led reference choice.
-Evaluate whether its guidance and recovery are easier to understand, and whether
-the reserved space is worth the extra scrolling. Relay's earlier reusable slice
-remains documented in [the component specification](relay.md).
+**Frame was selected as the preferred visual direction on 6 November 2026.**
+Its guidance above the input, attached recovery, cool-neutral surfaces, and
+44px controls establish the next visual baseline. The reserved validation space
+is an accepted tradeoff for a stable Save action. [DESIGN.md](../DESIGN.md)
+records the implemented rules and their prototype scope. Relay's earlier reusable
+slice remains documented in [the component specification](relay.md).
 
 Useful feedback names the part and the task. For example:
 
@@ -179,9 +181,10 @@ Useful feedback names the part and the task. For example:
 > action because I know where to start, and Index's persistent details because I
 > can compare records without reopening a dialog.
 
-That feedback can guide the next design iteration without treating each proposal
-as an indivisible package. These examples have not been tested with representative
-users, and they do not establish a winning design or a new public component API.
+That feedback can refine the selected direction without treating each proposal
+as an indivisible package. The choice records a visual preference; these examples
+have not been tested with representative users and do not establish a new public
+component API.
 
 ## Verification
 

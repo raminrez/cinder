@@ -14,7 +14,7 @@ export default function Research() {
     <>
       <main id="main" className="reading-page page-frame">
         <PageIntro title="Every decision has a source.">
-          Astryx leads the current visual exploration, alongside HeroUI v3. Carbon informs UX,
+          Frame is the preferred visual direction, led by Astryx alongside HeroUI v3. Carbon informs UX,
           accessibility, layout, and coverage. React Aria Components supplies the interaction
           foundation. The findings and their limits live with the code.
         </PageIntro>
@@ -22,7 +22,7 @@ export default function Research() {
           <section aria-labelledby="astryx-heading">
             <h2 id="astryx-heading">Astryx</h2>
             <p>
-              Frame explores its field anatomy: guidance before the input, attached recovery, and
+              Frame draws on its field anatomy: guidance before the input, attached recovery, and
               distinct focus. Source research also covers theme ownership, API exceptions, and
               localization gaps.
             </p>

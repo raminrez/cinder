@@ -271,7 +271,8 @@ The fourth prototype uses Cinder's existing RAC behavior and prototype-local CSS
 The comparison includes Astryx's actual light/dark Field documentation crop next
 to an explanation of what carries over. Its dimensions and content differ from
 the common 380px task specimens; it establishes anatomy rather than a controlled
-size comparison. Frame remains an exploration before a new library theme is adopted.
+size comparison. Frame was selected as the preferred visual direction after the
+comparison; its current implementation is prototype-local.
 [Working guide](prototypes-guide.md), [Frame styles](../apps/docs/src/prototypes/frame.css),
 [capture provenance](../apps/docs/src/prototypes/references/README.md).
 
