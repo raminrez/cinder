@@ -180,6 +180,12 @@ accessibility, internationalization, and customization. The
 composition belongs in the [Frame brief](apps/docs/.impeccable/surfaces/apps-docs-src-prototypes-main-tsx.md).
 Figma is the final handoff from the completed code-based system.
 
+The [Impeccable sidecar](.impeccable/design.json) adds inherited motion, depth,
+recipe breakpoints, narrative, and eight self-contained visual previews. Its
+eight-step OKLCH ramps are synthesized panel aids, not additional runtime tokens
+or validated foreground/background pairings. Preview controls demonstrate
+appearance; the React Aria components remain the behavior implementation.
+
 ## Colors
 
 The palette is a cool neutral foundation with small, purposeful areas of color.
