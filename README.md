@@ -126,8 +126,22 @@ bunx playwright install chrome
 ```
 
 Use `PLAYWRIGHT_CHANNEL=msedge` with an installed supported channel if appropriate.
-The individual commands are `bun run typecheck`, `bun test tests/unit`,
-`bun run test:browser`, and (after packing) `bun run test:package`.
+For formatting and type checking:
+
+```sh
+bun run format
+bun run format:check
+bun run typecheck
+```
+
+Formatting uses native `bun fmt`, configured in `bunfig.toml`. Type checking uses
+`bun check --no-script -p tsconfig.json`; `--no-script` selects Bun's checker rather
+than the workspace's aggregate `check` script. TypeScript is required for `.d.ts`
+generation and independent consumer checks. Native linting is deferred on the
+pinned stable runtime; see the [Bun tooling notes](docs/research-bun.md#native-lint-availability).
+
+The individual test commands are `bun test tests/unit`, `bun run test:browser`,
+and (after packing) `bun run test:package`.
 See [verification results](docs/verification.md) and the [visual critique](docs/visual-review.md).
 
 ## Research

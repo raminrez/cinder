@@ -1,6 +1,10 @@
 # Cinder 0.1.0 — verification
 
-**Final aggregate: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
+**Latest aggregate: passed, 6 November 2026, 08:36:49–08:38:52 UTC.**
+The [stable native-tooling follow-up](#stable-native-tooling-follow-up) verifies
+the migration to Bun's formatter and type checker.
+
+**Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
 calls**, the production build, **92 browser tests**, package packing, and an
 isolated tarball consumer. All **69 recorded source/configuration files** retained
@@ -10,6 +14,40 @@ The local production preview is **http://127.0.0.1:3000**. The source and packag
 are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
+
+## Stable native-tooling follow-up
+
+The workspace uses stable **Bun 1.4.4**. `format` runs `bun fmt`, `format:check`
+runs `bun fmt --check`, and `typecheck` runs
+`bun check --no-script -p tsconfig.json`. The formatter options and exclusions are
+in `bunfig.toml`; the Prettier dependency and separate config files were removed.
+TypeScript supplies declaration emission and independent consumer checks.
+
+- The [aggregate record](../test-results/check-native-tooling.json) and
+  [output](../test-results/check-native-tooling.log) show **12 unit tests / 129
+  expect calls**, **92 browser tests**, the production build, packing, and the
+  external consumer passing. All **69 recorded source/configuration hashes**
+  stayed stable during this run, and both tarballs match the baseline hashes below.
+- The [migration proof](../test-results/native-tooling.json) verifies the original
+  formatter options, ignore patterns, two generated Carbon blocks, and unchanged
+  hashes for 125 application/evidence files. `bun fmt --doctor` reports **70 native
+  files**; formatting changed zero files and `--debug-check` passed.
+- Native type checking passed on **42 files**. Both it and `tsc` rejected the same
+  deliberate `TS2322` in an included temporary file, which was removed afterward.
+- Frozen installation passed with **52 installs across 80 packages** and an
+  unchanged lockfile. The Carbon offline provenance validator also passed after
+  updating its formatter instructions.
+- The [README installation check](../test-results/readme-install.json) passed at
+  **08:39:32 UTC**, using the updated README's exact commands and TSX snippets.
+- The [preview delivery check](../test-results/preview-native-tooling.json) compares
+  the restarted preview's routes and all site assets with the build. The
+  [documentation check](../test-results/docs-native-tooling.json) records final
+  formatting and local-link verification after these notes were updated.
+
+Native `bun lint` is deferred under the user's stable-runtime choice. Its command
+is documented online and works in the separately tested canary, but both installed
+stable executables reject it. The [Bun notes](research-bun.md#native-lint-availability)
+record this availability probe; this follow-up does not claim a lint pass.
 
 ## Environment and evidence identity
 
@@ -25,15 +63,15 @@ and [visual review](visual-review.md) for the screenshot assessment.
 | Standard browser locale   | `en-US`; dedicated portal/direction cases use `ar-AE`                        |
 | Temporary external apps   | `CINDER_TEST_TMPDIR` under the harness-approved OpenCode temporary directory |
 
-The [aggregate record](../test-results/check.json) contains the command, timestamps,
+The [implementation-baseline record](../test-results/check.json) contains the command, timestamps,
 exit status, platform, source hashes, and an empty `sourcesChangedDuringRun` list.
 The [captured output](../test-results/check.log) records the executed gates.
-[Delivery reconciliation](../test-results/final-artifacts.json) ties the current
+[Baseline delivery reconciliation](../test-results/final-artifacts.json) ties that snapshot's
 sources, tarballs, emitted site files, screenshots, and final documents to their
 hashes. The final reports were added after the aggregate; their formatting and
 local links have a separate [documentation check](../test-results/final-docs-check.json).
 
-## Completed gates
+## Implementation-baseline gates
 
 | Command or check                        | Result                  | Evidence / scope                                                                                                                                            |
 | --------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -130,7 +168,7 @@ corners, and a visible keyboard focus outline. RTL probes pair `lang="ar-AE"` wi
 ## Distribution and installation
 
 Both archives were installed outside the workspace, with no source-path aliases.
-The [package consumer](../test-results/package-consumer.json), completed at
+The [baseline package consumer](../test-results/package-consumer-before-native-tooling.json), completed at
 **01:42:00 UTC**, checks the archive hashes, resolved package protocols,
 LICENSE/NOTICE, ESM/CSS/JSON exports, strict declarations with `skipLibCheck=false`,
 structured type metadata, theme/layer portals, refs/render props, keyboard state,
@@ -146,7 +184,7 @@ record agree on these hashes. `@cinder/tokens@0.1.0` is an explicit React-packag
 peer; workspace development retains `workspace:*`. Library consumers supply their
 fonts. The README demonstrates the pinned Fontsource packages and imports.
 
-The [README installation check](../test-results/readme-install.json) independently
+The [baseline README installation check](../test-results/readme-install-before-native-tooling.json) independently
 runs its exact tarball/font commands, adds the TypeScript tooling, copies every
 README TSX snippet verbatim, and typechecks and bundles the result. It records
 README SHA-256:

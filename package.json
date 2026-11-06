@@ -27,12 +27,12 @@
     "build:tokens": "bun packages/tokens/scripts/generate.ts",
     "pack": "bun run build && bun scripts/pack.ts",
     "start": "bun scripts/preview.ts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "bun check --no-script -p tsconfig.json",
     "test": "bun test tests/unit",
     "test:browser": "bun test --timeout 60000 tests/browser",
     "test:package": "bun scripts/verify-package.ts",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "bun fmt",
+    "format:check": "bun fmt --check",
     "check": "bun run format:check && bun run typecheck && bun run test && bun run build && bun run test:browser && bun scripts/pack.ts && bun run test:package"
   },
   "devDependencies": {
@@ -45,7 +45,6 @@
     "@types/react-dom": "catalog:",
     "bun": "1.4.4",
     "playwright": "1.65.0",
-    "prettier": "3.9.10",
     "typescript": "7.0.2"
   },
   "trustedDependencies": [

@@ -1,6 +1,6 @@
 # Bun research for Cinder
 
-**Research date:** 2026-11-06. Sources and probes were captured on 2026-11-05 UTC.
+**Research date:** 2026-11-06. Original sources and probes were captured on 2026-11-05 UTC; the native-tooling follow-up was captured on 2026-11-06 UTC.
 **Target:** Bun **1.4.4**, revision `38afee6c84fcf48c0edb2466aa4b27d287a59c30`.
 **Purpose:** implementation decisions for Cinder's Carbon-aligned tokens, React Aria Components library, and documentation site.
 
@@ -13,6 +13,7 @@
 - Publish **ESM JavaScript, declaration files, and an explicit CSS export**. Keep React/RAC imports external. Set `jsx.development: false` for the published library.
 - Generate declarations with **TypeScript 7.0.2 and `emitDeclarationOnly`**. The live Bun docs advertise `dts: true` / `--dts`, but the tested stable executable silently ignores them.
 - Use **`bun test`** for token logic and component tests, with explicit Happy DOM preloads when a DOM is needed. The advertised native DOM-environment selectors did not work on this revision. **Playwright Library under `bun test`** did work.
+- Use native **`bun fmt`** and **`bun check --no-script -p tsconfig.json`** for formatting and workspace type checking. Native linting is deferred under the user's stable-runtime choice; the availability probe below distinguishes stable from canary.
 
 These conclusions combine primary documentation with the [probe results](#10-verification-results). They are not a claim that every downloaded page or every Cinder component was tested.
 
@@ -95,9 +96,21 @@ For a future upgrade, update the exact Bun dependency, `packageManager`, matchin
 | 1.4                        | Runtime `.css` imports now export `{}` rather than a pathname                                                               | Use browser CSS imports for styles, or `Bun.file(...).text()` when a generator needs CSS text.                                   |
 | 1.4.3                      | Built-in `bun check`, `--check`, and `Bun.build({ check: true })`                                                           | Bun can type-check as well as transpile. Its checker does not emit declarations.                                                 |
 | 1.4.4                      | Deterministic dependency resolution; workspace/catalog/peer/linker fixes; HTML image/CSS fixes; redesigned dev overlay      | Strong reason to use the current patch release for this peer-heavy CSS/React monorepo.                                           |
-| 1.4.4                      | `bun fmt`, faster checking, and corrected coverage accounting                                                               | Formatter migration is a separate choice; coverage percentages can change because accounting was fixed.                          |
+| 1.4.4                      | `bun fmt`, faster checking, and corrected coverage accounting                                                               | Cinder now uses native formatting; coverage percentages can change because accounting was fixed.                                 |
 
-Sources: [1.3.3][release-133], [1.3.6][release-136], [1.3.13][release-1313], [1.4][release-14], [1.4.3][release-143], [1.4.4][release-144]. Vendor performance numbers are not Cinder benchmarks. In particular, `bun fmt` describes intentional differences and incomplete byte-for-byte equivalence with Prettier; “Prettier-compatible” does not mean an existing format gate will necessarily produce identical output.
+Sources: [1.3.3][release-133], [1.3.6][release-136], [1.3.13][release-1313], [1.4][release-14], [1.4.3][release-143], [1.4.4][release-144]. Vendor performance numbers are not Cinder benchmarks.
+
+### Native formatter migration
+
+Cinder's `format` and `format:check` scripts now run `bun fmt` and `bun fmt --check`. The former Prettier options and ignore patterns live in `[fmt]` in `bunfig.toml`; the Prettier dependency and its separate configuration files have been removed. The generated Carbon report blocks retain their supported `prettier-ignore-start` / `prettier-ignore-end` comments. [Formatter documentation](https://bun.com/docs/format)
+
+Before migration, both Prettier and `bun fmt --check` passed on the same source tree, and `bun fmt --doctor` reported 70 natively formatted files with no plugin-dependent files. This is workspace-specific compatibility evidence; Bun still documents intentional differences for some inputs. See [verification](verification.md) for the post-migration checks.
+
+### Native lint availability
+
+On 6 November 2026, the [live linter documentation](https://bun.sh/docs/lint.md) describes native `bun lint`. Both installed stable **1.4.4+38afee6c8** executables reject the command with `Script not found "lint"`, including the documented `--no-script` form. The npm `latest` tag and GitHub's latest stable release both still identify 1.4.4.
+
+A separately downloaded canary, **1.4.4-canary.1+b1305ddc7**, successfully ran `bun lint --no-script --doctor`, discovering 44 files and 78 default rules. The [capability record](../.research/bun/probes/native-lint-canary/probe.json) includes its archive/executable hashes and command output. This checks command availability, not whether Cinder passes lint. The user chose to retain stable 1.4.4 and defer native lint until a stable release supports it; Cinder therefore has no lint script or external linter dependency.
 
 ## 4. Workspaces, catalogs, and isolated installs
 
@@ -329,7 +342,7 @@ Keep React, React DOM, and RAC as the declared peers that the consumer supplies,
 
 ### Type-checking and `.d.ts`
 
-Bun ordinarily transpiles TypeScript without checking it. On 1.4.4, `bun check --no-script -p tsconfig.json` works, and `Bun.build({ check: true })` rejects a type error before writing outputs. Cinder has a root script named `check`, so plain **`bun check` selects that script**; `--no-script` explicitly selects Bun's checker. The aggregate `bun run check` remains the project's full verification command. [Type checking][check]
+Bun ordinarily transpiles TypeScript without checking it. Cinder's `typecheck` script now runs **`bun check --no-script -p tsconfig.json`**, verified on stable 1.4.4 against the previous `tsc --noEmit` check. Cinder has a root script named `check`, so plain **`bun check` selects that script**; `--no-script` explicitly selects Bun's checker and avoids recursive aggregate execution. The aggregate `bun run check` remains the project's full verification command. `Bun.build({ check: true })` also rejects a type error before writing outputs. [Type checking][check] · [Stable introduction in 1.4.3][release-143]
 
 The current bundler page advertises declaration output via `dts: true` / `--dts`. On the installed stable revision:
 
