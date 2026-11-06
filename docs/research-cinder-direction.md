@@ -1,9 +1,12 @@
 # Cinder — an original system informed by Carbon, Base, and HeroUI
 
-**Research date: 6 November 2026.** Design and architecture proposal, not an
-implementation decision. Cinder's [existing Carbon-led brief](design-direction.md)
-remains the current baseline. The candidate names, values, and interfaces below
-are proposals for comparison; they are not shipped features or approved branding.
+**Research date: 6 November 2026.** Historical design and architecture proposal,
+written before the four-direction comparison and the later Astryx research.
+**Frame is now the selected direction**; [DESIGN.md](../DESIGN.md), the
+[system specification](design-system.md), and [library plan](component-library-plan.md)
+record the current visual authority and next work. The candidate values and APIs
+below remain the original proposals, not current package contracts. The Carbon-led
+brief is retained for the existing baseline surfaces in [design direction](design-direction.md).
 
 ## Recommendation
 
@@ -18,7 +21,7 @@ where a class or ref lands, how an inner part can be styled, which state owns an
 attribute, and how a custom theme reaches an overlay. A new palette alone would
 leave those problems intact.
 
-Recommended sequence:
+Original recommended sequence, subsequently carried into the prototype comparison:
 
 1. Compare the **Field** visual candidate below with the current Cinder baseline
    using a form, a data workspace, and a nested-overlay task.

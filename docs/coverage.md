@@ -4,6 +4,15 @@
 interaction, React 19.3.1, and Bun 1.4.4. This describes the shipped source and
 examples. Final execution results are in [verification](verification.md).
 
+## Selected direction: Frame
+
+Frame is the preferred direction. Its [visual rules](../DESIGN.md),
+[system specification](design-system.md), and [ordered library plan](component-library-plan.md)
+define the next implementation work. The working Frame prototype uses local CSS;
+the package still exports the four Carbon themes and two Relay themes. Prototype
+verification is recorded in the [prototype guide](prototypes-guide.md#verification),
+and does not promote these 45 entries to Frame-verified status.
+
 ## Relay web slice
 
 The production `/relay` route uses the same exported components with

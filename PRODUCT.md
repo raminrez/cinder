@@ -23,7 +23,8 @@ Working examples let the team evaluate a design before adopting it in the librar
 - `/prototypes` compares designs using shared, fictional review data. Edits last
   only for the current demo session.
 - `/relay` demonstrates the first reusable Relay component slice.
-- Editable Figma assets are a later phase.
+- Build and verify the design system in code and documentation first. Editable
+  Figma assets are the final handoff, derived from the completed component library.
 
 ## Brand Commitments
 
@@ -50,7 +51,8 @@ and versions in `apps/docs/src/prototypes/references/README.md`.
 
 ## Open Decisions
 
-Frame's visual direction is selected. Promoting its prototype-local treatment into
-reusable library tokens and component APIs remains implementation work.
-Styling-engine changes, complete component coverage, and the Figma handoff remain
-separate decisions.
+Frame's visual direction is selected. The specification is in `docs/design-system.md`;
+`docs/component-library-plan.md` orders the reusable library work. Native prebuilt
+CSS with semantic variables and stable BEM-style hooks is the styling recommendation;
+public theme, size-default, and portable customization contracts require resolution
+before implementation. Figma follows the completed web system as the final step.

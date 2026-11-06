@@ -1,8 +1,10 @@
 # Relay: the first component slice
 
-**6 November 2026 · Cinder 0.1.0.** Relay is the preferred direction for Cinder.
-This specification records its implemented web controls and the choices visible
-in the [live gallery](http://127.0.0.1:3000/relay).
+**6 November 2026 · Cinder 0.1.0.** Relay is the first implemented reusable slice.
+Frame was subsequently selected as the preferred visual direction; its
+[system specification](design-system.md) and [library plan](component-library-plan.md)
+describe the next work. This document records Relay's existing web controls and
+the choices visible in the [live gallery](http://127.0.0.1:3000/relay).
 
 ## Try it
 
@@ -188,9 +190,10 @@ RAC re-exports replace their default class when given `className`; retain their
 `react-aria-*` class to keep Cinder's styles.
 
 `Layer` changes contextual aliases such as `--cinder-field` and
-`--cinder-border-subtle`. Theme, layer, and locale cross portals through React
-context; arbitrary inline CSS overrides only follow DOM inheritance. Put overlay
-overrides on the actual Popover/Modal or a selector matching its theme root.
+`--cinder-border-subtle`. React locale context crosses portals; the overlay bridge
+copies theme, layer, and direction to detached roots, but currently omits `lang`.
+Arbitrary inline CSS overrides only follow DOM inheritance. Put overlay overrides
+on the actual Popover/Modal or a selector matching its theme root.
 
 Native CSS `@scope` stops Relay selectors at each nested Theme. A nested Carbon
 Theme keeps its baseline styling. The stylesheet declares `cinder`, `cinder-relay`,
@@ -223,6 +226,6 @@ the latest executed results and remaining coverage limits.
 
 Subsequent library slices should follow the same path: finish a family from the
 coverage inventory, show its applicable states and composition, document its
-actual props, and verify the package. This specification and `tokens.json` are
-the inputs for the editable Figma system. Detailed Figma variables and component
-sets are the next phase after this web slice.
+actual props, and verify the package. Follow the [Frame library plan](component-library-plan.md)
+for that sequence. Editable Figma variables and component sets are the final
+handoff from the completed web library, tokens, and documentation.

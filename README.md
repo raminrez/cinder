@@ -1,7 +1,7 @@
 # Cinder
 
-A React component library built on React Aria Components (**RAC**), with Carbon
-reference styling, the Relay design direction, and interactive documentation.
+A React component library built on React Aria Components (**RAC**), with the
+selected Frame direction, working Carbon/Relay themes, and interactive documentation.
 
 **0.1.0 · working name and package scope.** The library has 45 documented component
 families, four Carbon themes, a first Relay light/dark component slice, contextual
@@ -10,6 +10,12 @@ layers, and typed compositional APIs. The packages are available as local tarbal
 **[Open Relay](http://127.0.0.1:3000/relay)** for buttons and fields across sizes and
 states, live validation, selection controls, an invitation dialog, tokens, and API
 guidance. See the [Relay specification](docs/relay.md) for its implemented scope.
+
+**[Try Frame settings](http://127.0.0.1:3000/prototypes?variant=frame&view=settings)**
+for the selected visual direction. Start with the [design system](docs/design-system.md),
+[visual foundations](DESIGN.md), and [ordered library plan](docs/component-library-plan.md).
+Frame's current implementation is prototype-local; the plan promotes it into the
+packages. Figma is the final handoff after the code-based system is complete.
 
 ## Run the site
 
@@ -101,7 +107,7 @@ focus management, collections, and forms. Cinder owns the component API, static
 CSS, documentation, and examples.
 
 The `/components` reference retains Carbon's v11 vocabulary with explicit RAC
-adaptations. `/relay` develops the preferred direction using the same components.
+adaptations. `/relay` demonstrates the first reusable slice using the same components.
 Relay's first verified slice covers Button, TextField, Select, Checkbox, Radio,
 Switch, ContentSwitcher, and Dialog/Popover composition. Other families retain
 their baseline styling; the [coverage matrix](docs/coverage.md) records the scope.
@@ -166,9 +172,13 @@ See [verification results](docs/verification.md) and the [visual critique](docs/
 - [Carbon](docs/research-carbon.md): foundations, component rules, visual/source
   comparisons, and the read-only Carbon and Carbon MCP reference repositories.
 - [RAC](docs/research-rac.md): current APIs, composition contracts, and adaptations.
-- [Prototype guide](docs/prototypes-guide.md): compare Field, Relay, and Index with
-  Carbon and HeroUI using the development-only `/prototypes` page.
-- [Design direction](docs/design-direction.md) and [implementation plan](docs/superpowers/plans/2026-11-05-cinder.md).
+- [Prototype guide](docs/prototypes-guide.md): compare Field, Relay, Index, and Frame
+  with Astryx, Carbon, and HeroUI using the development-only `/prototypes` page.
+- [Astryx](docs/research-astryx.md) and [HeroUI](docs/research-heroui.md): visual,
+  anatomy, customization, and implementation findings with versioned evidence.
+- [Design direction](docs/design-direction.md), [system specification](docs/design-system.md),
+  and [Frame library plan](docs/component-library-plan.md). The
+  [original implementation plan](docs/superpowers/plans/2026-11-05-cinder.md) remains historical context.
 
 Reports distinguish full reads, targeted reads, and archived material. Downloaded
 primary-source archives are in the ignored `.research/` directory.

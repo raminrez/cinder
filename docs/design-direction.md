@@ -16,8 +16,9 @@ the direction concrete. The cost is more vertical space for persistent guidance
 and reserved validation messages.
 
 Frame uses the existing React Aria behavior and shared review flows. Its CSS is
-prototype-local; the next implementation step is to specify the reusable library
-slice using this selected direction.
+prototype-local. The [system specification](design-system.md) and
+[ordered library plan](component-library-plan.md) define its promotion into reusable
+tokens, components, and documentation. Figma is the final handoff after that web work.
 See the [prototype guide](prototypes-guide.md), [Astryx findings](research-astryx.md),
 and the scoped visual rules in [DESIGN.md](../DESIGN.md).
 
