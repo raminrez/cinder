@@ -51,12 +51,17 @@ function VariantButtons(args: ButtonProps) {
     <dl className="action-story-matrix">
       {variants.map((variant) => (
         <Fragment key={variant}>
-          <dt><code>{variant}</code></dt>
+          <dt>
+            <code>{variant}</code>
+          </dt>
           <dd>
             <Button
               {...args}
               variant={variant}
-              pendingLabel={args.pendingLabel ?? (variant.startsWith("danger") ? "Deleting draft" : "Saving changes")}
+              pendingLabel={
+                args.pendingLabel ??
+                (variant.startsWith("danger") ? "Deleting draft" : "Saving changes")
+              }
             >
               {variant.startsWith("danger") ? "Delete draft" : "Save changes"}
             </Button>
@@ -77,8 +82,12 @@ export const Sizes: Story = {
     <dl className="action-story-matrix">
       {([undefined, "sm", "md", "lg", "xl", "2xl"] as const).map((size) => (
         <Fragment key={size ?? "default"}>
-          <dt><code>{size ?? "default (omitted)"}</code></dt>
-          <dd><Button {...args} size={size} /></dd>
+          <dt>
+            <code>{size ?? "default (omitted)"}</code>
+          </dt>
+          <dd>
+            <Button {...args} size={size} />
+          </dd>
         </Fragment>
       ))}
     </dl>
@@ -87,7 +96,8 @@ export const Sizes: Story = {
     controls: { exclude: ["size"] },
     docs: {
       description: {
-        story: "Frame: default 44px; sm 32px, md 44px, lg 48px, xl 64px, 2xl 80px. These are scalable minimums, so labels and text resizing can increase the height.",
+        story:
+          "Frame: default 44px; sm 32px, md 44px, lg 48px, xl 64px, 2xl 80px. These are scalable minimums, so labels and text resizing can increase the height.",
       },
     },
   },
@@ -136,7 +146,8 @@ export const Pending: Story = {
     controls: { exclude: ["variant", "children", "isPending"] },
     docs: {
       description: {
-        story: "Persistent pending states for inspection. isPending blocks activation without native disabling. Save and retry below demonstrates application-owned request state.",
+        story:
+          "Persistent pending states for inspection. isPending blocks activation without native disabling. Save and retry below demonstrates application-owned request state.",
       },
     },
   },
@@ -238,13 +249,19 @@ export const SaveAndRetry: Story = {
   args: { children: "Save draft", pendingLabel: "Saving draft", onPress: fn() },
   render: SaveExample,
   parameters: { controls: { exclude: ["children", "isPending", "isDisabled"] } },
-  beforeEach: () => { saveDraft.mockReset().mockImplementation(simulateSave); },
+  beforeEach: () => {
+    saveDraft.mockReset().mockImplementation(simulateSave);
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole("button", { name: "Save draft" });
     let rejectSave: (error: Error) => void = () => {};
     // Control completion explicitly so pending assertions never race the example delay.
-    saveDraft.mockReturnValueOnce(new Promise<void>((_, reject) => { rejectSave = reject; }));
+    saveDraft.mockReturnValueOnce(
+      new Promise<void>((_, reject) => {
+        rejectSave = reject;
+      }),
+    );
     saveDraft.mockResolvedValueOnce();
     const before = button.getBoundingClientRect();
     await userEvent.tab();
@@ -252,7 +269,9 @@ export const SaveAndRetry: Story = {
     await expect(button).toHaveAttribute("data-pending");
     await expect(button).toHaveTextContent("Save draft");
     await expect(button).toHaveFocus();
-    await expect(within(button).getByRole("progressbar", { name: "Saving draft" })).toBeInTheDocument();
+    await expect(
+      within(button).getByRole("progressbar", { name: "Saving draft" }),
+    ).toBeInTheDocument();
     const pending = button.getBoundingClientRect();
     await expect([pending.width, pending.height]).toEqual([before.width, before.height]);
     await userEvent.click(button);
@@ -278,13 +297,25 @@ function CustomButton(args: ButtonProps) {
       <Button
         {...args}
         ref={ref}
-        className={({ isPressed }) => `action-story-custom-button${isPressed ? " action-story-custom-button--pressed" : ""}`}
-        style={({ isPressed, defaultStyle }) => ({ ...defaultStyle, borderStyle: isPressed ? "dashed" : "solid" })}
+        className={({ isPressed }) =>
+          `action-story-custom-button${isPressed ? " action-story-custom-button--pressed" : ""}`
+        }
+        style={({ isPressed, defaultStyle }) => ({
+          ...defaultStyle,
+          borderStyle: isPressed ? "dashed" : "solid",
+        })}
         render={(domProps) => <button {...domProps} data-custom-render="true" />}
       >
-        {({ isPressed }) => <><Icon name={isPressed ? "check" : "file"} />Save draft</>}
+        {({ isPressed }) => (
+          <>
+            <Icon name={isPressed ? "check" : "file"} />
+            Save draft
+          </>
+        )}
       </Button>
-      <Button variant="ghost" onPress={() => ref.current?.focus()}>Focus save action</Button>
+      <Button variant="ghost" onPress={() => ref.current?.focus()}>
+        Focus save action
+      </Button>
     </div>
   );
 }
@@ -312,7 +343,9 @@ function LongLabelExample(args: ButtonProps) {
   const { theme } = useTheme();
   return (
     <Theme theme={theme} locale="de-DE" className="action-story-narrow">
-      <Button {...args}>Projektbenachrichtigungseinstellungen für diesen Arbeitsbereich speichern</Button>
+      <Button {...args}>
+        Projektbenachrichtigungseinstellungen für diesen Arbeitsbereich speichern
+      </Button>
     </Theme>
   );
 }
@@ -327,7 +360,9 @@ function RightToLeftExample(args: ButtonProps) {
   const { theme } = useTheme();
   return (
     <Theme theme={theme} locale="he-IL" className="action-story-stack action-story-narrow">
-      <p>סביבת עבודה <bdi dir="ltr">WS-1042</bdi></p>
+      <p>
+        סביבת עבודה <bdi dir="ltr">WS-1042</bdi>
+      </p>
       <Button {...args} pendingLabel="שמירת השינויים">
         שמירת השינויים בהגדרות סביבת העבודה <Icon name="chevronLeft" />
       </Button>

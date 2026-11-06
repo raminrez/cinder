@@ -91,15 +91,15 @@ the [verification record](../../docs/verification.md).
 
 ### Button props and behavior
 
-| Prop | Contract |
-| ---- | -------- |
-| `variant` | `primary` (default), `secondary`, `tertiary`, `ghost`, `danger`, `danger-tertiary`, or `danger-ghost` |
-| `size` | Omitted: Frame 44px, Carbon/Relay 48px. Explicit `sm`, `md`, `lg`, `xl`, `2xl` use the [theme minimums](#frame-foundations--phase-1). |
-| `iconOnly` | Defaults to `false`. Gives the icon a square target at the resolved size; supply `aria-label` or `aria-labelledby` on Button. |
-| `isDisabled` | Native disabled button: unavailable, skipped in tab order, and does not activate. |
-| `isPending` | Application-owned pending state. RAC prevents press/hover interaction and repeat activation while retaining focusability. |
-| `pendingLabel` | Accessible progress label; defaults to `"Pending"`. Supply the operation in the application's language, such as `"Saving draft"`. |
-| `onPress` | RAC's normalized mouse, touch, keyboard, and assistive-technology activation callback. Returning a promise does not set `isPending` automatically. |
+| Prop                    | Contract                                                                                                                                                                                  |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`               | `primary` (default), `secondary`, `tertiary`, `ghost`, `danger`, `danger-tertiary`, or `danger-ghost`                                                                                     |
+| `size`                  | Omitted: Frame 44px, Carbon/Relay 48px. Explicit `sm`, `md`, `lg`, `xl`, `2xl` use the [theme minimums](#frame-foundations--phase-1).                                                     |
+| `iconOnly`              | Defaults to `false`. Gives the icon a square target at the resolved size; supply `aria-label` or `aria-labelledby` on Button.                                                             |
+| `isDisabled`            | Native disabled button: unavailable, skipped in tab order, and does not activate.                                                                                                         |
+| `isPending`             | Application-owned pending state. RAC prevents press/hover interaction and repeat activation while retaining focusability.                                                                 |
+| `pendingLabel`          | Accessible progress label; defaults to `"Pending"`. Supply the operation in the application's language, such as `"Saving draft"`.                                                         |
+| `onPress`               | RAC's normalized mouse, touch, keyboard, and assistive-technology activation callback. Returning a promise does not set `isPending` automatically.                                        |
 | `type`, `name`, `value` | Native form contract. `type` defaults to `"button"`; use `"submit"` explicitly. RAC temporarily changes a pending submit button to `type="button"` to prevent implicit repeat submission. |
 
 Frame's primary action is neutral, secondary is a quiet fill, tertiary is outlined,
@@ -165,17 +165,21 @@ integration and current-page `aria-current` value.
 
 ```tsx
 <p>
-  Read the <Link href="/guidelines" inline>publishing guidelines</Link> before sharing.
+  Read the{" "}
+  <Link href="/guidelines" inline>
+    publishing guidelines
+  </Link>{" "}
+  before sharing.
 </p>
 ```
 
 ### DOM, refs, and customization
 
-| Component/part | Actual target and responsibility |
-| -------------- | -------------------------------- |
-| Button | One `<button>` with `cinder-button`; `ref`, `className`, and `style` target it. |
-| Pending progress | A `div.cinder-spinner` with `role="progressbar"` inside Button while pending. RAC supplies the announcement relationship; Cinder supplies the indeterminate appearance and `pendingLabel`. |
-| Link | `cinder-link` on the anchor, or on RAC's fallback span. `className`, `style`, and the ref reach that same element. The inherited ref type is `HTMLAnchorElement`; it is an actual anchor only with an enabled, nonempty `href`. |
+| Component/part   | Actual target and responsibility                                                                                                                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Button           | One `<button>` with `cinder-button`; `ref`, `className`, and `style` target it.                                                                                                                                                 |
+| Pending progress | A `div.cinder-spinner` with `role="progressbar"` inside Button while pending. RAC supplies the announcement relationship; Cinder supplies the indeterminate appearance and `pendingLabel`.                                      |
+| Link             | `cinder-link` on the anchor, or on RAC's fallback span. `className`, `style`, and the ref reach that same element. The inherited ref type is `HTMLAnchorElement`; it is an actual anchor only with an enabled, nonempty `href`. |
 
 Both components preserve RAC `children`, `className`, and `style` render functions.
 Custom classes are appended to the Cinder root hook. A `render` function must

@@ -55,7 +55,9 @@ export const Inline: Story = {
   args: { inline: true, href: "#inline-guidelines", children: "publishing guidelines" },
   render: (args) => (
     <div className="action-story-stack">
-      <p className="action-story-prose">Read the <Link {...args} /> before sharing a draft with your workspace.</p>
+      <p className="action-story-prose">
+        Read the <Link {...args} /> before sharing a draft with your workspace.
+      </p>
       <Destination href={args.href} />
     </div>
   ),
@@ -70,7 +72,9 @@ export const Navigation: Story = {
     await expect(link.tagName).toBe("A");
     await expect(link).toHaveAttribute("href", "#navigation-guidelines");
     await userEvent.click(link);
-    await expect(canvasElement.ownerDocument.defaultView?.location.hash).toBe("#navigation-guidelines");
+    await expect(canvasElement.ownerDocument.defaultView?.location.hash).toBe(
+      "#navigation-guidelines",
+    );
     await expect(args.onPress).toHaveBeenCalledTimes(1);
     await userEvent.tab({ shift: true });
     await expect(link).toHaveFocus();
@@ -128,7 +132,11 @@ export const External: Story = {
     href: "https://react-aria.adobe.com/Link",
     target: "_blank",
     rel: "noreferrer",
-    children: <>React Aria Link reference (opens in a new tab) <Icon name="external" /></>,
+    children: (
+      <>
+        React Aria Link reference (opens in a new tab) <Icon name="external" />
+      </>
+    ),
   },
   parameters: { controls: { exclude: ["children"] } },
 };
@@ -140,15 +148,32 @@ function CustomLink(args: LinkProps) {
       <Link
         {...args}
         ref={ref}
-        className={({ isPressed }) => `action-story-custom-link${isPressed ? " action-story-custom-link--pressed" : ""}`}
-        style={({ isHovered, defaultStyle }) => ({ ...defaultStyle, textUnderlineOffset: isHovered ? "0.3em" : "0.2em" })}
-        render={(domProps) => "href" in domProps
-          ? <a {...domProps} data-custom-render="true">{domProps.children}</a>
-          : <span {...domProps} data-custom-render="true" />}
+        className={({ isPressed }) =>
+          `action-story-custom-link${isPressed ? " action-story-custom-link--pressed" : ""}`
+        }
+        style={({ isHovered, defaultStyle }) => ({
+          ...defaultStyle,
+          textUnderlineOffset: isHovered ? "0.3em" : "0.2em",
+        })}
+        render={(domProps) =>
+          "href" in domProps ? (
+            <a {...domProps} data-custom-render="true">
+              {domProps.children}
+            </a>
+          ) : (
+            <span {...domProps} data-custom-render="true" />
+          )
+        }
       >
-        {({ isPressed }) => <>Publishing guidelines <Icon name={isPressed ? "check" : "arrowRight"} /></>}
+        {({ isPressed }) => (
+          <>
+            Publishing guidelines <Icon name={isPressed ? "check" : "arrowRight"} />
+          </>
+        )}
       </Link>
-      <Button variant="ghost" onPress={() => ref.current?.focus()}>Focus guidelines link</Button>
+      <Button variant="ghost" onPress={() => ref.current?.focus()}>
+        Focus guidelines link
+      </Button>
       <Destination href={args.href} />
     </div>
   );
@@ -179,7 +204,8 @@ export const LongLabel: Story = {
   render: (args) => (
     <div className="action-story-stack action-story-narrow">
       <p className="action-story-prose">
-        Read <Link {...args}>workspacepublishingandnotificationpreferences</Link> before changing how the team receives updates.
+        Read <Link {...args}>workspacepublishingandnotificationpreferences</Link> before changing
+        how the team receives updates.
       </p>
       <Destination href={args.href} />
     </div>
@@ -191,9 +217,15 @@ function RightToLeftExample(args: LinkProps) {
   const { theme } = useTheme();
   return (
     <Theme theme={theme} locale="he-IL" className="action-story-stack action-story-narrow">
-      <p>סביבת עבודה <bdi dir="ltr">WS-1042</bdi></p>
-      <Link {...args}>הנחיות לפרסום ולשיתוף בסביבת העבודה <Icon name="chevronLeft" /></Link>
-      <p id="rtl-guidelines" tabIndex={-1}>בדקו את הגדרות השיתוף לפני הפרסום.</p>
+      <p>
+        סביבת עבודה <bdi dir="ltr">WS-1042</bdi>
+      </p>
+      <Link {...args}>
+        הנחיות לפרסום ולשיתוף בסביבת העבודה <Icon name="chevronLeft" />
+      </Link>
+      <p id="rtl-guidelines" tabIndex={-1}>
+        בדקו את הגדרות השיתוף לפני הפרסום.
+      </p>
     </Theme>
   );
 }
