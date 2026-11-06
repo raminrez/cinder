@@ -4,6 +4,7 @@ import {
   Link as RACLink,
   ToggleButton as RACToggleButton,
   ToggleButtonGroup as RACToggleButtonGroup,
+  ProgressBar as RACProgressBar,
   composeRenderProps,
   type ButtonProps as RACButtonProps,
   type LinkProps as RACLinkProps,
@@ -18,6 +19,8 @@ export interface ButtonProps extends RACButtonProps {
   variant?: ButtonVariant;
   size?: ControlSize | "xl" | "2xl";
   iconOnly?: boolean;
+  /** Accessible progress label while pending; localize alongside the button text. */
+  pendingLabel?: string;
   ref?: Ref<HTMLButtonElement>;
 }
 
@@ -25,6 +28,7 @@ export function Button({
   variant = "primary",
   size = "lg",
   iconOnly = false,
+  pendingLabel = "Pending",
   className,
   children,
   ...props
@@ -40,7 +44,9 @@ export function Button({
       {composeRenderProps(children, (content, { isPending }) => (
         <>
           {content}
-          {isPending && <span className="cinder-spinner" aria-hidden="true" />}
+          {isPending && (
+            <RACProgressBar className="cinder-spinner" isIndeterminate aria-label={pendingLabel} />
+          )}
         </>
       ))}
     </RACButton>

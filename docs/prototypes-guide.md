@@ -11,6 +11,11 @@ picture has an explanation of the choice, why it might help, and its tradeoff.
 Run `bun run dev` from the repository root if the local site is not running. The
 comparison is the default `/prototypes` view on the research branch.
 
+**Relay now has a reusable [component gallery](http://127.0.0.1:3000/relay).** It
+shows the actual package components, states, sizes, light/dark tokens, and API
+guidance, and is included in production builds. The [Relay specification](relay.md)
+records these later library decisions; the comparisons below remain prototype evidence.
+
 ## The main difference
 
 | Design    | What it puts first                         | When that helps                                                       | What you give up                                                              |

@@ -33,7 +33,7 @@ export async function startPreview({
               : "no-cache",
           },
         });
-      if (/^\/(?:components(?:\/[^/]+)?|foundations|get-started|research)?\/?$/.test(path))
+      if (/^\/(?:components(?:\/[^/]+)?|foundations|get-started|research|relay)?\/?$/.test(path))
         return new Response(Bun.file(`${root}/index.html`), {
           headers: { "Cache-Control": "no-cache" },
         });

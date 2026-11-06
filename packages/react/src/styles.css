@@ -1,4 +1,5 @@
 @import "../../tokens/src/tokens.css";
+@import "./relay.css";
 
 /* Cinder's CSS is authored independently. Semantic values are generated from
    Carbon; RAC owns interaction states and the underlying accessible semantics. */
@@ -416,7 +417,9 @@
     background: var(--cinder-field);
     border: 0;
     border-block-end: 1px solid var(--cinder-border-strong);
-    color: var(--cinder-text-primary) !important;
+  }
+  .cinder-select > .cinder-select-trigger:not([data-disabled]) {
+    color: var(--cinder-text-primary);
   }
   .cinder-select-trigger[data-hovered] {
     background: var(--cinder-field-hover);
@@ -428,6 +431,9 @@
   }
   .cinder-select-trigger .react-aria-SelectValue[data-placeholder] {
     color: var(--cinder-text-placeholder);
+  }
+  .cinder-select-trigger [slot="description"] {
+    display: none;
   }
   .cinder-select[data-open] .cinder-select-trigger > svg {
     transform: rotate(180deg);
@@ -824,8 +830,13 @@
     position: absolute;
     inset-inline-end: 1rem;
   }
+  .react-aria-ListBoxItem:has(> [slot="description"]) {
+    display: grid;
+    gap: var(--cinder-spacing-01);
+  }
   .react-aria-MenuItem [slot="description"],
   .react-aria-ListBoxItem [slot="description"] {
+    display: block;
     color: var(--cinder-text-secondary);
     font-size: 0.75rem;
   }

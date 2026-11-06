@@ -1,0 +1,383 @@
+/* A nested Theme is a styling boundary, including when its root is a portal. */
+@layer cinder, cinder-relay, cinder-relay-forced-colors;
+@layer cinder-relay {
+  @scope ([data-cinder-theme="relay-light"], [data-cinder-theme="relay-dark"]) to ([data-cinder-theme]) {
+    .cinder-button {
+      --relay-button-ink: var(--cinder-text-on-color);
+      justify-content: center;
+      gap: var(--cinder-spacing-03);
+      padding: 0 calc(var(--cinder-spacing-05) - 1px);
+      border-radius: var(--cinder-control-radius);
+      color: var(--relay-button-ink);
+      font-weight: 500;
+      line-height: var(--cinder-body-01-line-height);
+      letter-spacing: 0;
+      transition:
+        background-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive),
+        border-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive);
+    }
+    .cinder-button > svg:last-child {
+      margin-inline-end: 0;
+    }
+    .cinder-button[data-size="xl"],
+    .cinder-button[data-size="2xl"] {
+      align-items: center;
+      padding-block: var(--cinder-spacing-04);
+    }
+    .cinder-button[data-icon-only] {
+      padding: 0;
+    }
+    .cinder-button:is(
+      [data-variant="secondary"],
+      [data-variant="tertiary"],
+      [data-variant="ghost"]
+    ) {
+      --relay-button-ink: var(--cinder-text-primary);
+      color: var(--relay-button-ink);
+    }
+    .cinder-button[data-variant="tertiary"] {
+      background: transparent;
+      border-color: var(--cinder-button-tertiary);
+    }
+    .cinder-button[data-variant="tertiary"][data-hovered] {
+      background: var(--cinder-button-tertiary-hover);
+    }
+    .cinder-button[data-variant="tertiary"][data-pressed] {
+      background: var(--cinder-button-tertiary-active);
+    }
+    .cinder-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]) {
+      --relay-button-ink: var(--cinder-button-danger-secondary);
+      color: var(--relay-button-ink);
+      background: transparent;
+    }
+    .cinder-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]):is(
+        [data-hovered],
+        [data-pressed]
+      ) {
+      --relay-button-ink: var(--cinder-text-on-color);
+      background: var(--button-hover);
+    }
+    .cinder-button:is(
+        [data-variant="danger-tertiary"],
+        [data-variant="danger-ghost"]
+      )[data-pressed] {
+      background: var(--button-active);
+    }
+    .cinder-button[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+      box-shadow: none;
+      border-color: transparent;
+    }
+    .cinder-button[data-variant="tertiary"][data-focus-visible] {
+      border-color: var(--cinder-button-tertiary);
+    }
+    .cinder-button[data-variant="danger-tertiary"][data-focus-visible] {
+      border-color: var(--cinder-button-danger-secondary);
+    }
+    .cinder-button[data-disabled] {
+      --relay-button-ink: var(--cinder-text-disabled);
+      color: var(--relay-button-ink);
+      background: var(--cinder-button-disabled);
+      border-color: transparent;
+    }
+    .cinder-button[data-disabled][data-variant*="tertiary"] {
+      background: transparent;
+      border-color: var(--cinder-border-disabled);
+    }
+    .cinder-button[data-disabled][data-variant*="ghost"] {
+      background: transparent;
+    }
+    /* Keep the label's width and accessible name while the progress mark replaces it. */
+    .cinder-button[data-pending] {
+      color: transparent;
+    }
+    .cinder-button[data-pending] > svg {
+      visibility: hidden;
+    }
+    .cinder-button > .cinder-spinner {
+      position: absolute;
+      color: var(--relay-button-ink);
+      margin: 0;
+    }
+
+    .cinder-field > .react-aria-Label {
+      font-size: var(--cinder-body-01-font-size);
+      line-height: var(--cinder-body-01-line-height);
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--cinder-text-primary);
+    }
+    .cinder-field :is(.react-aria-Input, .react-aria-TextArea),
+    .cinder-input-group,
+    .cinder-select-trigger {
+      border: 1px solid var(--cinder-border-strong);
+      border-radius: var(--cinder-control-radius);
+      background: var(--cinder-field);
+      color: var(--cinder-text-primary);
+      caret-color: var(--cinder-text-primary);
+    }
+    .cinder-field :is(.react-aria-Input, .react-aria-TextArea) {
+      padding-inline: calc(var(--cinder-spacing-05) - 1px);
+      line-height: var(--cinder-body-01-line-height);
+      transition:
+        background-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive),
+        border-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive);
+    }
+    .cinder-field :is(.react-aria-Input, .react-aria-TextArea):is(:hover, [data-hovered]),
+    .cinder-input-group[data-hovered],
+    .cinder-select-trigger[data-hovered] {
+      background: var(--cinder-field-hover);
+      border-color: var(--cinder-text-primary);
+    }
+    .cinder-select-trigger {
+      justify-content: space-between;
+      text-align: start;
+      font-weight: 400;
+    }
+    .cinder-field :is(.react-aria-Input, .react-aria-TextArea):is(:focus, [data-focused]),
+    .cinder-input-group[data-focus-within],
+    .cinder-select-trigger[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+      box-shadow: none;
+    }
+    .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group),
+    .cinder-field[data-invalid] .cinder-select-trigger {
+      border-color: var(--cinder-support-error);
+      outline: none;
+    }
+    .cinder-field[data-invalid]
+      :is(.react-aria-Input, .react-aria-TextArea):is(:focus, [data-focused]),
+    .cinder-field[data-invalid] > .cinder-input-group[data-focus-within],
+    .cinder-field[data-invalid] .cinder-select-trigger[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+    }
+    .cinder-field[data-readonly] :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group) {
+      background: transparent;
+      border-color: var(--cinder-border-subtle);
+    }
+    .cinder-field[data-disabled] > .react-aria-Label {
+      color: var(--cinder-text-disabled);
+    }
+    .cinder-field[data-disabled]
+      :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group, .cinder-select-trigger) {
+      background: var(--cinder-button-disabled);
+      border-color: var(--cinder-border-disabled);
+      color: var(--cinder-text-disabled);
+    }
+    .cinder-field[data-disabled] .react-aria-SelectValue {
+      color: var(--cinder-text-disabled);
+    }
+    .cinder-input-group > .react-aria-Input {
+      border: 0;
+      background: transparent;
+    }
+    .cinder-input-group > .cinder-button {
+      min-height: calc(var(--control-height, 2.5rem) - 2px);
+      align-self: stretch;
+    }
+
+    .cinder-checkbox,
+    .cinder-radio,
+    .cinder-switch {
+      min-height: var(--cinder-size-md);
+      gap: var(--cinder-spacing-03);
+      font-size: var(--cinder-body-01-font-size);
+      line-height: var(--cinder-body-01-line-height);
+    }
+    .cinder-checkbox,
+    .cinder-radio {
+      padding-block: 0.625rem;
+    }
+    .cinder-checkbox[data-readonly] {
+      cursor: default;
+    }
+    .cinder-checkbox-control,
+    .cinder-radio-control {
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-top: 1px;
+      border-color: var(--cinder-border-strong);
+    }
+    .cinder-checkbox-control {
+      border-radius: 4px;
+    }
+    .cinder-checkbox:is([data-selected], [data-indeterminate]) .cinder-checkbox-control {
+      background: var(--cinder-button-primary);
+      border-color: var(--cinder-button-primary);
+      color: var(--cinder-text-on-color);
+    }
+    .cinder-radio[data-selected] .cinder-radio-control {
+      border-color: var(--cinder-button-primary);
+    }
+    .cinder-checkbox[data-hovered] .cinder-checkbox-control,
+    .cinder-radio[data-hovered] .cinder-radio-control {
+      border-color: var(--cinder-text-primary);
+    }
+    .cinder-checkbox:not([data-selected], [data-indeterminate])[data-pressed]
+      .cinder-checkbox-control,
+    .cinder-radio:not([data-selected])[data-pressed] .cinder-radio-control {
+      background: var(--cinder-layer-active);
+    }
+    .cinder-checkbox:is([data-selected], [data-indeterminate])[data-pressed]
+      .cinder-checkbox-control {
+      background: var(--cinder-button-primary-active);
+    }
+    .cinder-checkbox[data-invalid] .cinder-checkbox-control,
+    .cinder-radio[data-invalid] .cinder-radio-control {
+      border-color: var(--cinder-support-error);
+    }
+    .cinder-checkbox[data-focus-visible] .cinder-checkbox-control,
+    .cinder-radio[data-focus-visible] .cinder-radio-control,
+    .cinder-switch[data-focus-visible] .cinder-switch-track {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+    }
+    .cinder-checkbox[data-disabled] .cinder-checkbox-control,
+    .cinder-radio[data-disabled] .cinder-radio-control {
+      border-color: var(--cinder-icon-disabled);
+    }
+    .cinder-checkbox[data-disabled]:is([data-selected], [data-indeterminate])
+      .cinder-checkbox-control {
+      background: var(--cinder-icon-disabled);
+      color: var(--cinder-field);
+    }
+    .cinder-switch[data-selected] .cinder-switch-track {
+      background: var(--cinder-button-primary);
+    }
+    .cinder-switch-thumb {
+      background: var(--cinder-field);
+    }
+    .cinder-switch[data-disabled] .cinder-switch-track {
+      background: var(--cinder-border-disabled);
+    }
+    .cinder-content-switcher {
+      border-radius: var(--cinder-control-radius);
+      outline-color: var(--cinder-border-strong);
+    }
+    .cinder-content-switcher > .cinder-toggle-button {
+      border-color: transparent;
+    }
+    .cinder-content-switcher > .cinder-toggle-button:first-child {
+      border-start-start-radius: var(--cinder-control-radius);
+      border-end-start-radius: var(--cinder-control-radius);
+    }
+    .cinder-content-switcher > .cinder-toggle-button:last-child {
+      border-start-end-radius: var(--cinder-control-radius);
+      border-end-end-radius: var(--cinder-control-radius);
+    }
+
+    :scope.cinder-popover {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-popover-radius);
+      box-shadow: 0 8px 24px var(--cinder-shadow);
+    }
+    .react-aria-ListBox,
+    .react-aria-Menu {
+      padding: var(--cinder-spacing-02);
+    }
+    .react-aria-ListBoxItem,
+    .react-aria-MenuItem {
+      border-radius: var(--cinder-control-radius);
+    }
+    .cinder-modal {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-overlay-radius);
+      box-shadow: 0 16px 48px var(--cinder-shadow);
+    }
+    .cinder-dialog {
+      padding: var(--cinder-spacing-06);
+    }
+    .cinder-dialog .react-aria-Heading[slot="title"] {
+      font-weight: 500;
+      margin-inline-end: 2.5rem;
+      margin-block-end: var(--cinder-spacing-03);
+    }
+    .cinder-dialog > .cinder-button[slot="close"] {
+      top: var(--cinder-spacing-04);
+      inset-inline-end: var(--cinder-spacing-04);
+    }
+    .cinder-dialog-footer {
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: var(--cinder-spacing-03);
+      margin: var(--cinder-spacing-06) 0 0;
+    }
+    .cinder-dialog-footer .cinder-button {
+      width: auto;
+      min-height: var(--control-height, 3rem);
+      align-items: center;
+      padding-block: 0;
+    }
+  }
+}
+
+/* System colors must outrank variant and interaction-state colors. */
+@layer cinder-relay-forced-colors {
+  @media (forced-colors: active) {
+    @scope ([data-cinder-theme="relay-light"], [data-cinder-theme="relay-dark"]) to ([data-cinder-theme]) {
+      .cinder-button,
+      .cinder-toggle-button {
+        --relay-button-ink: ButtonText;
+        --button-icon: currentColor;
+        background: ButtonFace;
+        color: ButtonText;
+        border-color: ButtonText;
+      }
+      .cinder-toggle-button[data-selected] {
+        background: Highlight;
+        color: HighlightText;
+      }
+      .cinder-button[data-disabled],
+      .cinder-toggle-button[data-disabled] {
+        --relay-button-ink: GrayText;
+        background: ButtonFace;
+        color: GrayText;
+        border-color: GrayText;
+      }
+      .cinder-select-trigger .react-aria-SelectValue[data-placeholder],
+      .cinder-field[data-disabled] .react-aria-SelectValue {
+        color: GrayText;
+      }
+      .cinder-button[data-pending] {
+        color: transparent;
+      }
+      .cinder-button[data-focus-visible],
+      .cinder-toggle-button[data-focus-visible],
+      .cinder-checkbox[data-focus-visible] .cinder-checkbox-control,
+      .cinder-radio[data-focus-visible] .cinder-radio-control,
+      .cinder-switch[data-focus-visible] .cinder-switch-track {
+        outline-color: Highlight;
+      }
+      .cinder-checkbox-control,
+      .cinder-radio-control,
+      .cinder-switch-track {
+        border-color: ButtonText;
+      }
+      .cinder-checkbox:is([data-selected], [data-indeterminate]) .cinder-checkbox-control,
+      .cinder-switch[data-selected] .cinder-switch-track {
+        background: Highlight;
+        color: HighlightText;
+      }
+      .cinder-switch-thumb {
+        background: ButtonText;
+      }
+      .cinder-switch[data-selected] .cinder-switch-thumb {
+        background: HighlightText;
+      }
+      .cinder-checkbox[data-disabled] .cinder-checkbox-control,
+      .cinder-radio[data-disabled] .cinder-radio-control,
+      .cinder-switch[data-disabled] .cinder-switch-track {
+        background: ButtonFace;
+        border-color: GrayText;
+        color: GrayText;
+      }
+      .cinder-radio[data-disabled] .cinder-radio-control::after,
+      .cinder-switch[data-disabled] .cinder-switch-thumb {
+        background: GrayText;
+      }
+    }
+  }
+}

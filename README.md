@@ -1,11 +1,15 @@
 # Cinder
 
-A Carbon-aligned React component library built on React Aria Components (**RAC**),
-with a Bun-native workspace and interactive documentation.
+A React component library built on React Aria Components (**RAC**), with Carbon
+reference styling, the Relay design direction, and interactive documentation.
 
 **0.1.0 · working name and package scope.** The library has 45 documented component
-families, four themes, contextual layers, typed compositional APIs, and a live
-reference. The packages are available as local tarballs.
+families, four Carbon themes, a first Relay light/dark component slice, contextual
+layers, and typed compositional APIs. The packages are available as local tarballs.
+
+**[Open Relay](http://127.0.0.1:3000/relay)** for buttons and fields across sizes and
+states, live validation, selection controls, an invitation dialog, tokens, and API
+guidance. See the [Relay specification](docs/relay.md) for its implemented scope.
 
 ## Run the site
 
@@ -54,7 +58,7 @@ import "@cinder/react/styles.css";
 
 export function Profile() {
   return (
-    <Theme theme="g10" locale="en-US">
+    <Theme theme="relay-light" locale="en-US">
       <Form
         onSubmit={(event) => {
           event.preventDefault();
@@ -62,7 +66,7 @@ export function Profile() {
           console.log(data.get("email"));
         }}
       >
-        <TextField name="email" label="Email" type="email" isRequired />
+        <TextField name="email" label="Email" type="email" isRequired size="lg" />
         <Button type="submit">Save profile</Button>
       </Form>
     </Theme>
@@ -90,17 +94,21 @@ and [token guide](packages/tokens/README.md).
 
 ## Design and scope
 
-Carbon supplies the design language: semantic tokens, the 2x grid, IBM Plex,
-four themes, component geometry, state treatment, and content guidance. RAC
-supplies accessible interaction, focus management, collections, and forms.
-Cinder owns the component API, CSS, documentation, examples, and visual identity.
+Carbon supplies the reference tokens, 2x grid, IBM Plex, and original four themes.
+Relay adds authored light/dark palettes, neutral actions, rounded controls, and
+separate error borders and focus rings. RAC supplies accessible interaction,
+focus management, collections, and forms. Cinder owns the component API, static
+CSS, documentation, and examples.
 
-The target is Carbon's v11 visual vocabulary with explicit RAC adaptations. The
-reference includes keyboard notes, source links, examples, and focused API notes.
-The [coverage matrix](docs/coverage.md) lists supported variants and omissions.
+The `/components` reference retains Carbon's v11 vocabulary with explicit RAC
+adaptations. `/relay` develops the preferred direction using the same components.
+Relay's first verified slice covers Button, TextField, Select, Checkbox, Radio,
+Switch, ContentSwitcher, and Dialog/Popover composition. Other families retain
+their baseline styling; the [coverage matrix](docs/coverage.md) records the scope.
 
-- `Theme` selects `white`, `g10`, `g90`, or `g100`; `locale` controls reading and
-  keyboard direction. `Layer` advances contextual surfaces. Portals retain context.
+- `Theme` selects `white`, `g10`, `g90`, `g100`, `relay-light`, or `relay-dark`;
+  `locale` controls reading and keyboard direction. `Layer` advances contextual
+  surfaces. Portals retain theme, layer, and direction.
 - RAC-native differences include Space-only Switch activation, radio-group
   ContentSwitcher, grid/treegrid collections, segmented date fields, and modal-default
   dialog popovers. They are documented with each component.
@@ -167,8 +175,8 @@ primary-source archives are in the ignored `.research/` directory.
 
 ## Project layout
 
-- `packages/tokens` — Carbon-derived semantic tokens and theme generation.
-- `packages/react` — styled RAC components and Carbon patterns.
+- `packages/tokens` — Carbon-derived foundations, authored Relay values, and theme generation.
+- `packages/react` — styled RAC components and composition patterns.
 - `apps/docs` — the Cinder website and interactive component reference.
 - `scripts` — build, production preview, packing, and distribution verification.
 - `tests` — behavioral and browser verification.

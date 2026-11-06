@@ -11,6 +11,7 @@ import * as typography from "@carbon/type";
 import * as motion from "@carbon/motion";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
+import { relayThemes } from "../src/relay";
 
 const destination = resolve(import.meta.dir, "../src");
 
@@ -54,6 +55,13 @@ const semantic = Object.fromEntries(
     return [theme, Object.fromEntries(entries.sort(([a], [b]) => a.localeCompare(b)))];
   }),
 );
+
+for (const [name, values] of Object.entries(relayThemes)) {
+  semantic[name] = {
+    ...semantic[name === "relay-light" ? "white" : "g100"],
+    ...values,
+  };
+}
 
 const global: Record<string, string | number> = {
   "font-sans": '"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif',
@@ -122,15 +130,15 @@ const aliases = (layer: number) =>
     )
     .join("\n");
 
-const css = `/* Generated from Carbon Design System. Copyright IBM Corp.
- * Apache-2.0. Cinder changes: CSS namespace and contextual layer aliases.
+const css = `/* Carbon-derived tokens. Copyright IBM Corp. Apache-2.0.
+ * Cinder changes: namespace, contextual layer aliases, and authored Relay themes.
  * Regenerate with: bun run build:tokens
  */
 :root {\n${declarations(global)}\n}
 ${Object.entries(semantic)
   .map(
     ([name, values]) =>
-      `${name === "white" ? ":root,\n" : ""}[data-cinder-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${name === "white" || name === "g10" ? "light" : "dark"};\n}`,
+      `${name === "white" ? ":root,\n" : ""}[data-cinder-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${values["color-scheme"]};\n}`,
   )
   .join("\n")}
 :root, [data-cinder-theme], [data-cinder-layer="0"] {\n${aliases(0)}\n}
@@ -151,5 +159,5 @@ await Promise.all([
   ),
 ]);
 console.log(
-  `Generated ${Object.keys(semantic.white ?? {}).length} theme tokens × 4 themes, ${Object.keys(global).length} foundations.`,
+  `Generated ${Object.keys(semantic).length} themes and ${Object.keys(global).length} foundations.`,
 );

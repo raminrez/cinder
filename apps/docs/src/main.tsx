@@ -9,17 +9,19 @@ const ComponentReference = lazy(() => import("./reference"));
 const Foundations = lazy(() => import("./foundations"));
 const GetStarted = lazy(() => import("./get-started"));
 const Research = lazy(() => import("./research"));
+const Relay = lazy(() => import("./relay"));
 
 function initialTheme(): ThemeName {
+  const relay = window.location.pathname.replace(/\/+$/, "") === "/relay";
   const requested = new URLSearchParams(window.location.search).get("theme");
-  if (isThemeName(requested)) return requested;
+  if (isThemeName(requested) && requested.startsWith("relay-") === relay) return requested;
   try {
     const saved = localStorage.getItem("cinder-theme");
-    if (isThemeName(saved)) return saved;
+    if (isThemeName(saved) && saved.startsWith("relay-") === relay) return saved;
   } catch {
     /* Storage is optional. */
   }
-  return "g10";
+  return relay ? "relay-light" : "g10";
 }
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
       /* Private storage can be unavailable. */
     }
     document.documentElement.style.colorScheme =
-      theme === "white" || theme === "g10" ? "light" : "dark";
+      theme === "white" || theme === "g10" || theme === "relay-light" ? "light" : "dark";
   }, [theme]);
   return (
     <ThemePreference.Provider value={{ theme, setTheme }}>
@@ -54,6 +56,8 @@ function App() {
               <GetStarted />
             ) : path === "/research" ? (
               <Research />
+            ) : path === "/relay" ? (
+              <Relay />
             ) : (
               <Home />
             )}

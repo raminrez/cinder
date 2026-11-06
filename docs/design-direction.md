@@ -1,6 +1,18 @@
 # Cinder — design direction
 
-## Brief
+## Current direction: Relay
+
+Relay is the preferred direction. Its first reusable web slice is available at
+[`/relay`](http://127.0.0.1:3000/relay): neutral actions, full field borders,
+8/12/20px corners, comfortable control sizes, and authored light/dark palettes.
+The [Relay specification](relay.md) records the implemented tokens, APIs, states,
+and composition rules.
+
+The main website and `/components` catalog retain the Carbon reference identity
+described below. Those pages document the baseline rather than imply that all 45
+families have completed the Relay treatment.
+
+## Carbon reference brief
 
 Build a reusable React component library that implements Carbon's design rules
 using RAC behavior, with a distinctive public website and useful live documentation.

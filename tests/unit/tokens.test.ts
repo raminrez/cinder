@@ -39,7 +39,7 @@ describe("Carbon token parity", () => {
     "support-error": "supportError",
   } as const;
 
-  for (const theme of themeNames) {
+  for (const theme of themeNames.filter((name) => !name.startsWith("relay-"))) {
     test(`${theme} preserves semantic and component colors from the official packages`, () => {
       for (const [name, original] of Object.entries(semantic)) {
         expect(themes[theme][name as keyof typeof semantic]).toBe(carbon.themes[theme][original]);
@@ -85,7 +85,9 @@ describe("Carbon token parity", () => {
     const paths = [
       "packages/tokens/src/tokens.css",
       "packages/react/src/styles.css",
+      "packages/react/src/relay.css",
       "apps/docs/src/site.css",
+      "apps/docs/src/relay.css",
     ];
     const css = (await Promise.all(paths.map((path) => Bun.file(resolve(root, path)).text()))).join(
       "\n",
@@ -112,9 +114,64 @@ describe("Carbon token parity", () => {
 });
 
 test("theme names are validated and nested layers saturate at Carbon's third level", () => {
-  expect(themeNames.filter(isThemeName)).toEqual(["white", "g10", "g90", "g100"]);
+  expect(themeNames.filter(isThemeName)).toEqual([
+    "white",
+    "g10",
+    "g90",
+    "g100",
+    "relay-light",
+    "relay-dark",
+  ]);
   for (const value of [null, undefined, {}, "dark", "White", 10])
     expect(isThemeName(value)).toBe(false);
   expect([nextLayer(0), nextLayer(1), nextLayer(2)]).toEqual([1, 2, 2]);
   expect(token("background")).toBe("var(--cinder-background)");
+  expect(token("control-radius")).toBe("var(--cinder-control-radius)");
 });
+
+function luminance(hex: string) {
+  const rgb = [1, 3, 5].map((offset) => Number.parseInt(hex.slice(offset, offset + 2), 16) / 255);
+  const linear = rgb.map((value) =>
+    value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4,
+  );
+  return linear[0]! * 0.2126 + linear[1]! * 0.7152 + linear[2]! * 0.0722;
+}
+
+for (const name of ["relay-light", "relay-dark"] as const) {
+  test(`${name} defines the complete semantic contract and readable control colors`, () => {
+    const values = themes[name];
+    for (const key of Object.keys(themes.white)) expect(values).toHaveProperty(key);
+    expect(Object.keys(values)).toEqual(Object.keys(themes["relay-light"]));
+    for (const [foreground, background] of [
+      ["text-primary", "background"],
+      ["text-secondary", "background"],
+      ["text-placeholder", "field-01"],
+      ["text-helper", "field-01"],
+      ["text-error", "background"],
+      ["text-primary", "button-secondary"],
+      ["text-primary", "button-secondary-hover"],
+      ["text-primary", "button-secondary-active"],
+      ["text-on-color", "button-primary"],
+      ["text-on-color", "button-primary-hover"],
+      ["text-on-color", "button-primary-active"],
+      ["text-on-color", "button-danger-primary"],
+      ["text-on-color", "button-danger-hover"],
+      ["text-on-color", "button-danger-active"],
+    ] as const) {
+      const pair = [luminance(values[foreground]), luminance(values[background])].sort(
+        (a, b) => b - a,
+      );
+      expect(
+        (pair[0]! + 0.05) / (pair[1]! + 0.05),
+        `${name}: ${foreground} on ${background}`,
+      ).toBeGreaterThanOrEqual(4.5);
+    }
+    for (const background of ["background", "field-01", "layer-03"] as const) {
+      const pair = [luminance(values.focus), luminance(values[background])].sort((a, b) => b - a);
+      expect(
+        (pair[0]! + 0.05) / (pair[1]! + 0.05),
+        `${name}: focus on ${background}`,
+      ).toBeGreaterThanOrEqual(3);
+    }
+  });
+}

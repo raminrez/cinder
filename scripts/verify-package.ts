@@ -165,6 +165,42 @@ try {
   assert.equal(exportedTokens.typeStyle.breakpoints.md.fontSize, "2.25rem");
   assert.equal(exportedTokens.typeStyle.breakpoints.md.fontWeight, 300);
   assert.equal(Object.hasOwn(exportedTokens.typeStyle.breakpoints.lg, "fontWeight"), false);
+  assert.equal(exportedTokens.cssRadius, "var(--cinder-control-radius)");
+  assert.equal(exportedTokens.relayRadius, "0.5rem");
+  assert.equal(exportedTokens.jsonRelayRadius, exportedTokens.relayRadius);
+  for (const [theme, label, background] of [
+    ["relay-light", "Relay light", "rgb(245, 245, 245)"],
+    ["relay-dark", "Relay dark", "rgb(21, 21, 21)"],
+  ] as const) {
+    await page.getByRole("button", { name: `Use ${label}` }).click();
+    await expect(page.locator(".cinder-theme").first()).toHaveAttribute("data-cinder-theme", theme);
+    await expect(page.locator(".cinder-theme").first()).toHaveCSS("background-color", background);
+    await expect(counter).toHaveCSS("border-radius", "8px");
+    await expect(counter).toHaveCSS("font-weight", "500");
+    await expect(page.getByRole("textbox", { name: "Email", exact: true })).toHaveCSS(
+      "border-radius",
+      "8px",
+    );
+    const pending = page.getByRole("button", { name: "Save draft", exact: true });
+    await expect(pending).toHaveAttribute("aria-disabled", "true");
+    await expect(pending.getByRole("progressbar", { name: "Saving" })).toBeVisible();
+    await page.getByRole("button", { name: "Open details" }).click();
+    await expect(page.locator(".cinder-modal-overlay")).toHaveAttribute("data-cinder-theme", theme);
+    await expect(page.locator(".cinder-modal")).toHaveCSS("border-radius", "20px");
+    await page.getByRole("button", { name: "Viewer Review role", exact: true }).click();
+    await expect(page.locator(".cinder-select-popover")).toHaveAttribute(
+      "data-cinder-theme",
+      theme,
+    );
+    await expect(page.locator(".cinder-select-popover")).toHaveAttribute("data-cinder-layer", "1");
+    await expect(page.locator(".cinder-select-popover")).toHaveCSS("border-radius", "12px");
+    await page.getByRole("option", { name: "Editor", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "Editor Review role", exact: true }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("button", { name: "Open details" })).toBeFocused();
+  }
   // Bun may inline font files into a CSS data URL for a TSX stylesheet import.
   // Verify decoded FontFace entries rather than requiring separate HTTP requests.
   const fontFaces = await page.evaluate(() =>
@@ -196,6 +232,7 @@ try {
           "CSS and JSON exports",
           "structured type styles and sparse breakpoint metadata",
           "theme and portalled layer",
+          "Relay light/dark geometry, tokens, pending state, and nested Select portal",
           "refs and render props",
           "keyboard state",
           "form validation and submission",

@@ -1,7 +1,8 @@
 # Cinder 0.1.0 — verification
 
-**Latest aggregate: passed, 6 November 2026, 09:03:25–09:05:29 UTC.**
-The [Oxlint follow-up](#oxlint-follow-up) adds linting to the stable Bun pipeline.
+**Latest aggregate: passed, 6 November 2026, 16:31:13–16:33:38 UTC.**
+The [Relay follow-up](#relay-follow-up) verifies the first light/dark component
+slice, its production gallery, and the distributed packages.
 
 **Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
@@ -9,12 +10,84 @@ calls**, the production build, **92 browser tests**, package packing, and an
 isolated tarball consumer. All **69 recorded source/configuration files** retained
 their SHA-256 values throughout the run.
 
-The local production preview is **http://127.0.0.1:3000**. The source and packages
+The local site is **http://127.0.0.1:3000**, with Relay at **/relay**. The source and packages
 are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
 
+## Relay follow-up
+
+The [aggregate record](../test-results/check-relay.json) and
+[output](../test-results/check-relay.log) record the complete `bun run check`:
+
+| Gate                          | Result                                                                                         |
+| ----------------------------- | ---------------------------------------------------------------------------------------------- |
+| Formatting and Oxlint         | Passed; 95 formatted files, no lint findings                                                   |
+| Native type checking          | Passed; 50 files                                                                               |
+| Unit tests                    | 14 passed, 792 expect calls                                                                    |
+| Production build              | Both libraries, declarations, CSS/JSON, and 15 documentation assets                            |
+| Browser tests                 | 106 passed across five files, including 11 Relay cases                                         |
+| Packing and isolated consumer | Passed for both tarballs; strict declarations, production bundle, fonts, and browser contracts |
+
+The [Relay specification](relay.md) defines the implemented family scope. The new
+browser cases exercise seven Button variants, pointer/keyboard states, three core
+heights, pending repeat prevention and stable geometry, field validation/recovery,
+read-only selection, selection controls, and a Dialog with a nested Select portal.
+Theme, layer, locale, and nested-theme boundaries are checked by the expanded
+consumer-contract suite. Existing Carbon documentation, interaction, and fidelity
+checks also pass after the shared CSS changes.
+
+### Accessibility and responsive evidence
+
+- Whole-page axe scans run in both Relay themes at 1440 and 390px. The invalid
+  dialog and its open Select receive desktop scans; dialog and Select are also
+  scanned at 390px. The configured tags cover supported WCAG 2/2.1/2.2 A/AA rules.
+- The described Select options retain separate accessible names and descriptions.
+  Axe 4.14 reports `label-content-name-mismatch` for this RAC pattern. The helper
+  first asserts each option's exact name and description, then filters only that
+  rule when **every reported target** is an exact ID selector for one of those
+  verified options. All other rules and targets remain enforced.
+- Pending names use Chrome's `Accessibility.getFullAXTree`, which includes the
+  embedded progress label: **“Save changes Saving”**. The progressbar is separately
+  named “Saving”. The DOM-based name calculation omits that embedded label.
+- Document overflow is checked at 1440, 768, 390, and 320px in both themes. Open
+  dialog and Select bounds fit at 768, 390, and 320px. Escape closes the Select
+  before the dialog and restores focus at each step; Tab remains trapped in the
+  dialog. Reduced-motion and Chromium-emulated forced-colors cases pass.
+- The [computed-state contrast probe](../test-results/relay-contrast.json) passed
+  **132 observations**, including the inert specimens omitted from axe's tree.
+  Enabled text is checked against 4.5:1; progress, focus, and interactive field
+  borders against 3:1. Disabled controls are exempt. The lowest text ratio is
+  **5.77:1**, progress **5.97:1**, focus **7.46:1**, and field border **3.43:1**.
+
+### Rendered review and installation
+
+All **24 fresh captures** were opened and reviewed: page, fields, dialog, and
+described Select at **1440×1000, 768×1000, and 390×844**, in light and dark.
+The [capture log](../test-results/relay-visual-capture.log) records font readiness
+and reduced motion. Files use `relay-{desktop,tablet,mobile}-{light,dark}.png`
+and the same names with `fields-`, `dialog-`, or `select-` before the theme.
+The [mobile fields](../test-results/relay-mobile-fields-light.png),
+[tablet dialog](../test-results/relay-tablet-dialog-dark.png), and
+[mobile Select](../test-results/relay-mobile-select-dark.png) show the responsive
+stacking, preserved focus treatment, and distinct option labels/descriptions.
+Comparison tables scroll locally; the mobile Select opens above its trigger.
+No further visual defects were found in these captures. Impeccable's mechanical
+scan of the Relay gallery, both Relay stylesheets, and Button source returned no
+findings.
+
+The [installed-package consumer](../test-results/package-consumer.json), completed
+at **16:33:37 UTC**, verifies both Relay themes, corner tokens, pending labels,
+Plex faces including weight 500, and Select inside a themed dialog. The separate
+[README installation check](../test-results/readme-install.json) and
+[output](../test-results/readme-install-relay.log) also pass using the exact
+tarball/font commands and every root README TSX snippet. Final documentation
+formatting and local links are recorded in
+[the documentation check](../test-results/docs-relay.json).
+
 ## Oxlint follow-up
+
+**Passed, 6 November 2026, 09:03:25–09:05:29 UTC**, before the Relay slice.
 
 The workspace pins **Oxlint 1.91.0** on stable **Bun 1.4.4**. `bun run lint` checks
 source files, `bun run lint:fix` applies safe fixes, and the aggregate runs lint
@@ -26,7 +99,7 @@ explain the rules, exclusions, and intentional accessibility settings.
   type checking**, **12 unit tests / 129 expect calls**, **92 browser tests**, the
   build, packing, and the external consumer passing. All **70 recorded
   source/configuration hashes**, including `.oxlintrc.json`, stayed stable during
-  the run. Both package archives match the implementation baseline.
+  the run. Both package archives matched the implementation baseline.
 - The [lint proof](../test-results/oxlint.json) records **44 files / 162 rules**
   with zero findings. Temporary fixtures verified that both hook rules, unused
   variables, unassociated labels, autofocus outside dialogs, and inappropriate
@@ -36,7 +109,7 @@ explain the rules, exclusions, and intentional accessibility settings.
   alone also caused failure, and `lint:fix` corrected a safely fixable regex.
   All temporary fixtures were removed. Frozen installation checked **54 installs
   across 100 packages**, with no changes and identical lockfile bytes.
-- The [README installation check](../test-results/readme-install.json),
+- The [README installation check](../test-results/readme-install-before-relay.json),
   [fresh preview check](../test-results/preview-oxlint.json), and
   [documentation check](../test-results/docs-oxlint.json) capture the updated
   instructions, built-file delivery, formatting, and local links.
@@ -58,7 +131,8 @@ TypeScript supplies declaration emission and independent consumer checks.
   [output](../test-results/check-native-tooling.log) show **12 unit tests / 129
   expect calls**, **92 browser tests**, the production build, packing, and the
   external consumer passing. All **69 recorded source/configuration hashes**
-  stayed stable during this run, and both tarballs match the baseline hashes below.
+  stayed stable during this run. Both tarballs matched the implementation-baseline
+  hashes in the [retained consumer record](../test-results/package-consumer-before-native-tooling.json).
 - The [migration proof](../test-results/native-tooling.json) verifies the original
   formatter options, ignore patterns, two generated Carbon blocks, and unchanged
   hashes for 125 application/evidence files. `bun fmt --doctor` reports **70 native
@@ -82,18 +156,18 @@ The later Oxlint follow-up above supplies the workspace lint gate.
 
 ## Environment and evidence identity
 
-| Item                      | Verified value                                                               |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| Platform                  | macOS 27.2, arm64                                                            |
-| Bun                       | 1.4.4, revision `38afee6c8`                                                  |
-| TypeScript                | 7.0.2                                                                        |
-| Oxlint                    | 1.91.0, added in the Oxlint follow-up                                        |
-| React / React DOM         | 19.3.1                                                                       |
-| RAC                       | 1.22.1                                                                       |
-| `@internationalized/date` | 3.12.4                                                                       |
-| Browser                   | Chrome 156.0.8078.80, driven through Playwright                              |
-| Standard browser locale   | `en-US`; dedicated portal/direction cases use `ar-AE`                        |
-| Temporary external apps   | `CINDER_TEST_TMPDIR` under the harness-approved OpenCode temporary directory |
+| Item                            | Verified value                                                               |
+| ------------------------------- | ---------------------------------------------------------------------------- |
+| Platform                        | macOS 27.2, arm64                                                            |
+| Bun                             | 1.4.4, revision `38afee6c8`                                                  |
+| TypeScript                      | 7.0.2                                                                        |
+| Oxlint                          | 1.91.0, added in the Oxlint follow-up                                        |
+| React / React DOM               | 19.3.1                                                                       |
+| RAC                             | 1.22.1                                                                       |
+| `@internationalized/date`       | 3.12.4                                                                       |
+| Implementation-baseline browser | Chrome 156.0.8078.80, driven through Playwright                              |
+| Standard browser locale         | `en-US`; dedicated portal/direction cases use `ar-AE`                        |
+| Temporary external apps         | `CINDER_TEST_TMPDIR` under the harness-approved OpenCode temporary directory |
 
 The [implementation-baseline record](../test-results/check.json) contains the command, timestamps,
 exit status, platform, source hashes, and an empty `sourcesChangedDuringRun` list.
@@ -112,11 +186,11 @@ local links have a separate [documentation check](../test-results/final-docs-che
 | `bun run typecheck`                     | Passed                  | Strict workspace `tsc --noEmit`, including API type fixtures                                                                                                |
 | `bun run test`                          | 12 passed               | Two unit files, 129 expect calls                                                                                                                            |
 | `bun run build`                         | Passed                  | Both ESM libraries, declaration graphs, CSS/token JSON, and 13 emitted documentation assets; three legal files are copied separately                        |
-| `bun run test:browser`                  | 92 passed               | Four files; browser scope is detailed below                                                                                                                 |
-| `bun scripts/pack.ts`                   | Passed                  | Two local archives and [SHA-256 manifest](../dist/packages/manifest.json)                                                                                   |
+| `bun run test:browser`                  | 92 passed               | Four files; the current expanded browser scope is detailed below                                                                                            |
+| `bun scripts/pack.ts`                   | Passed                  | Two local archives; [retained baseline hashes](../test-results/package-consumer-before-native-tooling.json)                                                 |
 | `bun run test:package`                  | Passed                  | Strict external consumer, production bundle, decoded fonts, and browser contracts                                                                           |
 | `bun .research/verify-readme.ts`        | Passed at 01:46:36 UTC  | Exact README installation commands and verbatim TSX snippets in another external app                                                                        |
-| `python3 .research/verify-doc-links.py` | Passed                  | Root/package READMEs, all `docs/` Markdown, and the artifact guide; [targets and anchors](../test-results/doc-links.json)                                   |
+| `python3 .research/verify-doc-links.py` | Passed                  | Root/package READMEs, all `docs/` Markdown, and the artifact guide; [saved baseline result](../test-results/final-docs-check.json)                          |
 | Catalog source-link audit               | 67 distinct URLs passed | [Response records](../.research/catalog-links.json), captured at 00:26:19 UTC                                                                               |
 | Final rendered inspections              | Completed               | Seven homepage and six reference images opened and reviewed; [results and exceptions](visual-review.md)                                                     |
 
@@ -129,26 +203,29 @@ and `PLAYWRIGHT_CHANNEL` selects an installed alternative channel.
 ### Unit and type checks
 
 [Unit tests](../tests/unit/) cover selected official Carbon semantic/component
-colors in all four themes, consistent token key sets, spacing/type/motion samples,
+colors in all four Carbon themes, both Relay contracts and selected contrast pairs,
+consistent token key sets, spacing/type/motion samples,
 layer saturation, theme-name validation, literal CSS variable references,
 structured typography serialization, pagination normalization, and file acceptance.
 The structured-type assertions compare full selected objects, including sparse
 breakpoint overrides, with the pinned Carbon package.
 
-There are **313 entries per theme**, **191 scalar foundations**, and **36 selected
-structured type definitions**. The scalar values are base values. Responsive type
+There are **313 entries per Carbon theme**, **318 per Relay theme**, **191 scalar
+foundations**, and **36 selected structured type definitions**. Relay adds five
+geometry/focus roles. The scalar values are base values. Responsive type
 changes and fluid interpolation remain application-owned. The tests sample
 upstream values and selected structured objects; the catalog count does not imply
 an exhaustive pixel comparison.
 
-### Browser tests: 52 + 18 + 6 + 16 = 92
+### Browser tests: 53 + 18 + 8 + 16 + 11 = 106
 
 | File                                                     | Tests | Exercised behavior                                                                                                                                                                                                                       |
 | -------------------------------------------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Documentation](../tests/browser/docs.test.ts)           | 52    | Five principal routes, production motion/reduced motion, preview-server behavior, and every one of the 45 catalog entries                                                                                                                |
+| [Documentation](../tests/browser/docs.test.ts)           | 53    | Six principal routes, production motion/reduced motion, preview-server behavior, and every one of the 45 catalog entries                                                                                                                 |
 | [Interactions](../tests/browser/interactions.test.ts)    | 18    | Keyboard activation/selection, invalid and corrected form submission, search, collections, bounded values, date/time changes, clipboard success/denial, file selection/native mixed-file drop, overlays, navigation, and persisted theme |
-| [Consumer contracts](../tests/browser/contracts.test.ts) | 6     | Refs, custom DOM rendering, render props, controlled fields, generic single/multiple collections, and four theme/RTL/nested-portal cases                                                                                                 |
+| [Consumer contracts](../tests/browser/contracts.test.ts) | 8     | Refs, custom DOM rendering, render props, controlled fields, generic single/multiple collections, and six theme/RTL/nested-portal cases                                                                                                  |
 | [Carbon fidelity](../tests/browser/fidelity.test.ts)     | 16    | Compound sizes, switcher boundaries, toggle/slider geometry, supporting typography, and button/notification/calendar states in four themes                                                                                               |
+| [Relay](../tests/browser/relay.test.ts)                  | 11    | Button/field states and sizes, selection, validation/recovery, nested overlays, accessible names, token overrides, responsive bounds, reduced motion, forced colors, and route theme preferences                                         |
 
 Documentation and interaction tests drive the built site. Contract and fidelity
 tests use focused browser fixtures. The documentation suite checks route responses,
@@ -206,10 +283,15 @@ LICENSE/NOTICE, ESM/CSS/JSON exports, strict declarations with `skipLibCheck=fal
 structured type metadata, theme/layer portals, refs/render props, keyboard state,
 form validation/submission, selection, loaded Plex faces, and browser errors.
 
+The current Relay archives are identified by the
+[manifest](../dist/packages/manifest.json),
+[package-consumer record](../test-results/package-consumer.json), and
+[README-install record](../test-results/readme-install.json):
+
 | Archive                                                               | Bytes  | SHA-256                                                            |
 | --------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
-| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 29,624 | `5f810ded6705b6c436d084306bf93e609624801755923d62a785dff051dd67cb` |
-| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 64,860 | `de1192fc87291163f06ca594c5abf944a0ca2aa00eb45424987e0e5e68390962` |
+| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 36,741 | `200bf419f59bdf08495ab9c045d8b6578b2de5571b72ffa67e0d75ef7484f597` |
+| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 71,850 | `30acf221d4b907258865e5666947ff445574c8b85db7ea3d5d1bea3c74cd0754` |
 
 The manifest, actual archive bytes, package-consumer record, and README-install
 record agree on these hashes. `@cinder/tokens@0.1.0` is an explicit React-package
@@ -313,7 +395,7 @@ modal-default dialog popovers.
 ## Remaining verification scope
 
 Manual assistive-technology testing, Firefox/WebKit and physical mobile-device
-checks, forced colors, broad zoom/locale/calendar combinations, SSR hydration,
+checks, full-catalog forced colors, broad zoom/locale/calendar combinations, SSR hydration,
 and comprehensive Carbon pixel comparisons remain unperformed. Automated axe,
 keyboard, type, and focused fidelity results establish the specific coverage above.
 The tested dependency combination is the pinned one. Toasts use experimental RAC

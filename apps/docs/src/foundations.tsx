@@ -10,8 +10,14 @@ import {
   Theme,
   ToggleButton,
 } from "@cinder/react";
-import { breakpoints, themeNames, themes } from "@cinder/tokens";
-import { PageIntro, SiteFooter, themeLabels, useThemePreference } from "./site";
+import { breakpoints, themes } from "@cinder/tokens";
+import {
+  PageIntro,
+  SiteFooter,
+  themeLabels,
+  useThemePreference,
+  referenceThemeNames as themeNames,
+} from "./site";
 
 export default function Foundations() {
   const { theme, setTheme } = useThemePreference();
@@ -57,6 +63,9 @@ export default function Foundations() {
             <p>
               A new Theme resets the layer context. Layer advances it, up to Carbon's third
               contextual level. Menus and dialogs carry the same theme through React portals.
+            </p>
+            <p>
+              <Link href="/relay#tokens">See the Relay light and dark token choices.</Link>
             </p>
             <Link href="https://carbondesignsystem.com/building-blocks/foundations/color/overview/">
               Carbon color guidance <Icon name="external" />

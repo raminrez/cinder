@@ -4,6 +4,31 @@
 interaction, React 19.3.1, and Bun 1.4.4. This describes the shipped source and
 examples. Final execution results are in [verification](verification.md).
 
+## Relay web slice
+
+The production `/relay` route uses the same exported components with
+`theme="relay-light"` or `theme="relay-dark"`. The [Relay specification](relay.md)
+records the authored values, API conventions, customization, and usage guidance.
+
+| Area              | Implemented Relay scope                                                                                                                             | Evidence                                         |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Button            | Seven variants; 32/40/48/64/80px heights; 8px corners; actual hover/press/focus, disabled, icon-only, and pending with a localizable progress label | R; P                                             |
+| TextField         | Three heights, full borders, label/help/error anatomy, invalid focus, read-only copying, and controlled validation recovery                         | R; C; P                                          |
+| Selection         | Checkbox/Radio groups, mixed/read-only/disabled/invalid where applicable, Switch's two track sizes, rounded ContentSwitcher                         | R                                                |
+| Select and Dialog | Described options, disabled-option skipping, 12px popovers, 20px dialogs, named focus containment/return, nested portal theme/layer inheritance     | R; C; P                                          |
+| Tokens            | Two authored palettes merged over Carbon roles; five Relay geometry tokens; same CSS, JSON, and typed exports                                       | U; R live token override; P                      |
+| Gallery           | State matrices, realistic local compositions, both themes, token mappings, real prop guidance, and controlled/uncontrolled examples                 | R responsive overflow and axe; visual inspection |
+
+**R** is [`relay.test.ts`](../tests/browser/relay.test.ts): real interaction,
+pending accessible names/repeat prevention, validation, selection, nested portals,
+responsive widths, reduced motion, forced colors, and automated accessibility in
+both Relay themes. P includes an installed Relay consumer. The remaining evidence
+letters below continue to describe the Carbon reference baseline.
+
+The other catalog families have not completed Relay-specific review. They receive
+available theme tokens and shared anatomy styles, while keeping baseline geometry.
+Relay does not add extra catalog families or imply full-library visual parity.
+
 ## What the number 45 means
 
 The [Cinder catalog][catalog] has **45 reference entries**, each with an example,
@@ -38,6 +63,7 @@ DateField, and RAC composition parts do not add to the 45-page count.
   normally in g100. The specific behavior is named in the table.
 - **C — consumer contract checks:** controlled state, dynamic collections, custom
   DOM rendering, render props, refs, locale, layers, and portals in [contracts.test.ts][contracts].
+  Theme/portal coverage includes all six themes and nested Carbon isolation.
 - **F — fidelity checks:** 16 focused browser tests in [fidelity.test.ts][fidelity]
   measure compound sizes, toggle/slider geometry, supporting typography, and
   button/notification/calendar states. The color assertions cover all four themes;
@@ -147,7 +173,7 @@ issues at the measured scope; they do not establish full visual or behavioral pa
 - Hosted backend services, file transfer, authentication, persistence, analytics,
   npm publication, and deployment. The example actions update local browser state.
 - Manual screen-reader testing, Firefox/WebKit/mobile-device verification,
-  forced-colors testing, broad zoom/locale coverage, SSR hydration, and a full
+  catalog-wide forced-colors testing, broad zoom/locale coverage, SSR hydration, and a full
   pixel-by-pixel Carbon screenshot comparison. Automated axe results have a
   narrower scope than those activities.
 

@@ -9,10 +9,9 @@ import {
   Tag,
   ToggleButton,
 } from "@cinder/react";
-import { themeNames } from "@cinder/tokens";
 import { categories, components } from "./catalog";
 import { ComponentExample } from "./examples";
-import { themeLabels, useThemePreference } from "./site";
+import { themeLabels, useThemePreference, referenceThemeNames as themeNames } from "./site";
 
 export default function ComponentReference() {
   const slug = window.location.pathname.split("/")[2];
@@ -240,7 +239,10 @@ export default function ComponentReference() {
               </CodeSnippet>
               <p>
                 Every example runs the actual library. Switch themes, use the keyboard, and inspect
-                the code.
+                the code.{" "}
+                <Link href="/relay" inline>
+                  Explore the Relay button and field specification.
+                </Link>
               </p>
             </div>
             {categories.map((category) => (

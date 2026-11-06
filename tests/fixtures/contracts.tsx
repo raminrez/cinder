@@ -127,6 +127,8 @@ function PortalContracts() {
           <option>g10</option>
           <option>g90</option>
           <option>g100</option>
+          <option>relay-light</option>
+          <option>relay-dark</option>
         </select>
       </label>
       <label>
@@ -141,6 +143,9 @@ function PortalContracts() {
         </select>
       </label>
       <Theme theme={theme} locale={direction === "rtl" ? "ar-AE" : "en-US"} className="inner-theme">
+        <Theme theme="white" className="nested-carbon-theme">
+          <Button>Nested Carbon action</Button>
+        </Theme>
         <Theme theme={theme} className="inherited-locale">
           <Layer className="first-layer">
             <Layer className="second-layer">

@@ -7,6 +7,10 @@
   future Carbon / Uber Base / HeroUI synthesis. All future changes and acceptance gates below are
   **unapproved proposals**.
 
+This is a historical audit: “current” below refers to the recorded source snapshot.
+The later Relay implementation is documented in the [Relay specification](relay.md)
+and [Relay verification](verification.md#relay-follow-up).
+
 ## Executive finding
 
 **Cinder is a useful, already functioning static-CSS and RAC foundation. Its main limitation for
@@ -66,10 +70,12 @@ coverage document explicitly records the corrected button, compound-size, notifi
 calendar, toggle/slider, and typography findings at their measured scope.
 [Correction record](coverage.md#L126-L139).
 
-Source links below identify repository files and inclusive line ranges using GitHub's
-`#Lstart-Lend` notation. Short **API**, **CSS**, and test labels in the family matrix resolve to
-those precise paths. Archived `.research/` material and `test-results/` are local supporting
-evidence and are ignored by Git; the important conclusions and counts are restated here.
+Source links below retain the snapshot's inclusive line ranges using GitHub's
+`#Lstart-Lend` notation. Relative links open working-tree files, whose lines may have shifted;
+use `git show ddcb8672:<repository-relative-path>` to read a tracked target at the cited revision.
+Short **API**, **CSS**, and test labels in the family matrix resolve to those paths.
+Archived `.research/` material and `test-results/` are local supporting evidence and are
+ignored by Git; the important conclusions and counts are restated here.
 [Ignore rules](../.gitignore#L1-L8).
 
 | Evidence inspected                     | Reading and verification boundary                                                                                                                                                                                                                                                                                                                                                    |

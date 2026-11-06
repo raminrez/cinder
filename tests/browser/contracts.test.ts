@@ -111,6 +111,14 @@ for (const theme of themeNames) {
     await page.goto("/?portals");
     await page.getByRole("combobox", { name: "Contract theme" }).selectOption(theme);
     await page.getByRole("combobox", { name: "Contract direction" }).selectOption("rtl");
+    await expect(page.getByRole("button", { name: "Nested Carbon action" })).toHaveCSS(
+      "border-radius",
+      "0px",
+    );
+    await expect(page.getByRole("button", { name: "Nested Carbon action" })).toHaveCSS(
+      "background-color",
+      "rgb(15, 98, 254)",
+    );
     await expect(page.locator(".inherited-locale")).toHaveAttribute("dir", "rtl");
     await expect(page.locator(".inherited-locale")).toHaveAttribute("lang", "ar-AE");
     await expect(page.locator(".first-layer")).toHaveAttribute("data-cinder-layer", "1");

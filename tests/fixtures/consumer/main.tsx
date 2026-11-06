@@ -14,6 +14,7 @@ import {
   Modal,
   Select,
   Stack,
+  Text,
   TextField,
   Theme,
   type Key,
@@ -23,13 +24,14 @@ import { token, themes, typeStyles, type TypeStyleName } from "@cinder/tokens";
 import tokenData from "@cinder/tokens/tokens.json";
 import "@cinder/react/styles.css";
 import "@fontsource/ibm-plex-sans/latin-400.css";
+import "@fontsource/ibm-plex-sans/latin-500.css";
 import "@fontsource/ibm-plex-sans/latin-600.css";
 import "@fontsource/ibm-plex-mono/latin-400.css";
 
-const theme: ThemeName = "g90";
 const typeStyleName: TypeStyleName = "fluid-heading-05";
 
 function App() {
+  const [theme, setTheme] = useState<ThemeName>("g90");
   const action = useRef<HTMLButtonElement>(null);
   const [count, setCount] = useState(0);
   const [region, setRegion] = useState<Key | null>("eu");
@@ -44,6 +46,11 @@ function App() {
           </Button>
           <Button variant="ghost" onPress={() => action.current?.focus()}>
             Focus counter
+          </Button>
+          <Button onPress={() => setTheme("relay-light")}>Use Relay light</Button>
+          <Button onPress={() => setTheme("relay-dark")}>Use Relay dark</Button>
+          <Button isPending pendingLabel="Saving">
+            Save draft
           </Button>
           <Form
             onSubmit={(event) => {
@@ -70,6 +77,13 @@ function App() {
                 <Dialog>
                   <Heading slot="title">Package details</Heading>
                   <p>Theme and layer crossed the package boundary.</p>
+                  <Select label="Review role" defaultValue="viewer">
+                    <ListBoxItem id="viewer" textValue="Viewer">
+                      <Text slot="label">Viewer</Text>
+                      <Text slot="description">Can view and comment</Text>
+                    </ListBoxItem>
+                    <ListBoxItem id="editor">Editor</ListBoxItem>
+                  </Select>
                   <Button slot="close">Close details</Button>
                 </Dialog>
               </Modal>
@@ -83,6 +97,9 @@ function App() {
                 json: tokenData.themes[theme].background,
                 typeStyle: typeStyles[typeStyleName],
                 jsonTypeStyle: tokenData.typeStyles[typeStyleName],
+                cssRadius: token("control-radius"),
+                relayRadius: themes["relay-light"]["control-radius"],
+                jsonRelayRadius: tokenData.themes["relay-light"]["control-radius"],
               },
               null,
               2,

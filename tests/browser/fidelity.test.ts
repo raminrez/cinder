@@ -188,7 +188,7 @@ test("supporting text and block code use Carbon's compact type roles", async () 
   await expect(code).toHaveCSS("padding-inline-start", "16px");
 });
 
-for (const theme of themeNames) {
+for (const theme of themeNames.filter((name) => !name.startsWith("relay-"))) {
   test(`${theme}: ghost/danger states and variant-specific keyboard focus retain Carbon colors`, async () => {
     await open(theme);
     const ghost = page.getByRole("button", { name: "ghost", exact: true });

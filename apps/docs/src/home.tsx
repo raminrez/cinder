@@ -23,7 +23,7 @@ import {
   useToast,
   type ControlSize,
 } from "@cinder/react";
-import { themeNames } from "@cinder/tokens";
+import { referenceThemeNames as themeNames } from "./site";
 import { components } from "./catalog";
 import { WorkspaceTable } from "./workbench";
 import { SiteFooter, themeLabels, useThemePreference } from "./site";

@@ -15,6 +15,8 @@ const server = Bun.serve({
     "/foundations": index,
     "/get-started": index,
     "/research": index,
+    "/relay": index,
+    "/relay/": index,
     "/prototypes": prototypes,
     "/LICENSE.txt": () =>
       new Response(Bun.file(`${root}/LICENSE`), {

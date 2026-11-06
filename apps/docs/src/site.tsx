@@ -21,7 +21,10 @@ export const themeLabels: Record<ThemeName, string> = {
   g10: "Gray 10",
   g90: "Gray 90",
   g100: "Gray 100",
+  "relay-light": "Relay light",
+  "relay-dark": "Relay dark",
 };
+export const referenceThemeNames = themeNames.filter((name) => !name.startsWith("relay-"));
 export const ThemePreference = createContext<{
   theme: ThemeName;
   setTheme: (theme: ThemeName) => void;
@@ -30,6 +33,10 @@ export const useThemePreference = () => useContext(ThemePreference);
 
 function ThemeMenu() {
   const { theme, setTheme } = useThemePreference();
+  const choices =
+    window.location.pathname.replace(/\/+$/, "") === "/relay"
+      ? themeNames.filter((name) => name.startsWith("relay-"))
+      : referenceThemeNames;
   return (
     <MenuTrigger>
       <Button
@@ -38,7 +45,10 @@ function ThemeMenu() {
         iconOnly
         aria-label={`Change theme, current theme ${themeLabels[theme]}`}
       >
-        <Icon name={theme === "white" || theme === "g10" ? "sun" : "moon"} size={20} />
+        <Icon
+          name={theme === "white" || theme === "g10" || theme === "relay-light" ? "sun" : "moon"}
+          size={20}
+        />
       </Button>
       <Popover placement="bottom end">
         <Menu
@@ -49,7 +59,7 @@ function ThemeMenu() {
             if (isThemeName(key)) setTheme(key);
           }}
         >
-          {themeNames.map((name) => (
+          {choices.map((name) => (
             <MenuItem id={name} key={name} textValue={themeLabels[name]}>
               <span className={`theme-dot theme-dot-${name}`} />
               {themeLabels[name]}
@@ -158,6 +168,9 @@ export function SiteHeader() {
           </Link>
           <Link href="/research" aria-current={path === "/research" ? "page" : undefined}>
             Research
+          </Link>
+          <Link href="/relay" aria-current={path === "/relay" ? "page" : undefined}>
+            Relay
           </Link>
         </nav>
         <div className="site-header-actions">

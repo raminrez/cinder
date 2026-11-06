@@ -63,6 +63,11 @@ export const components: ComponentEntry[] = [
       ],
       ["iconOnly", "boolean", "Square icon control. Supply an aria-label."],
       ["isPending", "boolean", "Show pending feedback and prevent duplicate actions."],
+      [
+        "pendingLabel",
+        "string",
+        "Accessible progress text; defaults to Pending. Localize with the action.",
+      ],
       ["size", '"sm" | "md" | "lg" | "xl" | "2xl"', "32, 40, 48, 64, or 80 px button height."],
       ...controlProps.filter(([name]) => name !== "size"),
     ],
