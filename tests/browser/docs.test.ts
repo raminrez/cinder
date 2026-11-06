@@ -117,7 +117,7 @@ describe("production routes", () => {
       expect(await page.locator("main h1").count()).toBe(1);
     }
     const html = await (await fetch(new URL("/components/button", server.url))).text();
-    const script = html.match(/src="(\/[^\"]+\.js)"/);
+    const script = html.match(/src="(\/[^"]+\.js)"/);
     expect(script).not.toBeNull();
     const asset = await fetch(new URL(script![1]!, server.url), { method: "HEAD" });
     expect(asset.status).toBe(200);

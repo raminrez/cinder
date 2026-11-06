@@ -116,9 +116,11 @@ export default function GetStarted() {
                 {"bun run check\n\n# Serve the built site:\nbun start"}
               </CodeSnippet>
               <p>
-                The check runs formatting, types, unit and browser tests, and an isolated tarball
-                consumer. Browser checks use Playwright and installed Google Chrome, including
-                keyboard interactions and automated accessibility checks. Install Chrome with{" "}
+                The check runs formatting, Oxlint, types, unit and browser tests, and an isolated
+                tarball consumer. Run <code>bun run lint</code> for linting alone or{" "}
+                <code>bun run lint:fix</code> to apply safe automatic fixes. Browser checks use
+                Playwright and installed Google Chrome, including keyboard interactions and
+                automated accessibility checks. Install Chrome with{" "}
                 <code>bunx playwright install chrome</code> if needed. The consumer verifies the
                 distributed declarations, CSS, fonts, and interactions outside this workspace.
               </p>

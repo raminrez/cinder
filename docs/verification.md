@@ -1,8 +1,7 @@
 # Cinder 0.1.0 — verification
 
-**Latest aggregate: passed, 6 November 2026, 08:36:49–08:38:52 UTC.**
-The [stable native-tooling follow-up](#stable-native-tooling-follow-up) verifies
-the migration to Bun's formatter and type checker.
+**Latest aggregate: passed, 6 November 2026, 09:03:25–09:05:29 UTC.**
+The [Oxlint follow-up](#oxlint-follow-up) adds linting to the stable Bun pipeline.
 
 **Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
@@ -15,7 +14,39 @@ are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
 
+## Oxlint follow-up
+
+The workspace pins **Oxlint 1.91.0** on stable **Bun 1.4.4**. `bun run lint` checks
+source files, `bun run lint:fix` applies safe fixes, and the aggregate runs lint
+between formatting and type checking. The [tooling notes](research-bun.md#oxlint-on-stable-bun)
+explain the rules, exclusions, and intentional accessibility settings.
+
+- The [aggregate record](../test-results/check-oxlint.json) and
+  [output](../test-results/check-oxlint.log) show formatting, lint, **42-file native
+  type checking**, **12 unit tests / 129 expect calls**, **92 browser tests**, the
+  build, packing, and the external consumer passing. All **70 recorded
+  source/configuration hashes**, including `.oxlintrc.json`, stayed stable during
+  the run. Both package archives match the implementation baseline.
+- The [lint proof](../test-results/oxlint.json) records **44 files / 162 rules**
+  with zero findings. Temporary fixtures verified that both hook rules, unused
+  variables, unassociated labels, autofocus outside dialogs, and inappropriate
+  tabindex/role attributes are rejected. Dialog focus, keyboard-scroll targets,
+  responsive table roles, rest-prop omission, and status regions are accepted.
+- A deliberate lint error stopped the aggregate before type checking. A warning
+  alone also caused failure, and `lint:fix` corrected a safely fixable regex.
+  All temporary fixtures were removed. Frozen installation checked **54 installs
+  across 100 packages**, with no changes and identical lockfile bytes.
+- The [README installation check](../test-results/readme-install.json),
+  [fresh preview check](../test-results/preview-oxlint.json), and
+  [documentation check](../test-results/docs-oxlint.json) capture the updated
+  instructions, built-file delivery, formatting, and local links.
+
+Oxlint's type-aware mode is not enabled. This lint pass complements the existing
+type and browser checks; manual audit scope remains listed below.
+
 ## Stable native-tooling follow-up
+
+**Passed, 6 November 2026, 08:36:49–08:38:52 UTC**, before Oxlint was added.
 
 The workspace uses stable **Bun 1.4.4**. `format` runs `bun fmt`, `format:check`
 runs `bun fmt --check`, and `typecheck` runs
@@ -37,17 +68,17 @@ TypeScript supplies declaration emission and independent consumer checks.
 - Frozen installation passed with **52 installs across 80 packages** and an
   unchanged lockfile. The Carbon offline provenance validator also passed after
   updating its formatter instructions.
-- The [README installation check](../test-results/readme-install.json) passed at
+- The [README installation check](../test-results/readme-install-before-oxlint.json) passed at
   **08:39:32 UTC**, using the updated README's exact commands and TSX snippets.
 - The [preview delivery check](../test-results/preview-native-tooling.json) compares
   the restarted preview's routes and all site assets with the build. The
   [documentation check](../test-results/docs-native-tooling.json) records final
   formatting and local-link verification after these notes were updated.
 
-Native `bun lint` is deferred under the user's stable-runtime choice. Its command
-is documented online and works in the separately tested canary, but both installed
-stable executables reject it. The [Bun notes](research-bun.md#native-lint-availability)
-record this availability probe; this follow-up does not claim a lint pass.
+This earlier run did not include linting. Native `bun lint` worked in the tested
+canary but was unavailable in stable 1.4.4; the
+[Bun notes](research-bun.md#native-lint-availability) retain that availability probe.
+The later Oxlint follow-up above supplies the workspace lint gate.
 
 ## Environment and evidence identity
 
@@ -56,6 +87,7 @@ record this availability probe; this follow-up does not claim a lint pass.
 | Platform                  | macOS 27.2, arm64                                                            |
 | Bun                       | 1.4.4, revision `38afee6c8`                                                  |
 | TypeScript                | 7.0.2                                                                        |
+| Oxlint                    | 1.91.0, added in the Oxlint follow-up                                        |
 | React / React DOM         | 19.3.1                                                                       |
 | RAC                       | 1.22.1                                                                       |
 | `@internationalized/date` | 3.12.4                                                                       |
@@ -158,7 +190,7 @@ The combined record reuses the other 43 entries' measurements and replaces the
 two date entries with those scoped rechecks. It records no remaining document
 overflow across the 180 observations. The original findings are retained in
 [`props-layout-before-calendar.json`](../test-results/props-layout-before-calendar.json).
-The layout record's source hashes match the final aggregate.
+The layout record's source hashes match the implementation-baseline aggregate.
 
 The earlier [toolbar probe](../test-results/final-layout.json) verifies 60px theme
 segments on desktop/tablet, 52px on mobile, Reset wrapping at 320px, logical LTR/RTL

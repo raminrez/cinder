@@ -142,7 +142,7 @@ export default function Foundations() {
               Design is in the details. A familiar label, a comfortable line length, the space to
               understand what comes next.
             </p>
-            <label>Workspace name</label>
+            <span className="type-scale-label">Workspace name</span>
             <code>const considered = true;</code>
           </div>
         </section>

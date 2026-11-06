@@ -13,7 +13,7 @@
 - Publish **ESM JavaScript, declaration files, and an explicit CSS export**. Keep React/RAC imports external. Set `jsx.development: false` for the published library.
 - Generate declarations with **TypeScript 7.0.2 and `emitDeclarationOnly`**. The live Bun docs advertise `dts: true` / `--dts`, but the tested stable executable silently ignores them.
 - Use **`bun test`** for token logic and component tests, with explicit Happy DOM preloads when a DOM is needed. The advertised native DOM-environment selectors did not work on this revision. **Playwright Library under `bun test`** did work.
-- Use native **`bun fmt`** and **`bun check --no-script -p tsconfig.json`** for formatting and workspace type checking. Native linting is deferred under the user's stable-runtime choice; the availability probe below distinguishes stable from canary.
+- Use native **`bun fmt`** and **`bun check --no-script -p tsconfig.json`** for formatting and workspace type checking, plus **Oxlint 1.91.0** for linting on stable Bun. The availability probe below distinguishes native lint support in stable and canary.
 
 These conclusions combine primary documentation with the [probe results](#10-verification-results). They are not a claim that every downloaded page or every Cinder component was tested.
 
@@ -110,7 +110,23 @@ Before migration, both Prettier and `bun fmt --check` passed on the same source 
 
 On 6 November 2026, the [live linter documentation](https://bun.sh/docs/lint.md) describes native `bun lint`. Both installed stable **1.4.4+38afee6c8** executables reject the command with `Script not found "lint"`, including the documented `--no-script` form. The npm `latest` tag and GitHub's latest stable release both still identify 1.4.4.
 
-A separately downloaded canary, **1.4.4-canary.1+b1305ddc7**, successfully ran `bun lint --no-script --doctor`, discovering 44 files and 78 default rules. The [capability record](../.research/bun/probes/native-lint-canary/probe.json) includes its archive/executable hashes and command output. This checks command availability, not whether Cinder passes lint. The user chose to retain stable 1.4.4 and defer native lint until a stable release supports it; Cinder therefore has no lint script or external linter dependency.
+A separately downloaded canary, **1.4.4-canary.1+b1305ddc7**, successfully ran `bun lint --no-script --doctor`, discovering 44 files and 78 default rules. The [capability record](../.research/bun/probes/native-lint-canary/probe.json) includes its archive/executable hashes and command output. This checks command availability, not whether Cinder passes lint. The user chose to retain stable 1.4.4, then selected Oxlint as the workspace linter.
+
+### Oxlint on stable Bun
+
+Following the supplied [Oxlint guide](https://oxc.rs/docs/guide/usage/linter.md) and [quickstart](https://oxc.rs/docs/guide/usage/linter/quickstart.md), Cinder pins **`oxlint@1.91.0`** as a development dependency. `bun run lint` runs `bun run --bun oxlint`, keeping the launcher on Bun. `bun run lint:fix` adds `--fix`, which applies safe fixes; suggestions and dangerous fixes require separate opt-ins. The aggregate runs lint after formatting and before type checking.
+
+[`.oxlintrc.json`](../.oxlintrc.json) enables correctness rules from ESLint core, TypeScript, Unicorn, Oxc, React, and JSX accessibility. It also explicitly enables [`react/rules-of-hooks`](https://oxc.rs/docs/guide/usage/linter/rules/react/rules-of-hooks.md), which Oxlint categorizes as pedantic; `react/exhaustive-deps` is already in correctness. Findings are errors and the warning limit is zero. It excludes dependency/build directories and local research, tools, visual evidence, and test results. This is source linting: type-aware Oxlint rules are not enabled. Bun checks workspace types; TypeScript emits declarations and checks the independent consumer.
+
+The configuration accounts for these intentional patterns:
+
+- [`no-unused-vars`](https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars.md) allows rest siblings, so `List` can remove its `ordered` prop before forwarding DOM attributes.
+- The JSX accessibility component map treats Cinder's `Dialog` as `dialog`. [`no-autofocus`](https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-autofocus.md) still checks autofocus outside dialogs, while permitting the expected initial focus inside them.
+- [`no-noninteractive-tabindex`](https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-tabindex.md) permits `pre` and `region` keyboard-scroll targets, retaining the default `tabpanel` exception.
+- [`no-redundant-roles`](https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-redundant-roles.md) permits `table` on tables to retain semantics under responsive CSS display changes.
+- [`prefer-tag-over-role`](https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/prefer-tag-over-role.md) is disabled: explicit status live regions and named regions are valid here. The other enabled JSX accessibility rules still check their markup.
+
+The [verification report](verification.md#oxlint-follow-up) records the lint gate and focused checks of these settings.
 
 ## 4. Workspaces, catalogs, and isolated installs
 

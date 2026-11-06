@@ -1250,7 +1250,7 @@ html {
   font-size: 1rem;
   margin: 0;
 }
-.type-scale label {
+.type-scale-label {
   font-size: 0.75rem;
   color: var(--cinder-text-secondary);
 }

@@ -114,7 +114,7 @@ The [coverage matrix](docs/coverage.md) lists supported variants and omissions.
 bun run check
 ```
 
-This runs formatting, TypeScript, unit tests, the production build, browser tests,
+This runs formatting, Oxlint, type checking, unit tests, the production build, browser tests,
 packing, and an independent tarball consumer. The consumer uses strict declaration
 checking, builds outside this workspace, and exercises the installed packages in
 a real browser. It needs registry access for its isolated dependency install.
@@ -126,19 +126,26 @@ bunx playwright install chrome
 ```
 
 Use `PLAYWRIGHT_CHANNEL=msedge` with an installed supported channel if appropriate.
-For formatting and type checking:
+For formatting, linting, and type checking:
 
 ```sh
 bun run format
 bun run format:check
+bun run lint
+bun run lint:fix
 bun run typecheck
 ```
 
 Formatting uses native `bun fmt`, configured in `bunfig.toml`. Type checking uses
 `bun check --no-script -p tsconfig.json`; `--no-script` selects Bun's checker rather
 than the workspace's aggregate `check` script. TypeScript is required for `.d.ts`
-generation and independent consumer checks. Native linting is deferred on the
-pinned stable runtime; see the [Bun tooling notes](docs/research-bun.md#native-lint-availability).
+generation and independent consumer checks.
+
+Linting uses **Oxlint 1.91.0** through Bun, configured in `.oxlintrc.json`. Correctness
+rules cover JavaScript, TypeScript, React hooks, and JSX accessibility; errors and
+warnings fail the check. `lint:fix` applies safe automatic fixes. The
+[tooling notes](docs/research-bun.md#oxlint-on-stable-bun) document its scope and
+intentional accessibility exceptions.
 
 The individual test commands are `bun test tests/unit`, `bun run test:browser`,
 and (after packing) `bun run test:package`.
