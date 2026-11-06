@@ -4,8 +4,8 @@
 visual direction. This specification defines how that direction becomes a usable,
 accessible, internationalized, and customizable component system. The
 [ordered implementation plan](component-library-plan.md) turns these requirements
-into library work. Figma is the final handoff after the web system is implemented
-and verified.
+into library work: **components + Storybook first, documentation website next,
+Figma last**.
 
 ## 1. Authority and implementation status
 
@@ -19,13 +19,19 @@ and verified.
 | [Prototype guide](prototypes-guide.md)                      | Working comparison tasks and their bounded evidence                        |
 | Research reports                                            | Rationale and versioned source observations                                |
 
-**Phase 1 establishes the foundations and styling contract.** The user approved
+**Phase 1 foundations and styling contracts are complete.** The user approved
 native prebuilt CSS, additive `frame-light` / `frame-dark`, Frame's 44px default,
 and `Theme appearanceClassName` on 6 November 2026. The four Carbon themes and
 `relay-light` / `relay-dark` retain their defaults. The remaining component and
 inclusion requirements below are the target for the later library slices;
 foundation work alone does not complete the Frame catalog. See the
 [Phase 1 verification](verification.md#frame-phase-1) for executed evidence.
+
+Phase 2 develops the actual packaged components with Storybook as their working
+review surface, starting with Button and Link, then fields and form recovery.
+Component stories and README/API contracts grow together through the remaining
+slices. The full documentation website follows the component work in Phase 6;
+Figma follows in Phase 7.
 
 | State         | Established today                                                                                                     | Remaining library work                                                                           |
 | ------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -521,12 +527,16 @@ work for the library slices that claim them.
 
 ## 10. Documentation, maturity, and change control
 
-Each component page contains: purpose and alternatives; a working example with
+During component work, Storybook supplies the working examples, state matrices,
+composition stories, and interaction/accessibility checks. README/API contracts
+record real props, values, refs, parts, and limits alongside the implementation.
+
+Phase 6 consolidates these verified components and examples into the existing
+`apps/docs` website. Each component page contains: purpose and alternatives; a working example with
 copyable code; anatomy and real targets; props/value shapes; applicable state
 matrix; keyboard/content rules; responsive/localization behavior; token/part/state
 customization; portal example where relevant; evidence, limitations, and migration
-notes. Start from the existing catalog rather than introducing another documentation
-platform before it solves a demonstrated need.
+notes. Keep the existing catalog and package contracts as the shared inventory.
 
 Promote a family only when its code, types, stylesheet, documentation, representative
 composition, and packed-consumer behavior agree. Track baseline, Frame-in-progress,

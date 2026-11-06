@@ -1,14 +1,14 @@
 # Cinder component-library implementation plan
 
-**6 November 2026 · approved code-first sequence.** Build the selected Frame
-direction into the existing code-based system, prove a small complete slice, then
-extend the same contracts through the catalog. **Figma is the final step**, derived
-from the implemented library and documentation.
+**6 November 2026 · approved code-first sequence.** Frame foundations are complete.
+Build the finished components and their **Storybook** stories next, extend them
+through the catalog, then develop the **documentation website**. **Figma is the
+final step**, derived from the implemented library and documentation.
 
 Visual authority: [DESIGN.md](../DESIGN.md). Behavior, inclusion, and customization
 requirements: [design-system.md](design-system.md). Current package scope:
-[coverage.md](coverage.md). This plan describes work to perform; checked prototype
-behavior does not mean the reusable Frame implementation is complete.
+[coverage.md](coverage.md). [Phase 1 evidence](verification.md#frame-phase-1) records
+the completed foundation scope; the phases below complete the component library.
 
 ## Outcome and sequence
 
@@ -16,16 +16,20 @@ The result is a reusable React Aria-based Cinder library with Frame light/dark
 themes, dependable defaults, documented root/part/state styling, coherent locale
 and portal behavior, working examples, and evidence from installed packages.
 
-| Phase | Deliverable                                   | Depends on                     | Completion condition                                                                                                          |
-| ----- | --------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| 0     | Selected direction and written system         | Completed prototype comparison | DESIGN.md, system specification, evidence boundaries, and this plan agree                                                     |
-| 1     | Foundation and public styling contracts       | 0                              | Frame theme/size proposal resolved; tokens, scope, parts, locale, and representative consumer proof agree                     |
-| 2     | First complete Frame slice                    | 1                              | Settings and nested-dialog tasks use packaged components with documented states and verified behavior                         |
-| 3     | Selection and navigation expansion            | 2                              | Eleven additional catalog entries meet the same contract                                                                      |
-| 4     | Data and structure expansion                  | 2; relevant choices from 3     | Nine additional entries preserve data, selection, responsive, and focus semantics                                             |
-| 5     | Dates, files, and feedback expansion          | 2; shared contracts from 3–4   | Eleven additional entries have their specialized value, locale, and lifecycle evidence                                        |
-| 6     | Whole-library documentation and release proof | 2–5                            | Coverage is reconciled, supported integrations are demonstrated, packages install cleanly, and migration guidance is complete |
-| 7     | Final Figma handoff                           | 6                              | Design assets match the settled token, anatomy, state, and package versions                                                   |
+**Current state:** Phases 0 and 1 are complete. Phase 2 is next. Delivery order:
+**components + Storybook (2–5) → documentation website and release proof (6) →
+Figma (7)**. Component README/API contracts and evidence accompany each batch.
+
+| Phase | Deliverable                             | Depends on                     | Completion condition                                                                                                              |
+| ----- | --------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | Selected direction and written system   | Completed prototype comparison | DESIGN.md, system specification, evidence boundaries, and this plan agree                                                         |
+| 1     | Foundation and public styling contracts | 0                              | Frame theme/size proposal resolved; tokens, scope, parts, locale, and representative consumer proof agree                         |
+| 2     | First complete Frame slice + Storybook  | 1                              | Fourteen entries have working stories; settings and nested-dialog tasks use packaged components with verified states and behavior |
+| 3     | Selection and navigation + stories      | 2                              | Eleven additional catalog entries and their stories meet the same contract                                                        |
+| 4     | Data and structure + stories            | 2; relevant choices from 3     | Nine additional entries and their stories preserve data, selection, responsive, and focus semantics                               |
+| 5     | Dates, files, and feedback + stories    | 2; shared contracts from 3–4   | Eleven additional entries and their stories have specialized value, locale, and lifecycle evidence                                |
+| 6     | Documentation website and release proof | 2–5                            | Website, coverage, supported integrations, package installation, and migration guidance agree with the verified components        |
+| 7     | Final Figma handoff                     | 6                              | Design assets match the settled token, anatomy, state, and package versions                                                       |
 
 The phases are dependency order, not calendar estimates. A phase may contain
 several small changes, each with its own meaningful proof. No family becomes
@@ -59,7 +63,8 @@ visual and behavioral reference; its task-specific CSS is not the package contra
 
 ### 1.1 Resolve the small set of public choices
 
-**Decisions resolved; implementation and consumer proof in progress.**
+**Complete, 6 November 2026.** Decisions, implementation, and representative
+installed-consumer proof agree; see [verification](verification.md#frame-phase-1).
 
 | Choice              | Approved contract                                                                                     | Required proof                                                                                                               |
 | ------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -77,8 +82,7 @@ geometry without conditional sizing in application examples.
 
 ### 1.2 Author and generate Frame foundations
 
-Owners: `packages/tokens/src/relay.ts` as the existing pattern, a corresponding
-Frame value source, `packages/tokens/scripts/generate.ts`, and
+Owners: `packages/tokens/src/frame.ts`, `packages/tokens/scripts/generate.ts`, and
 `packages/tokens/src/index.ts`.
 
 1. Map measured Frame roles onto existing semantic names. Add a paired status
@@ -158,12 +162,32 @@ root/part/state/portal examples. A pinned Tailwind fixture proves its actual
 preflight and layer integration before Tailwind support is advertised. This is
 the point to settle contract problems, before repeating them across the catalog.
 
+**Exit passed.** Native CSS, compiled CSS Modules, and pinned Tailwind 4.3.5
+consumers pass strict types, production builds, and browser contracts. The final
+rendered review covers both themes at 1440/768/390/320px, validation recovery,
+nested overlays, keyboard/focus, RTL, and reviewed axe results.
+
 ## Phase 2 — First complete Frame slice
 
 **Catalog entries (14):** `button`, `link`, `text-input`, `text-area`, `number-input`,
 `search`, `checkbox`, `radio-button`, `toggle`, `dropdown`, `form`, `modal`,
 `popover`, `tooltip`. Theme, Layer, Icon, ListBox/options, and field/overlay parts
 are supporting primitives, not extra catalog entries.
+
+### First batch — Storybook and actions
+
+Create a private `apps/storybook` workspace using Storybook's standard React setup,
+with development and static-build commands. Stories consume the public
+`@cinder/react` exports, import `@cinder/react/styles.css` once, and use the existing
+`Theme` for Frame light/dark previews. Storybook dependencies stay in the development
+workspace. Package exports target `dist`, so the workflow must rebuild the package
+output before starting or building Storybook and show component edits reliably.
+
+Complete **Button and Link** in their existing package owners, with the action
+states in item 1 below. This batch is done when their stories typecheck and build,
+keyboard/pointer/focus and pending behavior have focused evidence, and the public
+API contracts agree. Then move directly to shared field anatomy and form recovery.
+The full phase still requires all fourteen entries.
 
 ### Implementation order
 
@@ -182,13 +206,13 @@ are supporting primitives, not extra catalog entries.
 5. **Select and overlays:** rich/long/disabled options, trigger/value/popup targets,
    menu focus/selection distinction, named dialog, scroll/reflow, inner-first Escape,
    focus restoration, and portal appearance/language.
-6. **Canonical examples:** implement settings and nested editing using public package
-   imports. Replace prototype-only required/error presentation with the shared
+6. **Composition stories:** implement settings and nested editing in Storybook using
+   public package imports. Replace prototype-only required/error presentation with the shared
    anatomy. Use a checkbox for a deferred-save preference, or clearly document
    draft behavior. Use focus-retaining pending submission and preserve draft recovery.
 
 Owners: existing `packages/react/src/{buttons,fields,selection,overlays,theme}.tsx`,
-the component styles and exports, and the current docs/example structure. Keep
+the component styles and exports, and `apps/storybook`. Keep
 prototype-specific review logic out of the package. Remove duplicate styling from
 an example only after the replacement is verified and all its uses are accounted for.
 
@@ -208,11 +232,13 @@ an example only after the replacement is verified and all its uses are accounted
   mixed-direction values, one expanding Latin locale, and a real IME pass.
 - Forced colors, reduced motion, touch-sized targets, axe with incomplete results
   reviewed, and manual keyboard plus screen-reader tasks.
-- Strict types, production build, packed installation, and unchanged baseline-theme
-  journeys. Every completed family gets its anatomy/state/customization page.
+- Strict types, Storybook static build, package production build, packed installation,
+  and unchanged baseline-theme journeys. Every completed family gets typed stories,
+  anatomy/state/customization examples, and accompanying README/API contracts.
 
 **Stop condition:** the settings and nested-dialog compositions are complete and
-usable from an installed package, with the fourteen entries' scope documented.
+usable in Storybook and from an installed package, with stories and documented
+scope for all fourteen entries.
 Remaining families retain their honest baseline status until their own phase.
 
 ## Phase 3 — Selection and navigation
@@ -291,11 +317,13 @@ usable with screen readers, zoom, long translations, and motion reduction.
    Frame scope per family, including any deliberately experimental or incomplete
    variant. Extra primitives and generated AI tokens are not additional complete
    component families.
-2. Make the canonical examples, anatomy/ref/part tables, state matrices, keyboard
-   guidance, localization strings, theme/portal recipes, and migration notes agree
-   with the actual exported package. Use the current docs site and source examples.
-3. Promote the intended Frame gallery into production routing and build/preview
-   coverage; `/prototypes` currently remains a development-only comparison.
+2. Build the documentation website in the existing `apps/docs` from the verified
+   components and Storybook examples. Include canonical examples, anatomy/ref/part
+   tables, state matrices, keyboard guidance, localization strings, theme/portal
+   recipes, and migration notes that agree with the exported package.
+3. Add the Frame reference experience to production routing and build/preview
+   coverage, reusing the finished components and established examples.
+   `/prototypes` remains a development-only comparison.
 4. Run the normal aggregate checks and external tarball consumer. Validate plain
    CSS, CSS Modules, and the pinned Tailwind recipe actually supported by this
    release. Test other styling integrations before advertising them. Add SSR and
@@ -347,9 +375,13 @@ fixtures, and consumers before editing. Shared-ownership changes must preserve
 surrounding validation and error handling. Update [coverage](coverage.md) only
 with the specific completed scope and evidence.
 
+Use parallel, narrowly scoped subagents with Caveman/Ponytail guidance. Assign
+shared component/anatomy ownership explicitly; integrate and verify their work
+before advancing the batch.
+
 ## Next implementation unit
 
-Start with **phase 1's Frame foundation and portal contract**, using Button,
-TextField, and nested Select/Dialog as the bounded proof. Resolve the styling,
-size-default, and portable appearance-hook decisions there. Then finish the
-fourteen-entry slice before broadening the catalog.
+Start **Phase 2: Storybook + Button and Link**, using the completed Frame foundations
+in the actual packages. Follow with TextField's guidance/control/recovery anatomy
+and form journeys, the remaining text fields, choice controls, and nested overlays.
+Finish the fourteen-entry slice and its stories before broadening the catalog.

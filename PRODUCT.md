@@ -23,8 +23,9 @@ Working examples let the team evaluate a design before adopting it in the librar
 - `/prototypes` compares designs using shared, fictional review data. Edits last
   only for the current demo session.
 - `/relay` demonstrates the first reusable Relay component slice.
-- Build and verify the design system in code and documentation first. Editable
-  Figma assets are the final handoff, derived from the completed component library.
+- Build the packaged components and their Storybook stories first. Develop the
+  documentation website after the component work; editable Figma assets are the
+  final handoff, derived from the completed library and documentation.
 
 ## Brand Commitments
 
@@ -59,6 +60,13 @@ CSS with one stylesheet import, semantic variables and stable BEM-style hooks;
 additive `frame-light` / `frame-dark` themes; Frame controls at 44px by default and
 32/44/48px for explicit `sm` / `md` / `lg`; and `Theme appearanceClassName` for
 portable appearance on ordinary and detached roots. Preserve existing theme
-defaults and APIs. Phase 1 implementation and consumer proof are in progress.
+defaults and APIs. Phase 1 foundations and representative consumer proof are
+complete; see [verification](docs/verification.md#frame-phase-1).
+
+The user clarified the delivery order on 6 November 2026: components and Storybook,
+then the documentation website, then Figma. Phase 2 starts with a Storybook
+workspace and finished Button/Link coverage, followed by the shared Frame field
+anatomy and the rest of the fourteen-entry slice. README/API contracts accompany
+the components throughout.
 
 Figma follows the completed web system as the final step.

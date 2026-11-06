@@ -1,8 +1,8 @@
 # Cinder 0.1.0 — verification
 
-**Latest work: [Frame Phase 1](#frame-phase-1), 6 November 2026.**
-The foundation, compatibility, and installed-package gates pass; the final rendered
-review is being recorded below. These are scoped runs, not a new aggregate run.
+**Latest work: [Frame Phase 1](#frame-phase-1), passed, 6 November 2026.**
+The foundation, compatibility, installed-package, and rendered-review gates pass.
+The results below combine scoped runs; the latest aggregate remains the Relay run.
 
 **Latest aggregate: passed, 6 November 2026, 16:31:13–16:33:38 UTC.**
 The historical [Relay follow-up](#relay-follow-up) verifies its first light/dark
@@ -28,17 +28,17 @@ anatomy remain [Phase 2](component-library-plan.md#phase-2--first-complete-frame
 
 ### Executed gates
 
-| Gate | Result and scope |
-| --- | --- |
-| Tokens | Eight generated themes; deterministic output; all six legacy theme maps, 191 global foundations, and 36 structured typography definitions unchanged |
-| Unit tests | **22 passed, 1,945 assertions** across two files |
-| Focused browser contracts | **44 passed**: 17 consumer contracts and 27 fidelity cases |
-| Full browser suite | **126 passed** across five files, including existing Carbon and Relay coverage |
-| Workspace types and lint | **53 files** typechecked; Oxlint passed |
-| Formatting and whitespace | 117-file formatting check and `git diff --check` passed before the final documentation pass |
-| Production build | Both packages, declarations, generated CSS/JSON, and the documentation build passed |
-| Installed consumers | Native CSS, compiled Bun CSS Modules, and pinned Tailwind **4.3.5** passed installation, strict declaration checking, production bundling, and browser contracts |
-| README installation | Exact tarball commands, both optional font commands, and all three TSX snippets passed strict declaration checking and bundling in another isolated app |
+| Gate                      | Result and scope                                                                                                                                                 |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tokens                    | Eight generated themes; deterministic output; all six legacy theme maps, 191 global foundations, and 36 structured typography definitions unchanged              |
+| Unit tests                | **22 passed, 1,945 assertions** across two files                                                                                                                 |
+| Focused browser contracts | **44 passed**: 17 consumer contracts and 27 fidelity cases                                                                                                       |
+| Full browser suite        | **126 passed** across five files, including existing Carbon and Relay coverage                                                                                   |
+| Workspace types and lint | **53 files** typechecked; [typecheck output](../test-results/frame-phase1-typecheck.log) and [Oxlint output](../test-results/frame-phase1-lint.log) passed |
+| Formatting and whitespace | Final workspace formatting and `git diff --check` passed; [scoped completion record](../test-results/frame-phase1-final.json) includes local documentation links |
+| Production build          | Both packages, declarations, generated CSS/JSON, and the documentation build passed                                                                              |
+| Installed consumers       | Native CSS, compiled Bun CSS Modules, and pinned Tailwind **4.3.5** passed installation, strict declaration checking, production bundling, and browser contracts |
+| README installation       | Exact tarball commands, both optional font commands, and all three TSX snippets passed strict declaration checking and bundling in another isolated app          |
 
 The six legacy hashes are asserted directly in
 [`tests/unit/tokens.test.ts`](../tests/unit/tokens.test.ts); the regression tests
@@ -92,17 +92,59 @@ utilities and browser precedence rather than an optimizer-specific layer string.
 
 ### Rendered review
 
-Retained-consumer screenshots, keyboard paths, responsive bounds, and axe findings
-are being recorded with `agent-browser` before the final completion status.
+The [rendered record](../test-results/frame-phase1-rendered.json) and
+[output](../test-results/frame-phase1-rendered.log), completed at **21:26:23 UTC**,
+cover the retained final native/CSS Modules and Tailwind builds. Tooling:
+**agent-browser 0.41.2**, **Chrome for Testing 157.0.8103.38**, and its embedded
+**axe 4.12.1**. Font readiness and reduced motion were set before capture.
+
+All **42 captures were inspected**, including full-resolution sections of the tall
+narrow pages. No material visual defects remained in the reviewed composition:
+
+- **16 page captures:** both integrations and both Frame themes at **1440×1000,
+  768×1000, 390×844, and 320×844**. Both plain-CSS and CSS-Module recipes appear in
+  each page. Controls stack cleanly, labels and values remain readable, and nested
+  Frame/Carbon boundaries retain their intended type and geometry.
+- **22 overlay captures:** the plain-CSS dialog and nested Select at 1440 and 320px
+  in both integrations/themes; the CSS-Module dialog/Select at 320px in both themes;
+  and a dark, 320px Hebrew-provider RTL dialog/Select. Dialogs and menus fit the
+  viewport, longer option descriptions remain visible, and focus stays distinct
+  from borders and selection. The RTL check uses the real provider with English
+  fixture copy; it does not establish translation quality.
+- **4 invalid-field captures:** both custom recipes at 320px in light/dark. Guidance,
+  invalid state, focus, and recovery remain readable together. Across all sizes and
+  integrations, **32 corrected pointer submissions passed with 0px submit-action
+  movement**. Tab remained inside the dialog; selection, inner-first Escape, and
+  focus return passed. The record contains 106 observations and no browser errors.
+
+Representative images: [narrow invalid field](../test-results/frame-phase1-native-320-light-plain-invalid.png),
+[CSS-Module Select](../test-results/frame-phase1-native-320-dark-module-select.png),
+[Tailwind tablet](../test-results/frame-phase1-tailwind-768-dark-page.png), and
+[RTL nested Select](../test-results/frame-phase1-native-320-dark-rtl-select.png).
+
+All **42 axe audits reported zero violations**. Eleven dialog audits retained a
+`color-contrast` incomplete result, covering **20 reported node occurrences**;
+axe could not determine the background because of overlapping elements. Every
+target was reviewed in its rendered state. The
+[contrast follow-up](../test-results/frame-phase1-contrast-review.json) confirms
+unobscured text rectangles, an opaque modal background, and no intervening opacity,
+image, blend, or filter effects. All 20 text pairs exceed 4.5:1; the lowest is
+**5.08:1**. The original incomplete results remain in the raw evidence.
+
+The initial fixture scan also led to a named `group` for appearance controls and
+host-owned 24px minimum targets for unrelated raw buttons. These fixes are included
+in the final installed-consumer pass. Screenshot, keyboard, and automated checks
+establish this specific foundation scope; the remaining human/device checks are
+listed below.
 
 ### Distribution cost and boundary
 
-| Distributed React CSS | Size |
-| --- | ---: |
-| Before Phase 1 | 173,342 bytes |
-| With Frame foundations | **225,620 bytes** |
-| Increase | **52,278 bytes / 30.16%** |
-| Current gzip | **22,041 bytes** |
+| Distributed React CSS  |                      Size |
+| ---------------------- | ------------------------: |
+| Before Phase 1         |             173,342 bytes |
+| With Frame foundations |         **225,620 bytes** |
+| Increase               | **52,278 bytes / 30.16%** |
+| Current gzip           |          **22,041 bytes** |
 
 CSS SHA-256:
 `c8c1dc98141a028a36a13ec579fd1019dc824a5eb965fffb22792a25d37c10d5`.
@@ -325,8 +367,8 @@ an exhaustive pixel comparison.
 | -------------------------------------------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Documentation](../tests/browser/docs.test.ts)           | 53    | Six principal routes, production motion/reduced motion, preview-server behavior, and every one of the 45 catalog entries                                                                                                                 |
 | [Interactions](../tests/browser/interactions.test.ts)    | 18    | Keyboard activation/selection, invalid and corrected form submission, search, collections, bounded values, date/time changes, clipboard success/denial, file selection/native mixed-file drop, overlays, navigation, and persisted theme |
-| [Consumer contracts](../tests/browser/contracts.test.ts) | 17    | Refs/render props, controlled fields and collections, eight themes, live appearance/language on four portal families, nested boundaries, and Modal part targets |
-| [Fidelity](../tests/browser/fidelity.test.ts)     | 27    | Shared field anatomy, values/refs, Carbon size/state contracts, Frame default/explicit sizes, typography overrides, raw disabled/invalid fields, and forced colors |
+| [Consumer contracts](../tests/browser/contracts.test.ts) | 17    | Refs/render props, controlled fields and collections, eight themes, live appearance/language on four portal families, nested boundaries, and Modal part targets                                                                          |
+| [Fidelity](../tests/browser/fidelity.test.ts)            | 27    | Shared field anatomy, values/refs, Carbon size/state contracts, Frame default/explicit sizes, typography overrides, raw disabled/invalid fields, and forced colors                                                                       |
 | [Relay](../tests/browser/relay.test.ts)                  | 11    | Button/field states and sizes, selection, validation/recovery, nested overlays, accessible names, token overrides, responsive bounds, reduced motion, forced colors, and route theme preferences                                         |
 
 Documentation and interaction tests drive the built site. Contract and fidelity
