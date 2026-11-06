@@ -1,8 +1,11 @@
 import { expect, spyOn, test } from "bun:test";
 import * as processes from "node:child_process";
-import { EventEmitter } from "node:events";
-import { resolve } from "node:path";
-import type { ViteDevServer } from "vite";
+import { EventEmitter, once } from "node:events";
+import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
+import { createServer, type HotUpdateOptions, type ViteDevServer } from "vite";
+import config from "./main";
 import { watchPackages } from "./watch-packages";
 
 test("package refresh queues edits, retries failures, and stops with Vite", async () => {
@@ -68,5 +71,80 @@ test("package refresh queues edits, retries failures, and stops with Vite", asyn
   } finally {
     plugin.closeBundle();
     spawn.mockRestore();
+  }
+});
+
+test("package outputs defer HMR while story edits retain normal updates", () => {
+  const plugin = watchPackages();
+  const update = (file: string) =>
+    plugin.hotUpdate.call(
+      {} as ThisParameterType<typeof plugin.hotUpdate>,
+      {
+        file: resolve(import.meta.dir, file),
+      } as HotUpdateOptions,
+    );
+
+  expect(update("../../../packages/react/dist/styles.css")).toEqual([]);
+  expect(update("../../../packages/tokens/dist/index.js")).toEqual([]);
+  expect(update("../stories/actions.css")).toBeUndefined();
+});
+
+test("Vite resolves public CSS after a missing build output is restored", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "cinder-storybook-"));
+  const app = join(directory, "apps/storybook");
+  const pkg = join(directory, "packages/react");
+  const stylesheet = join(pkg, "dist/styles.css");
+  const events = new EventEmitter();
+  let watching: Promise<unknown> = Promise.resolve();
+  let server: ViteDevServer | undefined;
+
+  try {
+    await mkdir(join(app, "node_modules/@cinder"), { recursive: true });
+    await mkdir(dirname(stylesheet), { recursive: true });
+    await symlink(pkg, join(app, "node_modules/@cinder/react"), "dir");
+    await writeFile(
+      join(pkg, "package.json"),
+      JSON.stringify({ name: "@cinder/react", exports: { "./styles.css": "./dist/styles.css" } }),
+    );
+    await writeFile(join(app, "preview.js"), 'import "@cinder/react/styles.css";');
+    const vite = await config.viteFinal!(
+      {
+        configFile: false,
+        root: app,
+        cacheDir: join(directory, ".vite"),
+        logLevel: "silent",
+        optimizeDeps: { noDiscovery: true, include: [] },
+        server: { middlewareMode: true, ws: false, fs: { allow: [directory] } },
+        plugins: [
+          {
+            name: "observe-restored-stylesheet",
+            configureServer(vite) {
+              watching = once(vite.watcher, "ready", { signal: AbortSignal.timeout(3000) });
+              vite.watcher.add(dirname(stylesheet));
+            },
+            hotUpdate({ file }) {
+              if (file === stylesheet) {
+                events.emit("restored");
+                return [];
+              }
+            },
+          },
+        ],
+      },
+      {} as Parameters<NonNullable<typeof config.viteFinal>>[1],
+    );
+    server = await createServer(vite);
+    await watching;
+    await expect(server.transformRequest("/preview.js")).rejects.toThrow(
+      'Failed to resolve import "@cinder/react/styles.css"',
+    );
+
+    const restored = once(events, "restored", { signal: AbortSignal.timeout(3000) });
+    await writeFile(stylesheet, ":root { color: black; }");
+    await restored;
+    expect((await server.transformRequest("/preview.js"))?.code).toContain(stylesheet);
+  } finally {
+    await server?.close();
+    await rm(directory, { recursive: true, force: true });
   }
 });

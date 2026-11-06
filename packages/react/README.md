@@ -82,6 +82,19 @@ Use **Button** to perform an action and **Link** to navigate. Choose one primary
 action per decision. Destructive variants need explicit wording such as “Delete
 draft”; color alone does not explain the consequence.
 
+Cinder's recommended button set has four choices:
+
+| Variant     | Use                                                     |
+| ----------- | ------------------------------------------------------- |
+| `primary`   | The main action: a strong neutral fill.                 |
+| `secondary` | Supporting actions: a quiet neutral fill.               |
+| `ghost`     | Low-emphasis actions: unfilled until interaction.       |
+| `danger`    | Destructive actions: an explicit label and danger fill. |
+
+This compact hierarchy follows the emphasis model in [Base](../../docs/research-base.md)
+and [HeroUI](../../docs/research-heroui.md), with the small core set used by
+[Astryx](../../docs/research-astryx.md). Cinder keeps its own Frame palette and geometry.
+
 The canonical [Button stories](../../apps/storybook/stories/Button.stories.tsx) and
 [Link stories](../../apps/storybook/stories/Link.stories.tsx) cover appearance,
 keyboard/pointer interaction, pending and recovery, customization, long labels,
@@ -93,7 +106,7 @@ the [verification record](../../docs/verification.md).
 
 | Prop                    | Contract                                                                                                                                                                                  |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`               | `primary` (default), `secondary`, `tertiary`, `ghost`, `danger`, `danger-tertiary`, or `danger-ghost`                                                                                     |
+| `variant`               | `primary` (default), `secondary`, `ghost`, or `danger` for new Frame work. Existing `tertiary`, `danger-tertiary`, and `danger-ghost` values remain supported.                            |
 | `size`                  | Omitted: Frame 44px, Carbon/Relay 48px. Explicit `sm`, `md`, `lg`, `xl`, `2xl` use the [theme minimums](#frame-foundations--phase-1).                                                     |
 | `iconOnly`              | Defaults to `false`. Gives the icon a square target at the resolved size; supply `aria-label` or `aria-labelledby` on Button.                                                             |
 | `isDisabled`            | Native disabled button: unavailable, skipped in tab order, and does not activate.                                                                                                         |
@@ -102,9 +115,9 @@ the [verification record](../../docs/verification.md).
 | `onPress`               | RAC's normalized mouse, touch, keyboard, and assistive-technology activation callback. Returning a promise does not set `isPending` automatically.                                        |
 | `type`, `name`, `value` | Native form contract. `type` defaults to `"button"`; use `"submit"` explicitly. RAC temporarily changes a pending submit button to `type="button"` to prevent implicit repeat submission. |
 
-Frame's primary action is neutral, secondary is a quiet fill, tertiary is outlined,
-and ghost is unfilled. The three danger variants retain destructive text/fill
-meaning. Hover and press use RAC state; keyboard focus has an external two-pixel
+The compatibility stories cover the existing outlined `tertiary`, outlined
+`danger-tertiary`, and unfilled `danger-ghost` treatments. Hover and press use RAC
+state; keyboard focus has an external two-pixel
 outline with a three-pixel offset. Minimum heights and labels can grow with text.
 The compact 32px size is intentional; use the ordinary 44px minimum for comfortable
 standalone targets.
@@ -185,7 +198,9 @@ Both components preserve RAC `children`, `className`, and `style` render functio
 Custom classes are appended to the Cinder root hook. A `render` function must
 return one correct native element and pass all supplied DOM props and the ref
 through. Button expects `<button>`; Link's render props distinguish `<a>` from
-`<span>` with `"href" in domProps`. Replacing handlers, IDs, or the element type can
+`<span>` using a nonempty authored `href` and the render state's `!isDisabled`.
+An inert `href` can remain on RAC's fallback span, so `"href" in domProps` alone
+does not identify an anchor. Replacing handlers, IDs, or the element type can
 break the interaction and labeling contracts.
 
 Appearance hooks are `data-variant`, `data-size`, and `data-icon-only` on Button,

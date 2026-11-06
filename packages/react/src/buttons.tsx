@@ -16,7 +16,7 @@ import { classes, type ControlSize } from "./utils";
 export type ButtonVariant =
   "primary" | "secondary" | "tertiary" | "ghost" | "danger" | "danger-tertiary" | "danger-ghost";
 export interface ButtonProps extends RACButtonProps {
-  /** Action emphasis; destructive variants still need explicit action wording. */
+  /** Core choices: primary, secondary, ghost, danger. Additional existing variants remain supported. */
   variant?: ButtonVariant;
   /** Frame defaults to 44px; older themes default to 48px. Sizes are minimums. */
   size?: ControlSize | "xl" | "2xl";

@@ -7,9 +7,11 @@ import "./actions.css";
 const variants = [
   "primary",
   "secondary",
-  "tertiary",
   "ghost",
   "danger",
+] as const satisfies readonly ButtonVariant[];
+const compatibilityVariants = [
+  "tertiary",
   "danger-tertiary",
   "danger-ghost",
 ] as const satisfies readonly ButtonVariant[];
@@ -35,7 +37,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Use Button for actions. Frame defaults to a 44px minimum; explicit sizes remain available. Keep the action text mounted while pending, and localize pendingLabel alongside it. RAC announces progress with the action and keeps the button focusable.",
+          "Four core choices: primary for the main action, secondary for supporting actions, ghost for quiet actions, and danger for destructive actions. Frame defaults to a 44px minimum. Keep the action text mounted while pending and localize pendingLabel alongside it.",
       },
     },
   },
@@ -46,10 +48,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-function VariantButtons(args: ButtonProps) {
+function VariantButtons({
+  variants: choices = variants,
+  ...args
+}: ButtonProps & { variants?: readonly ButtonVariant[] }) {
   return (
     <dl className="action-story-matrix">
-      {variants.map((variant) => (
+      {choices.map((variant) => (
         <Fragment key={variant}>
           <dt>
             <code>{variant}</code>
@@ -75,6 +80,19 @@ function VariantButtons(args: ButtonProps) {
 export const Variants: Story = {
   render: VariantButtons,
   parameters: { controls: { exclude: ["variant", "children"] } },
+};
+
+export const CompatibilityVariants: Story = {
+  render: (args) => <VariantButtons {...args} variants={compatibilityVariants} />,
+  parameters: {
+    controls: { exclude: ["variant", "children"] },
+    docs: {
+      description: {
+        story:
+          "Existing outlined and quiet-destructive treatments remain supported. Use the four core variants for new Frame interfaces.",
+      },
+    },
+  },
 };
 
 export const Sizes: Story = {

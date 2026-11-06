@@ -6,6 +6,9 @@ const root = fileURLToPath(new URL("../../../", import.meta.url));
 const inputs = ["packages/react/src/", "packages/tokens/src/", "packages/tokens/scripts/"].map(
   (path) => normalizePath(root + path),
 );
+const outputs = ["packages/react/dist/", "packages/tokens/dist/"].map((path) =>
+  normalizePath(root + path),
+);
 const generated = new Set(
   ["tokens.css", "tokens.json"].map((file) => normalizePath(`${root}packages/tokens/src/${file}`)),
 );
@@ -15,6 +18,10 @@ export function watchPackages() {
   return {
     name: "cinder-package-rebuild",
     apply: "serve",
+    hotUpdate({ file }) {
+      // Keep resolver caches fresh; the completed build owns the preview reload.
+      if (outputs.some((output) => file.startsWith(output))) return [];
+    },
     configureServer(server) {
       let building = false;
       let pending = false;
@@ -56,7 +63,7 @@ export function watchPackages() {
         }
       }
 
-      server.watcher.add(inputs);
+      server.watcher.add([...inputs, ...outputs]);
       server.watcher.on("all", changed);
       dispose = () => {
         closed = true;

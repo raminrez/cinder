@@ -20,9 +20,10 @@ During development, Vite watches the package source directories and token
 generator. Changes trigger a serialized package rebuild, including declarations,
 generated tokens, JS, and CSS. Edits during a build queue another pass. The preview
 reloads after the final successful pass; generated outputs cannot trigger a loop.
-Rebuild failures appear in the terminal and the next source edit retries. This is
-a full preview reload, so local story state resets. Restart after dependency or
-build-configuration changes.
+Vite observes built files to invalidate resolver caches and defers their HMR to
+that final reload. Rebuild failures appear in the terminal and the next source
+edit retries. This is a full preview reload, so local story state resets. Restart
+after dependency or build-configuration changes.
 
 The rebuild queue's focused check is
 `bun test ./apps/storybook/.storybook/watch-packages.test.ts`; it also runs with

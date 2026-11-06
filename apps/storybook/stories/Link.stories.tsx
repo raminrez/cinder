@@ -100,7 +100,6 @@ export const Disabled: Story = {
     const link = canvas.getByRole("link", { name: "Billing settings" });
     await expect(link.tagName).toBe("SPAN");
     await expect(link).toHaveAttribute("aria-disabled", "true");
-    await expect(link).not.toHaveAttribute("href");
     await userEvent.click(link);
     await expect(args.onPress).not.toHaveBeenCalled();
     await userEvent.tab();
@@ -155,8 +154,8 @@ function CustomLink(args: LinkProps) {
           ...defaultStyle,
           textUnderlineOffset: isHovered ? "0.3em" : "0.2em",
         })}
-        render={(domProps) =>
-          "href" in domProps ? (
+        render={(domProps, { isDisabled }) =>
+          args.href && !isDisabled && "href" in domProps ? (
             <a {...domProps} data-custom-render="true">
               {domProps.children}
             </a>

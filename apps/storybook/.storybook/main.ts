@@ -10,8 +10,6 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       resolve: { dedupe: ["react", "react-dom"] },
       optimizeDeps: { exclude: ["@cinder/react", "@cinder/tokens"] },
-      // Reload only after the whole package build succeeds.
-      server: { watch: { ignored: ["**/packages/{react,tokens}/dist/**"] } },
       plugins: [watchPackages()],
     });
   },

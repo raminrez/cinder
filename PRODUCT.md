@@ -69,4 +69,8 @@ workspace and finished Button/Link coverage, followed by the shared Frame field
 anatomy and the rest of the fourteen-entry slice. README/API contracts accompany
 the components throughout.
 
+Button's recommended Frame variants are `primary`, `secondary`, `ghost`, and
+`danger`: a compact emphasis hierarchy informed by Base, HeroUI, and Astryx, as
+requested by the user. Existing additional variants remain compatible.
+
 Figma follows the completed web system as the final step.

@@ -255,6 +255,8 @@ const frameCases = [
       "border-strong-01": "#7f8795",
       "button-primary": "#272a32",
       "button-primary-hover": "#434754",
+      "button-primary-active": "#555b6b",
+      "button-secondary-active": "#cbd2dc",
       "text-on-color": "#ffffff",
       focus: "#365ccb",
       "layer-selected-01": "#e7edff",
@@ -283,6 +285,8 @@ const frameCases = [
       "border-strong-01": "#7d8493",
       "button-primary": "#f1f2f6",
       "button-primary-hover": "#d2d7e4",
+      "button-primary-active": "#b6bfd2",
+      "button-secondary-active": "#515765",
       "text-on-color": "#22242a",
       focus: "#a9bdff",
       "layer-selected-01": "#333f62",
@@ -307,9 +311,14 @@ for (const [name, expected] of frameCases) {
     expect(Object.keys(values)).toEqual(Object.keys(themes["frame-light"]));
     expect(Object.keys(values)).toHaveLength(343);
     expect(values).toMatchObject(expected);
-    expect(values["button-primary-active"]).toBe(values["button-primary-hover"]);
     expect(values["button-tertiary-hover"]).toBe(values["layer-02"]);
-    expect(values["button-tertiary-active"]).toBe(values["layer-02"]);
+    expect(values["button-tertiary-active"]).toBe(values["border-subtle-00"]);
+    expect(values["background-active"]).toBe(values["border-subtle-00"]);
+    for (const role of ["button-primary", "button-secondary", "button-tertiary", "background"]) {
+      expect(values[`${role}-active` as keyof typeof values]).not.toBe(
+        values[`${role}-hover` as keyof typeof values],
+      );
+    }
     expect(values["button-danger-primary"]).toBe(values["support-error"]);
     expect(values["button-danger-secondary"]).toBe(values["support-error"]);
     expect(values["text-error"]).toBe(values["support-error"]);
@@ -353,6 +362,8 @@ for (const [name, expected] of frameCases) {
       ["text-primary", "button-secondary-active"],
       ["text-primary", "button-tertiary-hover"],
       ["text-primary", "button-tertiary-active"],
+      ["text-primary", "background-hover"],
+      ["text-primary", "background-active"],
       ["text-primary", "layer-selected-01"],
       ["text-secondary", "layer-selected-01"],
       ["link-primary", "background"],

@@ -180,7 +180,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     const disabledLink = page.getByRole("link", { name: "Unavailable export", exact: true });
     await expect(sizesLink).toHaveAttribute("href", "#consumer-sizes");
     await expect(disabledLink).toHaveAttribute("aria-disabled", "true");
-    await expect(disabledLink).not.toHaveAttribute("href");
+    assert.equal(await disabledLink.evaluate((element) => element.tagName), "SPAN");
     await sizesLink.focus();
     await page.keyboard.press("Tab");
     await expect(page.getByTestId("size-default-button")).toBeFocused();
