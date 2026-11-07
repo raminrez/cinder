@@ -37,6 +37,12 @@ The standard toolbar selects `frame-light` or `frame-dark` through `globals.them
 The Accessibility panel reports axe results, including incomplete checks for
 manual review; static builds alone do not execute interaction/accessibility tests.
 
+The first batch contains 12 Button and 9 Link stories. Button presents four core
+choices, with existing additional values in the compatibility story. Both families
+include Persian and Arabic examples through real `Theme locale` scopes. Run
+`bun test --timeout 60000 tests/browser/storybook.test.ts` after the static build
+to execute every story in both themes and require successful play and a11y reporting.
+
 Development dependencies are pinned to Storybook/React-Vite/a11y **10.6.6** and
 Vite **8.3.6**, checked against the npm registry and the
 [React/Vite setup](https://storybook.js.org/docs/get-started/frameworks/react-vite).

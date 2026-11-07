@@ -203,15 +203,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(page).toHaveURL(/#consumer-sizes$/);
     await page.goBack();
     await expect(page).toHaveURL(beforeNavigation);
-    const treatments = [
-      "primary",
-      "secondary",
-      "tertiary",
-      "outline",
-      "ghost",
-      "danger",
-      "danger-soft",
-    ];
+    const treatments = ["primary", "secondary", "ghost", "danger"];
     const appearances = [];
     for (const variant of treatments) {
       const button = page.getByTestId(`variant-${variant}`);
@@ -224,7 +216,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
         }),
       );
     }
-    assert.equal(new Set(appearances).size, treatments.length, "Seven distinct Frame treatments");
+    assert.equal(new Set(appearances).size, treatments.length, "Four distinct Frame treatments");
     const carbon = page.getByTestId("nested-carbon");
     await expect(carbon).toHaveCSS("font-family", /IBM Plex Sans/);
     await expect(page.getByTestId("carbon-button")).toHaveCSS("height", "48px");
@@ -409,30 +401,30 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
   await page
     .getByTestId("use-frame-dark")
     .evaluate((element: HTMLButtonElement) => element.click());
-  await page.getByTestId("use-hebrew").evaluate((element: HTMLButtonElement) => element.click());
+  await page.getByTestId("use-persian").evaluate((element: HTMLButtonElement) => element.click());
   const overlay = page.locator(".cinder-modal-overlay");
   const popover = page.locator(".cinder-select-popover");
   for (const portal of [overlay, popover])
-    await expectPortal(portal, "frame-dark", "he-IL", "plain-appearance", "rtl");
+    await expectPortal(portal, "frame-dark", "fa-IR", "plain-appearance", "rtl");
   await expect(page.locator(".cinder-modal")).toHaveCSS("background-color", "rgb(44, 47, 56)");
   await expect(popover).toHaveCSS("background-color", "rgb(44, 47, 56)");
   await page
     .getByTestId("replace-recipe")
     .evaluate((element: HTMLButtonElement) => element.click());
   for (const portal of [overlay, popover]) {
-    await expectPortal(portal, "frame-dark", "he-IL", moduleAppearance, "rtl");
+    await expectPortal(portal, "frame-dark", "fa-IR", moduleAppearance, "rtl");
     await expect(portal).toHaveCSS("font-family", /Trebuchet MS/);
   }
   await page.getByTestId("clear-recipe").evaluate((element: HTMLButtonElement) => element.click());
   for (const portal of [overlay, popover]) {
-    await expectPortal(portal, "frame-dark", "he-IL", "", "rtl");
+    await expectPortal(portal, "frame-dark", "fa-IR", "", "rtl");
     await expect(portal).toHaveCSS("font-family", /system-ui/);
   }
   await page
     .getByTestId("inherit-recipe")
     .evaluate((element: HTMLButtonElement) => element.click());
   for (const portal of [overlay, popover])
-    await expectPortal(portal, "frame-dark", "he-IL", "plain-appearance", "rtl");
+    await expectPortal(portal, "frame-dark", "fa-IR", "plain-appearance", "rtl");
   await expect(page.getByRole("option", { name: "Editor", exact: true })).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(select).toBeFocused();

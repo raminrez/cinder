@@ -325,7 +325,7 @@ test("open portals track same-direction language changes, RTL, explicit Theme la
 
 for (const [themeLang, overlayLang] of [
   ["de-DE", ""],
-  ["", "he-IL"],
+  ["", "fa-IR"],
 ] as const) {
   test(`overlay lang=${JSON.stringify(overlayLang)} overrides Theme lang=${JSON.stringify(themeLang)} while direction and toast stay provider-owned`, async () => {
     await page.goto(`/?appearance&themeLang=${themeLang}&overlayLang=${overlayLang}`);

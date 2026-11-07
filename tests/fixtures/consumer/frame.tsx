@@ -268,8 +268,12 @@ export function FrameConsumer({ integration }: { integration: "native" | "tailwi
             >
               Use English locale
             </Button>
-            <Button variant="secondary" onPress={() => setLocale("he-IL")} data-testid="use-hebrew">
-              Use Hebrew locale
+            <Button
+              variant="secondary"
+              onPress={() => setLocale("fa-IR")}
+              data-testid="use-persian"
+            >
+              Use Persian locale
             </Button>
           </div>
           <div className="fixture-actions">
@@ -313,11 +317,8 @@ export function FrameConsumer({ integration }: { integration: "native" | "tailwi
               [
                 "primary",
                 "secondary",
-                "tertiary",
-                "outline",
                 "ghost",
                 "danger",
-                "danger-soft",
               ] as const satisfies readonly ButtonVariant[]
             ).map((variant) => (
               <Button key={variant} variant={variant} data-testid={`variant-${variant}`}>

@@ -19,6 +19,19 @@ are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
 
+## Frame actions — Phase 2 first batch
+
+This batch covers the private Storybook workspace, Button, and Link. Its scope is
+documented in [coverage](coverage.md#frame-actions--phase-2-first-batch) and the
+[public action contract](../packages/react/README.md#button-and-link).
+The full fourteen-entry Frame slice remains in progress.
+
+The component examples use four core Button choices and the three existing
+compatibility values. RTL examples use Persian (`fa-IR`) and Arabic (`ar`) through
+real locale providers. The packed-consumer locale-change case uses Persian.
+
+Final integrated builds, browser execution, and rendered review are in progress.
+
 ## Frame Phase 1
 
 Phase 1 implements reusable Frame foundations and public styling contracts. The

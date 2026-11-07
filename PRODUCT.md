@@ -44,6 +44,10 @@ Accessibility and internationalization are core requirements. Preserve meaningfu
 labels, instructions, keyboard behavior, focus, error recovery, and adaptable
 layouts. A visual resemblance or automated scan alone does not prove accessibility.
 
+Use Persian and Arabic for authored right-to-left examples, with real locale
+providers and isolated left-to-right identifiers. This is the user's preferred
+example content throughout the library and its documentation.
+
 ## Evidence on Hand
 
 Research reports live in `docs/`. The comparison at `/prototypes` includes working
@@ -69,10 +73,10 @@ workspace and finished Button/Link coverage, followed by the shared Frame field
 anatomy and the rest of the fourteen-entry slice. README/API contracts accompany
 the components throughout.
 
-The user confirmed HeroUI's seven Button treatments from the supplied reference:
-`primary`, `secondary`, `tertiary`, `outline`, `ghost`, `danger`, and `danger-soft`.
-Keep Frame's palette and corners. Tertiary is a quiet fill; outline is separate.
-Existing `danger-tertiary` and `danger-ghost` remain supported, and the older
-themes retain their original tertiary treatment.
+Button's recommended Frame variants are `primary`, `secondary`, `ghost`, and
+`danger`: a compact emphasis hierarchy informed by Base, HeroUI, and Astryx.
+The user reaffirmed this smaller set after reviewing the expanded reference.
+Keep Frame's palette and corners. Existing `tertiary`, `danger-tertiary`, and
+`danger-ghost` remain supported with their original treatments.
 
 Figma follows the completed web system as the final step.

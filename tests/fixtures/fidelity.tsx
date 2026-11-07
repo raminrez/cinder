@@ -48,10 +48,8 @@ const variants: ButtonVariant[] = [
   "primary",
   "secondary",
   "tertiary",
-  "outline",
   "ghost",
   "danger",
-  "danger-soft",
   "danger-tertiary",
   "danger-ghost",
 ];

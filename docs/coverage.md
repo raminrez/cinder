@@ -4,6 +4,26 @@
 interaction, React 19.3.1, and Bun 1.4.4. This describes the implemented source and
 examples. Dated execution results are in [verification](verification.md).
 
+## Frame actions — Phase 2 first batch
+
+The private [Storybook workspace](../apps/storybook/README.md) is the component
+workbench. Its **21 stories** use the public package exports, one prebuilt stylesheet,
+and Frame light/dark through `Theme`.
+
+| Area                 | Implemented first-batch scope                                                                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Button               | Four core choices (`primary`, `secondary`, `ghost`, `danger`); existing `tertiary`, `danger-tertiary`, and `danger-ghost` retained; omitted and explicit sizes; icon-only, disabled, pending, and real interaction states |
+| Request example      | Stable action content and dimensions, localizable progress, repeat prevention, retained draft, failure message, and retry; application-owned request state                                                                |
+| Link                 | Native anchor navigation with enabled `href`; disabled/href-less span fallback; inline decoration, external destinations, keyboard/pointer behavior, and disabled tab skipping                                            |
+| Customization        | Public refs, DOM renderers, state-based class/style callbacks, and render-function children for both actions                                                                                                              |
+| Internationalization | Long German Button label, long unbroken Link text, Persian and Arabic locale scopes, localized pending labels, and isolated Latin workspace identifiers                                                                   |
+| Developer workflow   | Serialized package rebuilds for source edits, strict public-declaration checks, static Storybook output, and a browser gate that waits for completed play and accessibility reporting                                     |
+
+The [action contract](../packages/react/README.md#button-and-link) documents these
+choices and ownership boundaries. The [first-batch verification](verification.md#frame-actions--phase-2-first-batch)
+records executed proof. The full fourteen-entry slice remains in progress; shared
+field anatomy and form recovery come next.
+
 ## Frame foundations — Phase 1
 
 Frame's [visual rules](../DESIGN.md), [system specification](design-system.md),

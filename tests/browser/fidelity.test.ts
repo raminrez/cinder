@@ -1,5 +1,5 @@
 import { afterAll, afterEach, beforeAll, beforeEach, test } from "bun:test";
-import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
+import { chromium, type Browser, type BrowserContext, type Locator, type Page } from "playwright";
 import { expect } from "playwright/test";
 import { themes, type ThemeName } from "@cinder/tokens";
 import index from "../fixtures/fidelity.html";
@@ -10,6 +10,15 @@ let context: BrowserContext;
 let page: Page;
 let errors: string[];
 const carbonThemes = ["white", "g10", "g90", "g100"] as const;
+const buttonVariants = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "ghost",
+  "danger",
+  "danger-tertiary",
+  "danger-ghost",
+] as const;
 
 beforeAll(async () => {
   server = Bun.serve({
@@ -58,6 +67,70 @@ async function color(theme: ThemeName, name: keyof typeof themes.white) {
     style.color = value;
     return style.color;
   }, themes[theme][name]);
+}
+
+async function buttonPaint(button: Locator) {
+  return button.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext("2d")!;
+    const fill = (color: string) => {
+      context.fillStyle = color;
+      context.fillRect(0, 0, 1, 1);
+    };
+    const pixel = () => Array.from(context.getImageData(0, 0, 1, 1).data);
+    // Composite transparent colors against the fixture's actual ancestor surfaces.
+    const backgrounds: string[] = [];
+    for (let node: Element | null = element; node; node = node.parentElement) {
+      backgrounds.unshift(getComputedStyle(node).backgroundColor);
+    }
+    fill("white");
+    for (const background of backgrounds) fill(background);
+    const background = pixel();
+    fill(style.color);
+    const foreground = pixel();
+    const luminance = (rgb: number[]) => {
+      const linear = rgb.slice(0, 3).map((channel) => {
+        const value = channel / 255;
+        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+      });
+      return linear[0]! * 0.2126 + linear[1]! * 0.7152 + linear[2]! * 0.0722;
+    };
+    const pair = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+    return {
+      background: style.backgroundColor,
+      ink: style.color,
+      paintedBackground: background.join(","),
+      contrast: (pair[0]! + 0.05) / (pair[1]! + 0.05),
+    };
+  });
+}
+
+async function expectInactiveButtons(variants: readonly string[]) {
+  for (const variant of variants) {
+    const disabled = page.locator(`[data-fixture="disabled-buttons"] [data-variant="${variant}"]`);
+    await expect(disabled).toBeDisabled();
+    await expect(disabled).toHaveAttribute("data-disabled");
+    await expect(disabled).toHaveCSS("cursor", "not-allowed");
+    await disabled.focus();
+    await expect(disabled).not.toBeFocused();
+    await disabled.click({ force: true });
+
+    const pending = page.locator(`[data-fixture="pending-buttons"] [data-variant="${variant}"]`);
+    await expect(pending).toHaveAttribute("data-pending");
+    await expect(pending).toHaveAttribute("aria-disabled", "true");
+    await expect(pending).not.toHaveAttribute("disabled");
+    await expect(pending).toHaveCSS("cursor", "progress");
+    await expect(pending.getByRole("progressbar", { name: `Pending ${variant}` })).toBeVisible();
+    await pending.focus();
+    await expect(pending).toBeFocused();
+    await pending.press("Enter");
+    await pending.press("Space");
+    await pending.click({ force: true });
+    await expect(pending).toBeFocused();
+  }
+  await expect(page.getByRole("status", { name: "Inactive button presses" })).toHaveText("0");
 }
 
 test("all twelve default field anatomies retain legacy aliases, BEM parts, and composition order", async () => {
@@ -285,26 +358,44 @@ test("Button omission marker survives custom rendering, refs, render props, and 
 for (const theme of ["frame-light", "frame-dark"] as const) {
   test(`${theme}: all seven Button variants distinguish real hover, press, and keyboard focus`, async () => {
     await open(theme);
-    for (const variant of [
-      "primary",
-      "secondary",
-      "tertiary",
-      "ghost",
-      "danger",
-      "danger-tertiary",
-      "danger-ghost",
-    ]) {
+    for (const variant of buttonVariants) {
       const button = page.getByRole("button", { name: variant, exact: true });
       const background = () =>
         button.evaluate((element) => getComputedStyle(element).backgroundColor);
-      const resting = await background();
+      const resting = await buttonPaint(button);
+      if (variant === "primary" || variant === "secondary") {
+        await expect(button).toHaveCSS("background-color", await color(theme, `button-${variant}`));
+        await expect(button).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
+      } else if (variant === "danger") {
+        await expect(button).toHaveCSS(
+          "background-color",
+          await color(theme, "button-danger-primary"),
+        );
+      } else {
+        await expect(button).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+      }
+      if (variant === "tertiary") {
+        await expect(button).toHaveCSS("border-top-width", "1px");
+        await expect(button).toHaveCSS("border-top-color", await color(theme, "button-tertiary"));
+      }
       await button.hover();
       await expect(button).toHaveAttribute("data-hovered");
-      await expect.poll(background).not.toBe(resting);
-      const hovered = await background();
+      await expect.poll(background).not.toBe(resting.background);
+      const hovered = await buttonPaint(button);
       await page.mouse.down();
       await expect(button).toHaveAttribute("data-pressed");
-      await expect.poll(background).not.toBe(hovered);
+      await expect.poll(background).not.toBe(hovered.background);
+      const pressed = await buttonPaint(button);
+      expect(hovered.paintedBackground).not.toBe(resting.paintedBackground);
+      expect(pressed.paintedBackground).not.toBe(hovered.paintedBackground);
+      const role =
+        variant === "ghost"
+          ? "background"
+          : variant === "primary" || variant === "secondary" || variant === "tertiary"
+            ? (`button-${variant}` as const)
+            : "button-danger";
+      expect(hovered.background).toBe(await color(theme, `${role}-hover`));
+      expect(pressed.background).toBe(await color(theme, `${role}-active`));
       await page.mouse.move(0, 0);
       await page.mouse.up();
       await expect(button).not.toHaveAttribute("data-pressed");
@@ -314,7 +405,32 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
       await expect(button).toHaveCSS("outline-color", await color(theme, "focus"));
       await expect(button).toHaveCSS("outline-width", "2px");
       await expect(button).toHaveCSS("outline-offset", "3px");
+      const focused = await buttonPaint(button);
+      expect(focused.paintedBackground).toBe(resting.paintedBackground);
+      await page.keyboard.down("Space");
+      await expect(button).toHaveAttribute("data-pressed");
+      const keyboardPressed = await buttonPaint(button);
+      expect(keyboardPressed.paintedBackground).toBe(pressed.paintedBackground);
+      await page.keyboard.up("Space");
+      await expect(button).not.toHaveAttribute("data-pressed");
+      for (const [state, paint] of Object.entries({
+        resting,
+        hovered,
+        pressed,
+        focused,
+        keyboardPressed,
+      })) {
+        expect(
+          paint.contrast,
+          `${theme} ${variant} ${state}: ${paint.ink} on ${paint.background}`,
+        ).toBeGreaterThanOrEqual(4.5);
+      }
     }
+  });
+
+  test(`${theme}: all seven Button variants keep disabled and pending actions inactive`, async () => {
+    await open(theme);
+    await expectInactiveButtons(buttonVariants);
   });
 
   test(`${theme}: Frame geometry and typography retain separate invalid and focus signals`, async () => {

@@ -7,13 +7,11 @@ import "./actions.css";
 const variants = [
   "primary",
   "secondary",
-  "tertiary",
-  "outline",
   "ghost",
   "danger",
-  "danger-soft",
 ] as const satisfies readonly ButtonVariant[];
 const compatibilityVariants = [
+  "tertiary",
   "danger-tertiary",
   "danger-ghost",
 ] as const satisfies readonly ButtonVariant[];
@@ -39,7 +37,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Seven treatments: primary, secondary, tertiary, outline, ghost, danger, and danger-soft. Choose emphasis within a decision; use explicit wording for destructive actions. Frame defaults to a 44px minimum. Keep action text mounted while pending and localize pendingLabel alongside it.",
+          "Four core choices: primary for the main action, secondary for supporting actions, ghost for quiet actions, and danger for destructive actions. Frame defaults to a 44px minimum. Keep action text mounted while pending and localize pendingLabel alongside it.",
       },
     },
   },
@@ -91,7 +89,7 @@ export const CompatibilityVariants: Story = {
     docs: {
       description: {
         story:
-          "The existing danger-tertiary and danger-ghost treatments remain supported. Use the seven core variants for new Frame interfaces.",
+          "Existing outlined and quiet-destructive treatments remain supported. Use the four core variants for new Frame interfaces.",
       },
     },
   },
@@ -379,14 +377,24 @@ export const LongLabel: Story = {
 function RightToLeftExample(args: ButtonProps) {
   const { theme } = useTheme();
   return (
-    <Theme theme={theme} locale="he-IL" className="action-story-stack action-story-narrow">
-      <p>
-        סביבת עבודה <bdi dir="ltr">WS-1042</bdi>
-      </p>
-      <Button {...args} pendingLabel="שמירת השינויים">
-        שמירת השינויים בהגדרות סביבת העבודה <Icon name="chevronLeft" />
-      </Button>
-    </Theme>
+    <div className="action-story-stack action-story-narrow">
+      <Theme theme={theme} locale="fa-IR" className="action-story-stack">
+        <p>
+          فارسی · فضای کاری <bdi dir="ltr">WS-1042</bdi>
+        </p>
+        <Button {...args} pendingLabel="در حال ذخیرهٔ تغییرات">
+          ذخیرهٔ تغییرات تنظیمات فضای کاری <Icon name="chevronLeft" />
+        </Button>
+      </Theme>
+      <Theme theme={theme} locale="ar" className="action-story-stack">
+        <p>
+          العربية · مساحة العمل <bdi dir="ltr">WS-1042</bdi>
+        </p>
+        <Button {...args} pendingLabel="جارٍ حفظ التغييرات">
+          حفظ تغييرات إعدادات مساحة العمل <Icon name="chevronLeft" />
+        </Button>
+      </Theme>
+    </div>
   );
 }
 

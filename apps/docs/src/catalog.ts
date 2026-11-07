@@ -58,7 +58,7 @@ export const components: ComponentEntry[] = [
     props: [
       [
         "variant",
-        '"primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger" | "danger-soft" | "danger-tertiary" | "danger-ghost"',
+        '"primary" | "secondary" | "tertiary" | "ghost" | "danger" | "danger-tertiary" | "danger-ghost"',
         "Choose an action's visual priority.",
       ],
       ["iconOnly", "boolean", "Square icon control. Supply an aria-label."],

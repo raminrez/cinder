@@ -215,22 +215,35 @@ export const LongLabel: Story = {
 function RightToLeftExample(args: LinkProps) {
   const { theme } = useTheme();
   return (
-    <Theme theme={theme} locale="he-IL" className="action-story-stack action-story-narrow">
-      <p>
-        סביבת עבודה <bdi dir="ltr">WS-1042</bdi>
-      </p>
-      <Link {...args}>
-        הנחיות לפרסום ולשיתוף בסביבת העבודה <Icon name="chevronLeft" />
-      </Link>
-      <p id="rtl-guidelines" tabIndex={-1}>
-        בדקו את הגדרות השיתוף לפני הפרסום.
-      </p>
-    </Theme>
+    <div className="action-story-stack action-story-narrow">
+      <Theme theme={theme} locale="fa-IR" className="action-story-stack">
+        <p>
+          فارسی · فضای کاری <bdi dir="ltr">WS-1042</bdi>
+        </p>
+        <Link {...args} href="#rtl-guidelines-fa">
+          راهنمای انتشار و اشتراک‌گذاری در فضای کاری <Icon name="chevronLeft" />
+        </Link>
+        <p id="rtl-guidelines-fa" tabIndex={-1}>
+          پیش از انتشار، تنظیمات اشتراک‌گذاری را بررسی کنید.
+        </p>
+      </Theme>
+      <Theme theme={theme} locale="ar" className="action-story-stack">
+        <p>
+          العربية · مساحة العمل <bdi dir="ltr">WS-1042</bdi>
+        </p>
+        <Link {...args} href="#rtl-guidelines-ar">
+          إرشادات النشر والمشاركة في مساحة العمل <Icon name="chevronLeft" />
+        </Link>
+        <p id="rtl-guidelines-ar" tabIndex={-1}>
+          راجع إعدادات المشاركة قبل النشر.
+        </p>
+      </Theme>
+    </div>
   );
 }
 
 export const RightToLeft: Story = {
-  args: { href: "#rtl-guidelines", inline: true },
+  args: { inline: true },
   render: RightToLeftExample,
   parameters: { controls: { exclude: ["children", "href"] } },
 };

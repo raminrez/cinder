@@ -82,26 +82,23 @@ Use **Button** to perform an action and **Link** to navigate. Choose one primary
 action per decision. Destructive variants need explicit wording such as “Delete
 draft”; color alone does not explain the consequence.
 
-Cinder's recommended Frame button set has seven choices:
+Cinder's recommended Frame button set has four choices:
 
-| Variant       | Use                                                     |
-| ------------- | ------------------------------------------------------- |
-| `primary`     | The main action: a strong neutral fill.                 |
-| `secondary`   | Supporting actions: a medium neutral fill.              |
-| `tertiary`    | Lower-emphasis actions: a quiet neutral fill.           |
-| `outline`     | An unfilled alternative with a visible border.          |
-| `ghost`       | Low-emphasis actions: unfilled until interaction.       |
-| `danger`      | Destructive actions: an explicit label and danger fill. |
-| `danger-soft` | A lower-emphasis destructive action with a tinted fill. |
+| Variant     | Use                                                     |
+| ----------- | ------------------------------------------------------- |
+| `primary`   | The main action: a strong neutral fill.                 |
+| `secondary` | Supporting actions: a quiet neutral fill.               |
+| `ghost`     | Low-emphasis actions: unfilled until interaction.       |
+| `danger`    | Destructive actions: an explicit label and danger fill. |
 
-The user-selected treatment set follows [HeroUI's reference](../../docs/research-heroui.md),
-with emphasis guidance from [Base](../../docs/research-base.md) and
-[Astryx](../../docs/research-astryx.md). Cinder keeps its neutral Frame palette and geometry.
+This compact hierarchy follows the emphasis guidance in [Base](../../docs/research-base.md),
+[HeroUI](../../docs/research-heroui.md), and [Astryx](../../docs/research-astryx.md).
+Cinder keeps its own Frame palette and geometry.
 
 The canonical [Button stories](../../apps/storybook/stories/Button.stories.tsx) and
 [Link stories](../../apps/storybook/stories/Link.stories.tsx) cover appearance,
 keyboard/pointer interaction, pending and recovery, customization, long labels,
-and a Hebrew `Theme locale` boundary. They inherit Frame light/dark from Storybook's
+and Persian and Arabic `Theme locale` boundaries. They inherit Frame light/dark from Storybook's
 preview. Story coverage is distinct from the executed browser/AT evidence in
 the [verification record](../../docs/verification.md).
 
@@ -109,7 +106,7 @@ the [verification record](../../docs/verification.md).
 
 | Prop                    | Contract                                                                                                                                                                                  |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`               | `primary` (default), `secondary`, `tertiary`, `outline`, `ghost`, `danger`, or `danger-soft`. Existing `danger-tertiary` and `danger-ghost` values remain supported.                      |
+| `variant`               | `primary` (default), `secondary`, `ghost`, or `danger` for new Frame work. Existing `tertiary`, `danger-tertiary`, and `danger-ghost` values remain supported.                            |
 | `size`                  | Omitted: Frame 44px, Carbon/Relay 48px. Explicit `sm`, `md`, `lg`, `xl`, `2xl` use the [theme minimums](#frame-foundations--phase-1).                                                     |
 | `iconOnly`              | Defaults to `false`. Gives the icon a square target at the resolved size; supply `aria-label` or `aria-labelledby` on Button.                                                             |
 | `isDisabled`            | Native disabled button: unavailable, skipped in tab order, and does not activate.                                                                                                         |
@@ -118,9 +115,8 @@ the [verification record](../../docs/verification.md).
 | `onPress`               | RAC's normalized mouse, touch, keyboard, and assistive-technology activation callback. Returning a promise does not set `isPending` automatically.                                        |
 | `type`, `name`, `value` | Native form contract. `type` defaults to `"button"`; use `"submit"` explicitly. RAC temporarily changes a pending submit button to `type="button"` to prevent implicit repeat submission. |
 
-Frame's `tertiary` is now filled; use `outline` for its earlier bordered treatment.
-Carbon and Relay retain their existing outlined `tertiary` appearance. The
-compatibility stories cover outlined `danger-tertiary` and unfilled `danger-ghost`.
+The compatibility stories cover the existing outlined `tertiary`, outlined
+`danger-tertiary`, and unfilled `danger-ghost` treatments.
 Hover and press use RAC state; keyboard focus has an external two-pixel
 outline with a three-pixel offset. Minimum heights and labels can grow with text.
 The compact 32px size is intentional; use the ordinary 44px minimum for comfortable
