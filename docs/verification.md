@@ -1,12 +1,13 @@
 # Cinder 0.1.0 — verification
 
-**Latest work: [Frame Phase 1](#frame-phase-1), passed, 6 November 2026.**
-The foundation, compatibility, installed-package, and rendered-review gates pass.
-The results below combine scoped runs; the latest aggregate remains the Relay run.
+**Latest work: [Frame actions](#frame-actions--phase-2-first-batch), acceptance passed,
+7 November 2026.** Storybook, Button, and Link pass browser, rendered, and
+installed-package gates. The full fourteen-entry Phase 2 slice remains in progress.
 
-**Latest aggregate: passed, 6 November 2026, 16:31:13–16:33:38 UTC.**
-The historical [Relay follow-up](#relay-follow-up) verifies its first light/dark
-component slice, production gallery, and distributed packages.
+**Latest aggregate: passed, 7 November 2026, 06:43:05–06:46:13 UTC.**
+The [acceptance record](../test-results/frame-actions-check-acceptance-2-2026-11-07.json)
+and [output](../test-results/frame-actions-check-acceptance-2-2026-11-07.log) retain
+the complete `bun run check`. Earlier Frame-foundation and Relay results remain below.
 
 **Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
@@ -24,13 +25,83 @@ and [visual review](visual-review.md) for the screenshot assessment.
 This batch covers the private Storybook workspace, Button, and Link. Its scope is
 documented in [coverage](coverage.md#frame-actions--phase-2-first-batch) and the
 [public action contract](../packages/react/README.md#button-and-link).
-The full fourteen-entry Frame slice remains in progress.
+Acceptance passed on **7 November 2026** at the scope below. The full fourteen-entry
+Frame slice remains in progress; shared field anatomy and form recovery come next.
 
 The component examples use four core Button choices and the three existing
 compatibility values. RTL examples use Persian (`fa-IR`) and Arabic (`ar`) through
 real locale providers. The packed-consumer locale-change case uses Persian.
 
-Final integrated builds, browser execution, and rendered review are in progress.
+The [rebuilt Storybook gate](../test-results/frame-actions-storybook-final-2026-11-07.json)
+passes **42/42 story/theme cases**: all 21 stories in both Frame themes. It retains
+explicit checks for play exceptions, completed accessibility reporting, and the
+rendered Theme. The final aggregate also passes these cases against its rebuilt output.
+
+### Executed acceptance gates
+
+| Gate                   | Result and scope                                                                                                                                                                                                                                   |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Formatting and Oxlint  | **132 formatted files**, no lint findings                                                                                                                                                                                                          |
+| Types                  | **56 source files**; strict Storybook configuration/stories and public declarations with `skipLibCheck: false` in the separate consumer check                                                                                                      |
+| Unit and watcher tests | **25 passed, 1,976 assertions**, across three files                                                                                                                                                                                                |
+| Builds                 | Both packages, declarations, generated CSS/JSON, existing documentation build, and static Storybook **10.6.6 / Vite 8.3.6**                                                                                                                        |
+| Full browser suite     | **172 passed across six files**, including all **42 Storybook story/theme cases**                                                                                                                                                                  |
+| Native input           | [**16 observations, both themes**](../test-results/frame-actions-native-acceptance-2026-11-07.json): held Space/pointer states, pending suppression, failure/retry, refs/customization, navigation, disabled Link, and Persian/Arabic destinations |
+| Installed consumers    | [Native CSS/CSS Modules and Tailwind **4.3.5**](../test-results/frame-actions-package-consumer-acceptance-2026-11-07.json): strict declarations, production bundles, browser contracts, and baseline-theme regressions                             |
+| README installation    | [Exact tarball/font commands and all three verbatim TSX snippets](../test-results/frame-actions-readme-install-acceptance-2026-11-07.json), checked and bundled in another isolated app                                                            |
+
+All **119 recorded source/configuration hashes** and the public README hashes
+remained unchanged during acceptance. The [identity reconciliation](../test-results/frame-actions-identities-2026-11-07.json)
+ties the final archives, emitted package payloads, consumers, static build, and
+retained review to their hashes. Native verification also compared **21 served
+iframe/index/JS/CSS assets** with that final static build. Only the local example's
+800ms request timer was held and explicitly completed; pointer and keyboard input
+remained native. Final documentation formatting, whitespace, and local links are
+recorded [separately](../test-results/frame-actions-final-2026-11-07.json).
+
+### Rendered and accessibility review
+
+The [render reconciliation](../test-results/frame-actions-render-review-final-2026-11-07.json)
+combines the completed [light review](../test-results/frame-actions-light-review-2026-11-07.md)
+and [dark review](../test-results/frame-actions-dark-review-2026-11-07.md).
+All **48 original captures were individually inspected**, 24 per theme, with
+**zero confirmed P0/P1/P2 product defects**. The reviewed states cover core and
+compatibility treatments, sizes, pending, disabled, customization, long German
+and unbroken-link labels, Persian/Arabic examples, and the first save failure.
+The overview covers 1440/768/390/320px; content-stress cases cover 1440/390/320px;
+the remaining captures cover 320px. Interaction gates separately exercise live
+hover, press, release, focus, navigation, and retry rather than fabricating states.
+
+All **48 retained axe audits have zero violations**. Their **32 `bypass`
+incomplete rule/node results** are individually resolved as inapplicable to these
+isolated component iframes: there are no repeated cross-page application blocks
+to bypass. Raw counts and messages remain intact. This does not certify a
+consuming application's navigation or the Storybook manager shell.
+
+| Theme | Applicable contrast samples passed | Lowest applicable ratio |
+| ----- | ---------------------------------: | ----------------------: |
+| Light |                                 66 |                5.3205:1 |
+| Dark  |                                 73 |                8.6554:1 |
+
+The **139 applicable samples** use measured foregrounds and effective backgrounds:
+4.5:1 for painted text and 3:1 for progress/focus indicators. Inactive text is
+recorded as exempt, not an enabled contrast pass. Transparent pending label paint
+is intentional; mounted names and separately named visible progress remain intact.
+The dark report's 78 recorded pairs include five inactive-control exemptions.
+
+The single [Impeccable source detector pass](../test-results/frame-actions-impeccable-final-2026-11-07.json)
+returned **zero findings**. It was not duplicated during the test/documentation-only
+closeout.
+
+No recapture was required. Current source-map, action CSSOM, and live-geometry
+comparisons support reuse, and the rebuilt Storybook's CSS content hashes are
+identical to the reviewed static assets. Final acceptance also retains the same
+rebuilt JS/CSS content hashes; only Storybook's `project.json` metadata changed.
+The original capture runner did not stamp
+capture-time source/HEAD hashes, so the exact historical checkout cannot be
+recovered from its timestamps; the newer gate records exact current inputs.
+These are bounded component checks, not full WCAG, device, translation, zoom, or
+SSR/hydration certification.
 
 ### Repairs and retained history
 
@@ -74,6 +145,25 @@ its absence was a harness error. The
 passes all 48 retained observations and six negative semantics checks, without
 rewriting the report. Native blocked activation and skipped Tab order are proved
 separately.
+
+The [first full aggregate](../test-results/frame-actions-check-final-2026-11-07.json)
+passed **171/172 browser tests** before the live-update portal contract failed.
+The [portal diagnosis and repair](../test-results/frame-actions-portal-repair-2026-11-07.json)
+show that clicking the final theme control scrolls the popover **145px** at
+1280×720, correctly closing RAC's tooltip before Escape. Only the test changed:
+a **1280×1200** viewport keeps its actions in view, and explicit visibility and
+original-handle checks prove the tooltip remains open without remounting after the
+last theme update. Escape order and focus restoration remain asserted. Three
+focused repetitions and the complete **17/17 contracts gate** passed; production
+dismissal is unchanged.
+
+The [first acceptance retry](../test-results/frame-actions-check-acceptance-2026-11-07.json)
+stopped at `docs/verification.md` formatting. Formatting that document resolved
+the gate; the subsequent full acceptance passed. Both failures, their logs, and
+the earlier native/package/README records remain preserved. The identity generator's
+[compressor-size assumption](../test-results/frame-actions-identities-attempt-2026-11-07.json)
+is also retained; final gzip size uses actual `Bun.gzipSync` with an asserted
+decompression round trip, not an assumed Python-compressor equivalence.
 
 ## Frame Phase 1
 
@@ -417,15 +507,16 @@ changes and fluid interpolation remain application-owned. The tests sample
 upstream values and selected structured objects; the catalog count does not imply
 an exhaustive pixel comparison.
 
-### Browser tests: 53 + 18 + 17 + 27 + 11 = 126
+### Browser tests: 53 + 18 + 17 + 31 + 11 + 42 = 172
 
 | File                                                     | Tests | Exercised behavior                                                                                                                                                                                                                       |
 | -------------------------------------------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Documentation](../tests/browser/docs.test.ts)           | 53    | Six principal routes, production motion/reduced motion, preview-server behavior, and every one of the 45 catalog entries                                                                                                                 |
 | [Interactions](../tests/browser/interactions.test.ts)    | 18    | Keyboard activation/selection, invalid and corrected form submission, search, collections, bounded values, date/time changes, clipboard success/denial, file selection/native mixed-file drop, overlays, navigation, and persisted theme |
 | [Consumer contracts](../tests/browser/contracts.test.ts) | 17    | Refs/render props, controlled fields and collections, eight themes, live appearance/language on four portal families, nested boundaries, and Modal part targets                                                                          |
-| [Fidelity](../tests/browser/fidelity.test.ts)            | 27    | Shared field anatomy, values/refs, Carbon size/state contracts, Frame default/explicit sizes, typography overrides, raw disabled/invalid fields, and forced colors                                                                       |
+| [Fidelity](../tests/browser/fidelity.test.ts)            | 31    | Shared field anatomy, values/refs, Carbon size/state contracts, all seven Frame Button variants and inactive states, default/explicit sizes, typography overrides, raw disabled/invalid fields, and forced colors                        |
 | [Relay](../tests/browser/relay.test.ts)                  | 11    | Button/field states and sizes, selection, validation/recovery, nested overlays, accessible names, token overrides, responsive bounds, reduced motion, forced colors, and route theme preferences                                         |
+| [Storybook](../tests/browser/storybook.test.ts)          | 42    | All 21 Button/Link stories in both Frame themes; completed play/accessibility reports, explicit exception rejection, and rendered theme                                                                                                  |
 
 Documentation and interaction tests drive the built site. Contract and fidelity
 tests use focused browser fixtures. The documentation suite checks route responses,
@@ -483,24 +574,30 @@ LICENSE/NOTICE, ESM/CSS/JSON exports, strict declarations with `skipLibCheck=fal
 structured type metadata, theme/layer portals, refs/render props, keyboard state,
 form validation/submission, selection, loaded Plex faces, and browser errors.
 
-The current Frame-foundation archives are identified by the
+The current Frame-action archives are identified by the
 [manifest](../dist/packages/manifest.json),
 [package-consumer record](../test-results/package-consumer.json), and
 [README-install record](../test-results/readme-install.json):
 
 | Archive                                                               | Bytes  | SHA-256                                                            |
 | --------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
-| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 46,331 | `ec741687d4fad05c440b56d2b5028b30b05ba0be628770990405f8488a263841` |
-| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 81,833 | `9b33628ba5a84f0a1ef7b9a7b4680bd502bff37e94d4be98b1413a12d33afd61` |
+| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 46,455 | `4a51a948bea67a854ba2fdc8e184054e6d449d3618c1de49884ae1c4a8520edd` |
+| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 85,477 | `bd5f0ae7f65f50000915e175baf0df5acbdfc75ede7c59e5935dadbaa21e45d8` |
 
-The [identity check](../test-results/frame-phase1-identities.json) confirms that
+The [current identity check](../test-results/frame-actions-identities-2026-11-07.json) confirms that
 the manifest, actual archive bytes, package-consumer record, and README-install
 record agree on these hashes, and that the checked README is current.
+Distributed React CSS is **226,535 bytes / 22,135 bytes gzip**: **915 bytes / 0.41%**
+above the retained Phase 1 uncompressed baseline. CSS SHA-256:
+`86df00a19870655d000eae2e9a3ef75c3a91574b699b0705594751faa3cbf8de`.
+Storybook remains a private development workspace, not a shipped styling engine
+or runtime dependency. The earlier [Phase 1 identities](../test-results/frame-phase1-identities.json)
+and scoped consumer records remain historical evidence.
 `@cinder/tokens@0.1.0` is an explicit React-package
 peer; workspace development retains `workspace:*`. Library consumers supply their
 fonts when needed; Frame uses the system sans-serif stack. The README demonstrates
 separate optional pinned Plex Sans and Mono installs. Its
-[current installation output](../test-results/frame-phase1-readme.log) checks the
+[current installation output](../test-results/frame-actions-readme-install-acceptance-2026-11-07.log) checks the
 tarball commands and all three TSX snippets verbatim in another isolated app.
 
 The [baseline README installation check](../test-results/readme-install-before-native-tooling.json) independently

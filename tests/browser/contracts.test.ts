@@ -270,6 +270,8 @@ test("appearance recipes inherit, replace, and clear on all four portal roots wi
 });
 
 test("open portals track same-direction language changes, RTL, explicit Theme language, and theme without remounting", async () => {
+  // Keep every settings action in view: ancestor scrolling intentionally dismisses RAC tooltips.
+  await page.setViewportSize({ width: 1280, height: 1200 });
   await page.goto("/?appearance");
   const child = page.locator(".appearance-child");
   await expect(page.locator(".appearance-parent")).toHaveAttribute("lang", "it-IT");
@@ -310,6 +312,9 @@ test("open portals track same-direction language changes, RTL, explicit Theme la
   await expect(page.locator(".cinder-toast")).toContainText("Provider-owned toast");
   await expect(page.locator(".local-language-layer")).toHaveAttribute("lang", "ja-JP");
   await expect(page.locator(".appearance-parent")).toHaveAttribute("lang", "it-IT");
+  await expect(page.locator(".cinder-tooltip")).toBeVisible();
+  for (const node of mounted)
+    expect(await node!.evaluate((element) => element.isConnected)).toBe(true);
   await page.keyboard.press("Escape");
   await expect(page.locator(".cinder-tooltip")).toHaveCount(0);
   await expect(page.locator(".cinder-popover")).toBeVisible();

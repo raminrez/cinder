@@ -1,14 +1,16 @@
 # Cinder component-library implementation plan
 
-**6 November 2026 · approved code-first sequence.** Frame foundations are complete.
-Build the finished components and their **Storybook** stories next, extend them
+**7 November 2026 · approved code-first sequence.** Frame foundations and Phase 2's
+first Storybook/actions batch are complete at their recorded verification scope.
+Complete the remaining components and their **Storybook** stories, extend them
 through the catalog, then develop the **documentation website**. **Figma is the
 final step**, derived from the implemented library and documentation.
 
 Visual authority: [DESIGN.md](../DESIGN.md). Behavior, inclusion, and customization
 requirements: [design-system.md](design-system.md). Current package scope:
 [coverage.md](coverage.md). [Phase 1 evidence](verification.md#frame-phase-1) records
-the completed foundation scope; the phases below complete the component library.
+the completed foundation scope; [first-batch evidence](verification.md#frame-actions--phase-2-first-batch)
+records Storybook, Button, and Link. The phases below complete the component library.
 
 ## Outcome and sequence
 
@@ -16,8 +18,9 @@ The result is a reusable React Aria-based Cinder library with Frame light/dark
 themes, dependable defaults, documented root/part/state styling, coherent locale
 and portal behavior, working examples, and evidence from installed packages.
 
-**Current state:** Phases 0 and 1 are complete. Phase 2's Storybook/actions batch is
-in progress. Delivery order:
+**Current state:** Phases 0 and 1 are complete. Phase 2's Storybook/actions first
+batch passed acceptance; shared field anatomy and form recovery are next. The full
+fourteen-entry phase remains in progress. Delivery order:
 **components + Storybook (2–5) → documentation website and release proof (6) →
 Figma (7)**. Component README/API contracts and evidence accompany each batch.
 
@@ -176,6 +179,13 @@ nested overlays, keyboard/focus, RTL, and reviewed axe results.
 are supporting primitives, not extra catalog entries.
 
 ### First batch — Storybook and actions
+
+**Acceptance passed, 7 November 2026.** The private workbench and 21 Button/Link
+stories pass all 42 theme gates; native input, retained rendered review, the full
+workspace aggregate, and installed-package/README consumers pass. See the
+[bounded acceptance evidence](verification.md#frame-actions--phase-2-first-batch).
+This completes only the first batch, not the fourteen-entry phase or later
+documentation website and Figma work.
 
 Create a private `apps/storybook` workspace using Storybook's standard React setup,
 with development and static-build commands. Stories consume the public
@@ -384,7 +394,8 @@ before advancing the batch.
 
 ## Next implementation unit
 
-Start **Phase 2: Storybook + Button and Link**, using the completed Frame foundations
-in the actual packages. Follow with TextField's guidance/control/recovery anatomy
-and form journeys, the remaining text fields, choice controls, and nested overlays.
+Next is **Phase 2: shared field anatomy and form recovery**, starting with
+TextField's guidance/control/recovery sequence and form journeys. Storybook,
+Button, and Link are complete at the first-batch acceptance scope above. Follow
+with the remaining text fields, choice controls, and nested overlays.
 Finish the fourteen-entry slice and its stories before broadening the catalog.

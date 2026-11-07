@@ -1,6 +1,6 @@
 # Cinder implementation coverage
 
-**Baseline:** Cinder 0.1.0, 6 November 2026. Carbon v11 visual rules, RAC 1.22.1
+**Baseline:** Cinder 0.1.0, 7 November 2026. Carbon v11 visual rules, RAC 1.22.1
 interaction, React 19.3.1, and Bun 1.4.4. This describes the implemented source and
 examples. Dated execution results are in [verification](verification.md).
 
@@ -24,6 +24,18 @@ choices and ownership boundaries. The [first-batch verification](verification.md
 records executed proof. The full fourteen-entry slice remains in progress; shared
 field anatomy and form recovery come next.
 
+**First-batch acceptance passed, 7 November 2026.** The rebuilt Storybook's
+**42 story/theme gates pass**. All **48 retained captures**
+have completed light/dark review with no confirmed P0/P1/P2 product defects; all
+32 retained axe incompletes are resolved for isolated-fixture applicability.
+The final aggregate passes **25 unit/watcher tests with 1,976 assertions** and
+**172 browser tests**. Final-build native input passes **16 observations** across
+both themes. Native CSS/CSS Modules, pinned Tailwind 4.3.5, and the exact README
+installation commands/snippets pass from the final archives. These scoped results
+do not imply manual assistive-technology, device, zoom, or full-phase proof. Shared
+fields, later catalog work, the documentation website, and Figma are not part of
+this completed batch.
+
 ## Frame foundations — Phase 1
 
 Frame's [visual rules](../DESIGN.md), [system specification](design-system.md),
@@ -41,7 +53,7 @@ Representative installed-package proof has passed. See the
 | Themes and portals   | Inherited/replaced/cleared appearance and effective language on Popover, ModalOverlay, Tooltip, ToastRegion; nested themes/layers; independent Modal part access                         |
 | Representative proof | Installed Button, TextField, and dialog → Select in Frame light/dark; native CSS/CSS Modules and isolated Tailwind consumers pass strict types, builds, and browser contracts            |
 
-The workspace suite passed **126 browser tests across five files**, including
+The Phase 1 workspace suite passed **126 browser tests across five files**, including
 **44 contracts/fidelity tests**. Unit checks passed **22 tests with 1,945
 expectations**; type checking covered **53 files**. Lint and the production build
 also passed. These counts describe the workspace suite; the installed-consumer
@@ -118,10 +130,11 @@ DateField, and RAC composition parts do not add to the 45-page count.
   DOM rendering, render props, refs, locale, layers, and portals in [contracts.test.ts][contracts].
   Theme/portal coverage includes all eight themes, nested Carbon isolation, live
   appearance/language changes, and independent Modal surface/backdrop targets.
-- **F — fidelity checks:** 27 focused browser tests in [fidelity.test.ts][fidelity]
+- **F — fidelity checks:** 31 focused browser tests in [fidelity.test.ts][fidelity]
   cover Carbon geometry, typography, and states; shared field-part/ref/validation
   contracts; legacy size defaults; and Frame light/dark geometry, typography,
-  invalid focus, pending, and forced colors. Carbon color assertions cover all four
+  all seven Button variants, inactive states, invalid focus, pending, and forced
+  colors. Carbon color assertions cover all four
   original themes; geometry and typography use the fixture's specified viewports and states.
 - **U — unit checks:** pinned token samples, authored Frame values, unchanged legacy
   maps/foundations/type objects, deterministic generation, CSS references, layer bounds,
