@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, fn, userEvent, waitFor, within } from "storybook/test";
+import { expect, fn, waitFor, within } from "storybook/test";
 import { Button, Icon, Theme, useTheme, type ButtonProps, type ButtonVariant } from "@cinder/react";
 import "./actions.css";
 
@@ -129,7 +129,7 @@ export const IconOnly: Story = {
     children: <Icon name="copy" />,
   },
   parameters: { controls: { exclude: ["children"] } },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const button = within(canvasElement).getByRole("button", { name: "Copy workspace link" });
     await expect(button).toHaveAccessibleName("Copy workspace link");
     await userEvent.tab();
@@ -148,7 +148,7 @@ export const Disabled: Story = {
     </div>
   ),
   parameters: { controls: { exclude: ["variant", "children", "isDisabled"] } },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     for (const button of within(canvasElement).getAllByRole("button")) {
       await expect(button).toBeDisabled();
       await userEvent.click(button);
@@ -169,7 +169,7 @@ export const Pending: Story = {
       },
     },
   },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const buttons = within(canvasElement).getAllByRole("button");
     await userEvent.tab();
     await expect(buttons[0]).toHaveFocus();
@@ -188,20 +188,24 @@ export const Pending: Story = {
 
 export const KeyboardAndPointer: Story = {
   args: { children: "Run action", onPress: fn() },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const button = within(canvasElement).getByRole("button", { name: "Run action" });
     await userEvent.tab();
     await expect(button).toHaveFocus();
     await expect(button).toHaveAttribute("data-focus-visible");
     await userEvent.keyboard("[Space>]");
     await expect(button).toHaveAttribute("data-pressed");
+    await expect(args.onPress).not.toHaveBeenCalled();
     await userEvent.keyboard("[/Space]");
+    await expect(button).not.toHaveAttribute("data-pressed");
     await expect(args.onPress).toHaveBeenCalledTimes(1);
     await userEvent.hover(button);
     await expect(button).toHaveAttribute("data-hovered");
     await userEvent.pointer({ target: button, keys: "[MouseLeft>]" });
     await expect(button).toHaveAttribute("data-pressed");
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
     await userEvent.pointer({ target: button, keys: "[/MouseLeft]" });
+    await expect(button).not.toHaveAttribute("data-pressed");
     await expect(args.onPress).toHaveBeenCalledTimes(2);
     await userEvent.keyboard("{Enter}");
     await expect(args.onPress).toHaveBeenCalledTimes(3);
@@ -270,7 +274,7 @@ export const SaveAndRetry: Story = {
   beforeEach: () => {
     saveDraft.mockReset().mockImplementation(simulateSave);
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole("button", { name: "Save draft" });
     let rejectSave: (error: Error) => void = () => {};
@@ -342,7 +346,7 @@ export const Customization: Story = {
   args: { variant: "secondary" },
   render: CustomButton,
   parameters: { controls: { exclude: ["children", "iconOnly"] } },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole("button", { name: "Save draft" });
     await userEvent.click(canvas.getByRole("button", { name: "Focus save action" }));
@@ -354,6 +358,9 @@ export const Customization: Story = {
     await expect(button).toHaveStyle({ borderStyle: "dashed" });
     await expect(button).toHaveAccessibleName("Save draft");
     await userEvent.keyboard("[/Space]");
+    await expect(button).not.toHaveAttribute("data-pressed");
+    await expect(button).not.toHaveClass("action-story-custom-button--pressed");
+    await expect(button).toHaveStyle({ borderStyle: "solid" });
   },
 };
 

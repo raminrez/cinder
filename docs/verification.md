@@ -32,6 +32,49 @@ real locale providers. The packed-consumer locale-change case uses Persian.
 
 Final integrated builds, browser execution, and rendered review are in progress.
 
+### Repairs and retained history
+
+The [original Storybook gate](../test-results/frame-actions-storybook-tests.log)
+recorded **34 passes and 8 failures**: four play functions failed in both themes.
+The repairs are confined to story assertions and input state, not the packaged
+Button/Link implementation or appearance:
+
+- Every action play uses Storybook's supplied stateful `userEvent`, retaining held
+  keys and pointer buttons across calls. Assertions check no premature activation,
+  activation on release, and restored pressed classes/styles.
+- Link Enter navigation is proved by a fresh fragment change and destination
+  focus. Native fragment focus can cancel RAC's keyup press callback; an
+  unconditional second `onPress` count is not the navigation contract. Pointer
+  callback counting remains checked separately.
+- Link's customization checks the authored `0.3em` inline offset and its computed
+  pixel value separately. At the rendered 14px font size, the correct value is
+  **4.2px**, not the literal `0.3em` string expected by the original matcher.
+
+The [watcher diagnosis](../test-results/frame-actions-watcher-repair-2026-11-07.json)
+found that macOS's `/var` alias and Vite's canonical `/private/var` root disagreed
+with the fixture filesystem allowlist. Canonicalizing only the temporary fixture
+root preserves strict filesystem access, the exact missing-stylesheet assertion,
+and the stylesheet-restoration check. Three focused repetitions passed **3 tests /
+17 assertions** each; three aggregate repetitions passed **25 tests / 1,976
+assertions** each. The production watcher is unchanged.
+
+The native runner scopes action queries to `#storybook-root`, rather than
+Storybook's hidden controls. In agent-browser **0.41.2**, integer mouse coordinates
+and a literal space produce the intended native input; fractional coordinates
+are rejected and the `Space` alias emits an empty key. The
+[expanded pre-rebuild pass](../test-results/frame-actions-native-expanded-before-static-rebuild-2026-11-07.json)
+is retained separately from the final-build proof.
+
+The [original rendered report](../test-results/frame-actions-render-2026-11-06/report.json)
+and all **48 captures** remain unchanged, including their original pending review
+markers and two disabled-Link measurement failures. RAC's disabled
+`<span role="link" aria-disabled="true">` may retain an inert `href`; requiring
+its absence was a harness error. The
+[supplemental validator replay](../test-results/frame-actions-render-reconciliation-2026-11-07.json)
+passes all 48 retained observations and six negative semantics checks, without
+rewriting the report. Native blocked activation and skipped Tab order are proved
+separately.
+
 ## Frame Phase 1
 
 Phase 1 implements reusable Frame foundations and public styling contracts. The

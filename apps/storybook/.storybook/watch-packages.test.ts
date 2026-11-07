@@ -1,7 +1,7 @@
 import { expect, spyOn, test } from "bun:test";
 import * as processes from "node:child_process";
 import { EventEmitter, once } from "node:events";
-import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { createServer, type HotUpdateOptions, type ViteDevServer } from "vite";
@@ -90,7 +90,8 @@ test("package outputs defer HMR while story edits retain normal updates", () => 
 });
 
 test("Vite resolves public CSS after a missing build output is restored", async () => {
-  const directory = await mkdtemp(join(tmpdir(), "cinder-storybook-"));
+  // Vite resolves symlinks in its root, so fixture paths and fs.allow must match.
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "cinder-storybook-")));
   const app = join(directory, "apps/storybook");
   const pkg = join(directory, "packages/react");
   const stylesheet = join(pkg, "dist/styles.css");

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, fn, userEvent, within } from "storybook/test";
+import { expect, fn, within } from "storybook/test";
 import { Button, Icon, Link, Theme, useTheme, type LinkProps } from "@cinder/react";
 import "./actions.css";
 
@@ -66,21 +66,28 @@ export const Inline: Story = {
 export const Navigation: Story = {
   args: { href: "#navigation-guidelines", onPress: fn() },
   render: Playground.render,
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole("link", { name: "Publishing guidelines" });
+    const destination = canvas.getByText(
+      "Before publishing, check the draft title, access, and sharing settings.",
+    );
+    const view = canvasElement.ownerDocument.defaultView!;
     await expect(link.tagName).toBe("A");
     await expect(link).toHaveAttribute("href", "#navigation-guidelines");
     await userEvent.click(link);
-    await expect(canvasElement.ownerDocument.defaultView?.location.hash).toBe(
-      "#navigation-guidelines",
-    );
+    await expect(view.location.hash).toBe("#navigation-guidelines");
+    await expect(destination).toHaveFocus();
     await expect(args.onPress).toHaveBeenCalledTimes(1);
     await userEvent.tab({ shift: true });
     await expect(link).toHaveFocus();
     await expect(link).toHaveAttribute("data-focus-visible");
+    view.history.replaceState(null, "", view.location.pathname + view.location.search);
+    await expect(view.location.hash).toBe("");
     await userEvent.keyboard("{Enter}");
-    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    // Native fragment navigation focuses the destination before RAC's keyup callback.
+    await expect(view.location.hash).toBe("#navigation-guidelines");
+    await expect(destination).toHaveFocus();
   },
 };
 
@@ -95,7 +102,7 @@ export const Disabled: Story = {
     </div>
   ),
   parameters: { controls: { exclude: ["isDisabled"] } },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole("link", { name: "Billing settings" });
     await expect(link.tagName).toBe("SPAN");
@@ -110,7 +117,7 @@ export const Disabled: Story = {
 export const KeyboardAndPointer: Story = {
   args: { href: "#interaction-guidelines", onPress: fn() },
   render: Playground.render,
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const link = within(canvasElement).getByRole("link", { name: "Publishing guidelines" });
     await userEvent.tab();
     await expect(link).toHaveFocus();
@@ -121,7 +128,9 @@ export const KeyboardAndPointer: Story = {
     await expect(link).toHaveAttribute("data-hovered");
     await userEvent.pointer({ target: link, keys: "[MouseLeft>]" });
     await expect(link).toHaveAttribute("data-pressed");
+    await expect(args.onPress).not.toHaveBeenCalled();
     await userEvent.pointer({ target: link, keys: "[/MouseLeft]" });
+    await expect(link).not.toHaveAttribute("data-pressed");
     await expect(args.onPress).toHaveBeenCalledTimes(1);
   },
 };
@@ -182,7 +191,7 @@ export const Customization: Story = {
   args: { href: "#custom-guidelines", inline: true },
   render: CustomLink,
   parameters: { controls: { exclude: ["children"] } },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const link = canvas.getByRole("link", { name: "Publishing guidelines" });
     await userEvent.click(canvas.getByRole("button", { name: "Focus guidelines link" }));
@@ -190,11 +199,18 @@ export const Customization: Story = {
     await expect(link).toHaveClass("cinder-link", "action-story-custom-link");
     await expect(link).toHaveAttribute("data-custom-render", "true");
     await userEvent.hover(link);
-    await expect(link).toHaveStyle({ textUnderlineOffset: "0.3em" });
+    await expect(link).toHaveAttribute("data-hovered");
+    await expect(link.style.textUnderlineOffset).toBe("0.3em");
+    const hoveredStyle = getComputedStyle(link);
+    await expect(parseFloat(hoveredStyle.textUnderlineOffset)).toBeCloseTo(
+      0.3 * parseFloat(hoveredStyle.fontSize),
+    );
     await userEvent.pointer({ target: link, keys: "[MouseLeft>]" });
     await expect(link).toHaveClass("action-story-custom-link--pressed");
     await expect(link).toHaveAccessibleName("Publishing guidelines");
     await userEvent.pointer({ target: link, keys: "[/MouseLeft]" });
+    await expect(link).not.toHaveAttribute("data-pressed");
+    await expect(link).not.toHaveClass("action-story-custom-link--pressed");
   },
 };
 
