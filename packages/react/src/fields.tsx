@@ -3,20 +3,27 @@ import {
   TextField as RACTextField,
   NumberField as RACNumberField,
   SearchField as RACSearchField,
-  Label,
   Input,
-  TextArea as RACTextArea,
-  Group,
-  Text,
-  FieldError,
   type TextFieldProps as RACTextFieldProps,
   type NumberFieldProps as RACNumberFieldProps,
   type SearchFieldProps as RACSearchFieldProps,
   type FieldErrorProps,
   type InputProps,
 } from "react-aria-components";
-import { Button } from "./buttons";
 import { Icon } from "./icons";
+import {
+  FieldLabel,
+  FieldDescription,
+  FieldErrorMessage,
+  FieldHelp,
+  FieldInput,
+  FieldGroupInput,
+  FieldTextArea,
+  FieldControl,
+  FieldButton,
+  fieldParts,
+} from "./field-parts";
+import { useTheme } from "./theme";
 import { classes, type ControlSize } from "./utils";
 
 export interface FieldContentProps {
@@ -25,33 +32,48 @@ export interface FieldContentProps {
   errorMessage?: FieldErrorProps["children"];
 }
 
-export function FieldLabel({ label }: Pick<FieldContentProps, "label">) {
-  return label != null ? (
-    <Label className="cinder-field__label react-aria-Label">{label}</Label>
-  ) : null;
-}
-
-export function FieldHelp({ description, errorMessage }: Omit<FieldContentProps, "label">) {
+export function FieldLayout({
+  label,
+  description,
+  errorMessage,
+  children,
+}: FieldContentProps & { children: ReactNode }) {
+  const { theme } = useTheme();
+  const isFrame = theme === "frame-light" || theme === "frame-dark";
   return (
-    <div className="cinder-field__help cinder-field-help">
-      {description != null && (
-        <Text className="cinder-field__description react-aria-Text" slot="description">
-          {description}
-        </Text>
-      )}
-      <FieldError className="cinder-field__error react-aria-FieldError">{errorMessage}</FieldError>
-    </div>
+    <>
+      {label != null && <FieldLabel>{label}</FieldLabel>}
+      {isFrame && description != null && <FieldDescription>{description}</FieldDescription>}
+      {children}
+      <FieldHelp>
+        {!isFrame && description != null && <FieldDescription>{description}</FieldDescription>}
+        <FieldErrorMessage>{errorMessage}</FieldErrorMessage>
+      </FieldHelp>
+    </>
   );
 }
 
-export interface TextFieldProps extends RACTextFieldProps, FieldContentProps {
+export interface TextFieldRootProps extends RACTextFieldProps {
   size?: ControlSize;
-  placeholder?: string;
-  inputRef?: Ref<HTMLInputElement>;
   ref?: Ref<HTMLDivElement>;
 }
 
-export function TextField({
+function TextFieldRoot({ size = "md", className, ...props }: TextFieldRootProps) {
+  return (
+    <RACTextField
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-text-field", className)}
+    />
+  );
+}
+
+export interface TextFieldProps extends TextFieldRootProps, FieldContentProps {
+  placeholder?: string;
+  inputRef?: Ref<HTMLInputElement>;
+}
+
+function TextFieldDefault({
   label,
   description,
   errorMessage,
@@ -63,34 +85,41 @@ export function TextField({
   ...props
 }: TextFieldProps) {
   return (
-    <RACTextField
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-text-field", className)}
-    >
+    <TextFieldRoot {...props} size={size} className={className}>
       {children ?? (
-        <>
-          <FieldLabel label={label} />
-          <Input
-            className="cinder-field__control react-aria-Input"
-            placeholder={placeholder}
-            ref={inputRef}
-          />
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <FieldInput placeholder={placeholder} ref={inputRef} />
+        </FieldLayout>
       )}
-    </RACTextField>
+    </TextFieldRoot>
   );
 }
 
-export interface TextAreaProps extends RACTextFieldProps, FieldContentProps {
-  placeholder?: string;
-  rows?: number;
-  inputRef?: Ref<HTMLTextAreaElement>;
+export const TextField = Object.assign(TextFieldDefault, {
+  Root: TextFieldRoot,
+  ...fieldParts,
+  Input: FieldInput,
+  TextArea: FieldTextArea,
+  Control: FieldControl,
+});
+
+export interface TextAreaRootProps extends RACTextFieldProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export function TextArea({
+function TextAreaRoot({ className, ...props }: TextAreaRootProps) {
+  return (
+    <RACTextField {...props} className={classes("cinder-field cinder-text-area", className)} />
+  );
+}
+
+export interface TextAreaProps extends TextAreaRootProps, FieldContentProps {
+  placeholder?: string;
+  rows?: number;
+  inputRef?: Ref<HTMLTextAreaElement>;
+}
+
+function TextAreaDefault({
   label,
   description,
   errorMessage,
@@ -102,29 +131,41 @@ export function TextArea({
   ...props
 }: TextAreaProps) {
   return (
-    <RACTextField {...props} className={classes("cinder-field cinder-text-area", className)}>
+    <TextAreaRoot {...props} className={className}>
       {children ?? (
-        <>
-          <FieldLabel label={label} />
-          <RACTextArea
-            className="cinder-field__control react-aria-TextArea"
-            rows={rows}
-            placeholder={placeholder}
-            ref={inputRef}
-          />
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <FieldTextArea rows={rows} placeholder={placeholder} ref={inputRef} />
+        </FieldLayout>
       )}
-    </RACTextField>
+    </TextAreaRoot>
   );
 }
 
-export interface NumberFieldProps extends RACNumberFieldProps, FieldContentProps {
+export const TextArea = Object.assign(TextAreaDefault, {
+  Root: TextAreaRoot,
+  ...fieldParts,
+  Input: FieldTextArea,
+  Control: FieldControl,
+});
+
+export interface NumberFieldRootProps extends RACNumberFieldProps {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
 
-export function NumberField({
+function NumberFieldRoot({ size = "md", className, ...props }: NumberFieldRootProps) {
+  return (
+    <RACNumberField
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-number-field", className)}
+    />
+  );
+}
+
+export interface NumberFieldProps extends NumberFieldRootProps, FieldContentProps {}
+
+function NumberFieldDefault({
   label,
   description,
   errorMessage,
@@ -134,38 +175,53 @@ export function NumberField({
   ...props
 }: NumberFieldProps) {
   return (
-    <RACNumberField
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-number-field", className)}
-    >
+    <NumberFieldRoot {...props} size={size} className={className}>
       {children ?? (
-        <>
-          <FieldLabel label={label} />
-          <Group className="cinder-field__control cinder-input-group">
-            <Input />
-            <Button slot="decrement" variant="ghost" size={size} iconOnly>
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <FieldControl>
+            <FieldGroupInput />
+            <FieldButton slot="decrement" size={size}>
               <Icon name="minus" />
-            </Button>
-            <Button slot="increment" variant="ghost" size={size} iconOnly>
+            </FieldButton>
+            <FieldButton slot="increment" size={size}>
               <Icon name="plus" />
-            </Button>
-          </Group>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+            </FieldButton>
+          </FieldControl>
+        </FieldLayout>
       )}
-    </RACNumberField>
+    </NumberFieldRoot>
   );
 }
 
-export interface SearchFieldProps extends RACSearchFieldProps, FieldContentProps {
+export const NumberField = Object.assign(NumberFieldDefault, {
+  Root: NumberFieldRoot,
+  ...fieldParts,
+  Input: FieldGroupInput,
+  Control: FieldControl,
+  Button: FieldButton,
+});
+
+export interface SearchFieldRootProps extends RACSearchFieldProps {
   size?: ControlSize;
-  placeholder?: string;
   ref?: Ref<HTMLDivElement>;
+}
+
+function SearchFieldRoot({ size = "md", className, ...props }: SearchFieldRootProps) {
+  return (
+    <RACSearchField
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-search-field", className)}
+    />
+  );
+}
+
+export interface SearchFieldProps extends SearchFieldRootProps, FieldContentProps {
+  placeholder?: string;
   inputProps?: InputProps;
 }
 
-export function SearchField({
+function SearchFieldDefault({
   label,
   description,
   errorMessage,
@@ -177,24 +233,26 @@ export function SearchField({
   ...props
 }: SearchFieldProps) {
   return (
-    <RACSearchField
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-search-field", className)}
-    >
+    <SearchFieldRoot {...props} size={size} className={className}>
       {children ?? (
-        <>
-          <FieldLabel label={label} />
-          <Group className="cinder-field__control cinder-input-group">
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <FieldControl>
             <Icon name="search" />
             <Input placeholder={placeholder} {...inputProps} />
-            <Button variant="ghost" size={size} iconOnly>
+            <FieldButton size={size}>
               <Icon name="close" />
-            </Button>
-          </Group>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+            </FieldButton>
+          </FieldControl>
+        </FieldLayout>
       )}
-    </RACSearchField>
+    </SearchFieldRoot>
   );
 }
+
+export const SearchField = Object.assign(SearchFieldDefault, {
+  Root: SearchFieldRoot,
+  ...fieldParts,
+  Input: FieldGroupInput,
+  Control: FieldControl,
+  ClearButton: FieldButton,
+});

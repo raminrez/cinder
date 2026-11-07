@@ -1,13 +1,14 @@
 # Cinder 0.1.0 — verification
 
-**Latest work: [Frame actions](#frame-actions--phase-2-first-batch), acceptance passed,
-7 November 2026.** Storybook, Button, and Link pass browser, rendered, and
-installed-package gates. The full fourteen-entry Phase 2 slice remains in progress.
+**Latest work: [Frame fields/forms](#frame-fields--phase-2-second-batch), bounded
+acceptance passed, 7 November 2026.** Shared compound fields, text/number/search
+stories, and Form recovery pass browser, rendered, native-input, and installed-package
+gates. The full fourteen-entry Phase 2 slice remains in progress.
 
-**Latest aggregate: passed, 7 November 2026, 06:43:05–06:46:13 UTC.**
-The [acceptance record](../test-results/frame-actions-check-acceptance-2-2026-11-07.json)
-and [output](../test-results/frame-actions-check-acceptance-2-2026-11-07.log) retain
-the complete `bun run check`. Earlier Frame-foundation and Relay results remain below.
+**Latest aggregate: passed, 7 November 2026, 14:18:39–14:22:50 UTC.**
+The [acceptance record](../test-results/frame-fields-check-acceptance-2026-11-07.json)
+and [output](../test-results/frame-fields-check-acceptance-2026-11-07.log) retain
+the frozen `bun run check`. Earlier action, Frame-foundation, and Relay results remain below.
 
 **Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
@@ -20,13 +21,211 @@ are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
 
+## Frame fields — Phase 2 second batch
+
+**Bounded acceptance passed, 7 November 2026.** This batch implements shared field
+composition and completes the TextField, TextArea, NumberField, SearchField, and
+Form recovery stories. The [coverage](coverage.md#frame-fields--phase-2-second-batch),
+[compound API](../packages/react/README.md#additive-compound-namespaces), and
+[ordered plan](component-library-plan.md#second-batch--shared-fields-and-form-recovery)
+define its boundary. The full fourteen-entry Phase 2 slice remains in progress.
+
+The workbench indexes **54 stories**: 12 Button, 9 Link, 7 TextField, 6 TextArea,
+8 NumberField, 7 SearchField, and 5 Form. The 21 action stories remain intact; the
+33 field/form stories use public package imports and one prebuilt stylesheet.
+All **108 story/theme cases** pass after the corrected static build and again in
+the final aggregate. The gate checks play exceptions, completed accessibility
+reporting, and the actual rendered Frame theme, not merely story discovery.
+
+### Executed acceptance gates
+
+| Gate                   | Result and scope                                                                                                                                                                                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Formatting and Oxlint  | **144 formatted files**, no lint findings                                                                                                                                                                                                                                                  |
+| Types                  | **64 source files**; strict Storybook configuration/stories and separate public declaration checks with `skipLibCheck: false` and no workspace aliases                                                                                                                                     |
+| Unit and watcher tests | **25 passed, 1,976 assertions**, across three files                                                                                                                                                                                                                                        |
+| Builds                 | Both packages, public declarations, generated CSS/JSON, the unchanged documentation application build (**15 emitted assets**), and Storybook **10.6.6 / Vite 8.3.6**                                                                                                                       |
+| Focused contracts      | [**90/90 composition/fidelity/contracts cases**](../test-results/frame-fields-composition-acceptance-2026-11-07.json), with frozen inputs; the final aggregate refreshes all affected cases                                                                                                |
+| Full browser suite     | **280 passed across seven files**, including **108 Storybook cases**, **21 compound composition cases**, **52 fidelity cases**, and baseline Carbon/Relay journeys                                                                                                                         |
+| Native input           | [**28 observations, both themes**](../test-results/frame-fields-native-acceptance-2026-11-07.json): validation/focus, current FormData, real refs, copying, read-only/disabled distinctions, clear/search/number behavior, recovery budgets, duplicate prevention, and local failure/retry |
+| Installed consumers    | [Native CSS/CSS Modules and Tailwind **4.3.5**](../test-results/frame-fields-package-consumer-aggregate-2026-11-07.json): strict positive/negative compound declarations, production bundles, actual refs, native field/form journeys, customization, and baseline regressions             |
+| README installation    | [Exact tarball/font commands and all three verbatim TSX snippets](../test-results/frame-fields-readme-install-acceptance-result-2026-11-07.json), checked and bundled in another isolated app against the final archives                                                                   |
+
+All **129 recorded source/configuration hashes** remained unchanged during the
+aggregate. The [before](../test-results/frame-fields-check-before-2026-11-07.json)
+and [immediate after](../test-results/frame-fields-check-after-2026-11-07.json)
+records separately prove that all **29 repository documentation hashes** also
+stayed unchanged during that run. Acceptance bookkeeping was updated afterward;
+no product source, fixture, configuration, or packed-package README changed then.
+
+The [final identity reconciliation](../test-results/frame-fields-identities-2026-11-07.json)
+ties the current source, package payloads, archives, installed consumers, README,
+corrected static build, native evidence, and retained visual closure to their
+hashes. All **47 render/native source inputs** and **30 reviewed static assets**
+still match. Only Storybook's `project.json` build metadata changed during the
+aggregate rebuild; no recapture or native rerun was needed for unchanged behavior
+and paint. Final formatting, whitespace, local links, and completion identities
+are recorded [separately](../test-results/frame-fields-final-2026-11-07.json).
+
+### Composition and ownership
+
+- Twelve existing conveniences remain callable compound namespaces. `.Root`
+  retains full RAC props, state render-function children, refs, and slots without
+  inserting convenience anatomy. Shared parts keep exact RAC/native types and
+  stable hooks; family-specific collection/value/segment contracts remain intact.
+  There are no new flat component exports or Cinder Form engine.
+- `FieldLayout` owns Frame's **label → persistent guidance → control → recovery**
+  defaults. Guidance survives validation. The six Carbon/Relay themes and
+  replacement children retain their previous composition contracts. Grouped
+  controls own the control hook once; optional TextField/TextArea Group recipes
+  use raw RAC leaves rather than duplicate control hooks.
+- RAC owns field values, validation, relationships, events, and state attributes.
+  Frame group recovery owns the error paint; invalid checkbox/radio options keep
+  neutral borders while their native/ARIA invalid relationships remain intact.
+  SearchField preserves the existing complete `inputProps.className` override.
+- Cross-family API proof includes CheckboxGroup, RadioGroup, Select, ComboBox,
+  DateField, TimeField, DatePicker, and DateRangePicker. Their installed collection
+  and date smoke is **not** complete later-family Frame acceptance. All eight
+  themes, existing refs/classes, raw RAC exports, and seven Button variants remain
+  compatible; examples recommend only `primary`, `secondary`, `ghost`, and `danger`.
+
+### Native form recovery and copying
+
+The native runner verifies required and malformed submission, first-invalid focus,
+simultaneous associated errors with guidance retained, corrected pointer submission,
+pending focus, duplicate suppression, failure/retry, and returned `validationErrors`.
+Drafts remain in application state. Pending fields are read-only, not disabled;
+Save retains focus while RAC changes its native type **submit → button → submit**.
+Application code guards repeated requests, including direct `requestSubmit()`.
+
+Only the exact local **800ms** callback containing the story's first-failure marker
+is held and explicitly completed. FormData observation delegates to the real
+constructor and retains actual instances and immutable snapshots; a retry gets
+new values without mutating the first request's snapshot. No request leaves these
+local recipes, and no fabricated value/state attributes serve as behavioral proof.
+
+Bounded fields reserve one recovery line, not a fixed maximum. The required-field
+Form recipe uses **58px/78px minimums** at a 16px root, with the narrow budget's
+actual **432/433px viewport boundary** after 24px side padding. Native checks cover
+expected-error Save stability at 1440/768/390px and both boundary widths; the full
+320px recovery journey is separate. Long errors may exceed the minimum and move
+Save rather than clip. Optional notes stay non-invalid. Field-grid layout is
+separately captured on both sides of its **647/648px** boundary.
+
+Read-only TextField, TextArea, NumberField, and SearchField remain selectable and
+copyable, reject editing, and differ from disabled controls. Selection uses trusted
+character-arrow keyboard input. Agent-browser **0.41.2** lacks the needed macOS copy
+editor command, so a CDP native `copy` command completes the operation; a trusted
+copy event and **actual clipboard readback** verify the exact selected value.
+Origin-scoped clipboard permission and a sentinel are confined to the isolated
+test browser; the fixture value is never written to manufacture the copy result.
+This is automated native-event evidence, not a physical-keyboard or IME audit.
+
+### Rendered and accessibility review
+
+The [fresh render-3 report](../test-results/frame-fields-render-3-2026-11-07/report.json)
+contains **74/74 captures**, with zero recorded geometry/contrast failures, axe
+violations, console messages, or page errors. Representative widths are
+1440/768/390/320px, plus both recovery and field-grid boundaries. States include
+read-only/disabled/invalid fields, custom anatomy, long text, Persian/Arabic locale
+providers and mixed-direction values, returned errors, pending, and first failure.
+
+The [supplemental visual closure](../test-results/frame-fields-visual-closure-2026-11-07.md)
+reuses **72 byte-identical prior verdicts** only after hash/source/build comparison.
+Both corrected long-TextArea originals were opened and inspected, closing the two
+original P2 findings. The original light/dark reviews each inspected **37/37
+render-2 originals** and remain unchanged, including their conditional status and
+source-drift warning. Fresh evidence resolves that warning; it does not erase it.
+The raw render-3 `visualReview: "pending"` marker is intentionally retained, with
+acceptance supplied by the separate closure ledger.
+
+All **74 retained axe 4.12.1 incompletes** are individually reconciled against their
+own story URL, theme/state, capture hash, prior occurrence, and exact node payload.
+Each is `bypass` on `html` in an isolated iframe without repeated application
+navigation. They remain contextual incompletes, **not WCAG 2.4.1 passes** or
+certification of the Storybook manager or a consuming application's skip navigation.
+
+| Theme | Applicable label/guidance/recovery paint samples | Lowest applicable ratio |
+| ----- | -----------------------------------------------: | ----------------------: |
+| Light |                                              253 |                5.3205:1 |
+| Dark  |                                              253 |                7.3810:1 |
+
+These **506 measured prose samples** exceed 4.5:1 against their effective painted
+backgrounds. Inactive labels are exempt; persistent guidance remains checked.
+They are repeated captured observations, not 506 unique components or a claim
+that every possible control state was inspected. Frame's restrained Operate
+direction continues through Impeccable's polish review; this closeout introduced
+no redesign, repeat context run, or additional source-detector pass.
+
+The prior nonblocking considerations remain: custom dashed/raised editable parts
+can resemble read-only defaults, pending is visually spinner-only, and one search
+count has programmatic rather than visible explanatory naming. No extra product
+polish was added to this acceptance batch.
+
+### Repairs and retained history
+
+- The initial composition preflight reported **15 passes / 6 failures** while
+  verifier inputs changed. A corrected **90/90** run also overlapped verifier edits;
+  neither is frozen acceptance. The later named **90/90 acceptance** and final
+  aggregate are stable. The [pre-fix group-paint regression](../test-results/frame-fields-paint-regression-before-2026-11-07.json)
+  retains **6 passes / 2 Frame failures**; the shared Frame recovery owner was
+  corrected without changing RAC state ownership or legacy-theme paint.
+- The original long TextArea rendered literal `\\n\\n` rather than paragraph
+  breaks. The story now uses actual newlines, and `LongContent.play` checks the
+  exact value. Render-2, both conditional reviews, and the failed supplemental
+  parser attempt remain preserved. Render-3 and its separate closure resolve the
+  content findings without rewriting those reports.
+- Failed installed gates `package-consumer-fresh`, `package-consumer-acceptance`,
+  and `package-consumer-acceptance-2` retain exact verifier/fixture snapshots and
+  diagnostic evidence. The verifier now uses RAC's complete accessible listbox
+  and date-trigger names and actual ID relationships, not weakened matching.
+  The fully controlled ComboBox fixture synchronizes selected key and input text
+  in both callbacks, as required by the React Aria MCP documentation; Cinder does
+  not reconcile application-owned controlled state.
+- Direct fill exposed a scroll/focus race: RAC correctly dismissed the opened
+  menu after auto-scroll. A click alone remained flaky. Scroll → full-viewport
+  assertion → focus passed **three repetitions in both themes** before the full
+  installed gate passed. No arbitrary wait or production dismissal change was used.
+  The [standalone acceptance-3](../test-results/frame-fields-package-consumer-acceptance-3-2026-11-07.json)
+  and its separately preserved result precede the final aggregate consumer.
+- Native shortcut/selection attempts remain retained alongside the character-arrow
+  and clipboard fix. Current diagnostics show trusted Space events for both the
+  `Space` alias and literal space; the contradictory action-era observation below
+  remains historical evidence rather than being retroactively rewritten.
+
+### Distribution cost and remaining work
+
+| Distributed React CSS  |                    Size |
+| ---------------------- | ----------------------: |
+| After action batch     |           226,535 bytes |
+| After field/form batch |       **233,973 bytes** |
+| Increase               | **7,438 bytes / 3.28%** |
+| Current gzip           |        **22,523 bytes** |
+
+CSS SHA-256:
+`b3091cdfbe87964560bed296e08d2808bba7877c7e2dcae7dc66048f268da914`.
+Gzip uses actual `Bun.gzipSync` with an asserted decompression round trip.
+No runtime dependency or styling engine was added. Final tarballs are
+**46,455 bytes** (`@cinder/tokens`) and **94,530 bytes** (`@cinder/react`). The token
+archive is unchanged; the final React archive differs from standalone installed
+acceptance only in its updated README, with identical emitted package payloads.
+Both final archives were exercised by the aggregate and exact README proof.
+
+Choice/toggle and overlay/task compositions, later catalog families, the
+documentation website, and Figma remain outside this batch. Manual assistive
+technology, Firefox/WebKit, physical touch, real IME/autofill/translation,
+representative users, broad text resizing/zoom, and comprehensive SSR/hydration
+remain unperformed. These scoped results do not complete the full phase or certify
+accessibility conformance.
+
 ## Frame actions — Phase 2 first batch
 
 This batch covers the private Storybook workspace, Button, and Link. Its scope is
 documented in [coverage](coverage.md#frame-actions--phase-2-first-batch) and the
 [public action contract](../packages/react/README.md#button-and-link).
-Acceptance passed on **7 November 2026** at the scope below. The full fourteen-entry
-Frame slice remains in progress; shared field anatomy and form recovery come next.
+Acceptance passed on **7 November 2026** at the scope below. At that first-batch
+closeout, shared field anatomy and form recovery were next; their later bounded
+acceptance is recorded above. The full fourteen-entry Frame slice remains in progress.
 
 The component examples use four core Button choices and the three existing
 compatibility values. RTL examples use Persian (`fa-IR`) and Arabic (`ar`) through

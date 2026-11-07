@@ -178,10 +178,19 @@ Field root — value, name, validation and disabled/read-only ownership
   Error — associated recovery text, when invalid
 ```
 
-Keep the default reading and DOM order coherent. The existing prototype visually
-moves the description above the input with CSS grid; extraction should establish
-that order in the reusable composition as well. Keep RAC `Label`, description and
-error slots, IDs, native controls, and ref connections intact.
+The reusable Frame defaults establish this reading and DOM order through shared
+`FieldLayout`; guidance stays visible when errors appear. The six Carbon/Relay
+themes retain label → control → help/error and their error-replaces-description
+behavior. Replacement children retain their authored order. Keep RAC `Label`,
+description and error slots, IDs, native controls, and ref connections intact.
+
+Callable conveniences remain supported. Twelve additive field namespaces expose
+`.Root`, `.Label`, `.Description`, `.Help`, `.ErrorMessage`, and their family-specific
+parts with RAC/native props and actual refs. `.Root` inserts no convenience anatomy;
+RAC owns relationships, validation, values, events, and state. The
+[package contract](../packages/react/README.md#additive-compound-namespaces) lists
+every part and target. Grouped, collection, and date namespaces establish shared
+API compatibility only; they do not complete those families' later Frame reviews.
 
 | Part                | Rule                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -208,10 +217,13 @@ error band is established as Frame's current field treatment.
   is corrected according to that form's policy.
 - Keep instructions visible alongside errors. Use separate description and error
   relationships; do not replace one ID with another merely to match the layout.
-- Reserve expected recovery space in stable form layouts. The prototype's required
-  settings fields reserve 58px on wider screens and 78px on narrow ones. These are
-  measured recipe budgets, not universal fixed heights or a promise of zero motion
-  for arbitrarily long translations. Extra text must grow rather than clip.
+- Reserve expected recovery space in stable form layouts. Bounded Frame controls
+  reserve one padded recovery line. The Form recipe increases required-field
+  minimums to 58px in wider containers and 78px at or below 24rem; its 24px side
+  padding places the tested viewport boundary at 432/433px. These are recipe
+  budgets, not fixed heights or a promise of zero motion for arbitrary recovery
+  text. Extra text must grow rather than clip; optional notes retain their values
+  and do not acquire unrelated errors.
 - Keep validation errors local. Put service/save errors above or beside the commit
   actions with a retry path. Preserve the draft; say whether anything was saved.
 - Map server field errors through Form's existing validation contract. The server
@@ -219,10 +231,13 @@ error band is established as Frame's current field treatment.
 - Use a status announcement for save progress/completion and an appropriate alert
   for a consequential failure. Avoid announcing the same message through several
   live regions and focus changes at once.
-- Pending submission should use Button's focus-retaining pending behavior with a
-  localized `pendingLabel`. The current prototype also disables its Save button
-  and fields; the package example must verify focus explicitly rather than copy
-  that combination as the desired contract.
+- Pending submission uses Button's focus-retaining pending behavior with a
+  localized `pendingLabel`. Form recipes keep fields read-only, not disabled, so
+  their values remain selectable, copyable, and included in native FormData. RAC
+  changes pending Save from native `submit` to `button`; the application also
+  guards in-flight submission. `onSubmit` preserves the draft and takes a fresh
+  FormData snapshot; service failure and retry stay application-owned. The
+  historical prototype's disabled Save/field combination is not this contract.
 
 Use a checkbox for a preference committed by Save. A switch normally applies its
 change immediately. The prototype's summary switch currently changes a draft and

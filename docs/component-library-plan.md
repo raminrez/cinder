@@ -1,7 +1,7 @@
 # Cinder component-library implementation plan
 
 **7 November 2026 · approved code-first sequence.** Frame foundations and Phase 2's
-first Storybook/actions batch are complete at their recorded verification scope.
+Storybook/actions and field/form batches are complete at their recorded verification scope.
 Complete the remaining components and their **Storybook** stories, extend them
 through the catalog, then develop the **documentation website**. **Figma is the
 final step**, derived from the implemented library and documentation.
@@ -10,7 +10,9 @@ Visual authority: [DESIGN.md](../DESIGN.md). Behavior, inclusion, and customizat
 requirements: [design-system.md](design-system.md). Current package scope:
 [coverage.md](coverage.md). [Phase 1 evidence](verification.md#frame-phase-1) records
 the completed foundation scope; [first-batch evidence](verification.md#frame-actions--phase-2-first-batch)
-records Storybook, Button, and Link. The phases below complete the component library.
+records Storybook, Button, and Link; [second-batch evidence](verification.md#frame-fields--phase-2-second-batch)
+records shared field composition and bounded field/form recovery. The phases below
+complete the component library.
 
 ## Outcome and sequence
 
@@ -19,8 +21,9 @@ themes, dependable defaults, documented root/part/state styling, coherent locale
 and portal behavior, working examples, and evidence from installed packages.
 
 **Current state:** Phases 0 and 1 are complete. Phase 2's Storybook/actions first
-batch passed acceptance; shared field anatomy and form recovery are next. The full
-fourteen-entry phase remains in progress. Delivery order:
+batch and bounded field/form second batch passed acceptance. Choice/toggle and
+overlay/task compositions remain next; they were not advanced in this batch. The
+full fourteen-entry phase remains in progress. Delivery order:
 **components + Storybook (2–5) → documentation website and release proof (6) →
 Figma (7)**. Component README/API contracts and evidence accompany each batch.
 
@@ -199,6 +202,33 @@ states in item 1 below. This batch is done when their stories typecheck and buil
 keyboard/pointer/focus and pending behavior have focused evidence, and the public
 API contracts agree. Then move directly to shared field anatomy and form recovery.
 The full phase still requires all fourteen entries.
+
+### Second batch — Shared fields and form recovery
+
+**Bounded acceptance passed, 7 November 2026.** TextField, TextArea, NumberField,
+SearchField, and Form recipes add **33 stories** to the preserved 21 action stories.
+All **108 story/theme cases** pass in the final **280-test browser suite**. Strict
+types, the complete workspace check, both installed consumers, exact README
+installation, **74 reviewed captures**, and **28 native-input observations** agree;
+see the [second-batch evidence](verification.md#frame-fields--phase-2-second-batch).
+
+Twelve callable field namespaces expose RAC-compatible roots and independently
+composable parts without a Cinder Form engine. Existing convenience calls, raw RAC
+exports, refs, classes, slots, collections, eight themes, and seven Button variants
+remain compatible. Frame defaults now keep label → persistent guidance → control →
+recovery; Carbon/Relay and custom-child contracts retain their prior ownership.
+
+Form examples preserve drafts through native submission, retain focus while pending,
+guard duplicate requests in application code, and demonstrate local failure/retry
+and returned field errors. Their documented 58px/78px recovery minimums stabilize
+the expected copy; longer errors grow rather than clip. Native copying includes
+actual clipboard readback, not fabricated selection or value state.
+
+The shared API reaches CheckboxGroup, RadioGroup, Select, ComboBox, and date/time
+fields, with contract and installed smoke evidence only. It does not complete their
+later-family Frame stories or acceptance. Choice/toggle, settings and nested-overlay
+tasks, required manual assistive-technology/device/IME/zoom work, the documentation
+website, and Figma remain outside this completed batch.
 
 ### Implementation order
 

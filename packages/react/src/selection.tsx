@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from "react";
+import type { ComponentProps, ReactNode, Ref } from "react";
 import {
   Checkbox as RACCheckbox,
   CheckboxGroup as RACCheckboxGroup,
@@ -10,8 +10,6 @@ import {
   ComboBox as RACComboBox,
   ComboBoxValue,
   ListBox,
-  Input,
-  Group,
   Slider as RACSlider,
   SliderOutput,
   SliderTrack,
@@ -27,11 +25,14 @@ import {
   type SelectProps as RACSelectProps,
   type ComboBoxProps as RACComboBoxProps,
   type ListBoxProps,
+  type SelectValueProps,
+  type ComboBoxValueProps,
   type SliderProps as RACSliderProps,
 } from "react-aria-components";
-import { Button } from "./buttons";
-import { Popover } from "./overlays";
-import { FieldLabel, FieldHelp, type FieldContentProps } from "./fields";
+import { Button, type ButtonProps } from "./buttons";
+import { Popover, type PopoverProps } from "./overlays";
+import { FieldLayout, type FieldContentProps } from "./fields";
+import { FieldControl, FieldGroupInput, FieldButton, fieldParts } from "./field-parts";
 import { Icon } from "./icons";
 import { classes, type ControlSize } from "./utils";
 
@@ -57,10 +58,22 @@ export function Checkbox({ children, className, ...props }: CheckboxProps) {
   );
 }
 
-export interface CheckboxGroupProps extends RACCheckboxGroupProps, FieldContentProps {
+export interface CheckboxGroupRootProps extends RACCheckboxGroupProps {
   ref?: Ref<HTMLDivElement>;
 }
-export function CheckboxGroup({
+
+function CheckboxGroupRoot({ className, ...props }: CheckboxGroupRootProps) {
+  return (
+    <RACCheckboxGroup
+      {...props}
+      className={classes("cinder-field cinder-checkbox-group", className)}
+    />
+  );
+}
+
+export interface CheckboxGroupProps extends CheckboxGroupRootProps, FieldContentProps {}
+
+function CheckboxGroupDefault({
   label,
   description,
   errorMessage,
@@ -69,25 +82,41 @@ export function CheckboxGroup({
   ...props
 }: CheckboxGroupProps) {
   return (
-    <RACCheckboxGroup
-      {...props}
-      className={classes("cinder-field cinder-checkbox-group", className)}
-    >
+    <CheckboxGroupRoot {...props} className={className}>
       {composeRenderProps(children, (content) => (
-        <>
-          <FieldLabel label={label} />
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
           {content}
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+        </FieldLayout>
       ))}
-    </RACCheckboxGroup>
+    </CheckboxGroupRoot>
   );
 }
 
-export interface RadioGroupProps extends RACRadioGroupProps, FieldContentProps {
+export const CheckboxGroup = Object.assign(CheckboxGroupDefault, {
+  Root: CheckboxGroupRoot,
+  ...fieldParts,
+  Checkbox,
+});
+
+export interface RadioGroupRootProps extends RACRadioGroupProps {
   ref?: Ref<HTMLDivElement>;
 }
-export function RadioGroup({
+
+function RadioGroupRoot({ className, ...props }: RadioGroupRootProps) {
+  return (
+    <RACRadioGroup {...props} className={classes("cinder-field cinder-radio-group", className)} />
+  );
+}
+
+function RadioOptions({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div {...props} className={["cinder-radio-options", className].filter(Boolean).join(" ")} />
+  );
+}
+
+export interface RadioGroupProps extends RadioGroupRootProps, FieldContentProps {}
+
+function RadioGroupDefault({
   label,
   description,
   errorMessage,
@@ -96,15 +125,13 @@ export function RadioGroup({
   ...props
 }: RadioGroupProps) {
   return (
-    <RACRadioGroup {...props} className={classes("cinder-field cinder-radio-group", className)}>
+    <RadioGroupRoot {...props} className={className}>
       {composeRenderProps(children, (content) => (
-        <>
-          <FieldLabel label={label} />
-          <div className="cinder-radio-options">{content}</div>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <RadioOptions>{content}</RadioOptions>
+        </FieldLayout>
       ))}
-    </RACRadioGroup>
+    </RadioGroupRoot>
   );
 }
 export interface RadioProps extends RACRadioProps {
@@ -122,6 +149,13 @@ export function Radio({ className, children, ...props }: RadioProps) {
     </RACRadio>
   );
 }
+
+export const RadioGroup = Object.assign(RadioGroupDefault, {
+  Root: RadioGroupRoot,
+  ...fieldParts,
+  Radio,
+  Options: RadioOptions,
+});
 
 export interface SwitchProps extends RACSwitchProps {
   size?: "sm" | "md";
@@ -143,16 +177,76 @@ export function Switch({ className, children, size = "md", ...props }: SwitchPro
 }
 
 type SelectionMode = "single" | "multiple";
-export interface SelectProps<T extends object, M extends SelectionMode = "single">
-  extends Omit<RACSelectProps<T, M>, "children">, FieldContentProps {
-  items?: Iterable<T>;
-  children: ListBoxProps<T>["children"];
+
+export interface SelectRootProps<T = {}, M extends SelectionMode = "single"> extends RACSelectProps<
+  T,
+  M
+> {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
 
+function SelectRoot<T, M extends SelectionMode = "single">({
+  size = "md",
+  className,
+  ...props
+}: SelectRootProps<T, M>) {
+  return (
+    <RACSelect<T, M>
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-select", className)}
+    />
+  );
+}
+
+function SelectTrigger({ className, size = "md", ...props }: ButtonProps) {
+  return (
+    <Button
+      variant="ghost"
+      {...props}
+      size={size}
+      className={classes("cinder-field__control cinder-select-trigger", className)}
+    />
+  );
+}
+
+function SelectValuePart<T>({
+  className,
+  ...props
+}: SelectValueProps<T> & { ref?: Ref<HTMLSpanElement> }) {
+  return (
+    <SelectValue<T>
+      {...props}
+      className={classes("cinder-select__value react-aria-SelectValue", className)}
+    />
+  );
+}
+
+function SelectPopover({ className, ...props }: PopoverProps) {
+  return <Popover offset={0} {...props} className={classes("cinder-select-popover", className)} />;
+}
+
+function SelectListBox<T>({
+  className,
+  ...props
+}: ListBoxProps<T> & { ref?: Ref<HTMLDivElement> }) {
+  return (
+    <ListBox<T>
+      {...props}
+      className={classes("cinder-select__listbox react-aria-ListBox", className)}
+    />
+  );
+}
+
+export interface SelectProps<T extends object, M extends SelectionMode = "single">
+  extends Omit<SelectRootProps<T, M>, "children">, FieldContentProps {
+  items?: Iterable<T>;
+  children: ListBoxProps<T>["children"];
+}
+
 /** Carbon's dropdown and multi-select share RAC's Select model. */
-export function Select<T extends object, M extends SelectionMode = "single">({
+function SelectDefault<T extends object, M extends SelectionMode = "single">({
   label,
   description,
   errorMessage,
@@ -163,35 +257,70 @@ export function Select<T extends object, M extends SelectionMode = "single">({
   ...props
 }: SelectProps<T, M>) {
   return (
-    <RACSelect<T, M>
+    <SelectRoot<T, M> {...props} size={size} className={className}>
+      <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <SelectTrigger size={size}>
+          <SelectValuePart />
+          <Icon name="chevronDown" />
+        </SelectTrigger>
+      </FieldLayout>
+      <SelectPopover>
+        <SelectListBox items={items}>{children}</SelectListBox>
+      </SelectPopover>
+    </SelectRoot>
+  );
+}
+
+export const Select = Object.assign(SelectDefault, {
+  Root: SelectRoot,
+  ...fieldParts,
+  Trigger: SelectTrigger,
+  Value: SelectValuePart,
+  Popover: SelectPopover,
+  ListBox: SelectListBox,
+});
+
+export interface ComboBoxRootProps<T, M extends SelectionMode = "single"> extends RACComboBoxProps<
+  T,
+  M
+> {
+  size?: ControlSize;
+  ref?: Ref<HTMLDivElement>;
+}
+
+function ComboBoxRoot<T, M extends SelectionMode = "single">({
+  size = "md",
+  className,
+  ...props
+}: ComboBoxRootProps<T, M>) {
+  return (
+    <RACComboBox<T, M>
       {...props}
       data-size={size}
-      className={classes("cinder-field cinder-select", className)}
-    >
-      <FieldLabel label={label} />
-      <Button className="cinder-field__control cinder-select-trigger" variant="ghost" size={size}>
-        <SelectValue className="cinder-select__value react-aria-SelectValue" />
-        <Icon name="chevronDown" />
-      </Button>
-      <FieldHelp description={description} errorMessage={errorMessage} />
-      <Popover className="cinder-select-popover" offset={0}>
-        <ListBox className="cinder-select__listbox react-aria-ListBox" items={items}>
-          {children}
-        </ListBox>
-      </Popover>
-    </RACSelect>
+      className={classes("cinder-field cinder-combobox", className)}
+    />
+  );
+}
+
+function ComboBoxValuePart<T>({
+  className,
+  ...props
+}: ComboBoxValueProps<T> & { ref?: Ref<HTMLDivElement> }) {
+  return (
+    <ComboBoxValue<T>
+      {...props}
+      className={classes("cinder-combobox-values react-aria-ComboBoxValue", className)}
+    />
   );
 }
 
 export interface ComboBoxProps<T extends object, M extends SelectionMode = "single">
-  extends Omit<RACComboBoxProps<T, M>, "children">, FieldContentProps {
+  extends Omit<ComboBoxRootProps<T, M>, "children">, FieldContentProps {
   children: ListBoxProps<T>["children"];
-  size?: ControlSize;
   placeholder?: string;
-  ref?: Ref<HTMLDivElement>;
 }
 
-export function ComboBox<T extends object, M extends SelectionMode = "single">({
+function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
   label,
   description,
   errorMessage,
@@ -202,26 +331,33 @@ export function ComboBox<T extends object, M extends SelectionMode = "single">({
   ...props
 }: ComboBoxProps<T, M>) {
   return (
-    <RACComboBox<T, M>
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-combobox", className)}
-    >
-      <FieldLabel label={label} />
-      <Group className="cinder-field__control cinder-input-group">
-        <Input placeholder={placeholder} />
-        <Button variant="ghost" size={size} iconOnly>
-          <Icon name="chevronDown" />
-        </Button>
-      </Group>
-      {props.selectionMode === "multiple" && <ComboBoxValue className="cinder-combobox-values" />}
-      <FieldHelp description={description} errorMessage={errorMessage} />
-      <Popover className="cinder-select-popover" offset={0}>
-        <ListBox>{children}</ListBox>
-      </Popover>
-    </RACComboBox>
+    <ComboBoxRoot<T, M> {...props} size={size} className={className}>
+      <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldControl>
+          <FieldGroupInput placeholder={placeholder} />
+          <FieldButton size={size}>
+            <Icon name="chevronDown" />
+          </FieldButton>
+        </FieldControl>
+        {props.selectionMode === "multiple" && <ComboBoxValuePart />}
+      </FieldLayout>
+      <SelectPopover>
+        <SelectListBox>{children}</SelectListBox>
+      </SelectPopover>
+    </ComboBoxRoot>
   );
 }
+
+export const ComboBox = Object.assign(ComboBoxDefault, {
+  Root: ComboBoxRoot,
+  ...fieldParts,
+  Input: FieldGroupInput,
+  Control: FieldControl,
+  Trigger: FieldButton,
+  Value: ComboBoxValuePart,
+  Popover: SelectPopover,
+  ListBox: SelectListBox,
+});
 
 export interface SliderProps<T extends number | number[] = number> extends RACSliderProps<T> {
   label?: ReactNode;

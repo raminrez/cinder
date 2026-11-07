@@ -37,11 +37,46 @@ The standard toolbar selects `frame-light` or `frame-dark` through `globals.them
 The Accessibility panel reports axe results, including incomplete checks for
 manual review; static builds alone do not execute interaction/accessibility tests.
 
-The first batch contains 12 Button and 9 Link stories. Button presents four core
-choices, with existing additional values in the compatibility story. Both families
-include Persian and Arabic examples through real `Theme locale` scopes. Run
-`bun test --timeout 60000 tests/browser/storybook.test.ts` after the static build
-to execute every story in both themes and require successful play and a11y reporting.
+The first action batch contains 12 Button and 9 Link stories. Button recommends
+four core choices (`primary`, `secondary`, `ghost`, `danger`); all seven variants
+remain supported, with `tertiary`, `danger-tertiary`, and `danger-ghost` in the
+compatibility story. Both families include Persian and Arabic examples through
+real `Theme locale` scopes. Existing action evidence remains in the
+[verification record](../../docs/verification.md), separate from this batch's
+authored field/form coverage.
+
+## Field/form batch
+
+| Story file                                                   | Authored coverage                                                                                                                                                                                                   |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`TextField.stories.tsx`](stories/TextField.stories.tsx)     | Convenience and compound composition, native refs/events/render callbacks, controlled/default values, sizes, read-only copying, validation, long content, and real locale scopes                                    |
+| [`TextArea.stories.tsx`](stories/TextArea.stories.tsx)       | Native multiline editing and rows, textarea refs, controlled/default values, read-only copying, rich recovery, long content, and locale scopes                                                                      |
+| [`SearchField.stories.tsx`](stories/SearchField.stories.tsx) | Grouped Input/ClearButton anatomy, query submission, clear/Escape focus, native FormData, sizes, values, recovery, and locale scopes                                                                                |
+| [`NumberField.stories.tsx`](stories/NumberField.stories.tsx) | Grouped Input/Button anatomy, decrement/increment slots, bounds and steps, committed values, localized formatting, raw numeric FormData, sizes, and recovery                                                        |
+| [`Form.stories.tsx`](stories/Form.stories.tsx)               | Native first-invalid focus, persistent guidance, application-owned pending/failure/retry, duplicate-submission protection, returned `validationErrors`, long recovery, and localized required/pending/error wording |
+
+The callable field APIs remain shorthand over additive compound parts. `.Root`
+retains RAC's original props and whole-tree children, including state render
+functions; the [package guide](../../packages/react/README.md#additive-compound-namespaces)
+maps the exported parts, native/RAC refs, and slots. Native Input slots remain
+string-only; roots accept `null`. Existing raw replacement children and SearchField
+`inputProps.className` complete overrides remain supported. Convenience Select and
+ComboBox children still supply options; their `.Root`s own the whole RAC tree.
+
+Frame defaults follow label → persistent guidance → control → recovery. The
+library reserves a bounded one-line recovery minimum; `forms.css` applies **58px**
+required-field Help minimums and **78px** at or below a `24rem` container, at a 16px
+root. Long messages grow beyond those minimums instead of clipping; optional fields
+are not given blanket invalid styling. The six Carbon/Relay theme defaults remain
+unchanged. Grouped, collection, and date compounds were added for shared anatomy
+and API compatibility, not completed later-family Frame review. Form and raw RAC
+exports keep upstream validation ownership.
+
+Run `bun test --timeout 60000 tests/browser/storybook.test.ts` after the static build
+to execute the indexed stories in both Frame themes and require successful play
+and a11y reporting. This README lists authored coverage, not new acceptance counts
+or passing results; rendered, package, browser, and manual evidence is recorded
+separately in the verification record.
 
 Development dependencies are pinned to Storybook/React-Vite/a11y **10.6.6** and
 Vite **8.3.6**, checked against the npm registry and the

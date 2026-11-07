@@ -18,7 +18,7 @@ const tailwindDirectory = await mkdtemp(
 );
 const tailwindVersion = "4.3.5";
 const consumers = [
-  { name: "native", directory, entrypoints: ["index.html", "frame.html"] },
+  { name: "native", directory, entrypoints: ["index.html", "frame.html", "composition.html"] },
   { name: "tailwind", directory: tailwindDirectory, entrypoints: ["tailwind.html"] },
 ] as const;
 const results = join(root, "test-results");
@@ -30,6 +30,405 @@ let passed = false;
 async function run(cwd: string, ...command: string[]) {
   const child = Bun.spawn(command, { cwd, stdout: "inherit", stderr: "inherit" });
   assert.equal(await child.exited, 0, `Consumer command failed: ${command.join(" ")}`);
+}
+
+async function verifyCompositionConsumer(page: Page, baseURL: URL) {
+  for (const [theme, background, surface] of [
+    ["frame-light", "rgb(245, 246, 248)", "rgb(255, 255, 255)"],
+    ["frame-dark", "rgb(24, 25, 29)", "rgb(34, 36, 42)"],
+  ] as const) {
+    const url = new URL("composition.html", baseURL);
+    url.searchParams.set("theme", theme);
+    await page.goto(url.href);
+    const themeRoot = page.locator(".cinder-theme").first();
+    await expect(themeRoot).toHaveAttribute("data-cinder-theme", theme);
+    await expect(themeRoot).toHaveAttribute("data-cinder-layer", "0");
+    await expect(themeRoot).toHaveCSS("background-color", background);
+    async function expectPortal(portal: Locator) {
+      await expect(portal).toHaveAttribute("data-cinder-theme", theme);
+      await expect(portal).toHaveAttribute("data-cinder-layer", "0");
+      await expect(portal).toHaveAttribute("lang", "en-US");
+      await expect(portal).toHaveAttribute("dir", "ltr");
+      await expect(portal).toHaveCSS("background-color", surface);
+      await expect(portal).toHaveCSS("font-family", /system-ui/);
+    }
+    const form = page.locator("form").first();
+    const text = form.locator(".cinder-text-field").first();
+    const area = form.locator(".cinder-text-area");
+    const number = form.locator(".cinder-number-field");
+    const search = form.locator(".cinder-search-field");
+    const checkbox = form.locator(".cinder-checkbox-group");
+    const radio = form.locator(".cinder-radio-group");
+    const select = form.locator(".cinder-select").first();
+    const combo = form.locator(".cinder-combobox").first();
+    const date = form.locator(".cinder-date-field").first();
+    const time = form.locator(".cinder-date-field").nth(1);
+    const picker = form.locator(".cinder-date-picker");
+    const range = form.locator(".cinder-date-range-picker");
+    for (const [name, field, leaf, count] of [
+      ["TextField", text, "input.cinder-field__control.react-aria-Input", 1],
+      ["TextArea", area, "textarea.cinder-field__control.react-aria-TextArea", 1],
+      ["NumberField", number, ".cinder-field__control.cinder-input-group", 1],
+      ["SearchField", search, ".cinder-field__control.cinder-input-group", 1],
+      ["CheckboxGroup", checkbox, ".cinder-checkbox", 2],
+      ["RadioGroup", radio, ".cinder-radio-options .cinder-radio", 2],
+      ["Select", select, ".cinder-field__control.cinder-select-trigger", 1],
+      ["ComboBox", combo, ".cinder-field__control.cinder-input-group", 1],
+      ["DateField", date, ".cinder-field__control.react-aria-DateInput", 1],
+      ["TimeField", time, ".cinder-field__control.react-aria-DateInput", 1],
+      ["DatePicker", picker, ".cinder-field__control.cinder-input-group", 1],
+      ["DateRangePicker", range, ".cinder-field__control.cinder-input-group", 1],
+    ] as const) {
+      await expect(field, `${name}.Root`).toBeVisible();
+      await expect(field.locator(".cinder-field__label.react-aria-Label")).toHaveCount(1);
+      await expect(field.locator(".cinder-field__description.react-aria-Text")).toHaveCount(1);
+      await expect(field.locator(".cinder-field__help.cinder-field-help")).toHaveCount(1);
+      await expect(field.locator(leaf)).toHaveCount(count);
+    }
+    const nativeInput = page.getByRole("status", { name: "Consumer native input", exact: true });
+    const saved = page.getByRole("status", { name: "Consumer FormData", exact: true });
+    const workspace = text.getByRole("textbox", { name: "Workspace (required)", exact: true });
+    const description = text.locator(".cinder-field__description");
+    const descriptionId = await description.getAttribute("id");
+    await expect(workspace).toHaveValue("Workspace");
+    await expect(workspace).toHaveAttribute("slot", "consumer-input");
+    await expect(workspace).toHaveAttribute("placeholder", "Workspace name");
+    await expect(workspace).toHaveAttribute("spellcheck", "false");
+    await expect(text).not.toHaveAttribute("placeholder");
+    await expect(text.locator(".cinder-field__label")).toHaveAttribute(
+      "for",
+      (await workspace.getAttribute("id"))!,
+    );
+    await workspace.focus();
+    await expect(workspace).toHaveAttribute("data-consumer-focus", "focused");
+    await expect(workspace).toHaveClass(/consumer-focused/);
+    await expect(workspace).toHaveCSS("padding-inline-start", "20px");
+    await workspace.fill("ab");
+    await expect(nativeInput).toHaveText("ab");
+    await expect(text).toHaveClass(/consumer-invalid/);
+    await expect(text).toHaveAttribute("data-consumer-validation", "invalid");
+    await expect(text).toHaveCSS("max-width", "320px");
+    await expect(text.locator("output")).toHaveText("Needs attention");
+    const textError = text.locator(".cinder-field__error.react-aria-FieldError");
+    await expect(textError).toHaveCount(1);
+    await expect(textError).toHaveClass(/consumer-error/);
+    await expect(textError).toHaveCSS("letter-spacing", "0.5px");
+    assert.ok(
+      (await workspace.getAttribute("aria-describedby"))!
+        .split(" ")
+        .includes((await textError.getAttribute("id"))!),
+    );
+    const inspectRefs = page.getByRole("button", {
+      name: "Inspect consumer refs",
+      exact: true,
+      includeHidden: true,
+    });
+    const refTargets = page.getByRole("status", {
+      name: "Consumer ref targets",
+      exact: true,
+      includeHidden: true,
+    });
+    const expectedRefs = {
+      root: "DIV",
+      input: "INPUT",
+      label: "LABEL",
+      description: "P",
+      help: "DIV",
+      error: "DIV",
+      area: "TEXTAREA",
+      numberControl: "DIV",
+      numberButton: "BUTTON",
+      checkboxLabel: "LABEL",
+      checkboxInput: "INPUT",
+      radioLabel: "LABEL",
+      radioInput: "INPUT",
+      radioOptions: "DIV",
+      selectTrigger: "BUTTON",
+      selectValue: "SPAN",
+      selectList: null,
+      selectPopover: null,
+      comboInput: "INPUT",
+      comboControl: "DIV",
+      comboValue: "DIV",
+      dateRoot: "DIV",
+      dateInput: "DIV",
+      dateSegment: "SPAN",
+      pickerInput: "DIV",
+      pickerTrigger: "BUTTON",
+      rangeStart: "DIV",
+      rangeEnd: "DIV",
+      rootContainsInput: true,
+      helpContainsDescription: true,
+      helpContainsError: true,
+      controlContainsButton: true,
+      checkboxLabelContainsInput: true,
+      radioLabelContainsInput: true,
+      radioOptionsContainsLabel: true,
+      selectTriggerContainsValue: true,
+      selectPopoverContainsList: false,
+      comboControlContainsInput: true,
+      dateRootContainsInput: true,
+      dateInputContainsSegment: true,
+    };
+    await inspectRefs.click();
+    await expect(refTargets).not.toHaveText("");
+    assert.deepEqual(JSON.parse((await refTargets.textContent())!), expectedRefs);
+    await workspace.fill("Design studio");
+    await expect(workspace).toHaveValue("Design studio");
+    await expect(nativeInput).toHaveText("Design studio");
+    await expect(text).toHaveAttribute("data-consumer-validation", "valid");
+    await expect(text).toHaveCSS("max-width", "336px");
+    await expect(text.locator("output")).toHaveText("Ready");
+    await expect(textError).toHaveCount(0);
+    await expect(workspace).toHaveAccessibleDescription("This name appears in invitations.");
+    await expect(description).toHaveAttribute("id", descriptionId!);
+
+    const independent = form.getByRole("textbox", { name: "Independent root", exact: true });
+    const independentRoot = form.locator(".cinder-text-field").nth(1);
+    await expect(independentRoot).not.toHaveAttribute("slot");
+    await expect(independent).toBeEnabled();
+    await expect(independent).toHaveAttribute("slot", "native-input");
+    await expect(independent).toHaveValue("Independent value");
+    await independent.fill("Local edit");
+    await expect(independent).toHaveValue("Local edit");
+    await expect(independentRoot.locator(".cinder-field__control")).toHaveCount(1);
+    await expect(independentRoot.locator(".cinder-input-group")).toHaveClass(/consumer-focus/);
+    await expect(workspace).toHaveValue("Design studio");
+    const notes = area.getByRole("textbox", { name: "0", exact: true });
+    await expect(notes).toHaveValue("Initial note");
+    await expect(notes).toHaveAttribute("slot", "native-area");
+    await expect(notes).toHaveAttribute("rows", "3");
+    await expect(notes).toHaveAccessibleDescription("0");
+    await expect(area.locator(".cinder-field__help")).toHaveText("0");
+    await notes.fill("First line\nSecond line");
+    await expect(notes).toHaveClass(/consumer-focused/);
+    await expect(notes).toHaveCSS("min-height", "96px");
+    await expect(nativeInput).toHaveText("First line\nSecond line");
+    const amount = number.getByRole("textbox", { name: "Amount", exact: true });
+    await expect(amount).toHaveValue("$1.50");
+    await expect(number.getByRole("button", { name: "Increase amount" })).toHaveAttribute(
+      "slot",
+      "increment",
+    );
+    await expect(number.getByRole("button", { name: "Decrease amount" })).toHaveAttribute(
+      "slot",
+      "decrement",
+    );
+    await number.getByRole("button", { name: "Increase amount" }).click();
+    await expect(amount).toHaveValue("$2.00");
+    const query = search.getByRole("searchbox", { name: "Search", exact: true });
+    const clear = search.getByRole("button", { name: "Clear search", exact: true });
+    await query.fill("First query");
+    await expect(search.locator("output")).toHaveText("First query");
+    await clear.click();
+    await expect(query).toHaveValue("");
+    await expect(query).toBeFocused();
+    await expect(search.locator("output")).toHaveText("No query");
+    await query.fill("Second query");
+    await query.press("Escape");
+    await expect(query).toHaveValue("");
+    await expect(query).toBeFocused();
+    await expect(nativeInput).toHaveText("cleared");
+
+    const submit = form.getByRole("button", { name: "Save composed values", exact: true });
+    const required = form.getByRole("textbox", { name: "Native required text", exact: true });
+    const requiredRoot = form
+      .locator(".cinder-text-field")
+      .filter({ hasText: "Native required text" });
+    const requiredDescription = requiredRoot.locator(".cinder-field__description");
+    const requiredDescriptionId = await requiredDescription.getAttribute("id");
+    const requiredGuidance = "Required text guidance stays visible.";
+    await expect(requiredDescription).toHaveText(requiredGuidance);
+    await expect(required).toHaveValue("");
+    await expect(required).toHaveAttribute("required");
+    await expect(required).toHaveAccessibleDescription(requiredGuidance);
+    const email = checkbox.getByRole("checkbox", { name: "Email", exact: true });
+    const checkboxDescription = checkbox.locator(".cinder-field__description");
+    const checkboxDescriptionId = await checkboxDescription.getAttribute("id");
+    await submit.click();
+    await expect(saved).toHaveText("");
+    await expect(required).toBeFocused();
+    await expect(required).toHaveAttribute("aria-invalid", "true");
+    const requiredError = requiredRoot.locator(".cinder-field__error.react-aria-FieldError");
+    await expect(requiredError).toHaveText("Enter the required text.");
+    await expect(required).toHaveAccessibleDescription(
+      `${requiredGuidance} Enter the required text.`,
+    );
+    const requiredAssociation = (await required.getAttribute("aria-describedby"))!.split(" ");
+    for (const id of [requiredDescriptionId, await requiredError.getAttribute("id")]) {
+      assert.ok(id);
+      assert.ok(requiredAssociation.includes(id));
+    }
+    await expect(checkbox).toHaveAttribute("data-invalid");
+    await expect(email).toHaveAttribute("aria-invalid", "true");
+    await expect(checkbox.locator("output")).toHaveText("Choose a channel");
+    const checkboxError = checkbox.locator(".cinder-field__error.react-aria-FieldError");
+    await expect(checkboxError).toBeVisible();
+    const associated = (await checkbox.getAttribute("aria-describedby"))!.split(" ");
+    for (const id of [checkboxDescriptionId, await checkboxError.getAttribute("id")]) {
+      assert.ok(id);
+      assert.ok(associated.includes(id));
+    }
+    await required.fill("Entered native text");
+    await submit.click();
+    await expect(saved).toHaveText("");
+    await expect(email).toBeFocused();
+    await expect(requiredError).toHaveCount(0);
+    await expect(required).not.toHaveAttribute("aria-invalid", "true");
+    await expect(required).toHaveAccessibleDescription(requiredGuidance);
+    await expect(requiredDescription).toHaveAttribute("id", requiredDescriptionId!);
+    await email.press("Space");
+    await expect(
+      checkbox.getByRole("checkbox", { name: "Email enabled", exact: true }),
+    ).toBeChecked();
+    await expect(checkbox.locator(".cinder-checkbox").first()).toHaveClass(/consumer-selected/);
+    await radio.getByRole("radio", { name: "Immediate selected", exact: true }).press("ArrowRight");
+    await expect(radio.getByRole("radio", { name: "Quiet", exact: true })).toBeChecked();
+
+    // Collections and dates get installed API smoke, not later-family interaction completeness.
+    const trigger = select.getByRole("button");
+    await expect(trigger.locator('[title="Can view records"]')).toHaveText("Reader");
+    await trigger.click();
+    await expectPortal(page.locator(".cinder-select-popover"));
+    const list = page.getByRole("listbox", { name: "Single role", exact: true });
+    await expect(list).toHaveClass(/cinder-select__listbox.*consumer-listbox/);
+    await expect(list.getByRole("option", { name: /^Reader/ })).toHaveAccessibleDescription(
+      "Can view records",
+    );
+    await expect(list.getByRole("option", { name: /^Writer/ })).toBeDisabled();
+    await expect(select.locator("output")).toHaveText("Open");
+    // Read live popup refs without moving focus out of the modal Select.
+    await inspectRefs.evaluate((element: HTMLButtonElement) => element.click());
+    await expect
+      .poll(async () => JSON.parse((await refTargets.textContent())!))
+      .toEqual({
+        ...expectedRefs,
+        error: null,
+        helpContainsError: false,
+        selectList: "DIV",
+        selectPopover: "DIV",
+        selectPopoverContainsList: true,
+      });
+    await page.keyboard.press("Escape");
+    await expect(trigger).toBeFocused();
+    await expect(select.locator("output")).toHaveText("Closed");
+    const comboInput = combo.getByRole("combobox", { name: "Searchable role", exact: true });
+    await expect(comboInput).toHaveValue("Reader");
+    // Scroll before focus; RAC dismisses an open popover when its page scrolls.
+    await comboInput.scrollIntoViewIfNeeded();
+    await expect(comboInput).toBeInViewport({ ratio: 1 });
+    await comboInput.click();
+    await comboInput.fill("Wri");
+    const comboList = page.getByRole("listbox", {
+      name: "Suggestions Searchable role",
+      exact: true,
+    });
+    await expectPortal(page.locator(".cinder-select-popover"));
+    await expect(comboList.getByRole("option")).toHaveCount(1);
+    await expect(comboInput).toHaveAttribute(
+      "aria-controls",
+      (await comboList.getAttribute("id"))!,
+    );
+    await comboInput.press("ArrowDown");
+    await expect(comboInput).toHaveAttribute(
+      "aria-activedescendant",
+      (await comboList.getByRole("option", { name: "Writer", exact: true }).getAttribute("id"))!,
+    );
+    await comboInput.press("Enter");
+    await expect(comboInput).toHaveValue("Writer");
+    assert.equal(
+      await form.evaluate((form: HTMLFormElement) => new FormData(form).get("combo-single")),
+      "2",
+    );
+    await comboInput.fill("");
+    assert.equal(
+      await form.evaluate((form: HTMLFormElement) => new FormData(form).get("combo-single")),
+      "",
+    );
+    await comboInput.fill("Wri");
+    await expect(comboList.getByRole("option", { name: "Writer", exact: true })).toBeVisible();
+    await comboInput.press("ArrowDown");
+    await comboInput.press("Enter");
+    await expect(comboInput).toHaveValue("Writer");
+    await comboInput.press("Escape");
+    const multipleCombo = form.locator(".cinder-combobox").nth(1);
+    await expect(
+      multipleCombo.locator('.cinder-combobox-values [title="Can view records"]'),
+    ).toHaveText("Reader");
+    const day = date.getByRole("spinbutton", { name: /^day,/ });
+    await expect(day.locator("span")).toHaveText("12");
+    await day.press("ArrowUp");
+    await expect(day.locator("span")).toHaveText("13");
+    await expect(date.locator("output")).toHaveText("2026-11-13");
+    await expect(time.getByRole("spinbutton", { name: /^hour,/ }).locator("b")).toHaveText("10");
+    await expect(picker.getByRole("spinbutton", { name: /^day,/ })).toHaveAttribute(
+      "aria-valuenow",
+      "13",
+    );
+    for (const [field, buttonName, dialogName] of [
+      [picker, "Open date calendar Pick a date", "Date calendar"],
+      [range, "Open range calendar Date range", "Range calendar"],
+    ] as const) {
+      const button = field.getByRole("button", { name: buttonName, exact: true });
+      await button.click();
+      const dialog = page.getByRole("dialog", { name: dialogName, exact: true });
+      await expect(dialog).toBeVisible();
+      await expectPortal(page.locator(".cinder-date-popover"));
+      await expect(dialog.locator(".cinder-calendar")).toHaveCount(1);
+      await page.keyboard.press("Escape");
+      await expect(dialog).toBeHidden();
+      await expect(button).toBeFocused();
+    }
+    for (const [slot, value] of [
+      ["start", "12"],
+      ["end", "16"],
+    ] as const)
+      await expect(
+        range
+          .locator(`.react-aria-DateInput[slot="${slot}"]`)
+          .getByRole("spinbutton", { name: /^day,/ }),
+      ).toHaveAttribute("aria-valuenow", value);
+    await submit.click();
+    await expect(saved).not.toHaveText("");
+    assert.deepEqual(Object.fromEntries(JSON.parse((await saved.textContent())!)), {
+      workspace: "Design studio",
+      notes: "First line\nSecond line",
+      amount: "2",
+      search: "",
+      native: "Entered native text",
+      channels: "email",
+      delivery: "quiet",
+      single: "1",
+      multiple: "1",
+      "combo-single": "2",
+      "combo-multiple": "1",
+      date: "2026-11-13",
+      time: "10:30:00",
+      picker: "2026-11-13",
+      start: "2026-11-12",
+      end: "2026-11-16",
+    });
+    await expect(checkboxError).toHaveCount(0);
+    await expect(checkbox).not.toHaveAttribute("data-invalid");
+    await expect(
+      checkbox.getByRole("checkbox", { name: "Email enabled", exact: true }),
+    ).not.toHaveAttribute("aria-invalid", "true");
+    await expect(checkboxDescription).toHaveAttribute("id", checkboxDescriptionId!);
+    await expect(requiredDescription).toHaveAttribute("id", requiredDescriptionId!);
+    const shorthand = page.getByRole("region", {
+      name: "Callable shorthand compatibility",
+      exact: true,
+    });
+    await expect(
+      shorthand.getByRole("searchbox", { name: "Shorthand search", exact: true }),
+    ).toHaveClass("consumer-raw-input");
+    await expect(
+      shorthand.getByRole("searchbox", { name: "Shorthand search", exact: true }),
+    ).toHaveAttribute("placeholder", "Native override");
+    await expect(
+      shorthand.getByRole("textbox", { name: "Raw RAC exports", exact: true }),
+    ).toHaveAccessibleDescription("Raw recovery");
+  }
 }
 
 async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "native" | "tailwind") {
@@ -507,6 +906,36 @@ try {
     dependencies[name] = docs.dependencies[name];
   for (const consumer of consumers) {
     await cp(join(root, "tests/fixtures/consumer"), consumer.directory, { recursive: true });
+    if (
+      consumer.name === "native" &&
+      !(await Bun.file(join(consumer.directory, "composition.html")).exists())
+    ) {
+      await Bun.write(
+        join(consumer.directory, "composition.html"),
+        `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Compound native package consumer</title>
+    <script type="module" src="./composition-native.tsx"></script>
+  </head>
+  <body><div id="root"></div></body>
+</html>\n`,
+      );
+      const entry = join(consumer.directory, "composition-native.tsx");
+      if (!(await Bun.file(entry).exists()))
+        await Bun.write(
+          entry,
+          `import { createRoot } from "react-dom/client";
+import { CompositionConsumer } from "./composition";
+import "@cinder/react/styles.css";
+
+const theme: "frame-light" | "frame-dark" =
+  new URLSearchParams(location.search).get("theme") === "frame-dark" ? "frame-dark" : "frame-light";
+createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={theme} />);\n`,
+        );
+    }
     await Bun.write(
       join(consumer.directory, "package.json"),
       JSON.stringify(
@@ -579,7 +1008,7 @@ try {
         protocolsResolved: true,
       });
     }
-    // skipLibCheck is false: this also resolves the distributed declaration graph.
+    // *.tsx includes compound positive/negative proofs; skipLibCheck=false resolves the declarations.
     await run(consumer.directory, process.execPath, "run", "typecheck");
   }
   for (const name of ["tailwindcss", "@tailwindcss/cli"])
@@ -726,6 +1155,7 @@ try {
   assert.equal(await page.evaluate(() => document.fonts.check('16px "IBM Plex Mono"')), true);
   await page.setViewportSize({ width: 1440, height: 1000 });
   for (const consumer of consumers) await verifyFrameConsumer(page, server.url, consumer.name);
+  await verifyCompositionConsumer(page, server.url);
   assert.deepEqual(failedAssets, []);
   assert.deepEqual(errors, []);
   await Bun.write(
@@ -741,6 +1171,7 @@ try {
           "archive hashes",
           "resolved package protocols",
           "license files",
+          "strict compound positive/negative RAC props, refs, raw exports, and generic declarations",
           "ESM imports",
           "CSS and JSON exports",
           "structured type styles and sparse breakpoint metadata",
@@ -751,6 +1182,11 @@ try {
           "nested Frame/Carbon sizing and font boundaries with document-level legacy overrides",
           "plain CSS and compiled CSS Modules root, part, state, and detached portal overrides",
           "controlled native input and wrapper refs, uncontrolled custom field validation",
+          "installed compound twelve namespace root/part trees and portal appearance in Frame light/dark",
+          "compound actual text root/leaf and representative part/live popup refs, render callbacks, and explicit/null slots",
+          "compound native text/group required focus order, error association, and corrected FormData submission",
+          "compound controlled/uncontrolled text, raw NumberField values, and Search clear/Escape",
+          "compound Select/ComboBox/date API smoke only; not later-family complete",
           "Modal outer/inner class, style, and ref targets",
           "rich Select collection types, descriptions, disabled options, and focus return",
           "live portal theme, locale, and inherited/replaced/cleared appearance",
@@ -768,7 +1204,7 @@ try {
         requestedFontAssets: fonts.length,
         loadedFontFaces: fontFaces,
         integrations: {
-          native: ["index.html", "frame.html"],
+          native: ["index.html", "frame.html", "composition.html"],
           tailwind: { version: tailwindVersion, entrypoint: "tailwind.html" },
         },
       },
@@ -778,7 +1214,7 @@ try {
   );
   passed = true;
   console.log(
-    "External package consumers passed · strict declarations, legacy/Frame, CSS Modules, Tailwind, and browser contracts",
+    "External package consumers passed · strict compound declarations, Frame light/dark refs and field/form journeys, collection/date API smoke, legacy/Frame, CSS Modules, and pinned Tailwind",
   );
 } finally {
   await browser?.close();
@@ -791,7 +1227,7 @@ try {
     console.log(`Installed consumer app retained: ${directory}`);
     console.log(`Tailwind consumer retained: ${tailwindDirectory}`);
     console.log(
-      `Serve built output for review: ${join(directory, "dist")} (index.html, frame.html, tailwind.html)`,
+      `Serve built output for review: ${join(directory, "dist")} (index.html, frame.html, composition.html, tailwind.html)`,
     );
   } else {
     console.error(`Consumer fixtures retained for diagnosis: ${directory}, ${tailwindDirectory}`);

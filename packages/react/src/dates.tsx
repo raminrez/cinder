@@ -12,9 +12,7 @@ import {
   DateRangePicker as RACDateRangePicker,
   DateField as RACDateField,
   TimeField as RACTimeField,
-  DateInput,
   DateSegment,
-  Group,
   type CalendarProps as RACCalendarProps,
   type RangeCalendarProps as RACRangeCalendarProps,
   type DatePickerProps as RACDatePickerProps,
@@ -26,8 +24,15 @@ import {
 } from "react-aria-components";
 import { Button } from "./buttons";
 import { Icon } from "./icons";
-import { Popover, Dialog } from "./overlays";
-import { FieldLabel, FieldHelp, type FieldContentProps } from "./fields";
+import { Popover, Dialog, type PopoverProps } from "./overlays";
+import { FieldLayout, type FieldContentProps } from "./fields";
+import {
+  FieldControl,
+  FieldButton,
+  FieldDateInput,
+  FieldGroupDateInput,
+  fieldParts,
+} from "./field-parts";
 import { classes, type ControlSize } from "./utils";
 
 function CalendarContent() {
@@ -80,12 +85,33 @@ export function RangeCalendar<T extends DateValue>({
   );
 }
 
-export interface DatePickerProps<T extends DateValue>
-  extends RACDatePickerProps<T>, FieldContentProps {
+function DatePopover({ className, ...props }: PopoverProps) {
+  return <Popover {...props} className={classes("cinder-date-popover", className)} />;
+}
+
+export interface DatePickerRootProps<T extends DateValue> extends RACDatePickerProps<T> {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
-export function DatePicker<T extends DateValue>({
+
+function DatePickerRoot<T extends DateValue>({
+  size = "md",
+  className,
+  ...props
+}: DatePickerRootProps<T>) {
+  return (
+    <RACDatePicker<T>
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-date-picker", className)}
+    />
+  );
+}
+
+export interface DatePickerProps<T extends DateValue>
+  extends DatePickerRootProps<T>, FieldContentProps {}
+
+function DatePickerDefault<T extends DateValue>({
   label,
   description,
   errorMessage,
@@ -95,38 +121,64 @@ export function DatePicker<T extends DateValue>({
   ...props
 }: DatePickerProps<T>) {
   return (
-    <RACDatePicker
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-date-picker", className)}
-    >
+    <DatePickerRoot<T> {...props} size={size} className={className}>
       {children ?? (
         <>
-          <FieldLabel label={label} />
-          <Group className="cinder-field__control cinder-input-group">
-            <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
-            <Button variant="ghost" size={size} iconOnly>
-              <Icon name="calendar" />
-            </Button>
-          </Group>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-          <Popover className="cinder-date-popover">
+          <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+            <FieldControl>
+              <FieldGroupDateInput>
+                {(segment) => <DateSegment segment={segment} />}
+              </FieldGroupDateInput>
+              <FieldButton size={size}>
+                <Icon name="calendar" />
+              </FieldButton>
+            </FieldControl>
+          </FieldLayout>
+          <DatePopover>
             <Dialog aria-label="Choose a date">
               <Calendar />
             </Dialog>
-          </Popover>
+          </DatePopover>
         </>
       )}
-    </RACDatePicker>
+    </DatePickerRoot>
+  );
+}
+
+export const DatePicker = Object.assign(DatePickerDefault, {
+  Root: DatePickerRoot,
+  ...fieldParts,
+  Input: FieldGroupDateInput,
+  Segment: DateSegment,
+  Control: FieldControl,
+  Trigger: FieldButton,
+  Popover: DatePopover,
+  Calendar,
+});
+
+export interface DateRangePickerRootProps<T extends DateValue> extends RACDateRangePickerProps<T> {
+  size?: ControlSize;
+  ref?: Ref<HTMLDivElement>;
+}
+
+function DateRangePickerRoot<T extends DateValue>({
+  size = "md",
+  className,
+  ...props
+}: DateRangePickerRootProps<T>) {
+  return (
+    <RACDateRangePicker<T>
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-date-range-picker", className)}
+    />
   );
 }
 
 export interface DateRangePickerProps<T extends DateValue>
-  extends RACDateRangePickerProps<T>, FieldContentProps {
-  size?: ControlSize;
-  ref?: Ref<HTMLDivElement>;
-}
-export function DateRangePicker<T extends DateValue>({
+  extends DateRangePickerRootProps<T>, FieldContentProps {}
+
+function DateRangePickerDefault<T extends DateValue>({
   label,
   description,
   errorMessage,
@@ -136,40 +188,68 @@ export function DateRangePicker<T extends DateValue>({
   ...props
 }: DateRangePickerProps<T>) {
   return (
-    <RACDateRangePicker
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-date-range-picker", className)}
-    >
+    <DateRangePickerRoot<T> {...props} size={size} className={className}>
       {children ?? (
         <>
-          <FieldLabel label={label} />
-          <Group className="cinder-field__control cinder-input-group">
-            <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
-            <span aria-hidden="true">–</span>
-            <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
-            <Button variant="ghost" size={size} iconOnly>
-              <Icon name="calendar" />
-            </Button>
-          </Group>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-          <Popover className="cinder-date-popover">
+          <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+            <FieldControl>
+              <FieldGroupDateInput slot="start">
+                {(segment) => <DateSegment segment={segment} />}
+              </FieldGroupDateInput>
+              <span aria-hidden="true">–</span>
+              <FieldGroupDateInput slot="end">
+                {(segment) => <DateSegment segment={segment} />}
+              </FieldGroupDateInput>
+              <FieldButton size={size}>
+                <Icon name="calendar" />
+              </FieldButton>
+            </FieldControl>
+          </FieldLayout>
+          <DatePopover>
             <Dialog aria-label="Choose a date range">
               <RangeCalendar />
             </Dialog>
-          </Popover>
+          </DatePopover>
         </>
       )}
-    </RACDateRangePicker>
+    </DateRangePickerRoot>
+  );
+}
+
+export const DateRangePicker = Object.assign(DateRangePickerDefault, {
+  Root: DateRangePickerRoot,
+  ...fieldParts,
+  Input: FieldGroupDateInput,
+  Segment: DateSegment,
+  Control: FieldControl,
+  Trigger: FieldButton,
+  Popover: DatePopover,
+  Calendar: RangeCalendar,
+});
+
+export interface DateFieldRootProps<T extends DateValue> extends RACDateFieldProps<T> {
+  size?: ControlSize;
+  ref?: Ref<HTMLDivElement>;
+}
+
+function DateFieldRoot<T extends DateValue>({
+  size = "md",
+  className,
+  ...props
+}: DateFieldRootProps<T>) {
+  return (
+    <RACDateField<T>
+      {...props}
+      data-size={size}
+      className={classes("cinder-field cinder-date-field", className)}
+    />
   );
 }
 
 export interface DateFieldProps<T extends DateValue>
-  extends RACDateFieldProps<T>, FieldContentProps {
-  size?: ControlSize;
-  ref?: Ref<HTMLDivElement>;
-}
-export function DateField<T extends DateValue>({
+  extends DateFieldRootProps<T>, FieldContentProps {}
+
+function DateFieldDefault<T extends DateValue>({
   label,
   description,
   errorMessage,
@@ -179,30 +259,46 @@ export function DateField<T extends DateValue>({
   ...props
 }: DateFieldProps<T>) {
   return (
-    <RACDateField
+    <DateFieldRoot<T> {...props} size={size} className={className}>
+      {children ?? (
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <FieldDateInput>{(segment) => <DateSegment segment={segment} />}</FieldDateInput>
+        </FieldLayout>
+      )}
+    </DateFieldRoot>
+  );
+}
+
+export const DateField = Object.assign(DateFieldDefault, {
+  Root: DateFieldRoot,
+  ...fieldParts,
+  Input: FieldDateInput,
+  Segment: DateSegment,
+});
+
+export interface TimeFieldRootProps<T extends TimeValue> extends RACTimeFieldProps<T> {
+  size?: ControlSize;
+  ref?: Ref<HTMLDivElement>;
+}
+
+function TimeFieldRoot<T extends TimeValue>({
+  size = "md",
+  className,
+  ...props
+}: TimeFieldRootProps<T>) {
+  return (
+    <RACTimeField<T>
       {...props}
       data-size={size}
       className={classes("cinder-field cinder-date-field", className)}
-    >
-      {children ?? (
-        <>
-          <FieldLabel label={label} />
-          <DateInput className="cinder-field__control react-aria-DateInput">
-            {(segment) => <DateSegment segment={segment} />}
-          </DateInput>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
-      )}
-    </RACDateField>
+    />
   );
 }
 
 export interface TimeFieldProps<T extends TimeValue>
-  extends RACTimeFieldProps<T>, FieldContentProps {
-  size?: ControlSize;
-  ref?: Ref<HTMLDivElement>;
-}
-export function TimeField<T extends TimeValue>({
+  extends TimeFieldRootProps<T>, FieldContentProps {}
+
+function TimeFieldDefault<T extends TimeValue>({
   label,
   description,
   errorMessage,
@@ -212,20 +308,19 @@ export function TimeField<T extends TimeValue>({
   ...props
 }: TimeFieldProps<T>) {
   return (
-    <RACTimeField
-      {...props}
-      data-size={size}
-      className={classes("cinder-field cinder-date-field", className)}
-    >
+    <TimeFieldRoot<T> {...props} size={size} className={className}>
       {children ?? (
-        <>
-          <FieldLabel label={label} />
-          <DateInput className="cinder-field__control react-aria-DateInput">
-            {(segment) => <DateSegment segment={segment} />}
-          </DateInput>
-          <FieldHelp description={description} errorMessage={errorMessage} />
-        </>
+        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+          <FieldDateInput>{(segment) => <DateSegment segment={segment} />}</FieldDateInput>
+        </FieldLayout>
       )}
-    </RACTimeField>
+    </TimeFieldRoot>
   );
 }
+
+export const TimeField = Object.assign(TimeFieldDefault, {
+  Root: TimeFieldRoot,
+  ...fieldParts,
+  Input: FieldDateInput,
+  Segment: DateSegment,
+});

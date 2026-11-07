@@ -19,7 +19,21 @@ export type {
   NumberFieldProps,
   SearchFieldProps,
   FieldContentProps,
+  TextFieldRootProps,
+  TextAreaRootProps,
+  NumberFieldRootProps,
+  SearchFieldRootProps,
 } from "./fields";
+export type {
+  FieldLabelProps,
+  FieldDescriptionProps,
+  FieldErrorMessageProps,
+  FieldHelpProps,
+  FieldInputProps,
+  FieldTextAreaProps,
+  FieldControlProps,
+  FieldDateInputProps,
+} from "./field-parts";
 export {
   Checkbox,
   CheckboxGroup,
@@ -39,6 +53,10 @@ export type {
   SelectProps,
   ComboBoxProps,
   SliderProps,
+  CheckboxGroupRootProps,
+  RadioGroupRootProps,
+  SelectRootProps,
+  ComboBoxRootProps,
 } from "./selection";
 export { Popover, Modal, Dialog, Tooltip } from "./overlays";
 export type { PopoverProps, ModalProps, DialogProps, TooltipProps } from "./overlays";
@@ -57,6 +75,10 @@ export type {
   DateRangePickerProps,
   DateFieldProps,
   TimeFieldProps,
+  DatePickerRootProps,
+  DateRangePickerRootProps,
+  DateFieldRootProps,
+  TimeFieldRootProps,
 } from "./dates";
 export {
   Table,

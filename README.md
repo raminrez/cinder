@@ -18,9 +18,13 @@ Frame foundations are implemented in the packages under Phase 1, including
 additive `frame-light` / `frame-dark` themes and public customization contracts.
 Representative installed-package proof has passed; see the
 [Phase 1 verification](docs/verification.md#frame-phase-1) for its scope.
-Phase 2 develops the fourteen-entry Frame slice in Storybook, starting with Button
-and Link. The documentation website follows the component work; Figma is the final
-handoff.
+Phase 2 develops the fourteen-entry Frame slice in Storybook. Button/Link and the
+text, number, search, and Form recovery batch have passed bounded acceptance. The
+workbench has **54 stories**, with **108 passing story/theme cases**; the full phase
+remains in progress. The documentation website follows the component work; Figma
+is the final handoff. See the
+[field/form verification](docs/verification.md#frame-fields--phase-2-second-batch)
+for the full check, 74 reviewed captures, native input, and installed-package proof.
 
 ## Develop components in Storybook
 
@@ -169,7 +173,12 @@ their baseline styling; the [coverage matrix](docs/coverage.md) records the scop
 
 The [React package guide](packages/react/README.md#composition-contracts) documents
 field root/part hooks, default and custom RAC composition, and Modal's distinct
-surface/backdrop targets. Its [styling guide](packages/react/README.md#css-integration)
+surface/backdrop targets. Callable fields remain compatible shorthand; additive
+namespaces such as `TextField.Root`, `.Label`, `.Description`, `.Input`, `.Help`, and
+`.ErrorMessage` expose independently composable anatomy without a second form engine.
+Frame defaults keep guidance before the control and recovery after it; legacy
+themes and replacement children retain their contracts. Its
+[styling guide](packages/react/README.md#css-integration)
 covers the single top-level `cinder` cascade layer, plain CSS, CSS Modules, and the
 pinned Tailwind fixture. Native CSS nesting, cascade layers, and `@scope` require
 a modern browser; current browser evidence is Chromium-only.
@@ -217,7 +226,7 @@ intentional accessibility exceptions.
 The individual test commands are `bun test tests/unit`, `bun run test:browser`,
 and (after packing) `bun run test:package`.
 See the [consumer fixture commands](tests/fixtures/consumer/README.md),
-[verification results](docs/verification.md#frame-phase-1), and the [visual critique](docs/visual-review.md).
+[verification results](docs/verification.md), and the [visual critique](docs/visual-review.md).
 
 ## Research
 

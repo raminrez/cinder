@@ -52,7 +52,7 @@ foundation overrides. The six older maps, 191 global foundations, and 36 structu
 Carbon typography objects retain their values; see the
 [token guide](../tokens/README.md#authored-frame-values).
 
-Representative installed-package proof has passed for native CSS, real Bun CSS
+Phase 1 representative installed-package proof passed for native CSS, real Bun CSS
 Modules, and Tailwind 4.3.5. The workspace's
 [Phase 1 verification](../../docs/verification.md#frame-phase-1) records the executed checks; the
 [coverage matrix](../../docs/coverage.md) records implemented family scope.
@@ -70,11 +70,14 @@ to use 44px. That internal marker is not a public CSS hook. Use the `size` prop
 for explicit sizing. Button's `xl` and `2xl` remain 64px and 80px in every theme.
 TextArea keeps its multiline `rows` contract rather than a size prop.
 
-These are foundation contracts, not a claim that the full catalog has Frame
-styling. The [Phase 2 slice](../../docs/component-library-plan.md#phase-2--first-complete-frame-slice)
-owns the fourteen complete entries, persistent field guidance, and attached
-recovery presentation. Phase 1 retains the convenience fields' existing DOM order
-and help/error presentation.
+These are foundation contracts, not a claim that the full catalog has completed
+Frame review. The current field/form batch adds persistent guidance, attached
+recovery, and additive compound APIs. Grouped, collection, and date compounds are
+included for shared anatomy and API compatibility only, not completed later-family
+Frame review. The [Phase 2 plan](../../docs/component-library-plan.md#phase-2--first-complete-frame-slice)
+and [coverage matrix](../../docs/coverage.md) track the wider family scope; the
+[field/form verification](../../docs/verification.md#frame-fields--phase-2-second-batch) distinguishes executed evidence
+from authored stories and fixtures.
 
 ## Button and Link
 
@@ -251,9 +254,10 @@ compositions, and customization examples. `docs/relay.md` records the specificat
 - Use RAC's `onPress` for actions. Fields expose their upstream controlled/default
   value APIs. `Select` and `ComboBox` use the current `value`/`defaultValue`/`onChange`
   API; multiple selection uses `selectionMode="multiple"` and arrays of keys.
-- Provide a visible `label` or accessible name. Field conveniences connect labels,
-  descriptions, and `errorMessage`. `Form` defaults to native submit-time validation;
-  `validationBehavior="aria"` opts into application-managed validation.
+- Provide a visible convenience `label`, compound `.Label`, or accessible name.
+  RAC connects labels, descriptions, and validation errors. `Form` defaults to
+  native submit-time validation; `validationBehavior="aria"` marks required/invalid
+  state through ARIA without native submission blocking.
 - Controls preserve upstream render props, events, and refs. TextField and TextArea
   expose a `ref` to the outer `div` and an `inputRef` to the default input or textarea.
   With custom children, supply the control ref yourself. SearchField retains its
@@ -268,11 +272,15 @@ compositions, and customization examples. `docs/relay.md` records the specificat
   than plain text. Use upstream collection children/functions and selection types.
   Select options may use `Text slot="label"` and `Text slot="description"`; the
   description stays in the menu and is hidden in the selected value.
-- TextField and TextArea `children` replace their convenience anatomy. Retain RAC's
-  `Label`, `Input` (or raw RAC TextArea), `Text slot="description"`, and `FieldError`
-  to keep their associations. Select's `children` remains
-  its option collection (including item render functions), not a replacement
-  trigger; its generic item and single/multiple value types are preserved.
+- A fully controlled ComboBox owns both `value` and `inputValue` in the application.
+  RAC calls `onChange` or `onInputChange` for an interaction, not both. Update the
+  input text on selection and clear the selected key when the input is cleared;
+  Cinder does not reconcile application-controlled state.
+- TextField, TextArea, NumberField, SearchField, and date-field conveniences retain
+  custom replacement `children`, including RAC state render functions. Raw RAC
+  replacements still work. Select and ComboBox convenience `children` remain their
+  option collections, not replacement triggers or full trees. Use `.Root` to own
+  the whole RAC tree; item generics and single/multiple value types are preserved.
 - Pair `DialogTrigger` with `Modal` or `Popover` and a named `Dialog`. Use a
   `Heading slot="title"` or `aria-label`; Escape restores trigger focus.
 
@@ -282,19 +290,20 @@ pagination, content, layout, and shell primitives. Run the docs for all 45 famil
 
 ### Default and custom field anatomy
 
-Default field roots keep `cinder-field` and their family classes, such as
-`cinder-text-field`, `cinder-text-area`, and `cinder-select`. Phase 1 adds these
-stable BEM-style hooks to Cinder-owned default anatomy alongside the existing classes:
+Default field roots and compound `.Root`s keep `cinder-field` and their family
+classes, such as `cinder-text-field`, `cinder-text-area`, and `cinder-select`.
+Cinder-owned default anatomy and compound parts share these stable BEM-style hooks
+alongside the existing classes:
 
-| Hook                        | Default part                                   |
-| --------------------------- | ---------------------------------------------- |
-| `cinder-field__label`       | Associated label                               |
-| `cinder-field__control`     | Input, textarea, or field control              |
-| `cinder-field__help`        | Help/error container; also `cinder-field-help` |
-| `cinder-field__description` | Description text                               |
-| `cinder-field__error`       | Validation error                               |
-| `cinder-select__value`      | Selected value                                 |
-| `cinder-select__listbox`    | Options in the detached Select popover         |
+| Hook                        | Default part                                                  |
+| --------------------------- | ------------------------------------------------------------- |
+| `cinder-field__label`       | Associated label                                              |
+| `cinder-field__control`     | Standalone input/textarea, grouped control, or Select trigger |
+| `cinder-field__help`        | Recovery container; also `cinder-field-help`                  |
+| `cinder-field__description` | Description text                                              |
+| `cinder-field__error`       | Validation error                                              |
+| `cinder-select__value`      | Selected value                                                |
+| `cinder-select__listbox`    | Options in the detached Select popover                        |
 
 RAC classes such as `react-aria-Label`, `react-aria-Input`, `react-aria-Text`,
 `react-aria-FieldError`, `react-aria-SelectValue`, and `react-aria-ListBox` are
@@ -304,7 +313,7 @@ State selectors belong on the element that owns the state: for example,
 `.cinder-field[data-invalid]` for the field and
 `.cinder-field__control[data-focused]` for a RAC Input's focus state.
 
-The convenience API supplies the default label → control → help/error anatomy:
+The convenience API remains callable:
 
 ```tsx
 <TextField
@@ -317,8 +326,177 @@ The convenience API supplies the default label → control → help/error anatom
 />
 ```
 
-To retain this styling in custom children, supply both the raw RAC classes and
-the part hooks explicitly:
+In `frame-light` and `frame-dark`, defaults follow **label → persistent guidance →
+control → recovery**. The description stays before the control and remains visible
+when validation fails; the Help part contains the RAC error. The six existing
+Carbon/Relay themes keep **label → control → help/error**, including the rule that a
+nonempty error replaces the visible description in the help container. Their
+defaults, APIs, and classes are unchanged. Custom children keep their authored order.
+
+Frame's Help immediately after a control reserves a bounded, padded **one-line
+recovery minimum**, not a fixed error height or a promise that arbitrary text cannot
+move the next action. Longer and rich errors wrap and grow. The
+[Form story recipe](../../apps/storybook/stories/forms.css) increases required-field
+Help minimums to **58px** (`3.625rem`) and **78px** (`4.875rem`) in a container at or
+below `24rem`, at a 16px root. Those are application recipe minimums, not global
+field sizes; long errors may exceed them and move Save rather than clip. Optional
+fields are not made invalid or given the larger required-field budget.
+
+#### Additive compound namespaces
+
+Each namespace below is still the existing callable convenience component.
+`.Root` accepts the original RAC props and original whole-tree `children` contract,
+including state render functions; it does not insert convenience labels, controls,
+or feedback. Cinder exports the corresponding `*RootProps` alongside the existing
+convenience `*Props`. TextArea.Root uses RAC's **TextField** root props; `rows`,
+`placeholder`, and native textarea events belong on TextArea.Input. It has no `size`
+prop. Other sized field roots retain `size="md"` by default.
+
+All twelve `.Root` refs target **`HTMLDivElement`**. Shared parts retain their exact
+RAC/native prop and ref types, not a generalized field-part interface:
+
+| Shared part     | Public prop type                                          | Default DOM and ref target                                                            |
+| --------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `.Label`        | `FieldLabelProps` = RAC Label component props             | `<label>`; `HTMLLabelElement`                                                         |
+| `.Description`  | `FieldDescriptionProps` = RAC Text component props        | `<span>`; `HTMLElement`; defaults to `slot="description"`, which callers may override |
+| `.Help`         | `FieldHelpProps` = native `ComponentProps<"div">`         | `<div>`; `HTMLDivElement`; ordinary DOM props, not RAC render props                   |
+| `.ErrorMessage` | `FieldErrorMessageProps` = RAC FieldError component props | `<span>`; `HTMLElement`; `elementType="div"` for block-level recovery children        |
+
+The family-specific parts below are the exported members; there are no new flat
+component exports for them. Ref targets are shown in parentheses.
+
+| Namespace         | Additional parts and ref targets                                                                                                                                                                                                                                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `TextField`       | `Input` → RAC Input (`HTMLInputElement`); `TextArea` → RAC TextArea (`HTMLTextAreaElement`); `Control` → RAC Group (`HTMLDivElement`)                                                                                                                                                                                                            |
+| `TextArea`        | `Input` → RAC TextArea (`HTMLTextAreaElement`); `Control` → RAC Group (`HTMLDivElement`)                                                                                                                                                                                                                                                         |
+| `NumberField`     | `Input` → RAC Input (`HTMLInputElement`); `Control` → RAC Group (`HTMLDivElement`); `Button` → Cinder Button (`HTMLButtonElement`), with `slot="decrement"` or `slot="increment"`                                                                                                                                                                |
+| `SearchField`     | `Input` → RAC Input (`HTMLInputElement`); `Control` → RAC Group (`HTMLDivElement`); `ClearButton` → Cinder Button (`HTMLButtonElement`)                                                                                                                                                                                                          |
+| `CheckboxGroup`   | `Checkbox` → existing Cinder Checkbox (`HTMLLabelElement`); inherited `inputRef` targets `HTMLInputElement`                                                                                                                                                                                                                                      |
+| `RadioGroup`      | `Radio` → existing Cinder Radio (`HTMLLabelElement`); inherited `inputRef` targets `HTMLInputElement`; `Options` → native div (`HTMLDivElement`)                                                                                                                                                                                                 |
+| `Select`          | `Trigger` → Cinder Button (`HTMLButtonElement`); `Value` → RAC SelectValue (`HTMLSpanElement`); `Popover` → Cinder Popover (`HTMLElement`); `ListBox` → RAC ListBox (`HTMLDivElement`)                                                                                                                                                           |
+| `ComboBox`        | `Input` → RAC Input (`HTMLInputElement`); `Control` → RAC Group (`HTMLDivElement`); `Trigger` → Cinder Button (`HTMLButtonElement`); `Value` → RAC ComboBoxValue (`HTMLDivElement`); `Popover` → Cinder Popover (`HTMLElement`); `ListBox` → RAC ListBox (`HTMLDivElement`)                                                                      |
+| `DateField`       | `Input` → RAC DateInput (`HTMLDivElement`); `Segment` → unchanged RAC DateSegment (`HTMLSpanElement`)                                                                                                                                                                                                                                            |
+| `TimeField`       | `Input` → RAC DateInput (`HTMLDivElement`); `Segment` → unchanged RAC DateSegment (`HTMLSpanElement`)                                                                                                                                                                                                                                            |
+| `DatePicker`      | `Input` → RAC DateInput (`HTMLDivElement`); `Segment` → unchanged RAC DateSegment (`HTMLSpanElement`); `Control` → RAC Group (`HTMLDivElement`); `Trigger` → Cinder Button (`HTMLButtonElement`); `Popover` → Cinder Popover (`HTMLElement`); `Calendar` → existing Cinder Calendar (`HTMLDivElement`)                                           |
+| `DateRangePicker` | `Input` → RAC DateInput (`HTMLDivElement`), with `slot="start"` or `slot="end"`; `Segment` → unchanged RAC DateSegment (`HTMLSpanElement`); `Control` → RAC Group (`HTMLDivElement`); `Trigger` → Cinder Button (`HTMLButtonElement`); `Popover` → Cinder Popover (`HTMLElement`); `Calendar` → existing Cinder RangeCalendar (`HTMLDivElement`) |
+
+`FieldInputProps`, `FieldTextAreaProps`, `FieldControlProps`, and
+`FieldDateInputProps` are the respective RAC Input, TextArea, Group, and DateInput
+component props, including their refs. DateInput requires a segment-rendering
+`children` function; it is a segmented div, not a native input. Select/ComboBox Root,
+Value, and ListBox retain their item generics. Their roots preserve the RAC
+single/multiple key contracts through `SelectRootProps<T, M>` and
+`ComboBoxRootProps<T, M>`; multiple roots use `M = "multiple"` and key arrays.
+
+Slots retain each underlying type. `.Root` supports RAC `slot?: string | null`:
+`slot={null}` opts out of inherited slot props. `.Control` and date `.Input` also
+retain RAC nullable slots. Native Input and textarea leaves retain
+**`slot?: string`**, not `null`; do not widen them to match the root. Search clear,
+ComboBox trigger, and picker trigger buttons use RAC's default button context
+without a special slot name. Number buttons and date-range inputs use the explicit
+slots in the table.
+
+Root `onChange` receives the RAC value (for example, a string or number). Input
+`onChange` and `onInput` receive native React events. Native props such as
+`placeholder`, `spellCheck`, `rows`, and a control ref go on the leaf. The shorthand
+TextField/TextArea `ref` still targets the root, and `inputRef` targets only their
+default leaf; custom children supply their own leaf ref. SearchField's existing
+shorthand `inputProps.className` remains a **complete override**, including removal
+of `react-aria-Input`; SearchField.Input instead appends custom classes to its RAC
+base class.
+
+Namespaced Label/Description accept string classes; Help/RadioGroup.Options accept
+native string classes and styles. Stateful RAC parts retain their upstream
+class/style/children functions where supported. Wrappers append custom classes to
+their base hooks. A `render` callback must return one expected native element and
+pass through every supplied DOM prop and ref; it is not a replacement state system.
+Raw aliases such as date Segment retain RAC's class-replacement behavior.
+
+```tsx
+import { TextField } from "@cinder/react";
+
+<TextField.Root name="email" type="email" autoComplete="email" isRequired>
+  <TextField.Label>Work email (required)</TextField.Label>
+  <TextField.Description>Use your work address.</TextField.Description>
+  <TextField.Input
+    placeholder="name@example.com"
+    className={({ isFocused }) => (isFocused ? "focused-email" : "")}
+  />
+  <TextField.Help>
+    <TextField.ErrorMessage>
+      {({ validationDetails }) =>
+        validationDetails.valueMissing ? "Enter your work email." : "Enter a valid work email."
+      }
+    </TextField.ErrorMessage>
+  </TextField.Help>
+</TextField.Root>;
+```
+
+For grouped families, the control hook belongs on **Control once**, not on each
+inner Input. NumberField, SearchField, ComboBox, and picker Inputs carry only their
+RAC leaf class. `TextField.Input`, `TextField.TextArea`, `TextArea.Input`,
+`DateField.Input`, and `TimeField.Input` already carry the control hook; inside an
+optional TextField.Control or TextArea.Control, use a raw RAC Input or textarea to
+avoid duplicating it. SearchField adds ClearButton, while ComboBox adds Trigger. Keep
+Help next to the control for attached Frame recovery. If using an explicit
+small/large size, also size the composed button parts to match.
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+<NumberField.Root name="reviewers" defaultValue={3} minValue={1} maxValue={12}>
+  <NumberField.Label>Reviewers</NumberField.Label>
+  <NumberField.Description>Choose one to twelve reviewers.</NumberField.Description>
+  <NumberField.Control>
+    <NumberField.Input />
+    <NumberField.Button slot="decrement" aria-label="Fewer reviewers">
+      −
+    </NumberField.Button>
+    <NumberField.Button slot="increment" aria-label="More reviewers">
+      +
+    </NumberField.Button>
+  </NumberField.Control>
+  <NumberField.Help>
+    <NumberField.ErrorMessage />
+  </NumberField.Help>
+</NumberField.Root>;
+```
+
+Unlike convenience Select/ComboBox children, `.Root` children describe the whole
+tree. Select's option `items` and item renderer go on Select.ListBox; ComboBox keeps
+its upstream `items`/`defaultItems` on its Root and the option renderer on ListBox.
+
+```tsx
+import { Icon, ListBoxItem, Select } from "@cinder/react";
+
+<Select.Root name="access" defaultValue="viewer">
+  <Select.Label>Access</Select.Label>
+  <Select.Description>Choose the access this teammate needs.</Select.Description>
+  <Select.Trigger>
+    <Select.Value />
+    <Icon name="chevronDown" />
+  </Select.Trigger>
+  <Select.Help>
+    <Select.ErrorMessage />
+  </Select.Help>
+  <Select.Popover>
+    <Select.ListBox>
+      <ListBoxItem id="viewer">Viewer</ListBoxItem>
+      <ListBoxItem id="editor">Editor</ListBoxItem>
+    </Select.ListBox>
+  </Select.Popover>
+</Select.Root>;
+```
+
+These compounds do not imply completed grouped, collection, or date-family Frame
+review. They expose compatible shared anatomy while those family reviews remain
+separate.
+
+#### Raw replacement children
+
+Existing raw replacement children still work. To retain this styling, supply both
+the raw RAC classes and the part hooks explicitly; Cinder does not inject or
+rearrange a custom tree:
 
 ```tsx
 import { useRef } from "react";
@@ -344,10 +522,35 @@ export function WorkEmail() {
 }
 ```
 
-With the current help/error styling, a nonempty error replaces the visible
-description in that container. Persistent guidance and attached recovery are
-Phase 2 work. A class render function on Input or FieldError must likewise return
-the raw class and BEM hook if it should retain this styling.
+This authored example keeps the legacy description-inside-help arrangement: a
+nonempty error still replaces its visible description, even in Frame. Put guidance
+before the control for Frame's persistent default arrangement. A class render
+function on raw Input or FieldError must likewise return the raw class and BEM
+hook to retain this styling. The flat `Label`, `Input`, `Text`, `FieldError`, `Group`,
+`DateInput`, `DateSegment`, `SelectValue`, `ComboBoxValue`, and `Form` exports remain
+the original RAC exports.
+
+### Form and validation ownership
+
+`Form` is unchanged RAC, with a native `HTMLFormElement` ref. RAC owns validation
+timing, invalid/required state, first-invalid focus, and the description/error
+associations. Use the upstream `isRequired`, constraints, `validate`,
+`validationBehavior`, and `Form validationErrors` contracts. ErrorMessage is RAC
+FieldError with Cinder classes: it appears when RAC reports an error, and its
+children may read `ValidationResult`, including `validationDetails` and
+`validationErrors`. Author required wording and useful localized recovery; Theme
+locale does not guarantee that browser-generated validation text uses that language.
+
+Applications own requests, pending lifetime, returned name-to-error mappings,
+service failure feedback, and retry. The
+[Form stories](../../apps/storybook/stories/Form.stories.tsx) use `onSubmit` with
+`event.preventDefault()` and a fresh `FormData(event.currentTarget)` snapshot to
+retain drafts rather than use an auto-resetting React action. They guard in-flight
+native/implicit submission as well as use Button `isPending`; pending appearance
+alone is not a request lock. Read-only controls remain selectable and included in
+FormData, unlike disabled controls. Server-side validation and authorization remain
+the application's responsibility. Authored stories are not execution evidence;
+see the [verification record](../../docs/verification.md) for completed checks.
 
 ## Theme, locale, and portals
 
@@ -520,10 +723,12 @@ bun run test:package
 
 The [consumer fixtures](../../tests/fixtures/consumer/README.md) install both
 tarballs into two isolated apps with no workspace aliases. Both use `strict: true`
-and `skipLibCheck: false`. The native app builds `index.html` for Carbon/Relay and
-`frame.html` for plain CSS and a real Bun CSS Module. The second app compiles
+and `skipLibCheck: false`. The native app builds `index.html` for Carbon/Relay,
+`frame.html` for plain CSS and a real Bun CSS Module, and a generated
+`composition.html` entry for the compound API fixture. The second app compiles
 `tailwind.css` through the pinned CLI and builds `tailwind.html`, importing the
-generated CSS once. The verifier drives both production builds in Chromium.
+generated CSS once. The verifier builds both apps and drives their Frame pages in
+Chromium; fixture source or build coverage alone is not new execution evidence.
 
 ## Visual and behavioral boundary
 

@@ -1,0 +1,74 @@
+.form-story-shell {
+  container: form-story / inline-size;
+  inline-size: 100%;
+  max-inline-size: 36rem;
+  min-inline-size: 0;
+}
+
+.form-story-form {
+  display: grid;
+  gap: var(--cinder-spacing-05);
+  min-inline-size: 0;
+}
+
+.form-story-intro,
+.form-story-feedback > p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.form-story-intro {
+  max-inline-size: 65ch;
+}
+
+/* These are required-field recipe minimums, not clipped error heights. */
+.form-story-form .cinder-field[data-required] > .cinder-field__help {
+  min-block-size: 3.625rem;
+}
+
+.form-story-commit {
+  display: grid;
+  justify-items: start;
+  gap: var(--cinder-spacing-03);
+  min-inline-size: 0;
+}
+
+.form-story-feedback {
+  min-block-size: 5rem;
+  inline-size: 100%;
+}
+
+.form-story-error {
+  color: var(--cinder-support-error);
+}
+
+.form-story-form .form-story-latin-value > .cinder-field__control {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
+}
+
+.form-story-narrow {
+  max-inline-size: 22rem;
+}
+
+.form-story-locales {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: var(--cinder-spacing-07);
+  max-inline-size: 76rem;
+}
+
+.form-story-locales > .cinder-theme {
+  min-inline-size: 0;
+}
+
+@container form-story (max-width: 24rem) {
+  .form-story-form .cinder-field[data-required] > .cinder-field__help {
+    min-block-size: 4.875rem;
+  }
+
+  .form-story-feedback {
+    min-block-size: 7rem;
+  }
+}

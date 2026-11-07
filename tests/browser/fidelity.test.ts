@@ -10,6 +10,7 @@ let context: BrowserContext;
 let page: Page;
 let errors: string[];
 const carbonThemes = ["white", "g10", "g90", "g100"] as const;
+const fieldThemes = Object.keys(themes) as ThemeName[];
 const buttonVariants = [
   "primary",
   "secondary",
@@ -133,147 +134,218 @@ async function expectInactiveButtons(variants: readonly string[]) {
   await expect(page.getByRole("status", { name: "Inactive button presses" })).toHaveText("0");
 }
 
-test("all twelve default field anatomies retain legacy aliases, BEM parts, and composition order", async () => {
-  await openFieldParts();
-  const fields = page.locator('[data-fixture="default-field-parts"]');
-  await expect(fields.locator(".cinder-field")).toHaveCount(12);
-  for (const [name, controlSelector] of [
-    ["text", "input.react-aria-Input"],
-    ["area", "textarea.react-aria-TextArea"],
-    ["number", ".cinder-input-group"],
-    ["search", ".cinder-input-group"],
-    ["checkbox", null],
-    ["radio", null],
-    ["select", "button.cinder-button.cinder-select-trigger"],
-    ["combobox", ".cinder-input-group"],
-    ["date-picker", ".cinder-input-group"],
-    ["date-range", ".cinder-input-group"],
-    ["date", ".react-aria-DateInput"],
-    ["time", ".react-aria-DateInput"],
-  ] as const) {
-    const field = fields.locator(`[data-field="${name}"]`);
-    const label = field.locator(":scope > .cinder-field__label.react-aria-Label");
-    const help = field.locator(":scope > .cinder-field__help.cinder-field-help");
-    await expect(label).toHaveCount(1);
-    await expect(help).toHaveCount(1);
-    await expect(help.locator(".cinder-field__description.react-aria-Text")).toHaveAttribute(
-      "slot",
-      "description",
-    );
-    await expect(help.locator(".cinder-field__description")).toHaveText(
-      name === "text" ? "0" : "Field guidance",
-    );
-    await expect(help.locator(".cinder-field__error.react-aria-FieldError")).toHaveText(
-      "Field recovery",
-    );
-    if (controlSelector) {
-      await expect(field.locator(`:scope > ${controlSelector}.cinder-field__control`)).toHaveCount(
-        1,
-      );
-      await expect(field.locator(".cinder-field__control")).toHaveCount(1);
+for (const theme of fieldThemes) {
+  test(`${theme}: all twelve default fields retain their owned parts and reading order`, async () => {
+    await openFieldParts(theme);
+    const isFrame = theme === "frame-light" || theme === "frame-dark";
+    const fields = page.locator('[data-fixture="default-field-parts"]');
+    await expect(fields.locator(".cinder-field")).toHaveCount(12);
+    for (const [name, controlSelector] of [
+      ["text", "input.react-aria-Input"],
+      ["area", "textarea.react-aria-TextArea"],
+      ["number", ".cinder-input-group"],
+      ["search", ".cinder-input-group"],
+      ["checkbox", ".cinder-checkbox"],
+      ["radio", ".cinder-radio-options"],
+      ["select", "button.cinder-button.cinder-select-trigger"],
+      ["combobox", ".cinder-input-group"],
+      ["date-picker", ".cinder-input-group"],
+      ["date-range", ".cinder-input-group"],
+      ["date", ".react-aria-DateInput"],
+      ["time", ".react-aria-DateInput"],
+    ] as const) {
+      const field = fields.locator(`[data-field="${name}"]`);
+      const label = field.locator(":scope > .cinder-field__label.react-aria-Label");
+      const help = field.locator(":scope > .cinder-field__help.cinder-field-help");
+      await expect(label).toHaveCount(1);
+      await expect(help).toHaveCount(1);
+      const description = field.locator(".cinder-field__description.react-aria-Text");
+      const error = help.locator(".cinder-field__error.react-aria-FieldError");
+      const content = field.locator(`:scope > ${controlSelector}`);
+      await expect(description).toHaveCount(1);
+      await expect(description).toHaveAttribute("slot", "description");
+      await expect(description).toHaveText(name === "text" ? "0" : "Field guidance");
+      await expect(error).toHaveText("Field recovery");
+      if (name !== "checkbox" && name !== "radio") {
+        await expect(
+          field.locator(`:scope > ${controlSelector}.cinder-field__control`),
+        ).toHaveCount(1);
+        await expect(field.locator(".cinder-field__control")).toHaveCount(1);
+      } else {
+        await expect(field.locator(".cinder-field__control")).toHaveCount(0);
+      }
+      await expect(content).toHaveCount(1);
       expect(
-        await field.evaluate((element) => {
-          const label = element.querySelector(".cinder-field__label")!;
-          const control = element.querySelector(".cinder-field__control")!;
-          const help = element.querySelector(".cinder-field__help")!;
-          return [
-            Boolean(label.compareDocumentPosition(control) & Node.DOCUMENT_POSITION_FOLLOWING),
-            Boolean(control.compareDocumentPosition(help) & Node.DOCUMENT_POSITION_FOLLOWING),
-          ];
-        }),
-      ).toEqual([true, true]);
-    } else {
-      await expect(field.locator(".cinder-field__control")).toHaveCount(0);
+        await field.evaluate(
+          (element, { isFrame, controlSelector }) => {
+            const label = element.querySelector(":scope > .cinder-field__label")!;
+            const description = element.querySelector(".cinder-field__description")!;
+            const control = element.querySelector(`:scope > ${controlSelector}`)!;
+            const help = element.querySelector(":scope > .cinder-field__help")!;
+            const sequence = isFrame ? [label, description, control, help] : [label, control, help];
+            return sequence
+              .slice(1)
+              .map((part, index) =>
+                Boolean(
+                  sequence[index]!.compareDocumentPosition(part) & Node.DOCUMENT_POSITION_FOLLOWING,
+                ),
+              );
+          },
+          { isFrame, controlSelector },
+        ),
+      ).toEqual(isFrame ? [true, true, true] : [true, true]);
+      if (isFrame) {
+        await expect(field.locator(":scope > .cinder-field__description")).toHaveCount(1);
+        await expect(description).toBeVisible();
+        if (name !== "checkbox" && name !== "radio") {
+          const controlBounds = await content.boundingBox();
+          const errorBounds = await error.boundingBox();
+          expect(
+            Math.abs(errorBounds!.y - controlBounds!.y - controlBounds!.height + 1),
+          ).toBeLessThan(1);
+          expect(Math.abs(errorBounds!.width - controlBounds!.width)).toBeLessThan(1);
+          await expect(error).toHaveCSS(
+            "background-color",
+            await color(theme, "notification-background-error"),
+          );
+          await expect(content).toHaveCSS("border-end-start-radius", "3px");
+        }
+      } else {
+        await expect(help.locator(".cinder-field__description")).toHaveCount(1);
+        await expect(description).not.toBeVisible();
+      }
     }
-  }
-  await expect(fields.locator('[data-field="text"] .cinder-field__label')).toHaveText("0");
-  await expect(fields.getByRole("textbox", { name: "0", exact: true })).toBeVisible();
-  expect(
-    await fields
-      .locator(".cinder-button")
-      .evaluateAll((buttons) =>
-        buttons.map((button) => [
-          button.getAttribute("data-size"),
-          button.hasAttribute("data-cinder-size-default"),
-        ]),
+    for (const control of await fields
+      .locator(".cinder-checkbox-control, .cinder-radio-control")
+      .all()) {
+      await expect(control).toHaveCSS(
+        "border-top-color",
+        await color(theme, isFrame ? "icon-primary" : "support-error"),
+      );
+    }
+    await expect(
+      page.locator('[data-fixture="standalone-invalid-checkbox"] .cinder-checkbox-control'),
+    ).toHaveCSS("border-top-color", await color(theme, "support-error"));
+    const disabledOptions = page.locator(
+      '[data-fixture="disabled-invalid-checkbox"] .cinder-checkbox-control, [data-fixture="disabled-invalid-radio"] .cinder-radio-control',
+    );
+    await expect(disabledOptions).toHaveCount(2);
+    for (const control of await disabledOptions.all()) {
+      await expect(control).toHaveCSS("border-top-color", await color(theme, "icon-disabled"));
+    }
+    await expect(fields.locator('[data-field="text"] .cinder-field__label')).toHaveText("0");
+    await expect(fields.getByRole("textbox", { name: "0", exact: true })).toBeVisible();
+    expect(
+      await fields
+        .locator(".cinder-button")
+        .evaluateAll((buttons) =>
+          buttons.map((button) => [
+            button.getAttribute("data-size"),
+            button.hasAttribute("data-cinder-size-default"),
+          ]),
+        ),
+    ).toEqual(Array.from({ length: 7 }, () => ["md", false]));
+  });
+
+  test(`${theme}: field refs, values, and raw replacement children keep their targets`, async () => {
+    await openFieldParts(theme);
+    await page.getByRole("button", { name: "Check field refs" }).click();
+    await expect(page.getByRole("status", { name: "Field ref targets" })).toHaveText(
+      "DIV,INPUT,true,DIV,TEXTAREA,true",
+    );
+    const text = page.getByRole("textbox", { name: "0", exact: true });
+    await expect(text).toBeFocused();
+    await text.fill("Controlled update");
+    await expect(page.getByRole("status", { name: "Controlled text" })).toHaveText(
+      "Controlled update",
+    );
+    const textRoot = page.locator('[data-field="text"]');
+    await expect(textRoot).toHaveClass(/cinder-field cinder-text-field.*consumer-invalid/);
+    await expect(textRoot).toHaveCSS("max-width", "320px");
+    await expect(text).toHaveCSS("max-width", "none");
+    await page.getByRole("button", { name: "Focus area control" }).click();
+    const area = page.getByRole("textbox", { name: "Part area" });
+    await expect(area).toBeFocused();
+    await expect(area).toHaveValue("Initial note");
+    await area.fill("Uncontrolled update");
+    await expect(area).toHaveValue("Uncontrolled update");
+    await expect(page.locator('[data-field="area"]')).toHaveClass(
+      /cinder-field cinder-text-area.*consumer-area/,
+    );
+    await expect(page.locator('[data-field="area"]')).toHaveCSS("max-width", "336px");
+    await expect(area).toHaveCSS("max-width", "none");
+
+    const custom = page.locator('[data-fixture="custom-field"]');
+    await expect(custom.locator("[class*='cinder-field__']")).toHaveCount(0);
+    await expect(custom.locator("label")).toHaveClass("consumer-label");
+    await expect(custom.getByRole("textbox", { name: "Custom invalid field" })).toHaveClass(
+      "consumer-input",
+    );
+    await expect(custom.locator('[slot="description"]')).toHaveClass("consumer-description");
+    await expect(custom.locator(".consumer-error")).toHaveText("Consumer recovery");
+    await expect(custom).not.toContainText("Unused");
+    const disabled = page.locator('[data-fixture="legacy-disabled-field"]');
+    const guidance = disabled.locator('[slot="description"]');
+    await expect(disabled.getByRole("textbox")).toBeDisabled();
+    await expect(guidance).toHaveCSS(
+      "color",
+      await color(
+        theme,
+        theme === "frame-light" || theme === "frame-dark" ? "text-helper" : "text-disabled",
       ),
-  ).toEqual(Array.from({ length: 7 }, () => ["md", false]));
-});
+    );
+    if (theme === "frame-light" || theme === "frame-dark")
+      expect((await buttonPaint(guidance)).contrast).toBeGreaterThanOrEqual(4.5);
+  });
 
-test("field root/control refs, values, and raw custom composition keep their existing targets", async () => {
-  await openFieldParts();
-  await page.getByRole("button", { name: "Check field refs" }).click();
-  await expect(page.getByRole("status", { name: "Field ref targets" })).toHaveText(
-    "DIV,INPUT,true,DIV,TEXTAREA,true",
-  );
-  const text = page.getByRole("textbox", { name: "0", exact: true });
-  await expect(text).toBeFocused();
-  await text.fill("Controlled update");
-  await expect(page.getByRole("status", { name: "Controlled text" })).toHaveText(
-    "Controlled update",
-  );
-  const textRoot = page.locator('[data-field="text"]');
-  await expect(textRoot).toHaveClass(/cinder-field cinder-text-field.*consumer-invalid/);
-  await expect(textRoot).toHaveCSS("max-width", "320px");
-  await expect(text).toHaveCSS("max-width", "none");
-  await page.getByRole("button", { name: "Focus area control" }).click();
-  const area = page.getByRole("textbox", { name: "Part area" });
-  await expect(area).toBeFocused();
-  await expect(area).toHaveValue("Initial note");
-  await area.fill("Uncontrolled update");
-  await expect(area).toHaveValue("Uncontrolled update");
-  await expect(page.locator('[data-field="area"]')).toHaveClass(
-    /cinder-field cinder-text-area.*consumer-area/,
-  );
-  await expect(page.locator('[data-field="area"]')).toHaveCSS("max-width", "336px");
-  await expect(area).toHaveCSS("max-width", "none");
-
-  const custom = page.locator('[data-fixture="custom-field"]');
-  await expect(custom.locator("[class*='cinder-field__']")).toHaveCount(0);
-  await expect(custom.locator("label")).toHaveClass("consumer-label");
-  await expect(custom.getByRole("textbox", { name: "Custom invalid field" })).toHaveClass(
-    "consumer-input",
-  );
-  await expect(custom.locator('[slot="description"]')).toHaveClass("consumer-description");
-  await expect(custom.locator(".consumer-error")).toHaveText("Consumer recovery");
-  await expect(custom).not.toContainText("Unused");
-});
-
-test("default errors remain mounted for native validation and validation callbacks keep guidance associations", async () => {
-  await openFieldParts();
-  const native = page.getByRole("textbox", { name: "Native required" });
-  const custom = page.getByRole("textbox", { name: "Custom required" });
-  const submit = page.getByRole("button", { name: "Validate fields" });
-  await submit.click();
-  await expect(native).toBeFocused();
-  await expect(native).toHaveAttribute("aria-invalid", "true");
-  await expect(native).toHaveAccessibleDescription(/fill out this field/i);
-  const nativeRoot = page.locator(".cinder-text-field").filter({ has: native });
-  const nativeError = nativeRoot.locator(".cinder-field__error.react-aria-FieldError");
-  await expect(nativeError).toHaveText(/fill out this field/i);
-  const description = nativeRoot.locator(".cinder-field__description.react-aria-Text");
-  await expect(description).toHaveText("Native guidance");
-  expect((await native.getAttribute("aria-describedby"))!.split(" ")).toEqual(
-    expect.arrayContaining([
-      await description.getAttribute("id"),
-      await nativeError.getAttribute("id"),
-    ]),
-  );
-  const customRoot = page.locator(".cinder-text-area").filter({ has: custom });
-  await expect(customRoot.locator(".cinder-field__error.react-aria-FieldError")).toHaveText(
-    "Add a note.",
-  );
-  await expect(custom).toHaveAccessibleDescription(/Add a note\./);
-  await expect(customRoot.locator(".cinder-field__description")).toHaveText("Custom guidance");
-  await native.fill("Entered");
-  await custom.fill("Details");
-  await submit.click();
-  await expect(page.getByRole("status", { name: "Submitted fields" })).toHaveText(
-    "Entered|Details",
-  );
-  await expect(native).not.toHaveAttribute("aria-invalid", "true");
-  await expect(custom).not.toHaveAttribute("aria-invalid", "true");
-});
+  test(`${theme}: native validation retains error paths, first-invalid focus, and description associations`, async () => {
+    await openFieldParts(theme);
+    const native = page.getByRole("textbox", { name: "Native required" });
+    const custom = page.getByRole("textbox", { name: "Custom required" });
+    const submit = page.getByRole("button", { name: "Validate fields" });
+    const nativeRoot = page.locator(".cinder-text-field").filter({ has: native });
+    const customRoot = page.locator(".cinder-text-area").filter({ has: custom });
+    const description = nativeRoot.locator(".cinder-field__description.react-aria-Text");
+    const descriptionId = await description.getAttribute("id");
+    await expect(nativeRoot.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(customRoot.locator(".cinder-field__error")).toHaveCount(0);
+    await submit.click();
+    await expect(native).toBeFocused();
+    await expect(native).toHaveAttribute("aria-invalid", "true");
+    await expect(native).toHaveAccessibleDescription(/fill out this field/i);
+    const nativeError = nativeRoot.locator(".cinder-field__error.react-aria-FieldError");
+    await expect(nativeError).toHaveText(/fill out this field/i);
+    await expect(description).toHaveText("Native guidance");
+    expect((await native.getAttribute("aria-describedby"))!.split(" ")).toEqual(
+      expect.arrayContaining([
+        await description.getAttribute("id"),
+        await nativeError.getAttribute("id"),
+      ]),
+    );
+    await expect(customRoot.locator(".cinder-field__error.react-aria-FieldError")).toHaveText(
+      "Add a note.",
+    );
+    await expect(custom).toHaveAccessibleDescription(/Add a note\./);
+    await expect(customRoot.locator(".cinder-field__description")).toHaveText("Custom guidance");
+    await expect(description).toHaveAttribute("id", descriptionId!);
+    if (theme === "frame-light" || theme === "frame-dark") {
+      await expect(description).toBeVisible();
+      await expect(customRoot.locator(".cinder-field__description")).toBeVisible();
+    }
+    await native.fill("Entered");
+    await custom.fill("Details");
+    await submit.click();
+    await expect(page.getByRole("status", { name: "Submitted fields" })).toHaveText(
+      "Entered|Details",
+    );
+    await expect(native).not.toHaveAttribute("aria-invalid", "true");
+    await expect(custom).not.toHaveAttribute("aria-invalid", "true");
+    await expect(nativeRoot.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(customRoot.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(description).toHaveAttribute("id", descriptionId!);
+    await expect(description).toBeVisible();
+  });
+}
 
 test("SearchField inputProps still replace raw input classes and override the parent placeholder", async () => {
   await openFieldParts();
@@ -453,7 +525,8 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
       expect((await control.boundingBox())!.height).toBe(44);
       await expect(control).toHaveCSS("font-size", "16px");
       await expect(control).toHaveCSS("line-height", "24px");
-      await expect(control).toHaveCSS("border-radius", "10px");
+      await expect(control).toHaveCSS("border-start-start-radius", "10px");
+      await expect(control).toHaveCSS("border-end-start-radius", "3px");
       await expect(control).toHaveCSS("border-top-color", await color(theme, "support-error"));
       await expect(control).toHaveCSS("outline-style", "none");
       await page.keyboard.press("Tab");

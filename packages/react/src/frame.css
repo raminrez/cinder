@@ -128,6 +128,13 @@
       line-height: var(--cinder-label-01-line-height);
       letter-spacing: var(--cinder-label-01-letter-spacing);
     }
+    .cinder-field > .cinder-field__label + .cinder-field__description {
+      margin-block-start: calc(-1 * var(--cinder-spacing-02));
+    }
+    .cinder-field > :is(.cinder-field__label, .cinder-field__description),
+    .cinder-field__error {
+      overflow-wrap: anywhere;
+    }
     .cinder-field
       > :is(
         .cinder-field__control,
@@ -212,6 +219,9 @@
     .cinder-field[data-disabled] .react-aria-SelectValue {
       color: var(--cinder-text-disabled);
     }
+    .cinder-field[data-disabled] [slot="description"] {
+      color: var(--cinder-text-helper);
+    }
     .cinder-input-group > .react-aria-Input {
       min-height: 0;
       height: auto;
@@ -235,6 +245,45 @@
     }
     .cinder-field__help {
       min-block-size: var(--cinder-helper-text-01-line-height);
+    }
+    /* Reserve one recovery line; form recipes can reserve a larger text budget. */
+    :is(.cinder-field__control, .cinder-field__control + input[hidden]) + .cinder-field__help {
+      min-block-size: calc(
+        var(--cinder-helper-text-01-line-height) + 2 * (var(--cinder-spacing-03) + 1px) + 1px
+      );
+      margin-block-start: calc(-1 * var(--cinder-spacing-03) - 1px);
+    }
+    :is(.cinder-field__control, .cinder-field__control + input[hidden])
+      + .cinder-field__help
+      > .cinder-field__error:not(:empty) {
+      align-self: start;
+      padding: calc(var(--cinder-spacing-03) + 1px) var(--cinder-spacing-04);
+      border: 1px solid var(--cinder-support-error);
+      border-block-start: 0;
+      border-end-start-radius: var(--cinder-control-radius);
+      border-end-end-radius: var(--cinder-control-radius);
+      background: var(--cinder-notification-background-error);
+    }
+    .cinder-field[data-invalid]
+      > .cinder-field__control:has(
+        + .cinder-field__help > .cinder-field__error:not(:empty),
+        + input[hidden] + .cinder-field__help > .cinder-field__error:not(:empty)
+      ) {
+      border-end-start-radius: calc(var(--cinder-spacing-02) - 1px);
+      border-end-end-radius: calc(var(--cinder-spacing-02) - 1px);
+    }
+    .cinder-checkbox-group > .cinder-field__description {
+      margin-block-end: var(--cinder-spacing-03);
+    }
+    .cinder-checkbox-group > .cinder-field__help {
+      margin-block-start: var(--cinder-spacing-03);
+    }
+    /* Group recovery owns the error paint, not every option. */
+    .cinder-checkbox-group[data-invalid]
+      .cinder-checkbox:not([data-disabled])
+      .cinder-checkbox-control,
+    .cinder-radio-group[data-invalid] .cinder-radio:not([data-disabled]) .cinder-radio-control {
+      border-color: var(--cinder-icon-primary);
     }
 
     :scope.cinder-popover {
@@ -355,6 +404,13 @@
           .cinder-select-trigger
         ) {
         border-style: dashed;
+      }
+      :is(.cinder-field__control, .cinder-field__control + input[hidden])
+        + .cinder-field__help
+        > .cinder-field__error:not(:empty) {
+        color: FieldText;
+        background: Field;
+        border-color: ButtonText;
       }
       .cinder-button[data-focus-visible],
       .cinder-link[data-focus-visible],

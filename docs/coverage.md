@@ -4,11 +4,50 @@
 interaction, React 19.3.1, and Bun 1.4.4. This describes the implemented source and
 examples. Dated execution results are in [verification](verification.md).
 
+## Frame fields — Phase 2 second batch
+
+The workbench now indexes **54 stories**: the preserved 21 action stories and
+**33 field/form stories** (7 TextField, 6 TextArea, 8 NumberField, 7 SearchField,
+and 5 Form). Stories import the public package and one prebuilt stylesheet.
+
+| Area                      | Implemented bounded scope                                                                                                                                                                                                 |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shared composition        | Twelve callable compound namespaces with RAC-compatible `.Root`, `.Label`, `.Description`, `.Help`, `.ErrorMessage`, and family-specific parts; actual DOM refs, render functions, slots, and collection types            |
+| Frame defaults            | Label → persistent guidance → control → recovery through `FieldLayout`; guidance survives validation; one-line recovery minimum; grouped controls own the control hook once                                               |
+| TextField / TextArea      | Convenience and whole-tree composition, controlled/default values, native refs/events/rendering, native validation/FormData, read-only and disabled distinctions, sizes where supported, long content, and locale stories |
+| NumberField / SearchField | Grouped input/buttons, numeric bounds/steps/display versus submitted values, clear/Escape focus, query submission, native callbacks/FormData, custom composition, and locale stories                                      |
+| Form recipes              | Native first-invalid focus, simultaneous associated errors, preserved drafts, focus-retaining pending Save, application-owned duplicate prevention, local failure/retry, and returned `validationErrors`                  |
+| Recovery layout           | Required-field recipe minimums of 58px/78px; tested viewport boundary 432/433px; longer errors grow instead of clipping; field-grid boundary 647/648px                                                                    |
+| Compatibility             | Eight themes, callable conveniences, replacement children, SearchField's complete `inputProps.className` override, existing refs/classes, raw RAC exports, and all seven Button variants retained                         |
+
+The compound surface also covers CheckboxGroup, RadioGroup, Select, ComboBox,
+DateField, TimeField, DatePicker, and DateRangePicker because they share anatomy.
+Their API/relationship compatibility and limited installed smoke are not completed
+later-family Frame acceptance. RAC continues to own values, validation, state,
+relationships, and events; Cinder adds no Form engine.
+
+The [package contract](../packages/react/README.md#additive-compound-namespaces)
+lists every part and ref target. The
+[dated field/form evidence](verification.md#frame-fields--phase-2-second-batch)
+distinguishes executed gates, visual review, native behavior, and remaining manual
+work. Choice/toggle and overlay compositions, the documentation website, and Figma
+remain outside this batch.
+
+**Bounded acceptance passed, 7 November 2026.** The frozen full check passes
+**25 unit/watcher tests / 1,976 assertions** and **280 browser tests**, including all
+**108 Storybook story/theme cases**. Both strict installed consumers and the exact
+README installation commands/snippets pass against the final archives. Visual
+closure covers **74 captures** (72 identical prior verdicts reused and two corrected
+originals inspected); **28 native observations** cover recovery, copying, values,
+refs, duplicate prevention, and failure/retry. All 74 retained axe incompletes have
+individual context dispositions, not WCAG conformance passes.
+
 ## Frame actions — Phase 2 first batch
 
 The private [Storybook workspace](../apps/storybook/README.md) is the component
-workbench. Its **21 stories** use the public package exports, one prebuilt stylesheet,
-and Frame light/dark through `Theme`.
+workbench. The first batch added **21 action stories**, still retained within the
+54-story workbench. They use public package exports, one prebuilt stylesheet, and
+Frame light/dark through `Theme`.
 
 | Area                 | Implemented first-batch scope                                                                                                                                                                                             |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -22,7 +61,7 @@ and Frame light/dark through `Theme`.
 The [action contract](../packages/react/README.md#button-and-link) documents these
 choices and ownership boundaries. The [first-batch verification](verification.md#frame-actions--phase-2-first-batch)
 records executed proof. The full fourteen-entry slice remains in progress; shared
-field anatomy and form recovery come next.
+field anatomy and form recovery followed in the second batch above.
 
 **First-batch acceptance passed, 7 November 2026.** The rebuilt Storybook's
 **42 story/theme gates pass**. All **48 retained captures**
@@ -59,9 +98,9 @@ expectations**; type checking covered **53 files**. Lint and the production buil
 also passed. These counts describe the workspace suite; the installed-consumer
 gate separately verifies the two isolated apps above.
 
-The full fourteen-entry Frame slice is **Phase 2**. In particular, persistent
-guidance, attached recovery, and the default field reading-order change still
-belong there. Phase 1 hooks also reach later date/grouped-field callers without
+The full fourteen-entry Frame slice is **Phase 2**. Persistent guidance, attached
+recovery, and the default field reading-order change were completed in its bounded
+second batch, not Phase 1. Phase 1 hooks also reach later date/grouped-field callers without
 promoting those families to complete Frame coverage. The following catalog remains
 the baseline capability inventory; its Frame work is allocated exactly once as
 14 + 11 + 9 + 11 entries in the plan. The development-only `/prototypes` comparison
@@ -130,7 +169,12 @@ DateField, and RAC composition parts do not add to the 45-page count.
   DOM rendering, render props, refs, locale, layers, and portals in [contracts.test.ts][contracts].
   Theme/portal coverage includes all eight themes, nested Carbon isolation, live
   appearance/language changes, and independent Modal surface/backdrop targets.
-- **F — fidelity checks:** 31 focused browser tests in [fidelity.test.ts][fidelity]
+- The **21 compound field cases** in
+  [composition.test.ts](../tests/browser/composition.test.ts) separately cover the
+  twelve callable namespaces, actual root/part refs, native events/validation and
+  FormData, render children, slots, collections, and shared field anatomy. These
+  cross-family contracts do not promote later families to completed Frame review.
+- **F — fidelity checks:** 52 focused browser tests in [fidelity.test.ts][fidelity]
   cover Carbon geometry, typography, and states; shared field-part/ref/validation
   contracts; legacy size defaults; and Frame light/dark geometry, typography,
   all seven Button variants, inactive states, invalid focus, pending, and forced

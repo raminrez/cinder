@@ -187,6 +187,19 @@ function FieldPartContracts() {
           defaultValue={new Time(10, 30)}
         />
       </section>
+      <Checkbox isInvalid data-fixture="standalone-invalid-checkbox">
+        Standalone invalid choice
+      </Checkbox>
+      <CheckboxGroup isInvalid isDisabled aria-label="Disabled invalid choices">
+        <Checkbox value="one" data-fixture="disabled-invalid-checkbox">
+          Disabled choice
+        </Checkbox>
+      </CheckboxGroup>
+      <RadioGroup isInvalid isDisabled aria-label="Disabled invalid options">
+        <Radio value="one" data-fixture="disabled-invalid-radio">
+          Disabled option
+        </Radio>
+      </RadioGroup>
       <Button
         onPress={() => {
           setRefTargets(
@@ -249,6 +262,7 @@ function FieldPartContracts() {
       <TextField isDisabled defaultValue="Unavailable" data-fixture="legacy-disabled-field">
         <Label>Legacy disabled field</Label>
         <Input />
+        <Text slot="description">Workspace owners can change this value.</Text>
       </TextField>
       <Form
         onSubmit={(event) => {
