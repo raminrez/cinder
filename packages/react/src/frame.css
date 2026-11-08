@@ -1017,6 +1017,135 @@
       border-color: var(--cinder-border-subtle);
       background: var(--cinder-field-background);
     }
+
+    /* Frame Table */
+    .cinder-table {
+      border-collapse: collapse;
+      width: 100%;
+      text-align: start;
+      background: var(--cinder-layer);
+      color: var(--cinder-text-primary);
+      font-size: var(--cinder-text-size-sm);
+    }
+    .cinder-column {
+      background: var(--cinder-layer-accent);
+      color: var(--cinder-text-primary);
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 600;
+      border-block-end: 1px solid var(--cinder-border-subtle);
+      transition: background var(--cinder-motion-fast);
+    }
+    .cinder-column[data-hovered] {
+      background: var(--cinder-layer-accent-hover);
+    }
+    .cinder-column[data-allows-sorting] {
+      cursor: pointer;
+    }
+    .cinder-sort-icon {
+      margin-inline-start: var(--cinder-spacing-02);
+      color: var(--cinder-icon-primary);
+    }
+    .cinder-table .react-aria-Cell {
+      color: var(--cinder-text-primary);
+      font-size: var(--cinder-text-size-sm);
+      border-block-end: 1px solid var(--cinder-border-subtle);
+    }
+    .cinder-table .react-aria-Row {
+      transition: background var(--cinder-motion-fast);
+    }
+    .cinder-table .react-aria-Row[data-hovered] {
+      background: var(--cinder-layer-hover);
+    }
+    .cinder-table .react-aria-Row[data-selected] {
+      background: var(--cinder-layer-selected);
+    }
+    .cinder-table :is(.react-aria-Cell, .react-aria-Row, .cinder-column)[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: -2px;
+    }
+    .cinder-table .react-aria-TableBody[data-empty] td {
+      color: var(--cinder-text-secondary);
+      padding: var(--cinder-spacing-08) var(--cinder-spacing-04);
+      text-align: center;
+    }
+    .react-aria-ResizableTableContainer {
+      overflow: auto;
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      background: var(--cinder-layer);
+    }
+    .react-aria-ColumnResizer {
+      position: absolute;
+      inset-inline-end: 0;
+      top: 0;
+      height: 100%;
+      width: 6px;
+      cursor: col-resize;
+      background: transparent;
+      transition: background var(--cinder-motion-fast);
+    }
+    .react-aria-ColumnResizer[data-resizing],
+    .react-aria-ColumnResizer[data-focus-visible],
+    .react-aria-ColumnResizer:hover {
+      background: var(--cinder-interactive);
+    }
+
+    /* Frame Pagination */
+    .cinder-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--cinder-spacing-04);
+      background: var(--cinder-layer);
+      border-block-start: 1px solid var(--cinder-border-subtle);
+      padding: var(--cinder-spacing-03) var(--cinder-spacing-05);
+      color: var(--cinder-text-secondary);
+      font-size: var(--cinder-text-size-sm);
+    }
+    .cinder-pagination-count {
+      color: var(--cinder-text-primary);
+      font-weight: 500;
+    }
+    .cinder-pagination .cinder-native-select {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--cinder-spacing-02);
+      margin: 0;
+    }
+    .cinder-pagination .cinder-native-select label {
+      color: var(--cinder-text-secondary);
+      font-size: var(--cinder-text-size-sm);
+      white-space: nowrap;
+      margin: 0;
+    }
+    .cinder-pagination .cinder-native-select .cinder-native-select-control {
+      inline-size: auto;
+    }
+    .cinder-pagination .cinder-native-select select {
+      min-inline-size: 4.5rem;
+      height: var(--cinder-size-sm);
+      padding-inline-start: var(--cinder-spacing-03);
+      padding-inline-end: 1.75rem;
+    }
+    .cinder-pagination .cinder-native-select-control > svg {
+      inset-inline-end: 0.5rem;
+      width: 12px;
+      height: 12px;
+    }
+    .cinder-pagination-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--cinder-spacing-01);
+    }
+    .cinder-pagination-actions .cinder-button {
+      border-radius: var(--cinder-control-radius);
+      color: var(--cinder-icon-primary);
+      width: var(--cinder-size-sm);
+      height: var(--cinder-size-sm);
+      min-height: var(--cinder-size-sm);
+      padding: 0;
+    }
   }
 }
 
@@ -1106,6 +1235,13 @@
       }
       .react-aria-ListBoxItem[data-focus-visible],
       .react-aria-MenuItem[data-focus-visible] {
+        outline-color: Highlight;
+      }
+      .cinder-table .react-aria-Row[data-selected] {
+        color: HighlightText;
+        background: Highlight;
+      }
+      .cinder-table :is(.react-aria-Cell, .react-aria-Row, .cinder-column)[data-focus-visible] {
         outline-color: Highlight;
       }
     }

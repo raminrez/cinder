@@ -47,9 +47,10 @@ export function Table({ className, size = "lg", ...props }: TableProps) {
 export interface ColumnProps extends RACColumnProps {
   ref?: Ref<HTMLTableCellElement | HTMLDivElement>;
 }
-export function Column({ className, children, ...props }: ColumnProps) {
+export function Column({ className, children, id, ...props }: ColumnProps) {
+  const derivedId = id ?? (typeof children === "string" ? children : undefined);
   return (
-    <RACColumn {...props} className={classes("cinder-column", className)}>
+    <RACColumn {...props} id={derivedId} className={classes("cinder-column", className)}>
       {composeRenderProps(children, (content, { allowsSorting, sortDirection }) => (
         <>
           {content}
