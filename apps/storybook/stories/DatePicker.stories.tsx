@@ -1,15 +1,18 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
-import { parseDate, type DateValue } from "@internationalized/date";
+import { parseDate, parseTime, type DateValue } from "@internationalized/date";
 import {
   DatePicker,
   DateRangePicker,
   Calendar,
   RangeCalendar,
+  DateField,
+  TimeField,
   Theme,
   useTheme,
   type DateRange as RACDateRange,
+  type TimeValue,
 } from "@cinder/react";
 import "./feedback.css";
 
@@ -203,5 +206,46 @@ export const LongContentAndLocales: Story = {
 
     const calTrigger = canvas.getByRole("button", { name: /Calendar/ });
     expect(calTrigger).toBeInTheDocument();
+  },
+};
+
+function DateAndFieldsExample() {
+  const [date, setDate] = useState<DateValue | null>(() => parseDate("2026-11-09"));
+  const [time, setTime] = useState<TimeValue | null>(() => parseTime("14:30"));
+
+  return (
+    <div className="feedback-story-stack">
+      <div className="feedback-card">
+        <div>
+          <h3 className="feedback-card-title">Direct Segment Date and Time Fields</h3>
+          <p className="feedback-card-description">
+            Accessible typed input segments with arrow-key incrementation and numeric typing.
+          </p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(16rem, 1fr))", gap: "1.5rem" }}>
+          <DateField
+            label="Direct Date Field"
+            description="Type MM/DD/YYYY or use arrow keys."
+            value={date}
+            onChange={setDate}
+          />
+          <TimeField
+            label="Direct Time Field"
+            description="Type HH:MM AM/PM or use arrow keys."
+            value={time}
+            onChange={setTime}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const DateAndTimeFields: Story = {
+  render: () => <DateAndFieldsExample />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText("Direct Date Field")).toBeInTheDocument();
+    expect(canvas.getByText("Direct Time Field")).toBeInTheDocument();
   },
 };

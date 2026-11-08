@@ -1,0 +1,59 @@
+.layout-story-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cinder-spacing-07, 1.75rem);
+  width: 100%;
+  max-width: 64rem;
+}
+
+.layout-card {
+  padding: var(--cinder-spacing-06, 1.5rem);
+  background: var(--cinder-layer-01);
+  border: 1px solid var(--cinder-border-subtle);
+  border-radius: var(--cinder-control-radius, 8px);
+  color: var(--cinder-text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cinder-spacing-05, 1rem);
+}
+
+.layout-card-title {
+  margin: 0 0 var(--cinder-spacing-02, 0.5rem);
+  font-size: var(--cinder-text-size-lg, 1.125rem);
+  font-weight: 600;
+  color: var(--cinder-text-primary);
+}
+
+.layout-card-description {
+  margin: 0;
+  font-size: var(--cinder-text-size-sm, 0.875rem);
+  color: var(--cinder-text-secondary);
+}
+
+.layout-shell-preview {
+  display: flex;
+  min-height: 20rem;
+  border: 1px solid var(--cinder-border-subtle);
+  border-radius: var(--cinder-control-radius, 8px);
+  overflow: hidden;
+  background: var(--cinder-background);
+}
+
+.layout-shell-content {
+  flex: 1;
+  padding: var(--cinder-spacing-06, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cinder-spacing-05, 1rem);
+}
+
+.layout-grid-demo-col {
+  padding: var(--cinder-spacing-05, 1rem);
+  background: var(--cinder-layer-02);
+  border: 1px dashed var(--cinder-border-subtle);
+  border-radius: var(--cinder-control-radius, 6px);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--cinder-text-primary);
+}

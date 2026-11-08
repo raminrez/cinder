@@ -3,6 +3,7 @@ import { expect, within } from "storybook/test";
 import {
   StructuredList,
   StructuredListRow,
+  List,
   Tag,
   Theme,
   useTheme,
@@ -178,5 +179,50 @@ export const LongContentAndLocales: Story = {
     expect(canvas.getByText("شناسه درگاه")).toBeInTheDocument();
     expect(canvas.getByText("pg-tehran-central-01")).toBeInTheDocument();
     expect(canvas.getByText("پروتکل امنیتی")).toBeInTheDocument();
+  },
+};
+
+function ListsExample() {
+  return (
+    <div className="content-story-stack">
+      <div className="content-card">
+        <div>
+          <h3 className="content-card-title">Ordered and Unordered Lists</h3>
+          <p className="content-card-description">
+            Clean typographic lists formatted with consistent line height and spacing tokens.
+          </p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(18rem, 1fr))", gap: "2rem" }}>
+          <div>
+            <h4 style={{ margin: "0 0 0.75rem", fontSize: "0.875rem", fontWeight: 600 }}>Deployment Steps (Ordered)</h4>
+            <List ordered>
+              <li>Pre-flight environment verification</li>
+              <li>Provision VPC subnets and NAT gateways</li>
+              <li>Compile and package application bundle</li>
+              <li>Rolling deployment across availability zones</li>
+            </List>
+          </div>
+          <div>
+            <h4 style={{ margin: "0 0 0.75rem", fontSize: "0.875rem", fontWeight: 600 }}>Cluster Features (Unordered)</h4>
+            <List>
+              <li>Automatic autoscaling with predictive telemetry</li>
+              <li>Zero-trust mutual TLS between worker pods</li>
+              <li>Global multi-region failover replication</li>
+              <li>Continuous compliance and audit logging</li>
+            </List>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const Lists: Story = {
+  render: () => <ListsExample />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText("Deployment Steps (Ordered)")).toBeInTheDocument();
+    expect(canvas.getByText("Pre-flight environment verification")).toBeInTheDocument();
+    expect(canvas.getByText("Cluster Features (Unordered)")).toBeInTheDocument();
   },
 };
