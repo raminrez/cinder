@@ -954,6 +954,69 @@
       color: var(--cinder-text-disabled);
       cursor: not-allowed;
     }
+
+    /* Frame NativeSelect */
+    .cinder-native-select {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cinder-spacing-02);
+      min-width: 0;
+    }
+    .cinder-native-select > label {
+      color: var(--cinder-text-secondary);
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 500;
+    }
+    .cinder-native-select-control {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .cinder-native-select-control select {
+      border: 1px solid var(--cinder-field-border);
+      border-radius: var(--cinder-control-radius);
+      background: var(--cinder-field-background);
+      color: var(--cinder-text-primary);
+      height: var(--control-height, var(--cinder-size-md));
+      padding: 0 var(--cinder-spacing-04);
+      font-size: var(--cinder-text-size-sm);
+      appearance: none;
+      padding-inline-end: 2.5rem;
+      cursor: pointer;
+      width: 100%;
+      outline: none;
+      transition: border-color var(--cinder-motion-fast), box-shadow var(--cinder-motion-fast);
+    }
+    .cinder-native-select-control select:hover:not(:disabled) {
+      border-color: var(--cinder-field-border-hover);
+    }
+    .cinder-native-select-control select:focus-visible {
+      border-color: var(--cinder-focus);
+      box-shadow: 0 0 0 1px var(--cinder-focus);
+    }
+    .cinder-native-select-control > svg {
+      position: absolute;
+      inset-inline-end: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--cinder-text-secondary);
+    }
+    .cinder-native-select[data-size="sm"] .cinder-native-select-control select {
+      height: var(--cinder-size-sm);
+    }
+    .cinder-native-select[data-size="md"] .cinder-native-select-control select {
+      height: var(--cinder-size-md);
+    }
+    .cinder-native-select[data-size="lg"] .cinder-native-select-control select {
+      height: var(--cinder-size-lg);
+    }
+    .cinder-native-select[data-disabled] select {
+      color: var(--cinder-text-disabled);
+      cursor: not-allowed;
+      border-color: var(--cinder-border-subtle);
+      background: var(--cinder-field-background);
+    }
   }
 }
 
