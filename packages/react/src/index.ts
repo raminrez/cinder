@@ -63,8 +63,14 @@ export type {
   SelectRootProps,
   ComboBoxRootProps,
 } from "./selection";
-export { Popover, Modal, Dialog, Tooltip } from "./overlays";
-export type { PopoverProps, ModalProps, DialogProps, TooltipProps } from "./overlays";
+export { Popover, Modal, Dialog, Tooltip, OverflowMenu } from "./overlays";
+export type {
+  PopoverProps,
+  ModalProps,
+  DialogProps,
+  TooltipProps,
+  OverflowMenuProps,
+} from "./overlays";
 export {
   Calendar,
   RangeCalendar,
@@ -93,6 +99,7 @@ export {
   AccordionItem,
   Breadcrumbs,
   BreadcrumbItem,
+  Breadcrumb,
   TagGroup,
   FilterTag,
 } from "./collections";
@@ -165,6 +172,7 @@ export {
   Menu,
   MenuItem,
   MenuSection,
+  Header as SectionHeader,
   Separator,
   ListBox,
   ListBoxItem,

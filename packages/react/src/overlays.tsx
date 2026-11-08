@@ -1,4 +1,4 @@
-import type { Ref } from "react";
+import type { ReactNode, Ref } from "react";
 import {
   Popover as RACPopover,
   Modal as RACModal,
@@ -6,12 +6,17 @@ import {
   Dialog as RACDialog,
   Tooltip as RACTooltip,
   OverlayArrow,
+  MenuTrigger,
+  Menu,
   type PopoverProps as RACPopoverProps,
   type ModalOverlayProps,
   type DialogProps as RACDialogProps,
   type TooltipProps as RACTooltipProps,
+  type Key,
 } from "react-aria-components";
-import { classes } from "./utils";
+import { Button } from "./buttons";
+import { Icon } from "./icons";
+import { classes, type ControlSize } from "./utils";
 import { useOverlayTheme } from "./theme";
 
 export interface PopoverProps extends RACPopoverProps {
@@ -105,5 +110,38 @@ export function Tooltip({ children, className, ...props }: TooltipProps) {
         </>
       )}
     </RACTooltip>
+  );
+}
+
+export interface OverflowMenuProps {
+  "aria-label": string;
+  children: ReactNode;
+  onAction?: (key: Key) => void;
+  disabledKeys?: Iterable<Key>;
+  size?: ControlSize;
+  className?: string;
+  popoverClassName?: string;
+}
+
+export function OverflowMenu({
+  "aria-label": ariaLabel,
+  children,
+  onAction,
+  disabledKeys,
+  size = "md",
+  className,
+  popoverClassName,
+}: OverflowMenuProps) {
+  return (
+    <MenuTrigger>
+      <Button variant="ghost" iconOnly size={size} aria-label={ariaLabel} className={className}>
+        <Icon name="overflow" />
+      </Button>
+      <Popover className={popoverClassName}>
+        <Menu onAction={onAction} disabledKeys={disabledKeys}>
+          {children}
+        </Menu>
+      </Popover>
+    </MenuTrigger>
   );
 }
