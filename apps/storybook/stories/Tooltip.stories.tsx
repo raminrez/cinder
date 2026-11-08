@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, waitFor, within } from "storybook/test";
-import { Button, Icon, Theme, Tooltip, TooltipTrigger } from "@cinder/react";
+import { Button, Icon, Theme, Tooltip, TooltipTrigger, useTheme } from "@cinder/react";
 import "./overlays.css";
 import "./fields.css";
 
@@ -210,37 +210,40 @@ export const CustomStylingAndRefs: Story = {
   },
 };
 
-export const LongContentAndLocales: Story = {
-  render: () => {
-    return (
-      <div className="overlay-story-grid">
-        <div className="overlay-story-case">
-          <h2>Persian RTL tooltip</h2>
-          <Theme locale="fa-IR">
-            <div style={{ padding: "1rem" }}>
-              <TooltipTrigger delay={0}>
-                <Button>رونوشت نشانی خوشه</Button>
-                <Tooltip>نشانی اتصال مستقیم به خوشه سرور در حافظه موقت ذخیره خواهد شد.</Tooltip>
-              </TooltipTrigger>
-            </div>
-          </Theme>
-        </div>
-
-        <div className="overlay-story-case">
-          <h2>Multiline wrapping tooltip</h2>
+function LocalizedTooltipExamples() {
+  const { theme } = useTheme();
+  return (
+    <div className="overlay-story-grid">
+      <div className="overlay-story-case">
+        <h2>Persian RTL tooltip</h2>
+        <Theme theme={theme} locale="fa-IR">
           <div style={{ padding: "1rem" }}>
             <TooltipTrigger delay={0}>
-              <Button variant="secondary">High-availability policy</Button>
-              <Tooltip style={{ maxWidth: "16rem" }}>
-                Automatic failover routes traffic across three distinct availability zones with zero
-                downtime SLA guarantee.
-              </Tooltip>
+              <Button>رونوشت نشانی خوشه</Button>
+              <Tooltip>نشانی اتصال مستقیم به خوشه سرور در حافظه موقت ذخیره خواهد شد.</Tooltip>
             </TooltipTrigger>
           </div>
+        </Theme>
+      </div>
+
+      <div className="overlay-story-case">
+        <h2>Multiline wrapping tooltip</h2>
+        <div style={{ padding: "1rem" }}>
+          <TooltipTrigger delay={0}>
+            <Button variant="secondary">High-availability policy</Button>
+            <Tooltip style={{ maxWidth: "16rem" }}>
+              Automatic failover routes traffic across three distinct availability zones with zero
+              downtime SLA guarantee.
+            </Tooltip>
+          </TooltipTrigger>
         </div>
       </div>
-    );
-  },
+    </div>
+  );
+}
+
+export const LongContentAndLocales: Story = {
+  render: LocalizedTooltipExamples,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const persianTrigger = canvas.getByRole("button", { name: "رونوشت نشانی خوشه" });

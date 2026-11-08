@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, waitFor, within } from "storybook/test";
+import { Collection, Header } from "react-aria-components";
 import {
   Button,
   Form,
@@ -10,6 +11,7 @@ import {
   Select,
   Text,
   Theme,
+  useTheme,
   type Key,
 } from "@cinder/react";
 import "./fields.css";
@@ -58,6 +60,37 @@ const standardRoles: RoleItem[] = [
   { id: "admin", name: "Administrator", description: "Full access to settings and billing" },
   { id: "editor", name: "Editor", description: "Can create, edit, and publish content" },
   { id: "viewer", name: "Viewer", description: "Read-only access to existing workspaces" },
+];
+
+interface ClusterItem {
+  id: string;
+  name: string;
+  description: string;
+}
+
+interface ClusterSection {
+  id: string;
+  name: string;
+  children: ClusterItem[];
+}
+
+const clusterSections: ClusterSection[] = [
+  {
+    id: "internal",
+    name: "Internal clusters",
+    children: [
+      { id: "dev-1", name: "Development alpha", description: "Sandbox testing node" },
+      { id: "stage-1", name: "Staging release", description: "Pre-production verification" },
+    ],
+  },
+  {
+    id: "protected",
+    name: "Protected clusters",
+    children: [
+      { id: "prod-1", name: "Production primary", description: "Live traffic routing" },
+      { id: "prod-dr", name: "Disaster recovery", description: "Failover standby only" },
+    ],
+  },
 ];
 
 export const Playground: Story = {
@@ -185,29 +218,21 @@ export const RichOptionsAndSections: Story = {
           description="Choose a destination environment for this workflow."
           placeholder="Select cluster..."
           disabledKeys={["prod-dr"]}
+          items={clusterSections}
         >
-          <ListBoxSection>
-            <header>Internal clusters</header>
-            <ListBoxItem id="dev-1" textValue="Development alpha">
-              <Text slot="label">Development alpha</Text>
-              <Text slot="description">Sandbox testing node</Text>
-            </ListBoxItem>
-            <ListBoxItem id="stage-1" textValue="Staging release">
-              <Text slot="label">Staging release</Text>
-              <Text slot="description">Pre-production verification</Text>
-            </ListBoxItem>
-          </ListBoxSection>
-          <ListBoxSection>
-            <header>Protected clusters</header>
-            <ListBoxItem id="prod-1" textValue="Production primary">
-              <Text slot="label">Production primary</Text>
-              <Text slot="description">Live traffic routing</Text>
-            </ListBoxItem>
-            <ListBoxItem id="prod-dr" textValue="Disaster recovery">
-              <Text slot="label">Disaster recovery (Locked)</Text>
-              <Text slot="description">Failover standby only</Text>
-            </ListBoxItem>
-          </ListBoxSection>
+          {(section) => (
+            <ListBoxSection id={section.id}>
+              <Header className="cinder-select-section-header">{section.name}</Header>
+              <Collection items={section.children}>
+                {(item) => (
+                  <ListBoxItem id={item.id} textValue={item.name}>
+                    <Text slot="label">{item.name}</Text>
+                    <Text slot="description">{item.description}</Text>
+                  </ListBoxItem>
+                )}
+              </Collection>
+            </ListBoxSection>
+          )}
         </Select>
       </div>
     );
@@ -217,12 +242,20 @@ export const RichOptionsAndSections: Story = {
     const trigger = canvas.getByRole("button", { name: /Deployment cluster/ });
     await userEvent.click(trigger);
 
-    const lockedOption = await waitFor(() =>
-      within(document.body).getByRole("option", { name: /Disaster recovery/ }),
-    );
+    const lockedOption = await waitFor(() => {
+      const opt = document.querySelector<HTMLElement>(
+        '.react-aria-ListBoxItem[data-key="prod-dr"]',
+      );
+      expect(opt).not.toBeNull();
+      return opt!;
+    });
     await expect(lockedOption).toHaveAttribute("aria-disabled", "true");
 
-    const liveOption = within(document.body).getByRole("option", { name: /Production primary/ });
+    const liveOption = await waitFor(() => {
+      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="prod-1"]');
+      expect(opt).not.toBeNull();
+      return opt!;
+    });
     await userEvent.click(liveOption);
 
     await waitFor(async () => {
@@ -404,8 +437,9 @@ export const CompositionAndFormData: Story = {
   },
 };
 
-export const LongContentAndLocales: Story = {
-  render: () => (
+function LocalizedSelectExamples() {
+  const { theme } = useTheme();
+  return (
     <div className="field-story-grid">
       <div className="field-story-case field-story-narrow">
         <h2>Narrow container with long option labels</h2>
@@ -434,7 +468,7 @@ export const LongContentAndLocales: Story = {
 
       <div className="field-story-case">
         <h2>Persian RTL with Latin identifier</h2>
-        <Theme locale="fa-IR">
+        <Theme theme={theme} locale="fa-IR">
           <Select
             label="نقش کاربری در سامانه"
             description="سطح دسترسی خود را برای اتصال به اطلس مشخص نمایید."
@@ -456,7 +490,7 @@ export const LongContentAndLocales: Story = {
 
       <div className="field-story-case">
         <h2>Arabic RTL</h2>
-        <Theme locale="ar-AE">
+        <Theme theme={theme} locale="ar-AE">
           <Select
             label="الصلاحية المخصصة للمستخدم"
             description="حدد مستوى الأذونات الخاصة ببيئة العمل."
@@ -479,7 +513,7 @@ export const LongContentAndLocales: Story = {
         <h2>German expanding labels</h2>
         <Select
           label="Berechtigungsstufe für Systemverwaltung"
-          description="Wählen Sie die entsprechende Zugriffsrichtlinie für dieses Teammitglied."
+          description="Wählen Sie die entsprechende Zugriffsrichtlinie برای dieses Teammitglied."
           defaultSelectedKey="hauptadministrator"
           items={[
             {
@@ -500,7 +534,11 @@ export const LongContentAndLocales: Story = {
         </Select>
       </div>
     </div>
-  ),
+  );
+}
+
+export const LongContentAndLocales: Story = {
+  render: LocalizedSelectExamples,
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const persianTrigger = canvas.getByRole("button", { name: /نقش کاربری در سامانه/ });

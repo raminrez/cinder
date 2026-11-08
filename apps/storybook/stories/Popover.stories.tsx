@@ -10,6 +10,7 @@ import {
   Icon,
   Popover,
   Theme,
+  useTheme,
 } from "@cinder/react";
 import "./overlays.css";
 import "./fields.css";
@@ -313,49 +314,50 @@ export const CustomStylingAndRefs: Story = {
   },
 };
 
-export const LongContentAndLocales: Story = {
-  render: () => {
-    return (
-      <div className="overlay-story-grid">
-        <div className="overlay-story-case">
-          <h2>Persian RTL popover</h2>
-          <Theme locale="fa-IR">
-            <DialogTrigger>
-              <Button>فیلترهای پیشرفته سامانه</Button>
-              <Popover placement="bottom start">
-                <Dialog>
-                  <Heading slot="title">گزینه‌های دسترسی</Heading>
-                  <p>
-                    این پاپ‌اور در جهت راست‌به‌چپ با زبان فارسی و قلم یکپارچه نمایش داده می‌شود.
-                  </p>
-                  <div className="overlay-filter-list">
-                    <Checkbox defaultSelected>خوشه اصلی تهران</Checkbox>
-                    <Checkbox>پشتیبان فرانکفورت</Checkbox>
-                  </div>
-                </Dialog>
-              </Popover>
-            </DialogTrigger>
-          </Theme>
-        </div>
-
-        <div className="overlay-story-case">
-          <h2>German expanded text</h2>
+function LocalizedPopoverExamples() {
+  const { theme } = useTheme();
+  return (
+    <div className="overlay-story-grid">
+      <div className="overlay-story-case">
+        <h2>Persian RTL popover</h2>
+        <Theme theme={theme} locale="fa-IR">
           <DialogTrigger>
-            <Button variant="secondary">Erweiterte Systeminformationen</Button>
-            <Popover placement="bottom end">
+            <Button>فیلترهای پیشرفته سامانه</Button>
+            <Popover placement="bottom start">
               <Dialog>
-                <Heading slot="title">Konfigurationsparameter</Heading>
-                <p>
-                  Detaillierte Übersicht der aktiven Authentifizierungszertifikate und
-                  Verschlüsselungseinstellungen.
-                </p>
+                <Heading slot="title">گزینه‌های دسترسی</Heading>
+                <p>این پاپ‌اور در جهت راست‌به‌چپ با زبان فارسی و قلم یکپارچه نمایش داده می‌شود.</p>
+                <div className="overlay-filter-list">
+                  <Checkbox defaultSelected>خوشه اصلی تهران</Checkbox>
+                  <Checkbox>پشتیبان فرانکفورت</Checkbox>
+                </div>
               </Dialog>
             </Popover>
           </DialogTrigger>
-        </div>
+        </Theme>
       </div>
-    );
-  },
+
+      <div className="overlay-story-case">
+        <h2>German expanded text</h2>
+        <DialogTrigger>
+          <Button variant="secondary">Erweiterte Systeminformationen</Button>
+          <Popover placement="bottom end">
+            <Dialog>
+              <Heading slot="title">Konfigurationsparameter</Heading>
+              <p>
+                Detaillierte Übersicht der aktiven Authentifizierungszertifikate und
+                Verschlüsselungseinstellungen.
+              </p>
+            </Dialog>
+          </Popover>
+        </DialogTrigger>
+      </div>
+    </div>
+  );
+}
+
+export const LongContentAndLocales: Story = {
+  render: LocalizedPopoverExamples,
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole("button", { name: "فیلترهای پیشرفته سامانه" });

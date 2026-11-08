@@ -462,6 +462,19 @@
     .react-aria-Menu {
       padding: var(--cinder-spacing-02);
     }
+    .react-aria-ListBoxSection > header,
+    .react-aria-MenuSection > header {
+      padding: var(--cinder-spacing-03) var(--cinder-spacing-04) var(--cinder-spacing-02);
+      font-size: var(--cinder-label-01-font-size);
+      font-weight: 600;
+      color: var(--cinder-text-secondary);
+      letter-spacing: var(--cinder-label-01-letter-spacing);
+    }
+    .react-aria-ListBoxSection:not(:first-child) {
+      margin-top: var(--cinder-spacing-02);
+      border-top: 1px solid var(--cinder-border-subtle);
+      padding-top: var(--cinder-spacing-02);
+    }
     .react-aria-ListBoxItem,
     .react-aria-MenuItem {
       min-height: var(--cinder-size-md);

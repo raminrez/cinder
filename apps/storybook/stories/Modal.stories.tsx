@@ -14,6 +14,7 @@ import {
   Select,
   TextField,
   Theme,
+  useTheme,
 } from "@cinder/react";
 import "./overlays.css";
 import "./fields.css";
@@ -412,50 +413,89 @@ export const CustomPartTargeting: Story = {
   },
 };
 
-export const LongContentAndLocales: Story = {
-  render: () => {
-    return (
-      <div className="overlay-story-grid">
-        <div className="overlay-story-case">
-          <h2>Scrollable content</h2>
+function LocalizedModalExamples() {
+  const { theme } = useTheme();
+  return (
+    <div className="overlay-story-grid">
+      <div className="overlay-story-case">
+        <h2>Scrollable content</h2>
+        <DialogTrigger>
+          <Button variant="secondary">Open scrollable modal</Button>
+          <Modal size="sm" isDismissable>
+            <Dialog>
+              {({ close }) => (
+                <>
+                  <Heading slot="title">Terms of Service</Heading>
+                  <Button
+                    slot="close"
+                    variant="ghost"
+                    size="md"
+                    iconOnly
+                    aria-label="Close terms modal"
+                    onPress={close}
+                  >
+                    <Icon name="close" />
+                  </Button>
+                  <div style={{ maxHeight: "14rem", overflowY: "auto", paddingRight: "0.5rem" }}>
+                    <p>
+                      Section 1: Acceptance of terms. By connecting services to the Atlas platform,
+                      you agree to abide by these operating standards.
+                    </p>
+                    <p>
+                      Section 2: Data confidentiality. Cryptographic keys and private tokens remain
+                      the exclusive property of the tenant.
+                    </p>
+                    <p>
+                      Section 3: Availability and uptime. Service guarantees apply strictly to
+                      production clusters with active redundancy.
+                    </p>
+                    <p>
+                      Section 4: Termination and audit. All access trails are preserved for 90 days
+                      following project decommission.
+                    </p>
+                  </div>
+                  <div className="cinder-dialog-footer">
+                    <Button variant="primary" onPress={close}>
+                      Accept terms
+                    </Button>
+                  </div>
+                </>
+              )}
+            </Dialog>
+          </Modal>
+        </DialogTrigger>
+      </div>
+
+      <div className="overlay-story-case">
+        <h2>Persian RTL dialog</h2>
+        <Theme theme={theme} locale="fa-IR">
           <DialogTrigger>
-            <Button variant="secondary">Open scrollable modal</Button>
+            <Button>تنظیمات امنیتی سامانه</Button>
             <Modal size="sm" isDismissable>
               <Dialog>
                 {({ close }) => (
                   <>
-                    <Heading slot="title">Terms of Service</Heading>
+                    <Heading slot="title">تأیید عملیات حساس</Heading>
                     <Button
                       slot="close"
                       variant="ghost"
                       size="md"
                       iconOnly
-                      aria-label="Close terms modal"
+                      aria-label="بستن پنجره"
                       onPress={close}
                     >
                       <Icon name="close" />
                     </Button>
-                    <div style={{ maxHeight: "14rem", overflowY: "auto", paddingRight: "0.5rem" }}>
-                      <p>
-                        Section 1: Acceptance of terms. By connecting services to the Atlas
-                        platform, you agree to abide by these operating standards.
-                      </p>
-                      <p>
-                        Section 2: Data confidentiality. Cryptographic keys and private tokens
-                        remain the exclusive property of the tenant.
-                      </p>
-                      <p>
-                        Section 3: Availability and uptime. Service guarantees apply strictly to
-                        production clusters with active redundancy.
-                      </p>
-                      <p>
-                        Section 4: Termination and audit. All access trails are preserved for 90
-                        days following project decommission.
-                      </p>
-                    </div>
+                    <p>
+                      آیا از بازنشانی کلیدهای دسترسی خوشه <code>atlas-sec-01</code> اطمینان دارید؟
+                      این عملیات بلافاصله اعمال خواهد شد.
+                    </p>
                     <div className="cinder-dialog-footer">
-                      <Button variant="primary" onPress={close}>
-                        Accept terms
+                      <Button variant="tertiary" onPress={close}>
+                        انصراف
+                      </Button>
+                      <Button variant="danger" onPress={close}>
+                        بازنشانی کلیدها
                       </Button>
                     </div>
                   </>
@@ -463,50 +503,14 @@ export const LongContentAndLocales: Story = {
               </Dialog>
             </Modal>
           </DialogTrigger>
-        </div>
-
-        <div className="overlay-story-case">
-          <h2>Persian RTL dialog</h2>
-          <Theme locale="fa-IR">
-            <DialogTrigger>
-              <Button>تنظیمات امنیتی سامانه</Button>
-              <Modal size="sm" isDismissable>
-                <Dialog>
-                  {({ close }) => (
-                    <>
-                      <Heading slot="title">تأیید عملیات حساس</Heading>
-                      <Button
-                        slot="close"
-                        variant="ghost"
-                        size="md"
-                        iconOnly
-                        aria-label="بستن پنجره"
-                        onPress={close}
-                      >
-                        <Icon name="close" />
-                      </Button>
-                      <p>
-                        آیا از بازنشانی کلیدهای دسترسی خوشه <code>atlas-sec-01</code> اطمینان دارید؟
-                        این عملیات بلافاصله اعمال خواهد شد.
-                      </p>
-                      <div className="cinder-dialog-footer">
-                        <Button variant="tertiary" onPress={close}>
-                          انصراف
-                        </Button>
-                        <Button variant="danger" onPress={close}>
-                          بازنشانی کلیدها
-                        </Button>
-                      </div>
-                    </>
-                  )}
-                </Dialog>
-              </Modal>
-            </DialogTrigger>
-          </Theme>
-        </div>
+        </Theme>
       </div>
-    );
-  },
+    </div>
+  );
+}
+
+export const LongContentAndLocales: Story = {
+  render: LocalizedModalExamples,
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole("button", { name: "تنظیمات امنیتی سامانه" });
