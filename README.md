@@ -19,10 +19,17 @@ additive `frame-light` / `frame-dark` themes and public customization contracts.
 Representative installed-package proof has passed; see the
 [Phase 1 verification](docs/verification.md#frame-phase-1) for its scope.
 Phase 2 develops the fourteen-entry Frame slice in Storybook. Button/Link and the
-text, number, search, and Form recovery batch have passed bounded acceptance. The
-workbench has **54 stories**, with **108 passing story/theme cases**; the full phase
-remains in progress. The documentation website follows the component work; Figma
-is the final handoff. See the
+text, number, search, and Form recovery batch have passed bounded acceptance, as
+has the field-status extension. Checkbox, Radio, and Switch have passed their
+code, Storybook, and installed-package gates; rendered acceptance is being closed.
+The workbench has **80 stories** (62 preserved plus 18 choice stories). The focused
+choice gate passes **46 story/theme/motion cases**; the preserved 132 cases were
+filtered, not rerun. Select, overlays, and settings/nested-edit compositions follow;
+the full phase remains in progress. The documentation
+website follows the component work; Figma is the final handoff. See the
+[choice verification](docs/verification.md#frame-choices--phase-2-third-batch), the
+[status verification](docs/verification.md#frame-field-status--phase-2-extension)
+for the frozen check, 52 retained captures, and exact README consumer proof, and the
 [field/form verification](docs/verification.md#frame-fields--phase-2-second-batch)
 for the full check, 74 reviewed captures, native input, and installed-package proof.
 

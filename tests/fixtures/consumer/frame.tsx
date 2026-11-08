@@ -6,6 +6,8 @@ import {
 } from "react-aria-components";
 import {
   Button,
+  Checkbox,
+  CheckboxGroup,
   Dialog,
   DialogTrigger,
   FieldError,
@@ -19,7 +21,10 @@ import {
   Link,
   ListBoxItem,
   Modal,
+  Radio,
+  RadioGroup,
   Select,
+  Switch,
   Text,
   TextField,
   Theme,
@@ -242,6 +247,121 @@ function Brand({ kind, theme }: { kind: "plain" | "module"; theme: FrameTheme })
   );
 }
 
+function ChoiceForm() {
+  const label = useRef<HTMLLabelElement>(null);
+  const input = useRef<HTMLInputElement>(null);
+  const [submitted, setSubmitted] = useState("");
+  const [channels, setChannels] = useState("");
+  const [refs, setRefs] = useState("");
+  return (
+    <Form
+      aria-label="Installed choice values"
+      className="fixture-stack"
+      data-testid="installed-choices"
+      onSubmit={(event) => {
+        event.preventDefault();
+        const values = new FormData(event.currentTarget);
+        setSubmitted(JSON.stringify(Array.from(values.entries())));
+        setChannels(JSON.stringify(values.getAll("channels")));
+      }}
+      onReset={() => {
+        setSubmitted("");
+        setChannels("");
+        setRefs("");
+      }}
+    >
+      <h2 className="fixture-heading">Native choice values</h2>
+      <p>
+        Switches change only this local preview. Read values snapshots the form without saving;
+        mixed marks are read-only snapshots, not select-all controls.
+      </p>
+      <CheckboxGroup
+        label="Installed review channels"
+        name="channels"
+        defaultValue={["email", "audit", "archived"]}
+      >
+        <Checkbox value="email">Email updates</Checkbox>
+        <Checkbox value="inApp">In-app updates</Checkbox>
+        <Checkbox value="audit" isReadOnly>
+          Owner-managed audit record
+        </Checkbox>
+        <Checkbox value="archived" isDisabled>
+          Archived updates
+        </Checkbox>
+      </CheckboxGroup>
+      <Checkbox name="mixedSnapshot" value="mixed" isReadOnly isIndeterminate>
+        Mixed review snapshot
+      </Checkbox>
+      <Checkbox name="disabledMixed" value="mixed" isDisabled isIndeterminate>
+        Unavailable mixed review snapshot
+      </Checkbox>
+      <Checkbox
+        isInvalid
+        validationBehavior="aria"
+        aria-describedby="installed-checkbox-error"
+        data-testid="installed-invalid-checkbox"
+      >
+        Review confirmation needing correction
+      </Checkbox>
+      <p id="installed-checkbox-error">Review the confirmation before continuing.</p>
+      <RadioGroup label="Installed delivery" name="delivery" defaultValue="immediate">
+        <Radio value="immediate">Immediate delivery</Radio>
+        <Radio value="daily">Daily delivery</Radio>
+      </RadioGroup>
+      <Switch
+        ref={label}
+        inputRef={input}
+        size="sm"
+        name="liveUpdates"
+        value="enabled"
+        className={({ isSelected }) => (isSelected ? "consumer-switch-on" : "consumer-switch-off")}
+        style={({ isSelected }) => ({ fontWeight: isSelected ? 600 : 400 })}
+        render={(props) => (
+          // oxlint-disable-next-line jsx-a11y/label-has-associated-control -- RAC supplies the native input through props.children.
+          <label {...props} data-consumer-switch="true" />
+        )}
+      >
+        {({ isSelected }) => (
+          <>
+            Live review updates <span aria-hidden="true">{isSelected ? "(On)" : "(Off)"}</span>
+          </>
+        )}
+      </Switch>
+      <Switch size="md" name="managedUpdates" value="enabled" isReadOnly defaultSelected>
+        Owner-managed live updates
+      </Switch>
+      <Switch name="archivedUpdates" value="enabled" isDisabled defaultSelected>
+        Archived live updates
+      </Switch>
+      <div className="fixture-actions">
+        <Button type="submit">Read installed choice values</Button>
+        <Button
+          type="button"
+          variant="ghost"
+          onPress={() => {
+            input.current?.focus();
+            setRefs(
+              JSON.stringify({
+                root: label.current?.tagName,
+                input: input.current?.tagName,
+                contains: label.current?.contains(input.current),
+              }),
+            );
+          }}
+        >
+          Focus installed live updates
+        </Button>
+        <Button type="reset" variant="ghost">
+          Reset installed choices
+        </Button>
+      </div>
+      <output aria-label="Installed choice FormData">{submitted}</output>
+      <output aria-label="Installed repeated channels">{channels}</output>
+      <output aria-label="Installed switch refs">{refs}</output>
+    </Form>
+  );
+}
+
 export function FrameConsumer({ integration }: { integration: "native" | "tailwind" }) {
   const [theme, setTheme] = useState<FrameTheme>("frame-light");
   const [locale, setLocale] = useState("en-US");
@@ -329,6 +449,7 @@ export function FrameConsumer({ integration }: { integration: "native" | "tailwi
           <Button className="rounded-none px-6" data-testid="utility-action">
             Utility override
           </Button>
+          <ChoiceForm />
           <Theme
             theme="g90"
             appearanceClassName=""

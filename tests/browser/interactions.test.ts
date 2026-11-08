@@ -120,8 +120,8 @@ test("search filters real results, presents an empty state, and Escape clears", 
 
 test("native validation connects errors, focuses the invalid field, and submits named values", async () => {
   const canvas = await example("form");
-  const name = canvas.getByRole("textbox", { name: "Name", exact: true });
-  const email = canvas.getByRole("textbox", { name: "Email", exact: true });
+  const name = canvas.getByRole("textbox", { name: "Name (required)", exact: true });
+  const email = canvas.getByRole("textbox", { name: "Email (required)", exact: true });
   await canvas.getByRole("button", { name: "Save profile" }).click();
   await expect(name).toBeFocused();
   await expect(name).toHaveAttribute("aria-invalid", "true");

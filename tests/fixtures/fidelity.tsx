@@ -7,9 +7,11 @@ import {
   AccordionItem,
   Button,
   Calendar,
+  Cell,
   Checkbox,
   CheckboxGroup,
   CodeSnippet,
+  Column,
   ComboBox,
   ContentSwitcher,
   DateField,
@@ -27,11 +29,15 @@ import {
   Radio,
   RadioGroup,
   RangeCalendar,
+  Row,
   SearchField,
   Select,
   Slider,
   Stack,
   Switch,
+  Table,
+  TableBody,
+  TableHeader,
   Text,
   TextArea,
   TextField,
@@ -40,6 +46,7 @@ import {
   ToastProvider,
   ToggleButton,
   useToast,
+  useTheme,
   type ButtonVariant,
   type Key,
 } from "@cinder/react";
@@ -331,10 +338,173 @@ function ToastExample() {
   );
 }
 
+function ChoiceContracts() {
+  const { theme } = useTheme();
+  return (
+    <Stack gap={5} data-fixture="choice-contracts">
+      <section aria-label="Checkbox paint">
+        <Checkbox data-fixture="choice-checkbox-off">Unchecked report</Checkbox>
+        <Checkbox defaultSelected data-fixture="choice-checkbox-selected">
+          Selected report
+        </Checkbox>
+        <Checkbox isIndeterminate data-fixture="choice-checkbox-mixed">
+          Partly selected reports
+        </Checkbox>
+        <Checkbox isDisabled isIndeterminate data-fixture="choice-checkbox-disabled-mixed">
+          Unavailable mixed reports
+        </Checkbox>
+        <Checkbox isDisabled defaultSelected data-fixture="choice-checkbox-disabled-selected">
+          Unavailable selected report
+        </Checkbox>
+        <Checkbox isReadOnly defaultSelected data-fixture="choice-checkbox-readonly">
+          Required audit record, read-only
+        </Checkbox>
+      </section>
+      <RadioGroup label="Report format" defaultValue="pdf" data-fixture="choice-radio-group">
+        <Radio value="pdf" data-fixture="choice-radio-selected">
+          PDF document
+        </Radio>
+        <Radio value="html" data-fixture="choice-radio-off">
+          Web page
+        </Radio>
+        <Radio value="csv" isDisabled data-fixture="choice-radio-disabled">
+          Spreadsheet export, unavailable
+        </Radio>
+      </RadioGroup>
+      <RadioGroup label="Fixed report format" defaultValue="pdf" isReadOnly>
+        <Radio value="pdf" data-fixture="choice-radio-readonly">
+          PDF document, read-only
+        </Radio>
+      </RadioGroup>
+      <RadioGroup label="Unavailable report format" defaultValue="pdf" isDisabled>
+        <Radio value="pdf" data-fixture="choice-radio-disabled-selected">
+          PDF document, unavailable
+        </Radio>
+      </RadioGroup>
+      <CheckboxGroup
+        label="Channels with a returned error"
+        defaultValue={["email", "archived"]}
+        isInvalid
+        errorMessage="Choose a channel available for this review."
+      >
+        <Checkbox value="email" data-fixture="choice-group-checkbox-selected">
+          Email review updates
+        </Checkbox>
+        <Checkbox value="inApp" data-fixture="choice-group-checkbox-off">
+          In-app review updates
+        </Checkbox>
+        <Checkbox value="topics" isIndeterminate data-fixture="choice-group-checkbox-mixed">
+          Some review topics
+        </Checkbox>
+        <Checkbox value="archived" isDisabled data-fixture="choice-group-checkbox-disabled">
+          Archived review updates
+        </Checkbox>
+      </CheckboxGroup>
+      <RadioGroup
+        label="Format with a returned error"
+        defaultValue="pdf"
+        isInvalid
+        errorMessage="Choose a format available for this review."
+      >
+        <Radio value="pdf" data-fixture="choice-group-radio-selected">
+          PDF review document
+        </Radio>
+        <Radio value="html" data-fixture="choice-group-radio-off">
+          Web review page
+        </Radio>
+        <Radio value="csv" isDisabled data-fixture="choice-group-radio-disabled">
+          Archived export format
+        </Radio>
+      </RadioGroup>
+      <section aria-label="Switch paint">
+        <Switch data-fixture="choice-switch-off">Live review updates</Switch>
+        <Switch defaultSelected data-fixture="choice-switch-selected">
+          Automatic review updates
+        </Switch>
+        <Switch size="sm" defaultSelected data-fixture="choice-switch-small">
+          Compact automatic updates
+        </Switch>
+        <Switch isDisabled defaultSelected data-fixture="choice-switch-disabled">
+          Managed updates, unavailable
+        </Switch>
+        <Switch isReadOnly defaultSelected data-fixture="choice-switch-readonly">
+          Managed updates, read-only
+        </Switch>
+      </section>
+      <Table aria-label="Compact report selection" selectionMode="multiple" size="sm">
+        <TableHeader>
+          <Column aria-label="Selection">
+            <Checkbox slot="selection" aria-label="Select all reports" />
+          </Column>
+          <Column isRowHeader>Report</Column>
+        </TableHeader>
+        <TableBody>
+          <Row id="weekly">
+            <Cell>
+              <Checkbox slot="selection" aria-label="Select weekly report" />
+            </Cell>
+            <Cell>Weekly review</Cell>
+          </Row>
+        </TableBody>
+      </Table>
+      {[
+        {
+          locale: "de-DE",
+          label: "Benachrichtigungen für den Arbeitsbereich",
+          checkbox:
+            "Arbeitsbereichsbenachrichtigungszusammenfassung einschließlich der Übergabecheckliste senden",
+          radio: "Die Zusammenfassung erst nach der vollständigen Überprüfung veröffentlichen",
+          toggle: "Neue Überprüfungsnachrichten automatisch im geöffneten Arbeitsbereich anzeigen",
+        },
+        {
+          locale: "fa-IR",
+          label: "پیام‌های فضای کاری",
+          checkbox: "خلاصهٔ هفتگی و فهرست کارهای باقی‌ماندهٔ فضای کاری را برای تیم بفرستید",
+          radio: "خلاصهٔ فضای کاری فقط پس از تأیید همهٔ اعضای تیم منتشر شود",
+          toggle: "پیام‌های جدید مرور تیم در فضای کاری به‌صورت خودکار نمایش داده شوند",
+        },
+        {
+          locale: "ar",
+          label: "إشعارات مساحة العمل",
+          checkbox: "إرسال الملخص الأسبوعي وقائمة مهام التسليم المتبقية إلى فريق مساحة العمل",
+          radio: "نشر ملخص مساحة العمل بعد اكتمال مراجعة جميع أعضاء الفريق فقط",
+          toggle: "عرض رسائل مراجعة الفريق الجديدة تلقائيًا في مساحة العمل المفتوحة",
+        },
+      ].map((copy) => (
+        <Theme
+          key={copy.locale}
+          theme={theme}
+          locale={copy.locale}
+          data-fixture={`choice-translation-${copy.locale}`}
+          style={{ maxWidth: "18rem" }}
+        >
+          <Checkbox>
+            {copy.checkbox} <bdi dir="ltr">WS-1042</bdi>
+          </Checkbox>
+          <RadioGroup label={copy.label}>
+            <Radio value="approved">{copy.radio}</Radio>
+          </RadioGroup>
+          <Switch>{copy.toggle}</Switch>
+        </Theme>
+      ))}
+    </Stack>
+  );
+}
+
 function App() {
   const parameters = new URLSearchParams(location.search);
   const requested = parameters.get("theme");
   const theme = isThemeName(requested) ? requested : "white";
+  if (parameters.has("choices")) {
+    return (
+      <Theme theme={theme} locale="en-US">
+        <main style={{ padding: "1rem", maxWidth: "52rem" }}>
+          <h1>Cinder choice contracts</h1>
+          <ChoiceContracts />
+        </main>
+      </Theme>
+    );
+  }
   if (parameters.has("field-parts")) {
     return (
       <Theme theme={theme} locale="en-US">

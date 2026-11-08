@@ -9,6 +9,11 @@ import {
   SelectValue,
   ComboBox as RACComboBox,
   ComboBoxValue,
+  CheckboxGroupContext,
+  RadioGroupContext,
+  SelectContext,
+  ComboBoxContext,
+  useSlottedContext,
   ListBox,
   Slider as RACSlider,
   SliderOutput,
@@ -32,7 +37,15 @@ import {
 import { Button, type ButtonProps } from "./buttons";
 import { Popover, type PopoverProps } from "./overlays";
 import { FieldLayout, type FieldContentProps } from "./fields";
-import { FieldControl, FieldGroupInput, FieldButton, fieldParts } from "./field-parts";
+import {
+  FieldControl,
+  FieldGroupInput,
+  FieldButton,
+  FieldStatusIcon,
+  useFieldPresentation,
+  type FieldPresentationProps,
+  fieldParts,
+} from "./field-parts";
 import { Icon } from "./icons";
 import { classes, type ControlSize } from "./utils";
 
@@ -58,16 +71,30 @@ export function Checkbox({ children, className, ...props }: CheckboxProps) {
   );
 }
 
-export interface CheckboxGroupRootProps extends RACCheckboxGroupProps {
+export interface CheckboxGroupRootProps extends RACCheckboxGroupProps, FieldPresentationProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-function CheckboxGroupRoot({ className, ...props }: CheckboxGroupRootProps) {
+function CheckboxGroupRoot({
+  className,
+  children,
+  status,
+  isOptional,
+  ...props
+}: CheckboxGroupRootProps) {
+  const context = useSlottedContext(CheckboxGroupContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
     <RACCheckboxGroup
       {...props}
+      {...presentation.props}
       className={classes("cinder-field cinder-checkbox-group", className)}
-    />
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACCheckboxGroup>
   );
 }
 
@@ -75,6 +102,7 @@ export interface CheckboxGroupProps extends CheckboxGroupRootProps, FieldContent
 
 function CheckboxGroupDefault({
   label,
+  labelTooltip,
   description,
   errorMessage,
   className,
@@ -84,7 +112,12 @@ function CheckboxGroupDefault({
   return (
     <CheckboxGroupRoot {...props} className={className}>
       {composeRenderProps(children, (content) => (
-        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldLayout
+          label={label}
+          labelTooltip={labelTooltip}
+          description={description}
+          errorMessage={errorMessage}
+        >
           {content}
         </FieldLayout>
       ))}
@@ -98,13 +131,30 @@ export const CheckboxGroup = Object.assign(CheckboxGroupDefault, {
   Checkbox,
 });
 
-export interface RadioGroupRootProps extends RACRadioGroupProps {
+export interface RadioGroupRootProps extends RACRadioGroupProps, FieldPresentationProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-function RadioGroupRoot({ className, ...props }: RadioGroupRootProps) {
+function RadioGroupRoot({
+  className,
+  children,
+  status,
+  isOptional,
+  ...props
+}: RadioGroupRootProps) {
+  const context = useSlottedContext(RadioGroupContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
-    <RACRadioGroup {...props} className={classes("cinder-field cinder-radio-group", className)} />
+    <RACRadioGroup
+      {...props}
+      {...presentation.props}
+      className={classes("cinder-field cinder-radio-group", className)}
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACRadioGroup>
   );
 }
 
@@ -118,6 +168,7 @@ export interface RadioGroupProps extends RadioGroupRootProps, FieldContentProps 
 
 function RadioGroupDefault({
   label,
+  labelTooltip,
   description,
   errorMessage,
   className,
@@ -127,7 +178,12 @@ function RadioGroupDefault({
   return (
     <RadioGroupRoot {...props} className={className}>
       {composeRenderProps(children, (content) => (
-        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldLayout
+          label={label}
+          labelTooltip={labelTooltip}
+          description={description}
+          errorMessage={errorMessage}
+        >
           <RadioOptions>{content}</RadioOptions>
         </FieldLayout>
       ))}
@@ -178,10 +234,8 @@ export function Switch({ className, children, size = "md", ...props }: SwitchPro
 
 type SelectionMode = "single" | "multiple";
 
-export interface SelectRootProps<T = {}, M extends SelectionMode = "single"> extends RACSelectProps<
-  T,
-  M
-> {
+export interface SelectRootProps<T = {}, M extends SelectionMode = "single">
+  extends RACSelectProps<T, M>, FieldPresentationProps {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
@@ -189,25 +243,43 @@ export interface SelectRootProps<T = {}, M extends SelectionMode = "single"> ext
 function SelectRoot<T, M extends SelectionMode = "single">({
   size = "md",
   className,
+  children,
+  status,
+  isOptional,
   ...props
 }: SelectRootProps<T, M>) {
+  const context = useSlottedContext(SelectContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
     <RACSelect<T, M>
       {...props}
+      {...presentation.props}
       data-size={size}
       className={classes("cinder-field cinder-select", className)}
-    />
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACSelect>
   );
 }
 
-function SelectTrigger({ className, size = "md", ...props }: ButtonProps) {
+function SelectTrigger({ className, children, size = "md", ...props }: ButtonProps) {
   return (
     <Button
       variant="ghost"
       {...props}
       size={size}
       className={classes("cinder-field__control cinder-select-trigger", className)}
-    />
+    >
+      {composeRenderProps(children, (content) => (
+        <>
+          {content}
+          <FieldStatusIcon />
+        </>
+      ))}
+    </Button>
   );
 }
 
@@ -248,6 +320,7 @@ export interface SelectProps<T extends object, M extends SelectionMode = "single
 /** Carbon's dropdown and multi-select share RAC's Select model. */
 function SelectDefault<T extends object, M extends SelectionMode = "single">({
   label,
+  labelTooltip,
   description,
   errorMessage,
   items,
@@ -258,7 +331,12 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
 }: SelectProps<T, M>) {
   return (
     <SelectRoot<T, M> {...props} size={size} className={className}>
-      <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+      <FieldLayout
+        label={label}
+        labelTooltip={labelTooltip}
+        description={description}
+        errorMessage={errorMessage}
+      >
         <SelectTrigger size={size}>
           <SelectValuePart />
           <Icon name="chevronDown" />
@@ -280,10 +358,8 @@ export const Select = Object.assign(SelectDefault, {
   ListBox: SelectListBox,
 });
 
-export interface ComboBoxRootProps<T, M extends SelectionMode = "single"> extends RACComboBoxProps<
-  T,
-  M
-> {
+export interface ComboBoxRootProps<T, M extends SelectionMode = "single">
+  extends RACComboBoxProps<T, M>, FieldPresentationProps {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
@@ -291,14 +367,25 @@ export interface ComboBoxRootProps<T, M extends SelectionMode = "single"> extend
 function ComboBoxRoot<T, M extends SelectionMode = "single">({
   size = "md",
   className,
+  children,
+  status,
+  isOptional,
   ...props
 }: ComboBoxRootProps<T, M>) {
+  const context = useSlottedContext(ComboBoxContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
     <RACComboBox<T, M>
       {...props}
+      {...presentation.props}
       data-size={size}
       className={classes("cinder-field cinder-combobox", className)}
-    />
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACComboBox>
   );
 }
 
@@ -322,6 +409,7 @@ export interface ComboBoxProps<T extends object, M extends SelectionMode = "sing
 
 function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
   label,
+  labelTooltip,
   description,
   errorMessage,
   children,
@@ -332,7 +420,12 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
 }: ComboBoxProps<T, M>) {
   return (
     <ComboBoxRoot<T, M> {...props} size={size} className={className}>
-      <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+      <FieldLayout
+        label={label}
+        labelTooltip={labelTooltip}
+        description={description}
+        errorMessage={errorMessage}
+      >
         <FieldControl>
           <FieldGroupInput placeholder={placeholder} />
           <FieldButton size={size}>

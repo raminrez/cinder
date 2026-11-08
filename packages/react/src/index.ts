@@ -33,6 +33,11 @@ export type {
   FieldTextAreaProps,
   FieldControlProps,
   FieldDateInputProps,
+  FieldStatus,
+  FieldStatusProps,
+  FieldStatusIconProps,
+  FieldPresentationProps,
+  FieldLabelOptions,
 } from "./field-parts";
 export {
   Checkbox,

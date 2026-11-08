@@ -298,10 +298,15 @@ alongside the existing classes:
 | Hook                        | Default part                                                  |
 | --------------------------- | ------------------------------------------------------------- |
 | `cinder-field__label`       | Associated label                                              |
+| `cinder-field__label-row`   | Label and its separate help button                            |
+| `cinder-field__necessity`   | Localized required/optional wording                           |
+| `cinder-field__label-help`  | Named field-help button                                       |
 | `cinder-field__control`     | Standalone input/textarea, grouped control, or Select trigger |
 | `cinder-field__help`        | Recovery container; also `cinder-field-help`                  |
 | `cinder-field__description` | Description text                                              |
 | `cinder-field__error`       | Validation error                                              |
+| `cinder-field__status`      | Appearance-only feedback, with its own description ID         |
+| `cinder-field__status-icon` | Decorative inline feedback icon                               |
 | `cinder-select__value`      | Selected value                                                |
 | `cinder-select__listbox`    | Options in the detached Select popover                        |
 
@@ -355,12 +360,14 @@ prop. Other sized field roots retain `size="md"` by default.
 All twelve `.Root` refs target **`HTMLDivElement`**. Shared parts retain their exact
 RAC/native prop and ref types, not a generalized field-part interface:
 
-| Shared part     | Public prop type                                          | Default DOM and ref target                                                            |
-| --------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `.Label`        | `FieldLabelProps` = RAC Label component props             | `<label>`; `HTMLLabelElement`                                                         |
-| `.Description`  | `FieldDescriptionProps` = RAC Text component props        | `<span>`; `HTMLElement`; defaults to `slot="description"`, which callers may override |
-| `.Help`         | `FieldHelpProps` = native `ComponentProps<"div">`         | `<div>`; `HTMLDivElement`; ordinary DOM props, not RAC render props                   |
-| `.ErrorMessage` | `FieldErrorMessageProps` = RAC FieldError component props | `<span>`; `HTMLElement`; `elementType="div"` for block-level recovery children        |
+| Shared part     | Public prop type                                             | Default DOM and ref target                                                            |
+| --------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| `.Label`        | `FieldLabelProps` = RAC Label props + `FieldLabelOptions`    | `<label>`; `HTMLLabelElement`; optional help sits outside the label                   |
+| `.Description`  | `FieldDescriptionProps` = RAC Text component props           | `<span>`; `HTMLElement`; defaults to `slot="description"`, which callers may override |
+| `.Help`         | `FieldHelpProps` = native `ComponentProps<"div">`            | `<div>`; `HTMLDivElement`; ordinary DOM props, not RAC render props                   |
+| `.ErrorMessage` | `FieldErrorMessageProps` = RAC FieldError component props    | `<span>`; `HTMLElement`; `elementType="div"` for block-level recovery children        |
+| `.Status`       | `FieldStatusProps` = RAC Text props without children/slot/id | `<span>`; `HTMLElement`; content and ID belong to the root's `status`                 |
+| `.StatusIcon`   | `FieldStatusIconProps` = Cinder Icon props without name      | `<svg>`; decorative; actual invalidity takes precedence over presentation status      |
 
 The family-specific parts below are the exported members; there are no new flat
 component exports for them. Ref targets are shown in parentheses.
@@ -416,7 +423,7 @@ Raw aliases such as date Segment retain RAC's class-replacement behavior.
 import { TextField } from "@cinder/react";
 
 <TextField.Root name="email" type="email" autoComplete="email" isRequired>
-  <TextField.Label>Work email (required)</TextField.Label>
+  <TextField.Label>Work email</TextField.Label>
   <TextField.Description>Use your work address.</TextField.Description>
   <TextField.Input
     placeholder="name@example.com"
@@ -530,6 +537,91 @@ hook to retain this styling. The flat `Label`, `Input`, `Text`, `FieldError`, `G
 `DateInput`, `DateSegment`, `SelectValue`, `ComboBoxValue`, and `Form` exports remain
 the original RAC exports.
 
+### Field status, necessity, and label help
+
+All twelve field namespaces accept `status?: FieldStatus` and `isOptional?: boolean`.
+Conveniences also accept `labelTooltip?: string`; compound `.Label` accepts
+`FieldLabelOptions` (`isRequired`, `isOptional`, and `labelTooltip`).
+
+```tsx
+<TextField
+  name="workspace"
+  label="Workspace name"
+  description="Use the name your team recognizes."
+  labelTooltip="This name appears in the shared review list."
+  isRequired
+  status={{ type: "warning", message: "Check this name before saving." }}
+/>
+```
+
+`FieldStatus` is `{ type: "warning" | "error" | "success"; message?: ReactNode }`.
+It is **appearance only**: even `type: "error"` does not set `isInvalid`, change a
+value, fail native validity, or block submission. RAC `isInvalid`, `validate`, native
+constraints, and Form `validationErrors` remain authoritative. Actual validation
+suppresses the presentation message and shows the validation error/icon instead.
+Do not use success appearance as evidence that server validation has passed.
+
+In Frame, visible status attaches beneath a bordered control. CheckboxGroup and
+RadioGroup feedback stays detached at group level. Older themes retain their field
+order and use readable text with status-colored icons; Frame uses its paired status
+foregrounds and surfaces. Long messages grow and wrap. DateRangePicker's existing
+control wraps its dates and action when they do not fit; it does not shrink segments.
+
+Status has a separate mounted description ID, not RAC's `slot="description"`.
+Existing guidance and caller `aria-describedby` remain associated. A compound Root
+does not insert Status: place `.Status` in `.Help` explicitly; omitting or unmounting
+it leaves no dangling status description. `.Control` includes the inline icon for
+grouped controls. For a bare Input/textarea/date input, place `.StatusIcon` next to
+the control and opt into `data-cinder-input-icon` on Root to share the grid cell
+without wrapping or replacing the native element. Raw exports remain raw.
+
+```tsx
+<NumberField.Root
+  name="reviewers"
+  defaultValue={3}
+  status={{ type: "success", message: "The count is recorded in this draft." }}
+>
+  <NumberField.Label labelTooltip="Count everyone who can review the draft.">
+    Reviewers
+  </NumberField.Label>
+  <NumberField.Control>
+    <NumberField.Input />
+    <NumberField.Button slot="decrement" aria-label="Fewer reviewers">
+      <Icon name="minus" />
+    </NumberField.Button>
+    <NumberField.Button slot="increment" aria-label="More reviewers">
+      <Icon name="plus" />
+    </NumberField.Button>
+  </NumberField.Control>
+  <NumberField.Help>
+    <NumberField.ErrorMessage />
+    <NumberField.Status />
+  </NumberField.Help>
+</NumberField.Root>
+```
+
+When a message is omitted, a visually hidden localized status word describes the
+inline icon. Status does not create a live region; applications own announcements
+for asynchronous results. Application labels, help, messages, and validation copy
+remain caller-localized.
+
+Cinder-owned labels inherit actual `isRequired` and append localized necessity
+wording. Required wins over optional; `isOptional` only adds a visible optional
+marker, never changes validity. A `.Label isRequired` marker is likewise presentation
+only: set `isRequired` on Root for actual required behavior. Avoid manually adding
+a second marker. Raw `Label` replacements retain authored wording and are unchanged.
+Built-in necessity, icon-only status, and help-control strings cover English,
+Persian, Arabic, and German, with English fallback, using the effective RAC locale.
+
+Label help uses a named info button outside the label. Stationary hover or keyboard
+focus shows a Tooltip; RAC tooltips dismiss on scroll. Click, Enter/Space, or tap
+opens a dialog Popover with reachable dismissal and focus return. The popover uses
+RAC's default focus/accessibility behavior and does not open the field's select,
+calendar, clear, or stepper action. Help's accessible name is localized “About” plus
+the label. The `cinder-field__label-popover` hook targets the detached help surface;
+Theme supplies its appearance and locale. Coarse-pointer help/dismissal targets
+have a 44px minimum.
+
 ### Form and validation ownership
 
 `Form` is unchanged RAC, with a native `HTMLFormElement` ref. RAC owns validation
@@ -538,7 +630,8 @@ associations. Use the upstream `isRequired`, constraints, `validate`,
 `validationBehavior`, and `Form validationErrors` contracts. ErrorMessage is RAC
 FieldError with Cinder classes: it appears when RAC reports an error, and its
 children may read `ValidationResult`, including `validationDetails` and
-`validationErrors`. Author required wording and useful localized recovery; Theme
+`validationErrors`. Use Cinder's necessity wording or author it on raw labels, and
+provide useful localized recovery; Theme
 locale does not guarantee that browser-generated validation text uses that language.
 
 Applications own requests, pending lifetime, returned name-to-error mappings,
@@ -551,6 +644,61 @@ alone is not a request lock. Read-only controls remain selectable and included i
 FormData, unlike disabled controls. Server-side validation and authorization remain
 the application's responsibility. Authored stories are not execution evidence;
 see the [verification record](../../docs/verification.md) for completed checks.
+
+## Checkbox, Radio, and Switch
+
+These controls retain RAC's native inputs, controlled/default values, event props,
+and label-root composition. For Checkbox, Radio, and Switch, the root `ref`,
+`className`, `style`, and `render` target the `HTMLLabelElement`; `inputRef` targets
+its contained `HTMLInputElement`. Group roots remain `HTMLDivElement` targets.
+Root class callbacks retain the Cinder class, and style/children callbacks receive
+the current RAC state. A custom `render` must preserve the supplied DOM props and
+children, including the native input and label relationship.
+
+| Control                | Value and interaction contract                                                                                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Checkbox`             | Independent choice; `isSelected` / `defaultSelected` / `onChange`; Space or the visible label toggles it                                                           |
+| `CheckboxGroup`        | `value` / `defaultValue` / `onChange` arrays; one repeated native entry per selected, enabled member with the group's `name`                                       |
+| `RadioGroup` + `Radio` | One group `value` / `defaultValue` / `onChange`; native `name` and radio `value`; arrows move and select within the group, skipping disabled members               |
+| `Switch`               | Immediate setting; `isSelected` / `defaultSelected` / `onChange`; Space or the visible label toggles it; Enter may submit a containing form, not toggle the switch |
+
+Read repeated CheckboxGroup entries with `new FormData(form).getAll("channels")`,
+not `Object.fromEntries`, which keeps only the last entry for a repeated name.
+Unchecked and disabled choices are omitted. Checked read-only choices remain
+focusable, immutable, and included in submission. A selected Switch submits its
+`name` and `value` through a native checkbox input with the accessible `switch`
+role; it does not create a separate settings or persistence engine.
+
+`Checkbox isIndeterminate` sets the mixed mark and native `indeterminate` property;
+it does not select members or add a third form value. Derive a select-all checkbox's
+`isSelected` and `isIndeterminate` from its selected members and update those
+members in application code. A read-only mixed snapshot is not a select-all action.
+
+Checkbox supports required/invalid state. CheckboxGroup and RadioGroup own group
+validation, guidance, and recovery through their existing convenience and compound
+parts. Actual validation suppresses appearance-only `status`. Frame group errors
+retain neutral resting marks and blue selected/mixed marks, with detached group
+recovery. A standalone invalid Checkbox keeps its red border, including during
+hover; disabled paint wins. Radio required/invalid state belongs to RadioGroup.
+Switch does **not** expose required, invalid, validation, or mixed-state APIs.
+
+Frame's ordinary choice labels have a **44px minimum height** and can grow with
+wrapping text. Checkbox marks are **18px with 5px corners**; compact table selection
+retains its existing **16px mark and 18px target**. Radio marks stay **18px**.
+Switch supports `size="sm"` and `size="md"` (default): **32×16px** and **48×24px**
+tracks with **10px** and **18px** thumbs, a **3px inset**, and logical LTR/RTL travel.
+Other-theme normal-state geometry remains unchanged. Across themes, long labels
+wrap without shrinking marks, read-only labels use a default cursor, and forced
+colors retain recognizable selected/disabled marks.
+
+Use a Checkbox for a preference applied only by Save. The
+[Checkbox](../../apps/storybook/stories/Checkbox.stories.tsx),
+[Radio](../../apps/storybook/stories/Radio.stories.tsx), and
+[Switch](../../apps/storybook/stories/Switch.stories.tsx) stories demonstrate state,
+native values, recovery, custom rendering/refs, and Persian/Arabic/German labels.
+Switch stories change only local preview state; applications own real requests
+and failure feedback. See [verification](../../docs/verification.md) for the bounded
+executed scope and remaining manual checks.
 
 ## Theme, locale, and portals
 

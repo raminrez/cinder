@@ -168,9 +168,7 @@ function ComposedEmail() {
         isRequired
         render={(props) => <div {...props} data-composed-root="true" />}
       >
-        <TextField.Label>
-          Contact email <span>(required)</span>
-        </TextField.Label>
+        <TextField.Label>Contact email</TextField.Label>
         <TextField.Description>
           Use an address that can receive workspace updates.
         </TextField.Description>
@@ -253,7 +251,7 @@ function LocalizedFields() {
     <div className="field-story-grid">
       <Theme theme={theme} locale="fa-IR">
         <TextField
-          label="نام فضای کاری (الزامی)"
+          label="نام فضای کاری"
           description={
             <>
               نام فضای کاری را برای پروژهٔ <bdi dir="ltr">WS-1042</bdi> وارد کنید.
@@ -266,7 +264,7 @@ function LocalizedFields() {
       </Theme>
       <Theme theme={theme} locale="ar">
         <TextField
-          label="اسم مساحة العمل (مطلوب)"
+          label="اسم مساحة العمل"
           description={
             <>
               أدخل اسم مساحة العمل للمشروع <bdi dir="ltr">WS-1042</bdi>.

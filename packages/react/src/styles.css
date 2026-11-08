@@ -284,6 +284,7 @@
   }
   .cinder-field > label,
   .cinder-field > .react-aria-Label,
+  .cinder-field__label-row > .cinder-field__label,
   .cinder-tag-group > .react-aria-Label,
   .cinder-slider .react-aria-Label,
   .cinder-progress .react-aria-Label {
@@ -291,6 +292,149 @@
     font-size: var(--cinder-label-01-font-size);
     line-height: var(--cinder-label-01-line-height);
     letter-spacing: var(--cinder-label-01-letter-spacing);
+  }
+  .cinder-field__label-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--cinder-spacing-03);
+    min-inline-size: 0;
+  }
+  .cinder-field__label-row > .cinder-field__label {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .cinder-field__necessity {
+    color: var(--cinder-text-helper);
+    font-weight: 400;
+  }
+  .cinder-field__label-help.cinder-button {
+    flex-shrink: 0;
+    min-block-size: 24px;
+    inline-size: 24px;
+    padding: 0;
+    border-radius: var(--cinder-control-radius, 4px);
+  }
+  .cinder-field__label-popover {
+    max-inline-size: min(24rem, calc(100vw - 2rem));
+  }
+  .cinder-field__label-popover .cinder-dialog {
+    padding: var(--cinder-spacing-05);
+    overflow-wrap: anywhere;
+  }
+  .cinder-field__label-popover p {
+    margin: 0 0 var(--cinder-spacing-04);
+  }
+  .cinder-field__label-popover .cinder-dialog > .cinder-button[slot="close"] {
+    position: static;
+    max-inline-size: 100%;
+  }
+  @media (pointer: coarse) {
+    .cinder-field__label-help.cinder-button {
+      min-block-size: 44px;
+      inline-size: 44px;
+    }
+    .cinder-field__label-popover .cinder-button[slot="close"] {
+      min-block-size: 44px;
+    }
+  }
+  /* Share a grid cell with the icon; never replace or wrap the native input when status changes. */
+  .cinder-field[data-cinder-input-icon] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    --cinder-control-row: 1;
+  }
+  .cinder-field[data-cinder-input-icon]:has(
+      > :is(.cinder-field__label, .cinder-field__label-row, .cinder-field__description)
+    ) {
+    --cinder-control-row: 2;
+  }
+  .cinder-field[data-cinder-input-icon]:has(
+      > :is(.cinder-field__label, .cinder-field__label-row)
+    ):has(> .cinder-field__description) {
+    --cinder-control-row: 3;
+  }
+  .cinder-field[data-cinder-input-icon] > :is(.cinder-field__control, .cinder-field__status-icon) {
+    grid-area: var(--cinder-control-row) / 1;
+  }
+  .cinder-field[data-cinder-input-icon] > .cinder-field__status-icon {
+    justify-self: end;
+    align-self: center;
+    margin-inline-end: var(--cinder-spacing-04);
+  }
+  .cinder-field[data-cinder-input-icon] > .cinder-field__control:has(~ .cinder-field__status-icon) {
+    --cinder-input-padding-end: calc(var(--cinder-spacing-04) + 1rem + var(--cinder-spacing-03));
+    padding-inline-end: var(--cinder-input-padding-end);
+  }
+  .cinder-text-area[data-cinder-input-icon] > .cinder-field__status-icon {
+    align-self: start;
+    margin-block-start: var(--cinder-spacing-04);
+  }
+  :is(
+    .cinder-field,
+    .cinder-field__status,
+    .cinder-field__status-icon
+  )[data-cinder-status="warning"] {
+    --cinder-field-status-ink: var(--cinder-status-yellow-outline);
+    --cinder-field-status-surface: var(--cinder-notification-background-warning);
+  }
+  :is(
+    .cinder-field,
+    .cinder-field__status,
+    .cinder-field__status-icon
+  )[data-cinder-status="success"] {
+    --cinder-field-status-ink: var(--cinder-support-success);
+    --cinder-field-status-surface: var(--cinder-notification-background-success);
+  }
+  .cinder-field[data-invalid],
+  :is(
+    .cinder-field,
+    .cinder-field__status,
+    .cinder-field__status-icon
+  )[data-cinder-status="error"] {
+    --cinder-field-status-ink: var(--cinder-text-error);
+    --cinder-field-status-surface: var(--cinder-notification-background-error);
+  }
+  .cinder-field[data-cinder-status]:not([data-invalid], [data-disabled]) > .cinder-field__control {
+    border-color: var(--cinder-field-status-ink);
+  }
+  .cinder-field__status-icon {
+    inline-size: 1rem;
+    block-size: 1rem;
+    color: var(--cinder-field-status-ink);
+    pointer-events: none;
+  }
+  .cinder-input-group > .cinder-field__status-icon {
+    margin-inline: var(--cinder-spacing-04);
+  }
+  .cinder-select-trigger > .cinder-field__status-icon {
+    order: 1;
+    margin-inline-start: auto;
+    color: var(--cinder-field-status-ink);
+  }
+  .cinder-select-trigger > svg:not(.cinder-field__status-icon) {
+    order: 2;
+  }
+  .cinder-field__status:not(.cinder-visually-hidden) {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--cinder-spacing-03);
+    color: var(--cinder-text-primary);
+    font-size: var(--cinder-helper-text-01-font-size);
+    line-height: var(--cinder-helper-text-01-line-height);
+    overflow-wrap: anywhere;
+  }
+  .cinder-field__status > svg {
+    margin-block-start: calc((var(--cinder-helper-text-01-line-height) - 1rem) / 2);
+    color: var(--cinder-field-status-ink);
+  }
+  .cinder-field__help:has(> .cinder-field__status:not([hidden], .cinder-visually-hidden))
+    > [slot="description"] {
+    grid-area: 1 / 1;
+  }
+  .cinder-field__help:has(> [slot="description"])
+    > .cinder-field__status:not([hidden], .cinder-visually-hidden) {
+    grid-area: 2 / 1;
+    margin-block-start: var(--cinder-spacing-03);
   }
   .cinder-field .react-aria-Input,
   .cinder-field .react-aria-TextArea,
@@ -412,7 +556,7 @@
     color: var(--cinder-icon-primary);
     min-height: calc(var(--control-height, 2.5rem) - 1px);
   }
-  .cinder-input-group > svg {
+  .cinder-input-group > svg:not(.cinder-field__status-icon) {
     margin-inline-start: var(--cinder-spacing-05);
   }
   .cinder-search-field[data-empty] .cinder-input-group > .cinder-button {
@@ -460,7 +604,7 @@
   .cinder-select-trigger [slot="description"] {
     display: none;
   }
-  .cinder-select[data-open] .cinder-select-trigger > svg {
+  .cinder-select[data-open] .cinder-select-trigger > svg:not(.cinder-field__status-icon) {
     transform: rotate(180deg);
   }
   .cinder-combobox-values {
@@ -524,7 +668,8 @@
   .cinder-radio[data-disabled] .cinder-radio-control {
     border-color: var(--cinder-icon-disabled);
   }
-  .cinder-checkbox[data-disabled][data-selected] .cinder-checkbox-control {
+  .cinder-checkbox[data-disabled]:is([data-selected], [data-indeterminate])
+    .cinder-checkbox-control {
     background: var(--cinder-icon-disabled);
   }
   .cinder-checkbox-group {
@@ -620,6 +765,21 @@
   }
   .cinder-switch[data-disabled] .cinder-switch-track {
     background: var(--cinder-layer-selected-disabled);
+  }
+  .cinder-checkbox,
+  .cinder-radio,
+  .cinder-switch {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  .cinder-checkbox > span:last-child:not(.cinder-checkbox-control),
+  .cinder-radio > span:last-child,
+  .cinder-switch > span:last-child {
+    min-inline-size: 0;
+  }
+  :is(.cinder-checkbox, .cinder-radio, .cinder-switch)[data-readonly]:not([data-disabled]) {
+    cursor: default;
   }
   .cinder-content-switcher {
     display: inline-flex;
@@ -1287,6 +1447,14 @@
   .cinder-input-group .react-aria-DateInput {
     flex: 1;
     padding-inline-end: 0.5rem;
+  }
+  .cinder-date-range-picker > .cinder-input-group {
+    flex-wrap: wrap;
+    height: auto;
+    min-block-size: var(--control-height, 2.5rem);
+  }
+  .cinder-date-range-picker > .cinder-input-group > .cinder-button {
+    margin-inline-start: auto;
   }
   @scope ([data-cinder-theme]) {
     .react-aria-DateSegment {
@@ -2005,6 +2173,12 @@
     }
   }
   @media (forced-colors: active) {
+    .cinder-field__status,
+    .cinder-field__status-icon {
+      color: CanvasText;
+      background: Canvas;
+      border-color: CanvasText;
+    }
     .cinder-button,
     .cinder-toggle-button,
     .cinder-checkbox-control,
@@ -2015,17 +2189,42 @@
       color: ButtonText;
       border: 1px solid ButtonText;
     }
-    .cinder-checkbox[data-selected] .cinder-checkbox-control,
+    .cinder-checkbox:is([data-selected], [data-indeterminate]) .cinder-checkbox-control,
     .cinder-switch[data-selected] .cinder-switch-track,
     .cinder-toggle-button[data-selected] {
       background: Highlight;
       color: HighlightText;
     }
     .cinder-radio[data-selected] .cinder-radio-control::after,
-    .cinder-switch-thumb,
     .cinder-progress-fill,
     .cinder-slider .react-aria-SliderThumb {
       background: Highlight;
+    }
+    .cinder-switch-track {
+      /* Keep the normal thumb inset when forced colors adds a one-pixel border. */
+      padding: 2px;
+    }
+    .cinder-switch-thumb {
+      background: ButtonText;
+    }
+    .cinder-switch[data-selected] .cinder-switch-thumb {
+      background: HighlightText;
+    }
+    .cinder-checkbox[data-disabled] .cinder-checkbox-control,
+    .cinder-radio[data-disabled] .cinder-radio-control,
+    .cinder-switch[data-disabled] .cinder-switch-track {
+      background: ButtonFace;
+      border-color: GrayText;
+      color: GrayText;
+    }
+    .cinder-radio[data-disabled] .cinder-radio-control::after,
+    .cinder-switch[data-disabled] .cinder-switch-thumb {
+      background: GrayText;
+    }
+    .cinder-checkbox[data-focus-visible] .cinder-checkbox-control,
+    .cinder-radio[data-focus-visible] .cinder-radio-control,
+    .cinder-switch[data-focus-visible] .cinder-switch-track {
+      outline-color: Highlight;
     }
     .cinder-button[data-disabled] {
       color: GrayText;

@@ -62,12 +62,30 @@ async function openFieldParts(theme: ThemeName = "white") {
   await page.goto(`/?field-parts&theme=${theme}`);
   await expect(page.getByRole("heading", { name: "Cinder field part contracts" })).toBeVisible();
 }
+async function openChoices(theme: ThemeName) {
+  const response = await page.goto(`/?theme=${theme}&choices=1`);
+  expect(response?.status()).toBe(200);
+  await expect(page.locator('[data-fixture="choice-contracts"]')).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
+}
 async function color(theme: ThemeName, name: keyof typeof themes.white) {
   return page.evaluate((value) => {
     const style = document.createElement("span").style;
     style.color = value;
     return style.color;
   }, themes[theme][name]);
+}
+
+async function systemColor(name: string) {
+  return page.evaluate((name) => {
+    const probe = document.createElement("span");
+    probe.style.forcedColorAdjust = "none";
+    probe.style.color = name;
+    document.querySelector('[data-fixture="choice-contracts"]')!.append(probe);
+    const color = getComputedStyle(probe).color;
+    probe.remove();
+    return color;
+  }, name);
 }
 
 async function buttonPaint(button: Locator) {
@@ -220,12 +238,15 @@ for (const theme of fieldThemes) {
       .all()) {
       await expect(control).toHaveCSS(
         "border-top-color",
-        await color(theme, isFrame ? "icon-primary" : "support-error"),
+        await color(theme, isFrame ? "border-strong-01" : "support-error"),
       );
     }
-    await expect(
-      page.locator('[data-fixture="standalone-invalid-checkbox"] .cinder-checkbox-control'),
-    ).toHaveCSS("border-top-color", await color(theme, "support-error"));
+    const standaloneInvalid = page.locator('[data-fixture="standalone-invalid-checkbox"]');
+    const invalidMark = standaloneInvalid.locator(".cinder-checkbox-control");
+    await expect(invalidMark).toHaveCSS("border-top-color", await color(theme, "support-error"));
+    await standaloneInvalid.hover();
+    await expect(standaloneInvalid).toHaveAttribute("data-hovered");
+    await expect(invalidMark).toHaveCSS("border-top-color", await color(theme, "support-error"));
     const disabledOptions = page.locator(
       '[data-fixture="disabled-invalid-checkbox"] .cinder-checkbox-control, [data-fixture="disabled-invalid-radio"] .cinder-radio-control',
     );
@@ -662,44 +683,267 @@ test("compound sizes produce 32/40/48px controls and equal bounded switcher segm
 });
 
 test("standard and compact toggles retain exact thumb size, inset, and logical travel", async () => {
-  await open();
-  for (const direction of ["ltr", "rtl"] as const) {
-    for (const [size, width, height, thumbSize, travel] of [
-      ["sm", 32, 16, 10, 16],
-      ["md", 48, 24, 18, 24],
-    ] as const) {
-      const control = page.locator(`[data-fixture="toggle-${size}-${direction}"]`);
-      const geometry = () =>
-        control.evaluate((element) => {
-          const track = element.querySelector(".cinder-switch-track")!.getBoundingClientRect();
-          const thumb = element.querySelector(".cinder-switch-thumb")!.getBoundingClientRect();
-          return {
-            width: track.width,
-            height: track.height,
-            thumbWidth: thumb.width,
-            thumbHeight: thumb.height,
-            left: thumb.left - track.left,
-            right: track.right - thumb.right,
-            top: thumb.top - track.top,
-          };
-        });
-      const before = await geometry();
-      expect([
-        before.width,
-        before.height,
-        before.thumbWidth,
-        before.thumbHeight,
-        before.top,
-        before[direction === "ltr" ? "left" : "right"],
-      ]).toEqual([width, height, thumbSize, thumbSize, 3, 3]);
-      await control.click();
-      await expect(control.getByRole("switch")).toBeChecked();
-      const after = await geometry();
-      expect(after[direction === "ltr" ? "right" : "left"]).toBe(3);
-      expect(Math.abs(after.left - before.left)).toBe(travel);
+  for (const forcedColors of ["none", "active"] as const) {
+    await page.emulateMedia({ forcedColors });
+    for (const theme of fieldThemes) {
+      await open(theme);
+      for (const direction of ["ltr", "rtl"] as const) {
+        for (const [size, width, height, thumbSize, travel] of [
+          ["sm", 32, 16, 10, 16],
+          ["md", 48, 24, 18, 24],
+        ] as const) {
+          const control = page.locator(`[data-fixture="toggle-${size}-${direction}"]`);
+          const geometry = () =>
+            control.evaluate((element) => {
+              const track = element.querySelector(".cinder-switch-track")!.getBoundingClientRect();
+              const thumb = element.querySelector(".cinder-switch-thumb")!.getBoundingClientRect();
+              return {
+                width: track.width,
+                height: track.height,
+                thumbWidth: thumb.width,
+                thumbHeight: thumb.height,
+                left: thumb.left - track.left,
+                right: track.right - thumb.right,
+                top: thumb.top - track.top,
+              };
+            });
+          const before = await geometry();
+          expect([
+            before.width,
+            before.height,
+            before.thumbWidth,
+            before.thumbHeight,
+            before.top,
+            before[direction === "ltr" ? "left" : "right"],
+          ]).toEqual([width, height, thumbSize, thumbSize, 3, 3]);
+          await control.click();
+          await expect(control.getByRole("switch")).toBeChecked();
+          const after = await geometry();
+          expect(after[direction === "ltr" ? "right" : "left"]).toBe(3);
+          expect(Math.abs(after.left - before.left)).toBe(travel);
+        }
+      }
     }
   }
 });
+
+for (const theme of fieldThemes) {
+  test(`${theme}: disabled mixed choices and forced-color marks remain identifiable`, async () => {
+    await openChoices(theme);
+    for (const name of ["checkbox", "radio", "switch"]) {
+      await expect(page.locator(`[data-fixture="choice-${name}-readonly"]`)).toHaveCSS(
+        "cursor",
+        "default",
+      );
+    }
+    const mixed = page.locator('[data-fixture="choice-checkbox-disabled-mixed"]');
+    const mixedMark = mixed.locator(".cinder-checkbox-control");
+    await expect(mixed).toHaveAttribute("data-indeterminate");
+    expect(
+      await mixed.locator("input").evaluate((input: HTMLInputElement) => input.indeterminate),
+    ).toBe(true);
+    await expect(mixedMark).toHaveCSS("background-color", await color(theme, "icon-disabled"));
+    await expect(mixedMark).toHaveCSS("border-top-color", await color(theme, "icon-disabled"));
+    const disabledSelectedMark = page.locator(
+      '[data-fixture="choice-checkbox-disabled-selected"] .cinder-checkbox-control',
+    );
+    await expect(disabledSelectedMark).toHaveCSS(
+      "background-color",
+      await color(theme, "icon-disabled"),
+    );
+
+    await page.emulateMedia({ forcedColors: "active" });
+    const highlight = await systemColor("Highlight");
+    const highlightText = await systemColor("HighlightText");
+    const buttonFace = await systemColor("ButtonFace");
+    const grayText = await systemColor("GrayText");
+    for (const state of ["selected", "mixed"]) {
+      const mark = page.locator(
+        `[data-fixture="choice-checkbox-${state}"] .cinder-checkbox-control`,
+      );
+      await expect(mark).toHaveCSS("background-color", highlight);
+      await expect(mark).toHaveCSS("color", highlightText);
+    }
+    await expect(mixedMark).toHaveCSS("background-color", buttonFace);
+    await expect(mixedMark).toHaveCSS("border-top-color", grayText);
+    await expect(mixedMark).toHaveCSS("color", grayText);
+    await expect(disabledSelectedMark).toHaveCSS("background-color", buttonFace);
+    await expect(disabledSelectedMark).toHaveCSS("color", grayText);
+    const selectedRadio = page.locator(
+      '[data-fixture="choice-radio-selected"] .cinder-radio-control',
+    );
+    expect(
+      await selectedRadio.evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
+    ).toBe(highlight);
+    const disabledRadio = page.locator(
+      '[data-fixture="choice-radio-disabled-selected"] .cinder-radio-control',
+    );
+    expect(
+      await disabledRadio.evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
+    ).toBe(grayText);
+    for (const name of ["selected", "small"]) {
+      const toggle = page.locator(`[data-fixture="choice-switch-${name}"]`);
+      await expect(toggle.locator(".cinder-switch-track")).toHaveCSS("background-color", highlight);
+      await expect(toggle.locator(".cinder-switch-thumb")).toHaveCSS(
+        "background-color",
+        highlightText,
+      );
+      expect(highlight).not.toBe(highlightText);
+      expect(
+        await toggle.evaluate((toggle) => {
+          const track = toggle.querySelector(".cinder-switch-track")!.getBoundingClientRect();
+          const thumb = toggle.querySelector(".cinder-switch-thumb")!.getBoundingClientRect();
+          return [
+            track.width,
+            track.height,
+            thumb.width,
+            thumb.top - track.top,
+            track.right - thumb.right,
+          ];
+        }),
+      ).toEqual(name === "small" ? [32, 16, 10, 3, 3] : [48, 24, 18, 3, 3]);
+    }
+    const disabledSwitch = page.locator('[data-fixture="choice-switch-disabled"]');
+    await expect(disabledSwitch.locator(".cinder-switch-track")).toHaveCSS(
+      "background-color",
+      buttonFace,
+    );
+    await expect(disabledSwitch.locator(".cinder-switch-track")).toHaveCSS(
+      "border-top-color",
+      grayText,
+    );
+    await expect(disabledSwitch.locator(".cinder-switch-thumb")).toHaveCSS(
+      "background-color",
+      grayText,
+    );
+    const toggle = page.locator('[data-fixture="choice-switch-off"]');
+    await toggle.getByRole("switch").focus();
+    await page.keyboard.press("Space");
+    await expect(toggle).toHaveAttribute("data-focus-visible");
+    await expect(toggle.locator(".cinder-switch-track")).toHaveCSS("outline-color", highlight);
+    for (const [name, role, control] of [
+      ["checkbox-off", "checkbox", ".cinder-checkbox-control"],
+      ["radio-selected", "radio", ".cinder-radio-control"],
+    ] as const) {
+      const choice = page.locator(`[data-fixture="choice-${name}"]`);
+      await choice.getByRole(role).press("Space");
+      await expect(choice).toHaveAttribute("data-focus-visible");
+      await expect(choice.locator(control)).toHaveCSS("outline-color", highlight);
+    }
+  });
+}
+
+for (const theme of ["frame-light", "frame-dark"] as const) {
+  test(`${theme}: choice geometry and interaction paint preserve compact table selection`, async () => {
+    await openChoices(theme);
+    for (const name of ["checkbox-off", "radio-off", "switch-off"]) {
+      const choice = page.locator(`[data-fixture="choice-${name}"]`);
+      expect((await choice.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    }
+    const checkbox = page.locator('[data-fixture="choice-checkbox-off"]');
+    const mark = checkbox.locator(".cinder-checkbox-control");
+    await expect(mark).toHaveCSS("width", "18px");
+    await expect(mark).toHaveCSS("height", "18px");
+    await expect(mark).toHaveCSS("border-radius", "5px");
+    await expect(mark).toHaveCSS("border-top-color", await color(theme, "border-strong-01"));
+    const initialBox = await checkbox.boundingBox();
+    await checkbox.hover();
+    await expect(mark).toHaveCSS("border-top-color", await color(theme, "text-primary"));
+    await page.mouse.down();
+    await expect(checkbox).toHaveAttribute("data-pressed");
+    await expect(mark).toHaveCSS("background-color", await color(theme, "layer-active-01"));
+    await page.mouse.up();
+    await expect(checkbox.getByRole("checkbox")).toBeChecked();
+    await expect(mark).toHaveCSS("background-color", await color(theme, "focus"));
+    expect(await checkbox.boundingBox()).toEqual(initialBox);
+    await checkbox.getByRole("checkbox").press("Space");
+    await expect(checkbox).toHaveAttribute("data-focus-visible");
+    await expect(mark).toHaveCSS("outline-color", await color(theme, "focus"));
+    for (const name of ["checkbox-selected", "checkbox-mixed"]) {
+      await expect(
+        page.locator(`[data-fixture="choice-${name}"] .cinder-checkbox-control`),
+      ).toHaveCSS("background-color", await color(theme, "focus"));
+    }
+    expect(
+      await page
+        .locator('[data-fixture="choice-radio-selected"] .cinder-radio-control')
+        .evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
+    ).toBe(await color(theme, "focus"));
+    await expect(
+      page.locator('[data-fixture="choice-switch-selected"] .cinder-switch-track'),
+    ).toHaveCSS("background-color", await color(theme, "focus"));
+    for (const name of ["checkbox", "radio"]) {
+      await expect(
+        page.locator(`[data-fixture="choice-group-${name}-off"] .cinder-${name}-control`),
+      ).toHaveCSS("border-top-color", await color(theme, "border-strong-01"));
+      await expect(
+        page.locator(`[data-fixture="choice-group-${name}-selected"] .cinder-${name}-control`),
+      ).toHaveCSS("border-top-color", await color(theme, "focus"));
+      await expect(
+        page.locator(`[data-fixture="choice-group-${name}-disabled"] .cinder-${name}-control`),
+      ).toHaveCSS("border-top-color", await color(theme, "icon-disabled"));
+    }
+    await expect(
+      page.locator('[data-fixture="choice-group-checkbox-mixed"] .cinder-checkbox-control'),
+    ).toHaveCSS("border-top-color", await color(theme, "focus"));
+    const table = page.getByRole("grid", { name: "Compact report selection" });
+    const selection = table.getByRole("checkbox", { name: "Select weekly report" });
+    const target = selection.locator("xpath=ancestor::label[1]");
+    const compactMark = target.locator(".cinder-checkbox-control");
+    await expect(target).toHaveCSS("min-height", "16px");
+    await expect(target).toHaveCSS("padding-top", "0px");
+    await expect(compactMark).toHaveCSS("width", "16px");
+    await expect(compactMark).toHaveCSS("height", "16px");
+    expect((await target.boundingBox())!.height).toBe(18);
+    const allReports = table.getByRole("checkbox", { name: "Select all reports" });
+    await allReports.locator("xpath=ancestor::label[1]").click();
+    await expect(allReports).toBeChecked();
+    await expect(selection).toBeChecked();
+  });
+}
+
+for (const theme of fieldThemes) {
+  test(`${theme}: translated choice labels wrap inside narrow containers without shrinking marks`, async () => {
+    await openChoices(theme);
+    for (const width of [310, 390, 768]) {
+      await page.setViewportSize({ width, height: 1000 });
+      for (const locale of ["de-DE", "fa-IR", "ar"]) {
+        const region = page.locator(`[data-fixture="choice-translation-${locale}"]`);
+        await expect(region).toHaveAttribute("dir", locale === "de-DE" ? "ltr" : "rtl");
+        const choices = region.locator(".cinder-checkbox, .cinder-radio, .cinder-switch");
+        await expect(choices).toHaveCount(3);
+        for (const choice of await choices.all()) {
+          const bounds = await choice.evaluate((choice) => {
+            const label = choice.lastElementChild as HTMLElement;
+            const mark = choice.querySelector<HTMLElement>(
+              ".cinder-checkbox-control, .cinder-radio-control, .cinder-switch-track",
+            )!;
+            return {
+              overflow: label.scrollWidth - label.clientWidth,
+              width: choice.getBoundingClientRect().width,
+              available: choice.parentElement!.getBoundingClientRect().width,
+              labelHeight: label.getBoundingClientRect().height,
+              lineHeight: parseFloat(getComputedStyle(label).lineHeight),
+              markWidth: mark.getBoundingClientRect().width,
+              isCheckbox: choice.classList.contains("cinder-checkbox"),
+              isSwitch: choice.classList.contains("cinder-switch"),
+            };
+          });
+          expect(bounds.overflow).toBeLessThanOrEqual(1);
+          expect(bounds.width).toBeLessThanOrEqual(bounds.available + 1);
+          expect(bounds.labelHeight).toBeGreaterThan(bounds.lineHeight);
+          const checkboxWidth = theme.startsWith("frame-") || theme.startsWith("relay-") ? 18 : 16;
+          expect(bounds.markWidth).toBe(
+            bounds.isSwitch ? 48 : bounds.isCheckbox ? checkboxWidth : 18,
+          );
+        }
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+        width,
+      );
+    }
+  });
+}
 
 test("slider tracks and active thumbs match the single/range geometry without shifting their centers", async () => {
   await open();

@@ -1,12 +1,79 @@
 # Cinder implementation coverage
 
-**Baseline:** Cinder 0.1.0, 7 November 2026. Carbon v11 visual rules, RAC 1.22.1
+**Baseline:** Cinder 0.1.0, 8 November 2026. Carbon v11 visual rules, RAC 1.22.1
 interaction, React 19.3.1, and Bun 1.4.4. This describes the implemented source and
 examples. Dated execution results are in [verification](verification.md).
 
+## Frame choices — Phase 2 third batch
+
+Checkbox, Radio, and Switch each add **six stories / five authored plays**. The
+static workbench now indexes **80 stories / 178 story/theme/motion cases**: 62
+preserved stories plus 18 choice stories. Code, Storybook, and installed-package
+gates passed on **8 November 2026**; rendered acceptance is being closed separately.
+
+| Area                 | Implemented bounded scope                                                                                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Choice behavior      | Native label/input ownership, controlled/default values, actual Space/label input, Radio arrow navigation and disabled skipping; Switch Enter may submit rather than toggle                                               |
+| Values and recovery  | Repeated CheckboxGroup `FormData.getAll()`, one Radio value, checked read-only submission/immutability, disabled omission, mixed state derived from members, native/group validation and detached recovery                |
+| Frame appearance     | 44px ordinary label minimum; 18px Checkbox marks with 5px corners and 18px Radio marks; blue selected/mixed marks; neutral/blue group error borders; standalone invalid hover stays red; compact table geometry unchanged |
+| Shared compatibility | Long-label wrapping, non-shrinking marks, read-only cursors, disabled-mixed paint, and forced colors across themes; unchanged `selection.tsx`, APIs, refs, render props, eight themes, and seven Button variants          |
+| Switch and locales   | sm/md tracks and logical LTR/RTL thumbs; no required/invalid/validation/mixed API; real Persian/Arabic/German providers, long text, and isolated Latin identifiers                                                        |
+
+Final source execution passes **32 cases / 113 filtered / 0 failures** across four
+files. Focused Storybook execution passes **46 choice cases / 132 filtered /
+0 failures**; the 132 existing cases were not rerun against this build. Formatting,
+lint, strict source/Storybook/public declarations, production packing, both native
+CSS/CSS Modules and Tailwind **4.3.5** consumers, and preserved baseline journeys pass.
+The renderer retains **62/62 PNGs**, with zero geometry/contrast failures, axe
+violations, or recorded console/page errors. Visual reviews and all **50 `bypass`
+incompletes** remain separately contextualized, not automated WCAG passes.
+
+See the [public choice contract](../packages/react/README.md#checkbox-radio-and-switch)
+and [dated evidence](verification.md#frame-choices--phase-2-third-batch). Select,
+overlays, and settings/nested-edit compositions follow. The full fourteen-entry
+slice, manual AT/device/IME/zoom/browser matrix, documentation website, and Figma
+are not completed by this bounded batch.
+
+## Frame field status — Phase 2 extension
+
+At extension acceptance, the workbench indexed **62 stories**: the preserved 21 action and 33 field/form
+stories plus **eight FieldStatus stories**. The status extension does not promote
+shared choice, selection, or date callers to complete family acceptance.
+
+| Area               | Implemented bounded scope                                                                                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Field status       | Twelve namespaces accept appearance-only warning/error/success; real validation takes precedence; values, native validity, and submission remain RAC/application-owned |
+| Composition        | Default inline icons and explicit compound `.Status`/`.StatusIcon`; mounted status descriptions preserve guidance and caller associations without dangling IDs         |
+| Frame feedback     | Attached below bordered controls, detached for CheckboxGroup/RadioGroup; long copy and date-range actions reflow without shrinking native values                       |
+| Necessity and help | Required-over-optional wording; independent hover/focus Tooltip and click/keyboard dialog Popover; English, Persian, Arabic, German, and English fallback strings      |
+| Compatibility      | Existing APIs, raw exports, native elements/drafts/caret/focus, slotted context children, refs, eight themes, and seven Button variants preserved                      |
+
+**Bounded acceptance passed, 8 November 2026.** The frozen check passes
+**41 unit/watcher tests / 2,005 assertions** and
+**341 browser tests**, including **132 Storybook story/theme/motion cases** and
+**37 status contracts**. Both installed consumers pass against matching archives.
+All **52 retained captures / 16 scenes** are accounted for: 14 newly reviewed after
+restart and 38 prior inspections reused after hash comparison. Six renderer source
+hashes, ten relevant dependency hashes, and all PNG hashes match; live served bytes
+were not rechecked because the old server is offline. All 16 retained axe audits
+have zero violations; four isolated-canvas `bypass` incompletes have contextual
+manual dispositions, not automated passes.
+
+The [exact README consumer receipt](../test-results/status-readme-resumed-2026-11-08.final.json)
+passes **13 accepted checks**: all three root installation workflows, all three
+root TSX blocks, and both verbatim status examples compile, bundle, and run against
+the matching final archives. An initial helper-only stepper selector failure and
+its corrected continuation remain preserved; no published example needed a fix.
+
+See the [public status contract](../packages/react/README.md#field-status-necessity-and-label-help)
+and [dated evidence](verification.md#frame-field-status--phase-2-extension).
+Checkbox/Radio/Switch family stories and overlay/task compositions remain next.
+No exact lost Astryx screenshot comparison, manual AT, physical device/IME, broad
+zoom, Firefox/WebKit, documentation website, or Figma completion is claimed.
+
 ## Frame fields — Phase 2 second batch
 
-The workbench now indexes **54 stories**: the preserved 21 action stories and
+This batch added a **54-story workbench**: the preserved 21 action stories and
 **33 field/form stories** (7 TextField, 6 TextArea, 8 NumberField, 7 SearchField,
 and 5 Form). Stories import the public package and one prebuilt stylesheet.
 
@@ -46,7 +113,7 @@ individual context dispositions, not WCAG conformance passes.
 
 The private [Storybook workspace](../apps/storybook/README.md) is the component
 workbench. The first batch added **21 action stories**, still retained within the
-54-story workbench. They use public package exports, one prebuilt stylesheet, and
+current workbench. They use public package exports, one prebuilt stylesheet, and
 Frame light/dark through `Theme`.
 
 | Area                 | Implemented first-batch scope                                                                                                                                                                                             |

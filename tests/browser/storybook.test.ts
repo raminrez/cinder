@@ -30,6 +30,18 @@ const stories = Object.values(index.entries).filter(({ type }) => type === "stor
 if (!stories.length)
   throw new Error("No stories in dist/storybook/index.json. Run bun run build:storybook.");
 
+const normalMotionStories = new Set([
+  "fields-checkbox--mixed-selection",
+  "fields-checkbox--composition-and-form-data",
+  "fields-radio--keyboard-navigation",
+  "fields-switch--sizes-and-keyboard",
+  "fields-switch--composition-and-form-data",
+  "fields-fieldstatus--required-optional-and-tooltip",
+  "fields-fieldstatus--validation-precedence",
+  "fields-fieldstatus--long-content",
+  "fields-fieldstatus--localized-content",
+]);
+
 let server: ReturnType<typeof Bun.serve>;
 let browser: Browser;
 let context: BrowserContext;
@@ -90,44 +102,49 @@ afterAll(async () => {
 
 for (const theme of ["frame-light", "frame-dark"]) {
   for (const { id } of stories) {
-    test(`${theme}: ${id} completes play and accessibility`, async () => {
-      const query = new URLSearchParams({ id, viewMode: "story", globals: `theme:${theme}` });
-      const response = await page.goto(`/iframe.html?${query}`);
-      expect(response?.status()).toBe(200);
+    for (const motion of ["reduce", "no-preference"] as const) {
+      if (motion === "no-preference" && !normalMotionStories.has(id)) continue;
+      const suffix = motion === "no-preference" ? " with normal motion" : "";
+      test(`${theme}: ${id} completes play and accessibility${suffix}`, async () => {
+        await page.emulateMedia({ reducedMotion: motion });
+        const query = new URLSearchParams({ id, viewMode: "story", globals: `theme:${theme}` });
+        const response = await page.goto(`/iframe.html?${query}`);
+        expect(response?.status()).toBe(200);
 
-      // storyRendered precedes addon afterEach; storyFinished includes its a11y reports.
-      const handle = await page.waitForFunction(
-        (storyId) => {
-          const channel = (window as StorybookWindow).__STORYBOOK_ADDONS_CHANNEL__;
-          for (const event of [
-            "storyThrewException",
-            "storyErrored",
-            "playFunctionThrewException",
-            "unhandledErrorsWhilePlaying",
-          ]) {
-            const exception = channel?.last(event);
-            if (exception) throw new Error(`${event}: ${JSON.stringify(exception)}`);
-          }
-          const finished = channel?.last("storyFinished")?.[0];
-          return finished?.storyId === storyId ? finished : undefined;
-        },
-        id,
-        { timeout: 30000 },
-      );
-      const finished = await handle.jsonValue();
-      await handle.dispose();
-      expect(finished?.status, JSON.stringify(finished)).toBe("success");
-      expect(finished?.reporters.filter(({ status }) => status === "failed")).toEqual([]);
-      for (const report of finished?.reporters ?? [])
-        expect(report).not.toHaveProperty("result.error");
-      expect(
-        finished?.reporters.find(({ type }) => type === "a11y"),
-        "Every story must complete the a11y afterEach check.",
-      ).toMatchObject({ status: "passed", result: { violations: [] } });
-      await expect(page.locator("#storybook-root > [data-cinder-theme]")).toHaveAttribute(
-        "data-cinder-theme",
-        theme,
-      );
-    }, 60000);
+        // storyRendered precedes addon afterEach; storyFinished includes its a11y reports.
+        const handle = await page.waitForFunction(
+          (storyId) => {
+            const channel = (window as StorybookWindow).__STORYBOOK_ADDONS_CHANNEL__;
+            for (const event of [
+              "storyThrewException",
+              "storyErrored",
+              "playFunctionThrewException",
+              "unhandledErrorsWhilePlaying",
+            ]) {
+              const exception = channel?.last(event);
+              if (exception) throw new Error(`${event}: ${JSON.stringify(exception)}`);
+            }
+            const finished = channel?.last("storyFinished")?.[0];
+            return finished?.storyId === storyId ? finished : undefined;
+          },
+          id,
+          { timeout: 30000 },
+        );
+        const finished = await handle.jsonValue();
+        await handle.dispose();
+        expect(finished?.status, JSON.stringify(finished)).toBe("success");
+        expect(finished?.reporters.filter(({ status }) => status === "failed")).toEqual([]);
+        for (const report of finished?.reporters ?? [])
+          expect(report).not.toHaveProperty("result.error");
+        expect(
+          finished?.reporters.find(({ type }) => type === "a11y"),
+          "Every story must complete the a11y afterEach check.",
+        ).toMatchObject({ status: "passed", result: { violations: [] } });
+        await expect(page.locator("#storybook-root > [data-cinder-theme]")).toHaveAttribute(
+          "data-cinder-theme",
+          theme,
+        );
+      }, 60000);
+    }
   }
 }

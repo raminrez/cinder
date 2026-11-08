@@ -121,14 +121,17 @@
       outline-offset: calc(var(--cinder-focus-offset) + 1px);
     }
 
-    .cinder-field > :is(.cinder-field__label, .react-aria-Label) {
+    .cinder-field > :is(.cinder-field__label, .react-aria-Label),
+    .cinder-field__label-row > .cinder-field__label {
       color: var(--cinder-text-primary);
       font-size: var(--cinder-label-01-font-size);
       font-weight: var(--cinder-label-01-font-weight);
       line-height: var(--cinder-label-01-line-height);
       letter-spacing: var(--cinder-label-01-letter-spacing);
     }
-    .cinder-field > .cinder-field__label + .cinder-field__description {
+    .cinder-field
+      > :is(.cinder-field__label, .cinder-field__label-row)
+      + .cinder-field__description {
       margin-block-start: calc(-1 * var(--cinder-spacing-02));
     }
     .cinder-field > :is(.cinder-field__label, .cinder-field__description),
@@ -158,6 +161,7 @@
     .cinder-field > :is(.react-aria-Input, .react-aria-TextArea),
     .cinder-input-group > .react-aria-Input {
       padding: calc(var(--cinder-spacing-02) - 1px) var(--cinder-spacing-04);
+      padding-inline-end: var(--cinder-input-padding-end, var(--cinder-spacing-04));
       font-size: var(--cinder-body-02-font-size);
       line-height: var(--cinder-body-02-line-height);
     }
@@ -216,6 +220,7 @@
       color: var(--cinder-text-disabled);
     }
     .cinder-field[data-disabled] > :is(.cinder-field__label, .react-aria-Label),
+    .cinder-field[data-disabled] > .cinder-field__label-row > .cinder-field__label,
     .cinder-field[data-disabled] .react-aria-SelectValue {
       color: var(--cinder-text-disabled);
     }
@@ -233,7 +238,7 @@
       width: calc(var(--control-height, var(--cinder-size-md)) - 2px);
       border-radius: calc(var(--cinder-control-radius) - 2px);
     }
-    .cinder-input-group > svg {
+    .cinder-input-group > svg:not(.cinder-field__status-icon) {
       margin-inline-start: var(--cinder-spacing-04);
       color: var(--cinder-text-secondary);
     }
@@ -247,13 +252,24 @@
       min-block-size: var(--cinder-helper-text-01-line-height);
     }
     /* Reserve one recovery line; form recipes can reserve a larger text budget. */
-    :is(.cinder-field__control, .cinder-field__control + input[hidden]) + .cinder-field__help {
+    :is(
+        .cinder-field__control,
+        .cinder-field__control + input[hidden],
+        .cinder-field__control + .cinder-field__status-icon,
+        .cinder-field__control + input[hidden] + .cinder-field__status-icon
+      )
+      + .cinder-field__help {
       min-block-size: calc(
         var(--cinder-helper-text-01-line-height) + 2 * (var(--cinder-spacing-03) + 1px) + 1px
       );
       margin-block-start: calc(-1 * var(--cinder-spacing-03) - 1px);
     }
-    :is(.cinder-field__control, .cinder-field__control + input[hidden])
+    :is(
+        .cinder-field__control,
+        .cinder-field__control + input[hidden],
+        .cinder-field__control + .cinder-field__status-icon,
+        .cinder-field__control + input[hidden] + .cinder-field__status-icon
+      )
       + .cinder-field__help
       > .cinder-field__error:not(:empty) {
       align-self: start;
@@ -267,10 +283,153 @@
     .cinder-field[data-invalid]
       > .cinder-field__control:has(
         + .cinder-field__help > .cinder-field__error:not(:empty),
-        + input[hidden] + .cinder-field__help > .cinder-field__error:not(:empty)
+        + input[hidden] + .cinder-field__help > .cinder-field__error:not(:empty),
+        + .cinder-field__status-icon + .cinder-field__help > .cinder-field__error:not(:empty),
+        + input[hidden]
+          + .cinder-field__status-icon
+          + .cinder-field__help
+          > .cinder-field__error:not(:empty)
       ) {
       border-end-start-radius: calc(var(--cinder-spacing-02) - 1px);
       border-end-end-radius: calc(var(--cinder-spacing-02) - 1px);
+    }
+    .cinder-field[data-cinder-status]:not([data-invalid], [data-disabled])
+      > .cinder-field__control {
+      border-color: var(--cinder-field-status-ink);
+    }
+    :is(
+      .cinder-field,
+      .cinder-field__status,
+      .cinder-field__status-icon
+    )[data-cinder-status="warning"] {
+      --cinder-field-status-ink: var(--cinder-support-warning);
+    }
+    .cinder-field__status,
+    .cinder-select-trigger > .cinder-field__status-icon {
+      color: var(--cinder-field-status-ink);
+    }
+    :is(
+        .cinder-field__control,
+        .cinder-field__control + input[hidden],
+        .cinder-field__control + .cinder-field__status-icon,
+        .cinder-field__control + input[hidden] + .cinder-field__status-icon
+      )
+      + .cinder-field__help
+      > .cinder-field__status:not([hidden], .cinder-visually-hidden) {
+      align-self: start;
+      padding: calc(var(--cinder-spacing-03) + 1px) var(--cinder-spacing-04);
+      border: 1px solid var(--cinder-field-status-ink);
+      border-block-start: 0;
+      border-end-start-radius: var(--cinder-control-radius);
+      border-end-end-radius: var(--cinder-control-radius);
+      background: var(--cinder-field-status-surface);
+    }
+    .cinder-field
+      > .cinder-field__control:has(
+        + .cinder-field__help > .cinder-field__status:not([hidden], .cinder-visually-hidden),
+        + input[hidden]
+          + .cinder-field__help
+          > .cinder-field__status:not([hidden], .cinder-visually-hidden),
+        + .cinder-field__status-icon
+          + .cinder-field__help
+          > .cinder-field__status:not([hidden], .cinder-visually-hidden),
+        + input[hidden]
+          + .cinder-field__status-icon
+          + .cinder-field__help
+          > .cinder-field__status:not([hidden], .cinder-visually-hidden)
+      ) {
+      border-end-start-radius: calc(var(--cinder-spacing-02) - 1px);
+      border-end-end-radius: calc(var(--cinder-spacing-02) - 1px);
+    }
+    .cinder-checkbox,
+    .cinder-radio,
+    .cinder-switch {
+      min-height: var(--cinder-size-md);
+      gap: var(--cinder-spacing-03);
+      font-size: var(--cinder-body-01-font-size);
+      line-height: var(--cinder-body-compact-01-line-height);
+    }
+    .cinder-checkbox,
+    .cinder-radio {
+      padding-block: var(--cinder-spacing-04);
+    }
+    .cinder-checkbox-control,
+    .cinder-radio-control {
+      width: 1.125rem;
+      height: 1.125rem;
+      margin-block-start: 1px;
+      border-color: var(--cinder-border-strong);
+    }
+    .cinder-checkbox-control {
+      border-radius: 0.3125rem;
+    }
+    .cinder-checkbox:is([data-selected], [data-indeterminate]) .cinder-checkbox-control {
+      background: var(--cinder-focus);
+      border-color: var(--cinder-focus);
+      color: var(--cinder-icon-on-color);
+    }
+    .cinder-radio[data-selected] .cinder-radio-control {
+      border-color: var(--cinder-focus);
+    }
+    .cinder-radio[data-selected] .cinder-radio-control::after {
+      background: var(--cinder-focus);
+    }
+    .cinder-checkbox[data-hovered]:where(:not([data-disabled], [data-readonly]))
+      .cinder-checkbox-control,
+    .cinder-radio[data-hovered]:where(:not([data-disabled], [data-readonly]))
+      .cinder-radio-control {
+      border-color: var(--cinder-text-primary);
+    }
+    .cinder-checkbox[data-pressed]:not(
+        [data-selected],
+        [data-indeterminate],
+        [data-disabled],
+        [data-readonly]
+      )
+      .cinder-checkbox-control,
+    .cinder-radio[data-pressed]:not([data-selected], [data-disabled], [data-readonly])
+      .cinder-radio-control {
+      background: var(--cinder-layer-active);
+    }
+    .cinder-checkbox[data-invalid] .cinder-checkbox-control,
+    .cinder-radio[data-invalid] .cinder-radio-control {
+      border-color: var(--cinder-support-error);
+    }
+    .cinder-checkbox[data-focus-visible] .cinder-checkbox-control,
+    .cinder-radio[data-focus-visible] .cinder-radio-control,
+    .cinder-switch[data-focus-visible] .cinder-switch-track {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: var(--cinder-focus-offset);
+    }
+    .cinder-checkbox[data-disabled] .cinder-checkbox-control,
+    .cinder-radio[data-disabled] .cinder-radio-control {
+      border-color: var(--cinder-icon-disabled);
+    }
+    .cinder-checkbox[data-disabled]:is([data-selected], [data-indeterminate])
+      .cinder-checkbox-control {
+      background: var(--cinder-icon-disabled);
+    }
+    .cinder-radio[data-disabled] .cinder-radio-control::after {
+      background: var(--cinder-icon-disabled);
+    }
+    .cinder-switch[data-selected] .cinder-switch-track {
+      background: var(--cinder-focus);
+    }
+    .cinder-switch[data-disabled] .cinder-switch-track {
+      background: var(--cinder-border-disabled);
+    }
+    .cinder-switch[data-disabled] .cinder-switch-thumb {
+      background: var(--cinder-icon-disabled);
+    }
+    /* Table selection keeps its existing compact target and mark geometry. */
+    .cinder-table .cinder-checkbox {
+      min-height: 1rem;
+      padding: 0;
+    }
+    .cinder-table .cinder-checkbox-control {
+      width: 1rem;
+      height: 1rem;
+      margin-block-start: 0.125rem;
     }
     .cinder-checkbox-group > .cinder-field__description {
       margin-block-end: var(--cinder-spacing-03);
@@ -283,7 +442,15 @@
       .cinder-checkbox:not([data-disabled])
       .cinder-checkbox-control,
     .cinder-radio-group[data-invalid] .cinder-radio:not([data-disabled]) .cinder-radio-control {
-      border-color: var(--cinder-icon-primary);
+      border-color: var(--cinder-border-strong);
+    }
+    .cinder-checkbox-group[data-invalid]
+      .cinder-checkbox:is([data-selected], [data-indeterminate]):not([data-disabled])
+      .cinder-checkbox-control,
+    .cinder-radio-group[data-invalid]
+      .cinder-radio[data-selected]:not([data-disabled])
+      .cinder-radio-control {
+      border-color: var(--cinder-focus);
     }
 
     :scope.cinder-popover {
@@ -405,7 +572,12 @@
         ) {
         border-style: dashed;
       }
-      :is(.cinder-field__control, .cinder-field__control + input[hidden])
+      :is(
+          .cinder-field__control,
+          .cinder-field__control + input[hidden],
+          .cinder-field__control + .cinder-field__status-icon,
+          .cinder-field__control + input[hidden] + .cinder-field__status-icon
+        )
         + .cinder-field__help
         > .cinder-field__error:not(:empty) {
         color: FieldText;

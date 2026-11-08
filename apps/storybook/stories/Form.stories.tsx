@@ -90,10 +90,10 @@ type FormCopy = {
 const englishCopy: FormCopy = {
   formName: "Workspace draft",
   intro: "Local example: the first save fails; retry succeeds. No request leaves this page.",
-  nameLabel: "Workspace name (required)",
+  nameLabel: "Workspace name",
   nameHint: "Use the name your team will recognize.",
   nameMissing: "Enter a workspace name.",
-  emailLabel: "Contact email (required)",
+  emailLabel: "Contact email",
   emailHint: (
     <>
       Workspace updates go to this address. For example, <bdi dir="ltr">review@example.com</bdi>.
@@ -101,7 +101,7 @@ const englishCopy: FormCopy = {
   ),
   emailMissing: "Enter a contact email.",
   emailInvalid: "Enter a complete email address, such as review@example.com.",
-  notesLabel: "Review notes (optional)",
+  notesLabel: "Review notes",
   notesHint: "Keep these notes while correcting the required fields.",
   defaultName: "Weekly review",
   defaultNotes: "Keep the handoff checklist.",
@@ -120,10 +120,10 @@ const persianCopy: FormCopy = {
       موفق می‌شود. هیچ درخواستی از این صفحه خارج نمی‌شود.
     </>
   ),
-  nameLabel: "نام فضای کاری (الزامی)",
+  nameLabel: "نام فضای کاری",
   nameHint: "نامی بنویسید که تیم شما بشناسد.",
   nameMissing: "نام فضای کاری را وارد کنید.",
-  emailLabel: "ایمیل تماس (الزامی)",
+  emailLabel: "ایمیل تماس",
   emailHint: (
     <>
       پیام‌های فضای کاری به این نشانی فرستاده می‌شوند. نمونه:{" "}
@@ -136,7 +136,7 @@ const persianCopy: FormCopy = {
       ایمیل را با قالب کامل وارد کنید؛ مثلاً <bdi dir="ltr">review@example.com</bdi>.
     </>
   ),
-  notesLabel: "یادداشت‌های مرور (اختیاری)",
+  notesLabel: "یادداشت‌های مرور",
   notesHint: "هنگام اصلاح بخش‌های الزامی، این یادداشت‌ها حفظ می‌شوند.",
   defaultName: "گزارش تیم تهران",
   defaultNotes: "یادداشت‌های جلسه برای مرور هفتگی تیم تهران.",
@@ -156,10 +156,10 @@ const arabicCopy: FormCopy = {
       التالية. لا يغادر أي طلب هذه الصفحة.
     </>
   ),
-  nameLabel: "اسم مساحة العمل (مطلوب)",
+  nameLabel: "اسم مساحة العمل",
   nameHint: "استخدم اسمًا يعرفه فريقك.",
   nameMissing: "أدخل اسم مساحة العمل.",
-  emailLabel: "بريد التواصل (مطلوب)",
+  emailLabel: "بريد التواصل",
   emailHint: (
     <>
       تُرسل تحديثات مساحة العمل إلى هذا العنوان. مثال: <bdi dir="ltr">review@example.com</bdi>
@@ -171,7 +171,7 @@ const arabicCopy: FormCopy = {
       أدخل عنوان بريد كاملًا، مثل <bdi dir="ltr">review@example.com</bdi>.
     </>
   ),
-  notesLabel: "ملاحظات المراجعة (اختياري)",
+  notesLabel: "ملاحظات المراجعة",
   notesHint: "تبقى هذه الملاحظات أثناء تصحيح الحقول المطلوبة.",
   defaultName: "مراجعة فريق القاهرة",
   defaultNotes: "ملاحظات الاجتماع وقائمة التسليم للمراجعة الأسبوعية.",
@@ -274,6 +274,7 @@ function DraftForm({
           description={copy.notesHint}
           defaultValue={copy.defaultNotes}
           rows={3}
+          isOptional
           isReadOnly={pending}
         />
         <div className="form-story-commit">
@@ -338,10 +339,14 @@ export const NativeValidationAndRecovery: Story = {
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const form = canvas.getByRole<HTMLFormElement>("form", { name: englishCopy.formName });
-    const name = canvas.getByRole<HTMLInputElement>("textbox", { name: englishCopy.nameLabel });
-    const email = canvas.getByRole<HTMLInputElement>("textbox", { name: englishCopy.emailLabel });
+    const name = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: `${englishCopy.nameLabel} (required)`,
+    });
+    const email = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: `${englishCopy.emailLabel} (required)`,
+    });
     const notes = canvas.getByRole<HTMLTextAreaElement>("textbox", {
-      name: englishCopy.notesLabel,
+      name: `${englishCopy.notesLabel} (optional)`,
     });
     const button = canvas.getByRole("button", { name: englishCopy.saveLabel });
     const nameDescriptionId = fieldDescription(name).id;
@@ -443,10 +448,14 @@ export const SaveAndRetry: Story = {
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const form = canvas.getByRole<HTMLFormElement>("form", { name: englishCopy.formName });
-    const name = canvas.getByRole<HTMLInputElement>("textbox", { name: englishCopy.nameLabel });
-    const email = canvas.getByRole<HTMLInputElement>("textbox", { name: englishCopy.emailLabel });
+    const name = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: `${englishCopy.nameLabel} (required)`,
+    });
+    const email = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: `${englishCopy.emailLabel} (required)`,
+    });
     const notes = canvas.getByRole<HTMLTextAreaElement>("textbox", {
-      name: englishCopy.notesLabel,
+      name: `${englishCopy.notesLabel} (optional)`,
     });
     const button = canvas.getByRole("button", { name: englishCopy.saveLabel });
     const first = deferredRequest();
@@ -581,10 +590,14 @@ export const ServerFieldErrors: Story = {
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const form = canvas.getByRole<HTMLFormElement>("form", { name: "Server field recovery" });
-    const name = canvas.getByRole<HTMLInputElement>("textbox", { name: englishCopy.nameLabel });
-    const email = canvas.getByRole<HTMLInputElement>("textbox", { name: englishCopy.emailLabel });
+    const name = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: `${englishCopy.nameLabel} (required)`,
+    });
+    const email = canvas.getByRole<HTMLInputElement>("textbox", {
+      name: `${englishCopy.emailLabel} (required)`,
+    });
     const notes = canvas.getByRole<HTMLTextAreaElement>("textbox", {
-      name: englishCopy.notesLabel,
+      name: `${englishCopy.notesLabel} (optional)`,
     });
     const button = canvas.getByRole("button", { name: englishCopy.saveLabel });
     const nameDescriptionId = fieldDescription(name).id;
@@ -679,9 +692,9 @@ export const LongRecovery: Story = {
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const form = canvas.getByRole("form", { name: englishCopy.formName });
-    const name = canvas.getByRole("textbox", { name: englishCopy.nameLabel });
-    const email = canvas.getByRole("textbox", { name: englishCopy.emailLabel });
-    const notes = canvas.getByRole("textbox", { name: englishCopy.notesLabel });
+    const name = canvas.getByRole("textbox", { name: `${englishCopy.nameLabel} (required)` });
+    const email = canvas.getByRole("textbox", { name: `${englishCopy.emailLabel} (required)` });
+    const notes = canvas.getByRole("textbox", { name: `${englishCopy.notesLabel} (optional)` });
     const button = canvas.getByRole("button", { name: englishCopy.saveLabel });
     const nameDescriptionId = fieldDescription(name).id;
     const emailDescriptionId = fieldDescription(email).id;
@@ -730,22 +743,28 @@ export const RightToLeft: Story = {
     docs: {
       description: {
         story:
-          "Persian and Arabic use real Theme locale providers, authored required/recovery/pending wording, native required inputs, and isolated Latin email values and identifiers. Both local forms retain drafts through failure and retry without focus changes or duplicate live feedback. Browser-generated validation wording is not assumed to follow the Theme locale.",
+          "Persian and Arabic use real Theme locale providers, Cinder's localized necessity wording, authored recovery/pending text, native required inputs, and isolated Latin email values and identifiers. Both local forms retain drafts through failure and retry without focus changes or duplicate live feedback. Browser-generated validation wording is not assumed to follow the Theme locale.",
       },
     },
   },
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
-    for (const [copy, locale, contact] of [
-      [persianCopy, "fa-IR", "tehran.review@example.com"],
-      [arabicCopy, "ar", "cairo.review@example.com"],
+    for (const [copy, locale, contact, required, optional] of [
+      [persianCopy, "fa-IR", "tehran.review@example.com", "الزامی", "اختیاری"],
+      [arabicCopy, "ar", "cairo.review@example.com", "مطلوب", "اختياري"],
     ] as const) {
       const form = canvas.getByRole<HTMLFormElement>("form", { name: copy.formName });
       const scope = within(form);
       const localeRoot = form.closest("[lang]")!;
-      const name = scope.getByRole<HTMLInputElement>("textbox", { name: copy.nameLabel });
-      const email = scope.getByRole<HTMLInputElement>("textbox", { name: copy.emailLabel });
-      const notes = scope.getByRole<HTMLTextAreaElement>("textbox", { name: copy.notesLabel });
+      const name = scope.getByRole<HTMLInputElement>("textbox", {
+        name: `${copy.nameLabel} (${required})`,
+      });
+      const email = scope.getByRole<HTMLInputElement>("textbox", {
+        name: `${copy.emailLabel} (${required})`,
+      });
+      const notes = scope.getByRole<HTMLTextAreaElement>("textbox", {
+        name: `${copy.notesLabel} (${optional})`,
+      });
       const button = scope.getByRole("button", { name: copy.saveLabel });
       const nameDescriptionId = fieldDescription(name).id;
       const emailDescriptionId = fieldDescription(email).id;

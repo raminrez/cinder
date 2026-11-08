@@ -145,7 +145,7 @@ function ComposedNotes() {
     >
       <p>Native textarea props go on Input. Rich recovery stays in RAC's ErrorMessage.</p>
       <TextArea.Root name="notes" isRequired>
-        <TextArea.Label>Handoff notes (required)</TextArea.Label>
+        <TextArea.Label>Handoff notes</TextArea.Label>
         <TextArea.Description>Keep the next review task with this draft.</TextArea.Description>
         <TextArea.Input
           ref={input}

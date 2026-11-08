@@ -47,13 +47,14 @@ authored field/form coverage.
 
 ## Field/form batch
 
-| Story file                                                   | Authored coverage                                                                                                                                                                                                   |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`TextField.stories.tsx`](stories/TextField.stories.tsx)     | Convenience and compound composition, native refs/events/render callbacks, controlled/default values, sizes, read-only copying, validation, long content, and real locale scopes                                    |
-| [`TextArea.stories.tsx`](stories/TextArea.stories.tsx)       | Native multiline editing and rows, textarea refs, controlled/default values, read-only copying, rich recovery, long content, and locale scopes                                                                      |
-| [`SearchField.stories.tsx`](stories/SearchField.stories.tsx) | Grouped Input/ClearButton anatomy, query submission, clear/Escape focus, native FormData, sizes, values, recovery, and locale scopes                                                                                |
-| [`NumberField.stories.tsx`](stories/NumberField.stories.tsx) | Grouped Input/Button anatomy, decrement/increment slots, bounds and steps, committed values, localized formatting, raw numeric FormData, sizes, and recovery                                                        |
-| [`Form.stories.tsx`](stories/Form.stories.tsx)               | Native first-invalid focus, persistent guidance, application-owned pending/failure/retry, duplicate-submission protection, returned `validationErrors`, long recovery, and localized required/pending/error wording |
+| Story file                                                   | Authored coverage                                                                                                                                                                                                                       |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`TextField.stories.tsx`](stories/TextField.stories.tsx)     | Convenience and compound composition, native refs/events/render callbacks, controlled/default values, sizes, read-only copying, validation, long content, and real locale scopes                                                        |
+| [`TextArea.stories.tsx`](stories/TextArea.stories.tsx)       | Native multiline editing and rows, textarea refs, controlled/default values, read-only copying, rich recovery, long content, and locale scopes                                                                                          |
+| [`SearchField.stories.tsx`](stories/SearchField.stories.tsx) | Grouped Input/ClearButton anatomy, query submission, clear/Escape focus, native FormData, sizes, values, recovery, and locale scopes                                                                                                    |
+| [`NumberField.stories.tsx`](stories/NumberField.stories.tsx) | Grouped Input/Button anatomy, decrement/increment slots, bounds and steps, committed values, localized formatting, raw numeric FormData, sizes, and recovery                                                                            |
+| [`Form.stories.tsx`](stories/Form.stories.tsx)               | Native first-invalid focus, persistent guidance, application-owned pending/failure/retry, duplicate-submission protection, returned `validationErrors`, long recovery, and localized required/pending/error wording                     |
+| [`FieldStatus.stories.tsx`](stories/FieldStatus.stories.tsx) | Appearance-only warning/error/success across shared fields, inline icons, validation precedence, explicit compound status mounting, localized necessity/help, independent Tooltip/Popover actions, long content, and real locale scopes |
 
 The callable field APIs remain shorthand over additive compound parts. `.Root`
 retains RAC's original props and whole-tree children, including state render
@@ -72,11 +73,50 @@ unchanged. Grouped, collection, and date compounds were added for shared anatomy
 and API compatibility, not completed later-family Frame review. Form and raw RAC
 exports keep upstream validation ownership.
 
+At its acceptance, the status extension added eight stories to the preserved 54,
+for **62 stories**.
+Its [8 November bounded acceptance](../../docs/verification.md#frame-field-status--phase-2-extension)
+records **132 passing story/theme/motion cases**. `status` is appearance
+only; actual validation remains authoritative. Compound roots do not insert a
+status message automatically: mount `.Status` explicitly in `.Help`. Frame's
+bordered controls use attached feedback; checkbox/radio groups keep it detached.
+Required wording wins over optional wording. Label help is a separate named button
+with hover/focus Tooltip and click/keyboard dialog Popover, not a field action.
+The [status API](../../packages/react/README.md#field-status-necessity-and-label-help)
+documents supported locale strings and native/description ownership.
+
+## Checkbox, Radio, and Switch batch
+
+Each choice family adds **six stories / five authored plays**, for **18 stories /
+15 plays**. The current static workbench indexes **80 stories / 178 theme/motion
+cases**. The focused choice execution passes **46 cases / 132 filtered / 0 failures**;
+it does not claim a new execution of the preserved action, field, and status cases.
+
+| Story file                                             | Authored coverage                                                                                                                                                                                                                       |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`Checkbox.stories.tsx`](stories/Checkbox.stories.tsx) | Independent and group choices; selected/mixed/read-only/disabled/invalid states; select-all derived from members; repeated native FormData; detached group recovery; custom label rendering and refs; long Persian/Arabic/German labels |
+| [`Radio.stories.tsx`](stories/Radio.stories.tsx)       | One-of-many values; controlled/default groups; disabled skipping and arrow navigation; native validation/submission; detached group recovery; custom composition/refs; long content and real locale scopes                              |
+| [`Switch.stories.tsx`](stories/Switch.stories.tsx)     | Immediate local preview changes; selected/read-only/disabled states; sm/md logical LTR/RTL geometry; Space versus Enter semantics; native input/FormData; custom label rendering and refs; long content and real locale scopes          |
+
+The [public choice contract](../../packages/react/README.md#checkbox-radio-and-switch)
+keeps RAC's value/input/label ownership. Ordinary Frame label targets have a 44px
+minimum and grow with wrapping text; compact table selection retains its previous
+16px mark and 18px target. Checkbox/Radio groups own validation and detached recovery.
+Switch has no required, invalid, validation, or mixed-state API. Use Checkbox for
+a preference committed by Save; these examples do not add persistence to the package.
+
+Code, static Storybook, and both installed-package gates have passed. All **62
+final PNGs** have zero recorded geometry/contrast failures or axe violations;
+visual review and per-capture incomplete dispositions are being closed separately.
+The [dated choice evidence](../../docs/verification.md#frame-choices--phase-2-third-batch)
+records the exact executed scope. Select/Modal/Popover/Tooltip and settings/nested
+editing are the next bounded batch; the documentation website and Figma remain later.
+
 Run `bun test --timeout 60000 tests/browser/storybook.test.ts` after the static build
 to execute the indexed stories in both Frame themes and require successful play
-and a11y reporting. This README lists authored coverage, not new acceptance counts
-or passing results; rendered, package, browser, and manual evidence is recorded
-separately in the verification record.
+and a11y reporting. Coverage above describes the authored stories; dated rendered,
+package, browser, and manual evidence is recorded separately in the verification
+record rather than inferred from a successful static build.
 
 Development dependencies are pinned to Storybook/React-Vite/a11y **10.6.6** and
 Vite **8.3.6**, checked against the npm registry and the

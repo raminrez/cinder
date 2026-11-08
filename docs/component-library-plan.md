@@ -1,7 +1,10 @@
 # Cinder component-library implementation plan
 
-**7 November 2026 · approved code-first sequence.** Frame foundations and Phase 2's
+**8 November 2026 · approved code-first sequence.** Frame foundations and Phase 2's
 Storybook/actions and field/form batches are complete at their recorded verification scope.
+The field-status extension has passed its code, retained visual, and exact README
+consumer gates. Checkbox, Radio, and Switch have passed code, Storybook, and installed
+gates; their rendered acceptance is being closed before Select and overlay/task work.
 Complete the remaining components and their **Storybook** stories, extend them
 through the catalog, then develop the **documentation website**. **Figma is the
 final step**, derived from the implemented library and documentation.
@@ -11,7 +14,11 @@ requirements: [design-system.md](design-system.md). Current package scope:
 [coverage.md](coverage.md). [Phase 1 evidence](verification.md#frame-phase-1) records
 the completed foundation scope; [first-batch evidence](verification.md#frame-actions--phase-2-first-batch)
 records Storybook, Button, and Link; [second-batch evidence](verification.md#frame-fields--phase-2-second-batch)
-records shared field composition and bounded field/form recovery. The phases below
+records shared field composition and bounded field/form recovery. The
+[field-status extension](verification.md#frame-field-status--phase-2-extension)
+records appearance-only feedback, inline icons, and label help; the
+[choice batch](verification.md#frame-choices--phase-2-third-batch) records native
+choices, labeled targets, and group recovery. The phases below
 complete the component library.
 
 ## Outcome and sequence
@@ -21,9 +28,12 @@ themes, dependable defaults, documented root/part/state styling, coherent locale
 and portal behavior, working examples, and evidence from installed packages.
 
 **Current state:** Phases 0 and 1 are complete. Phase 2's Storybook/actions first
-batch and bounded field/form second batch passed acceptance. Choice/toggle and
-overlay/task compositions remain next; they were not advanced in this batch. The
-full fourteen-entry phase remains in progress. Delivery order:
+batch and bounded field/form second batch passed acceptance. Its field-status
+extension adds eight stories to the preserved 54-story workbench and has passed
+bounded acceptance. Choice controls add 18 stories, bringing the workbench to 80;
+their code and installed gates passed, with rendered acceptance being closed.
+Select and overlay/task compositions follow. The full fourteen-entry phase remains
+in progress. Delivery order:
 **components + Storybook (2–5) → documentation website and release proof (6) →
 Figma (7)**. Component README/API contracts and evidence accompany each batch.
 
@@ -230,6 +240,57 @@ later-family Frame stories or acceptance. Choice/toggle, settings and nested-ove
 tasks, required manual assistive-technology/device/IME/zoom work, the documentation
 website, and Figma remain outside this completed batch.
 
+### Field status extension — Status, icons, and label help
+
+**Bounded acceptance passed, 8 November 2026.**
+Twelve field namespaces accept appearance-only warning/error/success status,
+localized required/optional wording, and independently operable label help. Actual
+RAC/native/server validation remains authoritative and suppresses presentation
+status. Default and compound anatomy preserve mounted description associations,
+drafts, native controls, refs, and the existing eight themes.
+
+Frame feedback attaches beneath bordered controls; CheckboxGroup and RadioGroup
+feedback remains detached at group level. Label help uses a Tooltip and a named
+dialog Popover, not a field action. The workbench now has **62 stories** and
+**132 passing story/theme/motion cases**. The frozen aggregate passes **41
+unit/watcher tests and 341 browser tests**, including both installed consumers.
+All **52 retained captures / 16 scenes** have a separate visual disposition;
+historical raw evidence is unchanged. All **13 accepted README checks** pass against
+the matching archives, including the three installation workflows and both verbatim
+status examples. This extension is closed before choice implementation proceeds.
+
+This shared extension does not complete Checkbox/Radio/Switch, selection/date
+families, overlay task stories, or manual assistive-technology/device/zoom work.
+See the [public status contract](../packages/react/README.md#field-status-necessity-and-label-help)
+and [bounded evidence](verification.md#frame-field-status--phase-2-extension).
+
+### Third batch — Checkbox, Radio, and Switch
+
+**Code, Storybook, and installed-package gates passed, 8 November 2026; rendered
+acceptance is being closed.** Six stories per family cover native values, actual
+keyboard/label input, controlled/default state, refs/render callbacks, long labels,
+and real Persian/Arabic/German locale scopes. Checkbox mixed/select-all state is
+derived from member selections. CheckboxGroup uses `FormData.getAll()`; RadioGroup
+submits one value. Checked read-only choices stay immutable and submitted; disabled
+choices are omitted. Switch supports selected/read-only/disabled and sm/md, not
+required/invalid/validation/mixed state.
+
+Existing CSS owners implement Frame's 44px ordinary label minimum, blue selection,
+18px Checkbox marks with 5px corners, and neutral/blue group marks during detached
+error recovery. Standalone invalid Checkbox stays red during hover, disabled paint
+wins, and compact table selection keeps its 16px mark and 18px target. Shared
+wrapping, read-only cursors, disabled-mixed paint, and forced colors apply across
+themes; normal Frame paint/geometry stays scoped. `selection.tsx` is unchanged.
+
+The static workbench has **80 stories / 178 indexed cases**. Focused final execution
+passes **32 source cases / 113 filtered** and **46 choice story/theme/motion cases /
+132 filtered**, with no failures; preserved full-status acceptance is reused, not
+rerun. Both installed consumers pass. The final renderer retains **62 PNGs**;
+visual and axe-incomplete dispositions accompany the
+[dated choice evidence](verification.md#frame-choices--phase-2-third-batch).
+This batch does not complete Select/overlays, settings/nested-edit tasks, manual
+AT/device/IME/zoom work, the documentation website, or Figma.
+
 ### Implementation order
 
 1. **Actions:** present four core Button choices: `primary`, `secondary`, `ghost`,
@@ -424,8 +485,10 @@ before advancing the batch.
 
 ## Next implementation unit
 
-Next is **Phase 2: shared field anatomy and form recovery**, starting with
-TextField's guidance/control/recovery sequence and form journeys. Storybook,
-Button, and Link are complete at the first-batch acceptance scope above. Follow
-with the remaining text fields, choice controls, and nested overlays.
+Close choice rendered acceptance, then continue **Phase 2: Select, Modal/Dialog,
+Popover, Tooltip, and settings/nested editing**. Reuse existing RAC value, focus,
+dismissal, and portal behavior. Complete rich/long/disabled options, meaningful
+part targets, focus versus selection, named dialogs, reflow/scrolling, inner-first
+Escape, focus return, and live appearance/locale. Select must not gain a fake
+read-only API; application request and summary state stays outside the package.
 Finish the fourteen-entry slice and its stories before broadening the catalog.

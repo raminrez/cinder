@@ -231,7 +231,7 @@ function FieldPlayground() {
         }}
       >
         <TextField
-          label="Workspace name (required)"
+          label="Workspace name"
           name="workspace"
           description="Use at least 3 characters. Teammates will see this name."
           placeholder="e.g. Atlas design"
@@ -374,7 +374,7 @@ function InvitationExample() {
                 >
                   <TextField
                     autoFocus
-                    label="Email address (required)"
+                    label="Email address"
                     name="email"
                     type="email"
                     isRequired

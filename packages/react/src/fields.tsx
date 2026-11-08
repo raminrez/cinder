@@ -3,6 +3,10 @@ import {
   TextField as RACTextField,
   NumberField as RACNumberField,
   SearchField as RACSearchField,
+  TextFieldContext,
+  NumberFieldContext,
+  SearchFieldContext,
+  useSlottedContext,
   Input,
   type TextFieldProps as RACTextFieldProps,
   type NumberFieldProps as RACNumberFieldProps,
@@ -21,6 +25,10 @@ import {
   FieldTextArea,
   FieldControl,
   FieldButton,
+  FieldStatusMessage,
+  FieldStatusIcon,
+  useFieldPresentation,
+  type FieldPresentationProps,
   fieldParts,
 } from "./field-parts";
 import { useTheme } from "./theme";
@@ -28,43 +36,63 @@ import { classes, type ControlSize } from "./utils";
 
 export interface FieldContentProps {
   label?: ReactNode;
+  labelTooltip?: string;
   description?: ReactNode;
   errorMessage?: FieldErrorProps["children"];
 }
 
 export function FieldLayout({
   label,
+  labelTooltip,
   description,
   errorMessage,
   children,
-}: FieldContentProps & { children: ReactNode }) {
+  inlineIcon,
+}: FieldContentProps & { children: ReactNode; inlineIcon?: boolean }) {
   const { theme } = useTheme();
   const isFrame = theme === "frame-light" || theme === "frame-dark";
   return (
     <>
-      {label != null && <FieldLabel>{label}</FieldLabel>}
+      {label != null && <FieldLabel labelTooltip={labelTooltip}>{label}</FieldLabel>}
       {isFrame && description != null && <FieldDescription>{description}</FieldDescription>}
       {children}
+      {inlineIcon && <FieldStatusIcon />}
       <FieldHelp>
         {!isFrame && description != null && <FieldDescription>{description}</FieldDescription>}
         <FieldErrorMessage>{errorMessage}</FieldErrorMessage>
+        <FieldStatusMessage />
       </FieldHelp>
     </>
   );
 }
 
-export interface TextFieldRootProps extends RACTextFieldProps {
+export interface TextFieldRootProps extends RACTextFieldProps, FieldPresentationProps {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
 
-function TextFieldRoot({ size = "md", className, ...props }: TextFieldRootProps) {
+function TextFieldRoot({
+  size = "md",
+  className,
+  children,
+  status,
+  isOptional,
+  ...props
+}: TextFieldRootProps) {
+  const context = useSlottedContext(TextFieldContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
     <RACTextField
       {...props}
+      {...presentation.props}
       data-size={size}
       className={classes("cinder-field cinder-text-field", className)}
-    />
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACTextField>
   );
 }
 
@@ -75,6 +103,7 @@ export interface TextFieldProps extends TextFieldRootProps, FieldContentProps {
 
 function TextFieldDefault({
   label,
+  labelTooltip,
   description,
   errorMessage,
   size = "md",
@@ -85,9 +114,20 @@ function TextFieldDefault({
   ...props
 }: TextFieldProps) {
   return (
-    <TextFieldRoot {...props} size={size} className={className}>
+    <TextFieldRoot
+      {...props}
+      size={size}
+      className={className}
+      data-cinder-input-icon={children == null ? "" : undefined}
+    >
       {children ?? (
-        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldLayout
+          inlineIcon
+          label={label}
+          labelTooltip={labelTooltip}
+          description={description}
+          errorMessage={errorMessage}
+        >
           <FieldInput placeholder={placeholder} ref={inputRef} />
         </FieldLayout>
       )}
@@ -103,13 +143,24 @@ export const TextField = Object.assign(TextFieldDefault, {
   Control: FieldControl,
 });
 
-export interface TextAreaRootProps extends RACTextFieldProps {
+export interface TextAreaRootProps extends RACTextFieldProps, FieldPresentationProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-function TextAreaRoot({ className, ...props }: TextAreaRootProps) {
+function TextAreaRoot({ className, children, status, isOptional, ...props }: TextAreaRootProps) {
+  const context = useSlottedContext(TextFieldContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
-    <RACTextField {...props} className={classes("cinder-field cinder-text-area", className)} />
+    <RACTextField
+      {...props}
+      {...presentation.props}
+      className={classes("cinder-field cinder-text-area", className)}
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACTextField>
   );
 }
 
@@ -121,6 +172,7 @@ export interface TextAreaProps extends TextAreaRootProps, FieldContentProps {
 
 function TextAreaDefault({
   label,
+  labelTooltip,
   description,
   errorMessage,
   placeholder,
@@ -131,9 +183,19 @@ function TextAreaDefault({
   ...props
 }: TextAreaProps) {
   return (
-    <TextAreaRoot {...props} className={className}>
+    <TextAreaRoot
+      {...props}
+      className={className}
+      data-cinder-input-icon={children == null ? "" : undefined}
+    >
       {children ?? (
-        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldLayout
+          inlineIcon
+          label={label}
+          labelTooltip={labelTooltip}
+          description={description}
+          errorMessage={errorMessage}
+        >
           <FieldTextArea rows={rows} placeholder={placeholder} ref={inputRef} />
         </FieldLayout>
       )}
@@ -148,18 +210,33 @@ export const TextArea = Object.assign(TextAreaDefault, {
   Control: FieldControl,
 });
 
-export interface NumberFieldRootProps extends RACNumberFieldProps {
+export interface NumberFieldRootProps extends RACNumberFieldProps, FieldPresentationProps {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
 
-function NumberFieldRoot({ size = "md", className, ...props }: NumberFieldRootProps) {
+function NumberFieldRoot({
+  size = "md",
+  className,
+  children,
+  status,
+  isOptional,
+  ...props
+}: NumberFieldRootProps) {
+  const context = useSlottedContext(NumberFieldContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
     <RACNumberField
       {...props}
+      {...presentation.props}
       data-size={size}
       className={classes("cinder-field cinder-number-field", className)}
-    />
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACNumberField>
   );
 }
 
@@ -167,6 +244,7 @@ export interface NumberFieldProps extends NumberFieldRootProps, FieldContentProp
 
 function NumberFieldDefault({
   label,
+  labelTooltip,
   description,
   errorMessage,
   size = "md",
@@ -177,7 +255,12 @@ function NumberFieldDefault({
   return (
     <NumberFieldRoot {...props} size={size} className={className}>
       {children ?? (
-        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldLayout
+          label={label}
+          labelTooltip={labelTooltip}
+          description={description}
+          errorMessage={errorMessage}
+        >
           <FieldControl>
             <FieldGroupInput />
             <FieldButton slot="decrement" size={size}>
@@ -201,18 +284,33 @@ export const NumberField = Object.assign(NumberFieldDefault, {
   Button: FieldButton,
 });
 
-export interface SearchFieldRootProps extends RACSearchFieldProps {
+export interface SearchFieldRootProps extends RACSearchFieldProps, FieldPresentationProps {
   size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
 
-function SearchFieldRoot({ size = "md", className, ...props }: SearchFieldRootProps) {
+function SearchFieldRoot({
+  size = "md",
+  className,
+  children,
+  status,
+  isOptional,
+  ...props
+}: SearchFieldRootProps) {
+  const context = useSlottedContext(SearchFieldContext, props.slot);
+  const presentation = useFieldPresentation(
+    { ...props, status, isOptional },
+    context?.["aria-describedby"],
+  );
   return (
     <RACSearchField
       {...props}
+      {...presentation.props}
       data-size={size}
       className={classes("cinder-field cinder-search-field", className)}
-    />
+    >
+      {presentation.wrap(children, context?.children)}
+    </RACSearchField>
   );
 }
 
@@ -223,6 +321,7 @@ export interface SearchFieldProps extends SearchFieldRootProps, FieldContentProp
 
 function SearchFieldDefault({
   label,
+  labelTooltip,
   description,
   errorMessage,
   size = "md",
@@ -235,7 +334,12 @@ function SearchFieldDefault({
   return (
     <SearchFieldRoot {...props} size={size} className={className}>
       {children ?? (
-        <FieldLayout label={label} description={description} errorMessage={errorMessage}>
+        <FieldLayout
+          label={label}
+          labelTooltip={labelTooltip}
+          description={description}
+          errorMessage={errorMessage}
+        >
           <FieldControl>
             <Icon name="search" />
             <Input placeholder={placeholder} {...inputProps} />

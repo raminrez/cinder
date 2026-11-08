@@ -100,7 +100,8 @@
       margin: 0;
     }
 
-    .cinder-field > .react-aria-Label {
+    .cinder-field > .react-aria-Label,
+    .cinder-field__label-row > .cinder-field__label {
       font-size: var(--cinder-body-01-font-size);
       line-height: var(--cinder-body-01-line-height);
       font-weight: 500;
@@ -118,6 +119,7 @@
     }
     .cinder-field :is(.react-aria-Input, .react-aria-TextArea) {
       padding-inline: calc(var(--cinder-spacing-05) - 1px);
+      padding-inline-end: var(--cinder-input-padding-end, calc(var(--cinder-spacing-05) - 1px));
       line-height: var(--cinder-body-01-line-height);
       transition:
         background-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive),
@@ -157,7 +159,8 @@
       background: transparent;
       border-color: var(--cinder-border-subtle);
     }
-    .cinder-field[data-disabled] > .react-aria-Label {
+    .cinder-field[data-disabled] > .react-aria-Label,
+    .cinder-field[data-disabled] > .cinder-field__label-row > .cinder-field__label {
       color: var(--cinder-text-disabled);
     }
     .cinder-field[data-disabled]

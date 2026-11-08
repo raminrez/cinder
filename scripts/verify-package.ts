@@ -1,9 +1,17 @@
 import assert from "node:assert/strict";
 import { cp, mkdir, mkdtemp, realpath, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { resolve, join, sep } from "node:path";
+import { resolve, join, relative, sep } from "node:path";
 import { chromium, type Locator, type Page } from "playwright";
 import { expect } from "playwright/test";
+import {
+  verifyAppearanceOnlyStatus,
+  verifyComposedStatus,
+  verifyLabelHelpIsolation,
+  verifyStatusNativeTransitions,
+  verifyValidationStatusPrecedence,
+  verifySelectStatusAdornment,
+} from "../tests/browser/field-status.assertions";
 
 const root = resolve(import.meta.dir, "..");
 const workspace = await Bun.file(join(root, "package.json")).json();
@@ -18,7 +26,11 @@ const tailwindDirectory = await mkdtemp(
 );
 const tailwindVersion = "4.3.5";
 const consumers = [
-  { name: "native", directory, entrypoints: ["index.html", "frame.html", "composition.html"] },
+  {
+    name: "native",
+    directory,
+    entrypoints: ["index.html", "frame.html", "composition.html", "status.html"],
+  },
   { name: "tailwind", directory: tailwindDirectory, entrypoints: ["tailwind.html"] },
 ] as const;
 const results = join(root, "test-results");
@@ -30,6 +42,34 @@ let passed = false;
 async function run(cwd: string, ...command: string[]) {
   const child = Bun.spawn(command, { cwd, stdout: "inherit", stderr: "inherit" });
   assert.equal(await child.exited, 0, `Consumer command failed: ${command.join(" ")}`);
+}
+
+async function verifyStatusConsumer(page: Page, baseURL: URL) {
+  for (const [theme, background] of [
+    ["frame-light", "rgb(245, 246, 248)"],
+    ["frame-dark", "rgb(24, 25, 29)"],
+  ] as const) {
+    const url = new URL("status.html", baseURL);
+    url.searchParams.set("theme", theme);
+    for (const verify of [
+      verifyAppearanceOnlyStatus,
+      verifyValidationStatusPrecedence,
+      verifyComposedStatus,
+      verifyLabelHelpIsolation,
+      verifyStatusNativeTransitions,
+      verifySelectStatusAdornment,
+    ]) {
+      // Each shared proof expects a fresh fixture, including empty submission output.
+      await page.goto(url.href);
+      await expect(
+        page.getByRole("heading", { name: "Field status contracts", exact: true }),
+      ).toBeVisible();
+      const themeRoot = page.locator(".cinder-theme").first();
+      await expect(themeRoot).toHaveAttribute("data-cinder-theme", theme);
+      await expect(themeRoot).toHaveCSS("background-color", background);
+      await verify(page);
+    }
+  }
 }
 
 async function verifyCompositionConsumer(page: Page, baseURL: URL) {
@@ -231,7 +271,10 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await expect(nativeInput).toHaveText("cleared");
 
     const submit = form.getByRole("button", { name: "Save composed values", exact: true });
-    const required = form.getByRole("textbox", { name: "Native required text", exact: true });
+    const required = form.getByRole("textbox", {
+      name: "Native required text (required)",
+      exact: true,
+    });
     const requiredRoot = form
       .locator(".cinder-text-field")
       .filter({ hasText: "Native required text" });
@@ -616,6 +659,176 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
       );
     }
     assert.equal(new Set(appearances).size, treatments.length, "Four distinct Frame treatments");
+    const choices = baseline.getByTestId("installed-choices");
+    const choiceValues = choices.getByRole("status", { name: "Installed choice FormData" });
+    const repeatedChannels = choices.getByRole("status", { name: "Installed repeated channels" });
+    await choices.getByRole("button", { name: "Reset installed choices", exact: true }).click();
+    await expect(choiceValues).toHaveText("");
+    await expect(repeatedChannels).toHaveText("");
+    const channels = choices.getByRole("group", { name: "Installed review channels", exact: true });
+    const email = channels.getByRole("checkbox", { name: "Email updates", exact: true });
+    const inApp = channels.getByRole("checkbox", { name: "In-app updates", exact: true });
+    const audit = channels.getByRole("checkbox", { name: "Owner-managed audit record" });
+    const archived = channels.getByRole("checkbox", { name: "Archived updates", exact: true });
+    const mixed = choices.getByRole("checkbox", { name: "Mixed review snapshot", exact: true });
+    const disabledMixed = choices.getByRole("checkbox", {
+      name: "Unavailable mixed review snapshot",
+      exact: true,
+    });
+    const delivery = choices.getByRole("radiogroup", { name: "Installed delivery", exact: true });
+    const immediate = delivery.getByRole("radio", { name: "Immediate delivery", exact: true });
+    const daily = delivery.getByRole("radio", { name: "Daily delivery", exact: true });
+    const live = choices.getByRole("switch", { name: "Live review updates", exact: true });
+    const liveLabel = live.locator("xpath=ancestor::label[1]");
+    const managed = choices.getByRole("switch", { name: "Owner-managed live updates" });
+    const archivedSwitch = choices.getByRole("switch", { name: "Archived live updates" });
+    const choiceFocus = theme === "frame-light" ? "rgb(54, 92, 203)" : "rgb(169, 189, 255)";
+    const choiceGray = theme === "frame-light" ? "rgb(127, 135, 149)" : "rgb(125, 132, 147)";
+    for (const target of await choices
+      .locator(".cinder-checkbox, .cinder-radio, .cinder-switch")
+      .all()) {
+      assert.equal(await target.evaluate((label) => label.tagName), "LABEL");
+      assert.ok((await target.boundingBox())!.height >= 44, "Frame choice label target >=44px");
+    }
+    const checkboxMark = email
+      .locator("xpath=ancestor::label[1]")
+      .locator(".cinder-checkbox-control");
+    await expect(checkboxMark).toHaveCSS("width", "18px");
+    await expect(checkboxMark).toHaveCSS("height", "18px");
+    await expect(checkboxMark).toHaveCSS("border-radius", "5px");
+    await expect(checkboxMark).toHaveCSS("background-color", choiceFocus);
+    for (const [input, paint] of [
+      [mixed, choiceFocus],
+      [disabledMixed, choiceGray],
+    ] as const) {
+      await expect(input).toHaveJSProperty("indeterminate", true);
+      await expect(input).not.toBeChecked();
+      const mark = input.locator("xpath=ancestor::label[1]").locator(".cinder-checkbox-control");
+      await expect(mark).toHaveCSS("background-color", paint);
+      await expect(mark).toHaveCSS("border-top-color", paint);
+      await expect(mark.locator("svg")).toBeVisible();
+    }
+    await expect(mixed.locator("xpath=ancestor::label[1]")).toHaveAttribute("data-readonly");
+    const radioMark = immediate
+      .locator("xpath=ancestor::label[1]")
+      .locator(".cinder-radio-control");
+    await expect(radioMark).toHaveCSS("width", "18px");
+    await expect(radioMark).toHaveCSS("height", "18px");
+    assert.equal(
+      await radioMark.evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
+      choiceFocus,
+    );
+    for (const input of [email, audit, archived, immediate, managed, archivedSwitch])
+      await expect(input).toBeChecked();
+    for (const input of [inApp, daily, live]) await expect(input).not.toBeChecked();
+    for (const input of [archived, disabledMixed, archivedSwitch])
+      await expect(input).toBeDisabled();
+    for (const input of [audit, managed]) {
+      const label = input.locator("xpath=ancestor::label[1]");
+      await expect(input).toBeEnabled();
+      await expect(label).toHaveAttribute("data-readonly");
+      await expect(label).toHaveCSS("cursor", "default");
+      await label.click();
+      await expect(input).toBeChecked();
+      await input.press("Space");
+      await expect(input).toBeFocused();
+      await expect(input).toBeChecked();
+    }
+    const invalid = choices.getByTestId("installed-invalid-checkbox");
+    const invalidMark = invalid.locator(".cinder-checkbox-control");
+    const errorInk = theme === "frame-light" ? "rgb(170, 39, 53)" : "rgb(255, 172, 179)";
+    await expect(invalid.getByRole("checkbox")).toHaveAttribute("aria-invalid", "true");
+    await expect(invalidMark).toHaveCSS("border-top-color", errorInk);
+    await invalid.hover();
+    await expect(invalid).toHaveAttribute("data-hovered");
+    await expect(invalidMark).toHaveCSS("border-top-color", errorInk);
+    const readChoices = choices.getByRole("button", {
+      name: "Read installed choice values",
+      exact: true,
+    });
+    await readChoices.click();
+    await expect(repeatedChannels).toHaveText(JSON.stringify(["email", "audit"]));
+    assert.deepEqual(JSON.parse((await choiceValues.textContent())!), [
+      ["channels", "email"],
+      ["channels", "audit"],
+      ["delivery", "immediate"],
+      ["managedUpdates", "enabled"],
+    ]);
+    await email.press("Space");
+    await expect(email).not.toBeChecked();
+    await channels.getByText("Email updates", { exact: true }).click();
+    await expect(email).toBeChecked();
+    await channels.getByText("In-app updates", { exact: true }).click();
+    await expect(inApp).toBeChecked();
+    await immediate.press("ArrowDown");
+    await expect(daily).toBeChecked();
+    await expect(immediate).not.toBeChecked();
+    await delivery.getByText("Immediate delivery", { exact: true }).click();
+    await expect(immediate).toBeChecked();
+    await expect(daily).not.toBeChecked();
+    await choices
+      .getByRole("button", { name: "Focus installed live updates", exact: true })
+      .click();
+    await expect(live).toBeFocused();
+    assert.deepEqual(
+      JSON.parse(
+        (await choices.getByRole("status", { name: "Installed switch refs" }).textContent())!,
+      ),
+      { root: "LABEL", input: "INPUT", contains: true },
+    );
+    await expect(live).toHaveAttribute("type", "checkbox");
+    await expect(live).toHaveAttribute("name", "liveUpdates");
+    await expect(live).toHaveAttribute("value", "enabled");
+    await expect(liveLabel).toHaveAttribute("data-consumer-switch", "true");
+    await expect(liveLabel).toHaveClass("cinder-switch consumer-switch-off");
+    await expect(liveLabel).toHaveCSS("font-weight", "400");
+    await expect(liveLabel).toContainText("(Off)");
+    await expect(liveLabel.locator(".cinder-switch-thumb")).toHaveCSS("transform", "none");
+    await liveLabel.click();
+    await expect(live).toBeChecked();
+    await expect(liveLabel).toHaveClass("cinder-switch consumer-switch-on");
+    await expect(liveLabel).toHaveCSS("font-weight", "600");
+    await expect(liveLabel).toContainText("(On)");
+    await live.press("Space");
+    await expect(live).not.toBeChecked();
+    await expect(liveLabel).toHaveClass("cinder-switch consumer-switch-off");
+    await expect(liveLabel).toHaveCSS("font-weight", "400");
+    await live.press("Space");
+    await expect(live).toBeChecked();
+    for (const [direction, locale, sign] of [
+      ["ltr", "english", 1],
+      ["rtl", "persian", -1],
+    ] as const) {
+      await page.getByTestId(`use-${locale}`).click();
+      for (const [input, size, width, height, thumbSize, travel] of [
+        [live, "sm", 32, 16, 10, 16],
+        [managed, "md", 48, 24, 18, 24],
+      ] as const) {
+        const label = input.locator("xpath=ancestor::label[1]");
+        const track = label.locator(".cinder-switch-track");
+        const thumb = label.locator(".cinder-switch-thumb");
+        await expect(input).toBeChecked();
+        await expect(label).toHaveAttribute("data-size", size);
+        await expect(label).toHaveCSS("direction", direction);
+        await expect(track).toHaveCSS("inline-size", `${width}px`);
+        await expect(track).toHaveCSS("block-size", `${height}px`);
+        await expect(track).toHaveCSS("background-color", choiceFocus);
+        await expect(thumb).toHaveCSS("inline-size", `${thumbSize}px`);
+        await expect(thumb).toHaveCSS("block-size", `${thumbSize}px`);
+        await expect(thumb).toHaveCSS("transform", `matrix(1, 0, 0, 1, ${travel * sign}, 0)`);
+      }
+    }
+    await page.getByTestId("use-english").click();
+    await readChoices.click();
+    await expect(repeatedChannels).toHaveText(JSON.stringify(["email", "inApp", "audit"]));
+    assert.deepEqual(JSON.parse((await choiceValues.textContent())!), [
+      ["channels", "email"],
+      ["channels", "inApp"],
+      ["channels", "audit"],
+      ["delivery", "immediate"],
+      ["liveUpdates", "enabled"],
+      ["managedUpdates", "enabled"],
+    ]);
     const carbon = page.getByTestId("nested-carbon");
     await expect(carbon).toHaveCSS("font-family", /IBM Plex Sans/);
     await expect(page.getByTestId("carbon-button")).toHaveCSS("height", "48px");
@@ -867,10 +1080,11 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(page.getByTestId("preflight-heading")).toHaveCSS("font-weight", "400");
     await expect(page.getByTestId("preflight-heading")).toHaveCSS("margin", "0px");
   }
+  await page.getByRole("button", { name: "Reset installed choices", exact: true }).click();
   await page.emulateMedia({ forcedColors: "active" });
   const system = await page.getByTestId("frame-baseline").evaluate((root) =>
     Object.fromEntries(
-      ["ButtonFace", "ButtonText", "Highlight"].map((name) => {
+      ["ButtonFace", "ButtonText", "Highlight", "GrayText"].map((name) => {
         const probe = document.createElement("span");
         probe.style.cssText = `color: ${name}; forced-color-adjust: none`;
         root.append(probe);
@@ -887,6 +1101,13 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
   await expect(button).toHaveCSS("background-color", system.ButtonFace!);
   await expect(button).toHaveCSS("color", system.ButtonText!);
   await expect(button).toHaveCSS("outline-color", system.Highlight!);
+  const disabledMixedMark = page
+    .getByRole("checkbox", { name: "Unavailable mixed review snapshot", exact: true })
+    .locator("xpath=ancestor::label[1]")
+    .locator(".cinder-checkbox-control");
+  await expect(disabledMixedMark).toHaveCSS("background-color", system.ButtonFace!);
+  await expect(disabledMixedMark).toHaveCSS("border-top-color", system.GrayText!);
+  await expect(disabledMixedMark).toHaveCSS("color", system.GrayText!);
   await page.emulateMedia({ forcedColors: "none" });
 }
 
@@ -1034,9 +1255,12 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
   assert.ok(/\.rounded-none\b/.test(tailwindCSS), "Tailwind must emit the corner utility");
   assert.ok(/\.px-6\b/.test(tailwindCSS), "Tailwind must emit the padding utility");
   const dist = join(directory, "dist");
+  const routes: Record<string, Response> = {};
   for (const consumer of consumers) {
     const build = await Bun.build({
       entrypoints: consumer.entrypoints.map((entry) => join(consumer.directory, entry)),
+      // Use the isolated consumer config, never the workspace's source aliases.
+      tsconfig: join(consumer.directory, "tsconfig.json"),
       outdir: dist,
       target: "browser",
       minify: true,
@@ -1045,12 +1269,18 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
       define: { "process.env.NODE_ENV": JSON.stringify("production") },
     });
     assert.ok(build.success, build.logs.map(String).join("\n"));
+    for (const output of build.outputs) {
+      const path = `/${relative(dist, output.path)}`;
+      const response = new Response(output, { headers: { "Content-Type": output.type } });
+      routes[path] = response;
+      if (path === "/index.html") routes["/"] = response;
+    }
   }
   server = Bun.serve({
     port: 0,
     hostname: "127.0.0.1",
     development: false,
-    routes: { "/*": { dir: dist } },
+    routes,
   });
   browser = await chromium.launch({
     channel: process.env.PLAYWRIGHT_CHANNEL ?? "chrome",
@@ -1117,7 +1347,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
     await expect(page.locator(".cinder-theme").first()).toHaveCSS("background-color", background);
     await expect(counter).toHaveCSS("border-radius", "8px");
     await expect(counter).toHaveCSS("font-weight", "500");
-    await expect(page.getByRole("textbox", { name: "Email", exact: true })).toHaveCSS(
+    await expect(page.getByRole("textbox", { name: "Email (required)", exact: true })).toHaveCSS(
       "border-radius",
       "8px",
     );
@@ -1156,6 +1386,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
   await page.setViewportSize({ width: 1440, height: 1000 });
   for (const consumer of consumers) await verifyFrameConsumer(page, server.url, consumer.name);
   await verifyCompositionConsumer(page, server.url);
+  await verifyStatusConsumer(page, server.url);
   assert.deepEqual(failedAssets, []);
   assert.deepEqual(errors, []);
   await Bun.write(
@@ -1179,6 +1410,9 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
           "Relay light/dark geometry, tokens, pending state, and nested Select portal",
           "Frame public JS/JSON/CSS tokens and default/explicit sizes in light and dark",
           "Frame Link native pointer/Enter navigation, disabled blocking, and tab order",
+          "installed Frame light/dark choices in native CSS and Tailwind: label targets, checkbox/radio marks, mixed/disabled paint, standalone invalid hover, and sm/md logical Switch geometry",
+          "installed choice native keyboard/label pointer, read-only immutability, repeated CheckboxGroup FormData, single radio/Switch values, disabled omission, and reset independence",
+          "installed Switch actual label/input refs, containment, native label rendering, and retained base/custom class/style/children callbacks",
           "nested Frame/Carbon sizing and font boundaries with document-level legacy overrides",
           "plain CSS and compiled CSS Modules root, part, state, and detached portal overrides",
           "controlled native input and wrapper refs, uncontrolled custom field validation",
@@ -1187,13 +1421,14 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
           "compound native text/group required focus order, error association, and corrected FormData submission",
           "compound controlled/uncontrolled text, raw NumberField values, and Search clear/Escape",
           "compound Select/ComboBox/date API smoke only; not later-family complete",
+          "installed Frame light/dark status: all twelve appearance-only fields and FormData, validation precedence, composed mount/refs/native identity, and isolated label help",
           "Modal outer/inner class, style, and ref targets",
           "rich Select collection types, descriptions, disabled options, and focus return",
           "live portal theme, locale, and inherited/replaced/cleared appearance",
           "explicit overlay language and exclusion of ordinary root class/style/id",
           "unrelated raw RAC ListBox and data-size/data-kind isolation",
           "pinned Tailwind CLI, genuine preflight, utilities, and cascade layer order",
-          "Frame forced-color action and focus precedence",
+          "Frame forced-color action/focus precedence and disabled mixed choice GrayText",
           "refs and render props",
           "keyboard state",
           "form validation and submission",
@@ -1204,7 +1439,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
         requestedFontAssets: fonts.length,
         loadedFontFaces: fontFaces,
         integrations: {
-          native: ["index.html", "frame.html", "composition.html"],
+          native: ["index.html", "frame.html", "composition.html", "status.html"],
           tailwind: { version: tailwindVersion, entrypoint: "tailwind.html" },
         },
       },
@@ -1214,7 +1449,10 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
   );
   passed = true;
   console.log(
-    "External package consumers passed · strict compound declarations, Frame light/dark refs and field/form journeys, collection/date API smoke, legacy/Frame, CSS Modules, and pinned Tailwind",
+    "External package consumers passed · strict compound declarations, installed Frame light/dark choice values/marks/Switch refs and geometry, field/form journeys, collection/date API smoke, legacy/Frame, CSS Modules, and pinned Tailwind",
+  );
+  console.log(
+    "Installed field status passed · Frame light/dark, 12 appearance-only fields and FormData, validation precedence, composed refs/native identity, and isolated label help",
   );
 } finally {
   await browser?.close();
@@ -1227,7 +1465,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
     console.log(`Installed consumer app retained: ${directory}`);
     console.log(`Tailwind consumer retained: ${tailwindDirectory}`);
     console.log(
-      `Serve built output for review: ${join(directory, "dist")} (index.html, frame.html, composition.html, tailwind.html)`,
+      `Serve built output for review: ${join(directory, "dist")} (index.html, frame.html, composition.html, status.html, tailwind.html)`,
     );
   } else {
     console.error(`Consumer fixtures retained for diagnosis: ${directory}, ${tailwindDirectory}`);

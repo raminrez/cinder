@@ -44,6 +44,7 @@
   "devDependencies": {
     "react": "catalog:",
     "react-dom": "catalog:",
+    "react-aria-components": "catalog:",
     "@axe-core/playwright": "4.14.0",
     "@internationalized/date": "catalog:",
     "@types/bun": "1.4.4",

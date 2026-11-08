@@ -171,14 +171,14 @@ export function CompositionConsumer({
             <div {...domProps} data-consumer-validation={isInvalid ? "invalid" : "valid"} />
           )}
         >
-          {({ isInvalid, isRequired }) => (
+          {({ isInvalid }) => (
             <>
               <TextField.Label
                 ref={label}
                 className="consumer-label"
                 render={(domProps) => <label {...domProps} htmlFor={domProps.htmlFor} />}
               >
-                Workspace {isRequired ? "(required)" : ""}
+                Workspace
               </TextField.Label>
               <TextField.Input {...inputProps} ref={input} />
               <TextField.Help ref={help} title="Workspace guidance" className="consumer-help">

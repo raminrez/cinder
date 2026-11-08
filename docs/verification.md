@@ -1,14 +1,14 @@
 # Cinder 0.1.0 — verification
 
-**Latest work: [Frame fields/forms](#frame-fields--phase-2-second-batch), bounded
-acceptance passed, 7 November 2026.** Shared compound fields, text/number/search
-stories, and Form recovery pass browser, rendered, native-input, and installed-package
-gates. The full fourteen-entry Phase 2 slice remains in progress.
+**Latest work: [Frame choices](#frame-choices--phase-2-third-batch), code, Storybook,
+and installed-package gates passed, 8 November 2026; rendered acceptance is being
+closed.** Checkbox, Radio, and Switch retain native values, label/input contracts,
+and group recovery. The full fourteen-entry Phase 2 slice remains in progress.
 
-**Latest aggregate: passed, 7 November 2026, 14:18:39–14:22:50 UTC.**
-The [acceptance record](../test-results/frame-fields-check-acceptance-2026-11-07.json)
-and [output](../test-results/frame-fields-check-acceptance-2026-11-07.log) retain
-the frozen `bun run check`. Earlier action, Frame-foundation, and Relay results remain below.
+**Latest aggregate: passed, 8 November 2026, 15:04:34–15:10:18 UTC.**
+The [acceptance record](../test-results/status-corrected-acceptance-2026-11-08.json)
+and [output](../test-results/status-corrected-acceptance-2026-11-08.log) retain
+the frozen `bun run check`. Earlier field/form, action, foundation, and Relay results remain below.
 
 **Implementation baseline: passed, 6 November 2026, 01:40:02–01:42:01 UTC.**
 `bun run check` completed formatting, TypeScript, **12 unit tests with 129 expect
@@ -20,6 +20,180 @@ The local site is **http://127.0.0.1:3000**, with Relay at **/relay**. The sourc
 are Cinder's provisional **0.1.0**, with the working package scope `@cinder`.
 See [implementation coverage](coverage.md) for the family-by-family boundaries
 and [visual review](visual-review.md) for the screenshot assessment.
+
+## Frame choices — Phase 2 third batch
+
+This bounded batch completes the Checkbox, Radio, and Switch source/stories and
+installed-package gates; rendered review is being closed separately. Its
+[public contract](../packages/react/README.md#checkbox-radio-and-switch),
+[coverage](coverage.md#frame-choices--phase-2-third-batch), and
+[ordered plan](component-library-plan.md#third-batch--checkbox-radio-and-switch)
+define the scope. It adds **18 stories / 15 authored plays**: six stories and five
+plays for each family. The final static index contains **80 stories / 178 indexed
+story/theme/motion cases**. Only the **46 choice cases** ran in the final focused
+Storybook gate; **132 existing cases were filtered**, not rerun.
+
+### Executed choice gates
+
+| Gate                        | Result and scope                                                                                                                                                                                                                                                                                                            |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Formatting, lint, and types | [Final static gate](../test-results/choices-static-final-2026-11-08.json): no findings; **73 source files**, strict Storybook and public declarations; package rebuild and whitespace checks                                                                                                                                |
+| Source browser proof        | [**32 cases / 113 filtered / 0 failures**](../test-results/choices-source-final-2026-11-08.json) across fidelity, composition, contracts, and status; eight-theme wrapping/cursors, normal/forced-color LTR/RTL Switch geometry, native group validation, refs/custom DOM, and shared anatomy/status                        |
+| Storybook                   | [Final build](../test-results/choices-storybook-final-build-2026-11-08.json) and [**46 choice cases / 132 filtered / 0 failures**](../test-results/choices-storybook-final-2026-11-08.json); actual play, completed a11y reporting, and rendered Frame themes                                                               |
+| Distribution                | [Production build/packing](../test-results/choices-build-pack-final-2026-11-08.json) and [installed gate](../test-results/choices-package-final-2026-11-08.json); strict declarations, production bundles, native CSS/CSS Modules and genuine Tailwind **4.3.5**                                                            |
+| Installed choice contracts  | [Both consumers](../test-results/choices-package-consumer-final-2026-11-08.json): repeated CheckboxGroup values, Radio/Switch values, read-only immutability/submission, disabled omission, mixed/forced-color paint, invalid hover, label targets, Switch refs/native rendering/callbacks, and preserved baseline journeys |
+| Code reviews                | [Final read-only Ponytail reconciliation](../.research/choices-2026-11-08/code-review-reconciliation.md): CSS/source-proof and installed-consumer reviews found no concrete bugs; exact reviewed hashes match final execution                                                                                               |
+| Rendered evidence           | [**62/62 retained PNGs**](../test-results/choices-render-final-2026-11-08/report.json), **31 per theme**, zero geometry/contrast failures, axe violations, or recorded console/page errors; visual dispositions are being closed                                                                                            |
+
+The [pre-documentation identity check](../test-results/choices-identities-pre-docs-2026-11-08.json)
+verified the gate inputs, packed README/payload, archives, ten renderer source hashes,
+all **34 recorded static assets**, and all **62 capture hashes**. It also verified
+unchanged `selection.tsx`, the exact **28 pre-existing staged files**, all **138
+frozen staged source comparisons**, and **52 preserved status artifacts**. The
+Git-index binary metadata differs from its earlier saved bytes; the staged content
+and file set match. No staging, commit, reset, or push occurred.
+
+### Choice ownership and compatibility
+
+- Existing CSS owners add Frame's **44px ordinary label minimum**, blue selection,
+  **18px Checkbox marks / 5px corners**, and 18px Radio marks. Compact table selection
+  retains its existing **16px mark / 18px target**. Labels can grow; marks do not shrink.
+- Shared wrapping, read-only cursors, disabled-mixed paint, and forced colors apply
+  across all eight themes; ordinary Frame geometry/paint remains scoped. Checkbox
+  and Radio hover guards use `:where(:not(...))` so later invalid paint wins without
+  admitting disabled/read-only hover. Frame group recovery retains neutral resting
+  and blue selected/mixed borders. Standalone invalid Checkbox stays red during hover;
+  disabled paint wins. `packages/react/src/selection.tsx` remains byte-identical.
+- CheckboxGroup submits repeated native entries read with `FormData.getAll()`;
+  RadioGroup submits one value. Checked read-only choices remain immutable and
+  submitted; disabled controls are omitted. Select-all/mixed state derives from
+  member selections rather than adding a third value or a selection engine.
+- Switch supports selected/read-only/disabled and **sm/md**, not required, invalid,
+  validation, or mixed-state APIs. Its **32×16px / 48×24px** tracks use logical LTR/RTL
+  thumb travel. Space toggles; Enter can submit the containing form, not toggle.
+  Deferred-save preferences use Checkbox; application requests remain outside Cinder.
+- Public refs/classes/render children, RAC props/native semantics, all eight themes,
+  seven Button variants, and Persian/Arabic examples remain compatible. The existing
+  native/CSS Modules/Tailwind consumers and compound Checkbox/Radio proof were extended
+  or reused rather than duplicated.
+
+### Rendered and accessibility review
+
+The renderer captures state matrices at **1440/768/390px**, long content and real
+Persian/Arabic/German providers at **1440/768/390/320px**, and 390px native FormData,
+custom composition, mixed/keyboard endpoints, native-invalid, and returned-error
+states. The raw report's `visualReview: "pending"` marker remains historical;
+acceptance will be supplied by separate, hash-linked reviews.
+
+The [final inspector gate](../test-results/choices-inspector-final-2026-11-08.json)
+passes both themes at **1440/768/390px**, with **zero failures**. It uses `--app --allow
+no-title` because Storybook owns the embedded scene title, preserving the approved
+component gallery. Light retains three warning categories, dark two; the original
+inspector evidence remains unchanged. Original/final image dispositions are being
+closed independently rather than erasing warnings or altering the gallery for a meter.
+
+| Theme | Applicable label/guidance/recovery samples | Lowest applicable ratio | Inactive exemptions |
+| ----- | -----------------------------------------: | ----------------------: | ------------------: |
+| Light |                                        303 |                5.3205:1 |                  34 |
+| Dark  |                                        303 |                8.6554:1 |                  34 |
+
+These **606 captured applicable samples** exceed 4.5:1 against measured effective
+backgrounds. They are repeated observations, not unique components or all possible
+states. Inactive samples remain exemptions, not enabled contrast passes.
+
+All **50 axe `bypass` incompletes**—25 per theme—target `html` with the same retained
+rule/node payload. Each still requires a per-capture contextual disposition tied to
+its image hash. Isolated-canvas applicability is not an automated WCAG 2.4.1 pass
+or certification of Storybook's manager shell or a consuming application.
+
+### Repairs and retained history
+
+The standalone-invalid Checkbox hover regression reproduced in both Frame themes
+and is retained in the [red receipt](../test-results/choices-hover-red-2026-11-08.json).
+The [corrected green gate](../test-results/choices-hover-green-2026-11-08.json) passes
+**10 cases / 54 filtered / 0 failures**; the final source gate above refreshes the
+affected proof after the repair. The earlier [Carbon/Relay gate](../test-results/choices-legacy-acceptance-2026-11-08.json)
+passes **6 cases / 23 filtered / 0 failures** but preceded that hover correction;
+its narrower historical scope is not relabeled as final acceptance.
+
+Pre-choice source and consumer baselines remain under
+`.research/choices-2026-11-08/`. Failed/earlier receipts, inspectors, and the frozen
+status aggregate and its 13 README checks remain unchanged. The complete status
+gate was not repeated for choice bookkeeping. Root installation commands and TSX
+examples remain unchanged; the public choice contract is in the final packed README.
+
+Select/Modal/Popover/Tooltip and settings/nested-edit tasks are next. The original
+Astryx screenshot is unavailable, so no exact pixel comparison is claimed. Manual
+AT, physical-device/IME, broad zoom/text-resizing, Firefox/WebKit, representative
+users, and comprehensive SSR/hydration remain unperformed. The documentation
+website and Figma remain later phases; this batch does not complete the full slice
+or certify accessibility conformance.
+
+## Frame field status — Phase 2 extension
+
+The extension completes status presentation, inline icons, localized necessity
+wording, and label help across twelve shared field namespaces. Its [public
+contract](../packages/react/README.md#field-status-necessity-and-label-help),
+[coverage](coverage.md#frame-field-status--phase-2-extension), and
+[ordered plan](component-library-plan.md#field-status-extension--status-icons-and-label-help)
+define the bounded scope. Code, retained visual, and exact README consumer gates
+are closed; choice-control implementation follows.
+
+The workbench indexes **62 stories: 54 preserved plus eight status stories**.
+All **132 story/theme/motion cases** pass: 124 reduced-motion cases and eight
+normal-motion cases for help, validation precedence, long content, and localization.
+Play exceptions, completed a11y reporting, and actual rendered Frame themes remain
+required. Appearance-only status does not change native validity or block submission;
+RAC/native/server validation takes precedence. Group feedback stays detached.
+
+### Executed extension gates
+
+| Gate                             | Result and scope                                                                                                                                                                                                                                                                                  |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Formatting, lint, and types      | **153 formatted files**, no lint findings, **70 source files**, strict Storybook and public declarations                                                                                                                                                                                          |
+| Unit and watcher tests           | **41 passed / 2,005 assertions**, including slotted/inherited context-child regressions                                                                                                                                                                                                           |
+| Builds                           | Packages, declarations, generated CSS/JSON, existing documentation build (**15 assets**), and static Storybook                                                                                                                                                                                    |
+| Full browser suite               | **341 passed across eight files**, including **132 Storybook cases**, **37 status cases**, and preserved Carbon/Relay/Frame contracts                                                                                                                                                             |
+| Installed consumers              | [Native CSS/CSS Modules and Tailwind 4.3.5](../test-results/status-package-consumer-acceptance-2026-11-08.json); twelve appearance-only fields/FormData, validation precedence, mounted associations/refs/native identity, isolated help, and baseline journeys                                   |
+| Retained visual review           | [52 captures / 16 scenes](../.research/status-final-2026-11-08/visual-review-resumed-2026-11-08.md): 14 newly inspected, 38 prior inspections reused after hash reconciliation; no fix identified                                                                                                 |
+| README installation and examples | [13 accepted checks](../test-results/status-readme-resumed-2026-11-08.final.json): three root installation workflows, three verbatim root TSX blocks, and both verbatim status examples; strict external declarations, published JS/CSS/fonts, Chrome validation/submission/help/stepper/recovery |
+
+All **138 recorded source/configuration hashes** remained unchanged during the
+aggregate and match the recovered staged implementation. Both current tarballs
+match installed acceptance, including the packaged React README. The full gate
+was not repeated after restart; acceptance bookkeeping is updated separately.
+
+The resumed README verifier reused the matching archives without rebuilding or
+repacking. Its final accepted result is **13 passed / 0 failed / 0 unrun**. The first
+attempt's helper selector omitted RAC's appended field label from the stepper name;
+its **10 passes / 1 helper-only failure / 2 unrun** remain immutable. A separate
+continuation using the actual accessible names passes the remaining three checks.
+Raw execution therefore retains one failed helper check; no product or published
+example fix was required. Later root README prose changes leave all verified
+installation commands and TSX blocks unchanged.
+
+The [preserved status snapshot](../test-results/status-preserved-2026-11-08/preservation.json)
+retains matching tarballs, static Storybook, accepted aggregate/consumer records,
+and pre-closeout READMEs before the next component build replaces ordinary output.
+
+The [raw corrected renderer](../.research/status-final-2026-11-08/corrected-render/report.json)
+and all 52 PNG hashes remain unchanged. Six recorded renderer source hashes and ten
+relevant dependency hashes still match. Its `visualReview: "pending"` marker remains
+historical; the separate review supplies the disposition. The former port 6020 server
+is offline, so retained served-asset hashes are not fresh live-byte verification.
+
+All **16 retained axe 4.12.1 scene audits have zero violations**. Four `bypass`
+incompletes on `html` were individually reviewed as isolated LongContent canvases
+without repeated navigation. They remain incompletes, not WCAG 2.4.1 passes or
+certification of Storybook's manager shell. Help was closed before those scene
+audits: open-help layout was visually reviewed, while interaction/naming contracts
+are covered separately by browser tests. No manual screen-reader audit is claimed.
+
+Checkbox/Radio/Switch family stories and overlay/task compositions remain next.
+The original Astryx screenshot is unavailable, so no exact reference/pixel match
+is claimed. Firefox/WebKit, manual AT, physical touch, real IME/autofill, broad
+zoom/text-resizing, representative-user testing, and comprehensive SSR/hydration
+remain unperformed. The documentation website and Figma remain later phases.
 
 ## Frame fields — Phase 2 second batch
 
