@@ -136,14 +136,29 @@ export type {
   SkeletonProps,
   ToastMessage,
 } from "./feedback";
-export { Tag, CodeSnippet, Tile, List, StructuredList, ProgressIndicator } from "./content";
+export {
+  Tag,
+  CodeSnippet,
+  Tile,
+  ClickableTile,
+  SelectableTile,
+  ExpandableTile,
+  List,
+  StructuredList,
+  StructuredListRow,
+  ProgressIndicator,
+} from "./content";
 export type {
   TagProps,
   TagColor,
   CodeSnippetProps,
   TileProps,
+  ClickableTileProps,
+  SelectableTileProps,
+  ExpandableTileProps,
   ListProps,
   StructuredListProps,
+  StructuredListRowProps,
   ProgressStep,
   ProgressIndicatorProps,
 } from "./content";

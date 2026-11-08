@@ -1146,6 +1146,273 @@
       min-height: var(--cinder-size-sm);
       padding: 0;
     }
+
+    /* Frame CodeSnippet */
+    .cinder-code-snippet {
+      background: var(--cinder-layer);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .cinder-code-snippet pre {
+      padding: var(--cinder-spacing-04) var(--cinder-spacing-05);
+      padding-inline-end: 2.75rem;
+      font-family: var(--cinder-font-mono);
+      font-size: var(--cinder-code-01-font-size, 0.8125rem);
+      line-height: 1.6;
+      color: var(--cinder-text-primary);
+    }
+    .cinder-code-snippet pre:focus-visible {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: -2px;
+    }
+    .cinder-code-snippet > .cinder-button {
+      position: absolute;
+      inset-inline-end: 0.375rem;
+      top: 0.375rem;
+      width: var(--cinder-size-sm);
+      height: var(--cinder-size-sm);
+      min-height: var(--cinder-size-sm);
+      border-radius: var(--cinder-control-radius);
+      background: var(--cinder-layer);
+      border: 1px solid var(--cinder-border-subtle);
+      color: var(--cinder-icon-primary);
+      padding: 0;
+    }
+    .cinder-code-snippet > .cinder-button:hover {
+      background: var(--cinder-layer-hover);
+    }
+    .cinder-code-snippet--inline {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--cinder-spacing-02);
+      padding: 0.125rem 0.375rem;
+      border-radius: calc(var(--cinder-control-radius) / 2);
+      background: var(--cinder-layer-accent, var(--cinder-layer));
+      border: 1px solid var(--cinder-border-subtle);
+      font-family: var(--cinder-font-mono);
+      font-size: 0.8125rem;
+      vertical-align: baseline;
+    }
+    .cinder-code-snippet--inline code {
+      color: var(--cinder-text-primary);
+    }
+    .cinder-code-snippet--inline > .cinder-button {
+      position: static;
+      width: 1.25rem;
+      height: 1.25rem;
+      min-height: 1.25rem;
+      border: none;
+      background: transparent;
+      padding: 0;
+    }
+
+    /* Frame Tiles */
+    .cinder-tile {
+      background: var(--cinder-layer);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      padding: var(--cinder-spacing-05);
+      transition: background var(--cinder-motion-fast), border-color var(--cinder-motion-fast), box-shadow var(--cinder-motion-fast);
+      color: var(--cinder-text-primary);
+    }
+    .cinder-tile--clickable {
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+    .cinder-tile--clickable:hover {
+      background: var(--cinder-layer-hover);
+      border-color: var(--cinder-border-strong);
+    }
+    .cinder-tile--clickable:focus-visible {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: 2px;
+    }
+    .cinder-tile--selectable {
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+    }
+    .cinder-tile--selectable .cinder-tile-checkmark {
+      position: absolute;
+      inset-inline-end: var(--cinder-spacing-04);
+      top: var(--cinder-spacing-04);
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: calc(var(--cinder-control-radius) / 2);
+      border: 1px solid var(--cinder-border-strong);
+      display: grid;
+      place-items: center;
+      transition: background var(--cinder-motion-fast), border-color var(--cinder-motion-fast);
+    }
+    .cinder-tile--selectable:hover {
+      background: var(--cinder-layer-hover);
+    }
+    .cinder-tile--selectable[data-selected="true"],
+    .cinder-tile--selectable.cinder-tile--selected {
+      border-color: var(--cinder-interactive);
+      background: var(--cinder-layer-selected);
+    }
+    .cinder-tile--selectable[data-selected="true"] .cinder-tile-checkmark,
+    .cinder-tile--selectable.cinder-tile--selected .cinder-tile-checkmark {
+      background: var(--cinder-interactive);
+      border-color: var(--cinder-interactive);
+      color: var(--cinder-text-on-color);
+    }
+    .cinder-tile--selectable:focus-within {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: 2px;
+    }
+    .cinder-tile--expandable {
+      position: relative;
+    }
+    .cinder-tile-expand-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: var(--cinder-spacing-04);
+      padding: var(--cinder-spacing-03) 0 0;
+      border: none;
+      border-block-start: 1px solid var(--cinder-border-subtle);
+      background: transparent;
+      cursor: pointer;
+      color: var(--cinder-interactive);
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 500;
+    }
+    .cinder-tile-expand-button:focus-visible {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: 2px;
+    }
+
+    /* Frame StructuredList */
+    .cinder-structured-list {
+      margin: 0;
+      background: var(--cinder-layer);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      overflow: hidden;
+    }
+    .cinder-structured-list > div,
+    .cinder-structured-list-row {
+      display: grid;
+      grid-template-columns: minmax(8rem, 1fr) 2fr;
+      gap: var(--cinder-spacing-04);
+      padding: var(--cinder-spacing-04) var(--cinder-spacing-05);
+      border-block-end: 1px solid var(--cinder-border-subtle);
+      align-items: baseline;
+    }
+    .cinder-structured-list > div:last-child,
+    .cinder-structured-list-row:last-child {
+      border-block-end: none;
+    }
+    .cinder-structured-list dt {
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 600;
+      color: var(--cinder-text-primary);
+      margin: 0;
+    }
+    .cinder-structured-list dd {
+      font-size: var(--cinder-text-size-sm);
+      color: var(--cinder-text-secondary);
+      margin: 0;
+    }
+
+    /* Frame ProgressIndicator */
+    .cinder-progress-indicator {
+      display: flex;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      gap: var(--cinder-spacing-02);
+    }
+    .cinder-progress-indicator li {
+      flex: 1;
+      min-width: 6.5rem;
+      border-block-start: 2px solid var(--cinder-border-subtle);
+      padding: var(--cinder-spacing-04) var(--cinder-spacing-03) 0 0;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--cinder-spacing-03);
+      position: relative;
+      transition: border-color var(--cinder-motion-fast);
+    }
+    .cinder-progress-indicator li[data-status="complete"] {
+      border-color: var(--cinder-interactive);
+    }
+    .cinder-progress-indicator li[data-status="current"] {
+      border-color: var(--cinder-interactive);
+    }
+    .cinder-progress-indicator li[data-status="invalid"] {
+      border-color: var(--cinder-support-error);
+    }
+    .cinder-step-marker {
+      width: 1.25rem;
+      height: 1.25rem;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      margin-top: 0.0625rem;
+      border-radius: 50%;
+      font-size: 0.8125rem;
+    }
+    .cinder-step-marker > span {
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 1.5px solid var(--cinder-border-strong);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    li[data-status="current"] .cinder-step-marker > span {
+      border-color: var(--cinder-interactive);
+      background: var(--cinder-interactive);
+      box-shadow: 0 0 0 2px var(--cinder-layer), 0 0 0 4px var(--cinder-interactive);
+    }
+    li[data-status="complete"] .cinder-step-marker {
+      color: var(--cinder-interactive);
+    }
+    li[data-status="invalid"] .cinder-step-marker {
+      color: var(--cinder-support-error);
+    }
+    .cinder-step-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+    .cinder-step-label {
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 500;
+      color: var(--cinder-text-primary);
+    }
+    .cinder-step-description {
+      font-size: 0.75rem;
+      color: var(--cinder-text-secondary);
+      margin: 0;
+    }
+    .cinder-progress-indicator .cinder-button {
+      min-height: auto;
+      padding: 0;
+      color: var(--cinder-text-primary);
+      font-weight: 500;
+      justify-content: flex-start;
+      text-align: start;
+    }
+    .cinder-progress-indicator[data-orientation="vertical"] {
+      flex-direction: column;
+      gap: 0;
+    }
+    .cinder-progress-indicator[data-orientation="vertical"] li {
+      border-block-start: 0;
+      border-inline-start: 2px solid var(--cinder-border-subtle);
+      padding: 0 0 var(--cinder-spacing-06) var(--cinder-spacing-04);
+    }
+    .cinder-progress-indicator[data-orientation="vertical"] li:last-child {
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -1243,6 +1510,20 @@
       }
       .cinder-table :is(.react-aria-Cell, .react-aria-Row, .cinder-column)[data-focus-visible] {
         outline-color: Highlight;
+      }
+      .cinder-tile--clickable:focus-visible,
+      .cinder-tile--selectable:focus-within,
+      .cinder-code-snippet pre:focus-visible,
+      .cinder-tile-expand-button:focus-visible {
+        outline-color: Highlight;
+      }
+      .cinder-tile--selectable[data-selected="true"],
+      .cinder-tile--selectable.cinder-tile--selected {
+        border-color: Highlight;
+      }
+      .cinder-progress-indicator li[data-status="complete"],
+      .cinder-progress-indicator li[data-status="current"] {
+        border-color: Highlight;
       }
     }
   }

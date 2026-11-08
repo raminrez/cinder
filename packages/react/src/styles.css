@@ -1864,10 +1864,100 @@
     top: 0.25rem;
     color: var(--cinder-icon-primary);
   }
+  .cinder-code-snippet--single pre {
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+  .cinder-code-snippet--inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.125rem 0.375rem;
+    background: var(--cinder-layer);
+    vertical-align: baseline;
+  }
+  .cinder-code-snippet--inline code {
+    font: var(--cinder-code-01-font-size) / var(--cinder-code-01-line-height)
+      var(--cinder-font-mono);
+  }
+  .cinder-code-snippet--inline > .cinder-button {
+    position: static;
+    display: inline-flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    min-height: 1.25rem;
+    padding: 0;
+  }
+  .cinder-code-snippet--wrap pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
   .cinder-tile {
     padding: 1rem;
     background: var(--cinder-layer);
     min-width: 0;
+  }
+  .cinder-tile--clickable {
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .cinder-tile--clickable:hover {
+    background: var(--cinder-layer-hover);
+  }
+  .cinder-tile--clickable:focus-visible {
+    outline: 2px solid var(--cinder-focus);
+    outline-offset: -2px;
+  }
+  .cinder-tile--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .cinder-tile--selectable {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+  .cinder-tile-checkmark {
+    position: absolute;
+    inset-inline-end: 0.75rem;
+    top: 0.75rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--cinder-border-strong);
+    background: transparent;
+    color: transparent;
+  }
+  .cinder-tile--selected .cinder-tile-checkmark {
+    background: var(--cinder-interactive);
+    border-color: var(--cinder-interactive);
+    color: var(--cinder-text-on-color);
+  }
+  .cinder-tile--expandable {
+    position: relative;
+  }
+  .cinder-tile-expand-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.5rem 0 0;
+    border: none;
+    border-top: 1px solid var(--cinder-border-subtle);
+    background: transparent;
+    cursor: pointer;
+    color: var(--cinder-interactive);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  .cinder-tile-below-fold {
+    margin-top: 0.75rem;
   }
   .cinder-list {
     margin: 0;
@@ -1880,7 +1970,8 @@
   .cinder-structured-list {
     margin: 0;
   }
-  .cinder-structured-list > div {
+  .cinder-structured-list > div,
+  .cinder-structured-list-row {
     display: grid;
     grid-template-columns: minmax(7rem, 1fr) 2fr;
     gap: 1rem;
