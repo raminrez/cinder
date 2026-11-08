@@ -112,6 +112,26 @@ The [dated choice evidence](../../docs/verification.md#frame-choices--phase-2-th
 records the exact executed scope. Select/Modal/Popover/Tooltip and settings/nested
 editing are the next bounded batch; the documentation website and Figma remain later.
 
+## Select and overlays batch
+
+The fourth batch covers **Select (Dropdown)** and the three overlay primitives:
+**Modal (Dialog)**, **Popover**, and **Tooltip**. Each family contributes **six stories
+with authored play functions**, adding **24 stories / 20 plays**. The static workbench
+now indexes **104 stories**.
+
+| Story file                                           | Authored coverage                                                                                                                                                                                                                                 |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`Select.stories.tsx`](stories/Select.stories.tsx)   | Convenience and compound `.Root`/`.Trigger`/`.Value`/`.Popover`/`.ListBox` composition; rich options with labels & descriptions; sections and disabled keys; controlled/uncontrolled state; Form FormData submission; narrow wrapping and RTL     |
+| [`Modal.stories.tsx`](stories/Modal.stories.tsx)     | Sizes `xs`/`sm`/`md`/`lg`; accessible titles and reachable close dismissal; form submission inside modal; nested `Select` with inner-first Escape; independent `overlayClassName`/`overlayRef`/`modalStyle` targets; scrollable long content; RTL |
+| [`Popover.stories.tsx`](stories/Popover.stories.tsx) | Placements (`bottom`, `top`, `start`, `end`); rich filter checkbox menu with Apply/Clear; focus containment and Escape dismissal; custom surface styles and ref forwarding; RTL reading direction                                                 |
+| [`Tooltip.stories.tsx`](stories/Tooltip.stories.tsx) | Placements and directional arrows; icon-only action toolbar hints; hover vs keyboard focus-visible; immediate Escape dismissal; custom styling and element refs; multiline wrapping and Persian RTL scopes                                        |
+
+The Select trigger inherits Frame's 44px ordinary control height (32/44/48px for `sm`/`md`/`lg`),
+10px corners, chevron down rotation on open, and attached recovery band when invalid.
+Overlays receive the portable Theme `appearanceClassName` and effective language across portals.
+Modal uses Frame's 18px corners (`--cinder-overlay-radius`), an opaque surface, and 50% dark backdrop;
+Popover uses 14px corners (`--cinder-popover-radius`) with `0 8px 24px` elevation; Tooltip uses 10px corners.
+
 Run `bun test --timeout 60000 tests/browser/storybook.test.ts` after the static build
 to execute the indexed stories in both Frame themes and require successful play
 and a11y reporting. Coverage above describes the authored stories; dated rendered,
