@@ -166,7 +166,6 @@ export const FocusAndHover: Story = {
 };
 
 function CustomStylingAndRefsExample() {
-  const tooltipRef = useRef<HTMLDivElement>(null);
   const [inspected, setInspected] = useState<boolean>(false);
   return (
     <div className="overlay-story-stack">
@@ -174,13 +173,15 @@ function CustomStylingAndRefsExample() {
       <div className="overlay-row">
         <TooltipTrigger delay={0}>
           <Button variant="secondary">Check tooltip element</Button>
-          <Tooltip ref={tooltipRef} className="overlay-custom-surface">
+          <Tooltip
+            ref={(node) => {
+              if (node) setInspected(true);
+            }}
+            className="overlay-custom-surface"
+          >
             {(state) => <span>{`Custom styled tooltip (placement: ${state.placement})`}</span>}
           </Tooltip>
         </TooltipTrigger>
-        <Button variant="ghost" size="sm" onPress={() => setInspected(tooltipRef.current !== null)}>
-          Inspect tooltip ref
-        </Button>
       </div>
       <output aria-label="Tooltip ref output">
         {inspected ? "Tooltip ref verified." : "Awaiting check."}
@@ -191,7 +192,7 @@ function CustomStylingAndRefsExample() {
 
 export const CustomStylingAndRefs: Story = {
   render: () => <CustomStylingAndRefsExample />,
-  play: async ({ canvasElement, userEvent }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole("button", { name: "Check tooltip element" });
     const output = canvas.getByRole("status", { name: "Tooltip ref output" });
@@ -203,10 +204,9 @@ export const CustomStylingAndRefs: Story = {
       return el!;
     });
     await expect(tooltip).toHaveClass(/overlay-custom-surface/);
-
-    const checkBtn = canvas.getByRole("button", { name: "Inspect tooltip ref" });
-    await userEvent.click(checkBtn);
-    await expect(output).toHaveTextContent("Tooltip ref verified.");
+    await waitFor(() => {
+      expect(output).toHaveTextContent("Tooltip ref verified.");
+    });
   },
 };
 

@@ -164,7 +164,7 @@ export const States: Story = {
     await userEvent.click(option);
 
     await waitFor(async () => {
-      await expect(canvas.getByText("Editor")).toBeVisible();
+      await expect(within(trigger).getByText("Editor")).toBeVisible();
     });
 
     // Check invalid recovery error message presence
@@ -217,22 +217,16 @@ export const RichOptionsAndSections: Story = {
     const trigger = canvas.getByRole("button", { name: /Deployment cluster/ });
     await userEvent.click(trigger);
 
-    const lockedOption = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>(
-        '.react-aria-ListBoxItem[data-key="prod-dr"]',
-      );
-      expect(opt).not.toBeNull();
-      return opt!;
-    });
+    const lockedOption = await waitFor(() =>
+      within(document.body).getByRole("option", { name: /Disaster recovery/ }),
+    );
     await expect(lockedOption).toHaveAttribute("aria-disabled", "true");
 
-    const liveOption = document.querySelector<HTMLElement>(
-      '.react-aria-ListBoxItem[data-key="prod-1"]',
-    )!;
+    const liveOption = within(document.body).getByRole("option", { name: /Production primary/ });
     await userEvent.click(liveOption);
 
     await waitFor(async () => {
-      await expect(canvas.getByText("Production primary")).toBeVisible();
+      await expect(within(trigger).getByText("Production primary")).toBeVisible();
     });
   },
 };
@@ -513,15 +507,13 @@ export const LongContentAndLocales: Story = {
     await expect(persianTrigger).toBeVisible();
 
     await userEvent.click(persianTrigger);
-    const editorOpt = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="editor"]');
-      expect(opt).not.toBeNull();
-      return opt!;
-    });
+    const editorOpt = await waitFor(() =>
+      within(document.body).getByRole("option", { name: /ویرایشگر محتوا/ }),
+    );
     await userEvent.click(editorOpt);
 
     await waitFor(async () => {
-      await expect(canvas.getByText("ویرایشگر محتوا و گردش‌کار")).toBeVisible();
+      await expect(within(persianTrigger).getByText("ویرایشگر محتوا و گردش‌کار")).toBeVisible();
     });
   },
 };

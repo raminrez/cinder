@@ -112,7 +112,7 @@ export const Sizes: Story = {
                       </p>
                       <div className="cinder-dialog-footer">
                         <Button variant="primary" onPress={close}>
-                          Dismiss
+                          Close size dialog
                         </Button>
                       </div>
                     </>
@@ -137,7 +137,7 @@ export const Sizes: Story = {
     });
     await expect(dialog).toBeVisible();
 
-    const closeBtn = within(dialog).getByRole("button", { name: "Dismiss" });
+    const closeBtn = within(dialog).getByRole("button", { name: "Close size dialog" });
     await userEvent.click(closeBtn);
 
     await waitFor(() => {
@@ -222,7 +222,7 @@ export const FormDialog: Story = {
       return el!;
     });
 
-    const emailInput = within(modal).getByRole("textbox", { name: "Teammate email" });
+    const emailInput = within(modal).getByRole("textbox", { name: /Teammate email/ });
     await userEvent.type(emailInput, "alex@cinder.dev");
 
     const submitBtn = within(modal).getByRole("button", { name: "Send invitation" });
