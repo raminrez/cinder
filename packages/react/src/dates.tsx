@@ -45,7 +45,7 @@ import { classes, type ControlSize } from "./utils";
 function CalendarContent() {
   return (
     <>
-      <header className="cinder-calendar-header">
+      <div className="cinder-calendar-header">
         <Button variant="ghost" iconOnly size="md" slot="previous">
           <Icon name="chevronLeft" />
         </Button>
@@ -53,7 +53,7 @@ function CalendarContent() {
         <Button variant="ghost" iconOnly size="md" slot="next">
           <Icon name="chevronRight" />
         </Button>
-      </header>
+      </div>
       <CalendarGrid>
         <CalendarGridHeader>
           {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}

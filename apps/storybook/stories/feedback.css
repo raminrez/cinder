@@ -1,0 +1,30 @@
+.feedback-story-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 720px;
+  width: 100%;
+}
+
+.feedback-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--cinder-layer);
+  border: 1px solid var(--cinder-border-subtle);
+  border-radius: var(--cinder-control-radius);
+}
+
+.feedback-card-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cinder-text-primary);
+}
+
+.feedback-card-description {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--cinder-text-secondary);
+}

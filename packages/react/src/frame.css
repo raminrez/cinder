@@ -1413,6 +1413,187 @@
     .cinder-progress-indicator[data-orientation="vertical"] li:last-child {
       padding-bottom: 0;
     }
+
+    /* Frame Calendar & Dates */
+    .cinder-calendar {
+      background: var(--cinder-layer);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      padding: var(--cinder-spacing-04);
+    }
+    .cinder-calendar-header {
+      padding: var(--cinder-spacing-01) var(--cinder-spacing-02);
+      margin-bottom: var(--cinder-spacing-02);
+    }
+    .cinder-calendar-header .react-aria-Heading {
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 600;
+      color: var(--cinder-text-primary);
+    }
+    .cinder-calendar-header .cinder-button {
+      border-radius: var(--cinder-control-radius);
+      width: var(--cinder-size-sm);
+      height: var(--cinder-size-sm);
+      min-height: var(--cinder-size-sm);
+      padding: 0;
+      color: var(--cinder-icon-primary);
+    }
+    .cinder-calendar .react-aria-CalendarHeaderCell {
+      color: var(--cinder-text-secondary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+    .cinder-calendar .react-aria-CalendarCell {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: calc(var(--cinder-control-radius) / 2);
+      font-size: var(--cinder-text-size-sm);
+      transition: background var(--cinder-motion-fast), color var(--cinder-motion-fast);
+      color: var(--cinder-text-primary);
+    }
+    .cinder-calendar .react-aria-CalendarCell[data-hovered] {
+      background: var(--cinder-layer-hover);
+    }
+    .cinder-calendar .react-aria-CalendarCell[data-selected] {
+      background: var(--cinder-interactive);
+      color: var(--cinder-text-on-color);
+    }
+    .cinder-range-calendar .react-aria-CalendarCell[data-selected] {
+      background: var(--cinder-layer-selected);
+      color: var(--cinder-text-primary);
+      border-radius: 0;
+    }
+    .cinder-range-calendar .react-aria-CalendarCell:is([data-selection-start], [data-selection-end]) {
+      background: var(--cinder-interactive);
+      color: var(--cinder-text-on-color);
+      border-radius: calc(var(--cinder-control-radius) / 2);
+    }
+    .cinder-date-popover {
+      border-radius: var(--cinder-control-radius);
+      border: 1px solid var(--cinder-border-subtle);
+      background: var(--cinder-layer);
+      box-shadow: var(--cinder-shadow-md);
+      overflow: hidden;
+    }
+    .cinder-date-picker .cinder-field__control,
+    .cinder-date-range-picker .cinder-field__control {
+      border-radius: var(--cinder-control-radius);
+    }
+
+    /* Frame FileUploader */
+    .cinder-file-uploader {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cinder-spacing-03);
+    }
+    .cinder-file-uploader .cinder-file-label {
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 600;
+      color: var(--cinder-text-primary);
+    }
+    .cinder-file-uploader .cinder-description {
+      font-size: var(--cinder-text-size-sm);
+      color: var(--cinder-text-secondary);
+      margin: 0;
+    }
+    .cinder-file-uploader .react-aria-DropZone {
+      border: 1.5px dashed var(--cinder-border-strong);
+      border-radius: var(--cinder-control-radius);
+      padding: var(--cinder-spacing-06);
+      background: var(--cinder-layer);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--cinder-motion-fast), background var(--cinder-motion-fast);
+      outline: none;
+    }
+    .cinder-file-uploader .react-aria-DropZone[data-drop-target],
+    .cinder-file-uploader .react-aria-DropZone:hover {
+      border-color: var(--cinder-interactive);
+      background: var(--cinder-layer-hover);
+    }
+    .cinder-file-uploader .react-aria-DropZone[data-focus-visible] {
+      outline: var(--cinder-focus-width) solid var(--cinder-focus);
+      outline-offset: 2px;
+    }
+    .cinder-file-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--cinder-spacing-02);
+    }
+    .cinder-file-list li {
+      display: flex;
+      align-items: center;
+      gap: var(--cinder-spacing-03);
+      padding: var(--cinder-spacing-03) var(--cinder-spacing-04);
+      background: var(--cinder-layer);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      font-size: var(--cinder-text-size-sm);
+      color: var(--cinder-text-primary);
+    }
+    .cinder-file-list li > span:first-of-type {
+      flex: 1;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .cinder-file-list li .cinder-button {
+      border-radius: var(--cinder-control-radius);
+      width: var(--cinder-size-sm);
+      height: var(--cinder-size-sm);
+      min-height: var(--cinder-size-sm);
+      padding: 0;
+    }
+
+    /* Frame Feedback: Notifications & Progress */
+    .cinder-notification {
+      border-radius: var(--cinder-control-radius);
+      border: 1px solid var(--cinder-border-subtle);
+      border-inline-start-width: 4px;
+      overflow: hidden;
+      padding: var(--cinder-spacing-04);
+      gap: var(--cinder-spacing-03);
+    }
+    .cinder-notification > .cinder-button {
+      border-radius: var(--cinder-control-radius);
+      width: var(--cinder-size-sm);
+      height: var(--cinder-size-sm);
+      min-height: var(--cinder-size-sm);
+      padding: 0;
+    }
+    .cinder-progress-track {
+      height: 6px;
+      border-radius: 9999px;
+      background: var(--cinder-border-subtle);
+      overflow: hidden;
+    }
+    .cinder-progress-fill {
+      border-radius: 9999px;
+    }
+    .cinder-progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: var(--cinder-text-size-sm);
+      font-weight: 500;
+      color: var(--cinder-text-primary);
+      margin-bottom: var(--cinder-spacing-01);
+    }
+    .cinder-skeleton {
+      border-radius: var(--cinder-control-radius);
+    }
+    .cinder-skeleton > span {
+      border-radius: var(--cinder-control-radius);
+      background: var(--cinder-layer-hover);
+    }
   }
 }
 
@@ -1524,6 +1705,16 @@
       .cinder-progress-indicator li[data-status="complete"],
       .cinder-progress-indicator li[data-status="current"] {
         border-color: Highlight;
+      }
+      .cinder-calendar .react-aria-CalendarCell[data-selected] {
+        background: Highlight;
+        color: HighlightText;
+      }
+      .cinder-file-uploader .react-aria-DropZone[data-focus-visible] {
+        outline-color: Highlight;
+      }
+      .cinder-notification {
+        border-color: ButtonText;
       }
     }
   }
