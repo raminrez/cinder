@@ -107,13 +107,15 @@ function DatePickerRoot<T extends DateValue>({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: DatePickerRootProps<T>) {
   const context = useSlottedContext(DatePickerContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACDatePicker<T>
@@ -192,13 +194,15 @@ function DateRangePickerRoot<T extends DateValue>({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: DateRangePickerRootProps<T>) {
   const context = useSlottedContext(DateRangePickerContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACDateRangePicker<T>
@@ -281,13 +285,15 @@ function DateFieldRoot<T extends DateValue>({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: DateFieldRootProps<T>) {
   const context = useSlottedContext(DateFieldContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACDateField<T>
@@ -354,13 +360,15 @@ function TimeFieldRoot<T extends TimeValue>({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: TimeFieldRootProps<T>) {
   const context = useSlottedContext(TimeFieldContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACTimeField<T>

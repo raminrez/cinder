@@ -33,14 +33,18 @@ import { Icon, type IconProps } from "./icons";
 import { Dialog, Popover, Tooltip } from "./overlays";
 import { classes } from "./utils";
 
+export type FieldStatusPlacement = "attached" | "detached";
+
 export interface FieldStatus {
   /** Presentation only. Use RAC isInvalid or Form validationErrors for validation. */
   type: "warning" | "error" | "success";
   message?: ReactNode;
+  variant?: FieldStatusPlacement;
 }
 
 export interface FieldPresentationProps {
   status?: FieldStatus;
+  statusVariant?: FieldStatusPlacement;
   isOptional?: boolean;
 }
 
@@ -51,17 +55,22 @@ const FieldPresentationContext = createContext<
 export function useFieldPresentation(
   {
     status,
+    statusVariant,
     isOptional,
     "aria-describedby": describedBy,
   }: FieldPresentationProps & { "aria-describedby"?: string },
   inheritedDescription?: string,
+  defaultVariant: FieldStatusPlacement = "attached",
 ) {
+  const resolvedVariant = statusVariant ?? status?.variant ?? defaultVariant;
   const description = describedBy ?? inheritedDescription;
   const [statusId, setStatusId] = useState<string>();
   const statusRef = useCallback((node: HTMLElement | null) => setStatusId(node?.id), []);
   return {
+    statusVariant: resolvedVariant,
     props: {
       "data-cinder-status": status?.type,
+      "data-cinder-status-variant": resolvedVariant,
       "aria-describedby":
         [description, status ? statusId : undefined].filter(Boolean).join(" ") || description,
     },
@@ -73,7 +82,13 @@ export function useFieldPresentation(
         children === undefined ? inheritedChildren : children,
         (content, state) => (
           <FieldPresentationContext.Provider
-            value={{ status, statusRef, isOptional, isRequired: state.isRequired }}
+            value={{
+              status,
+              statusVariant: resolvedVariant,
+              statusRef,
+              isOptional,
+              isRequired: state.isRequired,
+            }}
           >
             {content}
           </FieldPresentationContext.Provider>
@@ -242,19 +257,22 @@ export function FieldLabelHelp({
 
 export type FieldStatusProps = Omit<ComponentProps<typeof Text>, "children" | "slot" | "id">;
 export function FieldStatusMessage({ className, ...props }: FieldStatusProps) {
-  const { status, statusRef } = useContext(FieldPresentationContext);
+  const { status, statusRef, statusVariant = "attached" } = useContext(FieldPresentationContext);
   const validation = useContext(FieldErrorContext);
   const messages = useFieldMessages();
   const statusId = useId();
   if (!status || validation?.isInvalid) return null;
+  const isDetached = statusVariant === "detached";
   return (
     <TextContext.Provider value={{ ref: statusRef }}>
       <Text
         {...props}
         id={statusId}
         data-cinder-status={status.type}
+        data-variant={statusVariant}
         className={[
           "cinder-field__status",
+          isDetached ? "cinder-field__status--detached" : "cinder-field__status--attached",
           status.message == null && "cinder-visually-hidden",
           className,
         ]

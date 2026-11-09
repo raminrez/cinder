@@ -546,3 +546,81 @@ export const LongContentAndLocales: Story = {
     await expect(documentRoot.scrollWidth).toBeLessThanOrEqual(documentRoot.clientWidth + 1);
   },
 };
+
+export const DetachedStatusShowcase: Story = {
+  render: () => (
+    <div className="field-story-grid">
+      <RadioGroup
+        name="deployment-strategy"
+        label="Deployment strategy"
+        description="Select how the new build should be rolled out across nodes."
+        defaultValue="canary"
+        status={{
+          type: "warning",
+          message: "Canary rollouts take up to 45 minutes to reach full capacity.",
+        }}
+      >
+        <Radio value="canary">Canary rollout (10% increments)</Radio>
+        <Radio value="blue-green">Blue-green cutover</Radio>
+        <Radio value="rolling">Rolling restart</Radio>
+      </RadioGroup>
+
+      <RadioGroup
+        name="retention-policy"
+        label="Artifact retention window"
+        description="Specify how long build artifacts are preserved in storage."
+        defaultValue="30days"
+        status={{
+          type: "error",
+          message: "Selected retention window requires enterprise quota approval.",
+        }}
+      >
+        <Radio value="7days">7 days</Radio>
+        <Radio value="30days">30 days</Radio>
+        <Radio value="90days">90 days</Radio>
+      </RadioGroup>
+
+      <RadioGroup
+        name="encryption-level"
+        label="Key management service"
+        description="Select encryption key type for data at rest."
+        defaultValue="kms"
+        status={{
+          type: "success",
+          message: "Hardware security module (HSM) keys active and verified.",
+        }}
+      >
+        <Radio value="kms">Cloud KMS managed key</Radio>
+        <Radio value="customer">Customer provided key (CPK)</Radio>
+      </RadioGroup>
+    </div>
+  ),
+  play: async ({ canvasElement, userEvent }) => {
+    const canvas = within(canvasElement);
+
+    const warnGroup = canvas.getByRole("radiogroup", { name: "Deployment strategy" });
+    const warnStatus = warnGroup.querySelector(".cinder-field__status");
+    await expect(warnStatus).toBeVisible();
+    await expect(warnStatus).toHaveAttribute("data-cinder-status", "warning");
+    await expect(warnStatus).toHaveAttribute("data-variant", "detached");
+    await expect(warnStatus).toHaveTextContent("Canary rollouts take up to 45 minutes to reach full capacity.");
+    await expect(warnGroup).toHaveAccessibleDescription(/Canary rollouts take up to 45 minutes to reach full capacity/);
+
+    const errGroup = canvas.getByRole("radiogroup", { name: "Artifact retention window" });
+    const errStatus = errGroup.querySelector(".cinder-field__status");
+    await expect(errStatus).toBeVisible();
+    await expect(errStatus).toHaveAttribute("data-cinder-status", "error");
+    await expect(errStatus).toHaveAttribute("data-variant", "detached");
+    await expect(errStatus).toHaveTextContent("Selected retention window requires enterprise quota approval.");
+
+    const successGroup = canvas.getByRole("radiogroup", { name: "Key management service" });
+    const successStatus = successGroup.querySelector(".cinder-field__status");
+    await expect(successStatus).toBeVisible();
+    await expect(successStatus).toHaveAttribute("data-cinder-status", "success");
+    await expect(successStatus).toHaveAttribute("data-variant", "detached");
+    await expect(successStatus).toHaveTextContent("Hardware security module (HSM) keys active and verified.");
+
+    await userEvent.click(canvas.getByRole("radio", { name: "Blue-green cutover" }));
+    await expect(canvas.getByRole("radio", { name: "Blue-green cutover" })).toBeChecked();
+  },
+};

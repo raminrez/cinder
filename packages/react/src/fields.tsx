@@ -76,13 +76,15 @@ function TextFieldRoot({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: TextFieldRootProps) {
   const context = useSlottedContext(TextFieldContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACTextField
@@ -147,11 +149,19 @@ export interface TextAreaRootProps extends RACTextFieldProps, FieldPresentationP
   ref?: Ref<HTMLDivElement>;
 }
 
-function TextAreaRoot({ className, children, status, isOptional, ...props }: TextAreaRootProps) {
+function TextAreaRoot({
+  className,
+  children,
+  status,
+  statusVariant,
+  isOptional,
+  ...props
+}: TextAreaRootProps) {
   const context = useSlottedContext(TextFieldContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACTextField
@@ -220,13 +230,15 @@ function NumberFieldRoot({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: NumberFieldRootProps) {
   const context = useSlottedContext(NumberFieldContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACNumberField
@@ -294,13 +306,15 @@ function SearchFieldRoot({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: SearchFieldRootProps) {
   const context = useSlottedContext(SearchFieldContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACSearchField

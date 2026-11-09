@@ -507,3 +507,81 @@ export const LongContentAndLocales: Story = {
     await expect(documentRoot.scrollWidth).toBeLessThanOrEqual(documentRoot.clientWidth + 1);
   },
 };
+
+export const DetachedStatusShowcase: Story = {
+  render: () => (
+    <div className="field-story-grid">
+      <CheckboxGroup
+        name="notifications-warning"
+        label="Notification preferences"
+        description="Select the notifications you want delivered to your workspace."
+        defaultValue={["email"]}
+        status={{
+          type: "warning",
+          message: "Digest delivery is temporarily experiencing minor delays.",
+        }}
+      >
+        <Checkbox value="email">Email notifications</Checkbox>
+        <Checkbox value="sms">SMS notifications</Checkbox>
+        <Checkbox value="push">Push notifications</Checkbox>
+      </CheckboxGroup>
+
+      <CheckboxGroup
+        name="access-error"
+        label="Repository access permissions"
+        description="Choose which branches this service account can access."
+        defaultValue={["main"]}
+        status={{
+          type: "error",
+          message: "At least one production branch must be selected for deployment.",
+        }}
+      >
+        <Checkbox value="main">main branch</Checkbox>
+        <Checkbox value="staging">staging branch</Checkbox>
+        <Checkbox value="dev">development branch</Checkbox>
+      </CheckboxGroup>
+
+      <CheckboxGroup
+        name="compliance-success"
+        label="Compliance verification"
+        description="Confirm that security scans and audits have been performed."
+        defaultValue={["sast", "audit"]}
+        status={{
+          type: "success",
+          message: "All compliance requirements are verified for this release.",
+        }}
+      >
+        <Checkbox value="sast">Static application security testing (SAST)</Checkbox>
+        <Checkbox value="audit">Quarterly access audit confirmed</Checkbox>
+      </CheckboxGroup>
+    </div>
+  ),
+  play: async ({ canvasElement, userEvent }) => {
+    const canvas = within(canvasElement);
+
+    const warnGroup = canvas.getByRole("group", { name: "Notification preferences" });
+    const warnStatus = warnGroup.querySelector(".cinder-field__status");
+    await expect(warnStatus).toBeVisible();
+    await expect(warnStatus).toHaveAttribute("data-cinder-status", "warning");
+    await expect(warnStatus).toHaveAttribute("data-variant", "detached");
+    await expect(warnStatus).toHaveTextContent("Digest delivery is temporarily experiencing minor delays.");
+    await expect(warnGroup).toHaveAccessibleDescription(/Digest delivery is temporarily experiencing minor delays/);
+
+    const errGroup = canvas.getByRole("group", { name: "Repository access permissions" });
+    const errStatus = errGroup.querySelector(".cinder-field__status");
+    await expect(errStatus).toBeVisible();
+    await expect(errStatus).toHaveAttribute("data-cinder-status", "error");
+    await expect(errStatus).toHaveAttribute("data-variant", "detached");
+    await expect(errStatus).toHaveTextContent("At least one production branch must be selected for deployment.");
+
+    const successGroup = canvas.getByRole("group", { name: "Compliance verification" });
+    const successStatus = successGroup.querySelector(".cinder-field__status");
+    await expect(successStatus).toBeVisible();
+    await expect(successStatus).toHaveAttribute("data-cinder-status", "success");
+    await expect(successStatus).toHaveAttribute("data-variant", "detached");
+    await expect(successStatus).toHaveTextContent("All compliance requirements are verified for this release.");
+
+    await userEvent.click(canvas.getByRole("checkbox", { name: "SMS notifications" }));
+    await expect(canvas.getByRole("checkbox", { name: "SMS notifications" })).toBeChecked();
+  },
+};

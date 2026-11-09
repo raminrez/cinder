@@ -79,13 +79,15 @@ function CheckboxGroupRoot({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: CheckboxGroupRootProps) {
   const context = useSlottedContext(CheckboxGroupContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "detached",
   );
   return (
     <RACCheckboxGroup
@@ -139,13 +141,15 @@ function RadioGroupRoot({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: RadioGroupRootProps) {
   const context = useSlottedContext(RadioGroupContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "detached",
   );
   return (
     <RACRadioGroup
@@ -245,13 +249,15 @@ function SelectRoot<T, M extends SelectionMode = "single">({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: SelectRootProps<T, M>) {
   const context = useSlottedContext(SelectContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACSelect<T, M>
@@ -377,13 +383,15 @@ function ComboBoxRoot<T, M extends SelectionMode = "single">({
   className,
   children,
   status,
+  statusVariant,
   isOptional,
   ...props
 }: ComboBoxRootProps<T, M>) {
   const context = useSlottedContext(ComboBoxContext, props.slot);
   const presentation = useFieldPresentation(
-    { ...props, status, isOptional },
+    { ...props, status, statusVariant, isOptional },
     context?.["aria-describedby"],
+    "attached",
   );
   return (
     <RACComboBox<T, M>
