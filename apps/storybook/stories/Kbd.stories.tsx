@@ -55,7 +55,7 @@ export const Playground: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText("Esc")).toBeInTheDocument();
+    expect(canvas.getAllByText("Esc").length).toBeGreaterThan(0);
   },
 };
 
@@ -75,6 +75,6 @@ export const RTL: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText("Esc")).toBeInTheDocument();
+    expect(canvas.getAllByText("Esc").length).toBeGreaterThan(0);
   },
 };

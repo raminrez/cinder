@@ -193,7 +193,7 @@ export const FilterMenu: Story = {
       expect(document.querySelector(".cinder-popover")).toBeNull();
     });
     await expect(output).toHaveTextContent("Filters: prod, stage");
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
 

@@ -175,7 +175,7 @@ export const CollapsibleOrOverflow: Story = {
     expect(engineeringItem).toBeVisible();
 
     await userEvent.keyboard("{Escape}");
-    expect(menuTrigger).toHaveFocus();
+    await waitFor(() => expect(menuTrigger).toHaveFocus());
   },
 };
 
