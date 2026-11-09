@@ -261,14 +261,7 @@ export function FieldStatusMessage({ className, ...props }: FieldStatusProps) {
           .filter(Boolean)
           .join(" ")}
       >
-        {status.message == null ? (
-          messages[status.type]
-        ) : (
-          <>
-            <Icon name={status.type} />
-            <span>{status.message}</span>
-          </>
-        )}
+        {status.message == null ? messages[status.type] : status.message}
       </Text>
     </TextContext.Provider>
   );
@@ -278,8 +271,6 @@ export type FieldStatusIconProps = Omit<IconProps, "name">;
 export function FieldStatusIcon({ className, ...props }: FieldStatusIconProps) {
   const { status } = useContext(FieldPresentationContext);
   const validation = useContext(FieldErrorContext);
-  // Do not duplicate status icon inside input if a status message is already rendered below
-  if (status?.message != null) return null;
   const type = validation?.isInvalid ? "error" : status?.type;
   return type ? (
     <Icon
