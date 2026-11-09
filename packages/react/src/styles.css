@@ -827,6 +827,84 @@
   .cinder-switch[data-disabled] .cinder-switch-track {
     background: var(--cinder-layer-selected-disabled);
   }
+
+  /* Checkbox, Radio & Switch semantic color variants */
+  :is(.cinder-checkbox[data-color="success"], .cinder-checkbox-group[data-color="success"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :is(.cinder-checkbox[data-color="success"], .cinder-checkbox-group[data-color="success"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+    background: var(--cinder-support-success);
+    border-color: var(--cinder-support-success);
+  }
+  :is(.cinder-radio[data-color="success"], .cinder-radio-group[data-color="success"] .cinder-radio)[data-selected] .cinder-radio-control {
+    border-color: var(--cinder-support-success);
+  }
+  :is(.cinder-radio[data-color="success"], .cinder-radio-group[data-color="success"] .cinder-radio)[data-selected] .cinder-radio-control::after {
+    background: var(--cinder-support-success);
+  }
+  .cinder-switch[data-color="success"][data-selected] .cinder-switch-track {
+    background: var(--cinder-support-success);
+  }
+
+  :is(.cinder-checkbox[data-color="warning"], .cinder-checkbox-group[data-color="warning"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :is(.cinder-checkbox[data-color="warning"], .cinder-checkbox-group[data-color="warning"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+    background: var(--cinder-support-warning);
+    border-color: var(--cinder-support-warning);
+    color: #161616;
+  }
+  :is(.cinder-radio[data-color="warning"], .cinder-radio-group[data-color="warning"] .cinder-radio)[data-selected] .cinder-radio-control {
+    border-color: var(--cinder-support-warning);
+  }
+  :is(.cinder-radio[data-color="warning"], .cinder-radio-group[data-color="warning"] .cinder-radio)[data-selected] .cinder-radio-control::after {
+    background: var(--cinder-support-warning);
+  }
+  .cinder-switch[data-color="warning"][data-selected] .cinder-switch-track {
+    background: var(--cinder-support-warning);
+  }
+
+  :is(.cinder-checkbox[data-color="danger"], .cinder-checkbox-group[data-color="danger"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :is(.cinder-checkbox[data-color="danger"], .cinder-checkbox-group[data-color="danger"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+    background: var(--cinder-support-error);
+    border-color: var(--cinder-support-error);
+  }
+  :is(.cinder-radio[data-color="danger"], .cinder-radio-group[data-color="danger"] .cinder-radio)[data-selected] .cinder-radio-control {
+    border-color: var(--cinder-support-error);
+  }
+  :is(.cinder-radio[data-color="danger"], .cinder-radio-group[data-color="danger"] .cinder-radio)[data-selected] .cinder-radio-control::after {
+    background: var(--cinder-support-error);
+  }
+  .cinder-switch[data-color="danger"][data-selected] .cinder-switch-track {
+    background: var(--cinder-support-error);
+  }
+
+  :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+    background: var(--cinder-border-strong, #6f6f6f);
+    border-color: var(--cinder-border-strong, #6f6f6f);
+  }
+  :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control {
+    border-color: var(--cinder-border-strong, #6f6f6f);
+  }
+  :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control::after {
+    background: var(--cinder-border-strong, #6f6f6f);
+  }
+  .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-track {
+    background: var(--cinder-border-strong, #6f6f6f);
+  }
+
+  /* Invalid state always takes precedence */
+  .cinder-checkbox[data-invalid][data-selected] .cinder-checkbox-control,
+  .cinder-checkbox[data-invalid][data-indeterminate] .cinder-checkbox-control {
+    background: var(--cinder-support-error) !important;
+    border-color: var(--cinder-support-error) !important;
+  }
+  .cinder-radio[data-invalid][data-selected] .cinder-radio-control {
+    border-color: var(--cinder-support-error) !important;
+  }
+  .cinder-radio[data-invalid][data-selected] .cinder-radio-control::after {
+    background: var(--cinder-support-error) !important;
+  }
+  .cinder-switch[data-invalid][data-selected] .cinder-switch-track {
+    background: var(--cinder-support-error) !important;
+  }
   .cinder-checkbox,
   .cinder-radio,
   .cinder-switch {
@@ -1184,6 +1262,253 @@
     min-height: 4rem;
     align-items: flex-start;
     padding-block-start: 1rem;
+  }
+
+  /* Drawer overlay and dialog */
+  .cinder-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    animation: cinder-frame-backdrop-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cinder-drawer-overlay[data-exiting] {
+    animation: cinder-frame-backdrop-out 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .cinder-drawer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    background: var(--cinder-layer-01, #ffffff);
+    color: var(--cinder-text-primary);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    overflow: hidden;
+    outline: none;
+    z-index: 1001;
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"]) {
+    top: 0;
+    bottom: 0;
+    inset-inline-end: 0;
+    height: 100vh;
+    animation: cinder-drawer-slide-in-end 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"])[data-exiting] {
+    animation: cinder-drawer-slide-out-end 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .cinder-drawer:is([data-placement="left"], [data-placement="start"]) {
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0;
+    height: 100vh;
+    animation: cinder-drawer-slide-in-start 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cinder-drawer:is([data-placement="left"], [data-placement="start"])[data-exiting] {
+    animation: cinder-drawer-slide-out-start 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .cinder-drawer[data-placement="top"] {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    animation: cinder-drawer-slide-in-top 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cinder-drawer[data-placement="top"][data-exiting] {
+    animation: cinder-drawer-slide-out-top 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .cinder-drawer[data-placement="bottom"] {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    border-start-start-radius: var(--cinder-overlay-radius, 16px);
+    border-start-end-radius: var(--cinder-overlay-radius, 16px);
+    animation: cinder-drawer-slide-in-bottom 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cinder-drawer[data-placement="bottom"][data-exiting] {
+    animation: cinder-drawer-slide-out-bottom 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"], [data-placement="left"], [data-placement="start"])[data-size="sm"] {
+    width: min(20rem, 100vw);
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"], [data-placement="left"], [data-placement="start"])[data-size="md"] {
+    width: min(28rem, 100vw);
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"], [data-placement="left"], [data-placement="start"])[data-size="lg"] {
+    width: min(38rem, 100vw);
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"], [data-placement="left"], [data-placement="start"])[data-size="xl"] {
+    width: min(48rem, 100vw);
+  }
+  .cinder-drawer:is([data-placement="right"], [data-placement="end"], [data-placement="left"], [data-placement="start"])[data-size="full"] {
+    width: 100vw;
+  }
+  .cinder-drawer:is([data-placement="top"], [data-placement="bottom"])[data-size="sm"] {
+    max-height: 30vh;
+  }
+  .cinder-drawer:is([data-placement="top"], [data-placement="bottom"])[data-size="md"] {
+    max-height: 50vh;
+  }
+  .cinder-drawer:is([data-placement="top"], [data-placement="bottom"])[data-size="lg"] {
+    max-height: 70vh;
+  }
+  .cinder-drawer:is([data-placement="top"], [data-placement="bottom"])[data-size="xl"],
+  .cinder-drawer:is([data-placement="top"], [data-placement="bottom"])[data-size="full"] {
+    max-height: 90vh;
+  }
+  .cinder-drawer-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .cinder-drawer-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--cinder-spacing-04);
+    padding: var(--cinder-spacing-05) var(--cinder-spacing-06);
+    border-block-end: 1px solid var(--cinder-border-subtle);
+  }
+  .cinder-drawer-header-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .cinder-drawer-title {
+    font-size: var(--cinder-heading-03-font-size, 1.125rem);
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    color: var(--cinder-text-primary);
+  }
+  .cinder-drawer-description {
+    font-size: var(--cinder-body-compact-01-font-size, 0.875rem);
+    color: var(--cinder-text-secondary);
+    margin-block-start: var(--cinder-spacing-01);
+  }
+  .cinder-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--cinder-spacing-06);
+  }
+  .cinder-drawer-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--cinder-spacing-03);
+    padding: var(--cinder-spacing-04) var(--cinder-spacing-06);
+    border-block-start: 1px solid var(--cinder-border-subtle);
+  }
+  @keyframes cinder-drawer-slide-in-end {
+    from {
+      transform: translate3d(100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-out-end {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-in-start {
+    from {
+      transform: translate3d(-100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-out-start {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-in-top {
+    from {
+      transform: translate3d(0, -100%, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-out-top {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, -100%, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-in-bottom {
+    from {
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-out-bottom {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-drawer:is([data-placement="right"], [data-placement="end"]) {
+    animation-name: cinder-drawer-slide-in-end-rtl;
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-drawer:is([data-placement="right"], [data-placement="end"])[data-exiting] {
+    animation-name: cinder-drawer-slide-out-end-rtl;
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-drawer:is([data-placement="left"], [data-placement="start"]) {
+    animation-name: cinder-drawer-slide-in-start-rtl;
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-drawer:is([data-placement="left"], [data-placement="start"])[data-exiting] {
+    animation-name: cinder-drawer-slide-out-start-rtl;
+  }
+  @keyframes cinder-drawer-slide-in-end-rtl {
+    from {
+      transform: translate3d(-100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-out-end-rtl {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-in-start-rtl {
+    from {
+      transform: translate3d(100%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes cinder-drawer-slide-out-start-rtl {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(100%, 0, 0);
+    }
   }
   .cinder-tooltip {
     max-width: 18rem;
@@ -1834,6 +2159,40 @@
   }
   .cinder-notification:not([data-low-contrast]) .cinder-link {
     color: var(--cinder-link-inverse);
+  }
+
+  /* Rich feedback variants: subtle (default), solid, bordered */
+  .cinder-notification[data-variant="subtle"],
+  .cinder-toast[data-variant="subtle"] {
+    background: var(--notification-bg);
+    border: 1px solid var(--notification-border, rgba(0, 0, 0, 0.08));
+    border-inline-start-width: 1px;
+    color: var(--cinder-text-primary);
+  }
+  .cinder-notification[data-variant="solid"],
+  .cinder-toast[data-variant="solid"] {
+    background: var(--notification-color);
+    color: var(--cinder-text-on-color, #ffffff);
+    border: 1px solid var(--notification-color);
+    border-inline-start-width: 1px;
+  }
+  .cinder-notification[data-variant="solid"] > svg,
+  .cinder-toast[data-variant="solid"] > svg {
+    color: var(--cinder-text-on-color, #ffffff);
+  }
+  .cinder-notification[data-variant="solid"] .cinder-button,
+  .cinder-toast[data-variant="solid"] .cinder-button {
+    color: var(--cinder-text-on-color, #ffffff);
+  }
+  .cinder-toast[data-variant="solid"] [slot="description"] {
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .cinder-notification[data-variant="bordered"],
+  .cinder-toast[data-variant="bordered"] {
+    background: var(--cinder-layer-01, #ffffff);
+    border: 1px solid var(--notification-color);
+    border-inline-start-width: 1px;
+    color: var(--cinder-text-primary);
   }
   .cinder-progress {
     width: 100%;

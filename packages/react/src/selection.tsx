@@ -49,12 +49,15 @@ import {
 import { Icon } from "./icons";
 import { classes, type ControlSize } from "./utils";
 
+export type SelectionColor = "primary" | "secondary" | "success" | "warning" | "danger";
+
 export interface CheckboxProps extends RACCheckboxProps {
+  color?: SelectionColor;
   ref?: Ref<HTMLLabelElement>;
 }
-export function Checkbox({ children, className, ...props }: CheckboxProps) {
+export function Checkbox({ children, className, color, ...props }: CheckboxProps) {
   return (
-    <RACCheckbox {...props} className={classes("cinder-checkbox", className)}>
+    <RACCheckbox {...props} data-color={color} className={classes("cinder-checkbox", className)}>
       {composeRenderProps(children, (content, state) => (
         <>
           <span className="cinder-checkbox-control" aria-hidden="true">
@@ -72,6 +75,7 @@ export function Checkbox({ children, className, ...props }: CheckboxProps) {
 }
 
 export interface CheckboxGroupRootProps extends RACCheckboxGroupProps, FieldPresentationProps {
+  color?: SelectionColor;
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -81,6 +85,7 @@ function CheckboxGroupRoot({
   status,
   statusVariant,
   isOptional,
+  color,
   ...props
 }: CheckboxGroupRootProps) {
   const context = useSlottedContext(CheckboxGroupContext, props.slot);
@@ -93,6 +98,7 @@ function CheckboxGroupRoot({
     <RACCheckboxGroup
       {...props}
       {...presentation.props}
+      data-color={color}
       className={classes("cinder-field cinder-checkbox-group", className)}
     >
       {presentation.wrap(children, context?.children)}
@@ -100,7 +106,9 @@ function CheckboxGroupRoot({
   );
 }
 
-export interface CheckboxGroupProps extends CheckboxGroupRootProps, FieldContentProps {}
+export interface CheckboxGroupProps extends CheckboxGroupRootProps, FieldContentProps {
+  color?: SelectionColor;
+}
 
 function CheckboxGroupDefault({
   label,
@@ -109,10 +117,11 @@ function CheckboxGroupDefault({
   errorMessage,
   className,
   children,
+  color,
   ...props
 }: CheckboxGroupProps) {
   return (
-    <CheckboxGroupRoot {...props} className={className}>
+    <CheckboxGroupRoot {...props} color={color} className={className}>
       {composeRenderProps(children, (content) => (
         <FieldLayout
           label={label}
@@ -134,6 +143,7 @@ export const CheckboxGroup = Object.assign(CheckboxGroupDefault, {
 });
 
 export interface RadioGroupRootProps extends RACRadioGroupProps, FieldPresentationProps {
+  color?: SelectionColor;
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -143,6 +153,7 @@ function RadioGroupRoot({
   status,
   statusVariant,
   isOptional,
+  color,
   ...props
 }: RadioGroupRootProps) {
   const context = useSlottedContext(RadioGroupContext, props.slot);
@@ -155,6 +166,7 @@ function RadioGroupRoot({
     <RACRadioGroup
       {...props}
       {...presentation.props}
+      data-color={color}
       className={classes("cinder-field cinder-radio-group", className)}
     >
       {presentation.wrap(children, context?.children)}
@@ -168,7 +180,9 @@ function RadioOptions({ className, ...props }: ComponentProps<"div">) {
   );
 }
 
-export interface RadioGroupProps extends RadioGroupRootProps, FieldContentProps {}
+export interface RadioGroupProps extends RadioGroupRootProps, FieldContentProps {
+  color?: SelectionColor;
+}
 
 function RadioGroupDefault({
   label,
@@ -177,10 +191,11 @@ function RadioGroupDefault({
   errorMessage,
   className,
   children,
+  color,
   ...props
 }: RadioGroupProps) {
   return (
-    <RadioGroupRoot {...props} className={className}>
+    <RadioGroupRoot {...props} color={color} className={className}>
       {composeRenderProps(children, (content) => (
         <FieldLayout
           label={label}
@@ -195,11 +210,12 @@ function RadioGroupDefault({
   );
 }
 export interface RadioProps extends RACRadioProps {
+  color?: SelectionColor;
   ref?: Ref<HTMLLabelElement>;
 }
-export function Radio({ className, children, ...props }: RadioProps) {
+export function Radio({ className, children, color, ...props }: RadioProps) {
   return (
-    <RACRadio {...props} className={classes("cinder-radio", className)}>
+    <RACRadio {...props} data-color={color} className={classes("cinder-radio", className)}>
       {composeRenderProps(children, (content) => (
         <>
           <span className="cinder-radio-control" aria-hidden="true" />
@@ -218,12 +234,13 @@ export const RadioGroup = Object.assign(RadioGroupDefault, {
 });
 
 export interface SwitchProps extends RACSwitchProps {
+  color?: SelectionColor;
   size?: "sm" | "md";
   ref?: Ref<HTMLLabelElement>;
 }
-export function Switch({ className, children, size = "md", ...props }: SwitchProps) {
+export function Switch({ className, children, size = "md", color, ...props }: SwitchProps) {
   return (
-    <RACSwitch {...props} data-size={size} className={classes("cinder-switch", className)}>
+    <RACSwitch {...props} data-size={size} data-color={color} className={classes("cinder-switch", className)}>
       {composeRenderProps(children, (content) => (
         <>
           <span className="cinder-switch-track" aria-hidden="true">

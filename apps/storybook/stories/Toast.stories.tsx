@@ -153,3 +153,67 @@ export const LongContentAndLocales: Story = {
     expect(toastTitle).toBeInTheDocument();
   },
 };
+
+function VariantsExample() {
+  const toast = useToast();
+
+  return (
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.add({
+            title: "Subtle toast notification",
+            description: "Soft surface with muted borders.",
+            kind: "info",
+            variant: "subtle",
+          })
+        }
+      >
+        Subtle Toast
+      </Button>
+      <Button
+        variant="primary"
+        onPress={() =>
+          toast.add({
+            title: "Solid toast notification",
+            description: "High-emphasis saturated fill.",
+            kind: "success",
+            variant: "solid",
+          })
+        }
+      >
+        Solid Toast
+      </Button>
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.add({
+            title: "Bordered toast notification",
+            description: "Clean outlined card presentation.",
+            kind: "warning",
+            variant: "bordered",
+          })
+        }
+      >
+        Bordered Toast
+      </Button>
+    </div>
+  );
+}
+
+export const Variants: Story = {
+  render: () => (
+    <ToastProvider>
+      <VariantsExample />
+    </ToastProvider>
+  ),
+  play: async ({ canvasElement, userEvent }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("button", { name: "Solid Toast" });
+    await userEvent.click(trigger);
+
+    const body = within(document.body);
+    expect(await body.findByText("Solid toast notification")).toBeInTheDocument();
+  },
+};

@@ -25,8 +25,11 @@ import { classes } from "./utils";
 import { useOverlayTheme } from "./theme";
 
 export type NotificationKind = "info" | "success" | "warning" | "error";
+export type NotificationVariant = "subtle" | "solid" | "bordered";
+
 export interface InlineNotificationProps extends Omit<ComponentPropsWithRef<"div">, "title"> {
   kind?: NotificationKind;
+  variant?: NotificationVariant;
   title: ReactNode;
   children?: ReactNode;
   onDismiss?: () => void;
@@ -36,6 +39,7 @@ export interface InlineNotificationProps extends Omit<ComponentPropsWithRef<"div
 }
 export function InlineNotification({
   kind = "info",
+  variant,
   title,
   children,
   onDismiss,
@@ -45,11 +49,13 @@ export function InlineNotification({
   role = "status",
   ...props
 }: InlineNotificationProps) {
+  const resolvedVariant = variant ?? (lowContrast ? "subtle" : "solid");
   return (
     <div
       {...props}
       role={role}
       data-kind={kind}
+      data-variant={resolvedVariant}
       data-low-contrast={lowContrast || undefined}
       className={["cinder-notification", className].filter(Boolean).join(" ")}
     >
@@ -72,6 +78,11 @@ export function InlineNotification({
       )}
     </div>
   );
+}
+
+export interface AlertProps extends InlineNotificationProps {}
+export function Alert(props: AlertProps) {
+  return <InlineNotification role="alert" {...props} />;
 }
 
 export interface ProgressBarProps extends RACProgressBarProps {
@@ -197,6 +208,7 @@ export interface ToastMessage {
   title: string;
   description?: string;
   kind?: NotificationKind;
+  variant?: NotificationVariant;
 }
 type ToastApi = {
   add: (message: ToastMessage, options?: ToastOptions) => string;
@@ -217,7 +229,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         className={classes("cinder-toast-region", appearanceClassName)}
       >
         {({ toast }) => (
-          <Toast toast={toast} className="cinder-toast" data-kind={toast.content.kind ?? "info"}>
+          <Toast
+            toast={toast}
+            className="cinder-toast"
+            data-kind={toast.content.kind ?? "info"}
+            data-variant={toast.content.variant ?? "subtle"}
+          >
             <Icon name={toast.content.kind ?? "info"} size={20} />
             <ToastContent>
               <Text slot="title">{toast.content.title}</Text>

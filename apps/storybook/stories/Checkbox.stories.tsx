@@ -585,3 +585,29 @@ export const DetachedStatusShowcase: Story = {
     await expect(canvas.getByRole("checkbox", { name: "SMS notifications" })).toBeChecked();
   },
 };
+
+export const Colors: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+      <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", alignItems: "center" }}>
+        <Checkbox defaultSelected color="primary">Primary (Default)</Checkbox>
+        <Checkbox defaultSelected color="secondary">Secondary</Checkbox>
+        <Checkbox defaultSelected color="success">Success</Checkbox>
+        <Checkbox defaultSelected color="warning">Warning</Checkbox>
+        <Checkbox defaultSelected color="danger">Danger</Checkbox>
+      </div>
+      <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", alignItems: "center" }}>
+        <Checkbox isIndeterminate color="primary">Primary Indeterminate</Checkbox>
+        <Checkbox isIndeterminate color="success">Success Indeterminate</Checkbox>
+        <Checkbox isIndeterminate color="warning">Warning Indeterminate</Checkbox>
+        <Checkbox isIndeterminate color="danger">Danger Indeterminate</Checkbox>
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByRole("checkbox", { name: "Primary (Default)" })).toBeChecked();
+    expect(canvas.getByRole("checkbox", { name: "Success" })).toBeChecked();
+    expect(canvas.getByRole("checkbox", { name: "Danger" })).toBeChecked();
+  },
+};

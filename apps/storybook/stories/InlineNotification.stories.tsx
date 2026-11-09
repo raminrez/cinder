@@ -183,3 +183,34 @@ export const LongContentAndLocales: Story = {
     expect(canvas.getByText("خطا در اتصال به پایگاه داده")).toBeInTheDocument();
   },
 };
+
+export const Variants: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+      <div>
+        <h4 style={{ margin: "0 0 0.5rem" }}>Subtle</h4>
+        <InlineNotification variant="subtle" kind="info" title="Subtle notification">
+          Standard operational message with muted background.
+        </InlineNotification>
+      </div>
+      <div>
+        <h4 style={{ margin: "0 0 0.5rem" }}>Solid</h4>
+        <InlineNotification variant="solid" kind="success" title="Solid notification">
+          High-emphasis status with saturated solid background.
+        </InlineNotification>
+      </div>
+      <div>
+        <h4 style={{ margin: "0 0 0.5rem" }}>Bordered</h4>
+        <InlineNotification variant="bordered" kind="warning" title="Bordered notification">
+          Clean card with semantic colored border outline.
+        </InlineNotification>
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText("Subtle notification")).toBeInTheDocument();
+    expect(canvas.getByText("Solid notification")).toBeInTheDocument();
+    expect(canvas.getByText("Bordered notification")).toBeInTheDocument();
+  },
+};

@@ -624,3 +624,31 @@ export const DetachedStatusShowcase: Story = {
     await expect(canvas.getByRole("radio", { name: "Blue-green cutover" })).toBeChecked();
   },
 };
+
+export const Colors: Story = {
+  render: () => (
+    <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
+      <RadioGroup label="Primary" color="primary" defaultValue="p1">
+        <Radio value="p1">Primary Option</Radio>
+      </RadioGroup>
+      <RadioGroup label="Secondary" color="secondary" defaultValue="s1">
+        <Radio value="s1">Secondary Option</Radio>
+      </RadioGroup>
+      <RadioGroup label="Success" color="success" defaultValue="su1">
+        <Radio value="su1">Success Option</Radio>
+      </RadioGroup>
+      <RadioGroup label="Warning" color="warning" defaultValue="w1">
+        <Radio value="w1">Warning Option</Radio>
+      </RadioGroup>
+      <RadioGroup label="Danger" color="danger" defaultValue="d1">
+        <Radio value="d1">Danger Option</Radio>
+      </RadioGroup>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByRole("radio", { name: "Primary Option" })).toBeChecked();
+    expect(canvas.getByRole("radio", { name: "Success Option" })).toBeChecked();
+    expect(canvas.getByRole("radio", { name: "Danger Option" })).toBeChecked();
+  },
+};

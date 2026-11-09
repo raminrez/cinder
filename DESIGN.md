@@ -336,24 +336,33 @@ the default composition.
 
 Checkboxes support independent and mixed choices. Radios select one option from
 a group. Switches toggle a setting. Use a label beside the mark, not a mark whose
-meaning appears only on hover. The selected fill is focus blue; focus remains an
-additional signal. A form setting applied only by Save should use a checkbox or
+meaning appears only on hover. The selected fill defaults to focus blue (`primary`),
+with first-class semantic color options: `secondary`, `success`, `warning`, and `danger`.
+When a control is invalid (`[data-invalid]`), the error state takes strict precedence
+over any custom color. A form setting applied only by Save should use a checkbox or
 explicitly state that it is a draft, as detailed in the system specification.
 
-### Data and navigation
+### Feedback and notifications
 
-Table headings, values, selection, and row actions stay aligned. Status includes
-words; numeric and date columns align consistently. When a table becomes a list,
-retain labels, actions, and selection meaning. Current navigation combines its
-selected surface with a programmatic current state. Destinations use links;
-actions use buttons.
+Alerts, inline notifications, and toasts provide three rich visual variants:
+- **Subtle (default):** Soft surface tint with a matched, full 1px border. Per the
+  Impeccable craft floor, heavy colored left-accent borders (>1px) are avoided in favor of
+  complete, balanced boundary definitions.
+- **Solid:** High-emphasis saturated fill with white high-contrast text and icons,
+  ideal for urgent banners and high-priority toast announcements.
+- **Bordered:** Neutral card background with crisp 1px semantic outline and subtle
+  badge-framed icons, maintaining high legibility across dark and light surfaces.
 
 ### Temporary surfaces
 
-A dialog has a title, concise context, reachable dismissal, and explicit actions.
+A dialog or drawer has a title, concise context, reachable dismissal, and explicit actions.
 Its fields use the same anatomy as the page. A nested select menu belongs visually
 and behaviorally to that dialog. Theme, locale, keyboard direction, focus return,
 and the close order must all survive the portal.
+
+**Drawer (Sheet)** provides slide-over inspection and secondary task surfaces from any screen
+edge (`start`, `end`, `top`, `bottom`). It enforces bidirectional mirroring so `end`
+naturally slides from the left in RTL and from the right in LTR.
 
 ## Do's and Don'ts
 

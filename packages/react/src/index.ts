@@ -58,6 +58,7 @@ export type {
   SelectProps,
   ComboBoxProps,
   SliderProps,
+  SelectionColor,
   CheckboxGroupRootProps,
   RadioGroupRootProps,
   SelectRootProps,
@@ -71,6 +72,12 @@ export type {
   TooltipProps,
   OverflowMenuProps,
 } from "./overlays";
+export { Drawer } from "./drawer";
+export type {
+  DrawerProps,
+  DrawerPlacement,
+  DrawerSize,
+} from "./drawer";
 export {
   Calendar,
   RangeCalendar,
@@ -118,6 +125,7 @@ export { NativeSelect, Pagination, paginationRange } from "./pagination";
 export type { NativeSelectProps, PaginationProps } from "./pagination";
 export {
   InlineNotification,
+  Alert,
   ProgressBar,
   Meter,
   Loading,
@@ -128,7 +136,9 @@ export {
 } from "./feedback";
 export type {
   InlineNotificationProps,
+  AlertProps,
   NotificationKind,
+  NotificationVariant,
   ProgressBarProps,
   MeterProps,
   LoadingProps,
