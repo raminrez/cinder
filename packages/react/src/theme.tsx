@@ -15,19 +15,23 @@ const ThemeContext = createContext<ThemeContextValue>({
   direction: "ltr",
 });
 
-export interface ThemeProps extends Omit<ComponentPropsWithRef<"div">, "dir"> {
+export interface ThemeProps extends ComponentPropsWithRef<"div"> {
   theme?: ThemeName;
   /** Controls formatting, translated RAC labels, and reading/keyboard direction. */
   locale?: string;
+  /** Explicit reading/keyboard direction override. */
+  direction?: "ltr" | "rtl";
+  dir?: "ltr" | "rtl";
   /** Portable root/portal recipe. Omit to inherit; a string replaces it; "" clears it. */
   appearanceClassName?: string;
 }
 
-export function Theme({ locale, ...props }: ThemeProps) {
+export function Theme({ locale, direction, dir, ...props }: ThemeProps) {
   const inherited = useLocale();
+  const explicitDir = direction ?? dir;
   return (
-    <I18nProvider locale={locale ?? inherited.locale}>
-      <ThemeRoot {...props} />
+    <I18nProvider locale={locale ?? (explicitDir === "rtl" ? "ar-EG" : inherited.locale)}>
+      <ThemeRoot explicitDirection={explicitDir} {...props} />
     </I18nProvider>
   );
 }
@@ -37,10 +41,12 @@ function ThemeRoot({
   appearanceClassName,
   className,
   children,
+  explicitDirection,
   ...props
-}: Omit<ThemeProps, "locale">) {
+}: Omit<ThemeProps, "locale" | "direction" | "dir"> & { explicitDirection?: "ltr" | "rtl" }) {
   const parent = useTheme();
-  const { locale, direction } = useLocale();
+  const { locale, direction: ariaDirection } = useLocale();
+  const direction = explicitDirection ?? ariaDirection;
   const appearance = appearanceClassName ?? parent.appearanceClassName;
   const lang = props.lang ?? locale;
   const value = useMemo(

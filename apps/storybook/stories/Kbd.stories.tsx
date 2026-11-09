@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Kbd } from "@cinder/react";
+import { Kbd, Theme } from "@cinder/react";
 import "./content.css";
 
 const meta = {
@@ -61,17 +61,35 @@ export const Playground: Story = {
 
 export const RTL: Story = {
   render: () => (
-    <div dir="rtl" className="content-story-stack">
-      <div className="content-card">
-        <h4 className="content-card-title">کلیدهای میانبر در راست‌به‌چپ (RTL)</h4>
-        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-          <span>جستجوی سریع: </span>
-          <Kbd keys={["mod", "k"]} />
-          <span>خروج: </span>
-          <Kbd>Esc</Kbd>
+    <Theme direction="rtl">
+      <div dir="rtl" className="content-story-stack">
+        <div className="content-card">
+          <h4 className="content-card-title">کلیدهای میانبر در راست‌به‌چپ (RTL)</h4>
+          <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
+            <div>
+              <span>جستجوی سریع: </span>
+              <Kbd keys={["mod", "k"]} />
+            </div>
+            <div>
+              <span>ذخیره تغییرات: </span>
+              <Kbd keys={["mod", "s"]} />
+            </div>
+            <div>
+              <span>لغو عملیات: </span>
+              <Kbd>Esc</Kbd>
+            </div>
+            <div>
+              <span>سطر جدید: </span>
+              <Kbd keys={["shift", "enter"]} />
+            </div>
+            <div>
+              <span>بازگشت به عقب: </span>
+              <Kbd keys={["mod", "z"]} />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </Theme>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

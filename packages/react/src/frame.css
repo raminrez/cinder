@@ -317,8 +317,8 @@
         .cinder-input-group,
         .cinder-select-trigger
       ) {
-      border-end-start-radius: 0;
-      border-end-end-radius: 0;
+      border-end-start-radius: 0 !important;
+      border-end-end-radius: 0 !important;
     }
 
     :is(
@@ -328,7 +328,7 @@
       > .cinder-field__help > .cinder-field__status:not([hidden], .cinder-visually-hidden, [data-variant="detached"], .cinder-field__status--detached)
     )
       > .cinder-field__help {
-      margin-block-start: -1px;
+      margin-block-start: calc(-1 * var(--cinder-spacing-03, 0.5rem) - 1px) !important;
       position: relative;
       z-index: 1;
     }
@@ -339,17 +339,19 @@
       .cinder-field:not([data-cinder-status-variant="detached"], .cinder-checkbox-group, .cinder-radio-group)
     ):not([data-invalid])
       .cinder-field__status:not([hidden], .cinder-visually-hidden, [data-variant="detached"], .cinder-field__status--detached) {
-      width: 100%;
-      box-sizing: border-box;
+      width: 100% !important;
+      box-sizing: border-box !important;
       display: flex;
       align-items: center;
       gap: var(--cinder-spacing-03);
       padding: var(--cinder-spacing-02) var(--cinder-spacing-04);
-      margin-block-start: 0;
-      border: 1px solid var(--cinder-field-status-ink);
-      border-block-start: none;
-      border-end-start-radius: var(--cinder-control-radius);
-      border-end-end-radius: var(--cinder-control-radius);
+      margin-block-start: 0 !important;
+      border: 1px solid var(--cinder-field-status-ink) !important;
+      border-block-start: none !important;
+      border-start-start-radius: 0 !important;
+      border-start-end-radius: 0 !important;
+      border-end-start-radius: var(--cinder-control-radius) !important;
+      border-end-end-radius: var(--cinder-control-radius) !important;
       background: var(--cinder-field-status-surface);
       color: var(--cinder-text-primary);
       font-size: var(--cinder-helper-text-01-font-size, 0.8125rem);
@@ -776,6 +778,11 @@
       color: var(--cinder-text-primary) !important;
       font-weight: 500;
       border-radius: var(--cinder-control-radius);
+      transform: none !important;
+    }
+    .cinder-accordion-trigger:active,
+    .cinder-accordion-trigger[data-pressed] {
+      transform: none !important;
     }
     .cinder-accordion-trigger > svg {
       transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -972,9 +979,11 @@
     /* Frame ContentSwitcher */
     .cinder-content-switcher {
       display: inline-flex;
-      background: var(--cinder-field);
+      align-items: center;
+      background: var(--cinder-layer-accent, var(--cinder-field));
       border: 1px solid var(--cinder-border-subtle);
       border-radius: var(--cinder-control-radius);
+      outline: none;
       padding: 3px;
       gap: 2px;
       width: fit-content;
@@ -982,22 +991,27 @@
       box-sizing: border-box;
     }
     .cinder-content-switcher[data-size="sm"] {
+      height: var(--cinder-size-sm);
       min-height: var(--cinder-size-sm);
     }
     .cinder-content-switcher[data-size="md"] {
+      height: var(--cinder-size-md);
       min-height: var(--cinder-size-md);
     }
     .cinder-content-switcher[data-size="lg"] {
+      height: var(--cinder-size-lg);
       min-height: var(--cinder-size-lg);
     }
     .cinder-content-switcher > .cinder-toggle-button {
-      flex: 1 1 0;
+      flex: 1 1 auto;
       min-width: 0;
+      min-height: 0;
+      height: 100%;
       border: none;
-      border-radius: calc(var(--cinder-control-radius) - 3px);
-      padding: 0 var(--cinder-spacing-03);
+      border-radius: calc(var(--cinder-control-radius) - 2px);
+      padding: 0 var(--cinder-spacing-04);
       background: transparent;
-      color: var(--cinder-text-secondary);
+      color: var(--cinder-text-primary);
       font-size: var(--cinder-body-compact-01-font-size);
       font-weight: 500;
       cursor: pointer;
@@ -1005,17 +1019,18 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: background var(--cinder-duration-fast-01), color var(--cinder-duration-fast-01);
+      transition: background var(--cinder-duration-fast-01), color var(--cinder-duration-fast-01), box-shadow var(--cinder-duration-fast-01);
       white-space: nowrap;
     }
-    .cinder-content-switcher > .cinder-toggle-button[data-hovered] {
+    .cinder-content-switcher > .cinder-toggle-button[data-hovered]:not([data-selected], [data-disabled]) {
       color: var(--cinder-text-primary);
       background: var(--cinder-layer-hover);
     }
     .cinder-content-switcher > .cinder-toggle-button[data-selected] {
-      background: var(--cinder-layer-01);
+      background: var(--cinder-layer, #ffffff);
       color: var(--cinder-text-primary);
-      box-shadow: 0 1px 3px var(--cinder-shadow);
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
     }
     .cinder-content-switcher > .cinder-toggle-button[data-focus-visible] {
       outline: var(--cinder-focus-width) solid var(--cinder-focus);
@@ -2271,6 +2286,10 @@
     .cinder-alert-dialog {
       outline: none;
       padding: var(--cinder-spacing-06);
+      text-align: start;
+    }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-alert-dialog {
+      text-align: right;
     }
     .cinder-alert-dialog-header {
       display: flex;
@@ -2467,10 +2486,22 @@
     .cinder-table-batch-bar > span {
       flex: 1;
     }
+    .cinder-table-batch-action-list {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--cinder-spacing-03);
+    }
     .cinder-table-batch-bar .cinder-button {
       --frame-button-ink: var(--cinder-text-on-color);
       color: var(--cinder-text-on-color);
       border-color: var(--cinder-text-on-color);
+    }
+    .cinder-table-batch-bar .cinder-button[data-variant="ghost"] {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+    .cinder-table-batch-bar .cinder-button[data-variant="ghost"]:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.7);
     }
 
     /* ------------------------------------------------------------------ */

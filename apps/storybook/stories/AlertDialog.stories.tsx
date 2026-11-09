@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button, Theme } from "@cinder/react";
 import "./overlays.css";
 
 const onConfirm = fn();
@@ -74,21 +74,24 @@ export const Playground: Story = {
 function AlertDialogRtlDemo() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div dir="rtl" className="overlay-story-stack">
-      <Button variant="danger" onPress={() => setIsOpen(true)}>
-        حذف پایگاه داده
-      </Button>
-      <AlertDialog
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        kind="danger"
-        title="آیا از حذف پایگاه داده اطمینان دارید؟"
-        description="این عملیات غیرقابل بازگشت است و تمامی داده‌های مربوط به آن برای همیشه پاک خواهند شد."
-        confirmLabel="بله، حذف کن"
-        cancelLabel="انصراف"
-        onConfirm={() => setIsOpen(false)}
-      />
-    </div>
+    <Theme direction="rtl">
+      <div dir="rtl" className="overlay-story-stack">
+        <Button variant="danger" onPress={() => setIsOpen(true)}>
+          حذف پایگاه داده
+        </Button>
+        <AlertDialog
+          isOpen={isOpen}
+          onOpenChange={setIsOpen}
+          dir="rtl"
+          kind="danger"
+          title="آیا از حذف پایگاه داده اطمینان دارید؟"
+          description="این عملیات غیرقابل بازگشت است و تمامی داده‌های مربوط به آن برای همیشه پاک خواهند شد."
+          confirmLabel="بله، حذف کن"
+          cancelLabel="انصراف"
+          onConfirm={() => setIsOpen(false)}
+        />
+      </div>
+    </Theme>
   );
 }
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Badge, Button, Icon } from "@cinder/react";
+import { Badge, Button, Icon, Theme } from "@cinder/react";
 import "./content.css";
 
 const meta = {
@@ -104,23 +104,25 @@ export const KindsAndPlacements: Story = {
 
 export const RTL: Story = {
   render: () => (
-    <div dir="rtl" className="content-story-stack">
-      <div className="content-card">
-        <h4 className="content-card-title">نشان‌های شمارنده راست‌به‌چپ (RTL)</h4>
-        <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-          <Badge count={12} kind="danger">
-            <Button variant="secondary" iconOnly aria-label="پیام‌ها">
-              <Icon name="inbox" />
-            </Button>
-          </Badge>
-          <Badge count={150} max={99} kind="warning">
-            <Button variant="secondary" iconOnly aria-label="هشدارها">
-              <Icon name="alert" />
-            </Button>
-          </Badge>
+    <Theme direction="rtl">
+      <div dir="rtl" className="content-story-stack">
+        <div className="content-card">
+          <h4 className="content-card-title">نشان‌های شمارنده راست‌به‌چپ (RTL)</h4>
+          <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+            <Badge count={12} kind="danger">
+              <Button variant="secondary" iconOnly aria-label="پیام‌ها">
+                <Icon name="inbox" />
+              </Button>
+            </Badge>
+            <Badge count={150} max={99} kind="warning">
+              <Button variant="secondary" iconOnly aria-label="هشدارها">
+                <Icon name="alert" />
+              </Button>
+            </Badge>
+          </div>
         </div>
       </div>
-    </div>
+    </Theme>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

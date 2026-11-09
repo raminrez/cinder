@@ -22,6 +22,7 @@ export interface AlertDialogProps extends Omit<ModalOverlayProps, "children"> {
   onConfirm?: () => void;
   onCancel?: () => void;
   isPending?: boolean;
+  dir?: "ltr" | "rtl";
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -35,6 +36,7 @@ export function AlertDialog({
   onConfirm,
   onCancel,
   isPending = false,
+  dir,
   className,
   ref,
   ...props
@@ -43,7 +45,7 @@ export function AlertDialog({
   const bodyContent = children ?? description;
 
   return (
-    <Modal {...props} size="sm" isDismissable={false} className={classes("cinder-alert-modal", className)}>
+    <Modal {...props} dir={dir} size="sm" isDismissable={false} className={classes("cinder-alert-modal", className)}>
       <Dialog role="alertdialog" className="cinder-alert-dialog" ref={ref}>
         {({ close }) => (
           <>

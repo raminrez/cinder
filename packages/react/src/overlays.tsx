@@ -54,10 +54,12 @@ export function Modal({
   ...props
 }: ModalProps) {
   const { appearanceClassName, ...theme } = useOverlayTheme();
+  const resolvedDir = (props as { dir?: "ltr" | "rtl" }).dir ?? theme.dir;
   return (
     <ModalOverlay
       {...props}
       {...theme}
+      dir={resolvedDir}
       lang={props.lang ?? theme.lang}
       ref={overlayRef}
       className={classes(
@@ -67,6 +69,7 @@ export function Modal({
     >
       <RACModal
         ref={ref}
+        dir={resolvedDir}
         data-size={size}
         className={classes("cinder-modal", className)}
         style={modalStyle}

@@ -18,6 +18,7 @@ const MAC_SYMBOLS: Record<string, string> = {
   command: "⌘",
   cmd: "⌘",
   meta: "⌘",
+  mod: "⌘",
   shift: "⇧",
   ctrl: "⌃",
   control: "⌃",
@@ -41,6 +42,7 @@ const WIN_SYMBOLS: Record<string, string> = {
   command: "Ctrl",
   cmd: "Ctrl",
   meta: "Win",
+  mod: "Ctrl",
   shift: "Shift",
   ctrl: "Ctrl",
   control: "Ctrl",
@@ -63,7 +65,9 @@ const WIN_SYMBOLS: Record<string, string> = {
 function formatKey(key: string, isMac: boolean): string {
   const normalized = key.trim().toLowerCase();
   const map = isMac ? MAC_SYMBOLS : WIN_SYMBOLS;
-  return map[normalized] ?? key;
+  if (map[normalized]) return map[normalized];
+  if (normalized.length === 1) return normalized.toUpperCase();
+  return key;
 }
 
 export function Kbd({ keys, children, className, ref, ...props }: KbdProps) {
