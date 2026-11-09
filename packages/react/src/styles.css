@@ -419,6 +419,12 @@
     position: relative;
     z-index: 2;
   }
+  .cinder-field > :is(.cinder-field__control, .react-aria-Input, .react-aria-TextArea, .cinder-input-group, .cinder-select-trigger):is(:focus, [data-focus-within], [data-focus-visible]) {
+    position: relative;
+    z-index: 3;
+    outline: 2px solid var(--cinder-focus);
+    outline-offset: -2px;
+  }
   :is(
     .cinder-field[data-cinder-status-variant="attached"],
     .cinder-field:not([data-cinder-status-variant="detached"], .cinder-checkbox-group, .cinder-radio-group)
@@ -1011,6 +1017,14 @@
     min-width: var(--trigger-width);
     max-height: 20rem;
   }
+  .react-aria-ListBox,
+  .react-aria-Menu,
+  .cinder-select__listbox,
+  .cinder-combobox__listbox {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
   @scope ([data-cinder-theme]) {
     .react-aria-ListBox,
     .react-aria-Menu,
@@ -1247,15 +1261,43 @@
     outline: 2px solid var(--cinder-focus);
     outline-offset: -2px;
   }
+  .cinder-tabs[data-variant="contained"] .react-aria-TabList {
+    background: var(--cinder-layer-accent, var(--cinder-field));
+    border: 1px solid var(--cinder-border-subtle);
+    border-radius: var(--cinder-control-radius, 4px);
+    padding: 3px;
+    gap: 3px;
+    width: fit-content;
+    max-width: 100%;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
   .cinder-tabs[data-variant="contained"] .react-aria-Tab {
-    background: var(--cinder-layer-accent);
-    border-block-end: 2px solid transparent;
+    border: none;
+    margin-block-end: 0;
+    border-radius: calc(var(--cinder-control-radius, 4px) - 2px);
+    min-height: calc(var(--control-height, 2.5rem) - 8px);
+    min-width: auto;
+    padding: 0 var(--cinder-spacing-04);
+    font-size: var(--cinder-body-compact-01-font-size, 0.875rem);
+    font-weight: 500;
+    color: var(--cinder-text-secondary);
+    background: transparent;
+    transition:
+      background var(--cinder-duration-fast-01, 100ms) ease,
+      color var(--cinder-duration-fast-01, 100ms) ease,
+      box-shadow var(--cinder-duration-fast-01, 100ms) ease;
+  }
+  .cinder-tabs[data-variant="contained"] .react-aria-Tab[data-hovered]:not([data-selected]) {
+    color: var(--cinder-text-primary);
+    background: var(--cinder-layer-hover, rgba(0, 0, 0, 0.04));
   }
   .cinder-tabs[data-variant="contained"] .react-aria-Tab[data-selected] {
-    background: var(--cinder-layer);
-    border-block-start: 2px solid var(--cinder-border-interactive);
-    border-block-end: 0;
-    padding-block-start: 0.875rem;
+    background: var(--cinder-layer, white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    color: var(--cinder-text-primary);
+    font-weight: 600;
+    border: none;
+    padding-block-start: 0;
   }
   .cinder-tabs[data-orientation="vertical"] {
     display: flex;
@@ -1648,12 +1690,20 @@
     outline: 1px solid var(--cinder-layer-02);
     outline-offset: -3px;
   }
-  :is(.cinder-date-popover, .cinder-popover:has(.cinder-calendar)) .cinder-dialog {
+  :is(.cinder-date-popover, .cinder-popover:has(.cinder-calendar), .cinder-popover:has(.cinder-range-calendar)) {
     padding: 0;
+    overflow: hidden;
   }
-  :is(.cinder-date-popover, .cinder-popover:has(.cinder-calendar)) :is(.cinder-calendar, .cinder-range-calendar) {
-    border: none;
-    background: transparent;
+  :is(.cinder-date-popover, .cinder-popover:has(.cinder-calendar), .cinder-popover:has(.cinder-range-calendar)) .cinder-dialog,
+  .cinder-popover .cinder-dialog:has(.cinder-calendar) {
+    padding: 0 !important;
+    outline: none;
+  }
+  :is(.cinder-date-popover, .cinder-popover) :is(.cinder-calendar, .cinder-range-calendar) {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: var(--cinder-spacing-03) !important;
   }
 
   .cinder-tag {
@@ -2379,112 +2429,78 @@
     position: relative;
     display: inline-flex;
   }
-  .cinder-badge,
-  .cinder-badge[data-placement="top-end"] {
+  .cinder-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    padding: 0 0.3125rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    background: var(--cinder-support-error);
+    color: var(--cinder-text-on-color);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: auto;
+  }
+  .cinder-badge-wrapper > .cinder-badge,
+  .cinder-badge-wrapper > .cinder-badge[data-placement="top-end"] {
     position: absolute;
     top: 0;
     bottom: auto;
     inset-inline-end: 0;
     inset-inline-start: auto;
     transform: translate(50%, -50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.125rem;
-    height: 1.125rem;
-    padding: 0 0.3125rem;
-    border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    line-height: 1;
-    background: var(--cinder-support-error);
-    color: var(--cinder-text-on-color);
-    white-space: nowrap;
     pointer-events: none;
     z-index: 1;
   }
-  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-badge, .cinder-badge[data-placement="top-end"]) {
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-badge-wrapper > .cinder-badge, .cinder-badge-wrapper > .cinder-badge[data-placement="top-end"]) {
     transform: translate(-50%, -50%);
   }
 
-  .cinder-badge[data-placement="top-start"] {
+  .cinder-badge-wrapper > .cinder-badge[data-placement="top-start"] {
     position: absolute;
     top: 0;
     bottom: auto;
     inset-inline-start: 0;
     inset-inline-end: auto;
     transform: translate(-50%, -50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.125rem;
-    height: 1.125rem;
-    padding: 0 0.3125rem;
-    border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    line-height: 1;
-    background: var(--cinder-support-error);
-    color: var(--cinder-text-on-color);
-    white-space: nowrap;
     pointer-events: none;
     z-index: 1;
   }
-  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="top-start"] {
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge-wrapper > .cinder-badge[data-placement="top-start"] {
     transform: translate(50%, -50%);
   }
 
-  .cinder-badge[data-placement="bottom-end"] {
+  .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-end"] {
     position: absolute;
     bottom: 0;
     top: auto;
     inset-inline-end: 0;
     inset-inline-start: auto;
     transform: translate(50%, 50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.125rem;
-    height: 1.125rem;
-    padding: 0 0.3125rem;
-    border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    line-height: 1;
-    background: var(--cinder-support-error);
-    color: var(--cinder-text-on-color);
-    white-space: nowrap;
     pointer-events: none;
     z-index: 1;
   }
-  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-end"] {
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-end"] {
     transform: translate(-50%, 50%);
   }
 
-  .cinder-badge[data-placement="bottom-start"] {
+  .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-start"] {
     position: absolute;
     bottom: 0;
     top: auto;
     inset-inline-start: 0;
     inset-inline-end: auto;
     transform: translate(-50%, 50%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.125rem;
-    height: 1.125rem;
-    padding: 0 0.3125rem;
-    border-radius: 9999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    line-height: 1;
-    background: var(--cinder-support-error);
-    color: var(--cinder-text-on-color);
-    white-space: nowrap;
     pointer-events: none;
     z-index: 1;
   }
-  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-start"] {
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-start"] {
     transform: translate(50%, 50%);
   }
   .cinder-badge[data-kind="success"] {
@@ -2725,10 +2741,28 @@
   }
   .cinder-progress-circle-value {
     position: absolute;
-    font-size: var(--cinder-body-01-font-size);
+    font-size: 0.75rem;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
     color: var(--cinder-text-primary);
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .cinder-progress-circle[data-size="sm"] .cinder-progress-circle-value {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .cinder-progress-circle[data-size="md"] .cinder-progress-circle-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .cinder-progress-circle[data-size="lg"] .cinder-progress-circle-value {
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   /* AILabel base */

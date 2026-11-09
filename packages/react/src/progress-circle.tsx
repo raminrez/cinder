@@ -27,7 +27,7 @@ export function ProgressCircle({
   ...props
 }: ProgressCircleProps) {
   const pixelSize = size === "sm" ? 32 : size === "lg" ? 64 : 48;
-  const strokeWidth = size === "sm" ? 3 : size === "lg" ? 5 : 4;
+  const strokeWidth = size === "sm" ? 2.5 : size === "lg" ? 4.5 : 3.5;
   const radius = (pixelSize - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 

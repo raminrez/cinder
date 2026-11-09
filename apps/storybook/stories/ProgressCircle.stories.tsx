@@ -48,7 +48,9 @@ export const Playground: Story = {
     const canvas = within(canvasElement);
     const bars = canvas.getAllByRole("progressbar");
     expect(bars.length).toBe(3);
+    expect(canvas.getByText("65%")).toBeInTheDocument();
     expect(canvas.getByText("75%")).toBeInTheDocument();
+    expect(canvas.getByText("90%")).toBeInTheDocument();
   },
 };
 

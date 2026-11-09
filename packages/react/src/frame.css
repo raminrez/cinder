@@ -196,20 +196,20 @@
     .cinder-field > .cinder-field__control[data-focus-within],
     .cinder-input-group[data-focus-within],
     .cinder-select-trigger[data-focus-visible] {
-      outline: var(--cinder-focus-width) solid var(--cinder-focus);
-      outline-offset: var(--cinder-focus-offset);
+      outline: var(--cinder-focus-width, 2px) solid var(--cinder-focus);
+      outline-offset: -2px;
       box-shadow: none;
       position: relative;
-      z-index: 1;
+      z-index: 3;
     }
     .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea):focus,
     .cinder-field[data-invalid] > .cinder-field__control[data-focus-within],
     .cinder-field[data-invalid] > .cinder-input-group[data-focus-within],
     .cinder-field[data-invalid] > .cinder-select-trigger[data-focus-visible] {
-      outline: var(--cinder-focus-width) solid var(--cinder-focus);
-      outline-offset: var(--cinder-focus-offset);
+      outline: var(--cinder-focus-width, 2px) solid var(--cinder-focus);
+      outline-offset: -2px;
       position: relative;
-      z-index: 1;
+      z-index: 3;
     }
     .cinder-field[data-disabled]
       > :is(
@@ -1548,7 +1548,7 @@
       color: var(--cinder-text-on-color);
       border-radius: calc(var(--cinder-control-radius) / 2);
     }
-    :is(:scope.cinder-date-popover, .cinder-date-popover) {
+    :is(:scope.cinder-date-popover, .cinder-date-popover, :scope.cinder-popover:has(.cinder-calendar), .cinder-popover:has(.cinder-calendar), :scope.cinder-popover:has(.cinder-range-calendar), .cinder-popover:has(.cinder-range-calendar)) {
       border-radius: var(--cinder-popover-radius, var(--cinder-control-radius));
       border: 1px solid var(--cinder-border-subtle);
       background: var(--cinder-layer);
@@ -1556,14 +1556,16 @@
       padding: 0;
       overflow: hidden;
     }
-    :is(:scope.cinder-date-popover, .cinder-date-popover) .cinder-dialog {
-      padding: 0;
+    :is(:scope.cinder-date-popover, .cinder-date-popover, :scope.cinder-popover:has(.cinder-calendar), .cinder-popover:has(.cinder-calendar), :scope.cinder-popover:has(.cinder-range-calendar), .cinder-popover:has(.cinder-range-calendar)) .cinder-dialog,
+    .cinder-popover .cinder-dialog:has(.cinder-calendar) {
+      padding: 0 !important;
       outline: none;
     }
-    :is(:scope.cinder-date-popover, .cinder-date-popover) :is(.cinder-calendar, .cinder-range-calendar) {
+    :is(:scope.cinder-date-popover, .cinder-date-popover, :scope.cinder-popover, .cinder-popover) :is(.cinder-calendar, .cinder-range-calendar) {
       border: none !important;
-      background: transparent;
-      padding: var(--cinder-spacing-03);
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: var(--cinder-spacing-03) !important;
     }
     .cinder-date-picker .cinder-field__control,
     .cinder-date-range-picker .cinder-field__control {
@@ -2005,112 +2007,78 @@
       position: relative;
       display: inline-flex;
     }
-    .cinder-badge,
-    .cinder-badge[data-placement="top-end"] {
+    .cinder-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.125rem;
+      height: 1.125rem;
+      padding: 0 0.3125rem;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      line-height: 1;
+      background: var(--cinder-support-error);
+      color: var(--cinder-text-on-color);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: auto;
+    }
+    .cinder-badge-wrapper > .cinder-badge,
+    .cinder-badge-wrapper > .cinder-badge[data-placement="top-end"] {
       position: absolute;
       top: 0;
       bottom: auto;
       inset-inline-end: 0;
       inset-inline-start: auto;
       transform: translate(50%, -50%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 1.125rem;
-      height: 1.125rem;
-      padding: 0 0.3125rem;
-      border-radius: 9999px;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      line-height: 1;
-      background: var(--cinder-support-error);
-      color: var(--cinder-text-on-color);
-      white-space: nowrap;
       pointer-events: none;
       z-index: 1;
     }
-    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-badge, .cinder-badge[data-placement="top-end"]) {
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-badge-wrapper > .cinder-badge, .cinder-badge-wrapper > .cinder-badge[data-placement="top-end"]) {
       transform: translate(-50%, -50%);
     }
 
-    .cinder-badge[data-placement="top-start"] {
+    .cinder-badge-wrapper > .cinder-badge[data-placement="top-start"] {
       position: absolute;
       top: 0;
       bottom: auto;
       inset-inline-start: 0;
       inset-inline-end: auto;
       transform: translate(-50%, -50%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 1.125rem;
-      height: 1.125rem;
-      padding: 0 0.3125rem;
-      border-radius: 9999px;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      line-height: 1;
-      background: var(--cinder-support-error);
-      color: var(--cinder-text-on-color);
-      white-space: nowrap;
       pointer-events: none;
       z-index: 1;
     }
-    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="top-start"] {
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge-wrapper > .cinder-badge[data-placement="top-start"] {
       transform: translate(50%, -50%);
     }
 
-    .cinder-badge[data-placement="bottom-end"] {
+    .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-end"] {
       position: absolute;
       bottom: 0;
       top: auto;
       inset-inline-end: 0;
       inset-inline-start: auto;
       transform: translate(50%, 50%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 1.125rem;
-      height: 1.125rem;
-      padding: 0 0.3125rem;
-      border-radius: 9999px;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      line-height: 1;
-      background: var(--cinder-support-error);
-      color: var(--cinder-text-on-color);
-      white-space: nowrap;
       pointer-events: none;
       z-index: 1;
     }
-    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-end"] {
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-end"] {
       transform: translate(-50%, 50%);
     }
 
-    .cinder-badge[data-placement="bottom-start"] {
+    .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-start"] {
       position: absolute;
       bottom: 0;
       top: auto;
       inset-inline-start: 0;
       inset-inline-end: auto;
       transform: translate(-50%, 50%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 1.125rem;
-      height: 1.125rem;
-      padding: 0 0.3125rem;
-      border-radius: 9999px;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      line-height: 1;
-      background: var(--cinder-support-error);
-      color: var(--cinder-text-on-color);
-      white-space: nowrap;
       pointer-events: none;
       z-index: 1;
     }
-    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-start"] {
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge-wrapper > .cinder-badge[data-placement="bottom-start"] {
       transform: translate(50%, 50%);
     }
     .cinder-badge[data-kind="success"] {
@@ -2372,10 +2340,28 @@
     }
     .cinder-progress-circle-value {
       position: absolute;
-      font-size: var(--cinder-body-compact-01-font-size);
+      font-size: 0.75rem;
       font-weight: 600;
       font-variant-numeric: tabular-nums;
       color: var(--cinder-text-primary);
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    .cinder-progress-circle[data-size="sm"] .cinder-progress-circle-value {
+      font-size: 0.5625rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .cinder-progress-circle[data-size="md"] .cinder-progress-circle-value {
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .cinder-progress-circle[data-size="lg"] .cinder-progress-circle-value {
+      font-size: 1rem;
+      font-weight: 600;
     }
     .cinder-progress-circle[data-indeterminate] svg {
       animation: cinder-frame-spin 1.2s linear infinite;
@@ -2544,12 +2530,12 @@
       to { opacity: 0; transform: scale(0.97); }
     }
     @keyframes cinder-frame-backdrop-in {
-      from { opacity: 0; backdrop-filter: blur(0); }
-      to { opacity: 1; backdrop-filter: blur(6px); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     @keyframes cinder-frame-backdrop-out {
-      from { opacity: 1; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-      to { opacity: 0; backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); }
+      from { opacity: 1; }
+      to { opacity: 0; }
     }
     @keyframes cinder-frame-modal-in {
       from { opacity: 0; transform: scale(0.95); }

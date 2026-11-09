@@ -68,11 +68,37 @@ export const KindsAndPlacements: Story = {
           <Badge isDot kind="success" />
         </div>
       </div>
+      <div className="content-card">
+        <h4 className="content-card-title">Corner Placements</h4>
+        <div style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
+          <Badge count={5} placement="top-end">
+            <Button variant="secondary" iconOnly aria-label="Top end">
+              <Icon name="inbox" />
+            </Button>
+          </Badge>
+          <Badge count={5} placement="top-start">
+            <Button variant="secondary" iconOnly aria-label="Top start">
+              <Icon name="inbox" />
+            </Button>
+          </Badge>
+          <Badge count={5} placement="bottom-end">
+            <Button variant="secondary" iconOnly aria-label="Bottom end">
+              <Icon name="inbox" />
+            </Button>
+          </Badge>
+          <Badge count={5} placement="bottom-start">
+            <Button variant="secondary" iconOnly aria-label="Bottom start">
+              <Icon name="inbox" />
+            </Button>
+          </Badge>
+        </div>
+      </div>
     </div>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByText("42")).toBeInTheDocument();
+    expect(canvas.getAllByText("5")).toHaveLength(4);
   },
 };
 

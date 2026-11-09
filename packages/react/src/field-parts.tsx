@@ -279,7 +279,13 @@ export function FieldStatusMessage({ className, ...props }: FieldStatusProps) {
           .filter(Boolean)
           .join(" ")}
       >
-        {status.message == null ? messages[status.type] : status.message}
+        <Icon
+          name={status.type}
+          data-cinder-status={status.type}
+          aria-hidden="true"
+          className="cinder-field__status-icon"
+        />
+        <span>{status.message == null ? messages[status.type] : status.message}</span>
       </Text>
     </TextContext.Provider>
   );
@@ -289,6 +295,8 @@ export type FieldStatusIconProps = Omit<IconProps, "name">;
 export function FieldStatusIcon({ className, ...props }: FieldStatusIconProps) {
   const { status } = useContext(FieldPresentationContext);
   const validation = useContext(FieldErrorContext);
+  // Avoid duplicating status icon inside input if a status message banner is already rendered below
+  if (status?.message != null) return null;
   const type = validation?.isInvalid ? "error" : status?.type;
   return type ? (
     <Icon
