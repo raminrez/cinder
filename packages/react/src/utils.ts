@@ -5,4 +5,9 @@ export function classes<T>(base: string, custom?: ClassNameOrFunction<T>): Class
   return composeRenderProps(custom, (value) => [base, value].filter(Boolean).join(" "));
 }
 
+/** Joins HTML class names cleanly. */
+export function cx(...items: (string | undefined | null | false)[]): string {
+  return items.filter(Boolean).join(" ");
+}
+
 export type ControlSize = "sm" | "md" | "lg";

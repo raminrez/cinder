@@ -27,6 +27,15 @@ const paths = {
   menu: "M2 4h12M2 8h12M2 12h12",
   sun: "M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0",
   moon: "M13.5 10.5A6 6 0 0 1 5.5 2.5a6 6 0 1 0 8 8Z",
+  user: "M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1c-3 0-6 1.5-6 3v1h12v-1c0-1.5-3-3-6-3Z",
+  star: "m8 2 1.8 3.6L14 6.4l-3 2.9.7 4.1L8 11.4l-3.7 2 .7-4.1-3-2.9 4.2-.8L8 2Z",
+  sparkle: "M8 1v3M8 12v3M1 8h3M12 8h3M3 3l2.5 2.5M10.5 10.5 13 13M3 13l2.5-2.5M10.5 5.5 13 3",
+  undo: "M4 7h7a3 3 0 1 1 0 6H9M4 7l3-3M4 7l3 3",
+  trash: "M3 4h10M6 2h4M5 4v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4M7 6v5M9 6v5",
+  alert: "M8 2 1 14h14L8 2Zm0 4v4M8 11.5v.5",
+  inbox: "M2 3h12v10H2V3Zm0 7h4l1 2h2l1-2h4",
+  image: "M2 3h12v10H2V3Zm0 8 3-3 3 3 2-2 4 4M10 6.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z",
+  command: "M5 2v6h6V2M3 8a2 2 0 1 0 2 2V8H3Zm10 0a2 2 0 1 1-2 2V8h2ZM5 8a2 2 0 1 1-2 2h2V8Zm6 0a2 2 0 1 0 2 2h-2V8Z",
 } as const;
 
 export type IconName = keyof typeof paths;
