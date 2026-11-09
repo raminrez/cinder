@@ -334,7 +334,7 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
   ...props
 }: SelectProps<T, M>) {
   return (
-    <SelectRoot<T, M> {...props} size={size} className={className}>
+    <SelectRoot<T, M> {...props} placeholder={placeholder} size={size} className={className}>
       <FieldLayout
         label={label}
         labelTooltip={labelTooltip}
@@ -421,6 +421,7 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
   description,
   errorMessage,
   children,
+  items,
   className,
   placeholder,
   size = "md",
@@ -443,7 +444,7 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
         {props.selectionMode === "multiple" && <ComboBoxValuePart />}
       </FieldLayout>
       <SelectPopover>
-        <SelectListBox>{children}</SelectListBox>
+        <SelectListBox items={items}>{children}</SelectListBox>
       </SelectPopover>
     </ComboBoxRoot>
   );

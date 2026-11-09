@@ -14,7 +14,8 @@ export type AlertDialogKind = "danger" | "warning" | "info";
 
 export interface AlertDialogProps extends Omit<ModalOverlayProps, "children"> {
   title: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
+  description?: ReactNode;
   kind?: AlertDialogKind;
   confirmLabel?: string;
   cancelLabel?: string;
@@ -27,6 +28,7 @@ export interface AlertDialogProps extends Omit<ModalOverlayProps, "children"> {
 export function AlertDialog({
   title,
   children,
+  description,
   kind = "danger",
   confirmLabel = "Confirm",
   cancelLabel = "Cancel",
@@ -38,6 +40,7 @@ export function AlertDialog({
   ...props
 }: AlertDialogProps) {
   const iconName = kind === "danger" ? "alert" : kind === "warning" ? "warning" : "info";
+  const bodyContent = children ?? description;
 
   return (
     <Modal {...props} size="sm" isDismissable={false} className={classes("cinder-alert-modal", className)}>
@@ -50,7 +53,7 @@ export function AlertDialog({
                 <Heading slot="title">{title}</Heading>
               </div>
             </div>
-            <div className="cinder-alert-dialog-body">{children}</div>
+            {bodyContent && <div className="cinder-alert-dialog-body">{bodyContent}</div>}
             <div className="cinder-alert-dialog-footer">
               <Button
                 variant="secondary"

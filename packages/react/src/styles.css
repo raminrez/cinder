@@ -418,6 +418,7 @@
     display: flex;
     align-items: flex-start;
     gap: var(--cinder-spacing-03);
+    margin-block-start: var(--cinder-spacing-02);
     color: var(--cinder-text-primary);
     font-size: var(--cinder-helper-text-01-font-size);
     line-height: var(--cinder-helper-text-01-line-height);
@@ -473,6 +474,8 @@
   .cinder-date-field > .react-aria-DateInput[data-focus-within] {
     outline: 2px solid var(--cinder-focus);
     outline-offset: -2px;
+    position: relative;
+    z-index: 1;
   }
   .cinder-field [slot="description"],
   .cinder-description {
@@ -963,10 +966,13 @@
     .react-aria-Menu {
       outline: none;
       margin: 0;
-      padding: 0.25rem 0;
+      padding: 0.25rem;
       overflow: auto;
       min-width: 10rem;
       max-height: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     .react-aria-ListBoxItem,
     .react-aria-MenuItem {
@@ -976,6 +982,7 @@
       gap: 0.75rem;
       min-height: 2.5rem;
       padding: 0.625rem 2.5rem 0.625rem 1rem;
+      border-radius: var(--cinder-control-radius, 4px);
       color: var(--cinder-text-primary);
       outline: none;
       cursor: pointer;
@@ -1575,6 +1582,10 @@
   }
   .cinder-date-popover .cinder-dialog {
     padding: 0;
+  }
+  .cinder-date-popover .cinder-calendar {
+    border: none;
+    background: transparent;
   }
 
   .cinder-tag {

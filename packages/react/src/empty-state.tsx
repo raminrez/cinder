@@ -12,6 +12,7 @@ export interface EmptyStateProps extends Omit<ComponentPropsWithRef<"div">, "tit
   title: ReactNode;
   description?: ReactNode;
   action?: ReactNode;
+  actions?: ReactNode;
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -20,11 +21,13 @@ export function EmptyState({
   title,
   description,
   action,
+  actions,
   children,
   className,
   ref,
   ...props
 }: EmptyStateProps) {
+  const actionContent = action ?? actions;
   return (
     <div {...props} ref={ref} className={cx("cinder-empty-state", className)}>
       {icon && <div className="cinder-empty-state-icon">{icon}</div>}
@@ -35,7 +38,7 @@ export function EmptyState({
         ) : (
           description
         ))}
-      {action && <div className="cinder-empty-state-actions">{action}</div>}
+      {actionContent && <div className="cinder-empty-state-actions">{actionContent}</div>}
       {children}
     </div>
   );

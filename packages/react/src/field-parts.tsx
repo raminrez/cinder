@@ -186,19 +186,28 @@ export function FieldLabel({
   );
 }
 
+export interface FieldLabelHelpProps {
+  labelId?: string;
+  content?: ReactNode;
+  tooltip?: ReactNode;
+  children?: ReactNode;
+}
+
 export function FieldLabelHelp({
   labelId,
   content,
-}: {
-  labelId?: string;
-  content: ReactNode;
-}) {
+  tooltip,
+  children,
+}: FieldLabelHelpProps) {
   const messages = useFieldMessages();
   const prefixId = useId();
   const fallbackId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const targetLabelId = labelId ?? fallbackId;
   const labelledBy = `${prefixId} ${targetLabelId}`;
+  const tooltipContent = tooltip ?? content;
+  const popoverContent = children ?? content;
+
   return (
     <ButtonContext.Provider value={null}>
       <span id={prefixId} className="cinder-visually-hidden">
@@ -216,11 +225,11 @@ export function FieldLabelHelp({
           >
             <Icon name="info" />
           </Button>
-          <Tooltip>{content}</Tooltip>
+          {tooltipContent && <Tooltip>{tooltipContent}</Tooltip>}
         </TooltipTrigger>
         <Popover placement="bottom start" offset={6} className="cinder-field__label-popover">
           <Dialog aria-labelledby={labelledBy}>
-            {typeof content === "string" ? <p>{content}</p> : content}
+            {typeof popoverContent === "string" ? <p>{popoverContent}</p> : popoverContent}
             <Button variant="ghost" size="sm" slot="close">
               {messages.close}
             </Button>

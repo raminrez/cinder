@@ -199,6 +199,8 @@
       outline: var(--cinder-focus-width) solid var(--cinder-focus);
       outline-offset: var(--cinder-focus-offset);
       box-shadow: none;
+      position: relative;
+      z-index: 1;
     }
     .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea):focus,
     .cinder-field[data-invalid] > .cinder-field__control[data-focus-within],
@@ -206,6 +208,8 @@
     .cinder-field[data-invalid] > .cinder-select-trigger[data-focus-visible] {
       outline: var(--cinder-focus-width) solid var(--cinder-focus);
       outline-offset: var(--cinder-focus-offset);
+      position: relative;
+      z-index: 1;
     }
     .cinder-field[data-disabled]
       > :is(
