@@ -1062,7 +1062,7 @@
   }
   .cinder-modal-overlay[data-exiting] {
     animation: cinder-fade-in var(--cinder-duration-fast-02) var(--cinder-ease-exit-productive)
-      reverse;
+      reverse forwards;
   }
   .cinder-modal {
     width: 100%;

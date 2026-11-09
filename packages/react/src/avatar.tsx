@@ -2,15 +2,10 @@
 
 import {
   Children,
-  cloneElement,
   createContext,
-  isValidElement,
   useContext,
-  useRef,
   useState,
   type ComponentPropsWithRef,
-  type KeyboardEvent,
-  type ReactElement,
   type ReactNode,
   type Ref,
 } from "react";
@@ -132,47 +127,22 @@ export function AvatarGroup({
   ref,
   ...props
 }: AvatarGroupProps) {
-  const allChildren = Children.toArray(children).filter(isValidElement);
+  const allChildren = Children.toArray(children);
   const total = allChildren.length;
   const visibleCount = max != null && max < total ? max : total;
   const overflowCount = total - visibleCount;
 
   const visibleChildren = allChildren.slice(0, visibleCount);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
-    const focusable = containerRef.current?.querySelectorAll<HTMLElement>('[tabindex="0"], [tabindex="-1"]');
-    if (!focusable || focusable.length === 0) return;
-
-    const list = Array.from(focusable);
-    const currentIndex = list.indexOf(document.activeElement as HTMLElement);
-    if (currentIndex === -1) return;
-
-    event.preventDefault();
-    const nextIndex =
-      event.key === "ArrowRight"
-        ? (currentIndex + 1) % list.length
-        : (currentIndex - 1 + list.length) % list.length;
-    list[nextIndex]?.focus();
-  };
 
   return (
     <AvatarGroupContext.Provider value={{ size }}>
       <div
         {...props}
-        ref={ref ?? containerRef}
+        ref={ref}
         role="group"
-        onKeyDown={handleKeyDown}
         className={cx("cinder-avatar-group", className)}
       >
-        {visibleChildren.map((child, index) => {
-          const el = child as ReactElement<{ tabIndex?: number }>;
-          return cloneElement(el, {
-            tabIndex: index === 0 ? 0 : -1,
-            key: el.key ?? index,
-          });
-        })}
+        {visibleChildren}
 
         {overflowCount > 0 && (
           <span className="cinder-avatar-group-count" aria-label={`${overflowCount} more members`}>

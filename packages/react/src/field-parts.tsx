@@ -141,7 +141,7 @@ function useFieldMessages() {
 export interface FieldLabelOptions {
   isRequired?: boolean;
   isOptional?: boolean;
-  labelTooltip?: string;
+  labelTooltip?: ReactNode;
 }
 
 export type FieldLabelProps = ComponentProps<typeof Label> & FieldLabelOptions;
@@ -186,11 +186,19 @@ export function FieldLabel({
   );
 }
 
-function FieldLabelHelp({ labelId, content }: { labelId: string; content: string }) {
+export function FieldLabelHelp({
+  labelId,
+  content,
+}: {
+  labelId?: string;
+  content: ReactNode;
+}) {
   const messages = useFieldMessages();
   const prefixId = useId();
+  const fallbackId = useId();
   const [isOpen, setIsOpen] = useState(false);
-  const labelledBy = `${prefixId} ${labelId}`;
+  const targetLabelId = labelId ?? fallbackId;
+  const labelledBy = `${prefixId} ${targetLabelId}`;
   return (
     <ButtonContext.Provider value={null}>
       <span id={prefixId} className="cinder-visually-hidden">
@@ -210,9 +218,9 @@ function FieldLabelHelp({ labelId, content }: { labelId: string; content: string
           </Button>
           <Tooltip>{content}</Tooltip>
         </TooltipTrigger>
-        <Popover placement="bottom start" className="cinder-field__label-popover">
+        <Popover placement="bottom start" offset={6} className="cinder-field__label-popover">
           <Dialog aria-labelledby={labelledBy}>
-            <p>{content}</p>
+            {typeof content === "string" ? <p>{content}</p> : content}
             <Button variant="ghost" size="sm" slot="close">
               {messages.close}
             </Button>
@@ -261,6 +269,8 @@ export type FieldStatusIconProps = Omit<IconProps, "name">;
 export function FieldStatusIcon({ className, ...props }: FieldStatusIconProps) {
   const { status } = useContext(FieldPresentationContext);
   const validation = useContext(FieldErrorContext);
+  // Do not duplicate status icon inside input if a status message is already rendered below
+  if (status?.message != null) return null;
   const type = validation?.isInvalid ? "error" : status?.type;
   return type ? (
     <Icon

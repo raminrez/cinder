@@ -36,19 +36,32 @@ export function Card({
     }
   };
 
+  if (isPressable) {
+    return (
+      <div
+        {...props}
+        ref={ref}
+        role="button"
+        tabIndex={0}
+        data-elevation={elevation}
+        data-interactive="true"
+        onClick={(e) => {
+          onClick?.(e);
+          onPress?.();
+        }}
+        onKeyDown={handleKeyDown}
+        className={cx("cinder-card", className)}
+      >
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div
       {...props}
       ref={ref}
-      role={isPressable ? "button" : undefined}
-      tabIndex={isPressable ? 0 : undefined}
       data-elevation={elevation}
-      data-interactive={isPressable || undefined}
-      onClick={(e) => {
-        onClick?.(e);
-        if (isPressable) onPress?.();
-      }}
-      onKeyDown={handleKeyDown}
       className={cx("cinder-card", className)}
     >
       {children}

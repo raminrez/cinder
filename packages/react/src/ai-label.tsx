@@ -1,6 +1,6 @@
 "use client";
 
-import type { KeyboardEvent, ReactNode, Ref } from "react";
+import type { ReactNode, Ref } from "react";
 import { Icon } from "./icons";
 import { cx } from "./utils";
 
@@ -10,7 +10,7 @@ export interface AILabelProps {
   onRevert?: () => void;
   revertLabel?: string;
   className?: string;
-  ref?: Ref<HTMLSpanElement>;
+  ref?: Ref<HTMLElement>;
 }
 
 export function AILabel({
@@ -21,25 +21,29 @@ export function AILabel({
   className,
   ref,
 }: AILabelProps) {
-  const handleKeyDown = (e: KeyboardEvent<HTMLSpanElement>) => {
-    if (revertActive && (e.key === "Enter" || e.key === " ")) {
-      e.preventDefault();
-      onRevert?.();
-    }
-  };
+  if (revertActive) {
+    return (
+      <button
+        type="button"
+        ref={ref as Ref<HTMLButtonElement>}
+        aria-label={revertLabel}
+        data-revert-active="true"
+        onClick={onRevert}
+        className={cx("cinder-ai-label", className)}
+      >
+        <Icon name="undo" size={16} />
+        <span>{label}</span>
+      </button>
+    );
+  }
 
   return (
     <span
-      ref={ref}
-      role={revertActive ? "button" : "status"}
-      tabIndex={revertActive ? 0 : undefined}
-      aria-label={revertActive ? revertLabel : undefined}
-      data-revert-active={revertActive || undefined}
-      onClick={revertActive ? onRevert : undefined}
-      onKeyDown={handleKeyDown}
+      ref={ref as Ref<HTMLSpanElement>}
+      role="status"
       className={cx("cinder-ai-label", className)}
     >
-      <Icon name={revertActive ? "undo" : "sparkle"} size={16} />
+      <Icon name="sparkle" size={16} />
       <span>{label}</span>
     </span>
   );

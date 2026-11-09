@@ -295,8 +295,8 @@ function SelectValuePart<T>({
   );
 }
 
-function SelectPopover({ className, ...props }: PopoverProps) {
-  return <Popover offset={0} {...props} className={classes("cinder-select-popover", className)} />;
+function SelectPopover({ className, offset = 6, ...props }: PopoverProps) {
+  return <Popover offset={offset} {...props} className={classes("cinder-select-popover", className)} />;
 }
 
 function SelectListBox<T>({
@@ -315,6 +315,8 @@ export interface SelectProps<T extends object, M extends SelectionMode = "single
   extends Omit<SelectRootProps<T, M>, "children">, FieldContentProps {
   items?: Iterable<T>;
   children: ListBoxProps<T>["children"];
+  placeholder?: string;
+  renderValue?: (selectedItems: T[]) => ReactNode;
 }
 
 /** Carbon's dropdown and multi-select share RAC's Select model. */
@@ -327,6 +329,8 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
   children,
   className,
   size = "md",
+  placeholder,
+  renderValue,
   ...props
 }: SelectProps<T, M>) {
   return (
@@ -338,7 +342,11 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
         errorMessage={errorMessage}
       >
         <SelectTrigger size={size}>
-          <SelectValuePart />
+          <SelectValuePart>
+            {renderValue
+              ? ({ selectedItems }) => renderValue(selectedItems as T[])
+              : undefined}
+          </SelectValuePart>
           <Icon name="chevronDown" />
         </SelectTrigger>
       </FieldLayout>

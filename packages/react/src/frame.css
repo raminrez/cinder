@@ -247,51 +247,28 @@
       padding: calc(var(--cinder-spacing-02) - 1px) var(--cinder-spacing-04);
       font-weight: var(--cinder-body-02-font-weight);
       text-align: start;
+      transform: none !important;
+    }
+    .cinder-select-trigger:active,
+    .cinder-select-trigger[data-pressed] {
+      transform: none !important;
     }
     .cinder-field__help {
-      min-block-size: var(--cinder-helper-text-01-line-height);
+      display: flex;
+      flex-direction: column;
+      gap: var(--cinder-spacing-01);
+      margin-block-start: var(--cinder-spacing-01);
     }
-    /* Reserve one recovery line; form recipes can reserve a larger text budget. */
-    :is(
-        .cinder-field__control,
-        .cinder-field__control + input[hidden],
-        .cinder-field__control + .cinder-field__status-icon,
-        .cinder-field__control + input[hidden] + .cinder-field__status-icon
-      )
-      + .cinder-field__help {
-      min-block-size: calc(
-        var(--cinder-helper-text-01-line-height) + 2 * (var(--cinder-spacing-03) + 1px) + 1px
-      );
-      margin-block-start: calc(-1 * var(--cinder-spacing-03) - 1px);
-    }
-    :is(
-        .cinder-field__control,
-        .cinder-field__control + input[hidden],
-        .cinder-field__control + .cinder-field__status-icon,
-        .cinder-field__control + input[hidden] + .cinder-field__status-icon
-      )
-      + .cinder-field__help
-      > .cinder-field__error:not(:empty) {
-      align-self: start;
-      padding: calc(var(--cinder-spacing-03) + 1px) var(--cinder-spacing-04);
-      border: 1px solid var(--cinder-support-error);
-      border-block-start: 0;
-      border-end-start-radius: var(--cinder-control-radius);
-      border-end-end-radius: var(--cinder-control-radius);
-      background: var(--cinder-notification-background-error);
-    }
-    .cinder-field[data-invalid]
-      > .cinder-field__control:has(
-        + .cinder-field__help > .cinder-field__error:not(:empty),
-        + input[hidden] + .cinder-field__help > .cinder-field__error:not(:empty),
-        + .cinder-field__status-icon + .cinder-field__help > .cinder-field__error:not(:empty),
-        + input[hidden]
-          + .cinder-field__status-icon
-          + .cinder-field__help
-          > .cinder-field__error:not(:empty)
-      ) {
-      border-end-start-radius: calc(var(--cinder-spacing-02) - 1px);
-      border-end-end-radius: calc(var(--cinder-spacing-02) - 1px);
+    .cinder-field__error:not(:empty) {
+      color: var(--cinder-support-error);
+      font-size: var(--cinder-helper-text-01-font-size, 0.75rem);
+      line-height: var(--cinder-helper-text-01-line-height, 1rem);
+      display: flex;
+      align-items: center;
+      gap: var(--cinder-spacing-02);
+      padding: 0;
+      background: transparent;
+      border: none;
     }
     .cinder-field[data-cinder-status]:not([data-invalid], [data-disabled])
       > .cinder-field__control {
@@ -308,38 +285,19 @@
     .cinder-select-trigger > .cinder-field__status-icon {
       color: var(--cinder-field-status-ink);
     }
-    :is(
-        .cinder-field__control,
-        .cinder-field__control + input[hidden],
-        .cinder-field__control + .cinder-field__status-icon,
-        .cinder-field__control + input[hidden] + .cinder-field__status-icon
-      )
-      + .cinder-field__help
-      > .cinder-field__status:not([hidden], .cinder-visually-hidden) {
-      align-self: start;
-      padding: calc(var(--cinder-spacing-03) + 1px) var(--cinder-spacing-04);
+    /* Status banner is a distinct callout below the input, separated from focus rings */
+    .cinder-field__status:not([hidden], .cinder-visually-hidden) {
+      display: flex;
+      align-items: center;
+      gap: var(--cinder-spacing-03);
+      padding: var(--cinder-spacing-02) var(--cinder-spacing-03);
+      margin-block-start: var(--cinder-spacing-01);
       border: 1px solid var(--cinder-field-status-ink);
-      border-block-start: 0;
-      border-end-start-radius: var(--cinder-control-radius);
-      border-end-end-radius: var(--cinder-control-radius);
+      border-radius: var(--cinder-control-radius);
       background: var(--cinder-field-status-surface);
-    }
-    .cinder-field
-      > .cinder-field__control:has(
-        + .cinder-field__help > .cinder-field__status:not([hidden], .cinder-visually-hidden),
-        + input[hidden]
-          + .cinder-field__help
-          > .cinder-field__status:not([hidden], .cinder-visually-hidden),
-        + .cinder-field__status-icon
-          + .cinder-field__help
-          > .cinder-field__status:not([hidden], .cinder-visually-hidden),
-        + input[hidden]
-          + .cinder-field__status-icon
-          + .cinder-field__help
-          > .cinder-field__status:not([hidden], .cinder-visually-hidden)
-      ) {
-      border-end-start-radius: calc(var(--cinder-spacing-02) - 1px);
-      border-end-end-radius: calc(var(--cinder-spacing-02) - 1px);
+      color: var(--cinder-text-primary);
+      font-size: var(--cinder-helper-text-01-font-size, 0.8125rem);
+      line-height: var(--cinder-helper-text-01-line-height, 1.25rem);
     }
     .cinder-checkbox,
     .cinder-radio,
@@ -461,6 +419,9 @@
     .react-aria-ListBox,
     .react-aria-Menu {
       padding: var(--cinder-spacing-02);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
     .react-aria-ListBoxSection > header,
     .react-aria-MenuSection > header {
@@ -479,21 +440,27 @@
     .react-aria-ListBoxItem,
     .react-aria-MenuItem {
       min-height: var(--cinder-size-md);
-      padding: var(--cinder-spacing-03) var(--cinder-spacing-07) var(--cinder-spacing-03)
-        var(--cinder-spacing-04);
+      padding: var(--cinder-spacing-02) var(--cinder-spacing-04);
       border-radius: var(--cinder-control-radius);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--cinder-spacing-03);
+      cursor: pointer;
     }
     .react-aria-ListBoxItem[data-focus-visible],
     .react-aria-MenuItem[data-focus-visible] {
       outline: var(--cinder-focus-width) solid var(--cinder-focus);
       outline-offset: -2px;
     }
-    .react-aria-MenuItem[data-hovered],
-    .react-aria-MenuItem[data-focused] {
+    .react-aria-ListBoxItem:is([data-hovered], [data-focused]),
+    .react-aria-MenuItem:is([data-hovered], [data-focused]) {
       background: var(--cinder-layer-hover);
     }
+    .react-aria-ListBoxItem[data-selected],
     .react-aria-MenuItem[data-selected] {
       background: var(--cinder-layer-selected);
+      font-weight: 500;
     }
     .react-aria-MenuItem[data-danger] {
       color: var(--cinder-support-error);
@@ -565,24 +532,39 @@
 
     /* Frame Contained Tabs */
     .cinder-tabs[data-variant="contained"] .react-aria-TabList {
-      background: var(--cinder-field);
+      background: var(--cinder-layer-accent, var(--cinder-field));
       border: 1px solid var(--cinder-border-subtle);
       border-radius: var(--cinder-control-radius);
-      padding: 2px;
-      gap: 2px;
+      padding: 3px;
+      gap: 3px;
       width: fit-content;
       max-width: 100%;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
     }
     .cinder-tabs[data-variant="contained"] .react-aria-Tab {
       border: none;
       margin-block-end: 0;
-      border-radius: calc(var(--cinder-control-radius) - 2px);
+      border-radius: calc(var(--cinder-control-radius) - 3px);
       min-height: calc(var(--cinder-size-md) - 8px);
+      padding: 0 var(--cinder-spacing-04);
+      font-size: var(--cinder-body-compact-01-font-size);
+      font-weight: 500;
+      color: var(--cinder-text-secondary);
+      background: transparent;
+      transition:
+        background var(--cinder-duration-fast-01) ease,
+        color var(--cinder-duration-fast-01) ease,
+        box-shadow var(--cinder-duration-fast-01) ease;
+    }
+    .cinder-tabs[data-variant="contained"] .react-aria-Tab[data-hovered]:not([data-selected]) {
+      color: var(--cinder-text-primary);
+      background: var(--cinder-layer-hover, rgba(0, 0, 0, 0.04));
     }
     .cinder-tabs[data-variant="contained"] .react-aria-Tab[data-selected] {
-      background: var(--cinder-layer-01);
-      box-shadow: 0 1px 3px var(--cinder-shadow);
+      background: var(--cinder-layer, white);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
       color: var(--cinder-text-primary);
+      font-weight: 600;
     }
 
     /* Frame Vertical Tabs */
@@ -1474,8 +1456,18 @@
       border-radius: var(--cinder-control-radius);
       border: 1px solid var(--cinder-border-subtle);
       background: var(--cinder-layer);
-      box-shadow: var(--cinder-shadow);
+      box-shadow: 0 8px 24px var(--cinder-shadow);
+      padding: 0;
       overflow: hidden;
+    }
+    .cinder-date-popover .cinder-dialog {
+      padding: 0;
+      outline: none;
+    }
+    .cinder-date-popover .cinder-calendar {
+      border: none;
+      background: transparent;
+      padding: var(--cinder-spacing-04);
     }
     .cinder-date-picker .cinder-field__control,
     .cinder-date-range-picker .cinder-field__control {
@@ -1801,7 +1793,7 @@
         animation: cinder-frame-backdrop-in 250ms ease-out;
       }
       &[data-exiting] {
-        animation: cinder-frame-backdrop-out 150ms ease-in;
+        animation: cinder-frame-backdrop-out 150ms ease-in forwards;
       }
     }
     .cinder-modal {
@@ -1809,7 +1801,7 @@
         animation: cinder-frame-modal-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
       }
       &[data-exiting] {
-        animation: cinder-frame-modal-out 150ms ease-in;
+        animation: cinder-frame-modal-out 150ms ease-in forwards;
       }
     }
 
@@ -2373,8 +2365,8 @@
       to { opacity: 1; backdrop-filter: blur(6px); }
     }
     @keyframes cinder-frame-backdrop-out {
-      from { opacity: 1; }
-      to { opacity: 0; }
+      from { opacity: 1; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+      to { opacity: 0; backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); }
     }
     @keyframes cinder-frame-modal-in {
       from { opacity: 0; transform: scale(0.95); }

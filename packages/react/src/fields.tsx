@@ -36,7 +36,7 @@ import { classes, type ControlSize } from "./utils";
 
 export interface FieldContentProps {
   label?: ReactNode;
-  labelTooltip?: string;
+  labelTooltip?: ReactNode;
   description?: ReactNode;
   errorMessage?: FieldErrorProps["children"];
 }
