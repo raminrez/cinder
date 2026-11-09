@@ -788,7 +788,8 @@
   .cinder-switch[data-selected] .cinder-switch-thumb {
     transform: translateX(1.5rem);
   }
-  .cinder-switch:dir(rtl)[data-selected] .cinder-switch-thumb {
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-switch[data-selected] .cinder-switch-thumb,
+  .cinder-switch:is([dir="rtl"], [data-direction="rtl"], :dir(rtl))[data-selected] .cinder-switch-thumb {
     transform: translateX(-1.5rem);
   }
   .cinder-switch[data-size="sm"] .cinder-switch-track {
@@ -803,7 +804,8 @@
   .cinder-switch[data-size="sm"][data-selected] .cinder-switch-thumb {
     transform: translateX(1rem);
   }
-  .cinder-switch:dir(rtl)[data-size="sm"][data-selected] .cinder-switch-thumb {
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-switch[data-size="sm"][data-selected] .cinder-switch-thumb,
+  .cinder-switch:is([dir="rtl"], [data-direction="rtl"], :dir(rtl))[data-size="sm"][data-selected] .cinder-switch-thumb {
     transform: translateX(-1rem);
   }
   .cinder-switch[data-focus-visible] .cinder-switch-track {
@@ -1031,7 +1033,9 @@
       align-items: center;
       gap: 0.75rem;
       min-height: 2.5rem;
-      padding: 0.625rem 2.5rem 0.625rem 1rem;
+      padding-block: 0.625rem;
+      padding-inline-start: 1rem;
+      padding-inline-end: 2.5rem;
       border-radius: var(--cinder-control-radius, 4px);
       color: var(--cinder-text-primary);
       outline: none;
@@ -1072,6 +1076,9 @@
       content: "›";
       position: absolute;
       inset-inline-end: 1rem;
+    }
+    :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .react-aria-MenuItem[data-has-submenu]::after {
+      content: "‹";
     }
     .react-aria-ListBoxItem:has(> [slot="description"]) {
       display: grid;
@@ -1151,7 +1158,9 @@
     font-size: var(--cinder-heading-03-font-size);
     font-weight: 400;
     line-height: 1.4;
-    margin: 0 3rem 1.5rem 0;
+    margin-block: 0 1.5rem;
+    margin-inline-start: 0;
+    margin-inline-end: 3rem;
   }
   .cinder-dialog p {
     margin-block: 0 1rem;
@@ -1276,7 +1285,13 @@
   .cinder-accordion-trigger > svg {
     transition: transform var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive);
   }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-accordion-trigger > svg {
+    transform: rotate(180deg);
+  }
   .cinder-accordion-item[data-expanded] .cinder-accordion-trigger > svg {
+    transform: rotate(90deg);
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-accordion-item[data-expanded] .cinder-accordion-trigger > svg {
     transform: rotate(90deg);
   }
   .cinder-accordion-item .react-aria-DisclosurePanel {
@@ -1419,6 +1434,9 @@
   .cinder-pagination-actions .cinder-button {
     color: var(--cinder-icon-primary);
     border-inline-start: 1px solid var(--cinder-border-subtle);
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-pagination-actions, .cinder-calendar-header) svg {
+    transform: scaleX(-1);
   }
 
   @scope ([data-cinder-theme]) {
@@ -2055,7 +2073,9 @@
     flex: 1;
     min-width: 6rem;
     border-block-start: 2px solid var(--cinder-border-subtle);
-    padding: 1rem 0.5rem 0 0;
+    padding-block: 1rem 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0.5rem;
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
@@ -2105,7 +2125,9 @@
   .cinder-progress-indicator[data-orientation="vertical"] li {
     border-block-start: 0;
     border-inline-start: 2px solid var(--cinder-border-subtle);
-    padding: 0 0 2rem 1rem;
+    padding-block: 0 2rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 0;
   }
 
   .cinder-file-label {
@@ -2140,7 +2162,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.25rem 0.5rem 0.25rem 1rem;
+    padding-block: 0.25rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 0.5rem;
     background: var(--cinder-layer);
     margin-block-start: 0.25rem;
   }
@@ -2180,7 +2204,9 @@
   }
   .cinder-header-name {
     font-size: 1rem;
-    padding: 0.875rem 2rem 0.875rem 1rem;
+    padding-block: 0.875rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 2rem;
     color: var(--cinder-text-primary);
     font-weight: 600;
   }
@@ -2353,10 +2379,13 @@
     position: relative;
     display: inline-flex;
   }
-  .cinder-badge {
+  .cinder-badge,
+  .cinder-badge[data-placement="top-end"] {
     position: absolute;
     top: 0;
+    bottom: auto;
     inset-inline-end: 0;
+    inset-inline-start: auto;
     transform: translate(50%, -50%);
     display: inline-flex;
     align-items: center;
@@ -2374,12 +2403,96 @@
     pointer-events: none;
     z-index: 1;
   }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-badge, .cinder-badge[data-placement="top-end"]) {
+    transform: translate(-50%, -50%);
+  }
+
+  .cinder-badge[data-placement="top-start"] {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    padding: 0 0.3125rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    background: var(--cinder-support-error);
+    color: var(--cinder-text-on-color);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="top-start"] {
+    transform: translate(50%, -50%);
+  }
+
+  .cinder-badge[data-placement="bottom-end"] {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+    transform: translate(50%, 50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    padding: 0 0.3125rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    background: var(--cinder-support-error);
+    color: var(--cinder-text-on-color);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-end"] {
+    transform: translate(-50%, 50%);
+  }
+
+  .cinder-badge[data-placement="bottom-start"] {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    transform: translate(-50%, 50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    padding: 0 0.3125rem;
+    border-radius: 9999px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    background: var(--cinder-support-error);
+    color: var(--cinder-text-on-color);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-start"] {
+    transform: translate(50%, 50%);
+  }
   .cinder-badge[data-kind="success"] {
     background: var(--cinder-support-success);
   }
   .cinder-badge[data-kind="warning"] {
     background: var(--cinder-support-warning);
-    color: var(--cinder-text-primary);
+    color: #161616;
   }
   .cinder-badge[data-kind="info"] {
     background: var(--cinder-interactive);

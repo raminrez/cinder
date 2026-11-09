@@ -778,23 +778,25 @@
       border-radius: var(--cinder-control-radius);
     }
     .cinder-accordion-trigger > svg {
-      transition: transform var(--cinder-duration-fast-01) var(--cinder-ease-standard-productive, ease);
+      transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
       color: var(--cinder-text-secondary);
+    }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-accordion-trigger > svg {
+      transform: rotate(180deg);
     }
     .cinder-accordion-item[data-expanded] .cinder-accordion-trigger > svg {
       transform: rotate(90deg);
     }
-    :is([dir="rtl"], [data-direction="rtl"]) .cinder-accordion-item[data-expanded] .cinder-accordion-trigger > svg {
-      transform: rotate(-90deg);
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-accordion-item[data-expanded] .cinder-accordion-trigger > svg {
+      transform: rotate(90deg);
     }
     .cinder-accordion-item .react-aria-DisclosurePanel {
-      padding: 0 var(--cinder-spacing-02) var(--cinder-spacing-04) calc(var(--cinder-spacing-02) + 1.5rem);
+      padding-block: 0 var(--cinder-spacing-04);
+      padding-inline-start: calc(var(--cinder-spacing-02) + 1.5rem);
+      padding-inline-end: var(--cinder-spacing-02);
       color: var(--cinder-text-secondary);
       font-size: var(--cinder-body-compact-01-font-size);
       line-height: var(--cinder-body-compact-01-line-height);
-    }
-    :is([dir="rtl"], [data-direction="rtl"]) .cinder-accordion-item .react-aria-DisclosurePanel {
-      padding: 0 calc(var(--cinder-spacing-02) + 1.5rem) var(--cinder-spacing-04) var(--cinder-spacing-02);
     }
 
     /* Frame Tag & TagGroup & FilterTag */
@@ -1215,6 +1217,9 @@
       min-height: var(--cinder-size-sm);
       padding: 0;
     }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-pagination-actions, .cinder-calendar-header) svg {
+      transform: scaleX(-1);
+    }
 
     /* Frame CodeSnippet */
     .cinder-code-snippet {
@@ -1403,7 +1408,9 @@
       flex: 1;
       min-width: 6.5rem;
       border-block-start: 2px solid var(--cinder-border-subtle);
-      padding: var(--cinder-spacing-04) var(--cinder-spacing-03) 0 0;
+      padding-block: var(--cinder-spacing-04) 0;
+      padding-inline-start: 0;
+      padding-inline-end: var(--cinder-spacing-03);
       display: flex;
       align-items: flex-start;
       gap: var(--cinder-spacing-03);
@@ -1477,7 +1484,9 @@
     .cinder-progress-indicator[data-orientation="vertical"] li {
       border-block-start: 0;
       border-inline-start: 2px solid var(--cinder-border-subtle);
-      padding: 0 0 var(--cinder-spacing-06) var(--cinder-spacing-04);
+      padding-block: 0 var(--cinder-spacing-06);
+      padding-inline-start: var(--cinder-spacing-04);
+      padding-inline-end: 0;
     }
     .cinder-progress-indicator[data-orientation="vertical"] li:last-child {
       padding-bottom: 0;
@@ -1996,10 +2005,13 @@
       position: relative;
       display: inline-flex;
     }
-    .cinder-badge {
+    .cinder-badge,
+    .cinder-badge[data-placement="top-end"] {
       position: absolute;
       top: 0;
+      bottom: auto;
       inset-inline-end: 0;
+      inset-inline-start: auto;
       transform: translate(50%, -50%);
       display: inline-flex;
       align-items: center;
@@ -2017,12 +2029,96 @@
       pointer-events: none;
       z-index: 1;
     }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.cinder-badge, .cinder-badge[data-placement="top-end"]) {
+      transform: translate(-50%, -50%);
+    }
+
+    .cinder-badge[data-placement="top-start"] {
+      position: absolute;
+      top: 0;
+      bottom: auto;
+      inset-inline-start: 0;
+      inset-inline-end: auto;
+      transform: translate(-50%, -50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.125rem;
+      height: 1.125rem;
+      padding: 0 0.3125rem;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      line-height: 1;
+      background: var(--cinder-support-error);
+      color: var(--cinder-text-on-color);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+    }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="top-start"] {
+      transform: translate(50%, -50%);
+    }
+
+    .cinder-badge[data-placement="bottom-end"] {
+      position: absolute;
+      bottom: 0;
+      top: auto;
+      inset-inline-end: 0;
+      inset-inline-start: auto;
+      transform: translate(50%, 50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.125rem;
+      height: 1.125rem;
+      padding: 0 0.3125rem;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      line-height: 1;
+      background: var(--cinder-support-error);
+      color: var(--cinder-text-on-color);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+    }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-end"] {
+      transform: translate(-50%, 50%);
+    }
+
+    .cinder-badge[data-placement="bottom-start"] {
+      position: absolute;
+      bottom: 0;
+      top: auto;
+      inset-inline-start: 0;
+      inset-inline-end: auto;
+      transform: translate(-50%, 50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.125rem;
+      height: 1.125rem;
+      padding: 0 0.3125rem;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      line-height: 1;
+      background: var(--cinder-support-error);
+      color: var(--cinder-text-on-color);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
+    }
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-badge[data-placement="bottom-start"] {
+      transform: translate(50%, 50%);
+    }
     .cinder-badge[data-kind="success"] {
       background: var(--cinder-support-success);
     }
     .cinder-badge[data-kind="warning"] {
       background: var(--cinder-support-warning, #f1c21b);
-      color: var(--cinder-text-primary);
+      color: var(--cinder-text-on-color);
     }
     .cinder-badge[data-kind="info"] {
       background: var(--cinder-support-info, var(--cinder-interactive));

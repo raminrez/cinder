@@ -144,7 +144,7 @@ export const Sizes: Story = {
     await waitFor(() => {
       expect(document.querySelector('.cinder-modal[data-size="md"]')).toBeNull();
     });
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
 
@@ -233,7 +233,7 @@ export const FormDialog: Story = {
       expect(document.querySelector(".cinder-modal")).toBeNull();
     });
     await expect(output).toHaveTextContent("Invited: alex@cinder.dev (notify=yes)");
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
 
@@ -311,14 +311,14 @@ export const NestedSelect: Story = {
       expect(document.querySelector(".cinder-select-popover")).toBeNull();
     });
     await expect(modal).toBeVisible();
-    await expect(selectTrigger).toHaveFocus();
+    await waitFor(() => expect(selectTrigger).toHaveFocus());
 
     // Second Escape: closes Modal, focus returns to original trigger!
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
       expect(document.querySelector(".cinder-modal")).toBeNull();
     });
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
 
@@ -529,6 +529,6 @@ export const LongContentAndLocales: Story = {
     await waitFor(() => {
       expect(document.querySelector(".cinder-modal")).toBeNull();
     });
-    await expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   },
 };
