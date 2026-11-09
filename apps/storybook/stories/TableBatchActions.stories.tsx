@@ -63,27 +63,29 @@ export const Playground: Story = {
   },
 };
 
+function TableBatchActionsRtlDemo() {
+  const [selectedCount, setSelectedCount] = useState(4);
+  return (
+    <div dir="rtl" className="data-story-stack">
+      <TableBatchActions
+        totalSelected={selectedCount}
+        cancelLabel="لغو انتخاب"
+        selectedLabel={(c) => `${c} مورد انتخاب شده است`}
+        onCancel={() => setSelectedCount(0)}
+      >
+        <Button variant="ghost" size="sm">
+          خروجی
+        </Button>
+        <Button variant="danger" size="sm">
+          حذف موارد
+        </Button>
+      </TableBatchActions>
+    </div>
+  );
+}
+
 export const RTL: Story = {
-  render: () => {
-    const [selectedCount, setSelectedCount] = useState(4);
-    return (
-      <div dir="rtl" className="data-story-stack">
-        <TableBatchActions
-          totalSelected={selectedCount}
-          cancelLabel="لغو انتخاب"
-          selectedLabel={(c) => `${c} مورد انتخاب شده است`}
-          onCancel={() => setSelectedCount(0)}
-        >
-          <Button variant="ghost" size="sm">
-            خروجی
-          </Button>
-          <Button variant="danger" size="sm">
-            حذف موارد
-          </Button>
-        </TableBatchActions>
-      </div>
-    );
-  },
+  render: () => <TableBatchActionsRtlDemo />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByText("4 مورد انتخاب شده است")).toBeInTheDocument();

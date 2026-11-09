@@ -27,7 +27,7 @@ export const Playground: Story = {
         <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
           <Badge count={5} kind="danger">
             <Button variant="secondary" iconOnly aria-label="Notifications">
-              <Icon name="bell" />
+              <Icon name="alert" />
             </Button>
           </Badge>
 
@@ -89,7 +89,7 @@ export const RTL: Story = {
           </Badge>
           <Badge count={150} max={99} kind="warning">
             <Button variant="secondary" iconOnly aria-label="هشدارها">
-              <Icon name="bell" />
+              <Icon name="alert" />
             </Button>
           </Badge>
         </div>

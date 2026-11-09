@@ -71,27 +71,29 @@ export const Playground: Story = {
   },
 };
 
+function AlertDialogRtlDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div dir="rtl" className="overlay-story-stack">
+      <Button variant="danger" onPress={() => setIsOpen(true)}>
+        حذف پایگاه داده
+      </Button>
+      <AlertDialog
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        kind="danger"
+        title="آیا از حذف پایگاه داده اطمینان دارید؟"
+        description="این عملیات غیرقابل بازگشت است و تمامی داده‌های مربوط به آن برای همیشه پاک خواهند شد."
+        confirmLabel="بله، حذف کن"
+        cancelLabel="انصراف"
+        onConfirm={() => setIsOpen(false)}
+      />
+    </div>
+  );
+}
+
 export const RTL: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false);
-    return (
-      <div dir="rtl" className="overlay-story-stack">
-        <Button variant="danger" onPress={() => setIsOpen(true)}>
-          حذف پایگاه داده
-        </Button>
-        <AlertDialog
-          isOpen={isOpen}
-          onOpenChange={setIsOpen}
-          kind="danger"
-          title="آیا از حذف پایگاه داده اطمینان دارید؟"
-          description="این عملیات غیرقابل بازگشت است و تمامی داده‌های مربوط به آن برای همیشه پاک خواهند شد."
-          confirmLabel="بله، حذف کن"
-          cancelLabel="انصراف"
-          onConfirm={() => setIsOpen(false)}
-        />
-      </div>
-    );
-  },
+  render: () => <AlertDialogRtlDemo />,
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole("button", { name: "حذف پایگاه داده" });
