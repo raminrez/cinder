@@ -70,6 +70,12 @@ export const StatusesAndIndeterminate: Story = {
           size="md"
         />
         <ProgressCircle
+          aria-label="Warning threshold"
+          status="warning"
+          value={85}
+          size="md"
+        />
+        <ProgressCircle
           aria-label="Failed upload"
           status="error"
           value={45}

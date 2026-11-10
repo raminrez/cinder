@@ -9,7 +9,7 @@ import { classes } from "./utils";
 
 export interface ProgressCircleProps extends RACProgressBarProps {
   size?: "sm" | "md" | "lg";
-  status?: "active" | "success" | "error";
+  status?: "active" | "success" | "warning" | "error";
   showValueLabel?: boolean;
   ref?: Ref<HTMLDivElement>;
 }

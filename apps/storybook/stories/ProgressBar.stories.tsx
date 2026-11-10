@@ -81,6 +81,14 @@ function StatusVariantsExample() {
         />
 
         <ProgressBar
+          label="Cluster Approaching Capacity"
+          value={88}
+          valueLabel="88% (4.4 TB / 5.0 TB)"
+          status="warning"
+          helperText="Warning threshold exceeded: auto-scaling recommended."
+        />
+
+        <ProgressBar
           label="Container Image Push Failed"
           value={68}
           valueLabel="Failed at layer 7"

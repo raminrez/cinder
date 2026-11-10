@@ -88,7 +88,7 @@ export function Alert(props: AlertProps) {
 export interface ProgressBarProps extends RACProgressBarProps {
   label?: ReactNode;
   helperText?: ReactNode;
-  status?: "active" | "success" | "error";
+  status?: "active" | "success" | "warning" | "error";
   ref?: Ref<HTMLDivElement>;
 }
 export function ProgressBar({
