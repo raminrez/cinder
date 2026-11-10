@@ -16,6 +16,7 @@
     "select",
     "combobox",
     "date-picker",
+    "time-field",
     "input-otp",
     "dropzone",
     "---Overlays---",
