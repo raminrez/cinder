@@ -19,6 +19,6 @@
       "@cinder/tokens": ["./packages/tokens/src/index.ts"]
     }
   },
-  "include": ["apps", "packages", "scripts", "tests"],
-  "exclude": ["node_modules", "**/dist", ".research", ".tools", "tests/fixtures/consumer"]
+  "include": ["packages", "scripts", "tests", "apps/storybook"],
+  "exclude": ["node_modules", "**/dist", ".research", ".tools", "tests/fixtures/consumer", "apps/docs"]
 }
