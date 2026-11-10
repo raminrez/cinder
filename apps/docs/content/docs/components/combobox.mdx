@@ -164,6 +164,42 @@ export function RichItemComboBoxDemo() {
 }
 ```
 
+### Multi-Selection with Chips or Badges
+
+When `selectionMode="multiple"` is enabled, users can select several options. The `multipleDisplay` prop governs how selected choices appear:
+- `'chips'` (default): Interactive tags with removable <kbd>×</kbd> buttons rendered directly below the input field.
+- `'badge'`: A compact counter badge showing the number of selected items.
+- `'text'`: Plain text description.
+
+```tsx
+import { useState } from "react";
+import { ComboBox, ListBoxItem } from "@cinder/react";
+import type { Selection } from "react-aria-components";
+
+export function MultiComboBoxDemo() {
+  const [selected, setSelected] = useState<Selection>(new Set(["fuma", "react"]));
+
+  return (
+    <div className="max-w-md space-y-4">
+      <ComboBox
+        label="Select Frameworks & Tools"
+        placeholder="Type or pick multiple tools..."
+        selectionMode="multiple"
+        multipleDisplay="chips"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+      >
+        <ListBoxItem id="react">React 19</ListBoxItem>
+        <ListBoxItem id="astro">Astro v5</ListBoxItem>
+        <ListBoxItem id="fuma">Fumadocs</ListBoxItem>
+        <ListBoxItem id="tailwind">Tailwind CSS v4</ListBoxItem>
+        <ListBoxItem id="bun">Bun Runtime</ListBoxItem>
+      </ComboBox>
+    </div>
+  );
+}
+```
+
 ### Validation Error State
 
 ```tsx
@@ -192,6 +228,8 @@ export function InvalidComboBoxDemo() {
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
+| `selectionMode` | `'single' \| 'multiple'` | `'single'` | Allowed selection mode (single item or multi-select). |
+| `multipleDisplay` | `'chips' \| 'badge' \| 'text'` | `'chips'` | Display format for multi-selected items in the combobox. |
 | `items` | `Iterable<T>` | — | Dynamic list of items for autocomplete. |
 | `selectedKey` | `Key \| null` | — | Currently selected item key (controlled). |
 | `defaultSelectedKey` | `Key` | — | Initially selected item key (uncontrolled). |

@@ -1,0 +1,125 @@
+---
+title: Autocomplete
+description: Real-time filtering engine that connects text and search inputs with dynamic suggestion listboxes and popups.
+---
+
+# Autocomplete
+
+An **Autocomplete** component manages real-time query filtering across a collection of suggestions as the user types. Unlike standard ComboBox which pairs an input with a toggle button, Autocomplete can wrap any text field, search input, or custom search bar and connect it with an inline or popup `<ListBox>`.
+
+It is ideal for **global search bars, command palettes, URL address bars, live tag suggestions, and lookup forms**.
+
+---
+
+## Import
+
+```tsx
+import { Autocomplete, SearchField, ListBox } from "@cinder/react";
+```
+
+---
+
+## Anatomy
+
+```tsx
+<Autocomplete filter={myFilterFunction}>
+  <SearchField label="Search Documentation" />
+  <ListBox items={matchingResults}>
+    {(item) => <ListBox.Item>{item.title}</ListBox.Item>}
+  </ListBox>
+</Autocomplete>
+```
+
+---
+
+## Examples
+
+### Search Input with Dynamic Suggestions
+
+Wrap a `<SearchField>` and `<ListBox>` in an `<Autocomplete>` to create a live search filter:
+
+```tsx
+import { useState } from "react";
+import { Autocomplete, SearchField, ListBox } from "@cinder/react";
+
+const componentsList = [
+  { id: "btn", name: "Button", category: "Actions" },
+  { id: "lnk", name: "Link", category: "Actions" },
+  { id: "tb", name: "Toolbar", category: "Actions" },
+  { id: "tf", name: "TextField", category: "Forms" },
+  { id: "time", name: "TimeField", category: "Forms" },
+  { id: "sheet", name: "Sheet", category: "Overlays" },
+  { id: "tree", name: "Tree", category: "Collections" },
+];
+
+export function SearchAutocompleteExample() {
+  return (
+    <div className="max-w-md">
+      <Autocomplete>
+        <SearchField label="Find component" placeholder="Type component name..." />
+        <div className="mt-2 border border-[var(--divider)] rounded-md overflow-hidden bg-[var(--surface)]">
+          <ListBox aria-label="Component suggestions" items={componentsList} selectionMode="single">
+            {(item) => (
+              <ListBox.Item key={item.id} textValue={item.name}>
+                <div className="flex justify-between items-center py-1">
+                  <span className="font-medium text-sm">{item.name}</span>
+                  <span className="text-xs text-[var(--text-muted)]">{item.category}</span>
+                </div>
+              </ListBox.Item>
+            )}
+          </ListBox>
+        </div>
+      </Autocomplete>
+    </div>
+  );
+}
+```
+
+### Custom Filtering Algorithm
+
+Customize matching logic using custom filter predicates (e.g. substring, prefix, or fuzzy matching):
+
+```tsx
+import { Autocomplete, TextField, ListBox } from "@cinder/react";
+
+export function CustomFilterExample() {
+  const customFilter = (itemText: string, query: string) => {
+    return itemText.toLowerCase().includes(query.toLowerCase());
+  };
+
+  return (
+    <div className="max-w-sm">
+      <Autocomplete filter={customFilter}>
+        <TextField label="Country Search" placeholder="Start typing country..." />
+        <ListBox aria-label="Countries">
+          <ListBox.Item id="ir">Iran (Islamic Republic of)</ListBox.Item>
+          <ListBox.Item id="ca">Canada</ListBox.Item>
+          <ListBox.Item id="de">Germany</ListBox.Item>
+          <ListBox.Item id="jp">Japan</ListBox.Item>
+        </ListBox>
+      </Autocomplete>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Autocomplete
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `filter` | `(itemText: string, inputValue: string) => boolean` | *Prefix match* | Custom filtering callback evaluated for each suggestion item. |
+| `children` | `ReactNode` | — | The input field (TextField, SearchField) and suggestion target (ListBox). |
+| `className` | `string` | — | Custom CSS class applied to the autocomplete container. |
+
+---
+
+## Accessibility & Keyboard Navigation
+
+- **Automatic ARIA Linkage**: Automatically wires `aria-controls` between the search input and the suggestions ListBox.
+- **Arrow Key Delegation**: Pressing <kbd>↓</kbd> or <kbd>↑</kbd> inside the search input immediately shifts active focus down into the suggestions list.
+- **Escape Key Handling**: Pressing <kbd>Esc</kbd> clears the filter query or closes the suggestions list while restoring focus to the input.
+- **Screen Reader Announcements**: Live region announces the number of matching search results when query updates.

@@ -162,6 +162,55 @@ export function InvalidSelectDemo() {
 }
 ```
 
+### Multi-Selection with Chips, Badges, or Text
+
+Set `selectionMode="multiple"` to enable picking several options. The `multipleDisplay` prop controls how the selected values are displayed in the closed trigger:
+- `'chips'` (default): Interactive tags with individual remove buttons (<kbd>×</kbd>).
+- `'badge'`: Displays the first selected item along with a count pill badge (e.g. `+2`).
+- `'text'`: Comma-separated plain text summary.
+
+```tsx
+import { useState } from "react";
+import { Select, ListBoxItem } from "@cinder/react";
+import type { Selection } from "react-aria-components";
+
+export function MultiSelectDemo() {
+  const [selected, setSelected] = useState<Selection>(new Set(["react", "astro"]));
+
+  return (
+    <div className="max-w-md space-y-4">
+      {/* Chips display (default) */}
+      <Select
+        label="Technologies (Chips)"
+        selectionMode="multiple"
+        multipleDisplay="chips"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+      >
+        <ListBoxItem id="react">React 19</ListBoxItem>
+        <ListBoxItem id="astro">Astro</ListBoxItem>
+        <ListBoxItem id="tailwind">Tailwind CSS v4</ListBoxItem>
+        <ListBoxItem id="bun">Bun Runtime</ListBoxItem>
+      </Select>
+
+      {/* Badge display */}
+      <Select
+        label="Technologies (Badge)"
+        selectionMode="multiple"
+        multipleDisplay="badge"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+      >
+        <ListBoxItem id="react">React 19</ListBoxItem>
+        <ListBoxItem id="astro">Astro</ListBoxItem>
+        <ListBoxItem id="tailwind">Tailwind CSS v4</ListBoxItem>
+        <ListBoxItem id="bun">Bun Runtime</ListBoxItem>
+      </Select>
+    </div>
+  );
+}
+```
+
 ### Grouped Sections
 
 Use `<ListBoxSection>` and `<SectionHeader>` to organize items into clear categorical groupings:
@@ -202,6 +251,8 @@ export function GroupedSelectDemo() {
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
+| `selectionMode` | `'single' \| 'multiple'` | `'single'` | Selection mode allowing single or multiple option choices. |
+| `multipleDisplay` | `'chips' \| 'badge' \| 'text'` | `'chips'` | Display format for multi-selected items in the trigger. |
 | `selectedKey` | `Key` | — | The currently selected option ID (controlled). |
 | `defaultSelectedKey` | `Key` | — | The initial selected option ID (uncontrolled). |
 | `onSelectionChange` | `(key: Key) => void` | — | Handler invoked when an option is selected. |

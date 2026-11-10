@@ -1,0 +1,224 @@
+---
+title: ListBox
+description: Standalone accessible listbox component for single and multi-selection, option grouping, drag-and-drop reordering, and custom item templates.
+---
+
+# ListBox
+
+A **ListBox** displays a list of options and allows a user to select one or more items. While `<Select>` and `<ComboBox>` present a dropdown popup for picking options, a standalone **ListBox** renders the collection permanently inline on the page.
+
+It is ideal for **dual-list transfer pickers, permission managers, category selectors, command lists, and filter palettes**. Hashti's ListBox features compound subcomponents (`ListBox.Item`, `ListBox.Section`, `ListBox.Header`, `ListBox.DragHandle`, `ListBox.Checkbox`, `ListBox.EmptyState`), density sizing tiers, and keyboard roving navigation.
+
+---
+
+## Import
+
+Hashti exports both compound and named subcomponents:
+
+```tsx
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxHeader } from "@cinder/react";
+// Or via compound subcomponents:
+// ListBox.Root, ListBox.Item, ListBox.Section, ListBox.Header, ListBox.DragHandle, ListBox.Checkbox, ListBox.EmptyState
+```
+
+---
+
+## Anatomy
+
+```tsx
+<ListBox aria-label="Available permissions" selectionMode="multiple">
+  <ListBox.Section>
+    <ListBox.Header>Admin Roles</ListBox.Header>
+    <ListBox.Item id="superadmin" textValue="Super Administrator">
+      <ListBox.Checkbox />
+      <span>Super Administrator</span>
+    </ListBox.Item>
+  </ListBox.Section>
+</ListBox>
+```
+
+---
+
+## Examples
+
+### Standalone Single Selection
+
+A classic inline listbox for picking a single option:
+
+```tsx
+import { useState } from "react";
+import { ListBox } from "@cinder/react";
+import type { Selection } from "react-aria-components";
+
+const themes = [
+  { id: "carbon-white", name: "Carbon White", category: "Light" },
+  { id: "carbon-g10", name: "Carbon Gray 10", category: "Light" },
+  { id: "frame-light", name: "Frame Light", category: "Light" },
+  { id: "relay-dark", name: "Relay Dark", category: "Dark" },
+  { id: "frame-dark", name: "Frame Dark", category: "Dark" },
+  { id: "carbon-g100", name: "Carbon Gray 100", category: "Dark" },
+];
+
+export function BasicListBoxExample() {
+  const [selected, setSelected] = useState<Selection>(new Set(["frame-light"]));
+
+  return (
+    <div className="max-w-xs space-y-2">
+      <h3 className="text-sm font-semibold">Active Theme</h3>
+      <ListBox
+        aria-label="Select theme"
+        items={themes}
+        selectionMode="single"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+        variant="bordered"
+      >
+        {(item) => (
+          <ListBox.Item key={item.id} textValue={item.name}>
+            <div className="flex justify-between items-center w-full py-1">
+              <span className="text-sm font-medium">{item.name}</span>
+              <span className="text-xs text-[var(--text-muted)]">{item.category}</span>
+            </div>
+          </ListBox.Item>
+        )}
+      </ListBox>
+    </div>
+  );
+}
+```
+
+### Multi-Selection with Checkboxes
+
+Pair `<ListBox.Checkbox />` with `selectionMode="multiple"` for picking several items:
+
+```tsx
+import { useState } from "react";
+import { ListBox } from "@cinder/react";
+import type { Selection } from "react-aria-components";
+
+const features = [
+  { id: "a11y", name: "WCAG 2.2 AAA Contrast" },
+  { id: "rtl", name: "Persian & Arabic RTL Dual-Engine" },
+  { id: "tokens", name: "Semantic Token Integration" },
+  { id: "rac", name: "React Aria Components 1.22 Primitives" },
+];
+
+export function MultiSelectListBoxExample() {
+  const [selected, setSelected] = useState<Selection>(new Set(["a11y", "rtl"]));
+
+  return (
+    <div className="max-w-md space-y-3">
+      <ListBox
+        aria-label="Features"
+        items={features}
+        selectionMode="multiple"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+        variant="bordered"
+      >
+        {(feature) => (
+          <ListBox.Item key={feature.id} textValue={feature.name}>
+            <div className="flex items-center gap-3 py-1">
+              <ListBox.Checkbox />
+              <span className="text-sm">{feature.name}</span>
+            </div>
+          </ListBox.Item>
+        )}
+      </ListBox>
+    </div>
+  );
+}
+```
+
+### Sections and Group Headers
+
+Organize options into categories using `<ListBox.Section>` and `<ListBox.Header>`:
+
+```tsx
+import { ListBox } from "@cinder/react";
+
+export function SectionedListBoxExample() {
+  return (
+    <div className="max-w-xs">
+      <ListBox aria-label="Component categories" variant="bordered">
+        <ListBox.Section>
+          <ListBox.Header>Actions</ListBox.Header>
+          <ListBox.Item id="btn">Button</ListBox.Item>
+          <ListBox.Item id="lnk">Link</ListBox.Item>
+          <ListBox.Item id="tb">Toolbar</ListBox.Item>
+        </ListBox.Section>
+        <ListBox.Section>
+          <ListBox.Header>Forms</ListBox.Header>
+          <ListBox.Item id="tf">Text Field</ListBox.Item>
+          <ListBox.Item id="sel">Select</ListBox.Item>
+          <ListBox.Item id="cb">ComboBox</ListBox.Item>
+        </ListBox.Section>
+      </ListBox>
+    </div>
+  );
+}
+```
+
+### Visual Variants & Density Sizes
+
+Hashti supports three surface styling variants:
+- `bordered` (default): Crisp 1px border with row dividers.
+- `flat`: Transparent minimal frame with subtle item hover feedback.
+- `card`: Elevated card plinth (`--surface-raised`).
+
+And two density sizes:
+- `sm`: Compact rows (32px target) for dense sidebars and modal drawers.
+- `md`: Standard comfortable rows (40px target).
+
+---
+
+## Props Reference
+
+### ListBox (`ListBox.Root`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'` | Allowed selection behavior. |
+| `selectedKeys` | `'all' \| Iterable<Key>` | — | Controlled set of selected keys. |
+| `defaultSelectedKeys` | `'all' \| Iterable<Key>` | — | Uncontrolled default selected keys. |
+| `onSelectionChange` | `(keys: Selection) => void` | — | Callback fired when selection changes. |
+| `disabledKeys` | `Iterable<Key>` | — | Set of keys that cannot be selected. |
+| `variant` | `'bordered' \| 'flat' \| 'card'` | `'bordered'` | Container background and border treatment. |
+| `size` | `'sm' \| 'md'` | `'md'` | Height density and item padding. |
+| `emptyContent` | `ReactNode` | — | Content rendered when items array is empty. |
+| `aria-label` | `string` | — | Accessible description of the listbox. |
+
+### ListBox.Item (`ListBoxItem`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `Key` | — | Unique key for the item. |
+| `textValue` | `string` | — | Plain text string used for typeahead letter navigation. |
+| `isDisabled` | `boolean` | `false` | Whether the item is disabled. |
+
+---
+
+## Keyboard Interactions
+
+Hashti ListBox adheres strictly to the **WAI-ARIA Listbox Pattern**:
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates focus between items in the list. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Moves focus directly to the first or last item. |
+| <kbd>Space</kbd> | Toggles selection of the focused item in single and multiple modes. |
+| <kbd>Shift</kbd> + <kbd>↓</kbd> / <kbd>↑</kbd> | Extends contiguous selection across multiple items. |
+| <kbd>⌘</kbd> + <kbd>A</kbd> / <kbd>Ctrl</kbd> + <kbd>A</kbd> | Selects all selectable items in multiple selection mode. |
+| Type-ahead (<kbd>A</kbd>–<kbd>Z</kbd>) | Typing characters immediately jumps focus to the first matching option. |
+
+---
+
+## Hashti Token Bindings
+
+| Token | CSS Variable | Applied State |
+| :--- | :--- | :--- |
+| Surface Background | `--surface` | Listbox container background |
+| Surface Hover | `--surface-hover` | Hover highlight on option rows |
+| Selected Surface | `--selected` (`#e7edff`) | Active selected item tint |
+| Focus Ring | `--focus` | 2px focus ring on active option |
+| Border Divider | `--divider` | 1px perimeter border and section separator |
