@@ -217,40 +217,60 @@ export function FieldLabelHelp({
   const messages = useFieldMessages();
   const prefixId = useId();
   const fallbackId = useId();
-  const [isOpen, setIsOpen] = useState(false);
   const targetLabelId = labelId ?? fallbackId;
   const labelledBy = `${prefixId} ${targetLabelId}`;
   const tooltipContent = tooltip ?? content;
-  const popoverContent = children ?? content;
 
+  // Composition pattern: If children is provided, render a Popover dialog on click
+  if (children) {
+    return (
+      <ButtonContext.Provider value={null}>
+        <span id={prefixId} className="cinder-visually-hidden">
+          {messages.about}
+        </span>
+        <DialogTrigger>
+          <TooltipTrigger>
+            <Button
+              type="button"
+              variant="ghost"
+              iconOnly
+              size="sm"
+              aria-labelledby={labelledBy}
+              className="cinder-field__label-help"
+            >
+              <Icon name="info" />
+            </Button>
+            {tooltipContent && <Tooltip>{tooltipContent}</Tooltip>}
+          </TooltipTrigger>
+          <Popover placement="bottom start" offset={6} className="cinder-field__label-popover">
+            <Dialog aria-labelledby={labelledBy}>
+              {children}
+            </Dialog>
+          </Popover>
+        </DialogTrigger>
+      </ButtonContext.Provider>
+    );
+  }
+
+  // Default: Pure tooltip on hover/focus. Clicking does not open a popover.
   return (
     <ButtonContext.Provider value={null}>
       <span id={prefixId} className="cinder-visually-hidden">
         {messages.about}
       </span>
-      <DialogTrigger isOpen={isOpen} onOpenChange={setIsOpen}>
-        <TooltipTrigger isDisabled={isOpen}>
-          <Button
-            type="button"
-            variant="ghost"
-            iconOnly
-            size="sm"
-            aria-labelledby={labelledBy}
-            className="cinder-field__label-help"
-          >
-            <Icon name="info" />
-          </Button>
-          {tooltipContent && <Tooltip>{tooltipContent}</Tooltip>}
-        </TooltipTrigger>
-        <Popover placement="bottom start" offset={6} className="cinder-field__label-popover">
-          <Dialog aria-labelledby={labelledBy}>
-            {typeof popoverContent === "string" ? <p>{popoverContent}</p> : popoverContent}
-            <Button variant="ghost" size="sm" slot="close">
-              {messages.close}
-            </Button>
-          </Dialog>
-        </Popover>
-      </DialogTrigger>
+      <TooltipTrigger>
+        <Button
+          type="button"
+          variant="ghost"
+          iconOnly
+          size="sm"
+          aria-labelledby={labelledBy}
+          className="cinder-field__label-help"
+        >
+          <Icon name="info" />
+        </Button>
+        {tooltipContent && <Tooltip>{tooltipContent}</Tooltip>}
+      </TooltipTrigger>
     </ButtonContext.Provider>
   );
 }

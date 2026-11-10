@@ -877,17 +877,21 @@
 
   :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
   :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
-    background: var(--cinder-border-strong, #6f6f6f);
-    border-color: var(--cinder-border-strong, #6f6f6f);
+    background: var(--cinder-background-inverse);
+    border-color: var(--cinder-background-inverse);
+    color: var(--cinder-background);
   }
   :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control {
-    border-color: var(--cinder-border-strong, #6f6f6f);
+    border-color: var(--cinder-background-inverse);
   }
   :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control::after {
-    background: var(--cinder-border-strong, #6f6f6f);
+    background: var(--cinder-background-inverse);
   }
   .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-track {
-    background: var(--cinder-border-strong, #6f6f6f);
+    background: var(--cinder-background-inverse);
+  }
+  .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
+    background: var(--cinder-background);
   }
 
   /* Invalid state always takes precedence */
