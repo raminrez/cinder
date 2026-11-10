@@ -1,0 +1,220 @@
+---
+title: Sheet
+description: Gesture-driven modal sheet with touch swipe-to-dismiss, velocity tracking, configurable snap points, and responsive edge transitions.
+---
+
+# Sheet
+
+A **Sheet** is a gesture-enabled modal overlay that slides into the viewport from any edge—most commonly from the bottom on mobile devices or from the sides on desktop screens. While standard `<Drawer>` and `<Modal>` provide fixed-boundary overlays, a Sheet introduces **touch velocity tracking, swipe-to-dismiss gestures, multi-stage snap points, and interactive grab handles**.
+
+Built with React Aria Components' overlay primitives and touch gesture physics, Hashti's Sheet elevates the mobile experience with smooth spring physics, backdrop dimming, and full keyboard parity.
+
+---
+
+## Import
+
+Hashti exports both compound and named subcomponents:
+
+```tsx
+import { Sheet } from "@cinder/react";
+// Or via compound subcomponents:
+// Sheet.Root, Sheet.Trigger, Sheet.Overlay, Sheet.Backdrop, Sheet.Content, Sheet.Handle, Sheet.Header, Sheet.Body, Sheet.Footer
+```
+
+---
+
+## Anatomy
+
+```tsx
+<Sheet.Trigger>
+  <Button>View Order Details</Button>
+  <Sheet placement="bottom" snapPoints={[0.3, 0.6, 0.9]}>
+    <Sheet.Backdrop />
+    <Sheet.Content>
+      <Sheet.Handle />
+      <Sheet.Header>Order Summary</Sheet.Header>
+      <Sheet.Body>
+        <p>Order itemized list and pricing breakdown.</p>
+      </Sheet.Body>
+      <Sheet.Footer>
+        <Button variant="primary">Proceed to Checkout</Button>
+      </Sheet.Footer>
+    </Sheet.Content>
+  </Sheet>
+</Sheet.Trigger>
+```
+
+---
+
+## Examples
+
+### Mobile Bottom Sheet
+
+The standard bottom sheet layout with a drag handle, ideal for mobile action menus, checkout summaries, and detail cards:
+
+```tsx
+import { useState } from "react";
+import { Sheet, Button, Icon } from "@cinder/react";
+
+export function MobileBottomSheetExample() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="max-w-xs">
+      <Button variant="secondary" onPress={() => setIsOpen(true)}>
+        Open Mobile Sheet
+      </Button>
+
+      <Sheet
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        placement="bottom"
+      >
+        <Sheet.Backdrop />
+        <Sheet.Content className="p-6">
+          <Sheet.Handle />
+          <div className="mt-4 space-y-4">
+            <h3 className="text-base font-semibold">Share Document</h3>
+            <p className="text-sm text-[var(--text-muted)]">
+              Anyone with this link will be able to view the Hashti design tokens.
+            </p>
+            <div className="flex gap-2">
+              <Button variant="primary" className="flex-1" onPress={() => setIsOpen(false)}>
+                Copy Link
+              </Button>
+              <Button variant="ghost" onPress={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </Sheet.Content>
+      </Sheet>
+    </div>
+  );
+}
+```
+
+### Snap Points Drawer
+
+Snap points allow the sheet to rest at discrete height intervals (e.g. `[0.25, 0.5, 0.9]` representing 25%, 50%, and 90% of viewport height). Users can drag between snap points smoothly:
+
+```tsx
+import { Sheet, Button, TextField } from "@cinder/react";
+
+export function SnapPointsSheetExample() {
+  return (
+    <Sheet.Trigger>
+      <Button variant="secondary">Open Map Locations</Button>
+      <Sheet
+        placement="bottom"
+        snapPoints={[0.25, 0.5, 0.9]}
+        defaultSnapPoint={0.5}
+      >
+        <Sheet.Backdrop />
+        <Sheet.Content className="p-6">
+          <Sheet.Handle />
+          <div className="mt-3 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold text-base">Nearby Offices</h3>
+              <span className="text-xs text-[var(--text-muted)]">Drag up to expand</span>
+            </div>
+            <TextField placeholder="Search by city or country..." />
+            <div className="space-y-3 pt-2">
+              <div className="p-3 bg-[var(--surface-raised)] rounded-md">
+                <p className="text-sm font-medium">Tehran Innovation Hub</p>
+                <p className="text-xs text-[var(--text-muted)]">Valiasr St, Tehran</p>
+              </div>
+              <div className="p-3 bg-[var(--surface-raised)] rounded-md">
+                <p className="text-sm font-medium">Isfahan Tech Park</p>
+                <p className="text-xs text-[var(--text-muted)]">Chaharbagh Ave, Isfahan</p>
+              </div>
+            </div>
+          </div>
+        </Sheet.Content>
+      </Sheet>
+    </Sheet.Trigger>
+  );
+}
+```
+
+### Side Filter Drawer (Left / Right)
+
+On desktop viewports, sheets can emerge from the `right` or `left` edge to serve as deep filter sidebars or inspection drawers:
+
+```tsx
+import { Sheet, Button, Checkbox, CheckboxGroup } from "@cinder/react";
+
+export function SideFilterSheetExample() {
+  return (
+    <Sheet.Trigger>
+      <Button variant="ghost">Filter Catalog</Button>
+      <Sheet placement="right" className="max-w-md">
+        <Sheet.Backdrop />
+        <Sheet.Content className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="font-semibold text-lg">Filters</h3>
+            <Sheet.Handle className="hidden" />
+          </div>
+          <CheckboxGroup label="Component Categories">
+            <Checkbox value="actions">Buttons & Actions</Checkbox>
+            <Checkbox value="forms">Forms & Inputs</Checkbox>
+            <Checkbox value="navigation">Navigation & Collections</Checkbox>
+            <Checkbox value="overlays">Overlays & Modals</Checkbox>
+          </CheckboxGroup>
+        </Sheet.Content>
+      </Sheet>
+    </Sheet.Trigger>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Sheet (`Sheet.Root`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `isOpen` | `boolean` | — | Controlled visibility state. |
+| `defaultOpen` | `boolean` | `false` | Default uncontrolled open state. |
+| `onOpenChange` | `(isOpen: boolean) => void` | — | Callback fired when the sheet opens or closes. |
+| `placement` | `'bottom' \| 'top' \| 'left' \| 'right'` | `'bottom'` | Edge of the screen from which the sheet emerges. |
+| `snapPoints` | `number[]` | `[1.0]` | Array of fractional viewport height/width rest stops (e.g. `[0.3, 0.6, 1.0]`). |
+| `defaultSnapPoint` | `number` | First point | The initial snap point when opened. |
+| `onSnapPointChange` | `(point: number) => void` | — | Callback fired when user releases drag at a snap point. |
+| `isDismissable` | `boolean` | `true` | Allows closing via backdrop tap, swipe-down, or <kbd>Esc</kbd>. |
+| `children` | `ReactNode` | — | Backdrop and Content elements. |
+
+### Sheet.Handle (`SheetHandle`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `className` | `string` | — | Custom CSS class applied to the visual drag capsule pill. |
+
+---
+
+## Touch Gestures & Keyboard Accessibility
+
+### Touch & Gesture Physics
+- **Swipe Down to Dismiss**: Swiping down past the lowest snap point with positive velocity triggers an immediate exit transition.
+- **Velocity Tracking**: Fast flick gestures automatically advance to the next snap point or dismiss without requiring the user to drag the full distance.
+- **Rubber-band Resistance**: Dragging upward past the maximum snap point applies elastic resistance.
+
+### Keyboard & ARIA
+- **Role**: Emits native `role="dialog"` with `aria-modal="true"`.
+- **Focus Management**: Focus is trapped inside the sheet content when opened and restored to the trigger button upon dismissal.
+- **Escape Dismissal**: Pressing <kbd>Esc</kbd> smoothly transitions the sheet out and restores viewport interaction.
+
+---
+
+## Hashti Token Bindings
+
+| Token | CSS Variable | Applied Element |
+| :--- | :--- | :--- |
+| Sheet Surface | `--surface` | Content card background |
+| Backdrop Blur | `--backdrop` | 40% darkened backdrop with 4px backdrop-filter blur |
+| Grab Handle | `--control-border` | Pill handle (`4px` height, `32px` width, `--radius-full`) |
+| Top Border Radius | `--radius-lg` | 16px curved top corners on bottom sheets |
+| Shadow Elevation | `--elevation-overlay` | Multi-layered ambient drop shadow |
+| Motion Easing | `--motion-easing-standard` | Cubic-bezier slide-in and spring physics |
