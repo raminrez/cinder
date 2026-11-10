@@ -877,21 +877,30 @@
 
   :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
   :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
-    background: var(--cinder-background-inverse);
-    border-color: var(--cinder-background-inverse);
-    color: var(--cinder-background);
+    background: var(--cinder-icon-secondary);
+    border-color: var(--cinder-icon-secondary);
+    color: var(--cinder-text-on-color, #ffffff);
   }
   :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control {
-    border-color: var(--cinder-background-inverse);
+    border-color: var(--cinder-icon-secondary);
   }
   :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control::after {
-    background: var(--cinder-background-inverse);
+    background: var(--cinder-icon-secondary);
   }
   .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-track {
-    background: var(--cinder-background-inverse);
+    background: var(--cinder-icon-secondary);
   }
   .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
-    background: var(--cinder-background);
+    background: var(--cinder-text-on-color, #ffffff);
+  }
+
+  /* In dark Carbon themes, secondary controls use dark check/thumb against light gray icon-secondary */
+  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"]) :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"]) :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+    color: var(--cinder-background, #161616);
+  }
+  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"]) .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
+    background: var(--cinder-background, #161616);
   }
 
   /* Invalid state always takes precedence */

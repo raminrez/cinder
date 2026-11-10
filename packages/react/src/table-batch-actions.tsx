@@ -37,13 +37,15 @@ export function TableBatchActions({
       className={cx("cinder-table-batch-actions", className)}
     >
       <div className="cinder-table-batch-bar">
-        <span>{countText}</span>
-        <div className="cinder-table-batch-action-list">{children}</div>
-        {onCancel && (
-          <Button variant="ghost" size="sm" onPress={onCancel}>
-            {cancelLabel}
-          </Button>
-        )}
+        <span className="cinder-table-batch-count">{countText}</span>
+        <div className="cinder-table-batch-action-list">
+          {children}
+          {onCancel && (
+            <Button variant="ghost" size="sm" onPress={onCancel}>
+              {cancelLabel}
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import {
 } from "react";
 import { cx } from "./utils";
 
-export type BadgeKind = "danger" | "success" | "warning" | "info" | "primary" | "neutral";
+export type BadgeKind = "danger" | "success" | "warning" | "info" | "primary" | "neutral" | "secondary";
 export type BadgePlacement =
   | "top-end"
   | "top-start"
