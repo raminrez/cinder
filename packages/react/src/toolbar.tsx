@@ -10,6 +10,8 @@ import {
   Toolbar as RACToolbar,
   Group as RACGroup,
   Separator as RACSeparator,
+  SeparatorContext as RACSeparatorContext,
+  ToggleButtonGroupContext as RACToggleButtonGroupContext,
   type ToolbarProps as RACToolbarProps,
   type GroupProps as RACGroupProps,
   type SeparatorProps as RACSeparatorProps,
@@ -48,20 +50,27 @@ export function ToolbarRoot({
     isDisabled,
   };
 
+  const separatorOrientation =
+    orientation === "vertical" ? "horizontal" : "vertical";
+
   return (
     <ToolbarContext.Provider value={contextValue}>
-      <RACToolbar
-        {...props}
-        aria-disabled={isDisabled || undefined}
-        data-disabled={isDisabled || undefined}
-        orientation={orientation}
-        data-size={size}
-        data-orientation={orientation}
-        data-variant={variant}
-        className={classes("cinder-toolbar", className)}
-      >
-        {children}
-      </RACToolbar>
+      <RACToggleButtonGroupContext.Provider value={{ orientation }}>
+        <RACSeparatorContext.Provider value={{ orientation: separatorOrientation }}>
+          <RACToolbar
+            {...props}
+            aria-disabled={isDisabled || undefined}
+            data-disabled={isDisabled || undefined}
+            orientation={orientation}
+            data-size={size}
+            data-orientation={orientation}
+            data-variant={variant}
+            className={classes("cinder-toolbar", className)}
+          >
+            {children}
+          </RACToolbar>
+        </RACSeparatorContext.Provider>
+      </RACToggleButtonGroupContext.Provider>
     </ToolbarContext.Provider>
   );
 }
