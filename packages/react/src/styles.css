@@ -66,6 +66,8 @@
     .cinder-content-switcher,
     .cinder-toggle-button,
     .cinder-accordion,
+    .cinder-disclosure,
+    .cinder-toolbar,
     .cinder-table
   )[data-size="sm"] {
     --control-height: var(--cinder-size-sm);
@@ -76,6 +78,8 @@
     .cinder-content-switcher,
     .cinder-toggle-button,
     .cinder-accordion,
+    .cinder-disclosure,
+    .cinder-toolbar,
     .cinder-table
   )[data-size="md"] {
     --control-height: var(--cinder-size-md);
@@ -86,6 +90,8 @@
     .cinder-content-switcher,
     .cinder-toggle-button,
     .cinder-accordion,
+    .cinder-disclosure,
+    .cinder-toolbar,
     .cinder-table
   )[data-size="lg"] {
     --control-height: var(--cinder-size-lg);
@@ -1728,6 +1734,105 @@
   .cinder-accordion-item .react-aria-DisclosurePanel {
     padding: 0.5rem 3rem 1.5rem;
   }
+
+  /* Standalone Disclosure & DisclosureGroup */
+  .cinder-disclosure-group {
+    display: flex;
+    flex-direction: column;
+    border-block-start: 1px solid var(--cinder-border-subtle);
+  }
+  .cinder-disclosure-group .cinder-disclosure {
+    border-block-end: 1px solid var(--cinder-border-subtle);
+  }
+  .cinder-disclosure-group[data-variant="flush"] {
+    border-block-start: none;
+  }
+  .cinder-disclosure-group[data-variant="flush"] .cinder-disclosure {
+    border-block-end: 1px solid var(--cinder-border-subtle);
+  }
+  .cinder-disclosure-group[data-variant="card"] {
+    border: none;
+    gap: var(--cinder-spacing-03, 0.5rem);
+  }
+  .cinder-disclosure-group[data-variant="card"] .cinder-disclosure {
+    border: 1px solid var(--cinder-border-subtle);
+    border-radius: var(--cinder-control-radius, 4px);
+    background: var(--cinder-layer-01);
+  }
+  .cinder-disclosure {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .cinder-disclosure[data-variant="default"] {
+    border-block-end: 1px solid var(--cinder-border-subtle);
+  }
+  .cinder-disclosure[data-variant="card"] {
+    border: 1px solid var(--cinder-border-subtle);
+    border-radius: var(--cinder-control-radius, 4px);
+    background: var(--cinder-layer-01);
+  }
+  .cinder-disclosure[data-variant="flush"] {
+    border: none;
+  }
+  .cinder-disclosure > .react-aria-Heading {
+    margin: 0;
+  }
+  .cinder-disclosure-trigger {
+    width: 100%;
+    min-height: var(--control-height, 2.5rem);
+    justify-content: flex-start;
+    gap: 0.75rem;
+    color: var(--cinder-text-primary) !important;
+    transform: none !important;
+    text-align: start;
+    cursor: pointer;
+  }
+  .cinder-disclosure-trigger:active,
+  .cinder-disclosure-trigger[data-pressed] {
+    transform: none !important;
+  }
+  .cinder-disclosure-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cinder-disclosure-indicator > svg,
+  .cinder-disclosure-trigger > svg {
+    transition: transform var(--cinder-duration-fast-02, 150ms) var(--cinder-ease-standard-productive, cubic-bezier(0.2, 0, 0.38, 0.9));
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-disclosure-indicator > svg,
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-disclosure-trigger > svg {
+    transform: rotate(180deg);
+  }
+  .cinder-disclosure[data-expanded] .cinder-disclosure-indicator > svg,
+  .cinder-disclosure[data-expanded] .cinder-disclosure-trigger > svg {
+    transform: rotate(90deg);
+  }
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-disclosure[data-expanded] .cinder-disclosure-indicator > svg,
+  :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .cinder-disclosure[data-expanded] .cinder-disclosure-trigger > svg {
+    transform: rotate(90deg);
+  }
+  .cinder-disclosure-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--cinder-duration-fast-02, 200ms) cubic-bezier(0.2, 0, 0.38, 0.9);
+    overflow: hidden;
+  }
+  .cinder-disclosure[data-expanded] > .cinder-disclosure-panel,
+  .cinder-disclosure-panel[data-expanded] {
+    grid-template-rows: 1fr;
+  }
+  .cinder-disclosure-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.5rem 1rem 1.25rem;
+    color: var(--cinder-text-secondary);
+  }
+  .cinder-disclosure[data-variant="card"] .cinder-disclosure-panel-inner {
+    padding: 0.75rem 1rem 1rem;
+  }
   .cinder-breadcrumbs {
     display: flex;
     flex-wrap: wrap;
@@ -1934,6 +2039,73 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.25rem;
+    }
+
+    /* Hashti Toolbar */
+    .cinder-toolbar {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--cinder-spacing-02, 0.25rem);
+      box-sizing: border-box;
+      outline: none;
+    }
+    .cinder-toolbar[data-orientation="horizontal"] {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .cinder-toolbar[data-orientation="vertical"] {
+      flex-direction: column;
+      align-items: stretch;
+      width: fit-content;
+    }
+    .cinder-toolbar[data-variant="raised"] {
+      padding: var(--cinder-spacing-02, 0.25rem);
+      background: var(--cinder-layer-01);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius, 4px);
+    }
+    .cinder-toolbar[data-variant="floating"] {
+      padding: var(--cinder-spacing-02, 0.25rem);
+      background: var(--cinder-layer-01);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 6px var(--cinder-shadow);
+    }
+    .cinder-toolbar-group {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--cinder-spacing-02, 0.25rem);
+    }
+    .cinder-toolbar[data-orientation="vertical"] .cinder-toolbar-group {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .cinder-toolbar-item {
+      display: inline-flex;
+      align-items: center;
+    }
+    .cinder-toolbar-separator {
+      border: none;
+      margin: 0;
+      flex-shrink: 0;
+      background: var(--cinder-border-subtle);
+    }
+    .cinder-toolbar[data-orientation="horizontal"] .cinder-toolbar-separator,
+    .cinder-toolbar-separator[data-orientation="vertical"] {
+      width: 1px;
+      height: 20px;
+      margin: 0 var(--cinder-spacing-02, 6px);
+      align-self: center;
+    }
+    .cinder-toolbar[data-orientation="vertical"] .cinder-toolbar-separator,
+    .cinder-toolbar-separator[data-orientation="horizontal"] {
+      width: 100%;
+      height: 1px;
+      margin: var(--cinder-spacing-02, 6px) 0;
+    }
+    .cinder-toolbar[data-disabled] {
+      opacity: 0.6;
+      pointer-events: none;
     }
   }
 

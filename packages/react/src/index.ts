@@ -226,6 +226,30 @@ export { ProgressCircle } from "./progress-circle";
 export type { ProgressCircleProps } from "./progress-circle";
 export { AILabel } from "./ai-label";
 export type { AILabelProps } from "./ai-label";
+export { Toolbar, ToolbarGroup, ToolbarItem, ToolbarSeparator } from "./toolbar";
+export type {
+  ToolbarProps,
+  ToolbarGroupProps,
+  ToolbarItemProps,
+  ToolbarSeparatorProps,
+  ToolbarContextValue,
+} from "./toolbar";
+export {
+  Disclosure,
+  DisclosureRoot,
+  DisclosureTrigger,
+  DisclosureIndicator,
+  DisclosurePanel,
+  DisclosureGroup,
+} from "./disclosure";
+export type {
+  DisclosureProps,
+  DisclosureTriggerProps,
+  DisclosureIndicatorProps,
+  DisclosurePanelProps,
+  DisclosureGroupProps,
+  DisclosureContextValue,
+} from "./disclosure";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
 export type { ThemeName, LayerLevel } from "@cinder/tokens";
@@ -272,10 +296,6 @@ export {
   TreeSection,
   GridList,
   GridListItem,
-  Toolbar,
-  Disclosure,
-  DisclosurePanel,
-  DisclosureGroup,
   DateInput,
   DateSegment,
   CalendarGrid,
