@@ -340,6 +340,8 @@ export interface SelectProps<T extends object, M extends SelectionMode = "single
   children: ListBoxProps<T>["children"];
   placeholder?: string;
   renderValue?: (selectedItems: T[]) => ReactNode;
+  /** Display style when selectionMode is multiple: chips with remove button, count badge, or plain text */
+  multipleDisplay?: "chips" | "badge" | "text";
 }
 
 /** Carbon's dropdown and multi-select share RAC's Select model. */
@@ -354,8 +356,11 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
   size = "md",
   placeholder,
   renderValue,
+  multipleDisplay = "chips",
   ...props
 }: SelectProps<T, M>) {
+  const isMultiple = props.selectionMode === "multiple";
+
   return (
     <SelectRoot<T, M> {...props} placeholder={placeholder} size={size} className={className}>
       <FieldLayout
@@ -368,6 +373,77 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
           <SelectValuePart>
             {renderValue
               ? ({ selectedItems }) => renderValue(selectedItems as T[])
+              : isMultiple
+              ? ({ selectedItems, state, defaultChildren }) => {
+                  const itemsList = selectedItems.filter(Boolean) as any[];
+                  if (!itemsList.length) {
+                    return defaultChildren;
+                  }
+
+                  if (multipleDisplay === "badge") {
+                    return (
+                      <span className="cinder-select-multi-badge-wrapper">
+                        <span className="cinder-select-multi-first">
+                          {itemsList[0]?.textValue ?? itemsList[0]?.name ?? itemsList[0]?.rendered ?? itemsList[0]?.id ?? "Selected"}
+                        </span>
+                        <span className="cinder-badge cinder-select-badge" data-kind="info">
+                          +{itemsList.length - 1}
+                        </span>
+                      </span>
+                    );
+                  }
+
+                  if (multipleDisplay === "chips") {
+                    return (
+                      <span className="cinder-select-chips-wrapper">
+                        {itemsList.map((item, idx) => {
+                          const text = item?.textValue ?? item?.name ?? item?.rendered ?? String(item?.id ?? item);
+                          const key = item?.id ?? item?.key ?? idx;
+                          return (
+                            <span
+                              key={key}
+                              className="cinder-tag cinder-select-chip"
+                              data-size="sm"
+                              role="presentation"
+                            >
+                              <span>{text}</span>
+                              <span
+                                role="button"
+                                tabIndex={-1}
+                                aria-label={`Remove ${text}`}
+                                className="cinder-select-chip-remove"
+                                onPointerDown={(e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                }}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter" || e.key === " ") {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    const currentKeys = new Set(state.selectionManager.selectedKeys);
+                                    currentKeys.delete(key);
+                                    state.selectionManager.setSelectedKeys(currentKeys);
+                                  }
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                  const currentKeys = new Set(state.selectionManager.selectedKeys);
+                                  currentKeys.delete(key);
+                                  state.selectionManager.setSelectedKeys(currentKeys);
+                                }}
+                              >
+                                <Icon name="close" size={16} />
+                              </span>
+                            </span>
+                          );
+                        })}
+                      </span>
+                    );
+                  }
+
+                  return defaultChildren;
+                }
               : undefined}
           </SelectValuePart>
           <Icon name="chevronDown" />
@@ -438,6 +514,8 @@ export interface ComboBoxProps<T extends object, M extends SelectionMode = "sing
   extends Omit<ComboBoxRootProps<T, M>, "children">, FieldContentProps {
   children: ListBoxProps<T>["children"];
   placeholder?: string;
+  /** Display style when selectionMode is multiple: chips with remove button, count badge, or plain text */
+  multipleDisplay?: "chips" | "badge" | "text";
 }
 
 function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
@@ -450,8 +528,11 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
   className,
   placeholder,
   size = "md",
+  multipleDisplay = "chips",
   ...props
 }: ComboBoxProps<T, M>) {
+  const isMultiple = props.selectionMode === "multiple";
+
   return (
     <ComboBoxRoot<T, M> {...props} size={size} className={className}>
       <FieldLayout
@@ -466,7 +547,77 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
             <Icon name="chevronDown" />
           </FieldButton>
         </FieldControl>
-        {props.selectionMode === "multiple" && <ComboBoxValuePart />}
+        {isMultiple && (
+          <ComboBoxValuePart>
+            {({ selectedItems, state }) => {
+              const itemsList = selectedItems.filter(Boolean) as any[];
+              if (!itemsList.length) {
+                return null;
+              }
+
+              if (multipleDisplay === "badge") {
+                return (
+                  <div className="cinder-combobox-multi-badge-wrapper">
+                    <span className="cinder-badge cinder-combobox-badge" data-kind="info">
+                      {itemsList.length} selected
+                    </span>
+                  </div>
+                );
+              }
+
+              if (multipleDisplay === "chips") {
+                return (
+                  <div className="cinder-combobox-chips-wrapper">
+                    {itemsList.map((item, idx) => {
+                      const text = item?.textValue ?? item?.name ?? item?.rendered ?? String(item?.id ?? item);
+                      const key = item?.id ?? item?.key ?? idx;
+                      return (
+                        <span
+                          key={key}
+                          className="cinder-tag cinder-combobox-chip"
+                          data-size="sm"
+                          role="presentation"
+                        >
+                          <span>{text}</span>
+                          <span
+                            role="button"
+                            tabIndex={-1}
+                            aria-label={`Remove ${text}`}
+                            className="cinder-combobox-chip-remove"
+                            onPointerDown={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                const currentKeys = new Set(state.selectionManager.selectedKeys);
+                                currentKeys.delete(key);
+                                state.selectionManager.setSelectedKeys(currentKeys);
+                              }
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              const currentKeys = new Set(state.selectionManager.selectedKeys);
+                              currentKeys.delete(key);
+                              state.selectionManager.setSelectedKeys(currentKeys);
+                            }}
+                          >
+                            <Icon name="close" size={16} />
+                          </span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                );
+              }
+
+              return null;
+            }}
+          </ComboBoxValuePart>
+        )}
       </FieldLayout>
       <SelectPopover>
         <SelectListBox items={items}>{children}</SelectListBox>

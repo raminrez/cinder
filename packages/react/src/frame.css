@@ -639,12 +639,78 @@
       gap: var(--cinder-spacing-02, 4px);
     }
     .react-aria-ListBoxSection > header,
-    .react-aria-MenuSection > header {
+    .react-aria-MenuSection > header,
+    .cinder-listbox-header {
       padding: var(--cinder-spacing-03) var(--cinder-spacing-04) var(--cinder-spacing-02);
       font-size: var(--cinder-label-01-font-size);
       font-weight: 600;
       color: var(--cinder-text-secondary);
       letter-spacing: var(--cinder-label-01-letter-spacing);
+    }
+    .cinder-listbox {
+      outline: none;
+      background: var(--cinder-layer);
+      list-style: none;
+      padding: var(--cinder-spacing-02);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cinder-listbox--bordered {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+    }
+    .cinder-listbox--card {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      background: var(--cinder-layer-01);
+    }
+    .cinder-listbox--flat {
+      border: none;
+    }
+    .cinder-listbox--sm .react-aria-ListBoxItem,
+    .cinder-listbox--sm .cinder-listbox-item {
+      min-height: var(--cinder-size-sm);
+      padding: var(--cinder-spacing-01) var(--cinder-spacing-03);
+      font-size: var(--cinder-body-compact-01-font-size);
+    }
+    .cinder-listbox--md .react-aria-ListBoxItem,
+    .cinder-listbox--md .cinder-listbox-item {
+      min-height: var(--cinder-size-md);
+      padding: var(--cinder-spacing-02) var(--cinder-spacing-04);
+      font-size: var(--cinder-body-01-font-size);
+    }
+    .cinder-listbox--lg .react-aria-ListBoxItem,
+    .cinder-listbox--lg .cinder-listbox-item {
+      min-height: var(--cinder-size-lg);
+      padding: var(--cinder-spacing-03) var(--cinder-spacing-05);
+      font-size: 1rem;
+    }
+    .cinder-listbox-drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: var(--cinder-spacing-01);
+      color: var(--cinder-text-secondary);
+      cursor: grab;
+      outline: none;
+      border-radius: var(--cinder-control-radius);
+    }
+    .cinder-listbox-drag-handle:active {
+      cursor: grabbing;
+    }
+    .cinder-listbox-checkbox {
+      margin-inline-end: var(--cinder-spacing-02);
+    }
+    .cinder-listbox-empty-state,
+    .cinder-listbox-empty-content {
+      padding: var(--cinder-spacing-07) var(--cinder-spacing-05);
+      text-align: center;
+      color: var(--cinder-text-secondary);
     }
     .react-aria-ListBoxSection:not(:first-child),
     .react-aria-MenuSection:not(:first-child) {
@@ -2908,6 +2974,27 @@
       gap: var(--cinder-spacing-03);
       padding: var(--cinder-spacing-04) var(--cinder-spacing-06);
       border-block-start: 1px solid var(--cinder-border-subtle);
+    }
+
+    /* Frame RAC Sheet */
+    .cinder-sheet,
+    .react-aria-Sheet {
+      background: var(--cinder-layer-01);
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-overlay-radius, 24px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+    }
+    .cinder-sheet-handle,
+    .sheet-handle {
+      background: var(--cinder-border-strong-01, rgba(0, 0, 0, 0.3));
+    }
+    .cinder-sheet-backdrop,
+    .react-aria-SheetBackdrop {
+      &[data-stack-index='0'] {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
     }
 
     /* ------------------------------------------------------------------ */

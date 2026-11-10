@@ -686,6 +686,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
   }
   .cinder-select-trigger .react-aria-SelectValue[data-placeholder] {
     color: var(--cinder-text-placeholder);
@@ -696,9 +700,57 @@
   .cinder-select[data-open] .cinder-select-trigger > svg:not(.cinder-field__status-icon) {
     transform: rotate(180deg);
   }
+  .cinder-select-chips-wrapper,
+  .cinder-combobox-chips-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  .cinder-select-chip,
+  .cinder-combobox-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--cinder-tag-background-gray, var(--cinder-layer-02));
+    color: var(--cinder-tag-color-gray, var(--cinder-text-primary));
+    border-radius: 9999px;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+  .cinder-select-chip-remove,
+  .cinder-combobox-chip-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    color: inherit;
+    opacity: 0.7;
+    margin-inline-start: 0.125rem;
+  }
+  .cinder-select-chip-remove:hover,
+  .cinder-combobox-chip-remove:hover {
+    opacity: 1;
+  }
+  .cinder-select-multi-badge-wrapper,
+  .cinder-combobox-multi-badge-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .cinder-select-badge,
+  .cinder-combobox-badge {
+    border-radius: 9999px;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+  }
   .cinder-combobox-values {
     color: var(--cinder-text-secondary);
     font-size: 0.75rem;
+    margin-top: 0.25rem;
   }
 
   .cinder-checkbox,
@@ -1249,10 +1301,81 @@
       margin: 0.25rem 1rem;
     }
     .react-aria-ListBoxSection > header,
-    .react-aria-MenuSection > header {
+    .react-aria-MenuSection > header,
+    .cinder-listbox-header {
       padding: 0.5rem 1rem;
       color: var(--cinder-text-secondary);
       font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cinder-listbox {
+      outline: none;
+      background: var(--cinder-layer);
+      list-style: none;
+      padding: 0.25rem;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cinder-listbox--bordered {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius, 4px);
+    }
+    .cinder-listbox--card {
+      border: 1px solid var(--cinder-border-subtle);
+      border-radius: var(--cinder-control-radius, 4px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      background: var(--cinder-layer-01);
+    }
+    .cinder-listbox--flat {
+      border: none;
+    }
+    .cinder-listbox--sm .react-aria-ListBoxItem,
+    .cinder-listbox--sm .cinder-listbox-item {
+      min-height: 2rem;
+      padding-block: 0.25rem;
+      padding-inline-start: 0.75rem;
+      font-size: 0.8125rem;
+    }
+    .cinder-listbox--md .react-aria-ListBoxItem,
+    .cinder-listbox--md .cinder-listbox-item {
+      min-height: 2.5rem;
+      padding-block: 0.5rem;
+      padding-inline-start: 1rem;
+      font-size: 0.875rem;
+    }
+    .cinder-listbox--lg .react-aria-ListBoxItem,
+    .cinder-listbox--lg .cinder-listbox-item {
+      min-height: 3rem;
+      padding-block: 0.75rem;
+      padding-inline-start: 1.25rem;
+      font-size: 1rem;
+    }
+    .cinder-listbox-drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      padding: 0.25rem;
+      color: var(--cinder-text-secondary);
+      cursor: grab;
+      outline: none;
+    }
+    .cinder-listbox-drag-handle:active {
+      cursor: grabbing;
+    }
+    .cinder-listbox-checkbox {
+      margin-inline-end: 0.5rem;
+    }
+    .cinder-listbox-empty-state,
+    .cinder-listbox-empty-content {
+      padding: 2rem 1rem;
+      text-align: center;
+      color: var(--cinder-text-secondary);
     }
   }
 
@@ -1583,6 +1706,157 @@
     }
     to {
       transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  /* RAC Sheet (Swipeable bottom sheet with gesture snap points) */
+  .react-aria-Sheet,
+  .cinder-sheet {
+    background: var(--cinder-layer-01);
+    color: var(--cinder-text-primary);
+    border: 1px solid var(--cinder-border-subtle);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    font-size: var(--cinder-body-01-font-size, 0.875rem);
+    height: auto;
+    max-height: calc(100% - 2rem);
+    width: calc(100% - 1rem);
+    max-width: 800px;
+    margin: 0.5rem auto;
+    border-radius: var(--cinder-border-radius-16, 16px);
+    overflow: clip;
+    z-index: 1;
+    transform: perspective(1000px);
+    will-change: transform;
+    box-sizing: border-box;
+
+    &[data-position='left'],
+    &[data-position='right'],
+    &[data-position='start'],
+    &[data-position='end'] {
+      width: 360px;
+      height: calc(100% - 1rem);
+      max-height: unset;
+      margin: 0.5rem;
+    }
+
+    &[data-position='bottom'],
+    &[data-position='center'] {
+      transform-origin: center -150px;
+    }
+
+    &[data-position='top'] {
+      transform-origin: center 150px;
+    }
+
+    &[data-position='left'],
+    &[data-position='start'] {
+      transform-origin: 150px center;
+    }
+
+    &[data-position='right'],
+    &[data-position='end'] {
+      transform-origin: -150px center;
+    }
+
+    .sheet-handle,
+    .cinder-sheet-handle {
+      border-radius: 9999px;
+      background: var(--cinder-border-strong-01, rgba(0, 0, 0, 0.2));
+      position: absolute;
+      z-index: 2;
+      transition: opacity var(--cinder-duration-fast-02, 150ms);
+    }
+
+    &[data-swipe-direction='bottom'] .cinder-sheet-handle,
+    &[data-swipe-direction='vertical'] .cinder-sheet-handle,
+    &[data-swipe-direction='bottom'] .sheet-handle,
+    &[data-swipe-direction='vertical'] .sheet-handle {
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 4px;
+    }
+    &[data-swipe-direction='top'] .cinder-sheet-handle,
+    &[data-swipe-direction='top'] .sheet-handle {
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 4px;
+    }
+    &[data-swipe-direction='left'] .cinder-sheet-handle,
+    &[data-swipe-direction='horizontal'] .cinder-sheet-handle,
+    &[data-swipe-direction='start'] .cinder-sheet-handle,
+    &[data-swipe-direction='left'] .sheet-handle,
+    &[data-swipe-direction='horizontal'] .sheet-handle {
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 48px;
+      width: 4px;
+    }
+    &[data-swipe-direction='right'] .cinder-sheet-handle,
+    &[data-swipe-direction='end'] .cinder-sheet-handle,
+    &[data-swipe-direction='right'] .sheet-handle {
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 48px;
+      width: 4px;
+    }
+
+    &[data-has-descendants] .cinder-sheet-handle,
+    &[data-has-descendants] .sheet-handle {
+      opacity: 0;
+    }
+  }
+
+  .react-aria-SheetBackdrop,
+  .cinder-sheet-backdrop {
+    &[data-stack-index='0'] {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .react-aria-SheetContent,
+  .cinder-sheet-content {
+    padding: var(--cinder-spacing-06, 1.5rem);
+    padding-bottom: calc(var(--cinder-spacing-06, 1.5rem) + var(--sheet-scroll-padding-y, 0px));
+    box-sizing: border-box;
+    height: 100%;
+    outline: none;
+    overflow: hidden;
+    overscroll-behavior: auto;
+    scrollbar-gutter: stable;
+
+    .react-aria-Heading[slot='title'] {
+      margin-top: 0;
+      margin-bottom: var(--cinder-spacing-02, 0.25rem);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+  }
+
+  .react-aria-SheetOverlay[data-expanded] .cinder-sheet-content,
+  .react-aria-SheetOverlay[data-expanded] .react-aria-SheetContent,
+  .cinder-sheet-overlay[data-expanded] .cinder-sheet-content {
+    overflow: auto;
+  }
+
+  @keyframes sheet-backdrop {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes sheet-scale-back {
+    to {
+      transform: translateZ(-120px);
     }
   }
   .cinder-tooltip {

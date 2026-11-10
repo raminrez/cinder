@@ -269,6 +269,30 @@ export type {
   GridListContextValue,
 } from "./grid-list";
 export {
+  ListBox,
+  ListBoxRoot,
+  ListBoxItem,
+  ListBoxSection,
+  ListBoxHeader,
+  ListBoxDragHandle,
+  ListBoxCheckbox,
+  ListBoxEmptyState,
+  ListBoxContext,
+} from "./list-box";
+export type {
+  ListBoxProps,
+  ListBoxRootProps,
+  ListBoxItemProps,
+  ListBoxSectionProps,
+  ListBoxHeaderProps,
+  ListBoxDragHandleProps,
+  ListBoxCheckboxProps,
+  ListBoxEmptyStateProps,
+  ListBoxContextValue,
+} from "./list-box";
+export { Autocomplete } from "./autocomplete";
+export type { AutocompleteProps } from "./autocomplete";
+export {
   Tree,
   TreeRoot,
   TreeItem,
@@ -287,6 +311,31 @@ export type {
   TreeCheckboxProps,
   TreeContextValue,
 } from "./tree";
+export {
+  Sheet,
+  SheetRoot,
+  SheetTrigger,
+  SheetOverlay,
+  SheetBackdrop,
+  SheetContent,
+  SheetHandle,
+  SheetContext,
+  SheetConvenience,
+} from "./sheet";
+export type {
+  SheetProps,
+  SheetRootProps,
+  SheetTriggerProps,
+  SheetOverlayProps,
+  SheetBackdropProps,
+  SheetContentProps,
+  SheetHandleProps,
+  SheetConvenienceProps,
+  SheetContextValue,
+  SheetRenderProps,
+} from "./sheet";
+export { PreviewTrigger, PreviewTriggerRoot } from "./preview-trigger";
+export type { PreviewTriggerProps } from "./preview-trigger";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
 export type { ThemeName, LayerLevel } from "@cinder/tokens";
@@ -311,9 +360,6 @@ export {
   MenuSection,
   Header as SectionHeader,
   Separator,
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
   SelectValue,
   ComboBoxValue,
   TableHeader,
@@ -354,7 +400,6 @@ export type {
   TimeValue,
   DateRange,
   FormProps,
-  ListBoxItemProps,
   MenuProps,
   MenuItemProps,
   TableHeaderProps,
