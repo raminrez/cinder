@@ -54,7 +54,7 @@ export function Drawer({
       dir={resolvedDir}
       isDismissable={isDismissable}
       className={classes(
-        "cinder-modal-overlay cinder-drawer-overlay",
+        "cinder-drawer-overlay",
         classes(appearanceClassName ?? "", overlayClassName),
       )}
     >

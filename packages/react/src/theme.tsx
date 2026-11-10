@@ -9,11 +9,7 @@ type ThemeContextValue = {
   lang?: string;
   appearanceClassName?: string;
 };
-const ThemeContext = createContext<ThemeContextValue>({
-  theme: "white",
-  layer: 0,
-  direction: "ltr",
-});
+const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export interface ThemeProps extends ComponentPropsWithRef<"div"> {
   theme?: ThemeName;
@@ -37,21 +33,22 @@ export function Theme({ locale, direction, dir, ...props }: ThemeProps) {
 }
 
 function ThemeRoot({
-  theme = "white",
+  theme,
   appearanceClassName,
   className,
   children,
   explicitDirection,
   ...props
 }: Omit<ThemeProps, "locale" | "direction" | "dir"> & { explicitDirection?: "ltr" | "rtl" }) {
-  const parent = useTheme();
+  const parent = useContext(ThemeContext);
   const { locale, direction: ariaDirection } = useLocale();
-  const direction = explicitDirection ?? ariaDirection;
-  const appearance = appearanceClassName ?? parent.appearanceClassName;
-  const lang = props.lang ?? locale;
+  const direction = explicitDirection ?? ariaDirection ?? parent?.direction ?? "ltr";
+  const resolvedTheme = theme ?? parent?.theme ?? "frame-light";
+  const appearance = appearanceClassName ?? parent?.appearanceClassName;
+  const lang = props.lang ?? locale ?? parent?.lang;
   const value = useMemo(
-    () => ({ theme, layer: 0 as const, direction, lang, appearanceClassName: appearance }),
-    [theme, direction, lang, appearance],
+    () => ({ theme: resolvedTheme, layer: 0 as const, direction, lang, appearanceClassName: appearance }),
+    [resolvedTheme, direction, lang, appearance],
   );
   return (
     <ThemeContext.Provider value={value}>
@@ -59,7 +56,7 @@ function ThemeRoot({
         {...props}
         lang={lang}
         dir={direction}
-        data-cinder-theme={theme}
+        data-cinder-theme={resolvedTheme}
         data-cinder-layer="0"
         className={["cinder-theme", appearance, className].filter(Boolean).join(" ")}
       >
@@ -90,8 +87,15 @@ export function Layer({ level, className, children, ...props }: LayerProps) {
   );
 }
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTheme(): ThemeContextValue {
+  const context = useContext(ThemeContext);
+  return (
+    context ?? {
+      theme: "frame-light",
+      layer: 0,
+      direction: "ltr",
+    }
+  );
 }
 
 /** CSS inheritance stops at a portal; React context does not. */

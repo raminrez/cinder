@@ -86,7 +86,7 @@ export const StatusesAndIndeterminate: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getAllByRole("progressbar").length).toBe(3);
+    expect(canvas.getAllByRole("progressbar").length).toBe(4);
   },
 };
 

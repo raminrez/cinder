@@ -1,6 +1,6 @@
 "use client";
 
-export { Theme, Layer, useTheme } from "./theme";
+export { Theme, Layer, useTheme, useOverlayTheme } from "./theme";
 export type { ThemeProps, LayerProps } from "./theme";
 export { Icon } from "./icons";
 export type { IconName, IconProps } from "./icons";
