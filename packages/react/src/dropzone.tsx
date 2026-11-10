@@ -10,6 +10,7 @@ import {
 import {
   DropZone as RACDropZone,
   FileTrigger as RACFileTrigger,
+  isFileDropItem,
   type DropZoneProps as RACDropZoneProps,
   type DropZoneRenderProps,
   type FileTriggerProps as RACFileTriggerProps,
@@ -52,9 +53,8 @@ export function DropZoneRoot({
       onDrop={async (e) => {
         onDrop?.(e);
         if (onDropFiles) {
-          const files = await Promise.all(
-            e.items.filter((item) => item.kind === "file").map((item) => item.getFile())
-          );
+          const fileItems = e.items.filter(isFileDropItem);
+          const files = await Promise.all(fileItems.map((item) => item.getFile()));
           if (files.length > 0) {
             onDropFiles(files);
           }
