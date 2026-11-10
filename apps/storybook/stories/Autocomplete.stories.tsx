@@ -4,6 +4,7 @@ import {
   Autocomplete,
   SearchField,
   Menu,
+  MenuItem,
 } from "@cinder/react";
 
 const meta = {
@@ -23,15 +24,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  render: () => (
+  args: {
+    children: null,
+  },
+  render: (args) => (
     <div style={{ maxWidth: 320 }}>
-      <Autocomplete filter={() => true}>
+      <Autocomplete {...args} filter={() => true}>
         <SearchField label="Search users" placeholder="Type a name..." />
-        <Menu.Root aria-label="Users">
-          <Menu.Item id="alice">Alice Johnson</Menu.Item>
-          <Menu.Item id="bob">Bob Smith</Menu.Item>
-          <Menu.Item id="charlie">Charlie Davis</Menu.Item>
-        </Menu.Root>
+        <Menu aria-label="Users">
+          <MenuItem id="alice">Alice Johnson</MenuItem>
+          <MenuItem id="bob">Bob Smith</MenuItem>
+          <MenuItem id="charlie">Charlie Davis</MenuItem>
+        </Menu>
       </Autocomplete>
     </div>
   ),
