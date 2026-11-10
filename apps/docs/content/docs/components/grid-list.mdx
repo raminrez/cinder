@@ -1,0 +1,227 @@
+---
+title: GridList
+description: Interactive collection view for structured item lists with multi-selection, drag-and-drop reordering, and keyboard grid navigation.
+---
+
+# GridList
+
+A **GridList** represents an interactive list of items where each element can be navigated, selected, reordered, and manipulated with assistive technologies. While a standard `<Table>` is designed for tabular column records, a `GridList` excels at **single-column or card-style collection views, message inboxes, file directories, and task queues**.
+
+Built on React Aria Components' `GridList`, Hashti elevates this pattern with built-in selection checkboxes, drag-and-drop grab handles, empty state slots, and three density tiers.
+
+---
+
+## Import
+
+```tsx
+import { GridList } from "@cinder/react";
+// Or named subcomponents:
+// GridList.Root, GridList.Item, GridList.DragHandle, GridList.Checkbox, GridList.EmptyState
+```
+
+---
+
+## Anatomy
+
+```tsx
+<GridList selectionMode="multiple" aria-label="Inbox messages">
+  <GridList.Item textValue="System notification">
+    <GridList.DragHandle />
+    <GridList.Checkbox />
+    <span>Build #402 deployed to production</span>
+  </GridList.Item>
+</GridList>
+```
+
+---
+
+## Examples
+
+### Selectable List with Checkboxes
+
+A multi-selection list featuring checkboxes and keyboard selection:
+
+```tsx
+import { useState } from "react";
+import { GridList, Badge } from "@cinder/react";
+import type { Selection } from "react-aria-components";
+
+const tasks = [
+  { id: "1", title: "Migrate documentation to Fumadocs", status: "completed" },
+  { id: "2", title: "Audit WCAG 2.2 AAA contrast across 8 themes", status: "in-progress" },
+  { id: "3", title: "Add Persian Vazirmatn typography specimen", status: "completed" },
+  { id: "4", title: "Release RAC 1.22.1 elevated components", status: "pending" },
+];
+
+export function SelectableTasksList() {
+  const [selected, setSelected] = useState<Selection>(new Set(["1", "3"]));
+
+  return (
+    <div className="max-w-lg space-y-3">
+      <GridList
+        aria-label="Design system tasks"
+        items={tasks}
+        selectionMode="multiple"
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+        variant="bordered"
+      >
+        {(task) => (
+          <GridList.Item key={task.id} textValue={task.title}>
+            <div className="flex items-center justify-between w-full py-1">
+              <div className="flex items-center gap-3">
+                <GridList.Checkbox />
+                <span className="text-sm font-medium">{task.title}</span>
+              </div>
+              <Badge
+                kind={task.status === "completed" ? "success" : task.status === "in-progress" ? "info" : "neutral"}
+              >
+                {task.status}
+              </Badge>
+            </div>
+          </GridList.Item>
+        )}
+      </GridList>
+
+      <p className="text-xs text-[var(--text-muted)]">
+        Selected tasks count: {selected === "all" ? tasks.length : selected.size}
+      </p>
+    </div>
+  );
+}
+```
+
+### Visual Variants
+
+Hashti provides three container surface styles:
+- `bordered` (default): Encased in a single clean border with internal divider rules.
+- `flat`: Minimalist borderless item rows with subtle hover washes.
+- `card`: Floating raised card rows separated by discrete margins.
+
+```tsx
+import { GridList } from "@cinder/react";
+
+export function CardGridListExample() {
+  return (
+    <GridList variant="card" aria-label="Server clusters" selectionMode="single">
+      <GridList.Item textValue="Cluster US-East">
+        <div>
+          <p className="font-semibold text-sm">us-east-prod-01</p>
+          <p className="text-xs text-[var(--text-muted)]">32 nodes · 99.98% uptime</p>
+        </div>
+      </GridList.Item>
+      <GridList.Item textValue="Cluster EU-West">
+        <div>
+          <p className="font-semibold text-sm">eu-west-prod-02</p>
+          <p className="text-xs text-[var(--text-muted)]">16 nodes · 100% uptime</p>
+        </div>
+      </GridList.Item>
+    </GridList>
+  );
+}
+```
+
+### Drag-and-Drop Reordering
+
+Integrate `<GridList.DragHandle />` to enable intuitive touch, mouse, and keyboard item reordering:
+
+```tsx
+import { GridList } from "@cinder/react";
+
+export function ReorderableQueueList() {
+  return (
+    <GridList aria-label="Playback queue" variant="bordered">
+      <GridList.Item textValue="Track 1">
+        <div className="flex items-center gap-2">
+          <GridList.DragHandle />
+          <span>01. Introduction to Safavid Geometry</span>
+        </div>
+      </GridList.Item>
+      <GridList.Item textValue="Track 2">
+        <div className="flex items-center gap-2">
+          <GridList.DragHandle />
+          <span>02. The Sacred Threshold of Hashti</span>
+        </div>
+      </GridList.Item>
+    </GridList>
+  );
+}
+```
+
+### Empty State Handling
+
+When no items match search criteria or the collection is empty, supply `emptyContent`:
+
+```tsx
+<GridList
+  aria-label="Search results"
+  items={[]}
+  emptyContent={
+    <div className="text-center py-8">
+      <p className="font-medium text-sm">No items found</p>
+      <p className="text-xs text-[var(--text-muted)]">Try adjusting your active filters</p>
+    </div>
+  }
+>
+  {(item) => <GridList.Item>{item.name}</GridList.Item>}
+</GridList>
+```
+
+---
+
+## Props Reference
+
+### GridList (`GridList.Root`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'` | Allowed selection behavior for items. |
+| `selectedKeys` | `'all' \| Iterable<Key>` | — | Set of currently selected item keys (controlled). |
+| `defaultSelectedKeys` | `'all' \| Iterable<Key>` | — | Initial selected keys (uncontrolled). |
+| `onSelectionChange` | `(keys: Selection) => void` | — | Callback fired when the selection changes. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height density and internal item padding. |
+| `variant` | `'bordered' \| 'flat' \| 'card'` | `'bordered'` | Container background and border styling. |
+| `emptyContent` | `ReactNode` | — | Fallback content rendered when `items` is empty. |
+| `aria-label` | `string` | — | Accessible description of the collection. |
+
+### GridList.Item (`GridListItem`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `Key` | — | Unique key for the item within the collection. |
+| `textValue` | `string` | — | Plain text string representing item content for typeahead and accessibility. |
+| `isDisabled` | `boolean` | `false` | Disables interaction and selection for this item. |
+| `children` | `ReactNode` | — | Content, drag handle, or checkbox. |
+
+### GridList.DragHandle (`GridListDragHandle`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `aria-label` | `string` | `'Reorder item'` | Accessible label for the drag handle button. |
+
+---
+
+## Keyboard Interactions
+
+Hashti GridList follows the **WAI-ARIA Grid Pattern**:
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates between items in the list. |
+| <kbd>Space</kbd> | Toggles selection of the focused item. |
+| <kbd>Shift</kbd> + <kbd>↓</kbd> / <kbd>↑</kbd> | Extends selection range across multiple items. |
+| <kbd>⌘</kbd> + <kbd>A</kbd> / <kbd>Ctrl</kbd> + <kbd>A</kbd> | Selects all items in multiple selection mode. |
+| <kbd>Enter</kbd> | Triggers the primary action on the focused item. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Moves focus directly to the first or last item in the list. |
+
+---
+
+## Hashti Token Bindings
+
+| Token | CSS Variable | Applied State |
+| :--- | :--- | :--- |
+| Surface Normal | `--surface` | Item default background |
+| Surface Hover | `--surface-hover` | Row hover highlight |
+| Selection Surface | `--selected` (`#e7edff`) | Selected item tint |
+| Focus Ring | `--focus` | 2px focus border on active item |
+| Border Divider | `--divider` | Separator line between rows |

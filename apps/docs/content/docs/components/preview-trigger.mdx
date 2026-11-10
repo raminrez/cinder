@@ -1,0 +1,190 @@
+---
+title: Preview Trigger
+description: Contextual hovercard popover that displays rich preview cards when hovering or focusing an interactive trigger link or badge.
+---
+
+# Preview Trigger
+
+A **Preview Trigger** (often referred to as a **HoverCard**) is a contextual preview popover that reveals rich informational cards when a user hovers over or focuses an interactive trigger—such as a user mention `@ramin`, a link to another documentation page, an issue ticket, or an avatar.
+
+Unlike simple text-only `<Tooltip>`, a Preview Trigger accommodates rich formatted content including **avatars, status badges, secondary action buttons, and live metadata**, while supporting deliberate enter/leave delays, keyboard accessibility, and pointer bridge persistence.
+
+---
+
+## Import
+
+```tsx
+import { PreviewTrigger } from "@cinder/react";
+// Or compound subcomponents:
+// PreviewTrigger.Root, PreviewTrigger.Trigger, PreviewTrigger.Content, PreviewTrigger.Arrow
+```
+
+---
+
+## Anatomy
+
+```tsx
+<PreviewTrigger delay={400} closeDelay={300}>
+  <PreviewTrigger.Trigger>
+    <Link href="/team/ramin">@ramin</Link>
+  </PreviewTrigger.Trigger>
+  <PreviewTrigger.Content>
+    {/* Rich user profile preview card */}
+  </PreviewTrigger.Content>
+</PreviewTrigger>
+```
+
+---
+
+## Examples
+
+### User Profile Card Preview
+
+Display rich profile statistics, presence status, and actions when hovering over an author mention:
+
+```tsx
+import { PreviewTrigger, Avatar, Button, Badge } from "@cinder/react";
+
+export function UserProfilePreviewExample() {
+  return (
+    <p className="text-sm">
+      This proposal was authored by{" "}
+      <PreviewTrigger delay={300} closeDelay={200}>
+        <PreviewTrigger.Trigger>
+          <span className="font-semibold underline decoration-dotted cursor-pointer text-[var(--focus)]">
+            @ramin
+          </span>
+        </PreviewTrigger.Trigger>
+        <PreviewTrigger.Content className="w-80 p-4">
+          <div className="flex gap-3">
+            <Avatar size="lg" initials="RR" presence="online" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-sm">Ramin Rezaei</h4>
+                <Badge kind="success">Core</Badge>
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mt-0.5">@ramin · Isfahan, IR</p>
+              <p className="text-xs text-[var(--text)] mt-2">
+                Staff Designer & Systems Engineer. Architecting Hashti Design System.
+              </p>
+              <div className="flex items-center gap-4 mt-3 text-xs text-[var(--text-muted)]">
+                <span><strong>48</strong> Components</span>
+                <span><strong>8</strong> Themes</span>
+              </div>
+            </div>
+          </div>
+        </PreviewTrigger.Content>
+      </PreviewTrigger>{" "}
+      for review by the design systems council.
+    </p>
+  );
+}
+```
+
+### Rich Link Preview
+
+Provide instant document summaries before users click an external or cross-section link:
+
+```tsx
+import { PreviewTrigger, Icon } from "@cinder/react";
+
+export function RichLinkPreviewExample() {
+  return (
+    <div className="text-sm space-y-2">
+      <p>
+        Learn more about Persian arch geometry in our{" "}
+        <PreviewTrigger placement="top" delay={400}>
+          <PreviewTrigger.Trigger>
+            <span className="text-[var(--focus)] underline cursor-pointer">
+              Spatial Philosophy Guide
+            </span>
+          </PreviewTrigger.Trigger>
+          <PreviewTrigger.Content className="w-72 p-3 space-y-2">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[var(--accent-turquoise)]">
+              <Icon name="info" size={14} />
+              <span>Hashti Architecture</span>
+            </div>
+            <p className="text-xs text-[var(--text)] leading-relaxed">
+              Explore how the octagonal vestibule acts as a sensory pause between bustling public streets and private tranquil courtyards.
+            </p>
+            <span className="text-[10px] text-[var(--text-muted)] font-mono">
+              docs/foundations/spacing-geometry.mdx
+            </span>
+          </PreviewTrigger.Content>
+        </PreviewTrigger>
+        .
+      </p>
+    </div>
+  );
+}
+```
+
+### Delayed Hover & Safe Pointer Bridge
+
+A `delay` (default 500ms) prevents unwanted flickering when users merely pass their cursor over the trigger. The `closeDelay` (default 300ms) provides a safe "pointer bridge," allowing users to move their mouse from the trigger into the popover content without the card closing abruptly:
+
+```tsx
+<PreviewTrigger delay={500} closeDelay={400} placement="bottom">
+  <PreviewTrigger.Trigger>
+    <button className="text-sm font-medium">Inspect Metric</button>
+  </PreviewTrigger.Trigger>
+  <PreviewTrigger.Content className="p-3">
+    <p className="text-xs">Hover over this card without losing focus.</p>
+  </PreviewTrigger.Content>
+</PreviewTrigger>
+```
+
+---
+
+## Props Reference
+
+### PreviewTrigger (`PreviewTrigger.Root`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `isOpen` | `boolean` | — | Controlled visibility state of the preview popover. |
+| `defaultOpen` | `boolean` | `false` | Default uncontrolled open state. |
+| `onOpenChange` | `(isOpen: boolean) => void` | — | Callback fired when open state changes. |
+| `delay` | `number` | `500` | Duration in milliseconds before popover appears upon hover. |
+| `closeDelay` | `number` | `300` | Duration in milliseconds before popover closes when cursor leaves trigger and content. |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Preferred cardinal placement relative to trigger. |
+| `offset` | `number` | `8` | Distance in pixels between trigger and popover card. |
+| `children` | `ReactNode` | — | Trigger element and Content popover. |
+
+### PreviewTrigger.Trigger
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `ReactNode` | — | The anchor element (link, button, mention) that activates the preview. |
+
+### PreviewTrigger.Content
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `className` | `string` | — | Custom CSS classes for padding, width, and typography. |
+| `children` | `ReactNode` | — | Rich interactive card layout. |
+
+---
+
+## Accessibility & Keyboard Guide
+
+Hashti PreviewTrigger adheres strictly to **WCAG 2.1 Success Criterion 1.4.13 (Content on Hover or Focus)**:
+
+- **Dismissable Without Moving Pointer**: Pressing <kbd>Esc</kbd> closes the preview immediately without shifting pointer position.
+- **Hoverable**: Users can move their mouse pointer from the trigger into the preview card without the card disappearing.
+- **Persistent**: The preview card remains visible until the user moves the hover/focus away or explicitly presses <kbd>Esc</kbd>.
+- **Focus Activation**: Keyboard users focusing the trigger with <kbd>Tab</kbd> reveal the preview card automatically.
+- **Role**: Emits `role="dialog"` or `role="tooltip"` with appropriate `aria-expanded` and `aria-haspopup` linkages.
+
+---
+
+## Hashti Token Bindings
+
+| Token | CSS Variable | Applied Element |
+| :--- | :--- | :--- |
+| Surface Background | `--surface-raised` | Preview card background |
+| Border | `--divider` | 1px clean card boundary outline |
+| Elevation Shadow | `--elevation-overlay` | Subtle floating elevation shadow |
+| Corner Radius | `--radius-lg` | 12px rounded corner geometry |
+| Text Primary | `--text` | Card header and body text |
+| Text Secondary | `--text-muted` | Metadata and secondary statistics |

@@ -1,0 +1,256 @@
+---
+title: Time Field
+description: Segmented time input allowing users to enter and adjust hours, minutes, seconds, and AM/PM periods using keyboard arrows and numerical input.
+---
+
+# Time Field
+
+A **Time Field** allows users to enter and edit time values using segmented, formatted fields. Unlike freeform text inputs, a Time Field breaks time representations into discrete, keyboard-accessible segments (such as hour, minute, second, and day period) that validate user input in real time according to the active locale.
+
+Built upon React Aria Components' `TimeField`, Hashti's implementation provides integrated field labels, helper descriptions, error messages, validation badges, granular step controls, boundary enforcement (`minValue`, `maxValue`), and three density sizes (`sm`, `md`, `lg`).
+
+---
+
+## Import
+
+```tsx
+import { TimeField } from "@cinder/react";
+import { Time } from "@internationalized/date";
+// Or compound subcomponents:
+// TimeField.Root, TimeField.Input, TimeField.Segment, TimeField.Label, TimeField.Description, TimeField.ErrorMessage
+```
+
+---
+
+## Anatomy
+
+```tsx
+<TimeField label="Appointment Time" defaultValue={new Time(9, 30)}>
+  {/* FieldLayout automatically renders Label, segmented FieldDateInput, and descriptions */}
+</TimeField>
+```
+
+---
+
+## Examples
+
+### Basic Time Field
+
+By default, `<TimeField>` renders a standard 12-hour or 24-hour time selector depending on user locale, dividing the value into hours, minutes, and day periods (AM/PM):
+
+```tsx
+import { TimeField } from "@cinder/react";
+import { Time } from "@internationalized/date";
+
+export function BasicTimeFieldExample() {
+  return (
+    <div className="max-w-xs space-y-4">
+      <TimeField
+        label="Event Start Time"
+        defaultValue={new Time(14, 0)}
+        description="Select when the workshop commences"
+      />
+    </div>
+  );
+}
+```
+
+### Granularity & Seconds
+
+Control the precision of the time input using the `granularity` prop:
+- `'hour'`: Displays only hours and day period.
+- `'minute'` (default): Displays hours, minutes, and day period.
+- `'second'`: Displays hours, minutes, seconds, and day period.
+
+```tsx
+import { TimeField } from "@cinder/react";
+import { Time } from "@internationalized/date";
+
+export function GranularityTimeExample() {
+  return (
+    <div className="max-w-xs space-y-4">
+      <TimeField
+        label="Countdown Duration"
+        granularity="second"
+        defaultValue={new Time(0, 5, 30)}
+        description="Hour, minute, and second segments"
+      />
+    </div>
+  );
+}
+```
+
+### Min and Max Boundary Constraints
+
+Enforce business hours or booking limits with `minValue` and `maxValue`. Values outside the allowed range will trigger an invalid state:
+
+```tsx
+import { useState } from "react";
+import { TimeField } from "@cinder/react";
+import { Time } from "@internationalized/date";
+
+export function BusinessHoursExample() {
+  const [time, setTime] = useState(new Time(10, 0));
+
+  return (
+    <div className="max-w-xs">
+      <TimeField
+        label="Delivery Slot"
+        value={time}
+        onChange={setTime}
+        minValue={new Time(9, 0)}
+        maxValue={new Time(17, 0)}
+        description="Deliveries operate between 09:00 AM and 05:00 PM"
+        errorMessage="Selected time is outside working business hours"
+      />
+    </div>
+  );
+}
+```
+
+### Size Variants
+
+Hashti provides three control heights adhering to our golden spatial geometry:
+- `sm` (32px): Compact density for dense data tables, toolbars, and inspection sidebars.
+- `md` (40px, default): Standard form control height with optimal touch targets.
+- `lg` (48px): High-contrast prominent form controls.
+
+```tsx
+import { TimeField } from "@cinder/react";
+import { Time } from "@internationalized/date";
+
+export function TimeFieldSizesExample() {
+  return (
+    <div className="max-w-xs space-y-4">
+      <TimeField size="sm" label="Small (32px)" defaultValue={new Time(8, 0)} />
+      <TimeField size="md" label="Medium (40px)" defaultValue={new Time(12, 30)} />
+      <TimeField size="lg" label="Large (48px)" defaultValue={new Time(18, 45)} />
+    </div>
+  );
+}
+```
+
+### Validation Status
+
+TimeField supports Hashti's semantic status badge indicators (`valid`, `warning`, `invalid`):
+
+```tsx
+import { TimeField } from "@cinder/react";
+import { Time } from "@internationalized/date";
+
+export function TimeFieldValidationExample() {
+  return (
+    <div className="max-w-xs space-y-4">
+      <TimeField
+        label="Available Slot"
+        defaultValue={new Time(11, 15)}
+        status="valid"
+        description="Slot confirmed available"
+      />
+      <TimeField
+        label="Off-Peak Window"
+        defaultValue={new Time(23, 30)}
+        status="warning"
+        description="Late night surcharge may apply"
+      />
+      <TimeField
+        label="Doctor Consultation"
+        defaultValue={new Time(3, 0)}
+        isInvalid
+        status="invalid"
+        errorMessage="Clinic is closed at this time"
+      />
+    </div>
+  );
+}
+```
+
+### Controlled Value & Formatting
+
+Use `@internationalized/date`'s `Time` object to maintain complete programmatic control:
+
+```tsx
+import { useState } from "react";
+import { TimeField, Button } from "@cinder/react";
+import { Time } from "@internationalized/date";
+
+export function ControlledTimeExample() {
+  const [time, setTime] = useState<Time | null>(new Time(9, 0));
+
+  return (
+    <div className="max-w-xs space-y-3">
+      <TimeField
+        label="Meeting Time"
+        value={time}
+        onChange={setTime}
+      />
+      <div className="flex gap-2">
+        <Button variant="secondary" size="sm" onPress={() => setTime(new Time(9, 0))}>
+          Morning (9:00 AM)
+        </Button>
+        <Button variant="secondary" size="sm" onPress={() => setTime(new Time(14, 0))}>
+          Afternoon (2:00 PM)
+        </Button>
+      </div>
+      <p className="text-xs text-[var(--text-muted)]">
+        Raw value: {time ? time.toString() : "None"}
+      </p>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### TimeField (`TimeField.Root`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `TimeValue \| null` | — | Controlled time object (from `@internationalized/date`). |
+| `defaultValue` | `TimeValue` | — | Default uncontrolled initial time. |
+| `onChange` | `(value: TimeValue) => void` | — | Callback fired when any time segment is edited or adjusted. |
+| `granularity` | `'hour' \| 'minute' \| 'second'` | `'minute'` | Precision of time segments displayed. |
+| `minValue` | `TimeValue` | — | Earliest time boundary permitted. |
+| `maxValue` | `TimeValue` | — | Latest time boundary permitted. |
+| `hourCycle` | `12 \| 24` | *Locale default* | Force 12-hour or 24-hour time presentation cycle. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height density of the input control. |
+| `label` | `ReactNode` | — | Accessible label positioned above the field. |
+| `description` | `ReactNode` | — | Supplemental instructional helper text. |
+| `errorMessage` | `ReactNode` | — | Error text displayed when `isInvalid` is true. |
+| `isInvalid` | `boolean` | `false` | Whether the current value fails validation. |
+| `isDisabled` | `boolean` | `false` | Whether the time input is non-interactive. |
+| `isReadOnly` | `boolean` | `false` | Prevents modifications while preserving focusability. |
+| `isRequired` | `boolean` | `false` | Indicates whether the field must be completed before submission. |
+| `status` | `'valid' \| 'warning' \| 'invalid'` | — | Status icon and color indicator attached to the input. |
+
+---
+
+## Keyboard Interactions
+
+Each segment within the Time Field acts as an isolated, keyboard-controllable unit:
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>Tab</kbd> | Navigates forward to the next time segment (Hour → Minute → AM/PM). |
+| <kbd>←</kbd> / <kbd>Shift</kbd> + <kbd>Tab</kbd> | Navigates backward to the previous time segment. |
+| <kbd>↑</kbd> | Increments the focused segment value (with automatic roll-over, e.g. 11 → 12 → 1). |
+| <kbd>↓</kbd> | Decrements the focused segment value. |
+| Numbers (<kbd>0</kbd>–<kbd>9</kbd>) | Directly types numerical values into the active segment. Focus automatically advances when the segment is satisfied. |
+| <kbd>A</kbd> / <kbd>P</kbd> | In the dayPeriod segment, switches between AM and PM immediately. |
+| <kbd>Backspace</kbd> / <kbd>Delete</kbd> | Clears the active segment value. |
+
+---
+
+## Hashti Token Bindings
+
+| Token | CSS Variable | Applied Element |
+| :--- | :--- | :--- |
+| Surface Control | `--surface` | Inactive input background |
+| Control Border | `--control-border` | 1px border around field container |
+| Focus Ring | `--focus` | 2px high-contrast outline on active segment / container |
+| Segment Highlight | `--selected` (`#e7edff`) | Active highlighted segment background |
+| Error Status | `--error` (`#DC2626`) | Border and indicator on invalid time |
+| Valid Status | `--success` (`#246343`) | Success badge and confirmed indicator |
+| Geometry Radius | `--radius-md` | 6px rounded input container geometry |
