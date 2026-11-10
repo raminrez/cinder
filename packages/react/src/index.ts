@@ -66,6 +66,20 @@ export type {
   SelectRootProps,
   ComboBoxRootProps,
 } from "./selection";
+export {
+  TokenField,
+  TokenFieldContext,
+  useTokenFieldContext,
+  TokenFieldValue,
+} from "./token-field";
+export type {
+  TokenFieldProps,
+  TokenFieldRootProps,
+  TokenInputProps,
+  TokenProps,
+  TokenSegment,
+  TokenFieldContextValue,
+} from "./token-field";
 export { Popover, Modal, Dialog, Tooltip, OverflowMenu } from "./overlays";
 export type {
   PopoverProps,
@@ -74,6 +88,23 @@ export type {
   TooltipProps,
   OverflowMenuProps,
 } from "./overlays";
+export {
+  CommandPalette,
+  CommandPaletteContext,
+  useCommandPaletteContext,
+} from "./command-palette";
+export type {
+  CommandPaletteProps,
+  CommandPaletteRootProps,
+  CommandPaletteDialogProps,
+  CommandPaletteInputProps,
+  CommandPaletteListProps,
+  CommandPaletteGroupProps,
+  CommandPaletteItemProps,
+  CommandPaletteEmptyProps,
+  CommandPaletteFooterProps,
+  CommandPaletteContextValue,
+} from "./command-palette";
 export { Drawer } from "./drawer";
 export type {
   DrawerProps,
