@@ -339,3 +339,43 @@ export const LongContentAndLocales: Story = {
     expect(input).toHaveValue("شیراز (مرکز داده پارس)");
   },
 };
+
+export const DynamicItemCreation: Story = {
+  render: () => {
+    const [items, setItems] = useState([
+      { id: "react", name: "React" },
+      { id: "vue", name: "Vue" },
+      { id: "svelte", name: "Svelte" },
+    ]);
+    const [selected, setSelected] = useState<Key | null>(null);
+
+    return (
+      <div style={{ maxWidth: 360 }}>
+        <ComboBox
+          label="Project framework"
+          placeholder="Search or create framework..."
+          items={items}
+          allowCreateItem={true}
+          onCreateItem={(val) => {
+            const newItem = { id: val.toLowerCase().replace(/\s+/g, "-"), name: val };
+            setItems((prev) => [...prev, newItem]);
+            setSelected(newItem.id);
+          }}
+          selectedKey={selected}
+          onSelectionChange={setSelected}
+        >
+          {(item) => (
+            <ListBoxItem id={item.id} textValue={item.name}>
+              {item.name}
+            </ListBoxItem>
+          )}
+        </ComboBox>
+      </div>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("combobox", { name: "Project framework" });
+    expect(input).toBeInTheDocument();
+  },
+};
