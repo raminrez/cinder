@@ -1,0 +1,169 @@
+---
+title: Divider
+description: Visual rule separating distinct sections of content or interface elements.
+---
+
+# Divider
+
+Dividers are visual rules that separate distinct groups of content, interface controls, or page sections. Hashti's `Divider` component is built on [React Aria Components Separator](https://react-spectrum.adobe.com/react-aria/Separator.html), offering both horizontal and vertical orientations, text label insertions (e.g. "Or continue with"), and accessibility control over semantic vs. decorative separation.
+
+---
+
+## Architectural Context
+
+In classical Persian architectural masonry, subtle course banding (*hazartaf* or frieze borders) marks the transition between structural brick arches and ornamental plaster. Similarly, Hashti's `Divider` introduces structural order without visual clutter:
+
+```
+[Section A]  ─────── Horizontal Divider ───────  [Section B]
+
+[Button A]  │ Vertical Divider │  [Button B]
+```
+
+- **Horizontal & Vertical Orientations**: Adapts cleanly to both stacked column layouts and inline horizontal toolbars.
+- **Labeled Separation**: Supports centered textual chips (e.g. "OR") for multi-provider authentication flows or form phase transitions.
+- **Semantic vs. Decorative**: Respects screen reader document hierarchy by allowing pure visual dividers to be marked `decorative`, removing noisy separators from the accessibility tree.
+
+---
+
+## Import
+
+```tsx
+import { Divider } from "@cinder/react";
+import type { DividerProps } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Horizontal Divider
+
+The default divider creates a 1px architectural rule spanning the horizontal width of its container:
+
+```tsx
+import { Divider } from "@cinder/react";
+
+export function HorizontalDividerDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-md">
+      <div>
+        <h4 className="font-medium text-sm">Cluster Configuration</h4>
+        <p className="text-xs text-neutral-500">Manage regional ingress rules and proxy zones.</p>
+      </div>
+
+      <Divider />
+
+      <div>
+        <h4 className="font-medium text-sm">DNS Records</h4>
+        <p className="text-xs text-neutral-500">Manage authoritative nameservers and CNAME mapping.</p>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+### Labeled Divider (Authentication Flow)
+
+Place a text label or badge directly within a horizontal divider using the `label` prop:
+
+```tsx
+import { Divider, Button } from "@cinder/react";
+
+export function LabeledDividerDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <Button variant="primary" className="w-full">
+        Sign in with Corporate SSO
+      </Button>
+
+      <Divider label="or continue with email" />
+
+      <input
+        type="email"
+        placeholder="admin@enterprise.com"
+        className="rounded border border-neutral-300 dark:border-neutral-700 px-3 py-2 text-sm"
+      />
+      <Button variant="secondary" className="w-full">
+        Continue
+      </Button>
+    </div>
+  );
+}
+```
+
+---
+
+### Vertical Divider (Toolbar Integration)
+
+In horizontal toolbars and button bars, set `orientation="vertical"` to visually partition groupings of tools:
+
+```tsx
+import { Divider, Button, Icon } from "@cinder/react";
+
+export function VerticalDividerDemo() {
+  return (
+    <div className="inline-flex items-center gap-2 p-1.5 border border-neutral-200 dark:border-neutral-800 rounded-lg">
+      <Button variant="ghost" size="sm" iconOnly aria-label="Format bold">
+        <Icon name="bold" size={16} />
+      </Button>
+      <Button variant="ghost" size="sm" iconOnly aria-label="Format italic">
+        <Icon name="italic" size={16} />
+      </Button>
+
+      <Divider orientation="vertical" className="h-5" />
+
+      <Button variant="ghost" size="sm" iconOnly aria-label="Align left">
+        <Icon name="alignLeft" size={16} />
+      </Button>
+      <Button variant="ghost" size="sm" iconOnly aria-label="Align center">
+        <Icon name="alignCenter" size={16} />
+      </Button>
+    </div>
+  );
+}
+```
+
+---
+
+### Decorative vs. Semantic Separators
+
+By default, dividers are semantic separators (`role="separator"`). When a divider is purely cosmetic and should not be announced by screen readers, set `decorative={true}`:
+
+```tsx
+import { Divider } from "@cinder/react";
+
+export function DecorativeDividerDemo() {
+  return (
+    <div className="flex flex-col gap-2">
+      <p className="text-sm">Summary paragraph 1</p>
+      <Divider decorative />
+      <p className="text-sm">Summary paragraph 2</p>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+`Divider` extends `RACSeparatorProps` from `react-aria-components`.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Axis of the divider rule. |
+| `label` | `ReactNode` | — | Textual label or node displayed centered within a horizontal divider. |
+| `decorative` | `boolean` | `false` | When true, renders with `role="none"` so screen readers ignore it. |
+| `className` | `string` | — | Additional CSS classes for custom width, height, or spacing. |
+| `slot` | `string` | — | React Aria slot name when composed inside menus or popovers. |
+
+---
+
+## Accessibility & Screen Reader Guidance
+
+- **Semantic Role**: When `decorative` is omitted or false, renders `role="separator"` and informs screen readers that a content boundary exists.
+- **Orientation Announcement**: Supplies `aria-orientation="horizontal"` or `aria-orientation="vertical"`.
+- **Labeled Dividers**: When `label` is provided on a horizontal divider, the component renders a semantic separator container around the textual content, ensuring the text remains legible and discoverable by assistive technologies.
+- **Decorative Use**: Whenever a visual line is used strictly for aesthetics and doesn't separate distinct semantic sections, use `decorative={true}` to prevent screen reader clutter.

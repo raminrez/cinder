@@ -1,0 +1,185 @@
+---
+title: Popover
+description: Floating panel anchored to a trigger element for contextual actions, filters, or additional data.
+---
+
+# Popover
+
+The **Popover** component displays a floating overlay anchored directly to an initiating trigger element (such as a button). It is engineered for contextual options, interactive mini-forms, detail flyouts, and spatial pickers without requiring a full-page modal takeover.
+
+In Hashti's architectural philosophy, a Popover functions like an arched niche (*taqcheh*) set into a corridor wall—providing immediate utility right at hand without forcing the traveler to diverge from their primary path.
+
+---
+
+## Import
+
+```tsx
+import { Popover, DialogTrigger, Dialog, Button, Heading } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Popover
+
+Pair `<DialogTrigger>` with a `<Button>`, `<Popover>`, and `<Dialog>`:
+
+```tsx
+import { Popover, DialogTrigger, Dialog, Button, Heading } from "@cinder/react";
+
+export function BasicPopoverDemo() {
+  return (
+    <DialogTrigger>
+      <Button variant="secondary">Architectural Notes</Button>
+      <Popover>
+        <Dialog>
+          {({ close }) => (
+            <div className="p-4 flex flex-col gap-2 max-w-xs">
+              <Heading slot="title" className="font-semibold text-base">
+                Hashti Spatial Geometry
+              </Heading>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Octagonal vestibules typically feature shallow dome vaults (*karbandi*)
+                decorated with geometric plasterwork or exposed brickwork.
+              </p>
+              <div className="pt-2 flex justify-end">
+                <Button size="sm" variant="ghost" onPress={close}>
+                  Dismiss
+                </Button>
+              </div>
+            </div>
+          )}
+        </Dialog>
+      </Popover>
+    </DialogTrigger>
+  );
+}
+```
+
+### Placement Variants
+
+Use the `placement` prop to position the popover relative to its anchor. Available placements include `'top'`, `'bottom'`, `'left'`, `'right'`, along with alignment variations like `'bottom start'`, `'top end'`, etc.:
+
+```tsx
+import { Popover, DialogTrigger, Dialog, Button } from "@cinder/react";
+
+export function PlacementsDemo() {
+  return (
+    <div className="flex flex-wrap gap-4 py-8 items-center justify-center">
+      <DialogTrigger>
+        <Button variant="secondary">Top Popover</Button>
+        <Popover placement="top">
+          <Dialog className="p-3 text-sm">Floating above the trigger</Dialog>
+        </Popover>
+      </DialogTrigger>
+
+      <DialogTrigger>
+        <Button variant="secondary">Bottom Popover</Button>
+        <Popover placement="bottom">
+          <Dialog className="p-3 text-sm">Floating below the trigger</Dialog>
+        </Popover>
+      </DialogTrigger>
+
+      <DialogTrigger>
+        <Button variant="secondary">Left Popover</Button>
+        <Popover placement="left">
+          <Dialog className="p-3 text-sm">Floating to the left</Dialog>
+        </Popover>
+      </DialogTrigger>
+
+      <DialogTrigger>
+        <Button variant="secondary">Right Popover</Button>
+        <Popover placement="right">
+          <Dialog className="p-3 text-sm">Floating to the right</Dialog>
+        </Popover>
+      </DialogTrigger>
+    </div>
+  );
+}
+```
+
+### Offset Spacing & Arrow Pointer
+
+Customize spacing with `offset` (distance from trigger) and `crossOffset` (shift along trigger edge):
+
+```tsx
+import { Popover, DialogTrigger, Dialog, Button } from "@cinder/react";
+
+export function CustomOffsetDemo() {
+  return (
+    <DialogTrigger>
+      <Button variant="secondary">Spaced Popover (offset=16)</Button>
+      <Popover offset={16} crossOffset={10}>
+        <Dialog className="p-4 text-sm max-w-xs">
+          This popover sits 16px away from the trigger with a 10px lateral offset.
+        </Dialog>
+      </Popover>
+    </DialogTrigger>
+  );
+}
+```
+
+### Contextual Quick Actions
+
+Popovers are ideal for quick multi-option toggles or filter panels:
+
+```tsx
+import { useState } from "react";
+import { Popover, DialogTrigger, Dialog, Button, Heading, Switch } from "@cinder/react";
+
+export function QuickSettingsPopover() {
+  const [wireframe, setWireframe] = useState(false);
+  const [contours, setContours] = useState(true);
+
+  return (
+    <DialogTrigger>
+      <Button variant="ghost">Viewport Layers</Button>
+      <Popover placement="bottom start">
+        <Dialog>
+          <div className="p-4 flex flex-col gap-3 min-w-[200px]">
+            <Heading slot="title" className="text-xs font-bold uppercase tracking-wider text-gray-500">
+              Layer Visibility
+            </Heading>
+            <div className="flex flex-col gap-2">
+              <Switch isSelected={wireframe} onChange={setWireframe}>
+                Wireframe Mesh
+              </Switch>
+              <Switch isSelected={contours} onChange={setContours}>
+                Topographic Contours
+              </Switch>
+            </div>
+          </div>
+        </Dialog>
+      </Popover>
+    </DialogTrigger>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `placement` | `Placement` | `'bottom'` | Anchor placement (`'top'`, `'bottom'`, `'left'`, `'right'`, `'bottom start'`, etc.). |
+| `offset` | `number` | `8` | Distance in pixels between the popover edge and trigger anchor. |
+| `crossOffset` | `number` | `0` | Lateral shift in pixels along the trigger axis. |
+| `isOpen` | `boolean` | — | Controlled open visibility state. |
+| `onOpenChange` | `(isOpen: boolean) => void` | — | Handler invoked when open/close state transitions. |
+| `shouldFlip` | `boolean` | `true` | Automatically flips placement to opposite edge if viewport space is insufficient. |
+| `containerPadding` | `number` | `8` | Minimum distance in pixels from the viewport boundary. |
+| `isNonModal` | `boolean` | `false` | When true, page interaction behind the popover remains enabled. |
+| `children` | `ReactNode` | — | Popover content, typically a `<Dialog>` element. |
+
+---
+
+## Accessibility
+
+- **Keyboard Dismissal**: Pressing <kbd>Esc</kbd> closes the popover immediately and returns focus smoothly to the initiating trigger button.
+- **Focus Management**:
+  - In modal popovers (default), focus is trapped inside the popover dialog while open.
+  - In non-modal popovers (`isNonModal={true}`), users can interact with elements on the page while the popover remains open until dismissed.
+- **Collision Avoidance**: Uses real-time boundary detection (`shouldFlip={true}`) to prevent content from rendering off-screen on small mobile viewports.
+- **Trigger ARIA Attributes**: The trigger automatically receives `aria-haspopup="dialog"`, `aria-expanded="false|true"`, and `aria-controls` referencing the popover dialog.

@@ -1,0 +1,283 @@
+---
+title: Text Field & Text Area
+description: Text inputs for single-line or multi-line textual and alphanumeric data entry.
+---
+
+# Text Field & Text Area
+
+The **TextField** and **TextArea** components provide accessible, tactile textual input fields for single-line or multi-line data capture. In Hashti's architectural design system, inputs are treated as welcoming thresholds—reminiscent of the *dalan* corridor leading from the outer portal to inner spaces—providing unambiguous cues, comfortable padding, and seamless bilingual support for both LTR and RTL scripts.
+
+Both components are built on top of [React Aria Components](https://react-spectrum.adobe.com/react-aria/TextField.html) and inherit robust state management, high-contrast focus indicators, integrated status messaging, and complete accessibility guarantees.
+
+---
+
+## Import
+
+```tsx
+import { TextField, TextArea } from "@cinder/react";
+```
+
+You can also import sub-parts for custom compositional layouts:
+
+```tsx
+import {
+  TextField,
+  TextArea,
+  FieldLabel,
+  FieldDescription,
+  FieldErrorMessage,
+  FieldInput,
+  FieldTextArea,
+  FieldControl,
+} from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Text Field
+
+A standard text field consists of an input box with a label, optional helper description, and automated error message wiring.
+
+```tsx
+import { TextField } from "@cinder/react";
+
+export function BasicTextFieldDemo() {
+  return (
+    <TextField
+      label="Full Name"
+      placeholder="e.g. Parisa Rahimi"
+      description="Enter your legal name as it appears on official documents."
+    />
+  );
+}
+```
+
+### Control Sizes
+
+Hashti text inputs come in three standard heights: `sm` (32px), `md` (40px, default), and `lg` (48px).
+
+```tsx
+import { TextField } from "@cinder/react";
+
+export function SizesDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <TextField size="sm" label="Compact (sm)" placeholder="Small input" />
+      <TextField size="md" label="Default (md)" placeholder="Medium input" />
+      <TextField size="lg" label="Spacious (lg)" placeholder="Large input" />
+    </div>
+  );
+}
+```
+
+### Required & Optional Indicators
+
+You can mark a field as required or explicitly optional. When `isRequired` is set, an asterisk or required indicator is rendered and native HTML validation constraints are attached.
+
+```tsx
+import { TextField } from "@cinder/react";
+
+export function RequiredDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <TextField
+        label="Work Email"
+        isRequired
+        placeholder="alex@example.com"
+      />
+      <TextField
+        label="Secondary Phone"
+        isOptional
+        placeholder="+1 (555) 019-2834"
+      />
+    </div>
+  );
+}
+```
+
+### Validation & Status States
+
+Text fields support built-in validation states (`isInvalid`, `errorMessage`) as well as presentation status badges (`error`, `warning`, `success`).
+
+```tsx
+import { TextField } from "@cinder/react";
+
+export function StatusDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      {/* Valid / Success State */}
+      <TextField
+        label="Username"
+        defaultValue="parisa_r"
+        status={{
+          type: "success",
+          message: "Username is available for registration.",
+        }}
+      />
+
+      {/* Warning State */}
+      <TextField
+        label="Password"
+        type="password"
+        defaultValue="summer2026!"
+        status={{
+          type: "warning",
+          message: "Password strength is moderate. Consider adding special characters.",
+        }}
+      />
+
+      {/* Invalid / Error State */}
+      <TextField
+        label="Email Address"
+        defaultValue="invalid-email@"
+        isInvalid
+        errorMessage="Please enter a valid email address containing an @ domain."
+      />
+    </div>
+  );
+}
+```
+
+### Disabled & Read-Only States
+
+Disabled fields prevent interaction and are grayed out. Read-only fields allow text selection and copying without permitting modification.
+
+```tsx
+import { TextField } from "@cinder/react";
+
+export function DisabledReadOnlyDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <TextField
+        label="API Endpoint"
+        defaultValue="https://api.hashti.design/v1/telemetry"
+        isReadOnly
+        description="Assigned endpoint for your current environment."
+      />
+      <TextField
+        label="Organization ID"
+        defaultValue="org_9874123"
+        isDisabled
+        description="Contact your workspace administrator to modify this ID."
+      />
+    </div>
+  );
+}
+```
+
+### Text Area (Multi-line)
+
+The `TextArea` component shares the exact same API and styling model as `TextField`, but renders a multi-line `<textarea>` with a customizable `rows` property.
+
+```tsx
+import { TextArea } from "@cinder/react";
+
+export function TextAreaDemo() {
+  return (
+    <TextArea
+      label="Project Architectural Rationale"
+      placeholder="Describe the cultural and structural considerations for this space..."
+      description="Provide up to 500 characters of contextual background."
+      rows={5}
+    />
+  );
+}
+```
+
+### Bilingual & RTL Support (Persian / Arabic)
+
+Hashti is engineered from the ground up for right-to-left (RTL) scripts such as Persian (*Farsi*) and Arabic. When placed in an RTL container or passed `dir="rtl"`, text alignment, padding, icons, and error indicators mirror seamlessly.
+
+```tsx
+import { TextField, TextArea } from "@cinder/react";
+
+export function RTLTextFieldDemo() {
+  return (
+    <div dir="rtl" className="flex flex-col gap-4 max-w-md font-sans">
+      <TextField
+        label="نام و نام خانوادگی"
+        placeholder="مثال: سهراب سپهری"
+        description="نام کامل خود را مطابق با کارت ملی وارد نمایید."
+      />
+      <TextArea
+        label="توضیحات طرح معماری"
+        placeholder="ویژگی‌های هشتی، حیاط مرکزی و ایوان را تشریح کنید..."
+        rows={4}
+      />
+    </div>
+  );
+}
+```
+
+### Compositional Pattern
+
+For advanced layouts requiring custom input prefixes, suffixes, or inline actions, use the compound sub-parts:
+
+```tsx
+import { TextField, Icon, Button } from "@cinder/react";
+
+export function CompositionalDemo() {
+  return (
+    <TextField.Root>
+      <TextField.Label>Custom Token Field</TextField.Label>
+      <TextField.Control>
+        <span className="text-gray-400 px-2 text-sm select-none">hash_</span>
+        <TextField.Input placeholder="abc123xyz" />
+        <Button variant="ghost" size="sm" iconOnly aria-label="Copy token">
+          <Icon name="copy" />
+        </Button>
+      </TextField.Control>
+      <TextField.Help>
+        <TextField.Description>Secret key for webhook verification.</TextField.Description>
+      </TextField.Help>
+    </TextField.Root>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### TextField Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `ReactNode` | — | Accessible label for the input element. |
+| `description` | `ReactNode` | — | Supplementary description or guidance text. |
+| `errorMessage` | `ReactNode \| ((v: ValidationResult) => ReactNode)` | — | Error message displayed when `isInvalid` is true. |
+| `value` | `string` | — | Controlled value for the input. |
+| `defaultValue` | `string` | — | Default value for uncontrolled usage. |
+| `onChange` | `(value: string) => void` | — | Handler invoked when the input value changes. |
+| `placeholder` | `string` | — | Placeholder text displayed when input is empty. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and typographic scale of the input control. |
+| `isInvalid` | `boolean` | `false` | Whether the input is in an invalid error state. |
+| `isRequired` | `boolean` | `false` | Whether the input is required before form submission. |
+| `isOptional` | `boolean` | `false` | Renders an optional badge next to the field label. |
+| `isDisabled` | `boolean` | `false` | Whether the input is disabled from user interaction. |
+| `isReadOnly` | `boolean` | `false` | Whether the input is read-only. |
+| `labelTooltip` | `ReactNode` | — | Renders an informational tooltip icon beside the label. |
+| `status` | `FieldStatus` | — | Status presentation object (`{ type: 'warning' \| 'error' \| 'success', message?: ReactNode }`). |
+| `statusVariant`| `'attached' \| 'detached'` | `'attached'` | Layout variant for the status indicator message. |
+| `type` | `string` | `'text'` | Standard HTML input type (`'text'`, `'email'`, `'password'`, `'url'`, etc.). |
+| `inputRef` | `Ref<HTMLInputElement>` | — | Forwarded ref to the underlying HTML `<input>` element. |
+
+### TextArea Props
+
+In addition to the props above, `TextArea` accepts:
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `rows` | `number` | `4` | Number of visible text lines in the textarea control. |
+| `inputRef` | `Ref<HTMLTextAreaElement>` | — | Forwarded ref to the underlying HTML `<textarea>` element. |
+
+---
+
+## Accessibility
+
+- **W3C WAI-ARIA Form Semantics**: TextField automatically generates unique IDs associating the `<label>`, `<input>`, `<small>` description, and error message via `aria-labelledby` and `aria-describedby`.
+- **Validation Linking**: When `isInvalid` is true, the input receives `aria-invalid="true"` and assistive technology automatically reads the error message upon focusing the field.
+- **Contrast**: Text, border lines, and focus outlines adhere to WCAG 2.2 AAA standards with a minimum 7:1 contrast ratio against the background layer.
+- **RTL & Dual Engine**: Automatically aligns cursor, text selection, and clear indicators with Arabic and Persian script standards.

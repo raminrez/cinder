@@ -1,0 +1,157 @@
+---
+title: Keyboard Key (Kbd)
+description: Inline visual representation of keyboard keys and shortcut combinations.
+---
+
+# Keyboard Key (Kbd)
+
+The `Kbd` component renders styled visual representations of keyboard keys and shortcut combinations. It features automatic operating system detection (rendering Apple symbols like `⌘`, `⌥`, `⇧` on macOS and words like `Ctrl`, `Alt`, `Shift` on Windows and Linux), standard key normalization, and semantic HTML `<kbd>` tag outputs.
+
+---
+
+## Architectural Purpose
+
+In technical application interfaces, keyboard shortcuts empower power users to traverse views with speed and efficiency. The Hashti `Kbd` component provides an unmistakable visual indicator that resembles a physical keycap:
+
+```
+┌───────┐ ┌───────┐
+│   ⌘   │ │   K   │  (Mac)
+└───────┘ └───────┘
+
+┌────────┐ ┌───────┐
+│  Ctrl  │ │   K   │  (Windows / Linux)
+└────────┘ └───────┘
+```
+
+- **Platform-Aware Normalization**: Automatically switches symbols based on user operating system (`isMac`). You pass `keys={["mod", "k"]}` and Hashti outputs `⌘ K` on Mac or `Ctrl K` on Windows.
+- **Keycap Styling**: Tactile borders, subtle background elevations, and monospaced typography reflecting physical keys.
+- **Composable in Menus & Search Fields**: Pairs cleanly with search inputs, command palettes, and dropdown action items.
+
+---
+
+## Import
+
+```tsx
+import { Kbd } from "@cinder/react";
+import type { KbdProps } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Single Key
+
+Render a single key by passing a string to `keys` or as direct `children`:
+
+```tsx
+import { Kbd } from "@cinder/react";
+
+export function SingleKeyDemo() {
+  return (
+    <div className="flex items-center gap-3">
+      <span>Press</span>
+      <Kbd keys="escape" />
+      <span>to dismiss the active modal.</span>
+    </div>
+  );
+}
+```
+
+---
+
+### Key Combinations
+
+Pass an array of keys to `keys` to render a grouped combination:
+
+```tsx
+import { Kbd } from "@cinder/react";
+
+export function KeyCombinationDemo() {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center justify-between p-3 border border-neutral-200 dark:border-neutral-800 rounded-lg max-w-sm">
+        <span className="text-sm">Global Command Palette</span>
+        <Kbd keys={["mod", "k"]} />
+      </div>
+
+      <div className="flex items-center justify-between p-3 border border-neutral-200 dark:border-neutral-800 rounded-lg max-w-sm">
+        <span className="text-sm">Format Document</span>
+        <Kbd keys={["shift", "alt", "f"]} />
+      </div>
+
+      <div className="flex items-center justify-between p-3 border border-neutral-200 dark:border-neutral-800 rounded-lg max-w-sm">
+        <span className="text-sm">Force Refresh Cache</span>
+        <Kbd keys={["mod", "shift", "r"]} />
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+### In Search Fields & Toolbars
+
+Embed `Kbd` inside search field adornments to advertise global hotkeys:
+
+```tsx
+import { Kbd, Icon } from "@cinder/react";
+
+export function SearchFieldWithKbdDemo() {
+  return (
+    <div className="relative flex items-center max-w-md w-full">
+      <Icon name="search" size={16} className="absolute left-3 text-neutral-400" />
+      <input
+        type="text"
+        placeholder="Search documentation..."
+        className="w-full pl-9 pr-14 py-2 text-sm bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <div className="absolute right-2.5">
+        <Kbd keys={["mod", "k"]} />
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Supported Key Tokens
+
+When using the `keys` prop, Hashti recognizes the following standard keywords:
+
+| Keyword | macOS Symbol | Windows / Linux Label |
+| :--- | :--- | :--- |
+| `'mod'` / `'meta'` / `'cmd'` | `⌘` (Command) | `Ctrl` |
+| `'ctrl'` / `'control'` | `⌃` (Control) | `Ctrl` |
+| `'alt'` / `'option'` | `⌥` (Option) | `Alt` |
+| `'shift'` | `⇧` (Shift) | `Shift` |
+| `'enter'` / `'return'` | `↵` | `Enter` |
+| `'escape'` / `'esc'` | `Esc` | `Esc` |
+| `'backspace'` | `⌫` | `Backspace` |
+| `'delete'` | `⌦` | `Del` |
+| `'tab'` | `⇥` | `Tab` |
+| `'up'` / `'down'` / `'left'` / `'right'` | `↑` `↓` `←` `→` | `↑` `↓` `←` `→` |
+
+Single letters (such as `'k'`, `'p'`, `'s'`) are automatically capitalized (`K`, `P`, `S`).
+
+---
+
+## Props Reference
+
+`Kbd` extends `ComponentPropsWithRef<'kbd'>`.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `keys` | `string \| string[]` | — | Keyword token or list of tokens to normalize and format into keycaps. |
+| `children` | `ReactNode` | — | Custom key content rendered if `keys` is not provided. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility Guidance
+
+- **Semantic HTML Tag**: Renders a native `<kbd>` element, which is the official W3C HTML element for identifying user keyboard input.
+- **Screen Reader Readability**: Screen readers announce `<kbd>` content as text. Using standard key words and symbols ensures text-to-speech engines can enunciate the shortcut (e.g. "Command K").
+- **Contrast Ratios**: The keycap border and text colors adhere to WCAG 2.2 AAA specifications against both light and dark application backgrounds.

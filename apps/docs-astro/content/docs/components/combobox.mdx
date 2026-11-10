@@ -1,0 +1,228 @@
+---
+title: ComboBox
+description: Autocomplete input combining a text field with a filtered popup listbox for quick lookups.
+---
+
+# ComboBox
+
+The **ComboBox** component merges a single-line text input with a filtered dropdown listbox. Users can either type directly to filter through available options or click the dropdown trigger to browse the full set.
+
+ComboBox is particularly suited for high-density forms, long dataset lookups (such as geographic regions, currencies, or user directories), and cases where custom values can optionally be typed.
+
+---
+
+## Import
+
+```tsx
+import { ComboBox, ListBoxItem } from "@cinder/react";
+```
+
+Sub-parts for advanced composition:
+
+```tsx
+import {
+  ComboBox,
+  FieldControl,
+  FieldGroupInput,
+  FieldButton,
+  Popover,
+  ListBox,
+} from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Autocomplete Filtering
+
+A standard ComboBox that automatically filters suggestions matching the user's typed input:
+
+```tsx
+import { ComboBox, ListBoxItem } from "@cinder/react";
+
+export function BasicComboBoxDemo() {
+  return (
+    <div className="max-w-xs">
+      <ComboBox label="Persian UNESCO World Heritage Site" placeholder="Type to search...">
+        <ListBoxItem id="persepolis">Persepolis (تخت جمشید)</ListBoxItem>
+        <ListBoxItem id="naqsh-e-jahan">Naqsh-e Jahan Square (میدان نقش جهان)</ListBoxItem>
+        <ListBoxItem id="pasargadae">Pasargadae (پاسارگاد)</ListBoxItem>
+        <ListBoxItem id="yazd">Historic City of Yazd (شهر تاریخی یزد)</ListBoxItem>
+        <ListBoxItem id="golestan">Golestan Palace (کاخ گلستان)</ListBoxItem>
+        <ListBoxItem id="chogha-zanbil">Chogha Zanbil (چغازنبیل)</ListBoxItem>
+      </ComboBox>
+    </div>
+  );
+}
+```
+
+### Controlled Input & Selection
+
+Track both the typed text (`inputValue`) and the selected key (`selectedKey`):
+
+```tsx
+import { useState } from "react";
+import { ComboBox, ListBoxItem } from "@cinder/react";
+import type { Key } from "react-aria-components";
+
+export function ControlledComboBoxDemo() {
+  const [selectedKey, setSelectedKey] = useState<Key | null>(null);
+  const [inputValue, setInputValue] = useState("");
+
+  return (
+    <div className="max-w-xs flex flex-col gap-3">
+      <ComboBox
+        label="Select Artisan Workshop"
+        placeholder="Search workshops..."
+        selectedKey={selectedKey}
+        onSelectionChange={setSelectedKey}
+        inputValue={inputValue}
+        onInputChange={setInputValue}
+        description="Choose or type a workshop location."
+      >
+        <ListBoxItem id="isfahan-tile">Isfahan Glazed Tile Atelier</ListBoxItem>
+        <ListBoxItem id="kashan-rose">Kashan Rosewater Distillery</ListBoxItem>
+        <ListBoxItem id="shiraz-carpet">Shiraz Nomadic Carpet Loom</ListBoxItem>
+        <ListBoxItem id="yazd-silk">Yazd Termeh Silk Weaving</ListBoxItem>
+      </ComboBox>
+      <div className="text-xs text-gray-500">
+        Selected Key: <b>{String(selectedKey ?? "none")}</b> | Input: <b>"{inputValue}"</b>
+      </div>
+    </div>
+  );
+}
+```
+
+### Allowing Custom Values
+
+Set `allowsCustomValue` to enable users to type and submit free-form text that isn't present in the list of suggestions:
+
+```tsx
+import { ComboBox, ListBoxItem } from "@cinder/react";
+
+export function CustomValueComboBoxDemo() {
+  return (
+    <div className="max-w-xs">
+      <ComboBox
+        label="Project Tag / Category"
+        placeholder="Pick existing or type new..."
+        allowsCustomValue
+        description="Select an existing architectural category or type your own."
+      >
+        <ListBoxItem id="restoration">Restoration</ListBoxItem>
+        <ListBoxItem id="vernacular">Vernacular</ListBoxItem>
+        <ListBoxItem id="sustainability">Sustainability</ListBoxItem>
+        <ListBoxItem id="structural">Structural Masonry</ListBoxItem>
+      </ComboBox>
+    </div>
+  );
+}
+```
+
+### Custom Item Rendering with Descriptions
+
+ListBox items can render custom layouts including secondary titles, status badges, and metadata:
+
+```tsx
+import { ComboBox, ListBoxItem } from "@cinder/react";
+
+interface Member {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+}
+
+const MEMBERS: Member[] = [
+  { id: "1", name: "Darius Jamshidi", role: "Principal Architect", department: "Restoration" },
+  { id: "2", name: "Anahita Moradi", role: "Structural Engineer", department: "Vaulting" },
+  { id: "3", name: "Cyrus Tavakoli", role: "Materials Specialist", department: "Ceramics" },
+];
+
+export function RichItemComboBoxDemo() {
+  return (
+    <div className="max-w-sm">
+      <ComboBox
+        label="Assign Team Lead"
+        items={MEMBERS}
+        placeholder="Filter by name or role..."
+      >
+        {(member) => (
+          <ListBoxItem id={member.id} textValue={member.name}>
+            <div className="flex flex-col py-1">
+              <span className="font-semibold text-sm">{member.name}</span>
+              <span className="text-xs text-gray-500">
+                {member.role} • {member.department}
+              </span>
+            </div>
+          </ListBoxItem>
+        )}
+      </ComboBox>
+    </div>
+  );
+}
+```
+
+### Validation Error State
+
+```tsx
+import { ComboBox, ListBoxItem } from "@cinder/react";
+
+export function InvalidComboBoxDemo() {
+  return (
+    <div className="max-w-xs">
+      <ComboBox
+        label="Geographic Zone"
+        placeholder="Select zone..."
+        isInvalid
+        errorMessage="Please select an approved conservation zone."
+      >
+        <ListBoxItem id="zone-a">Zone A: Central Historic Core</ListBoxItem>
+        <ListBoxItem id="zone-b">Zone B: Buffer Perimeter</ListBoxItem>
+      </ComboBox>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `Iterable<T>` | — | Dynamic list of items for autocomplete. |
+| `selectedKey` | `Key \| null` | — | Currently selected item key (controlled). |
+| `defaultSelectedKey` | `Key` | — | Initially selected item key (uncontrolled). |
+| `onSelectionChange` | `(key: Key \| null) => void` | — | Callback fired when an item is selected. |
+| `inputValue` | `string` | — | Text content within the input field (controlled). |
+| `defaultInputValue` | `string` | — | Default text content for the input field. |
+| `onInputChange` | `(value: string) => void` | — | Callback fired as the user types into the input. |
+| `allowsCustomValue` | `boolean` | `false` | When true, accepts free-form text outside the suggested options. |
+| `placeholder` | `string` | — | Placeholder text when the field is empty. |
+| `label` | `ReactNode` | — | Accessible label for the input. |
+| `description` | `ReactNode` | — | Explanatory text beneath or above the control. |
+| `errorMessage` | `ReactNode` | — | Error text shown when `isInvalid` is true. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and control sizing. |
+| `isDisabled` | `boolean` | `false` | Whether the entire combobox is disabled. |
+| `isInvalid` | `boolean` | `false` | Whether validation has failed. |
+| `isRequired` | `boolean` | `false` | Marks the combobox as mandatory for submission. |
+| `disabledKeys` | `Iterable<Key>` | — | Keys of specific options that should be disabled. |
+
+---
+
+## Accessibility
+
+ComboBox complies with the **WAI-ARIA 1.2 Combobox with Listbox Popup** design pattern:
+
+- **Keyboard Interaction**:
+  - <kbd>↓</kbd> opens the popup listbox and focuses the first item.
+  - <kbd>↑</kbd> and <kbd>↓</kbd> navigate between matching suggestions.
+  - <kbd>Enter</kbd> commits the highlighted suggestion into the input and closes the popup.
+  - <kbd>Esc</kbd> closes the dropdown without modifying the input or clears the field.
+  - <kbd>Alt</kbd> + <kbd>↓</kbd> or clicking the disclosure button toggles the dropdown list.
+- **ARIA Structure**:
+  - The text input has `role="combobox"`, `aria-autocomplete="list"`, `aria-expanded="false|true"`, and `aria-controls` referencing the popup listbox.
+  - `aria-activedescendant` communicates the currently focused suggestion to assistive software without moving DOM focus out of the input.
+- **Screen Reader Support**: When options filter as the user types, screen readers announce the number of matching items automatically.

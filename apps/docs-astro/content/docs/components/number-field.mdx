@@ -1,0 +1,222 @@
+---
+title: Number Field
+description: Numeric input field featuring stepper decrement/increment controls, boundary constraints, and currency/percentage formatting.
+---
+
+# Number Field
+
+The **NumberField** component enables users to enter, increment, and decrement numeric values. It pairs a styled numeric text field with integrated tactile stepper buttons (`+` and `-`), supporting fine-grained constraints, step increments, and internationalized currency and percentage formatting.
+
+Like all Hashti components, NumberField reflects deliberate geometric proportions and provides full accessibility according to the W3C WAI-ARIA `spinbutton` pattern.
+
+---
+
+## Import
+
+```tsx
+import { NumberField } from "@cinder/react";
+```
+
+Compositional sub-components are also available:
+
+```tsx
+import {
+  NumberField,
+  FieldControl,
+  FieldGroupInput,
+  FieldButton,
+} from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Standard Number Field
+
+A standard NumberField includes an accessible label, an input area, and increment/decrement buttons.
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+export function StandardNumberFieldDemo() {
+  return (
+    <NumberField
+      label="Guest Count"
+      defaultValue={2}
+      description="Select the total number of overnight visitors."
+    />
+  );
+}
+```
+
+### Boundary Limits (Min & Max)
+
+Use `minValue` and `maxValue` to enforce safe bounds. Stepper buttons automatically disable when limits are reached, and out-of-range typing triggers validation feedback.
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+export function MinMaxDemo() {
+  return (
+    <NumberField
+      label="Room Occupancy"
+      defaultValue={1}
+      minValue={1}
+      maxValue={8}
+      description="Minimum 1 guest, maximum 8 guests."
+    />
+  );
+}
+```
+
+### Custom Step Intervals
+
+The `step` prop defines the increment and decrement amount. By default, step is `1`. For decimal or large-interval measurements, pass fractions or custom integers.
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+export function StepDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      {/* Fractional increments */}
+      <NumberField
+        label="Arch Thickness (meters)"
+        defaultValue={0.5}
+        step={0.25}
+        minValue={0.25}
+        maxValue={5.0}
+      />
+
+      {/* Large increments */}
+      <NumberField
+        label="Square Meters"
+        defaultValue={150}
+        step={10}
+        minValue={50}
+        maxValue={2000}
+      />
+    </div>
+  );
+}
+```
+
+### Internationalized Currency Formatting
+
+Using the `formatOptions` property (powered by JavaScript's `Intl.NumberFormat`), you can format inputs in any currency while preserving numeric parsing under the hood.
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+export function CurrencyDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      {/* US Dollar */}
+      <NumberField
+        label="Nightly Rate (USD)"
+        defaultValue={120}
+        formatOptions={{
+          style: "currency",
+          currency: "USD",
+          currencyDisplay: "symbol",
+        }}
+      />
+
+      {/* Euro */}
+      <NumberField
+        label="Service Deposit (EUR)"
+        defaultValue={50}
+        formatOptions={{
+          style: "currency",
+          currency: "EUR",
+          currencyDisplay: "symbol",
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Percentage Formatting
+
+Format ratios or commission percentages with automatic multiplication by 100 and localized percent symbols:
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+export function PercentageDemo() {
+  return (
+    <NumberField
+      label="Preservation Discount"
+      defaultValue={0.15}
+      step={0.01}
+      minValue={0}
+      maxValue={1}
+      formatOptions={{
+        style: "percent",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }}
+    />
+  );
+}
+```
+
+### Sizes & Disabled State
+
+NumberField supports Hashti's standard control sizes (`sm`, `md`, `lg`) and full disablement:
+
+```tsx
+import { NumberField } from "@cinder/react";
+
+export function StatesDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <NumberField size="sm" label="Small (sm)" defaultValue={10} />
+      <NumberField size="md" label="Medium (md)" defaultValue={25} />
+      <NumberField size="lg" label="Large (lg)" defaultValue={50} />
+      <NumberField
+        label="Locked Allocation"
+        defaultValue={100}
+        isDisabled
+        description="Quota allocation is managed by project owners."
+      />
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `number` | — | The controlled numerical value. |
+| `defaultValue` | `number` | — | The default numerical value for uncontrolled usage. |
+| `onChange` | `(value: number) => void` | — | Callback invoked with the parsed numeric value upon change. |
+| `minValue` | `number` | — | The minimum permissible value. |
+| `maxValue` | `number` | — | The maximum permissible value. |
+| `step` | `number` | `1` | The amount to increment or decrement per step. |
+| `formatOptions` | `Intl.NumberFormatOptions` | — | Formatting options for currency, percentage, decimals, or units. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and control sizing of the input and buttons. |
+| `label` | `ReactNode` | — | Accessible field label. |
+| `description` | `ReactNode` | — | Explanatory helper text beneath or above the control. |
+| `errorMessage` | `ReactNode` | — | Error text rendered when in an invalid state. |
+| `isInvalid` | `boolean` | `false` | Whether the number field currently violates validation rules. |
+| `isRequired` | `boolean` | `false` | Marks the number field as required for submission. |
+| `isDisabled` | `boolean` | `false` | Prevents user interaction with the input and stepper controls. |
+| `isReadOnly` | `boolean` | `false` | Allows viewing and copying the value while preventing changes. |
+
+---
+
+## Accessibility
+
+NumberField implements the **WAI-ARIA `spinbutton`** role pattern:
+
+- **ArrowUp & ArrowDown**: Pressing <kbd>↑</kbd> increments the value by `step`; pressing <kbd>↓</kbd> decrements the value by `step`.
+- **PageUp & PageDown**: Pressing <kbd>PageUp</kbd> increments the value by a larger step (typically 10x the primary step); <kbd>PageDown</kbd> decrements by the larger step.
+- **Home & End**: Pressing <kbd>Home</kbd> immediately jumps to `minValue` (if defined); pressing <kbd>End</kbd> jumps to `maxValue` (if defined).
+- **Accessible Stepper Buttons**: Decrement and increment buttons feature clear localized labels (`aria-label="Decrement"`, `aria-label="Increment"`) and are marked `tabIndex={-1}` so keyboard users navigate smoothly through form fields without extra tab stops.
+- **Screen Reader Announcements**: The component sets `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (reflecting internationalized currency and percentage strings) so screen readers accurately speak the formatted value.

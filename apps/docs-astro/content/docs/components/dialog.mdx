@@ -1,0 +1,186 @@
+---
+title: Dialog
+description: Accessible container defining header, content, and footer regions within modals and popovers.
+---
+
+# Dialog
+
+The **Dialog** component serves as the semantic and accessible container placed inside overlays like `Modal` and `Popover`. It manages ARIA landmark associations, title slot connections, header/content/footer layouts, and provides a render function slot exposing a programmatic `close` callback.
+
+In Hashti, Dialog embodies the inner sanctum of an overlay experience—guaranteeing that assistive technologies identify the container's purpose immediately upon entry.
+
+---
+
+## Import
+
+```tsx
+import { Dialog, DialogTrigger, Heading, Button } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Standard Structured Dialog
+
+A clean three-tier structured dialog featuring a header with `<Heading slot="title">`, body content, and footer actions:
+
+```tsx
+import { DialogTrigger, Button, Modal, Dialog, Heading } from "@cinder/react";
+
+export function StandardDialogDemo() {
+  return (
+    <DialogTrigger>
+      <Button variant="primary">Invite Collaborator</Button>
+      <Modal>
+        <Dialog>
+          {({ close }) => (
+            <div className="flex flex-col p-6 gap-4">
+              <div className="flex flex-col gap-1">
+                <Heading slot="title" className="text-xl font-bold tracking-tight">
+                  Invite Architectural Specialist
+                </Heading>
+                <p className="text-sm text-gray-500">
+                  Grant access to survey blueprints and photogrammetry scans.
+                </p>
+              </div>
+
+              <div className="py-2 text-sm text-gray-700 dark:text-gray-300">
+                Collaborators will receive an email invitation valid for 7 calendar days.
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+                <Button variant="ghost" onPress={close}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onPress={close}>
+                  Send Invitation
+                </Button>
+              </div>
+            </div>
+          )}
+        </Dialog>
+      </Modal>
+    </DialogTrigger>
+  );
+}
+```
+
+### Form Inside Dialog
+
+Dialog integrates naturally with forms. Notice how the first interactive element automatically receives focus:
+
+```tsx
+import { DialogTrigger, Button, Modal, Dialog, Heading, TextField } from "@cinder/react";
+
+export function FormDialogDemo() {
+  return (
+    <DialogTrigger>
+      <Button variant="secondary">Add Architectural Element</Button>
+      <Modal size="sm">
+        <Dialog>
+          {({ close }) => (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                close();
+              }}
+              className="p-6 flex flex-col gap-4"
+            >
+              <Heading slot="title" className="text-lg font-bold">
+                New Element Registration
+              </Heading>
+
+              <TextField
+                label="Element Name"
+                placeholder="e.g. Muqarnas Vaulting"
+                isRequired
+                autoFocus
+              />
+
+              <TextField
+                label="Period / Century"
+                placeholder="e.g. 17th Century Safavid"
+              />
+
+              <div className="flex justify-end gap-2 pt-2">
+                <Button variant="ghost" onPress={close}>
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit">
+                  Save Element
+                </Button>
+              </div>
+            </form>
+          )}
+        </Dialog>
+      </Modal>
+    </DialogTrigger>
+  );
+}
+```
+
+### Composition Inside Popover
+
+Dialog is not limited to Modals; it also serves as the accessible content wrapper inside a `Popover`:
+
+```tsx
+import { DialogTrigger, Button, Popover, Dialog, Heading } from "@cinder/react";
+
+export function PopoverDialogDemo() {
+  return (
+    <DialogTrigger>
+      <Button variant="ghost">Filter By Century</Button>
+      <Popover>
+        <Dialog>
+          {({ close }) => (
+            <div className="p-4 flex flex-col gap-3 min-w-[220px]">
+              <Heading slot="title" className="text-sm font-semibold">
+                Historical Eras
+              </Heading>
+              <div className="flex flex-col gap-2 text-sm">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" defaultChecked /> Seljuk (11th–12th c.)
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" defaultChecked /> Ilkhanid (13th–14th c.)
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" defaultChecked /> Safavid (16th–18th c.)
+                </label>
+              </div>
+              <div className="flex justify-end pt-2 border-t border-gray-100 dark:border-gray-800">
+                <Button size="sm" variant="primary" onPress={close}>
+                  Apply Filters
+                </Button>
+              </div>
+            </div>
+          )}
+        </Dialog>
+      </Popover>
+    </DialogTrigger>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `role` | `'dialog' \| 'alertdialog'` | `'dialog'` | Accessible role for the dialog container. |
+| `aria-label` | `string` | — | Direct accessible label when no visible heading exists. |
+| `aria-labelledby` | `string` | — | ID of an external heading element labelling the dialog. |
+| `aria-describedby` | `string` | — | ID of an element describing the dialog content. |
+| `children` | `ReactNode \| ((props: { close: () => void }) => ReactNode)` | — | Content or render function exposing the `close` handler. |
+| `className` | `string` | — | Additional CSS classes for the dialog container. |
+
+---
+
+## Accessibility
+
+- **Semantic Role & Landmark**: Automatically assigns `role="dialog"` (or `role="alertdialog"`). Assistive technologies recognize this as a self-contained interactive context.
+- **Automated Title Linkage**: Any `<Heading slot="title">` child is automatically detected, and its generated ID is linked to the dialog container's `aria-labelledby` property.
+- **Initial Focus**: By default, focus moves to the first focusable element inside the dialog. You can override this by placing `autoFocus` on a specific input or button.
+- **Tab Loop**: Tab and Shift+Tab continuously cycle through interactive elements within the dialog boundary without escaping into other page regions.

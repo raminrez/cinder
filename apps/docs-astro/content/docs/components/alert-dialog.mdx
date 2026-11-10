@@ -1,0 +1,198 @@
+---
+title: Alert Dialog
+description: Modal confirmation overlay requiring explicit user confirmation before executing destructive or irreversible actions.
+---
+
+# Alert Dialog
+
+The **AlertDialog** component presents a high-urgency confirmation modal designed specifically for destructive, irreversible, or high-consequence operations (such as deleting project records, revoking security credentials, or rolling back live database migrations).
+
+Unlike standard informational modals, an Alert Dialog strictly forces the user to make an explicit choice. Backdrop clicks do not dismiss the dialog (`isDismissable={false}`), and assistive technology is immediately notified via the W3C `alertdialog` role.
+
+---
+
+## Import
+
+```tsx
+import { AlertDialog, Button } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Destructive Delete Confirmation (Danger)
+
+The default `danger` kind features high-contrast red warning accents and requires explicit confirmation:
+
+```tsx
+import { useState } from "react";
+import { AlertDialog, Button } from "@cinder/react";
+
+export function DeleteConfirmationDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="danger" onPress={() => setIsOpen(true)}>
+        Delete Architectural Archive
+      </Button>
+
+      <AlertDialog
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        kind="danger"
+        title="Delete Survey Archive?"
+        description="This action cannot be undone. All 3D point-cloud scans, photogrammetry models, and CAD annotations for this structure will be permanently erased."
+        confirmLabel="Yes, Delete Archive"
+        cancelLabel="Keep Archive"
+        onConfirm={() => {
+          console.log("Archive deleted successfully.");
+        }}
+      />
+    </>
+  );
+}
+```
+
+### Warning Dialog (Unsaved Changes)
+
+Use `kind="warning"` when alerting users of potential data loss before navigating away:
+
+```tsx
+import { useState } from "react";
+import { AlertDialog, Button } from "@cinder/react";
+
+export function UnsavedChangesDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="secondary" onPress={() => setIsOpen(true)}>
+        Discard Draft Blueprint
+      </Button>
+
+      <AlertDialog
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        kind="warning"
+        title="Discard Unsaved Architectural Changes?"
+        description="You have modified 4 structural layers in the active vault view. If you discard now, these edits cannot be recovered."
+        confirmLabel="Discard Edits"
+        cancelLabel="Continue Editing"
+        onConfirm={() => {
+          console.log("Draft edits discarded.");
+        }}
+      />
+    </>
+  );
+}
+```
+
+### Informational Confirmation (Info)
+
+Use `kind="info"` for important non-destructive milestones:
+
+```tsx
+import { useState } from "react";
+import { AlertDialog, Button } from "@cinder/react";
+
+export function InfoConfirmationDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="primary" onPress={() => setIsOpen(true)}>
+        Publish Restoration Dossier
+      </Button>
+
+      <AlertDialog
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        kind="info"
+        title="Publish Dossier to Public Registry?"
+        description="Publishing will issue a cryptographic timestamp and assign a permanent DOI identifier visible to UNESCO peer reviewers worldwide."
+        confirmLabel="Confirm & Publish"
+        cancelLabel="Review Again"
+        onConfirm={() => {
+          console.log("Dossier published to registry.");
+        }}
+      />
+    </>
+  );
+}
+```
+
+### Asynchronous Action with Pending State
+
+Pass `isPending={true}` to indicate ongoing network requests while disabling controls and displaying a spinner:
+
+```tsx
+import { useState } from "react";
+import { AlertDialog, Button } from "@cinder/react";
+
+export function AsyncAlertDialogDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
+  const handleConfirm = () => {
+    setIsPending(true);
+    setTimeout(() => {
+      setIsPending(false);
+      setIsOpen(false);
+      alert("Workspace decommissioned.");
+    }, 1200);
+  };
+
+  return (
+    <>
+      <Button variant="danger" onPress={() => setIsOpen(true)}>
+        Decommission Workspace
+      </Button>
+
+      <AlertDialog
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        kind="danger"
+        isPending={isPending}
+        title="Decommission Workspace?"
+        description="Decommissioning will revoke all active API keys and detach storage volumes."
+        confirmLabel="Decommission"
+        cancelLabel="Cancel"
+        onConfirm={handleConfirm}
+      />
+    </>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `kind` | `'danger' \| 'warning' \| 'info'` | `'danger'` | Visual theme and icon variant for the dialog. |
+| `title` | `ReactNode` | — | Primary alert heading (required). |
+| `description` | `ReactNode` | — | Explanatory description detailing the consequences. |
+| `children` | `ReactNode` | — | Custom body content (overrides `description` if provided). |
+| `confirmLabel` | `string` | `"Confirm"` | Text label for the confirmation button. |
+| `cancelLabel` | `string` | `"Cancel"` | Text label for the cancellation button. |
+| `onConfirm` | `() => void` | — | Callback fired when the user confirms the action. |
+| `onCancel` | `() => void` | — | Callback fired when the user cancels or presses <kbd>Esc</kbd>. |
+| `isPending` | `boolean` | `false` | Disables buttons and displays loading spinners on the confirm button. |
+| `isOpen` | `boolean` | — | Controlled open visibility state. |
+| `defaultOpen` | `boolean` | `false` | Initial uncontrolled open state. |
+| `onOpenChange` | `(isOpen: boolean) => void` | — | Handler invoked when open state transitions. |
+| `dir` | `'ltr' \| 'rtl'` | — | Text direction override for bilingual layouts. |
+
+---
+
+## Accessibility
+
+AlertDialog implements the **WAI-ARIA `alertdialog`** specification:
+
+- **Urgent Screen Reader Interruption**: Using `role="alertdialog"`, assistive technologies immediately announce the modal title and description, interrupting other queued screen reader speech to emphasize the gravity of the decision.
+- **Initial Focus on the Safest Action**: In accordance with accessibility safety standards, focus is automatically initialized on the **Cancel** button rather than the destructive confirmation button. This guarantees that an accidental <kbd>Enter</kbd> or <kbd>Space</kbd> keystroke cancels rather than executes the dangerous action.
+- **Non-Dismissable Backdrop**: The background overlay click handler is disabled (`isDismissable={false}`), preventing inadvertent clicks outside from discarding critical prompts without a deliberate user choice.
+- **Escape Key Handling**: Pressing <kbd>Esc</kbd> triggers `onCancel` and closes the dialog safely.

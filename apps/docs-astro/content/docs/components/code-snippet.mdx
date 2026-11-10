@@ -1,0 +1,160 @@
+---
+title: Code Snippet
+description: Stylized code display block supporting inline, single-line, and multi-line terminal outputs with one-click copying.
+---
+
+# Code Snippet
+
+The `CodeSnippet` component displays formatted commands, scripts, and code excerpts with integrated one-click copying, scrollable viewports, and accessible live-region status feedback. It supports three distinct visual display types: single-line terminal commands, multi-line code blocks, and compact inline snippets.
+
+---
+
+## Architectural Affordances
+
+Technical tools require immediate affordance for copying executable commands and reading config blocks without layout distortion:
+
+```
+┌──────────────────────────────────────────────────────────┬───────┐
+│ $ bun add @cinder/react @cinder/tokens                   │ [Copy]│
+└──────────────────────────────────────────────────────────┴───────┘
+```
+
+- **Three Display Types**:
+  - `single`: Horizontal terminal bar with command line and quick copy button.
+  - `multi`: Full multi-line syntax block with optional vertical scrolling and line wrapping.
+  - `inline`: Compact prose badge for keywords, configuration parameters, and paths.
+- **Accessible Clipboard Announcements**: Includes a visually-hidden screen reader live region (`role="status"`) announcing "Copied to clipboard" upon successful copy.
+- **Scrollable Keyboard Traversal**: Multi-line code blocks feature `tabIndex={0}` and an accessible `aria-label`, allowing keyboard users to scroll long lines without mouse dragging.
+
+---
+
+## Import
+
+```tsx
+import { CodeSnippet } from "@cinder/react";
+import type { CodeSnippetProps } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Single-Line Terminal Command
+
+Ideal for package manager commands, curl requests, and terminal invocations:
+
+```tsx
+import { CodeSnippet } from "@cinder/react";
+
+export function SingleLineSnippetDemo() {
+  return (
+    <CodeSnippet type="single" label="Package installation command">
+      bun add @cinder/react @cinder/tokens
+    </CodeSnippet>
+  );
+}
+```
+
+---
+
+### Multi-Line Code Block
+
+Designed for code blocks, JSON payloads, and configuration files. Supports setting `maxHeight` for contained scrolling and `wrapText` to prevent horizontal clipping:
+
+```tsx
+import { CodeSnippet } from "@cinder/react";
+
+const configExample = `{
+  "name": "hashti-cluster",
+  "version": "1.0.0",
+  "theme": "frame-dark",
+  "nodes": [
+    { "id": "ir-thr-01", "role": "primary" },
+    { "id": "ir-shz-02", "role": "replica" }
+  ]
+}`;
+
+export function MultiLineSnippetDemo() {
+  return (
+    <CodeSnippet
+      type="multi"
+      label="Hashti Configuration Manifest"
+      language="json"
+      maxHeight="220px"
+    >
+      {configExample}
+    </CodeSnippet>
+  );
+}
+```
+
+---
+
+### Inline Code Snippet
+
+Use `type="inline"` within running documentation copy or tables to present actionable tokens, environment variables, or file paths:
+
+```tsx
+import { CodeSnippet } from "@cinder/react";
+
+export function InlineSnippetDemo() {
+  return (
+    <p className="text-sm text-neutral-800 dark:text-neutral-200">
+      Set the environment variable{" "}
+      <CodeSnippet type="inline">
+        HASHTI_VAULT_KEY
+      </CodeSnippet>{" "}
+      in your production secret manager before initiating container boot.
+    </p>
+  );
+}
+```
+
+---
+
+### Disabling the Copy Action
+
+For read-only logs or sensitive hashes where manual selection is preferred:
+
+```tsx
+import { CodeSnippet } from "@cinder/react";
+
+export function NonCopyableSnippetDemo() {
+  return (
+    <CodeSnippet type="single" copyable={false} label="System Build Hash">
+      commit 3f9a72b (HEAD -&gt; main, origin/main)
+    </CodeSnippet>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `type` | `'single' \| 'multi' \| 'inline'` | `'multi'` | Display geometry and interaction layout. |
+| `children` | `string` | — | The exact raw string of code to render and copy to the clipboard. |
+| `label` | `string` | `'Code example'` | Descriptive label applied via `aria-label` to the container and copy button. |
+| `language` | `string` | — | Programming or syntax language tag (e.g. `'bash'`, `'tsx'`, `'json'`). |
+| `copyable` | `boolean` | `true` | Whether the one-click copy button is rendered. |
+| `maxHeight` | `string` | — | Maximum CSS height for multi-line viewports (e.g., `'280px'`). |
+| `wrapText` | `boolean` | `false` | When true, wraps long code lines instead of creating a horizontal scrollbar. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility & Keyboard Interaction
+
+### Keyboard Interaction
+
+- <kbd>Tab</kbd>: Focuses the one-click copy button and the code viewport (`<pre tabIndex={0}>`).
+- <kbd>Space</kbd> / <kbd>Enter</kbd>: Activates the copy button when focused.
+- <kbd>Arrow Keys</kbd>: When the code container `<pre>` is focused, users can scroll horizontally and vertically using standard keyboard navigation.
+
+### Screen Reader & Live Region Semantics
+
+- **Copy Status Announcement**: When the copy button is pressed, the component updates an internal status string inside a `<span role="status" className="cinder-visually-hidden">`. Assistive technologies immediately announce "Copied to clipboard" without disturbing screen reader cursor focus.
+- **Descriptive Button Label**: The copy button utilizes `aria-label={\`Copy ${label.toLowerCase()}\`}` (e.g. *"Copy package installation command"*), ensuring screen reader users understand what payload will be copied.
+- **Scroll Container Semantics**: Scrollable code blocks include `aria-label={label}` so that the scrollable region has an unambiguous accessible name.

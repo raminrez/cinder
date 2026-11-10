@@ -1,0 +1,161 @@
+---
+title: Link
+description: Navigational element for navigating between routes and external URLs.
+---
+
+# Link
+
+Links allow users to navigate between pages, jump to specific page anchors, or navigate to external web resources. Built on [React Aria Components Link](https://react-spectrum.adobe.com/react-aria/Link.html), Hashti's `Link` component seamlessly supports traditional hyperlinks, client-side single page app (SPA) routers, and accessible inline prose citations.
+
+---
+
+## Architecture & Visual Intent
+
+In architectural design, hallways and archways guide foot traffic with quiet certainty. Hashti's `Link` component provides crisp textual contrast and visual affordances to indicate navigational pathways:
+
+```
+[Prose Context] ──► <Link inline href="/docs">Docs</Link> ──► [Continuous Underline]
+[Standalone Action] ──► <Link href="/portal">Portal →</Link> ──► [Clean Text + Icon]
+```
+
+- **Dual Rendering Mechanism**: When an active `href` is supplied, `Link` renders a semantic HTML `<a>` tag. When `href` is omitted or `isDisabled` is set, it renders a semantic `<span role="link">` with proper accessibility attributes.
+- **Client-Side Routing Compatibility**: Works out of the box with Astro, Next.js (`next/link`), React Router, and Remix via `router` context or client navigation handlers.
+- **Inline vs. Standalone Modes**: Distinguish between dense body prose links (which need persistent underlines for accessibility) and standalone directional links.
+
+---
+
+## Import
+
+```tsx
+import { Link } from "@cinder/react";
+import type { LinkProps } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Inline Prose Link
+
+Within running body copy or articles, pass `inline={true}`. This applies a persistent underline (`text-decoration: underline`) to ensure WCAG 2.2 AAA accessibility compliance for color-blind users who cannot differentiate links purely by hue:
+
+```tsx
+import { Link } from "@cinder/react";
+
+export function InlineLinkDemo() {
+  return (
+    <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+      Please review our comprehensive{" "}
+      <Link href="/docs/getting-started/accessibility" inline>
+        Accessibility Guidelines
+      </Link>{" "}
+      before submitting your pull request to the Hashti repository.
+    </p>
+  );
+}
+```
+
+---
+
+### Standalone Navigational Link with Icon
+
+Standalone links are placed outside running body paragraphs (e.g., in footers, cards, or hero banners). They typically include directional icons:
+
+```tsx
+import { Link, Icon } from "@cinder/react";
+
+export function StandaloneLinkDemo() {
+  return (
+    <div className="flex flex-col gap-3">
+      <Link href="/docs/components/button" className="inline-flex items-center gap-1.5 font-medium">
+        Explore Button component
+        <Icon name="arrowRight" size={16} />
+      </Link>
+
+      <Link href="/docs/foundations/theming" className="inline-flex items-center gap-1.5 font-medium">
+        Discover Theme Tokens
+        <Icon name="arrowRight" size={16} />
+      </Link>
+    </div>
+  );
+}
+```
+
+---
+
+### External Links
+
+For links leading to external web resources, specify `target="_blank"` and `rel="noopener noreferrer"`. It is best practice to include an external link icon and an accessible screen-reader warning:
+
+```tsx
+import { Link, Icon } from "@cinder/react";
+
+export function ExternalLinkDemo() {
+  return (
+    <Link
+      href="https://github.com/cinder/hashti"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 font-medium text-blue-600 dark:text-blue-400"
+    >
+      Hashti GitHub Repository
+      <Icon name="launch" size={14} />
+      <span className="sr-only">(opens in new window)</span>
+    </Link>
+  );
+}
+```
+
+---
+
+### Disabled Link State
+
+Disabled links cannot be focused via keyboard navigation, reject pointer interactions, and communicate their inactive state via `aria-disabled="true"`:
+
+```tsx
+import { Link } from "@cinder/react";
+
+export function DisabledLinkDemo() {
+  return (
+    <div className="flex gap-4">
+      <Link href="/billing" isDisabled>
+        Enterprise Billing (Requires Admin Privileges)
+      </Link>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+`Link` extends `RACLinkProps` from `react-aria-components`.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `href` | `string` | — | The URL or anchor destination for the link. |
+| `inline` | `boolean` | `false` | When true, renders a persistent underline for inline prose readability. |
+| `target` | `string` | — | Window target (e.g., `'_blank'`, `'_self'`). |
+| `rel` | `string` | — | Relationship attribute (recommended `'noopener noreferrer'` for external links). |
+| `isDisabled` | `boolean` | `false` | Whether the link is inactive and disabled. |
+| `onPress` | `(e: PressEvent) => void` | — | Interaction callback triggered on mouse click or keyboard Enter key. |
+| `children` | `ReactNode \| ((values: LinkRenderProps) => ReactNode)` | — | Content or children rendered inside the link. |
+| `className` | `string` | — | Custom CSS classes applied to the root element. |
+
+---
+
+## Accessibility & Keyboard Navigation
+
+Hashti links adhere to W3C ARIA practices for hyperlink controls:
+
+### Keyboard Interaction
+
+- <kbd>Enter</kbd>: Activates the link and follows the destination URL.
+- <kbd>Tab</kbd>: Moves keyboard focus onto the link. Focused links render a 2px offset focus ring.
+
+### Assistive Technology Notes
+
+- **Native Anchors**: When `href` is supplied and `isDisabled` is false, renders standard `<a href="...">` elements that assistive technologies report as links.
+- **External Notifications**: Always provide visual and auditory indicators (such as `<span className="sr-only">(opens in new tab)</span>`) when a link opens a new browser window or tab.
+- **Color Distinguishability**: Under WCAG 2.2 Criterion 1.4.1 (Use of Color), links surrounded by text must be distinguishable by more than color alone. Using `inline={true}` applies an underline that guarantees compliance.

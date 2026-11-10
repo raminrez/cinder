@@ -1,0 +1,136 @@
+---
+title: Tooltip
+description: Compact informational popup displaying helper text when hovering or focusing an interactive element.
+---
+
+# Tooltip
+
+The **Tooltip** component presents a concise floating label or contextual explanation when a user hovers over with a pointer or focuses an interactive element via keyboard navigation.
+
+Tooltips prevent visual clutter by keeping primary interfaces clean and uncluttered, revealing supplementary descriptions—such as icon button actions, keyboard shortcuts, or technical definitions—only on demand.
+
+---
+
+## Import
+
+```tsx
+import { Tooltip, TooltipTrigger, Button, Icon } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Tooltip on Icon Button
+
+Icon-only buttons must always have an accessible tooltip to clarify their purpose for sighted users:
+
+```tsx
+import { Tooltip, TooltipTrigger, Button, Icon } from "@cinder/react";
+
+export function IconButtonTooltipDemo() {
+  return (
+    <div className="flex gap-4">
+      <TooltipTrigger>
+        <Button variant="ghost" iconOnly aria-label="Export Blueprint">
+          <Icon name="download" />
+        </Button>
+        <Tooltip>Export architectural blueprint (PDF)</Tooltip>
+      </TooltipTrigger>
+
+      <TooltipTrigger>
+        <Button variant="ghost" iconOnly aria-label="Duplicate Canvas">
+          <Icon name="copy" />
+        </Button>
+        <Tooltip>Duplicate active floorplan</Tooltip>
+      </TooltipTrigger>
+    </div>
+  );
+}
+```
+
+### Directional Placements
+
+Tooltips can appear in four cardinal directions (`top`, `bottom`, `left`, `right`):
+
+```tsx
+import { Tooltip, TooltipTrigger, Button } from "@cinder/react";
+
+export function TooltipPlacementsDemo() {
+  return (
+    <div className="flex flex-wrap gap-4 py-8 items-center justify-center">
+      <TooltipTrigger>
+        <Button variant="secondary">Top Tooltip</Button>
+        <Tooltip placement="top">Vault geometry notes</Tooltip>
+      </TooltipTrigger>
+
+      <TooltipTrigger>
+        <Button variant="secondary">Bottom Tooltip</Button>
+        <Tooltip placement="bottom">Foundation survey reports</Tooltip>
+      </TooltipTrigger>
+
+      <TooltipTrigger>
+        <Button variant="secondary">Left Tooltip</Button>
+        <Tooltip placement="left">Historical era metadata</Tooltip>
+      </TooltipTrigger>
+
+      <TooltipTrigger>
+        <Button variant="secondary">Right Tooltip</Button>
+        <Tooltip placement="right">Conservation status log</Tooltip>
+      </TooltipTrigger>
+    </div>
+  );
+}
+```
+
+### Delay Duration & Warm-Up Behavior
+
+By default, tooltips wait 500ms before appearing to avoid flicker during incidental pointer passes. When moving quickly between adjacent buttons with tooltips, React Aria's built-in warm-up timer reveals subsequent tooltips instantly:
+
+```tsx
+import { Tooltip, TooltipTrigger, Button } from "@cinder/react";
+
+export function TooltipDelayDemo() {
+  return (
+    <div className="flex gap-3">
+      {/* Custom instant delay */}
+      <TooltipTrigger delay={0}>
+        <Button variant="secondary">Instant Tooltip (0ms)</Button>
+        <Tooltip>Opens immediately on hover or focus</Tooltip>
+      </TooltipTrigger>
+
+      {/* Standard delay */}
+      <TooltipTrigger delay={500}>
+        <Button variant="secondary">Standard Tooltip (500ms)</Button>
+        <Tooltip>Appears after a 500ms pause</Tooltip>
+      </TooltipTrigger>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `delay` | `number` | `500` | Delay in milliseconds before the tooltip appears on hover/focus (set on `TooltipTrigger`). |
+| `closeDelay` | `number` | `500` | Delay in milliseconds before the tooltip closes when pointer leaves (set on `TooltipTrigger`). |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` | Placement of the tooltip relative to its trigger. |
+| `offset` | `number` | `8` | Distance in pixels between the tooltip arrow and trigger element. |
+| `isOpen` | `boolean` | — | Controlled open state (set on `TooltipTrigger`). |
+| `onOpenChange` | `(isOpen: boolean) => void` | — | Callback fired on visibility change (set on `TooltipTrigger`). |
+| `children` | `ReactNode \| ((props) => ReactNode)` | — | The text content or element to render within the tooltip container. |
+
+---
+
+## Accessibility
+
+Tooltip complies strictly with the **WAI-ARIA Tooltip Pattern** and **WCAG 2.1 Criterion 1.4.13 (Content on Hover or Focus)**:
+
+- **Touch Device Suppression**: Tooltips are intentionally suppressed on touch-only devices. On mobile, tapping triggers the primary action instead of locking an un-dismissable tooltip.
+- **Keyboard Focus Trigger**: Tooltips appear when their trigger button receives keyboard focus (<kbd>Tab</kbd>) and dismiss when focus leaves.
+- **Escape Key Dismissal**: Users can press <kbd>Esc</kbd> to immediately dismiss a visible tooltip without changing pointer position or losing keyboard focus.
+- **Hoverable Content**: The pointer can be moved over the tooltip itself without causing it to disappear, allowing users with screen magnifiers to read its contents.
+- **ARIA Semantics**: Hashti links the trigger button and tooltip using `role="tooltip"` and `aria-describedby`, ensuring assistive technologies read the tooltip text upon focusing the trigger.

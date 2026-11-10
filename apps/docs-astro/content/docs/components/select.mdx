@@ -1,0 +1,238 @@
+---
+title: Select
+description: Collapsible menu allowing users to select an option from a predefined list.
+---
+
+# Select
+
+The **Select** component presents a collapsible menu of options, enabling users to choose a single value from a predetermined set. When closed, it displays the currently selected value or a welcoming placeholder; when triggered, it opens a floating listbox styled with Hashti's serene architectural geometry.
+
+Built on React Aria Components' Select, it provides full typeahead searching, keyboard navigation, popover collision repositioning, and screen reader announcements.
+
+---
+
+## Import
+
+```tsx
+import { Select, ListBoxItem, ListBoxSection, SectionHeader } from "@cinder/react";
+```
+
+Sub-parts for advanced composition:
+
+```tsx
+import {
+  Select,
+  FieldLayout,
+  Popover,
+  ListBox,
+} from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Standard Select
+
+A basic select dropdown using static `<ListBoxItem>` children:
+
+```tsx
+import { Select, ListBoxItem } from "@cinder/react";
+
+export function BasicSelectDemo() {
+  return (
+    <div className="max-w-xs">
+      <Select label="Architectural Style" placeholder="Choose a style">
+        <ListBoxItem id="isfahani">Isfahani Style (سبک اصفهانی)</ListBoxItem>
+        <ListBoxItem id="razi">Razi Style (سبک رازی)</ListBoxItem>
+        <ListBoxItem id="azari">Azari Style (سبک آذری)</ListBoxItem>
+        <ListBoxItem id="khorasani">Khorasani Style (سبک خراسانی)</ListBoxItem>
+      </Select>
+    </div>
+  );
+}
+```
+
+### Dynamic Items Collection
+
+Render options dynamically from an array of objects:
+
+```tsx
+import { useState } from "react";
+import { Select, ListBoxItem } from "@cinder/react";
+import type { Key } from "react-aria-components";
+
+interface City {
+  id: string;
+  name: string;
+  province: string;
+}
+
+const CITIES: City[] = [
+  { id: "isfahan", name: "Isfahan", province: "Isfahan Province" },
+  { id: "shiraz", name: "Shiraz", province: "Fars Province" },
+  { id: "yazd", name: "Yazd", province: "Yazd Province" },
+  { id: "kashan", name: "Kashan", province: "Isfahan Province" },
+  { id: "tabriz", name: "Tabriz", province: "East Azerbaijan" },
+];
+
+export function DynamicSelectDemo() {
+  const [selectedCity, setSelectedCity] = useState<Key>("isfahan");
+
+  return (
+    <div className="max-w-xs flex flex-col gap-2">
+      <Select
+        label="Historical Center"
+        items={CITIES}
+        selectedKey={selectedCity}
+        onSelectionChange={setSelectedCity}
+        description="Select your target preservation region."
+      >
+        {(city) => (
+          <ListBoxItem id={city.id} textValue={city.name}>
+            <div className="flex flex-col">
+              <span className="font-medium">{city.name}</span>
+              <span className="text-xs text-gray-500">{city.province}</span>
+            </div>
+          </ListBoxItem>
+        )}
+      </Select>
+    </div>
+  );
+}
+```
+
+### Disabled Options & Disabled State
+
+You can disable specific individual options using `disabledKeys`, or disable the entire select component with `isDisabled`:
+
+```tsx
+import { Select, ListBoxItem } from "@cinder/react";
+
+export function DisabledSelectDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-xs">
+      {/* Individual items disabled */}
+      <Select
+        label="Room Type"
+        disabledKeys={["penthouse"]}
+        placeholder="Select room"
+      >
+        <ListBoxItem id="standard">Standard Garden View</ListBoxItem>
+        <ListBoxItem id="suite">Courtyard Suite</ListBoxItem>
+        <ListBoxItem id="penthouse">Rooftop Pavilion (Sold Out)</ListBoxItem>
+      </Select>
+
+      {/* Whole component disabled */}
+      <Select
+        label="Booking Season"
+        isDisabled
+        defaultSelectedKey="spring"
+      >
+        <ListBoxItem id="spring">Spring Nowruz (Bookings Closed)</ListBoxItem>
+        <ListBoxItem id="autumn">Autumn</ListBoxItem>
+      </Select>
+    </div>
+  );
+}
+```
+
+### Validation Error State
+
+When validation fails, pass `isInvalid` and an `errorMessage`:
+
+```tsx
+import { Select, ListBoxItem } from "@cinder/react";
+
+export function InvalidSelectDemo() {
+  return (
+    <div className="max-w-xs">
+      <Select
+        label="Vault Material"
+        placeholder="Choose material..."
+        isInvalid
+        errorMessage="Selecting a structural vault material is required to proceed."
+      >
+        <ListBoxItem id="adobe">Sun-dried Adobe</ListBoxItem>
+        <ListBoxItem id="fired-brick">Fired Kiln Brick</ListBoxItem>
+        <ListBoxItem id="glazed-tile">Glazed Ceramic Tile</ListBoxItem>
+      </Select>
+    </div>
+  );
+}
+```
+
+### Grouped Sections
+
+Use `<ListBoxSection>` and `<SectionHeader>` to organize items into clear categorical groupings:
+
+```tsx
+import { Select, ListBoxItem, ListBoxSection, SectionHeader } from "@cinder/react";
+
+export function GroupedSelectDemo() {
+  return (
+    <div className="max-w-xs">
+      <Select label="Spatial Elements" placeholder="Select an architectural feature">
+        <ListBoxSection>
+          <SectionHeader className="font-semibold text-xs text-gray-400 px-3 py-1">
+            Transitional Spaces
+          </SectionHeader>
+          <ListBoxItem id="hashti">Hashti (Octagonal Vestibule)</ListBoxItem>
+          <ListBoxItem id="dalan">Dalan (Connecting Corridor)</ListBoxItem>
+          <ListBoxItem id="sar-dar">Sar-dar (Entrance Portal)</ListBoxItem>
+        </ListBoxSection>
+
+        <ListBoxSection>
+          <SectionHeader className="font-semibold text-xs text-gray-400 px-3 py-1">
+            Interior Sanctuaries
+          </SectionHeader>
+          <ListBoxItem id="iwan">Iwan (Vaulted Hall)</ListBoxItem>
+          <ListBoxItem id="howz-khaneh">Howz-Khaneh (Pool Room)</ListBoxItem>
+          <ListBoxItem id="panj-dari">Panj-Dari (Five-Door Living Room)</ListBoxItem>
+        </ListBoxSection>
+      </Select>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `selectedKey` | `Key` | — | The currently selected option ID (controlled). |
+| `defaultSelectedKey` | `Key` | — | The initial selected option ID (uncontrolled). |
+| `onSelectionChange` | `(key: Key) => void` | — | Handler invoked when an option is selected. |
+| `items` | `Iterable<T>` | — | Dynamic item collection array or iterable. |
+| `children` | `ReactNode \| ((item: T) => ReactNode)` | — | Options to render within the select dropdown. |
+| `placeholder` | `string` | — | Prompt text shown when no item has been selected. |
+| `label` | `ReactNode` | — | Accessible label for the select element. |
+| `description` | `ReactNode` | — | Guidance text rendered with the field. |
+| `errorMessage` | `ReactNode` | — | Error text rendered when `isInvalid` is true. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and scale of the trigger button. |
+| `isDisabled` | `boolean` | `false` | Whether the select dropdown is disabled. |
+| `isInvalid` | `boolean` | `false` | Marks the select as invalid and activates error styling. |
+| `isRequired` | `boolean` | `false` | Indicates that an option selection is required. |
+| `disabledKeys` | `Iterable<Key>` | — | Keys of specific options that should be disabled. |
+| `renderValue` | `(items: T[]) => ReactNode` | — | Custom renderer for the closed trigger display value. |
+
+---
+
+## Accessibility
+
+Select complies with the **WAI-ARIA `combobox`** specification:
+
+- **Opening & Closing**:
+  - Pressing <kbd>Space</kbd>, <kbd>Enter</kbd>, or <kbd>↓</kbd> opens the popup listbox.
+  - Pressing <kbd>Esc</kbd> closes the listbox and restores focus to the select trigger button.
+- **Keyboard Navigation**:
+  - <kbd>↑</kbd> and <kbd>↓</kbd> navigate between options.
+  - <kbd>Home</kbd> moves focus to the first item; <kbd>End</kbd> jumps to the last item.
+  - **Typeahead Letter Jumping**: Typing letters (e.g. "I", "S", "H") immediately jumps focus to the next matching item.
+- **Focus Management**:
+  - Focus is never lost; closing returns focus directly to the trigger button.
+  - While open, `aria-activedescendant` is tracked on the focused item, ensuring screen readers announce options accurately.
+- **ARIA Attributes**:
+  - The trigger has `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded="false|true"`, and `aria-labelledby` referencing the label.

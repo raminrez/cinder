@@ -1,0 +1,213 @@
+---
+title: Radio Group
+description: Single-choice selection control for mutually exclusive options.
+---
+
+# Radio Group
+
+Radio Groups allow users to select exactly one option from a set of mutually exclusive choices. Built on [React Aria Components RadioGroup](https://react-spectrum.adobe.com/react-aria/RadioGroup.html), Hashti's `RadioGroup` and `Radio` components provide keyboard roving tabindex navigation, horizontal and vertical flow layouts, architectural circular geometry, and accessible fieldset associations.
+
+---
+
+## Architectural Purpose
+
+In architectural entrance design, an intersecting crossway presents definitive directional paths where a traveler must commit to one branch at a time. The `RadioGroup` represents this singular decision model in digital interfaces:
+
+```
+(○) Option A  ──(Arrow Down)──►  (●) Option B  ──(Arrow Down)──►  (○) Option C
+```
+
+- **Roving Tabindex**: Focus enters the group on the currently selected radio button. Navigating with arrow keys immediately shifts focus and selection simultaneously.
+- **Orientation Control**: Supports both vertical column stacks (recommended for readability) and horizontal inline rows (for compact rating scales or binary choices).
+- **Validation & Status**: Integrated with Hashti field layouts for error messages, helper descriptions, and optional/required badges.
+
+---
+
+## Import
+
+```tsx
+import { RadioGroup, Radio } from "@cinder/react";
+import type { RadioGroupProps, RadioProps, SelectionColor } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Basic RadioGroup
+
+The default vertical orientation provides maximum clarity and reading comfort for multi-option forms:
+
+```tsx
+import { useState } from "react";
+import { RadioGroup, Radio } from "@cinder/react";
+
+export function BasicRadioGroupDemo() {
+  const [tier, setTier] = useState("pro");
+
+  return (
+    <RadioGroup
+      label="Subscription Tier"
+      description="Choose the compute capacity allocated to your Hashti instances."
+      value={tier}
+      onChange={setTier}
+    >
+      <Radio value="starter">Starter — 2 vCPU / 4 GB RAM</Radio>
+      <Radio value="pro">Pro — 8 vCPU / 32 GB RAM (Recommended)</Radio>
+      <Radio value="enterprise">Enterprise — Dedicated Bare Metal</Radio>
+    </RadioGroup>
+  );
+}
+```
+
+---
+
+### Horizontal Orientation
+
+For compact settings or binary choices with short labels, configure `orientation="horizontal"`:
+
+```tsx
+import { useState } from "react";
+import { RadioGroup, Radio } from "@cinder/react";
+
+export function HorizontalRadioGroupDemo() {
+  const [storageType, setStorageType] = useState("ssd");
+
+  return (
+    <RadioGroup
+      orientation="horizontal"
+      label="Storage Media"
+      description="Select physical disk medium."
+      value={storageType}
+      onChange={setStorageType}
+    >
+      <Radio value="nvme">NVMe</Radio>
+      <Radio value="ssd">SSD</Radio>
+      <Radio value="hdd">HDD</Radio>
+    </RadioGroup>
+  );
+}
+```
+
+---
+
+### Validation Error Display
+
+When a required choice has not been made, mark `isInvalid={true}` and provide an explicit `errorMessage`:
+
+```tsx
+import { useState } from "react";
+import { RadioGroup, Radio } from "@cinder/react";
+
+export function InvalidRadioGroupDemo() {
+  const [region, setRegion] = useState("");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  const isInvalid = hasSubmitted && !region;
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setHasSubmitted(true);
+      }}
+      className="flex flex-col gap-4"
+    >
+      <RadioGroup
+        label="Data Center Location"
+        description="Select the primary edge node for your deployment."
+        errorMessage="You must select a deployment region to proceed."
+        isInvalid={isInvalid}
+        value={region}
+        onChange={setRegion}
+      >
+        <Radio value="tehran">Tehran (IR-THR)</Radio>
+        <Radio value="frankfurt">Frankfurt (EU-FRA)</Radio>
+        <Radio value="amsterdam">Amsterdam (EU-AMS)</Radio>
+      </RadioGroup>
+
+      <button type="submit" className="self-start rounded bg-blue-600 px-4 py-2 text-white">
+        Deploy Node
+      </button>
+    </form>
+  );
+}
+```
+
+---
+
+### Disabled State
+
+Disable the entire group or individual options:
+
+```tsx
+import { RadioGroup, Radio } from "@cinder/react";
+
+export function DisabledRadioDemo() {
+  return (
+    <RadioGroup
+      label="Network Protocols"
+      defaultValue="https"
+    >
+      <Radio value="https">HTTPS / TLS 1.3 (Enforced)</Radio>
+      <Radio value="http" isDisabled>
+        HTTP (Plaintext — Deprecated)
+      </Radio>
+      <Radio value="grpc">gRPC Streaming</Radio>
+    </RadioGroup>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### RadioGroup Props
+
+`RadioGroup` extends `RACRadioGroupProps` from `react-aria-components`.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `ReactNode` | — | Accessible label for the radio group. |
+| `description` | `ReactNode` | — | Supporting description text displayed under the label. |
+| `errorMessage` | `ReactNode` | — | Error text rendered when `isInvalid` is true. |
+| `value` | `string` | — | Controlled value of the currently selected radio option. |
+| `defaultValue` | `string` | — | Initial selected value for uncontrolled usage. |
+| `onChange` | `(value: string) => void` | — | Callback invoked when the selected option changes. |
+| `orientation` | `'horizontal' \| 'vertical'` | `'vertical'` | Layout direction of the radio options. |
+| `isInvalid` | `boolean` | `false` | Whether the radio group fails validation. |
+| `isDisabled` | `boolean` | `false` | Disables user interaction across the entire group. |
+| `isOptional` | `boolean` | `false` | Displays an optional badge next to the group label. |
+| `color` | `SelectionColor` | `'primary'` | Semantic accent color applied to the checked state. |
+
+### Radio Props
+
+`Radio` extends `RACRadioProps` from `react-aria-components`.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `string` | — | Unique value represented by this radio option. |
+| `isDisabled` | `boolean` | `false` | Disables interaction for this individual option. |
+| `color` | `SelectionColor` | `'primary'` | Semantic color token for the active radio dot. |
+| `children` | `ReactNode` | — | Label or description content rendered alongside the radio circle. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility & Keyboard Interaction
+
+Hashti's `RadioGroup` strictly complies with the [W3C WAI-ARIA Radio Group Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/):
+
+### Keyboard Navigation & Roving Focus
+
+- <kbd>Tab</kbd>: Moves focus into the radio group to the currently selected option. If none is selected, focus lands on the first enabled option.
+- <kbd>Down Arrow</kbd> / <kbd>Right Arrow</kbd>: Moves focus and selection to the next enabled radio option in the group, wrapping from the last option back to the first.
+- <kbd>Up Arrow</kbd> / <kbd>Left Arrow</kbd>: Moves focus and selection to the previous enabled radio option in the group, wrapping from the first option to the last.
+- <kbd>Space</kbd>: Selects the focused radio button if it was not already selected.
+
+### ARIA Attributes
+
+- The container receives `role="radiogroup"` linked via `aria-labelledby` to its `<Label>`.
+- Each option renders `role="radio"` with `aria-checked="true"` or `"false"`.
+- The helper description and error message are programmatically linked via `aria-describedby`, ensuring screen readers announce context when entering the group.

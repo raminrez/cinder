@@ -1,0 +1,174 @@
+---
+title: Search Field
+description: Specialized input control designed for real-time querying, featuring clear buttons and shortcut key indicators.
+---
+
+# Search Field
+
+The **SearchField** component delivers an intuitive search input engineered for fast, real-time query entry and data discovery. Out of the box, it features a leading search icon, an automatic clear button that emerges as the user types, and support for keyboard shortcut hints (such as <kbd>⌘K</kbd>).
+
+In Hashti's visual philosophy, discovery tools must never obstruct the user's view; rather, they serve as luminous focal points allowing immediate navigation across complex data architectures.
+
+---
+
+## Import
+
+```tsx
+import { SearchField, Kbd } from "@cinder/react";
+```
+
+Sub-components for custom layouts:
+
+```tsx
+import {
+  SearchField,
+  FieldControl,
+  FieldGroupInput,
+} from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Search Field
+
+A basic search field with placeholder and label:
+
+```tsx
+import { SearchField } from "@cinder/react";
+
+export function BasicSearchFieldDemo() {
+  return (
+    <SearchField
+      label="Explore Components"
+      placeholder="Search documentation, props, tokens..."
+    />
+  );
+}
+```
+
+### Real-Time Querying & Submit Handlers
+
+Hook into `onChange` for instant typeahead filtering, or `onSubmit` when the user presses <kbd>Enter</kbd>:
+
+```tsx
+import { useState } from "react";
+import { SearchField } from "@cinder/react";
+
+export function SearchHandlerDemo() {
+  const [query, setQuery] = useState("");
+  const [submittedQuery, setSubmittedQuery] = useState("");
+
+  return (
+    <div className="flex flex-col gap-3 max-w-md">
+      <SearchField
+        label="Architectural Archive"
+        placeholder="Search mosques, courtyards, vaults..."
+        value={query}
+        onChange={setQuery}
+        onSubmit={(text) => setSubmittedQuery(text)}
+        onClear={() => {
+          setQuery("");
+          setSubmittedQuery("");
+        }}
+      />
+      <div className="text-sm text-gray-600 dark:text-gray-400">
+        Active Query: <code className="font-mono text-xs">{query || "—"}</code> |
+        Submitted: <code className="font-mono text-xs">{submittedQuery || "—"}</code>
+      </div>
+    </div>
+  );
+}
+```
+
+### Integrated Keyboard Shortcut Indicator
+
+Pair with Hashti's `<Kbd>` component to indicate a global command palette or focus shortcut:
+
+```tsx
+import { SearchField, Kbd } from "@cinder/react";
+
+export function ShortcutSearchDemo() {
+  return (
+    <div className="relative max-w-md">
+      <SearchField
+        label="Global Search"
+        placeholder="Search everywhere..."
+      />
+      <div className="absolute right-10 top-9 pointer-events-none flex items-center gap-1">
+        <Kbd>⌘</Kbd>
+        <Kbd>K</Kbd>
+      </div>
+    </div>
+  );
+}
+```
+
+### Control Sizes
+
+SearchField is available in `sm` (32px), `md` (40px, default), and `lg` (48px) sizes:
+
+```tsx
+import { SearchField } from "@cinder/react";
+
+export function SearchSizesDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <SearchField size="sm" label="Compact" placeholder="Quick search..." />
+      <SearchField size="md" label="Default" placeholder="Standard search..." />
+      <SearchField size="lg" label="Spacious" placeholder="Hero search..." />
+    </div>
+  );
+}
+```
+
+### Disabled State
+
+```tsx
+import { SearchField } from "@cinder/react";
+
+export function DisabledSearchDemo() {
+  return (
+    <SearchField
+      label="Index Search"
+      placeholder="Reindexing in progress..."
+      isDisabled
+      description="Search index is currently rebuilding. Check back shortly."
+    />
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `string` | — | The controlled query string. |
+| `defaultValue` | `string` | — | Default query string for uncontrolled instances. |
+| `onChange` | `(value: string) => void` | — | Handler triggered upon every text change. |
+| `onSubmit` | `(value: string) => void` | — | Handler triggered when the user presses <kbd>Enter</kbd>. |
+| `onClear` | `() => void` | — | Handler triggered when the clear button is pressed or <kbd>Esc</kbd> is hit. |
+| `placeholder` | `string` | `"Search"` | Placeholder text when empty. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and typographic scale of the search input. |
+| `label` | `ReactNode` | — | Accessible label for the search input. |
+| `description` | `ReactNode` | — | Helper text underneath or above the field. |
+| `errorMessage` | `ReactNode` | — | Error text when validation fails. |
+| `isInvalid` | `boolean` | `false` | Marks field as having an invalid state. |
+| `isDisabled` | `boolean` | `false` | Disables search interaction and gray out controls. |
+| `isReadOnly` | `boolean` | `false` | Prevents editing while permitting selection. |
+| `inputProps` | `InputProps` | — | Custom props forwarded directly to the RAC `<Input>`. |
+
+---
+
+## Accessibility
+
+SearchField implements the **WAI-ARIA `searchbox`** pattern:
+
+- **Escape Key Clearing**: Pressing <kbd>Esc</kbd> while the input is focused immediately clears the search query and fires the `onClear` callback, without deselecting the input.
+- **Enter Key Submission**: Pressing <kbd>Enter</kbd> fires the `onSubmit` event, allowing users to submit searches via keyboard without needing to click an external submit button.
+- **Clear Button Labeling**: The clear button includes an accessible label (`aria-label="Clear search"`) and is automatically hidden when the input is empty to avoid tab clutter.
+- **Search Landmark Semantics**: Rendered with `type="search"` to trigger native virtual keyboard search actions on iOS and Android devices.
+- **RTL Script Support**: In Persian/Arabic layouts, the magnifying glass icon and clear button gracefully swap positions to match reading direction.

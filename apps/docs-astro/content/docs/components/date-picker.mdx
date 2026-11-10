@@ -1,0 +1,238 @@
+---
+title: Date Picker
+description: Calendar-driven date selection suite supporting single dates, date ranges, and direct segment inputs.
+---
+
+# Date Picker
+
+Hashti's date and time suite provides an accessible, culturally aware foundation for temporal data entry. Rather than relying on rigid browser defaults, Hashti implements segmented numerical date fields paired with smooth calendar popovers, offering full support for single dates, continuous date ranges, direct segment navigation, and international calendar systems (including the Persian Solar Hijri calendar).
+
+The suite is comprised of:
+- **`DatePicker`**: A segmented input with an attached calendar popup for single date selection.
+- **`DateRangePicker`**: Paired start/end segmented inputs with a range calendar for booking windows and timespans.
+- **`DateField` & `TimeField`**: Standalone keyboard-navigable segment inputs without a calendar popup.
+- **`Calendar` & `RangeCalendar`**: Embedded, standalone calendar grids.
+
+---
+
+## Import
+
+```tsx
+import {
+  DatePicker,
+  DateRangePicker,
+  DateField,
+  TimeField,
+  Calendar,
+  RangeCalendar,
+} from "@cinder/react";
+```
+
+Date values are manipulated using `@internationalized/date` (an industry-standard library included with React Aria):
+
+```bash
+bun add @internationalized/date
+```
+
+```tsx
+import { parseDate, today, getLocalTimeZone } from "@internationalized/date";
+```
+
+---
+
+## Examples
+
+### Single Date Picker
+
+A standard DatePicker with an input field and calendar trigger button:
+
+```tsx
+import { DatePicker } from "@cinder/react";
+import { parseDate } from "@internationalized/date";
+
+export function SingleDatePickerDemo() {
+  return (
+    <div className="max-w-xs">
+      <DatePicker
+        label="Restoration Milestone Date"
+        defaultValue={parseDate("2026-06-15")}
+        description="Select the scheduled inspection date."
+      />
+    </div>
+  );
+}
+```
+
+### Date Range Picker
+
+`DateRangePicker` manages paired start and end dates with integrated validation, perfect for hotel reservations, travel bookings, and project phases:
+
+```tsx
+import { DateRangePicker } from "@cinder/react";
+import { parseDate } from "@internationalized/date";
+
+export function DateRangePickerDemo() {
+  return (
+    <div className="max-w-sm">
+      <DateRangePicker
+        label="Residency Duration"
+        defaultValue={{
+          start: parseDate("2026-09-01"),
+          end: parseDate("2026-09-14"),
+        }}
+        description="Select arrival and departure dates."
+      />
+    </div>
+  );
+}
+```
+
+### Persian Solar Hijri Calendar Support
+
+Hashti includes architectural support for the Persian Solar Hijri (*Jalali*) calendar system via `@internationalized/date`'s `PersianCalendar`. When paired with an Iranian locale (`fa-IR`), month names, day orders (Saturday to Friday), and numeral formats correspond directly to Persian standards:
+
+```tsx
+import { DatePicker } from "@cinder/react";
+import { today, PersianCalendar, toCalendar } from "@internationalized/date";
+
+export function PersianDatePickerDemo() {
+  // Convert current Gregorian date to Persian Solar Hijri (1405 SH)
+  const persianToday = toCalendar(today("Asia/Tehran"), new PersianCalendar());
+
+  return (
+    <div dir="rtl" className="max-w-xs font-sans">
+      <DatePicker
+        label="تاریخ آغاز مرمت عمارت"
+        defaultValue={persianToday}
+        description="تقویم هجری شمسی با پشتیبانی کامل از روزهای هفته و ماه‌ها."
+      />
+    </div>
+  );
+}
+```
+
+### Date Constraints (Min & Max Boundaries)
+
+Set `minValue` and `maxValue` to restrict dates to a valid window. Dates outside this range are visually grayed out and unselectable:
+
+```tsx
+import { DatePicker } from "@cinder/react";
+import { today, getLocalTimeZone } from "@internationalized/date";
+
+export function BoundedDateDemo() {
+  const current = today(getLocalTimeZone());
+
+  return (
+    <div className="max-w-xs">
+      <DatePicker
+        label="Permit Request Date"
+        minValue={current}
+        maxValue={current.add({ months: 6 })}
+        description="Requests can be submitted up to 6 months in advance."
+      />
+    </div>
+  );
+}
+```
+
+### Standalone DateField & TimeField
+
+When a calendar popup is unnecessary or when screen space is tight, `DateField` and `TimeField` provide tactile segment-by-segment keyboard inputs:
+
+```tsx
+import { DateField, TimeField } from "@cinder/react";
+import { parseDate, parseTime } from "@internationalized/date";
+
+export function StandaloneFieldsDemo() {
+  return (
+    <div className="flex flex-col gap-4 max-w-xs">
+      <DateField
+        label="Archival Date"
+        defaultValue={parseDate("1971-10-14")}
+      />
+
+      <TimeField
+        label="Acoustic Measurement Time"
+        defaultValue={parseTime("14:30")}
+      />
+    </div>
+  );
+}
+```
+
+### Embedded Calendar Grid
+
+Use `<Calendar>` directly inline within a dashboard or sidebar panel:
+
+```tsx
+import { useState } from "react";
+import { Calendar } from "@cinder/react";
+import { today, getLocalTimeZone, type DateValue } from "@internationalized/date";
+
+export function InlineCalendarDemo() {
+  const [selectedDate, setSelectedDate] = useState<DateValue>(today(getLocalTimeZone()));
+
+  return (
+    <div className="p-4 border rounded-xl max-w-sm">
+      <Calendar value={selectedDate} onChange={setSelectedDate} />
+      <div className="mt-3 text-xs text-gray-500 text-center">
+        Selected: {selectedDate.toString()}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### DatePicker Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `DateValue \| null` | — | Controlled date value. |
+| `defaultValue` | `DateValue` | — | Default date value for uncontrolled usage. |
+| `onChange` | `(value: DateValue \| null) => void` | — | Handler invoked when the selected date changes. |
+| `minValue` | `DateValue` | — | The earliest permissible date. |
+| `maxValue` | `DateValue` | — | The latest permissible date. |
+| `granularity` | `'day' \| 'hour' \| 'minute' \| 'second'` | `'day'` | Temporal precision level for the segmented field. |
+| `label` | `ReactNode` | — | Accessible field label. |
+| `description` | `ReactNode` | — | Helper text below or above the input. |
+| `errorMessage` | `ReactNode` | — | Error text rendered when validation fails. |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and control sizing. |
+| `isDisabled` | `boolean` | `false` | Whether the date picker is disabled. |
+| `isReadOnly` | `boolean` | `false` | Whether the date picker is read-only. |
+| `isInvalid` | `boolean` | `false` | Whether the date picker is in an invalid error state. |
+| `isRequired` | `boolean` | `false` | Whether a date value is required for form submission. |
+
+### DateRangePicker Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `DateRange \| null` | — | Controlled `{ start: DateValue, end: DateValue }`. |
+| `defaultValue` | `DateRange` | — | Default start and end dates. |
+| `onChange` | `(range: DateRange \| null) => void` | — | Callback fired when the range changes. |
+| `minValue` | `DateValue` | — | Earliest selectable date. |
+| `maxValue` | `DateValue` | — | Latest selectable date. |
+
+---
+
+## Accessibility
+
+The date suite implements the **WAI-ARIA Date Picker Pattern** with comprehensive keyboard parity:
+
+### Segmented Input Navigation
+- <kbd>→</kbd> and <kbd>←</kbd> move between date segments (Month, Day, Year).
+- <kbd>↑</kbd> and <kbd>↓</kbd> increment and decrement the focused segment.
+- Typing numbers directly sets the segment value (e.g., typing "0" then "5" in the month segment selects May).
+- In RTL locales, segment arrow navigation mirrors automatically.
+
+### Calendar Grid Navigation
+- <kbd>→</kbd> and <kbd>←</kbd> navigate to the next / previous day.
+- <kbd>↑</kbd> and <kbd>↓</kbd> move focus one full week forward or backward.
+- <kbd>PageUp</kbd> and <kbd>PageDown</kbd> move focus by one month.
+- <kbd>Alt</kbd> + <kbd>PageUp</kbd> and <kbd>Alt</kbd> + <kbd>PageDown</kbd> move focus by one year.
+- <kbd>Home</kbd> moves to the first day of the month; <kbd>End</kbd> moves to the last day of the month.
+- <kbd>Enter</kbd> or <kbd>Space</kbd> selects the focused date and closes the popover (in single-date mode).
+- <kbd>Esc</kbd> closes the calendar popover and returns focus to the trigger button.

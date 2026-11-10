@@ -1,0 +1,220 @@
+---
+title: Card
+description: Container component grouping related content, actions, and media.
+---
+
+# Card
+
+Cards are versatile structural containers used to group related information, media, and interactive actions. In Hashti, cards draw inspiration from the delineated chambers and courtyards of Persian architectural complexes, presenting distinct visual boundaries, multiple depth elevations, structured semantic sub-components (`CardHeader`, `CardBody`, `CardFooter`), and accessible pressable behaviors.
+
+---
+
+## Architectural Composition
+
+In Persian spatial planning (*Chahar Taq* and *Koushk* pavilions), perimeter plinths elevate living areas above the ground level, establishing clear functional zones. Hashti's `Card` brings this structural clarity into user interfaces:
+
+```
+┌──────────────────────────────────────────────┐
+│ CardHeader (Title, Description, Action)     │
+├──────────────────────────────────────────────┤
+│ CardBody (Primary Content, Data, Forms)      │
+├──────────────────────────────────────────────┤
+│ CardFooter (Confirm / Cancel Actions, Meta) │
+└──────────────────────────────────────────────┘
+```
+
+- **Compound Architecture**: Cleanly decomposes into `<CardHeader>`, `<CardBody>`, and `<CardFooter>` for predictable spacing, typography, and responsive flow.
+- **Three Elevations**: `flat` (subtle border, zero shadow for dense dashboards), `raised` (tactile drop shadow for cards floating above canvas), and `overlay` (for elevated floating modals and popouts).
+- **Pressable Affinity**: Setting `isPressable={true}` transforms the card into a fully keyboard-accessible action trigger (`role="button"`).
+
+---
+
+## Import
+
+```tsx
+import { Card, CardHeader, CardBody, CardFooter } from "@cinder/react";
+import type {
+  CardProps,
+  CardHeaderProps,
+  CardBodyProps,
+  CardFooterProps,
+  CardElevation,
+} from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Standard Composed Card
+
+Use `CardHeader`, `CardBody`, and `CardFooter` to compose complete information units with built-in layout consistency:
+
+```tsx
+import { Card, CardHeader, CardBody, CardFooter, Button, Badge } from "@cinder/react";
+
+export function StandardCardDemo() {
+  return (
+    <Card elevation="raised" className="max-w-md">
+      <CardHeader
+        title="Edge Gateway Cluster"
+        description="High-availability routing proxy for regional ingress"
+        action={<Badge variant="success">Active</Badge>}
+      />
+
+      <CardBody>
+        <p className="text-sm text-neutral-600 dark:text-neutral-300">
+          Cluster deployed across 3 availability zones in Frankfurt (eu-central-1).
+          Current throughput is 42,000 req/sec with average latency of 4.2ms.
+        </p>
+      </CardBody>
+
+      <CardFooter className="flex justify-end gap-2">
+        <Button variant="ghost" size="sm">View Metrics</Button>
+        <Button variant="primary" size="sm">Configure Route</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+---
+
+### Elevations
+
+Hashti supports three calibrated elevations:
+
+- `flat`: Minimalist flat surface with subtle structural border. Perfect for dense analytical dashboards.
+- `raised`: Soft elevation shadow (`elevation-2`). Ideal for overview cards, product offerings, and kanban cards.
+- `overlay`: Deep floating shadow (`elevation-4`) designed for flyout panels, detached widgets, and focused items.
+
+```tsx
+import { Card, CardBody } from "@cinder/react";
+
+export function CardElevationsDemo() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Card elevation="flat">
+        <CardBody>
+          <h4 className="font-semibold text-sm mb-1">Flat Elevation</h4>
+          <p className="text-xs text-neutral-500">Subtle border, zero elevation drop shadow.</p>
+        </CardBody>
+      </Card>
+
+      <Card elevation="raised">
+        <CardBody>
+          <h4 className="font-semibold text-sm mb-1">Raised Elevation</h4>
+          <p className="text-xs text-neutral-500">Tactile ambient shadow lifting off canvas.</p>
+        </CardBody>
+      </Card>
+
+      <Card elevation="overlay">
+        <CardBody>
+          <h4 className="font-semibold text-sm mb-1">Overlay Elevation</h4>
+          <p className="text-xs text-neutral-500">Deep spatial shadow for detached containers.</p>
+        </CardBody>
+      </Card>
+    </div>
+  );
+}
+```
+
+---
+
+### Interactive / Pressable Card
+
+To use a card as an entire clickable card (e.g. selecting a workspace, opening a project, or choosing a plan), provide `isPressable={true}` and an `onPress` callback. Hashti automatically injects `role="button"`, keyboard listener (`Enter` and `Space`), and visual hover/active transforms:
+
+```tsx
+import { Card, CardHeader, CardBody, Icon } from "@cinder/react";
+
+export function PressableCardDemo() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl">
+      <Card
+        isPressable
+        elevation="flat"
+        onPress={() => alert("Navigating to Shiraz Analytics Workspace")}
+        className="cursor-pointer transition-transform hover:-translate-y-0.5"
+      >
+        <CardHeader
+          title="Shiraz Production"
+          description="Primary cluster · 24 nodes"
+          action={<Icon name="arrowRight" size={16} />}
+        />
+        <CardBody>
+          <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400">
+            99.995% Uptime
+          </span>
+        </CardBody>
+      </Card>
+
+      <Card
+        isPressable
+        elevation="flat"
+        onPress={() => alert("Navigating to Isfahan Staging Workspace")}
+        className="cursor-pointer transition-transform hover:-translate-y-0.5"
+      >
+        <CardHeader
+          title="Isfahan Staging"
+          description="Testing environment · 8 nodes"
+          action={<Icon name="arrowRight" size={16} />}
+        />
+        <CardBody>
+          <span className="text-xs font-mono text-amber-600 dark:text-amber-400">
+            Pending Migrations
+          </span>
+        </CardBody>
+      </Card>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Card Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `elevation` | `'flat' \| 'raised' \| 'overlay'` | `'flat'` | Shadow elevation and depth treatment. |
+| `isPressable` | `boolean` | `false` | When true, renders with interactive button semantics, hover states, and keyboard triggering. |
+| `onPress` | `() => void` | — | Callback invoked when an interactive card is clicked or triggered via keyboard. |
+| `children` | `ReactNode` | — | Card content (typically `CardHeader`, `CardBody`, and `CardFooter`). |
+| `className` | `string` | — | Additional CSS class names. |
+
+### CardHeader Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `ReactNode` | — | Title text or node. Strings are automatically wrapped in an `<h3 className="cinder-card-title">`. |
+| `description` | `ReactNode` | — | Subtitle or description text, wrapped in `<p className="cinder-card-description">`. |
+| `action` | `ReactNode` | — | Trailing element (such as a `<Button>`, `<Badge>`, or menu icon). |
+| `children` | `ReactNode` | — | Custom children when custom header layout is needed. |
+
+### CardBody Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `ReactNode` | — | Primary body content of the card. |
+| `className` | `string` | — | Additional CSS classes for internal padding and layout. |
+
+### CardFooter Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `ReactNode` | — | Footer actions, meta labels, or pagination controls. |
+| `className` | `string` | — | Additional CSS classes for alignment and spacing. |
+
+---
+
+## Accessibility & Keyboard Interaction
+
+- **Semantic Headers**: When string titles are passed to `CardHeader`, they render as semantic `<h3>` elements, maintaining an accessible heading outline for screen reader navigation.
+- **Interactive Keyboard Activation**: When `isPressable={true}`:
+  - Adds `role="button"` and `tabIndex={0}`.
+  - Responds to both <kbd>Enter</kbd> and <kbd>Space</kbd> keys, invoking `onPress()`.
+  - Focus rings appear via `:focus-visible` without triggering on mouse clicks.
+- **Nested Controls Warning**: Avoid placing interactive nested buttons inside a pressable card without stopping event propagation, as nested buttons inside a `role="button"` violate accessibility guidelines. For cards containing nested buttons, use a non-pressable card and place discrete buttons in `CardFooter` or `CardHeader`.

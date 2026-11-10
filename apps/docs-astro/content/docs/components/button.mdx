@@ -1,0 +1,246 @@
+---
+title: Button
+description: Interactive button control for executing actions, submitting forms, and triggering commands.
+---
+
+# Button
+
+Buttons are foundational interactive controls that enable users to trigger actions, execute commands, and submit forms. Hashti's `Button` is built directly on [React Aria Components (RAC)](https://react-spectrum.adobe.com/react-aria/Button.html), ensuring full keyboard navigation, touch responsiveness, WCAG 2.2 AAA contrast compliance, and built-in pending/loading spinner management.
+
+---
+
+## Architecture & Spatial Geometry
+
+In Persian architectural spatial design, entrance portals (*darvazeh* and *sar-dar*) clearly signal transitional affordances. Similarly, the Hashti `Button` provides unambiguous visual affordance through intentional elevation, contrast, and tactile focus states:
+
+```
+[Default Surface]  ──(Hover / Press)──►  [Elevation / Tint Shift]  ──(Async Action)──►  [Inline Spinner]
+```
+
+- **Built on React Aria Components**: Leverages `RACButton` for cross-browser event normalization (`onPress`), roving focus integration, and screen-reader accessibility.
+- **Native Loading States**: Integrated `isPending` state that renders a localized indeterminate progress spinner while preserving layout dimensions.
+- **Eight Theme Adaptability**: Automatically shifts border radius, surface contrast, and shadow depth across Frame and Carbon design systems.
+
+---
+
+## Import
+
+```tsx
+import { Button } from "@cinder/react";
+import type { ButtonProps, ButtonVariant } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Basic Usage
+
+The standard `Button` uses the `primary` variant by default and responds to both mouse clicks and keyboard trigger keys (`Enter` and `Space`):
+
+```tsx
+import { Button } from "@cinder/react";
+
+export function BasicButtonDemo() {
+  return (
+    <Button onPress={() => alert("Action triggered!")}>
+      Save Changes
+    </Button>
+  );
+}
+```
+
+---
+
+### Variants
+
+Hashti provides a comprehensive palette of visual variants designed for clear visual hierarchy:
+
+- `primary`: For high-emphasis, primary page actions (e.g., "Submit Order", "Create Project").
+- `secondary`: For balanced secondary actions (e.g., "Cancel", "Previous Step").
+- `tertiary`: For understated actions that do not compete with primary buttons.
+- `ghost`: Borderless, low-emphasis button suitable for toolbars, headers, and dense tabular rows.
+- `danger`: High-urgency destructive action (e.g., "Delete Database", "Revoke Certificate").
+- `danger-tertiary`: Subdued destructive action with colored text and minimal background.
+- `danger-ghost`: Borderless destructive action designed for item deletion inside dense lists.
+
+```tsx
+import { Button } from "@cinder/react";
+
+export function ButtonVariantsDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button variant="primary">Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="tertiary">Tertiary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="danger">Danger</Button>
+      <Button variant="danger-tertiary">Danger Tertiary</Button>
+      <Button variant="danger-ghost">Danger Ghost</Button>
+    </div>
+  );
+}
+```
+
+---
+
+### Sizes
+
+Hashti offers 5 control sizes. In the Frame theme family, the default control size is `lg` (44px target), matching touch-friendly human interface ergonomics:
+
+| Size | Height (Frame) | Height (Carbon) | Common Use Cases |
+| :--- | :--- | :--- | :--- |
+| `sm` | 32px | 32px | Compact data tables, tight filters, compact card headers |
+| `md` | 38px | 40px | Standard dialogs, sidebar forms, secondary navigation |
+| `lg` | 44px (default) | 48px | Primary forms, landing pages, standard page actions |
+| `xl` | 50px | 56px | Hero callouts, prominent promotional flows |
+| `2xl`| 56px | 64px | High-visibility onboarding steps, kiosk displays |
+
+```tsx
+import { Button } from "@cinder/react";
+
+export function ButtonSizesDemo() {
+  return (
+    <div className="flex flex-wrap items-end gap-3">
+      <Button size="sm">Small (32px)</Button>
+      <Button size="md">Medium (38px)</Button>
+      <Button size="lg">Large (44px - Default)</Button>
+      <Button size="xl">Extra Large (50px)</Button>
+      <Button size="2xl">2X Large (56px)</Button>
+    </div>
+  );
+}
+```
+
+---
+
+### With Icons
+
+Buttons support leading or trailing icons using the Hashti `<Icon />` component. For icon-only utility buttons, pass `iconOnly` and supply an accessible `aria-label`:
+
+```tsx
+import { Button, Icon } from "@cinder/react";
+
+export function IconButtonDemo() {
+  return (
+    <div className="flex items-center gap-3">
+      {/* Leading icon */}
+      <Button variant="primary">
+        <Icon name="plus" />
+        Create Cluster
+      </Button>
+
+      {/* Trailing icon */}
+      <Button variant="secondary">
+        Export Data
+        <Icon name="arrowRight" />
+      </Button>
+
+      {/* Icon only (requires aria-label for accessibility) */}
+      <Button variant="ghost" iconOnly aria-label="Refresh telemetry feed">
+        <Icon name="refresh" />
+      </Button>
+
+      <Button variant="danger-ghost" iconOnly aria-label="Delete entry">
+        <Icon name="trash" />
+      </Button>
+    </div>
+  );
+}
+```
+
+> [!IMPORTANT]
+> When `iconOnly` is set to `true`, the button dimensions form a square touch target. Always provide an explicit `aria-label` or `aria-labelledby` so assistive technologies can describe the action.
+
+---
+
+### Loading & Pending States
+
+When executing asynchronous requests (e.g., API mutation, Stripe checkout), set `isPending={true}`. Hashti automatically injects an indeterminate `<RACProgressBar className="cinder-spinner" />` while preserving button dimensions to avoid layout shift:
+
+```tsx
+import { useState } from "react";
+import { Button } from "@cinder/react";
+
+export function PendingButtonDemo() {
+  const [isDeploying, setIsDeploying] = useState(false);
+
+  const handleDeploy = async () => {
+    setIsDeploying(true);
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+    setIsDeploying(false);
+  };
+
+  return (
+    <Button
+      variant="primary"
+      isPending={isDeploying}
+      pendingLabel="Deploying infrastructure..."
+      onPress={handleDeploy}
+    >
+      Deploy to Production
+    </Button>
+  );
+}
+```
+
+---
+
+### Disabled State
+
+Disabled buttons reject all mouse and keyboard interactions, prevent focus where appropriate, and visually display reduced opacity:
+
+```tsx
+import { Button } from "@cinder/react";
+
+export function DisabledButtonDemo() {
+  return (
+    <div className="flex gap-3">
+      <Button variant="primary" isDisabled>
+        Confirm Transaction
+      </Button>
+      <Button variant="ghost" isDisabled>
+        Reset Form
+      </Button>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+`Button` extends `RACButtonProps` from `react-aria-components`.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger' \| 'danger-tertiary' \| 'danger-ghost'` | `'primary'` | Visual hierarchy styling variant. |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `'lg'` | Geometric control size (default 44px in Frame, 48px in Carbon). |
+| `iconOnly` | `boolean` | `false` | When true, renders a square aspect-ratio target for an icon. |
+| `isPending` | `boolean` | `false` | Renders an inline indeterminate progress spinner. |
+| `pendingLabel` | `string` | `'Pending'` | Accessible label announced by screen readers during pending state. |
+| `isDisabled` | `boolean` | `false` | Whether the button is disabled from user interactions. |
+| `autoFocus` | `boolean` | `false` | Whether the element should receive keyboard focus on initial render. |
+| `onPress` | `(e: PressEvent) => void` | — | Handler called when a press interaction completes (click, tap, Space/Enter). |
+| `children` | `ReactNode \| ((values: ButtonRenderProps) => ReactNode)` | — | Content rendered within the button. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility & Keyboard Interaction
+
+Hashti buttons strictly adhere to the [W3C WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/):
+
+### Keyboard Navigation
+
+- <kbd>Enter</kbd>: Triggers the button's `onPress` event handler.
+- <kbd>Space</kbd>: Triggers the button's `onPress` event handler.
+- <kbd>Tab</kbd>: Moves keyboard focus onto and away from the button control.
+
+### Screen Reader Support
+
+- **Native Semantics**: Renders a semantic `<button type="button">` element unless configured as `type="submit"` or `type="reset"`.
+- **Accessible Names**: Buttons containing text automatically inherit their accessible name from `children`. Icon-only buttons must supply `aria-label`.
+- **Pending Announcements**: When `isPending` is active, the spinner contains `role="progressbar"` with `aria-label={pendingLabel}`, immediately informing vision-impaired users of background work.
+- **Focus Rings**: Employs high-contrast focus rings (`outline: 2px solid var(--cinder-focus-ring)`) with double-offset separation that remains distinct in both light and dark themes.

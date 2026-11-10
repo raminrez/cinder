@@ -1,0 +1,213 @@
+---
+title: Avatar
+description: Visual representation of a user, team, or entity with image, initials fallback, and status indicator.
+---
+
+# Avatar
+
+Avatars visually represent users, teams, organizations, or automated agents. Hashti's `Avatar` and `AvatarGroup` components feature automatic image error fallbacks, grapheme-safe international initials (with native support for Persian and Arabic scripts), five standardized geometric sizes, presence badges, and stacked group layouts.
+
+---
+
+## Architectural Affordances & Grapheme Clusters
+
+In international design systems, extracting the first letter of a name often fails with non-Latin scripts (e.g., Persian *گ*, *چ*, Arabic ligatures, or multi-byte emoji combinations). Hashti's `Avatar` incorporates an `Intl.Segmenter` engine via `getInitials`:
+
+```
+"Sara Moradi"       ──► "SM"
+"سارا مرادی"         ──► "سم"  (Persian grapheme cluster safe)
+"Failed Image URL"  ──► Fallback to Initials or Icon
+```
+
+- **Graceful Fallback Sequence**: `Image` ──(error)──► `Initials` ──(missing name)──► `Custom Fallback` ──(empty)──► `Default User Icon`.
+- **Presence Indicators**: High-visibility status dots (`online`, `offline`, `away`, `busy`, `dnd`) with accessible screen reader status labels.
+- **AvatarGroup Composition**: Stacks multiple members with negative overlapping margins, automatic `+N` count calculation, and inherited size tokens.
+
+---
+
+## Import
+
+```tsx
+import { Avatar, AvatarGroup, getInitials } from "@cinder/react";
+import type { AvatarProps, AvatarGroupProps, AvatarSize, AvatarPresence } from "@cinder/react";
+```
+
+---
+
+## Usage Examples
+
+### Basic Image Avatar
+
+When a valid image URL is provided in `src`:
+
+```tsx
+import { Avatar } from "@cinder/react";
+
+export function BasicAvatarDemo() {
+  return (
+    <div className="flex gap-4 items-center">
+      <Avatar
+        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=128&q=80"
+        name="Elena Rostova"
+        alt="Portrait of Elena Rostova"
+      />
+      <div>
+        <div className="font-medium text-sm">Elena Rostova</div>
+        <div className="text-xs text-neutral-500">Principal Systems Architect</div>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+### Grapheme-Safe Initials Fallback
+
+When `src` is missing or fails to load, `Avatar` automatically derives initials from `name`. It safely handles both Latin and Persian/Arabic names:
+
+```tsx
+import { Avatar } from "@cinder/react";
+
+export function InitialsAvatarDemo() {
+  return (
+    <div className="flex flex-wrap gap-4 items-center">
+      {/* English initials -> "AS" */}
+      <Avatar name="Ali Soleimani" />
+
+      {/* Persian initials -> "سم" (Sara Moradi) */}
+      <Avatar name="سارا مرادی" lang="fa" />
+
+      {/* Persian single name -> "ر" (Ramin) */}
+      <Avatar name="رامین" lang="fa" />
+
+      {/* French / German compound names */}
+      <Avatar name="Jean-Luc Picard" />
+    </div>
+  );
+}
+```
+
+---
+
+### Sizes
+
+Hashti offers five standardized sizes from `xs` (24px) up to `xl` (64px):
+
+```tsx
+import { Avatar } from "@cinder/react";
+
+export function AvatarSizesDemo() {
+  return (
+    <div className="flex items-end gap-3">
+      <Avatar size="xs" name="Kian" />
+      <Avatar size="sm" name="Kian" />
+      <Avatar size="md" name="Kian" />
+      <Avatar size="lg" name="Kian" />
+      <Avatar size="xl" name="Kian" />
+    </div>
+  );
+}
+```
+
+| Size | Dimension | Use Cases |
+| :--- | :--- | :--- |
+| `xs` | 24px | Dense table cells, inline comments, chat thread sub-replies |
+| `sm` | 32px | Header user menus, list items, card author stamps |
+| `md` | 40px (Default) | Standard profile cards, member directories |
+| `lg` | 48px | Modal profile overviews, workspace headers |
+| `xl` | 64px | Account settings pages, profile hero sections |
+
+---
+
+### Presence Status Badges
+
+Add a live activity indicator using the `presence` prop:
+
+```tsx
+import { Avatar } from "@cinder/react";
+
+export function AvatarPresenceDemo() {
+  return (
+    <div className="flex gap-4 items-center">
+      <Avatar name="Kav" presence="online" presenceLabel="Online and active" />
+      <Avatar name="Zahra" presence="away" presenceLabel="Away from keyboard" />
+      <Avatar name="David" presence="busy" presenceLabel="In a design review" />
+      <Avatar name="Nima" presence="dnd" presenceLabel="Do not disturb" />
+      <Avatar name="Reza" presence="offline" presenceLabel="Offline" />
+    </div>
+  );
+}
+```
+
+---
+
+### AvatarGroup (Stacked Cluster)
+
+Group multiple team members with `AvatarGroup`. Use the `max` prop to constrain the display and show an overflow counter:
+
+```tsx
+import { AvatarGroup, Avatar } from "@cinder/react";
+
+export function AvatarGroupDemo() {
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Default group */}
+      <AvatarGroup size="md" max={3}>
+        <Avatar name="Soran" />
+        <Avatar name="Maryam" />
+        <Avatar name="Farhad" />
+        <Avatar name="Kaveh" />
+        <Avatar name="Niloufar" />
+      </AvatarGroup>
+
+      {/* Small group */}
+      <AvatarGroup size="sm" max={4}>
+        <Avatar name="A" />
+        <Avatar name="B" />
+        <Avatar name="C" />
+        <Avatar name="D" />
+        <Avatar name="E" />
+        <Avatar name="F" />
+      </AvatarGroup>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Avatar Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `src` | `string` | — | Image source URL. |
+| `alt` | `string` | `''` | Alt text for the image element. |
+| `name` | `string` | — | Full name used to generate initials and accessible label. |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Geometric size (inherited from `AvatarGroup` if present). |
+| `presence` | `'online' \| 'offline' \| 'away' \| 'busy' \| 'dnd'` | — | Current presence status indicator. |
+| `presenceLabel` | `string` | — | Accessible screen reader description for the presence status. |
+| `fallback` | `ReactNode` | — | Custom fallback node rendered if image fails and name is not supplied. |
+| `className` | `string` | — | Additional CSS class names. |
+
+### AvatarGroup Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Inherited size for all member avatars in the group. |
+| `max` | `number` | — | Maximum number of avatars visible before rendering the `+N` badge. |
+| `overflowRenderer` | `(count: number) => ReactNode` | — | Custom renderer for the overflow count badge. |
+| `children` | `ReactNode` | — | Collection of `<Avatar />` components. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility & Internationalization
+
+- **Semantic Role**: Renders with `role="img"` and calculates an accessible `aria-label` falling back in order: `aria-label` ➔ `name` ➔ `alt` ➔ `"Avatar"`.
+- **Initials Hidden from Assistive Voice**: Initials are wrapped in `<span aria-hidden="true">` to prevent screen readers from attempting to pronounce initials as strange phonetic syllables.
+- **Presence Status Announcement**: Presence dots render with `role="status"` and `aria-label={presenceLabel ?? presence}`.
+- **International Grapheme Segmentation**: Uses `Intl.Segmenter` to avoid splitting compound characters or emoji ligatures, ensuring polite rendering across all languages.
+- **AvatarGroup Semantics**: The group wrapper receives `role="group"` with an accessible label on the overflow counter (e.g., `aria-label="3 more members"`).
