@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hashti (هشتی) — Brandbook & Website Design System</title>
+  <title>Hashti (هشتی) — Brand Identity & Design System | hashti.raminrez.dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-sans: 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-fa: 'Vazirmatn', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
@@ -958,6 +959,414 @@
       from { opacity: 0; transform: scale(0.96) translateY(8px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
+
+    /* Domain Pill */
+    .domain-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition);
+      margin-left: 8px;
+    }
+    [dir="rtl"] .domain-pill {
+      margin-left: 0;
+      margin-right: 8px;
+    }
+    .domain-pill:hover {
+      background: var(--bg-raised);
+      border-color: var(--border-strong);
+      color: var(--text-main);
+    }
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-turquoise);
+      box-shadow: 0 0 8px var(--accent-turquoise);
+    }
+
+    /* Interactive Playground Section */
+    .brand-interactive-playground {
+      margin-top: 32px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .playground-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 20px;
+    }
+
+    .playground-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .playground-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .playground-controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-btn-group {
+      display: inline-flex;
+      background: var(--bg-raised);
+      padding: 2px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .pill-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-sans);
+    }
+
+    .pill-btn.active {
+      background: var(--bg);
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .surface-dot-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .surface-dot-btn.active {
+      outline: 2px solid var(--accent-turquoise);
+      outline-offset: 1px;
+    }
+
+    .playground-stage-viewport {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .playground-stage-viewport.bg-checker {
+      background-image: linear-gradient(45deg, #f0f0f2 25%, transparent 25%),
+                        linear-gradient(-45deg, #f0f0f2 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #f0f0f2 75%),
+                        linear-gradient(-45deg, transparent 75%, #f0f0f2 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+
+    .playground-stage-viewport.bg-black {
+      background-color: #000000 !important;
+      border-color: #27272A;
+    }
+
+    .playground-stage-viewport.bg-zinc {
+      background-color: var(--bg-sunken) !important;
+    }
+
+    .clear-space-overlay-box {
+      border: 1px dashed rgba(13, 148, 136, 0.7);
+      background: rgba(13, 148, 136, 0.05);
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .cs-marker {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-turquoise);
+      pointer-events: none;
+    }
+    .cs-marker-top { top: 8px; left: 50%; transform: translateX(-50%); }
+    .cs-marker-bottom { bottom: 8px; left: 50%; transform: translateX(-50%); }
+    .cs-marker-left { left: 8px; top: 50%; transform: translateY(-50%); }
+    .cs-marker-right { right: 8px; top: 50%; transform: translateY(-50%); }
+
+    .playground-actions-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+    }
+
+    .download-chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .download-chip {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-main);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .download-chip:hover {
+      background: var(--bg-raised);
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    /* Architectural Heritage Section */
+    .brand-heritage-card {
+      margin-top: 32px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+    }
+
+    .heritage-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 36px;
+      margin-top: 24px;
+    }
+    @media (max-width: 900px) {
+      .heritage-grid { grid-template-columns: 1fr; }
+    }
+
+    .heritage-step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .heritage-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .step-number {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--text-main);
+      color: var(--bg);
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+    .step-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .pillars-4-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    @media (max-width: 900px) {
+      .pillars-4-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 550px) {
+      .pillars-4-grid { grid-template-columns: 1fr; }
+    }
+
+    .pillar-card {
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .pillar-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pillar-body {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Complete Download Center Matrix */
+    .download-center-card {
+      margin-top: 32px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+    }
+
+    .asset-matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 20px;
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .asset-matrix-table th {
+      background: var(--bg-raised);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    [dir="rtl"] .asset-matrix-table th {
+      text-align: right;
+    }
+
+    .asset-matrix-table td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+    .asset-matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Toast Notification */
+    .toast-pill {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #000000;
+      color: #FFFFFF;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-theme="dark"] .toast-pill {
+      background: #FFFFFF;
+      color: #000000;
+    }
+    .toast-pill.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
   </style>
 </head>
 <body>
@@ -974,6 +1383,11 @@
         </svg>
         <span>Hashti</span>
         <span class="sub" id="nav-sub">Design System</span>
+      </a>
+      <a href="https://hashti.raminrez.dev" target="_blank" rel="noopener" class="domain-pill" title="Live Documentation Domain">
+        <span class="live-dot"></span>
+        <span>hashti.raminrez.dev</span>
+        <span style="opacity:0.6;">↗</span>
       </a>
 
       <nav class="nav-tabs">
@@ -1006,22 +1420,40 @@
     <!-- ========================================================================= -->
     <!-- VIEW 1: BRAND IDENTITY SHEET (Recreation of uploaded specification sheet) -->
     <!-- ========================================================================= -->
+    
+    <!-- ========================================================================= -->
+    <!-- VIEW 1: BRAND IDENTITY SHEET & ASSET CENTER (hashti.raminrez.dev)         -->
+    <!-- ========================================================================= -->
     <div id="view-sheet" class="view-panel active">
       <div class="section-title-wrap">
         <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+            <span class="sheet-badge" style="margin-bottom:0;">OFFICIAL BRAND BOOK</span>
+            <a href="https://hashti.raminrez.dev" target="_blank" rel="noopener" class="domain-pill" style="margin:0;">
+              <span class="live-dot"></span>
+              <span>hashti.raminrez.dev</span>
+              <span>↗</span>
+            </a>
+          </div>
           <h1 class="section-title">Hashti Identity Presentation Sheet</h1>
-          <p class="section-subtitle">Mathematical vector construction, clear space, variations, and high-contrast monochrome guidelines.</p>
+          <p class="section-subtitle">Mathematical ogival portal construction, strict clear space boundaries, pure monochrome #000000 / #FFFFFF contrast, and complete multi-resolution asset suite.</p>
         </div>
-        <button class="btn-hero-secondary" onclick="openSvgModal()">View Raw SVG</button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn-hero-secondary" onclick="copySvgCode('mark')">Copy Mark SVG</button>
+          <button class="btn-hero-primary" onclick="scrollToSection('asset-center')">Download Assets ↓</button>
+        </div>
       </div>
 
+      <!-- =================================================================== -->
+      <!-- 1. OFFICIAL SPECIFICATION GRID (Exact recreation of Brand Sheet)     -->
+      <!-- =================================================================== -->
       <div class="brand-sheet-grid">
         <!-- Col 1: Hero Large Lockup & Essence -->
         <div class="col-hero">
           <div>
             <div class="sheet-badge">BRAND BOOK • SPECIFICATION</div>
             <div class="col-hero-center">
-              <svg class="main-logo-svg" viewBox="0 0 256 256" fill="none">
+              <svg class="main-logo-svg" viewBox="0 0 256 256" fill="none" style="color:var(--text-main);">
                 <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
                 <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
                 <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
@@ -1048,185 +1480,692 @@
 
         <!-- Col 2: Logo Variations & Guidelines -->
         <div class="col-variations">
+          <!-- Row 1: Horizontal Logos -->
           <div>
-            <div class="variation-block-title">Logo Variations (Horizontal & Dark Mode)</div>
+            <div class="variation-block-title">Logo Variations</div>
             <div class="variation-row">
-              <div class="card-preview">
+              <!-- Light Horizontal -->
+              <div class="card-preview" title="Horizontal Logo Light Mode">
                 <div style="display:flex; align-items:center; gap:12px;">
-                  <svg style="width:36px; height:36px;" viewBox="0 0 256 256" fill="none">
+                  <svg style="width:38px; height:38px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
                     <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
                     <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
                     <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
                     <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                   </svg>
                   <div style="text-align:left;">
-                    <div style="font-weight:800; font-size:18px;">Hashti</div>
-                    <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; color:var(--text-muted);">Design System</div>
+                    <div style="font-weight:700; font-size:18px; line-height:1.1;">Hashti</div>
+                    <div style="font-size:10px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted); margin-top:2px;">Design System</div>
                   </div>
                 </div>
               </div>
 
-              <div class="card-preview dark-preset">
+              <!-- Dark Horizontal -->
+              <div class="card-preview dark-preset" title="Horizontal Logo Inverted Dark Card">
                 <div style="display:flex; align-items:center; gap:12px;">
-                  <svg style="width:36px; height:36px;" viewBox="0 0 256 256" fill="none">
-                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
-                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
-                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#ffffff" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
-                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+                  <svg style="width:38px; height:38px; color:#FFFFFF;" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#FFFFFF" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
+                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#FFFFFF" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
+                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#FFFFFF" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
+                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
                   </svg>
                   <div style="text-align:left;">
-                    <div style="font-weight:800; font-size:18px; color:#ffffff;">Hashti</div>
-                    <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; color:#a1a1aa;">Design System</div>
+                    <div style="font-weight:700; font-size:18px; color:#FFFFFF; line-height:1.1;">Hashti</div>
+                    <div style="font-size:10px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:#A1A1AA; margin-top:2px;">Design System</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- Row 2: Icon & Stacked Variations -->
           <div>
-            <div class="variation-block-title">Clear Space & Minimum Size</div>
-            <div class="variation-row">
-              <div class="card-preview" style="border:1px dashed var(--border-strong); position:relative;">
-                <span style="position:absolute; top:4px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
-                <span style="position:absolute; bottom:4px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
-                <span style="position:absolute; left:4px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
-                <span style="position:absolute; right:4px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
-                <svg style="width:48px; height:48px;" viewBox="0 0 256 256" fill="none">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px;">
+              <!-- Standalone Icon -->
+              <div class="card-preview" style="min-height:100px; padding:16px;">
+                <svg style="width:36px; height:36px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
                   <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
                   <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
                   <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
                   <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
                 </svg>
-                <div style="font-size:11px; margin-top:8px; color:var(--text-muted);">Clear space = 0.5H</div>
+                <div style="font-size:11px; font-weight:600; color:var(--text-muted); margin-top:8px;">Icon</div>
               </div>
 
-              <div class="card-preview">
-                <div style="display:flex; align-items:flex-end; gap:16px;">
-                  <div style="text-align:center;">
-                    <svg style="width:24px; height:24px;" viewBox="0 0 256 256" fill="none">
-                      <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="20" stroke-linejoin="round"/>
-                      <path d="M 62 216 V 132 L 128 91 L 194 132 V 216" stroke="currentColor" stroke-width="20" stroke-linejoin="round"/>
-                      <path d="M 96 216 V 154 L 128 134 L 160 154 V 216" stroke="currentColor" stroke-width="20" stroke-linejoin="round"/>
-                      <path d="M 115 216 V 180 L 128 168 L 141 180 V 216 Z" fill="currentColor"/>
-                    </svg>
-                    <div style="font-size:10px; margin-top:4px; font-family:var(--font-mono);">24px min</div>
-                  </div>
-                  <div style="text-align:center;">
-                    <svg style="width:16px; height:16px;" viewBox="0 0 256 256" fill="none">
-                      <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="24" stroke-linejoin="round"/>
-                      <path d="M 62 216 V 132 L 128 91 L 194 132 V 216" stroke="currentColor" stroke-width="24" stroke-linejoin="round"/>
-                      <path d="M 96 216 V 154 L 128 134 L 160 154 V 216" stroke="currentColor" stroke-width="24" stroke-linejoin="round"/>
-                      <path d="M 115 216 V 180 L 128 168 L 141 180 V 216 Z" fill="currentColor"/>
-                    </svg>
-                    <div style="font-size:10px; margin-top:4px; font-family:var(--font-mono);">16px icon</div>
-                  </div>
-                </div>
+              <!-- Stacked Bold -->
+              <div class="card-preview" style="min-height:100px; padding:16px;">
+                <svg style="width:30px; height:30px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                  <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
+                </svg>
+                <div style="font-size:14px; font-weight:700; color:var(--text-main); margin-top:4px;">Hashti</div>
+              </div>
+
+              <!-- Stacked Regular -->
+              <div class="card-preview" style="min-height:100px; padding:16px;">
+                <svg style="width:30px; height:30px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                  <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
+                </svg>
+                <div style="font-size:14px; font-weight:400; color:var(--text-main); margin-top:4px;">Hashti</div>
               </div>
             </div>
           </div>
 
+          <!-- Row 3: Clear Space & Minimum Size -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="variation-block-title">Clear Space</div>
+              <div class="card-preview" style="border:1px dashed var(--border-strong); position:relative; min-height:140px;">
+                <span style="position:absolute; top:6px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
+                <span style="position:absolute; bottom:6px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
+                <span style="position:absolute; left:6px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
+                <span style="position:absolute; right:6px; font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">X</span>
+                <svg style="width:48px; height:48px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                  <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
+                  <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
+                </svg>
+                <div style="font-size:11px; margin-top:8px; color:var(--text-muted); text-align:center;">Keep clear space around the logo (equal to the height of the icon).</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="variation-block-title">Minimum Size</div>
+              <div class="card-preview" style="min-height:140px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:8px;">
+                  <svg style="width:24px; height:24px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="20" stroke-linejoin="round"/>
+                    <path d="M 62 216 V 132 L 128 91 L 194 132 V 216" stroke="currentColor" stroke-width="20" stroke-linejoin="round"/>
+                    <path d="M 96 216 V 154 L 128 134 L 160 154 V 216" stroke="currentColor" stroke-width="20" stroke-linejoin="round"/>
+                    <path d="M 115 216 V 180 L 128 168 L 141 180 V 216 Z" fill="currentColor"/>
+                  </svg>
+                  <div style="display:flex; align-items:center; gap:4px; margin-top:6px; color:var(--text-muted); font-size:10px; font-family:var(--font-mono);">
+                    <span>←</span>
+                    <span>24 px</span>
+                    <span>→</span>
+                  </div>
+                </div>
+                <div style="font-size:11px; color:var(--text-muted); text-align:center;">Do not use the logo smaller than 24px wide.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 4: Usage Guidelines -->
           <div>
-            <div class="variation-block-title">Usage Guidelines & Integrity Rules</div>
+            <div class="variation-block-title">Usage Guidelines</div>
             <div class="guideline-grid">
               <div class="guideline-item valid">
-                <span class="guideline-tag">CORRECT</span>
-                <svg style="width:32px; height:32px;" viewBox="0 0 256 256" fill="none">
+                <span class="guideline-tag">✓</span>
+                <svg style="width:32px; height:32px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
                   <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
                   <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
                   <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/>
                   <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
                 </svg>
-                <div style="margin-top:6px;">Original Vector</div>
               </div>
 
               <div class="guideline-item invalid">
-                <span class="guideline-tag">DO NOT</span>
-                <svg style="width:40px; height:24px;" viewBox="0 0 256 256" fill="none">
+                <span class="guideline-tag">✕</span>
+                <svg style="width:42px; height:24px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
                   <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16"/>
                   <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16"/>
                   <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16"/>
                   <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
                 </svg>
-                <div style="margin-top:6px;">Don't Distort</div>
               </div>
 
               <div class="guideline-item invalid">
-                <span class="guideline-tag">DO NOT</span>
-                <svg style="width:32px; height:32px; filter: drop-shadow(0 6px 8px rgba(220,38,38,0.7));" viewBox="0 0 256 256" fill="none">
+                <span class="guideline-tag">✕</span>
+                <svg style="width:32px; height:32px; transform:rotate(-15deg); color:var(--text-main);" viewBox="0 0 256 256" fill="none">
                   <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16"/>
                   <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16"/>
                   <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16"/>
                   <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
                 </svg>
-                <div style="margin-top:6px;">No Shadows</div>
               </div>
 
               <div class="guideline-item invalid">
-                <span class="guideline-tag">DO NOT</span>
-                <div style="background:#52525b; padding:4px 8px; border-radius:4px;">
-                  <svg style="width:24px; height:24px;" viewBox="0 0 256 256" fill="none">
-                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#27272a" stroke-width="16"/>
-                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#27272a" stroke-width="16"/>
-                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#27272a" stroke-width="16"/>
-                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#27272a"/>
+                <span class="guideline-tag">✕</span>
+                <div style="background:#E4E4E7; padding:4px 8px; border-radius:4px;">
+                  <svg style="width:28px; height:28px; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.5)); color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16"/>
+                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16"/>
+                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16"/>
+                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
                   </svg>
                 </div>
-                <div style="margin-top:6px;">Low Contrast</div>
               </div>
             </div>
+            <div style="font-size:11px; color:var(--text-muted); text-align:center; margin-top:8px;">Keep it original. Don't distort, rotate, or add effects.</div>
+          </div>
+
+          <!-- Row 5: Favicon & App Icon + Dark Mode -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div>
+              <div class="variation-block-title">Favicon & App Icon</div>
+              <div class="card-preview" style="min-height:120px;">
+                <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:8px;">
+                  <!-- Dark App Icon -->
+                  <div style="width:40px; height:40px; background:#000000; border-radius:10px; display:flex; align-items:center; justify-content:center;">
+                    <svg style="width:24px; height:24px;" viewBox="0 0 256 256" fill="none">
+                      <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#FFFFFF" stroke-width="16" stroke-linejoin="round"/>
+                      <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#FFFFFF" stroke-width="16" stroke-linejoin="round"/>
+                      <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#FFFFFF" stroke-width="16" stroke-linejoin="round"/>
+                      <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#FFFFFF"/>
+                    </svg>
+                  </div>
+                  <!-- Light App Icon -->
+                  <div style="width:40px; height:40px; background:#FFFFFF; border:1px solid #E4E4E7; border-radius:10px; display:flex; align-items:center; justify-content:center;">
+                    <svg style="width:24px; height:24px;" viewBox="0 0 256 256" fill="none">
+                      <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#000000" stroke-width="16" stroke-linejoin="round"/>
+                      <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#000000" stroke-width="16" stroke-linejoin="round"/>
+                      <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#000000" stroke-width="16" stroke-linejoin="round"/>
+                      <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#000000"/>
+                    </svg>
+                  </div>
+                  <!-- Mini Favicon -->
+                  <div style="width:24px; height:24px; background:#000000; border-radius:6px; display:flex; align-items:center; justify-content:center;">
+                    <svg style="width:14px; height:14px;" viewBox="0 0 256 256" fill="none">
+                      <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#FFFFFF" stroke-width="22" stroke-linejoin="round"/>
+                      <path d="M 62 216 V 132 L 128 91 L 194 132 V 216" stroke="#FFFFFF" stroke-width="22" stroke-linejoin="round"/>
+                      <path d="M 96 216 V 154 L 128 134 L 160 154 V 216" stroke="#FFFFFF" stroke-width="22" stroke-linejoin="round"/>
+                      <path d="M 115 216 V 180 L 128 168 L 141 180 V 216 Z" fill="#FFFFFF"/>
+                    </svg>
+                  </div>
+                </div>
+                <div style="font-size:11px; color:var(--text-muted); text-align:center;">Works beautifully at any size.</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="variation-block-title">Dark Mode</div>
+              <div class="card-preview dark-preset" style="min-height:120px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                  <svg style="width:32px; height:32px;" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#FFFFFF" stroke-width="18" stroke-linejoin="round"/>
+                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#FFFFFF" stroke-width="18" stroke-linejoin="round"/>
+                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#FFFFFF" stroke-width="18" stroke-linejoin="round"/>
+                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#FFFFFF"/>
+                  </svg>
+                  <div style="text-align:left;">
+                    <div style="font-weight:700; font-size:16px; color:#FFFFFF;">Hashti</div>
+                    <div style="font-size:9px; font-weight:500; letter-spacing:0.15em; color:#A1A1AA;">Design System</div>
+                  </div>
+                </div>
+                <div style="font-size:11px; color:#A1A1AA; text-align:center;">Use the inverted version for dark backgrounds.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 6: Get the SVG -->
+          <div>
+            <div class="variation-block-title">Get the SVG</div>
+            <div class="code-box">
+              <button class="btn-copy" onclick="copySvgCode('mark')">Copy SVG</button>
+              &lt;svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"&gt;<br>
+              &nbsp;&nbsp;&lt;path fill="currentColor" d="M 112 864 V 440 L 512 192..." /&gt;<br>
+              &lt;/svg&gt;
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:6px;">Use the SVG for scalable, high-quality rendering across your website and products.</div>
           </div>
         </div>
 
         <!-- Col 3: Colors & Typography Specs -->
         <div class="col-system">
+          <!-- Brand Colors -->
           <div>
             <div class="variation-block-title">Brand Colors</div>
             <div class="swatch-group">
-              <div>
+              <div style="cursor:pointer;" onclick="copyColor('#000000', 'rgb(0, 0, 0)')" title="Click to copy Black hex code">
                 <div class="swatch-box" style="background:#000000; width:100px;"></div>
                 <div class="swatch-label">Black</div>
                 <div class="swatch-code">#000000</div>
+                <div style="font-size:10px; color:var(--text-muted);">rgb(0, 0, 0)</div>
               </div>
-              <div>
-                <div class="swatch-box" style="background:#FFFFFF; width:100px;"></div>
+              <div style="cursor:pointer;" onclick="copyColor('#FFFFFF', 'rgb(255, 255, 255)')" title="Click to copy White hex code">
+                <div class="swatch-box" style="background:#FFFFFF; width:100px; border:1px solid var(--border-subtle);"></div>
                 <div class="swatch-label">White</div>
                 <div class="swatch-code">#FFFFFF</div>
+                <div style="font-size:10px; color:var(--text-muted);">rgb(255, 255, 255)</div>
               </div>
             </div>
-            <p style="font-size:12px; color:var(--text-muted); margin-top:10px;">
+            <p style="font-size:12px; color:var(--text-muted); margin-top:10px; line-height:1.5;">
               Use pure black and white for maximum clarity and structural contrast.
             </p>
+
+            <!-- Accent Swatches -->
+            <div style="margin-top:16px;">
+              <div style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Semantic Accent Tokens</div>
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px;">
+                <div style="cursor:pointer;" onclick="copyColor('#0D9488', 'rgb(13, 148, 136)')" title="Turquoise #0D9488">
+                  <div style="height:32px; background:#0D9488; border-radius:6px;"></div>
+                  <div style="font-size:10px; font-weight:700; margin-top:4px;">Turquoise</div>
+                  <div style="font-size:9px; font-family:var(--font-mono); color:var(--text-muted);">#0D9488</div>
+                </div>
+                <div style="cursor:pointer;" onclick="copyColor('#D97706', 'rgb(217, 119, 6)')" title="Amber #D97706">
+                  <div style="height:32px; background:#D97706; border-radius:6px;"></div>
+                  <div style="font-size:10px; font-weight:700; margin-top:4px;">Amber</div>
+                  <div style="font-size:9px; font-family:var(--font-mono); color:var(--text-muted);">#D97706</div>
+                </div>
+                <div style="cursor:pointer;" onclick="copyColor('#DC2626', 'rgb(220, 38, 38)')" title="Terracotta #DC2626">
+                  <div style="height:32px; background:#DC2626; border-radius:6px;"></div>
+                  <div style="font-size:10px; font-weight:700; margin-top:4px;">Terracotta</div>
+                  <div style="font-size:9px; font-family:var(--font-mono); color:var(--text-muted);">#DC2626</div>
+                </div>
+              </div>
+            </div>
           </div>
 
+          <!-- Typography Specs -->
           <div>
             <div class="variation-block-title">Typography</div>
             <div class="type-specimen-large">Aa</div>
-            <div style="font-weight:700; font-size:14px;">Satoshi / Vazirmatn</div>
-            <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">Geometric Sans Serif (Dual LTR/RTL)</div>
+            <div style="font-weight:700; font-size:14px; margin-top:4px;">Satoshi</div>
+            <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Geometric Sans Serif (Primary Latin)</div>
             <div class="type-alpha-line">
               Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz 0123456789
             </div>
-            <div class="type-alpha-line" style="margin-top:4px;" dir="rtl">
+
+            <div style="font-weight:700; font-size:14px; margin-top:16px;">Vazirmatn (وزیرمتن)</div>
+            <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Persian / RTL System Font</div>
+            <div class="type-alpha-line" dir="rtl" style="font-family:var(--font-fa); font-size:12px;">
               آ ا ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی ۱۲۳۴۵۶۷۸۹۰
             </div>
-          </div>
 
-          <div>
-            <div class="variation-block-title">Get the SVG</div>
-            <div class="code-box">
-              <button class="btn-copy" onclick="copySvgCode()">Copy SVG</button>
-              &lt;svg viewBox="0 0 256 256"&gt;<br>
-              &nbsp;&nbsp;&lt;path d="M 28 216 V 110..." /&gt;<br>
-              &lt;/svg&gt;
+            <div style="font-weight:700; font-size:13px; margin-top:16px;">JetBrains Mono</div>
+            <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Technical / Code Specimen</div>
+            <div class="type-alpha-line" style="font-family:var(--font-mono); font-size:11px;">
+              import { HashtiProvider } from '@hashti/react';
             </div>
           </div>
         </div>
       </div>
+
+      <!-- =================================================================== -->
+      <!-- 2. INTERACTIVE LOGO PLAYGROUND & INSPECTOR                           -->
+      <!-- =================================================================== -->
+      <div class="brand-interactive-playground" id="interactive-playground">
+        <div class="playground-header">
+          <div>
+            <h2 class="playground-title">⚡ Interactive Logo Playground & Inspector</h2>
+            <p class="playground-subtitle">Test variations against diverse background surfaces, verify 1X clear space bounds, and inspect minimum size rendering in real-time.</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-hero-secondary" onclick="resetPlayground()">Reset Defaults</button>
+          </div>
+        </div>
+
+        <!-- Controls Toolbar -->
+        <div class="playground-controls-bar">
+          <!-- Variation Switcher -->
+          <div class="control-group">
+            <span class="control-label">Variation:</span>
+            <div class="pill-btn-group" id="pg-variation-tabs">
+              <button class="pill-btn active" onclick="setPgVariation('horizontal')">Horizontal</button>
+              <button class="pill-btn" onclick="setPgVariation('vertical')">Vertical</button>
+              <button class="pill-btn" onclick="setPgVariation('mark')">Icon Mark</button>
+              <button class="pill-btn" onclick="setPgVariation('app-icon')">App Icon</button>
+            </div>
+          </div>
+
+          <!-- Surface / Background Switcher -->
+          <div class="control-group">
+            <span class="control-label">Surface:</span>
+            <div style="display:flex; gap:6px;">
+              <button class="surface-dot-btn active" style="background:#FFFFFF;" onclick="setPgSurface('white')" title="Pure White (#FFFFFF)"></button>
+              <button class="surface-dot-btn" style="background:#000000;" onclick="setPgSurface('black')" title="Pure Black (#000000)"></button>
+              <button class="surface-dot-btn" style="background:var(--bg-sunken);" onclick="setPgSurface('zinc')" title="Sunken Zinc"></button>
+              <button class="surface-dot-btn" style="background:#E4E4E7; background-image:linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%); background-size:8px 8px;" onclick="setPgSurface('checker')" title="Transparency Grid"></button>
+            </div>
+          </div>
+
+          <!-- Clear Space Overlay Toggle -->
+          <div class="control-group">
+            <label style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; cursor:pointer;">
+              <input type="checkbox" id="pg-clearspace-toggle" onchange="togglePgClearSpace(this.checked)">
+              <span>Show 1X Clear Space Guides</span>
+            </label>
+          </div>
+
+          <!-- Scale / Size Slider -->
+          <div class="control-group">
+            <span class="control-label">Scale:</span>
+            <input type="range" id="pg-scale-slider" min="20" max="320" value="120" style="width:100px; accent-color:var(--text-main);" oninput="updatePgScale(this.value)">
+            <span id="pg-scale-label" style="font-family:var(--font-mono); font-size:11px; width:44px; text-align:right;">120px</span>
+            <span id="pg-min-warning" style="display:none; color:var(--accent-terracotta); font-size:11px; font-weight:700;">⚠️ &lt; 24px limit!</span>
+          </div>
+        </div>
+
+        <!-- The Canvas Stage -->
+        <div class="playground-stage-viewport" id="pg-viewport">
+          <div id="pg-clearspace-wrap" class="">
+            <span class="cs-marker cs-marker-top" style="display:none;">1X Clear Space</span>
+            <span class="cs-marker cs-marker-bottom" style="display:none;">1X Clear Space</span>
+            <span class="cs-marker cs-marker-left" style="display:none;">1X</span>
+            <span class="cs-marker cs-marker-right" style="display:none;">1X</span>
+            <div id="pg-mount-point" style="display:flex; align-items:center; justify-content:center; transition:width 0.15s ease, height 0.15s ease;">
+              <!-- Dynamic Mount Point for SVG -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions & Multi-Res Downloads -->
+        <div class="playground-actions-bar">
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <button class="btn-hero-primary" onclick="copyCurrentPgSvg()">📋 Copy SVG Code</button>
+            <a id="pg-download-svg" href="/hashti-horizontal.svg" download class="btn-hero-secondary">⬇ Download SVG</a>
+          </div>
+
+          <div class="download-chips-wrap">
+            <span class="control-label">Raster PNGs:</span>
+            <div id="pg-png-chips" style="display:flex; gap:6px; flex-wrap:wrap;">
+              <!-- Dynamic chips updated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- 3. PERSIAN ARCHITECTURAL HERITAGE & DESIGN PHILOSOPHY               -->
+      <!-- =================================================================== -->
+      <div class="brand-heritage-card">
+        <div style="max-width:760px;">
+          <div class="sheet-badge">ARCHITECTURAL GENEALOGY</div>
+          <h2 style="font-size:26px; font-weight:800; letter-spacing:-0.03em; margin-bottom:8px;">
+            The Hashti (هشتی): The Sacred Spatial Threshold
+          </h2>
+          <p style="font-size:14px; color:var(--text-muted); line-height:1.7;">
+            In traditional Persian architecture — prominent across Isfahan, Yazd, Kashan, and Shiraz — the <strong>Hashti</strong> is the vaulted transitional vestibule positioned immediately behind the entrance portal (<em>sar-dar</em>). Derived from the Persian word for eight (<em>hasht</em>), it is an octagonal or polygonal vaulted chamber that serves as a sensory pause between the chaotic exterior street and the tranquil intimacy of the private home.
+          </p>
+        </div>
+
+        <div class="heritage-grid">
+          <!-- The Spatial Sequence -->
+          <div>
+            <h3 style="font-size:15px; font-weight:700; margin-bottom:14px;">The Spatial Threshold Sequence</h3>
+            <div class="heritage-step-list">
+              <div class="heritage-step">
+                <div class="step-number">01</div>
+                <div>
+                  <div class="step-title">کوچه (Koucheh — The Public Street)</div>
+                  <div class="step-desc">The open, bustling external street realm. High sensory stimuli, continuous movement, and social exposure.</div>
+                </div>
+              </div>
+              <div class="heritage-step">
+                <div class="step-number">02</div>
+                <div>
+                  <div class="step-title">سردر (Sar-Dar — The Entrance Portal)</div>
+                  <div class="step-desc">The monumental pointed ogival arch that announces transition. Built with the classic 32° arch pitch mirrored in our logo.</div>
+                </div>
+              </div>
+              <div class="heritage-step">
+                <div class="step-number">03</div>
+                <div>
+                  <div class="step-title">هشتی (Hashti — The Vestibule)</div>
+                  <div class="step-desc">The octagonal pause chamber. Natural cooling, zenithal skylight (<em>hoor-noor</em>), acoustic tranquility, and respectful orientation.</div>
+                </div>
+              </div>
+              <div class="heritage-step">
+                <div class="step-number">04</div>
+                <div>
+                  <div class="step-title">دالان (Dalan — The Indirect Passage)</div>
+                  <div class="step-desc">A bent corridor intentionally blocking direct sightlines into the private dwelling to preserve privacy (<em>mahramiyat</em>).</div>
+                </div>
+              </div>
+              <div class="heritage-step">
+                <div class="step-number">05</div>
+                <div>
+                  <div class="step-title">حیاط (Hayat — The Courtyard Sanctuary)</div>
+                  <div class="step-desc">The destination: lush central garden, fountain pool (<em>howz</em>), sunlight, and harmonious living spaces.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Digital Translation & Geometry -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <div style="background:var(--bg); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px;">
+              <h3 style="font-size:15px; font-weight:700; margin-bottom:10px;">The Digital Metaphor</h3>
+              <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:12px;">
+                Just as the historical Hashti welcomes weary travelers into a calm domestic refuge, <strong>Hashti Design System</strong> serves as the welcoming architectural threshold between complex underlying application logic and intuitive human experience.
+              </p>
+              <div style="font-family:var(--font-mono); font-size:11px; background:var(--bg-sunken); padding:10px; border-radius:6px; border:1px solid var(--border-subtle);">
+                [API / Data Engine] → &lt;Hashti /&gt; → [Human Experience]
+              </div>
+            </div>
+
+            <div style="background:var(--bg); border:1px solid var(--border-subtle); border-radius:var(--radius-lg); padding:24px;">
+              <h3 style="font-size:15px; font-weight:700; margin-bottom:10px;">Mathematical Vector Geometry</h3>
+              <p style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+                The Hashti logo mark is constructed from 3 concentric arches featuring the authentic ~32° pitch characteristic of Safavid Persian masonry, resting upon an exact baseline with a central solid gateway anchor. Every stroke width (16px) and negative clearance gap (14px) adheres to a golden spatial cadence.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Pillars -->
+        <div class="pillars-4-grid">
+          <div class="pillar-card">
+            <div class="pillar-name">
+              <span style="color:var(--accent-turquoise);">✦</span>
+              <span>Accessible</span>
+            </div>
+            <div class="pillar-body">
+              Engineered for WCAG 2.2 AAA rigor. 7:1 minimum contrast ratios, full keyboard parity, and native screen-reader ARIA semantics.
+            </div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-name">
+              <span style="color:var(--text-main);">◈</span>
+              <span>Elegant</span>
+            </div>
+            <div class="pillar-body">
+              Grounded in pure monochrome restraint (#000000 & #FFFFFF), crisp geometric arches, and an uncompromising 8pt spatial grid.
+            </div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-name">
+              <span style="color:var(--accent-amber);">⚡</span>
+              <span>Open Source</span>
+            </div>
+            <div class="pillar-body">
+              Modern TypeScript foundation, Bun runtime velocity, unbundled native ESM, zero tracking, and permissive MIT licensing.
+            </div>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-name">
+              <span style="color:var(--accent-terracotta);">⇄</span>
+              <span>International</span>
+            </div>
+            <div class="pillar-body">
+              First-class bidirectional symmetry. LTR and RTL are treated as design equals, supporting English, Persian, Arabic, and Hebrew.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================================== -->
+      <!-- 4. COMPLETE BRAND ASSET SUITE & DOWNLOAD CENTER                     -->
+      <!-- =================================================================== -->
+      <div class="download-center-card" id="asset-center">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div class="sheet-badge">OFFICIAL ASSET SUITE</div>
+            <h2 style="font-size:24px; font-weight:800; letter-spacing:-0.03em;">Complete Vector & High-Resolution Asset Center</h2>
+            <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">All assets are generated in crisp vector SVG and multi-resolution PNGs (32px to 1024px) for retina displays and native applications.</p>
+          </div>
+          <button class="btn-hero-secondary" onclick="copyAllAssetLinks()">Copy All Asset URLs</button>
+        </div>
+
+        <table class="asset-matrix-table">
+          <thead>
+            <tr>
+              <th style="width:120px;">Asset</th>
+              <th>Name & Description</th>
+              <th>Vector Format</th>
+              <th>Retina PNG Multi-Resolution Suite</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 1. Mark -->
+            <tr>
+              <td>
+                <div style="width:52px; height:52px; background:var(--bg-sunken); border:1px solid var(--border-subtle); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                  <svg style="width:34px; height:34px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </td>
+              <td>
+                <div style="font-weight:700;">Hashti Mark (Standalone Portal Icon)</div>
+                <div style="font-size:11px; color:var(--text-muted);">The primary 3-tier ogival arch mark. Used for avatars, favicons, watermarks, and compact navigation.</div>
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <a href="./hashti-mark.svg" download class="download-chip">SVG (Light)</a>
+                  <a href="./hashti-mark-dark.svg" download class="download-chip">SVG (Dark)</a>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <a href="./hashti-mark-32.png" download class="download-chip">32px</a>
+                  <a href="./hashti-mark-64.png" download class="download-chip">64px</a>
+                  <a href="./hashti-mark-128.png" download class="download-chip">128px</a>
+                  <a href="./hashti-mark-192.png" download class="download-chip">192px</a>
+                  <a href="./hashti-mark-512.png" download class="download-chip">512px</a>
+                  <a href="./hashti-mark-1024.png" download class="download-chip">1024px</a>
+                </div>
+              </td>
+              <td style="text-align:right;">
+                <button class="pill-btn" onclick="copySvgCode('mark')">Copy SVG</button>
+              </td>
+            </tr>
+
+            <!-- 2. Horizontal Logo -->
+            <tr>
+              <td>
+                <div style="width:80px; height:44px; background:var(--bg-sunken); border:1px solid var(--border-subtle); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <svg style="width:20px; height:20px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                      <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="18" stroke-linejoin="round"/>
+                      <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="18" stroke-linejoin="round"/>
+                      <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="18" stroke-linejoin="round"/>
+                      <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
+                    </svg>
+                    <span style="font-weight:700; font-size:11px;">Hashti</span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div style="font-weight:700;">Hashti Horizontal Lockup</div>
+                <div style="font-size:11px; color:var(--text-muted);">Mark on left, "Hashti" in Satoshi Bold, "DESIGN SYSTEM" in Satoshi Medium tracking 4. Used for website navigation bars, headers, and banners.</div>
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <a href="./hashti-horizontal.svg" download class="download-chip">SVG (Light)</a>
+                  <a href="./hashti-horizontal-dark.svg" download class="download-chip">SVG (Dark)</a>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <a href="./hashti-horizontal-light.png" download class="download-chip">Light PNG</a>
+                  <a href="./hashti-horizontal-dark.png" download class="download-chip">Dark PNG</a>
+                  <a href="./hashti-horizontal-dark-bg.png" download class="download-chip">Dark Card PNG</a>
+                </div>
+              </td>
+              <td style="text-align:right;">
+                <button class="pill-btn" onclick="copySvgCode('horizontal')">Copy SVG</button>
+              </td>
+            </tr>
+
+            <!-- 3. Vertical Logo -->
+            <tr>
+              <td>
+                <div style="width:52px; height:60px; background:var(--bg-sunken); border:1px solid var(--border-subtle); border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;">
+                  <svg style="width:20px; height:20px; color:var(--text-main);" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="18" stroke-linejoin="round"/>
+                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="18" stroke-linejoin="round"/>
+                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="18" stroke-linejoin="round"/>
+                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor"/>
+                  </svg>
+                  <span style="font-weight:700; font-size:10px;">Hashti</span>
+                </div>
+              </td>
+              <td>
+                <div style="font-weight:700;">Hashti Stacked / Vertical Lockup</div>
+                <div style="font-size:11px; color:var(--text-muted);">Mark centered on top, "Hashti" centered below. Used for splash screens, mobile hero cards, packaging, and poster presentations.</div>
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <a href="./hashti-vertical.svg" download class="download-chip">SVG (Light)</a>
+                  <a href="./hashti-vertical-dark.svg" download class="download-chip">SVG (Dark)</a>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <a href="./hashti-vertical-light.png" download class="download-chip">Light PNG</a>
+                  <a href="./hashti-vertical-dark.png" download class="download-chip">Dark PNG</a>
+                  <a href="./hashti-vertical-dark-bg.png" download class="download-chip">Dark Card PNG</a>
+                </div>
+              </td>
+              <td style="text-align:right;">
+                <button class="pill-btn" onclick="copySvgCode('vertical')">Copy SVG</button>
+              </td>
+            </tr>
+
+            <!-- 4. App Icon & Favicon -->
+            <tr>
+              <td>
+                <div style="width:48px; height:48px; background:#000000; border-radius:11px; display:flex; align-items:center; justify-content:center;">
+                  <svg style="width:26px; height:26px;" viewBox="0 0 256 256" fill="none">
+                    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="#FFFFFF" stroke-width="16" stroke-linejoin="round"/>
+                    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="#FFFFFF" stroke-width="16" stroke-linejoin="round"/>
+                    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="#FFFFFF" stroke-width="16" stroke-linejoin="round"/>
+                    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#FFFFFF"/>
+                  </svg>
+                </div>
+              </td>
+              <td>
+                <div style="font-weight:700;">Hashti App Icon & Favicon</div>
+                <div style="font-size:11px; color:var(--text-muted);">Dark and light squircles with 22.5% curvature. Standard formats for PWA manifests, iOS home screens, browser tabs, and desktop icons.</div>
+              </td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <a href="./hashti-app-icon.svg" download class="download-chip">SVG (Dark)</a>
+                  <a href="./hashti-app-icon-light.svg" download class="download-chip">SVG (Light)</a>
+                  <a href="./favicon.svg" download class="download-chip">Favicon.svg</a>
+                </div>
+              </td>
+              <td>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <a href="./hashti-app-icon-192.png" download class="download-chip">192px</a>
+                  <a href="./hashti-app-icon-512.png" download class="download-chip">512px</a>
+                  <a href="./hashti-app-icon-1024.png" download class="download-chip">1024px</a>
+                </div>
+              </td>
+              <td style="text-align:right;">
+                <button class="pill-btn" onclick="copySvgCode('app-icon')">Copy SVG</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- ========================================================================= -->
-    <!-- VIEW 2: THE LANDING PAGE DESIGN -->
-    <!-- ========================================================================= -->
+
     <div id="view-landing" class="view-panel">
       <div class="hero-stage">
         <div class="hero-badge">
@@ -1753,6 +2692,246 @@
         btn.textContent = 'Destructive Action (Terracotta)';
       }
     }
+
+    // Toast Notification System
+    function showToast(message) {
+      let toast = document.getElementById('global-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'global-toast';
+        toast.className = 'toast-pill';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = '<span>✓</span> <span>' + message + '</span>';
+      toast.classList.add('visible');
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 2400);
+    }
+
+    function copyColor(hex, rgb) {
+      navigator.clipboard.writeText(hex);
+      showToast('Copied ' + hex + ' (' + rgb + ') to clipboard!');
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Interactive Logo Playground Logic
+    const svgSources = {
+      'mark': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+  <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+  <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+  <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+</svg>`,
+      'horizontal': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" fill="none">
+  <defs>
+    <style>
+      @import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&amp;display=swap');
+    </style>
+  </defs>
+  <g transform="translate(16, 8) scale(0.65)">
+    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="18" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="88" fill="currentColor" font-family="'Satoshi', sans-serif" font-weight="700" font-size="52" letter-spacing="-1.5">Hashti</text>
+  <text x="202" y="124" fill="currentColor" opacity="0.75" font-family="'Satoshi', sans-serif" font-weight="500" font-size="16" letter-spacing="4">DESIGN SYSTEM</text>
+</svg>`,
+      'vertical': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 380" fill="none">
+  <defs>
+    <style>
+      @import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&amp;display=swap');
+    </style>
+  </defs>
+  <g transform="translate(32, 16)">
+    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke="currentColor" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <text x="160" y="295" text-anchor="middle" fill="currentColor" font-family="'Satoshi', sans-serif" font-weight="700" font-size="48" letter-spacing="-1.5">Hashti</text>
+  <text x="160" y="335" text-anchor="middle" fill="currentColor" opacity="0.75" font-family="'Satoshi', sans-serif" font-weight="500" font-size="18" letter-spacing="4">DESIGN SYSTEM</text>
+</svg>`,
+      'app-icon': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="115" fill="#000000"/>
+  <g transform="translate(96, 96) scale(1.25)" stroke="#FFFFFF">
+    <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 58 216 V 128 L 128 85 L 198 128 V 216" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 88 216 V 147 L 128 122 L 168 147 V 216" stroke-width="16" stroke-linecap="butt" stroke-linejoin="round"/>
+    <path d="M 111 216 V 176 L 128 160 L 145 176 V 216 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+</svg>`
+    };
+
+    let currentPgVar = 'horizontal';
+    let currentPgSurface = 'white';
+    let currentPgScale = 120;
+
+    function renderPgLogo() {
+      const mount = document.getElementById('pg-mount-point');
+      if (!mount) return;
+
+      const svgCode = svgSources[currentPgVar];
+      mount.innerHTML = svgCode;
+
+      // Color handling based on surface
+      const svgEl = mount.querySelector('svg');
+      if (svgEl) {
+        if (currentPgSurface === 'black') {
+          svgEl.style.color = '#FFFFFF';
+        } else {
+          svgEl.style.color = (currentPgVar === 'app-icon') ? '' : '#000000';
+        }
+
+        // Sizing
+        if (currentPgVar === 'horizontal') {
+          svgEl.style.width = (currentPgScale * 3.25) + 'px';
+          svgEl.style.height = currentPgScale + 'px';
+        } else if (currentPgVar === 'vertical') {
+          svgEl.style.width = (currentPgScale * 0.84) + 'px';
+          svgEl.style.height = currentPgScale + 'px';
+        } else {
+          svgEl.style.width = currentPgScale + 'px';
+          svgEl.style.height = currentPgScale + 'px';
+        }
+      }
+
+      // Update download link
+      const dlLink = document.getElementById('pg-download-svg');
+      if (dlLink) {
+        dlLink.href = '/hashti-' + currentPgVar + (currentPgSurface === 'black' ? '-dark.svg' : '.svg');
+        if (currentPgVar === 'app-icon') dlLink.href = '/hashti-app-icon.svg';
+      }
+
+      // Update chips
+      updatePgChips();
+    }
+
+    function setPgVariation(v) {
+      currentPgVar = v;
+      const tabs = document.querySelectorAll('#pg-variation-tabs .pill-btn');
+      tabs.forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(tabs).find(b => b.textContent.toLowerCase().includes(v.replace('-', ' ')));
+      if (activeBtn) activeBtn.classList.add('active');
+      renderPgLogo();
+    }
+
+    function setPgSurface(s) {
+      currentPgSurface = s;
+      const viewport = document.getElementById('pg-viewport');
+      if (viewport) {
+        viewport.className = 'playground-stage-viewport bg-' + s;
+      }
+      const dots = document.querySelectorAll('.surface-dot-btn');
+      dots.forEach(d => d.classList.remove('active'));
+      renderPgLogo();
+    }
+
+    function togglePgClearSpace(show) {
+      const wrap = document.getElementById('pg-clearspace-wrap');
+      const markers = wrap.querySelectorAll('.cs-marker');
+      if (show) {
+        wrap.className = 'clear-space-overlay-box';
+        markers.forEach(m => m.style.display = 'block');
+      } else {
+        wrap.className = '';
+        markers.forEach(m => m.style.display = 'none');
+      }
+    }
+
+    function updatePgScale(val) {
+      currentPgScale = parseInt(val, 10);
+      document.getElementById('pg-scale-label').textContent = val + 'px';
+      const warning = document.getElementById('pg-min-warning');
+      if (currentPgScale < 24) {
+        warning.style.display = 'inline';
+      } else {
+        warning.style.display = 'none';
+      }
+      renderPgLogo();
+    }
+
+    function resetPlayground() {
+      setPgVariation('horizontal');
+      setPgSurface('white');
+      document.getElementById('pg-scale-slider').value = 120;
+      updatePgScale(120);
+      document.getElementById('pg-clearspace-toggle').checked = false;
+      togglePgClearSpace(false);
+    }
+
+    function copyCurrentPgSvg() {
+      const code = svgSources[currentPgVar];
+      navigator.clipboard.writeText(code);
+      showToast('Hashti ' + currentPgVar + ' SVG copied to clipboard!');
+    }
+
+    function copySvgCode(variant) {
+      const code = svgSources[variant] || svgSources['mark'];
+      navigator.clipboard.writeText(code);
+      showToast('Hashti SVG (' + variant + ') copied to clipboard!');
+    }
+
+    function copyAllAssetLinks() {
+      const links = [
+        'https://hashti.raminrez.dev/hashti-mark.svg',
+        'https://hashti.raminrez.dev/hashti-mark-dark.svg',
+        'https://hashti.raminrez.dev/hashti-horizontal.svg',
+        'https://hashti.raminrez.dev/hashti-horizontal-dark.svg',
+        'https://hashti.raminrez.dev/hashti-vertical.svg',
+        'https://hashti.raminrez.dev/hashti-vertical-dark.svg',
+        'https://hashti.raminrez.dev/hashti-app-icon.svg',
+        'https://hashti.raminrez.dev/favicon.svg'
+      ].join('\n');
+      navigator.clipboard.writeText(links);
+      showToast('All 8 official asset URLs copied!');
+    }
+
+    function updatePgChips() {
+      const container = document.getElementById('pg-png-chips');
+      if (!container) return;
+
+      if (currentPgVar === 'mark') {
+        container.innerHTML = `
+          <a href="/hashti-mark-32.png" download class="download-chip">32px</a>
+          <a href="/hashti-mark-64.png" download class="download-chip">64px</a>
+          <a href="/hashti-mark-128.png" download class="download-chip">128px</a>
+          <a href="/hashti-mark-192.png" download class="download-chip">192px</a>
+          <a href="/hashti-mark-512.png" download class="download-chip">512px</a>
+          <a href="/hashti-mark-1024.png" download class="download-chip">1024px</a>
+        `;
+      } else if (currentPgVar === 'app-icon') {
+        container.innerHTML = `
+          <a href="/hashti-app-icon-192.png" download class="download-chip">192px</a>
+          <a href="/hashti-app-icon-512.png" download class="download-chip">512px</a>
+          <a href="/hashti-app-icon-1024.png" download class="download-chip">1024px</a>
+        `;
+      } else if (currentPgVar === 'horizontal') {
+        container.innerHTML = `
+          <a href="/hashti-horizontal-light.png" download class="download-chip">Light PNG</a>
+          <a href="/hashti-horizontal-dark.png" download class="download-chip">Dark PNG</a>
+          <a href="/hashti-horizontal-dark-bg.png" download class="download-chip">Dark Card PNG</a>
+        `;
+      } else if (currentPgVar === 'vertical') {
+        container.innerHTML = `
+          <a href="/hashti-vertical-light.png" download class="download-chip">Light PNG</a>
+          <a href="/hashti-vertical-dark.png" download class="download-chip">Dark PNG</a>
+          <a href="/hashti-vertical-dark-bg.png" download class="download-chip">Dark Card PNG</a>
+        `;
+      }
+    }
+
+    // Initialize playground on window load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPgLogo();
+    });
+
   </script>
 </body>
 </html>
