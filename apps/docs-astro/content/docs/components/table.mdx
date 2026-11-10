@@ -1,0 +1,306 @@
+---
+title: Table
+description: High-density data grid displaying structured tabular records with sorting, selection, and resizing.
+---
+
+# Table
+
+Tables present structured, tabular datasets across rows and columns. In Hashti, the Table component combines high-density data presentation with enterprise-grade interactive capabilities: bidirectional column sorting, multi-row selection with shift-click ranges, keyboard cell navigation, resizable columns, and full screen reader accessibility.
+
+Built on React Aria Components, Table implements the ARIA DataGrid pattern, ensuring that large enterprise datasets remain accessible, performant, and tranquil.
+
+---
+
+## Import
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  Column,
+  Row,
+  Cell,
+  ResizableTableContainer,
+  ColumnResizer,
+} from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Static Table
+
+Construct a structured data table using `<TableHeader>`, `<Column>`, `<TableBody>`, `<Row>`, and `<Cell>`:
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  Column,
+  Row,
+  Cell,
+} from "@cinder/react";
+
+export function BasicTableExample() {
+  return (
+    <Table aria-label="Edge Servers">
+      <TableHeader>
+        <Column isRowHeader>Server Name</Column>
+        <Column>Region</Column>
+        <Column>Status</Column>
+        <Column>Throughput</Column>
+      </TableHeader>
+
+      <TableBody>
+        <Row>
+          <Cell>edge-lon-01</Cell>
+          <Cell>Europe (London)</Cell>
+          <Cell className="text-success font-medium">Healthy</Cell>
+          <Cell>4.8 Gbps</Cell>
+        </Row>
+        <Row>
+          <Cell>edge-teh-02</Cell>
+          <Cell>Middle East (Tehran)</Cell>
+          <Cell className="text-success font-medium">Healthy</Cell>
+          <Cell>3.2 Gbps</Cell>
+        </Row>
+        <Row>
+          <Cell>edge-nyc-01</Cell>
+          <Cell>US East (New York)</Cell>
+          <Cell className="text-warning font-medium">Degraded</Cell>
+          <Cell>1.1 Gbps</Cell>
+        </Row>
+        <Row>
+          <Cell>edge-tyo-03</Cell>
+          <Cell>Asia Pacific (Tokyo)</Cell>
+          <Cell className="text-success font-medium">Healthy</Cell>
+          <Cell>5.6 Gbps</Cell>
+        </Row>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Column Sorting
+
+Enable column sorting with `allowsSorting` on `<Column>`, and manage state via `sortDescriptor` and `onSortChange`. Hashti automatically renders direction indicators (`↑` and `↓`):
+
+```tsx
+import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  Column,
+  Row,
+  Cell,
+} from "@cinder/react";
+import type { SortDescriptor } from "@cinder/react";
+
+interface ServiceRecord {
+  id: string;
+  name: string;
+  latency: number;
+  uptime: number;
+}
+
+const initialRecords: ServiceRecord[] = [
+  { id: "1", name: "Authentication Gateway", latency: 18, uptime: 99.98 },
+  { id: "2", name: "GraphQL Ingress Proxy", latency: 24, uptime: 99.91 },
+  { id: "3", name: "Image Processing Worker", latency: 110, uptime: 98.45 },
+  { id: "4", name: "Distributed Cache Cluster", latency: 4, uptime: 99.99 },
+];
+
+export function SortableTableExample() {
+  const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
+    column: "latency",
+    direction: "ascending",
+  });
+
+  const sortedItems = [...initialRecords].sort((a, b) => {
+    const col = sortDescriptor.column as keyof ServiceRecord;
+    const first = a[col];
+    const second = b[col];
+    const cmp = first < second ? -1 : first > second ? 1 : 0;
+    return sortDescriptor.direction === "descending" ? -cmp : cmp;
+  });
+
+  return (
+    <Table
+      aria-label="Service Latency Monitoring"
+      sortDescriptor={sortDescriptor}
+      onSortChange={setSortDescriptor}
+    >
+      <TableHeader>
+        <Column id="name" isRowHeader allowsSorting>
+          Service Name
+        </Column>
+        <Column id="latency" allowsSorting>
+          Latency (ms)
+        </Column>
+        <Column id="uptime" allowsSorting>
+          Uptime (%)
+        </Column>
+      </TableHeader>
+
+      <TableBody items={sortedItems}>
+        {(item) => (
+          <Row id={item.id}>
+            <Cell>{item.name}</Cell>
+            <Cell>{item.latency} ms</Cell>
+            <Cell>{item.uptime}%</Cell>
+          </Row>
+        )}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+### Row Selection (Single & Multi-Row)
+
+Enable `selectionMode="multiple"` or `selectionMode="single"` to add native row selection checkboxes or radio inputs with full keyboard and shift-click range support:
+
+```tsx
+import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  Column,
+  Row,
+  Cell,
+} from "@cinder/react";
+import type { Selection } from "@cinder/react";
+
+export function SelectableTableExample() {
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["2"]));
+
+  const rows = [
+    { id: "1", dataset: "Production Access Logs", size: "142 GB", records: "18.4M" },
+    { id: "2", dataset: "Customer Telemetry Shards", size: "84 GB", records: "9.2M" },
+    { id: "3", dataset: "Global Edge Metrics", size: "310 GB", records: "45.0M" },
+    { id: "4", dataset: "Security Audit Ledger", size: "12 GB", records: "1.1M" },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <Table
+        aria-label="Datasets"
+        selectionMode="multiple"
+        selectedKeys={selectedKeys}
+        onSelectionChange={setSelectedKeys}
+      >
+        <TableHeader>
+          <Column isRowHeader>Dataset</Column>
+          <Column>Archive Size</Column>
+          <Column>Total Records</Column>
+        </TableHeader>
+
+        <TableBody items={rows}>
+          {(row) => (
+            <Row id={row.id}>
+              <Cell>{row.dataset}</Cell>
+              <Cell>{row.size}</Cell>
+              <Cell>{row.records}</Cell>
+            </Row>
+          )}
+        </TableBody>
+      </Table>
+
+      <p className="text-xs text-subtle">
+        Selected IDs: {selectedKeys === "all" ? "All" : Array.from(selectedKeys).join(", ") || "None"}
+      </p>
+    </div>
+  );
+}
+```
+
+### Density Sizes
+
+Use the `size` prop (`sm`, `md`, `lg`, `xl`) to adapt row height and text density to your data needs:
+
+```tsx
+import { Table, TableHeader, TableBody, Column, Row, Cell } from "@cinder/react";
+
+export function TableSizesExample() {
+  return (
+    <div className="space-y-6">
+      {/* Compact density */}
+      <div>
+        <h4 className="text-xs font-semibold uppercase text-subtle mb-2">Compact (size="sm")</h4>
+        <Table size="sm" aria-label="Compact Table">
+          <TableHeader>
+            <Column>Key</Column>
+            <Column>Value</Column>
+          </TableHeader>
+          <TableBody>
+            <Row><Cell>NODE_ENV</Cell><Cell>production</Cell></Row>
+            <Row><Cell>PORT</Cell><Cell>8080</Cell></Row>
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Spacious density */}
+      <div>
+        <h4 className="text-xs font-semibold uppercase text-subtle mb-2">Spacious (size="xl")</h4>
+        <Table size="xl" aria-label="Spacious Table">
+          <TableHeader>
+            <Column>Key</Column>
+            <Column>Value</Column>
+          </TableHeader>
+          <TableBody>
+            <Row><Cell>NODE_ENV</Cell><Cell>production</Cell></Row>
+            <Row><Cell>PORT</Cell><Cell>8080</Cell></Row>
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Table Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `aria-label` | `string` | — | **Required**: Accessible name describing the table to assistive technologies. |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'lg'` | Density scale dictating vertical cell padding and typography size. |
+| `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'` | The selection mode for rows. When enabled, checkboxes or selection indicators render automatically. |
+| `selectedKeys` | `'all' \| Iterable<Key>` | — | The currently selected keys (for controlled selection). |
+| `onSelectionChange` | `(keys: Selection) => void` | — | Handler invoked when row selection changes. |
+| `sortDescriptor` | `SortDescriptor` | — | Current sort column key and direction (`'ascending' \| 'descending'`). |
+| `onSortChange` | `(descriptor: SortDescriptor) => void` | — | Handler invoked when a sortable column header is activated. |
+| `disabledKeys` | `Iterable<Key>` | — | Collection of row keys that cannot be selected or activated. |
+| `className` | `string` | — | Additional CSS class names. |
+
+### Column Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `Key` | — | Unique identifier for sorting and selection. Defaults to the column text if string. |
+| `allowsSorting` | `boolean` | `false` | Whether clicking the column header toggles ascending/descending sort. |
+| `isRowHeader` | `boolean` | `false` | Whether this column functions as the primary row header describing the entire row. |
+| `width` | `string \| number` | — | Static or percentage column width. |
+| `children` | `ReactNode \| ((values) => ReactNode)` | — | Column header text or render function. |
+
+---
+
+## Accessibility (a11y)
+
+- **WAI-ARIA DataGrid Semantics**: Renders with `role="grid"` or `role="table"`. Screen readers identify column totals, row indexes, and header associations automatically.
+- **2D Keyboard Cell Navigation**:
+  - Use <kbd>ArrowUp</kbd>, <kbd>ArrowDown</kbd>, <kbd>ArrowLeft</kbd>, and <kbd>ArrowRight</kbd> to move focus between cells and headers.
+  - Press <kbd>Home</kbd> and <kbd>End</kbd> to jump to the first and last cell of the current row.
+  - Press <kbd>PageUp</kbd> and <kbd>PageDown</kbd> to scroll pages of records.
+- **Selection**: Press <kbd>Space</kbd> to toggle the selection of the currently focused row. Hold <kbd>Shift</kbd> + <kbd>ArrowDown</kbd> to select contiguous ranges.
+- **Sort Announcements**: Sortable column headers announce their active sort status (`aria-sort="ascending"` or `aria-sort="descending"`), avoiding silent visual-only indicators.
+- **Row Headers**: Mark the primary identity column (such as name or ID) with `isRowHeader` so screen readers announce it when reading across subsequent data cells.

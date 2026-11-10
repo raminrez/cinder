@@ -1,0 +1,166 @@
+---
+title: Alert
+description: Prominent visual banner alerting users to critical system states, errors, or announcements.
+---
+
+# Alert
+
+An Alert communicates important, immediate messages about system states, errors, service disruptions, or critical achievements. Unlike passive notifications, alerts demand high visual attention and automatically trigger assistive technology announcements using an assertive `role="alert"`.
+
+---
+
+## Import
+
+```tsx
+import { Alert } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Severity Kinds
+
+Alerts support four standard severity levels (`info`, `success`, `warning`, and `error`), each paired with a dedicated icon and distinct color styling:
+
+```tsx
+import { Alert } from "@cinder/react";
+
+export function AlertSeveritiesExample() {
+  return (
+    <div className="space-y-4">
+      <Alert
+        kind="info"
+        title="Scheduled Maintenance"
+      >
+        The database cluster will undergo automated indexing on Sunday at 02:00 UTC.
+      </Alert>
+
+      <Alert
+        kind="success"
+        title="Deployment Successful"
+      >
+        Version 2.4.0 is now live across all edge zones with zero downtime.
+      </Alert>
+
+      <Alert
+        kind="warning"
+        title="Storage Limit Reached"
+      >
+        Your organization has used 88% of provisioned S3 capacity.
+      </Alert>
+
+      <Alert
+        kind="error"
+        title="Authentication Gateway Failure"
+      >
+        Failed to establish mutual TLS connection with the upstream authentication provider.
+      </Alert>
+    </div>
+  );
+}
+```
+
+### Dismissible Alert
+
+Supply `onDismiss` to display an accessible close button that allows users to acknowledge and dismiss the alert banner.
+
+```tsx
+import { useState } from "react";
+import { Alert, Button } from "@cinder/react";
+
+export function DismissibleAlertExample() {
+  const [showAlert, setShowAlert] = useState(true);
+
+  return (
+    <div className="space-y-4">
+      {showAlert ? (
+        <Alert
+          kind="warning"
+          title="Unsaved Architectural Changes"
+          onDismiss={() => setShowAlert(false)}
+        >
+          You have pending migrations that have not yet been synchronized with the remote registry.
+        </Alert>
+      ) : (
+        <Button variant="secondary" onPress={() => setShowAlert(true)}>
+          Reset Alert
+        </Button>
+      )}
+    </div>
+  );
+}
+```
+
+### Alert with Action
+
+Embed an inline action button or link directly inside the alert to give users a clear recovery path:
+
+```tsx
+import { Alert, Button } from "@cinder/react";
+
+export function ActionableAlertExample() {
+  return (
+    <Alert
+      kind="error"
+      title="Payment Method Declined"
+      action={
+        <div className="mt-3 flex gap-2">
+          <Button variant="primary" size="sm">
+            Update Card
+          </Button>
+          <Button variant="ghost" size="sm">
+            Contact Support
+          </Button>
+        </div>
+      }
+    >
+      We could not process your latest invoice because the card on file expired.
+    </Alert>
+  );
+}
+```
+
+### High Contrast Variant
+
+By default, alerts use a calm `lowContrast` (subtle) background. For mission-critical interruptions, set `lowContrast={false}` or `variant="solid"` for maximum visual prominence:
+
+```tsx
+import { Alert } from "@cinder/react";
+
+export function HighContrastAlertExample() {
+  return (
+    <Alert
+      kind="error"
+      lowContrast={false}
+      title="Critical Cluster Outage"
+    >
+      Node 04 stopped responding to health checks. Immediate operator intervention required.
+    </Alert>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `ReactNode` | **Required** | The bold primary heading of the alert message. |
+| `kind` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Semantic severity level determining the icon, color palette, and border treatment. |
+| `children` | `ReactNode` | — | The detailed explanatory description rendered below the title. |
+| `onDismiss` | `() => void` | — | Optional callback fired when the dismiss button is clicked. When omitted, the close button is hidden. |
+| `action` | `ReactNode` | — | Optional action elements (such as secondary buttons or links) rendered at the end of the alert content. |
+| `lowContrast` | `boolean` | `true` | When `true`, uses a subtle background tint. When `false`, renders solid, saturated colors. |
+| `variant` | `'subtle' \| 'solid' \| 'bordered'` | `'subtle'` | Visual styling variant. Automatically derived from `lowContrast` if omitted. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility (a11y)
+
+- **Assertive Screen Reader Announcements**: The `<Alert>` component renders with `role="alert"`. In accordance with ARIA standards, browsers expose this as an assertive live region (`aria-live="assertive"`), causing screen readers to immediately interrupt current speech and announce the alert.
+- **Do Not Abuse**: Because `role="alert"` interrupts user flow, use alerts sparingly for critical, time-sensitive system errors. For normal inline form validation or passive status feedback, prefer [`InlineNotification`](./inline-notification) which uses `role="status"`.
+- **Keyboard Dismissal**: The close button rendered when `onDismiss` is provided has a descriptive `aria-label="Dismiss notification"` and is fully focusable and activatable via <kbd>Enter</kbd> or <kbd>Space</kbd>.
+- **High Contrast Ratios**: In both light and dark themes, text and icon colors maintain a minimum 4.5:1 contrast against the background surface.

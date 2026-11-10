@@ -1,0 +1,217 @@
+---
+title: Tag & Filter Tag
+description: Compact label for categorizing, filtering, and organizing entities and content items.
+---
+
+# Tag & Filter Tag
+
+Tags represent concise pieces of metadata, status descriptors, categories, or active search filters. Hashti provides two distinct varieties:
+
+1. **`Tag`**: A static, lightweight visual label representing entity categories, badges, or read-only taxonomy terms.
+2. **`FilterTag` & `TagGroup`**: An interactive, accessible collection built on React Aria Components supporting item selection, keyboard navigation, and tag dismissal/removal.
+
+---
+
+## Import
+
+```tsx
+import { Tag, FilterTag, TagGroup } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Static Tags
+
+Use `<Tag>` for read-only labels, statuses, and taxonomy indicators.
+
+```tsx
+import { Tag } from "@cinder/react";
+
+export function StaticTagsExample() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Tag color="gray">General</Tag>
+      <Tag color="teal">Architecture</Tag>
+      <Tag color="blue">Kubernetes</Tag>
+      <Tag color="green">Healthy</Tag>
+      <Tag color="red">Deprecated</Tag>
+      <Tag color="purple">Enterprise</Tag>
+    </div>
+  );
+}
+```
+
+### Tag Sizes
+
+Tags are available in two standard heights: `sm` (20px) for high-density tables and compact card metadata, and `md` (24px, default) for general UI layouts.
+
+```tsx
+import { Tag } from "@cinder/react";
+
+export function TagSizesExample() {
+  return (
+    <div className="flex items-center gap-4">
+      <Tag size="sm" color="blue">Small Tag (20px)</Tag>
+      <Tag size="md" color="blue">Medium Tag (24px)</Tag>
+    </div>
+  );
+}
+```
+
+### Color Palette
+
+Hashti includes ten distinct color tokens mapped to the design system's semantic color scales:
+
+```tsx
+import { Tag } from "@cinder/react";
+
+export function TagPaletteExample() {
+  const colors = [
+    "gray",
+    "cool-gray",
+    "warm-gray",
+    "blue",
+    "cyan",
+    "teal",
+    "green",
+    "red",
+    "purple",
+    "magenta",
+  ] as const;
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {colors.map((color) => (
+        <Tag key={color} color={color}>
+          {color}
+        </Tag>
+      ))}
+    </div>
+  );
+}
+```
+
+### Dismissible Filter Tags with TagGroup
+
+Use `<TagGroup>` combined with `<FilterTag>` to manage interactive filter collections. When `onRemove` is specified on `TagGroup`, each `FilterTag` automatically renders an accessible dismiss button with a close icon.
+
+```tsx
+import { useState } from "react";
+import { TagGroup, FilterTag } from "@cinder/react";
+
+export function FilterTagGroupExample() {
+  const [filters, setFilters] = useState([
+    { id: "1", name: "Status: Active" },
+    { id: "2", name: "Role: Administrator" },
+    { id: "3", name: "Region: Middle East" },
+    { id: "4", name: "Environment: Production" },
+  ]);
+
+  const handleRemove = (keys: Set<React.Key>) => {
+    setFilters((prev) => prev.filter((item) => !keys.has(item.id)));
+  };
+
+  return (
+    <div className="space-y-4">
+      <TagGroup
+        label="Active Filters"
+        items={filters}
+        onRemove={handleRemove}
+      >
+        {(item) => (
+          <FilterTag id={item.id}>
+            {item.name}
+          </FilterTag>
+        )}
+      </TagGroup>
+
+      {filters.length === 0 && (
+        <p className="text-sm text-subtle">No active filters applied.</p>
+      )}
+    </div>
+  );
+}
+```
+
+### Selectable Tags
+
+`TagGroup` can also be configured with `selectionMode="single"` or `selectionMode="multiple"` for filter chips that toggle on and off.
+
+```tsx
+import { useState } from "react";
+import { TagGroup, FilterTag } from "@cinder/react";
+import type { Selection } from "@cinder/react";
+
+export function SelectableTagsExample() {
+  const [selected, setSelected] = useState<Selection>(new Set(["architecture"]));
+
+  const topics = [
+    { id: "architecture", label: "Architecture" },
+    { id: "tokens", label: "Design Tokens" },
+    { id: "accessibility", label: "Accessibility" },
+    { id: "performance", label: "Performance" },
+  ];
+
+  return (
+    <TagGroup
+      label="Topics"
+      selectionMode="multiple"
+      selectedKeys={selected}
+      onSelectionChange={setSelected}
+      items={topics}
+    >
+      {(item) => (
+        <FilterTag id={item.id}>
+          {item.label}
+        </FilterTag>
+      )}
+    </TagGroup>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Tag Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `color` | `'gray' \| 'blue' \| 'cyan' \| 'green' \| 'red' \| 'teal' \| 'purple' \| 'magenta' \| 'cool-gray' \| 'warm-gray'` | `'gray'` | Preset color variant using Hashti token CSS variables. |
+| `size` | `'sm' \| 'md'` | `'md'` | Height and padding of the tag. `sm` is 20px, `md` is 24px. |
+| `children` | `ReactNode` | — | Text or elements rendered inside the tag. |
+| `className` | `string` | — | Additional CSS class names. |
+
+### TagGroup Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `ReactNode` | — | Accessible label rendered above or associated with the group. |
+| `items` | `Iterable<T>` | — | The collection of tag data items for dynamic rendering. |
+| `children` | `(item: T) => ReactNode` | — | Render function returning `<FilterTag>` elements. |
+| `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'` | The selection behavior for tags in the group. |
+| `selectedKeys` | `'all' \| Iterable<Key>` | — | Controlled set of selected keys. |
+| `onSelectionChange` | `(keys: Selection) => void` | — | Callback fired when the selection changes. |
+| `onRemove` | `(keys: Set<Key>) => void` | — | Callback fired when user clicks the remove button or presses Delete/Backspace on a tag. |
+| `disabledKeys` | `Iterable<Key>` | — | Keys of tags that cannot be selected or removed. |
+
+### FilterTag Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `Key` | — | Unique identifier for the tag within the `TagGroup`. |
+| `textValue` | `string` | — | Accessible string representation used for screen readers and keyboard typeahead. |
+| `children` | `ReactNode \| ((values) => ReactNode)` | — | Content of the tag, or render function with state arguments. |
+| `isDisabled` | `boolean` | `false` | Whether this tag is disabled. |
+
+---
+
+## Accessibility (a11y)
+
+- **Keyboard Navigation**: In interactive `<TagGroup>` collections, use `ArrowLeft` and `ArrowRight` (or `ArrowUp`/`ArrowDown`) to move roving focus between tags.
+- **Dismissal Controls**: When `onRemove` is enabled, pressing <kbd>Delete</kbd> or <kbd>Backspace</kbd> on a focused tag triggers dismissal. The remove button within `<FilterTag>` is also accessible via keyboard and screen readers with an automatic `slot="remove"` designation.
+- **Selection**: Press <kbd>Space</kbd> or <kbd>Enter</kbd> to toggle the selection of a tag when `selectionMode` is enabled.
+- **Screen Reader Semantics**: `TagGroup` outputs an ARIA `role="grid"` or `role="listbox"` with appropriate group labelling via `<Label>`, and each tag provides `aria-selected` and accessible button states.

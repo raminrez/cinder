@@ -1,0 +1,150 @@
+---
+title: Breadcrumbs
+description: Hierarchical navigational aid communicating page depth and location within the site structure.
+---
+
+# Breadcrumbs
+
+Breadcrumbs provide a secondary, linear navigational hierarchy that shows users where they are within an application's nested site structure, enabling quick parent-level traversal.
+
+In Hashti, Breadcrumbs are constructed using semantic ordered lists wrapped in accessible `<nav>` landmarks, automatically marking the terminal page with `aria-current="page"` and handling responsive truncation.
+
+---
+
+## Import
+
+```tsx
+import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Standard Breadcrumbs
+
+Compose breadcrumbs using `<Breadcrumbs>` with nested `<BreadcrumbItem>` components. Set `isCurrent` on the last item to signify the active page:
+
+```tsx
+import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+
+export function BasicBreadcrumbsExample() {
+  return (
+    <Breadcrumbs>
+      <BreadcrumbItem href="/">Home</BreadcrumbItem>
+      <BreadcrumbItem href="/architecture">Architecture</BreadcrumbItem>
+      <BreadcrumbItem href="/architecture/services">Edge Services</BreadcrumbItem>
+      <BreadcrumbItem isCurrent>Global Router</BreadcrumbItem>
+    </Breadcrumbs>
+  );
+}
+```
+
+### Dynamic Collections
+
+Render breadcrumbs dynamically from an array of routes or navigation history items:
+
+```tsx
+import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+
+interface Crumb {
+  id: string;
+  label: string;
+  href?: string;
+  isCurrent?: boolean;
+}
+
+export function DynamicBreadcrumbsExample() {
+  const trail: Crumb[] = [
+    { id: "dashboard", label: "Dashboard", href: "/dashboard" },
+    { id: "projects", label: "Projects", href: "/projects" },
+    { id: "hashti", label: "Hashti Design System", href: "/projects/hashti" },
+    { id: "tokens", label: "Tokens", isCurrent: true },
+  ];
+
+  return (
+    <Breadcrumbs>
+      {trail.map((item) => (
+        <BreadcrumbItem
+          key={item.id}
+          href={item.href}
+          isCurrent={item.isCurrent}
+        >
+          {item.label}
+        </BreadcrumbItem>
+      ))}
+    </Breadcrumbs>
+  );
+}
+```
+
+### Action Callbacks
+
+Breadcrumb items can fire an `onAction` callback instead of navigating directly via `href`, making it easy to integrate with client routers or state machines:
+
+```tsx
+import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+
+export function ActionBreadcrumbsExample() {
+  return (
+    <Breadcrumbs onAction={(key) => console.log("Navigating to step:", key)}>
+      <BreadcrumbItem id="cart" href="#cart">Shopping Cart</BreadcrumbItem>
+      <BreadcrumbItem id="shipping" href="#shipping">Shipping Address</BreadcrumbItem>
+      <BreadcrumbItem id="payment" isCurrent>Payment Method</BreadcrumbItem>
+    </Breadcrumbs>
+  );
+}
+```
+
+### Deep Nesting & Truncation
+
+When nesting exceeds four levels, long labels can be truncated with ellipses while preserving full clarity in tooltips or page titles:
+
+```tsx
+import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+
+export function TruncatedBreadcrumbsExample() {
+  return (
+    <div className="max-w-md">
+      <Breadcrumbs>
+        <BreadcrumbItem href="/">Organizations</BreadcrumbItem>
+        <BreadcrumbItem href="/org/engineering">Global Infrastructure Engineering</BreadcrumbItem>
+        <BreadcrumbItem href="/org/engineering/regions">Middle East & North Africa</BreadcrumbItem>
+        <BreadcrumbItem isCurrent>Isfahan-DC-Cluster-Alpha</BreadcrumbItem>
+      </Breadcrumbs>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Breadcrumbs Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `ReactNode` | **Required** | Nested `<BreadcrumbItem>` elements or render function. |
+| `onAction` | `(key: Key) => void` | — | Callback fired when a breadcrumb item is activated. |
+| `isDisabled` | `boolean` | `false` | Whether the entire breadcrumb trail is disabled. |
+| `className` | `string` | — | Additional CSS class names. |
+
+### BreadcrumbItem Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `ReactNode` | **Required** | The text label or node rendered for this breadcrumb. |
+| `href` | `string` | — | Hyperlink destination. When provided, renders as an interactive link. |
+| `isCurrent` | `boolean` | `false` | Whether this item represents the current page. When `true`, automatically assigns `aria-current="page"` and disables link navigation. |
+| `id` | `Key` | — | Unique identifier for action callbacks. |
+
+---
+
+## Accessibility (a11y)
+
+- **Landmark Region**: Breadcrumbs render inside a `<nav>` landmark automatically labeled with `aria-label="Breadcrumbs"`.
+- **Ordered List Structure**: Rendered internally as an ordered list (`<ol>`) where each crumb is an `<li>`, signaling the sequential depth of navigation to screen readers.
+- **Current Page Identification**: The active page item receives `aria-current="page"`. Assistive technologies vocalize that the item is the active page rather than an active link.
+- **Separators are Decorative**: Visual slash or chevron separators are marked with `aria-hidden="true"` (or generated via CSS pseudo-elements), preventing screen readers from vocalizing unnecessary punctuation characters like "slash, slash".
+- **Keyboard Tab Order**: Only navigable ancestor items are interactive tab stops; the terminal current page is non-interactive prose.

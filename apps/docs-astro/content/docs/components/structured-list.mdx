@@ -1,0 +1,205 @@
+---
+title: Structured List
+description: Tabular layout displaying structured, non-sortable records or metadata comparisons.
+---
+
+# Structured List
+
+A Structured List presents structured, non-sortable key-value metadata, technical specifications, or read-only tabular records. Unlike interactive data tables that support column sorting and pagination, a structured list emphasizes quiet reading legibility, high visual clarity, and semantic definition list pairings.
+
+It is ideal for server specifications, infrastructure metadata, billing summaries, and feature comparison matrices.
+
+---
+
+## Import
+
+```tsx
+import { StructuredList, StructuredListRow, Tag, Icon } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Key-Value Specification List
+
+Use `<StructuredList>` with nested `<StructuredListRow>` elements to present clear description pairs:
+
+```tsx
+import { StructuredList, StructuredListRow, Tag } from "@cinder/react";
+
+export function KeyValueListExample() {
+  return (
+    <div className="max-w-xl border border-subtle rounded bg-layer-1 p-2">
+      <StructuredList>
+        <StructuredListRow
+          label="Cluster Architecture"
+          value="ARM64 Graviton3 / 32 vCPU"
+        />
+        <StructuredListRow
+          label="Memory Allocation"
+          value="128 GB ECC DDR5"
+        />
+        <StructuredListRow
+          label="Primary Region"
+          value="Middle East (Isfahan-DC-01)"
+        />
+        <StructuredListRow
+          label="Ingress IP"
+          value="198.51.100.24"
+        />
+        <StructuredListRow
+          label="Health Status"
+          value={<Tag color="green">Operational</Tag>}
+        />
+      </StructuredList>
+    </div>
+  );
+}
+```
+
+### Multi-Column Structured List
+
+You can place custom nodes or multiple columns inside `<StructuredListRow>` for dense tabular comparisons:
+
+```tsx
+import { StructuredList, StructuredListRow, Tag } from "@cinder/react";
+
+export function ComparisonListExample() {
+  return (
+    <div className="max-w-2xl border border-subtle rounded bg-layer-1 p-2">
+      <StructuredList>
+        <StructuredListRow className="font-semibold text-xs text-subtle border-b border-subtle pb-2">
+          <div className="w-1/3">Feature</div>
+          <div className="w-1/3">Standard Plan</div>
+          <div className="w-1/3">Enterprise Plan</div>
+        </StructuredListRow>
+
+        <StructuredListRow>
+          <div className="w-1/3 font-medium">Edge Compute Workers</div>
+          <div className="w-1/3 text-subtle">Up to 25 workers</div>
+          <div className="w-1/3 text-primary font-medium">Unlimited</div>
+        </StructuredListRow>
+
+        <StructuredListRow>
+          <div className="w-1/3 font-medium">Global CDN Replication</div>
+          <div className="w-1/3 text-subtle">12 PoPs</div>
+          <div className="w-1/3 text-primary font-medium">320+ Global PoPs</div>
+        </StructuredListRow>
+
+        <StructuredListRow>
+          <div className="w-1/3 font-medium">SLA Guarantee</div>
+          <div className="w-1/3 text-subtle">99.9%</div>
+          <div className="w-1/3">
+            <Tag color="teal">99.999% High Availability</Tag>
+          </div>
+        </StructuredListRow>
+      </StructuredList>
+    </div>
+  );
+}
+```
+
+### Selectable Rows (Radio Plan Picker)
+
+Embed selection radio inputs into rows for clear option selection:
+
+```tsx
+import { useState } from "react";
+import { StructuredList, StructuredListRow, Tag } from "@cinder/react";
+
+export function SelectableRowsExample() {
+  const [selectedPlan, setSelectedPlan] = useState("pro");
+
+  const plans = [
+    {
+      id: "starter",
+      name: "Starter Instance",
+      specs: "2 vCPU / 4 GB RAM",
+      price: "$20/mo",
+    },
+    {
+      id: "pro",
+      name: "Professional Fleet",
+      specs: "8 vCPU / 32 GB RAM",
+      price: "$80/mo",
+      tag: "Popular",
+    },
+    {
+      id: "enterprise",
+      name: "Dedicated Node",
+      specs: "32 vCPU / 128 GB RAM",
+      price: "$320/mo",
+    },
+  ];
+
+  return (
+    <div className="max-w-xl space-y-2">
+      <StructuredList>
+        {plans.map((plan) => {
+          const isSelected = selectedPlan === plan.id;
+          return (
+            <StructuredListRow
+              key={plan.id}
+              className={`cursor-pointer transition-colors p-3 rounded border ${
+                isSelected
+                  ? "border-primary bg-layer-2"
+                  : "border-transparent hover:bg-layer-1"
+              }`}
+              onClick={() => setSelectedPlan(plan.id)}
+            >
+              <div className="flex items-center gap-3 w-full">
+                <input
+                  type="radio"
+                  name="plan"
+                  checked={isSelected}
+                  onChange={() => setSelectedPlan(plan.id)}
+                  aria-label={plan.name}
+                  className="accent-primary"
+                />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-sm">{plan.name}</span>
+                    {plan.tag && <Tag color="blue" size="sm">{plan.tag}</Tag>}
+                  </div>
+                  <span className="text-xs text-subtle">{plan.specs}</span>
+                </div>
+                <div className="font-semibold text-sm">{plan.price}</div>
+              </div>
+            </StructuredListRow>
+          );
+        })}
+      </StructuredList>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### StructuredList Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `ReactNode` | **Required** | One or more `<StructuredListRow>` elements. |
+| `className` | `string` | — | Additional CSS class names applied to the `<dl>` container. |
+
+### StructuredListRow Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `ReactNode` | — | Content rendered in a semantic `<dt>` (description term) element. |
+| `value` | `ReactNode` | — | Content rendered in a semantic `<dd>` (description details) element. |
+| `children` | `ReactNode` | — | Additional children rendered inside the row. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility (a11y)
+
+- **Semantic HTML Definition Lists**: Renders using native `<dl>` (description list), `<dt>` (term), and `<dd>` (description details) tags.
+- **Screen Reader Pair Navigation**: Modern screen readers (VoiceOver, NVDA, JAWS) announce the total count of terms in the list and allow users to jump term-by-term, announcing corresponding values automatically.
+- **Form Controls in Rows**: When placing radio buttons or checkboxes inside rows for plan selection, each control should either be labeled by an `<input aria-label="...">` or linked to the row term via `id` and `htmlFor`.
+- **Keyboard Usability**: When interactive selection is enabled, radio elements receive native focus and arrow key navigation without requiring custom JavaScript listeners.

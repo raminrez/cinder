@@ -1,0 +1,266 @@
+---
+title: Toast
+description: Temporary floating notification popping up at the edge of the screen to acknowledge asynchronous actions.
+---
+
+# Toast
+
+Toasts are transient, floating notifications that appear in the viewport corner to acknowledge asynchronous events—such as saving a draft, copying a link to the clipboard, or completing a background sync.
+
+Built on React Aria Components' toast architecture, Hashti's toast system features automatic queueing, configurable timeouts, polite live region announcements, and full keyboard dismissal.
+
+---
+
+## Import
+
+```tsx
+import { ToastProvider, useToast } from "@cinder/react";
+```
+
+---
+
+## Setup & Architecture
+
+To use toasts anywhere in your application, place `<ToastProvider>` near the root of your component tree (for example, inside your root layout or application shell). All child components can then dispatch toasts using the `useToast()` hook.
+
+```tsx
+// Root application layout or provider wrapper
+import { Theme, ToastProvider } from "@cinder/react";
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+  return (
+    <Theme theme="frame-light">
+      <ToastProvider>
+        {children}
+      </ToastProvider>
+    </Theme>
+  );
+}
+```
+
+---
+
+## Examples
+
+### Dispatching Toasts with `useToast()`
+
+Call `toast.add()` inside event handlers or promise resolutions to surface instant feedback:
+
+```tsx
+import { useToast, Button } from "@cinder/react";
+
+export function BasicToastExample() {
+  const toast = useToast();
+
+  const handleSave = () => {
+    toast.add({
+      title: "Project saved",
+      description: "All architectural changes were persisted successfully.",
+      kind: "success",
+    });
+  };
+
+  return (
+    <Button variant="primary" onPress={handleSave}>
+      Save Project
+    </Button>
+  );
+}
+```
+
+### Toast Kinds (Severities)
+
+Toasts support Hashti's four standard feedback kinds: `info`, `success`, `warning`, and `error`.
+
+```tsx
+import { useToast, Button } from "@cinder/react";
+
+export function ToastKindsExample() {
+  const toast = useToast();
+
+  return (
+    <div className="flex flex-wrap gap-3">
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.add({
+            title: "Information",
+            description: "New software update is available in the background.",
+            kind: "info",
+          })
+        }
+      >
+        Info Toast
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.add({
+            title: "Changes Published",
+            description: "Your design system tokens have been synced.",
+            kind: "success",
+          })
+        }
+      >
+        Success Toast
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={() =>
+          toast.add({
+            title: "Rate Limit Approaching",
+            description: "85% of your hourly API quota has been consumed.",
+            kind: "warning",
+          })
+        }
+      >
+        Warning Toast
+      </Button>
+
+      <Button
+        variant="danger"
+        onPress={() =>
+          toast.add({
+            title: "Upload Failed",
+            description: "Could not establish connection to the remote cluster.",
+            kind: "error",
+          })
+        }
+      >
+        Error Toast
+      </Button>
+    </div>
+  );
+}
+```
+
+### Auto-Dismiss Duration & Custom Timeouts
+
+By default, toasts automatically dismiss after 5,000 milliseconds (5 seconds). You can customize the duration per toast via `options.timeout`:
+
+```tsx
+import { useToast, Button } from "@cinder/react";
+
+export function CustomTimeoutExample() {
+  const toast = useToast();
+
+  const handleQuickToast = () => {
+    toast.add(
+      {
+        title: "Copied to clipboard!",
+        kind: "info",
+      },
+      { timeout: 2000 } // Dismisses after 2 seconds
+    );
+  };
+
+  const handlePersistentToast = () => {
+    toast.add(
+      {
+        title: "Large migration running...",
+        description: "This background job will take several minutes to complete.",
+        kind: "warning",
+      },
+      { timeout: 15000 } // Extended to 15 seconds
+    );
+  };
+
+  return (
+    <div className="flex gap-4">
+      <Button variant="ghost" onPress={handleQuickToast}>
+        Quick Toast (2s)
+      </Button>
+      <Button variant="ghost" onPress={handlePersistentToast}>
+        Long Toast (15s)
+      </Button>
+    </div>
+  );
+}
+```
+
+### Programmatic Toast Dismissal
+
+The `toast.add()` method returns a unique string identifier that can be passed to `toast.close(id)` to manually dismiss a toast:
+
+```tsx
+import { useRef } from "react";
+import { useToast, Button } from "@cinder/react";
+
+export function ProgrammaticDismissExample() {
+  const toast = useToast();
+  const activeToastKey = useRef<string | null>(null);
+
+  const startTask = () => {
+    activeToastKey.current = toast.add(
+      {
+        title: "Syncing data...",
+        description: "Contacting primary replica node.",
+        kind: "info",
+      },
+      { timeout: 30000 }
+    );
+  };
+
+  const completeTask = () => {
+    if (activeToastKey.current) {
+      toast.close(activeToastKey.current);
+      activeToastKey.current = null;
+    }
+    toast.add({
+      title: "Data synchronized successfully!",
+      kind: "success",
+    });
+  };
+
+  return (
+    <div className="flex gap-3">
+      <Button variant="secondary" onPress={startTask}>
+        Start Background Sync
+      </Button>
+      <Button variant="primary" onPress={completeTask}>
+        Finish & Close
+      </Button>
+    </div>
+  );
+}
+```
+
+---
+
+## API Reference
+
+### `useToast()` Hook
+
+The `useToast()` hook returns an object with the following methods:
+
+| Method | Parameters | Returns | Description |
+| :--- | :--- | :--- | :--- |
+| `add` | `(message: ToastMessage, options?: ToastOptions)` | `string` | Adds a new toast to the queue and returns its unique ID key. |
+| `close` | `(key: string)` | `void` | Closes and removes the toast with the specified ID key. |
+
+### `ToastMessage` Object
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `string` | **Required** | The bold heading text displayed in the toast notification. |
+| `description` | `string` | — | Additional supporting description text. |
+| `kind` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Semantic kind determining the toast icon and border accent. |
+| `variant` | `'subtle' \| 'solid' \| 'bordered'` | `'subtle'` | Visual style variant for high or low contrast rendering. |
+
+### `ToastOptions` Object
+
+| Property | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `timeout` | `number` | `5000` | Duration in milliseconds before the toast automatically fades away. |
+| `priority` | `number` | `0` | Queue priority determining order when multiple toasts arrive simultaneously. |
+
+---
+
+## Accessibility (a11y)
+
+- **Polite Live Announcements**: Toasts render within a `<ToastRegion>` mapped to `aria-live="polite"`. Assistive technologies queue the notification and read it aloud as soon as the user is idle, avoiding jarring interruptions during typing or reading.
+- **Keyboard Dismissal**: Every toast includes a focusable close button equipped with `aria-label="Dismiss notification"`. Users navigating via keyboard can tab to the button and press <kbd>Enter</kbd> or <kbd>Space</kbd> to dismiss.
+- **Timing Guidelines (WCAG 2.2.1)**: Critical error messages or required actions should not rely solely on auto-dismissing toasts. Because users with reading difficulties or screen magnifiers may need more time to comprehend content, provide ample duration or consider using [`Alert`](./alert) or [`InlineNotification`](./inline-notification) for essential recovery instructions.
+- **Maximum Visible Count**: The toast queue limits visible toasts to 3 at a time to prevent overcrowding the screen and overwhelming the user's field of view.

@@ -1,0 +1,204 @@
+---
+title: Progress Bar
+description: Linear indicator displaying the completion percentage of a multi-step task or background process.
+---
+
+# Progress Bar
+
+The Progress Bar visualizes the progression of an extended operation—such as file uploads, computation tasks, installation scripts, or multi-step form journeys. It supports both determinate states (where quantifiable percentage completion is known) and indeterminate states (when progress duration cannot be calculated).
+
+Built on React Aria Components, it implements comprehensive WAI-ARIA `progressbar` semantics, automatic value formatting, and internationalization.
+
+---
+
+## Import
+
+```tsx
+import { ProgressBar, Meter } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Determinate Progress
+
+Set `value` to display a determinate progress bar. By default, values range from `0` to `100`.
+
+```tsx
+import { ProgressBar } from "@cinder/react";
+
+export function DeterminateProgressExample() {
+  return (
+    <div className="space-y-6 max-w-md">
+      <ProgressBar
+        label="Database Export"
+        value={65}
+        helperText="Estimated time remaining: 45 seconds"
+      />
+
+      <ProgressBar
+        label="Artifact Upload"
+        value={25}
+        helperText="Uploading chunk 4 of 16"
+      />
+    </div>
+  );
+}
+```
+
+### Indeterminate Progress
+
+When operation duration is unknown, pass `isIndeterminate`. This activates an animated shimmering pulse across the progress track.
+
+```tsx
+import { ProgressBar } from "@cinder/react";
+
+export function IndeterminateProgressExample() {
+  return (
+    <div className="max-w-md">
+      <ProgressBar
+        label="Provisioning Kubernetes Cluster"
+        isIndeterminate
+        helperText="Allocating network subnets and compute instances..."
+      />
+    </div>
+  );
+}
+```
+
+### Value Formatting & Currencies
+
+Use `formatOptions` to customize how the numeric value is localized and formatted (e.g. percentages, bytes, or currencies):
+
+```tsx
+import { ProgressBar } from "@cinder/react";
+
+export function FormattingExample() {
+  return (
+    <div className="space-y-6 max-w-md">
+      {/* Default percentage formatting */}
+      <ProgressBar
+        label="Standard Percentage"
+        value={72}
+      />
+
+      {/* Custom min/max range */}
+      <ProgressBar
+        label="Memory Consumption"
+        minValue={0}
+        maxValue={16}
+        value={12}
+        formatOptions={{
+          style: "unit",
+          unit: "gigabyte",
+          unitDisplay: "short",
+        }}
+        helperText="12 GB of 16 GB memory utilized"
+      />
+
+      {/* Currency budget consumption */}
+      <ProgressBar
+        label="Monthly Cloud Spend"
+        minValue={0}
+        maxValue={5000}
+        value={3820}
+        formatOptions={{
+          style: "currency",
+          currency: "USD",
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Status Variants
+
+The `status` prop allows you to highlight task health with semantic colors (`active`, `success`, `warning`, `error`):
+
+```tsx
+import { ProgressBar } from "@cinder/react";
+
+export function StatusVariantsExample() {
+  return (
+    <div className="space-y-6 max-w-md">
+      <ProgressBar
+        label="Active Sync"
+        value={50}
+        status="active"
+      />
+
+      <ProgressBar
+        label="Compilation Complete"
+        value={100}
+        status="success"
+        helperText="All 142 packages compiled cleanly."
+      />
+
+      <ProgressBar
+        label="High Memory Pressure"
+        value={89}
+        status="warning"
+        helperText="Approaching node memory threshold."
+      />
+
+      <ProgressBar
+        label="Build Interrupted"
+        value={40}
+        status="error"
+        helperText="Process exited with exit code 1."
+      />
+    </div>
+  );
+}
+```
+
+### Meter for Static Measurements
+
+For representing a quantity within a known range that is **not** a progress indicator (such as disk storage, CPU load, or password strength), use the `<Meter>` component:
+
+```tsx
+import { Meter } from "@cinder/react";
+
+export function MeterExample() {
+  return (
+    <div className="max-w-md">
+      <Meter
+        label="Storage Capacity"
+        value={74}
+        minValue={0}
+        maxValue={100}
+      />
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `number` | `0` | The current completion value. |
+| `minValue` | `number` | `0` | The minimum possible value of the range. |
+| `maxValue` | `number` | `100` | The maximum possible value of the range. |
+| `isIndeterminate` | `boolean` | `false` | Whether progress is indeterminate (ongoing with unknown duration). |
+| `label` | `ReactNode` | — | Accessible text label displayed above the progress bar. |
+| `helperText` | `ReactNode` | — | Explanatory description rendered beneath the progress track. |
+| `status` | `'active' \| 'success' \| 'warning' \| 'error'` | `'active'` | Semantic status styling applied to the fill indicator. |
+| `formatOptions` | `Intl.NumberFormatOptions` | `{ style: 'percent' }` | Options for formatting the displayed value text using `Intl.NumberFormat`. |
+| `valueLabel` | `ReactNode` | — | Custom string or node to replace the formatted value text. |
+| `aria-label` | `string` | — | Accessible label for the progress bar if `label` is not visually rendered. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility (a11y)
+
+- **WAI-ARIA Role**: Renders with native `role="progressbar"`.
+- **Dynamic Value Attributes**: In determinate mode, updates `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` in real-time as the `value` prop changes.
+- **Indeterminate Mode**: When `isIndeterminate={true}`, the `aria-valuenow` attribute is omitted in accordance with ARIA specifications, signaling to screen readers that the task is underway with unknown duration.
+- **Accessible Labelling**: When the visual `label` prop is provided, it is linked automatically to the progress bar via an internal `id` reference. If omitting a visual label, you **must** supply an `aria-label` or `aria-labelledby` attribute.
+- **Value Text**: Screen readers read the localized `valueText` (e.g. "65 percent" or "$3,820.00"), ensuring internationalized clarity for non-visual users.

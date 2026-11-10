@@ -1,0 +1,235 @@
+---
+title: Tabs
+description: Navigation component organizing content across layered panel views.
+---
+
+# Tabs
+
+Tabs organize related content across multiple layered panel views, allowing users to alternate between different categories or contexts without leaving the current page.
+
+Built on React Aria Components, Hashti's Tabs adhere strictly to the WAI-ARIA Tabs design pattern, providing automatic roving keyboard focus, high-contrast visual focus rings, smooth indicator transitions, and support for both horizontal and vertical orientations.
+
+---
+
+## Import
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Horizontal Tabs
+
+Use `<Tabs>` with `<TabList>`, `<Tab>`, and `<TabPanel>` to construct layered panel navigation:
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+
+export function BasicTabsExample() {
+  return (
+    <Tabs defaultSelectedKey="overview">
+      <TabList aria-label="Project Sections">
+        <Tab id="overview">Overview</Tab>
+        <Tab id="specifications">Specifications</Tab>
+        <Tab id="deployments">Deployments</Tab>
+        <Tab id="activity">Audit Activity</Tab>
+      </TabList>
+
+      <TabPanel id="overview" className="p-4 bg-layer-1 border border-subtle mt-2 rounded">
+        <h3 className="font-medium text-base mb-1">Architecture Overview</h3>
+        <p className="text-sm text-subtle">
+          This service orchestrates edge compute workers across 32 regional points of presence.
+        </p>
+      </TabPanel>
+
+      <TabPanel id="specifications" className="p-4 bg-layer-1 border border-subtle mt-2 rounded">
+        <h3 className="font-medium text-base mb-1">Technical Specifications</h3>
+        <p className="text-sm text-subtle">
+          Runtime: Node.js 22 LTS / Bun 1.2 with 128MB isolated memory per worker instance.
+        </p>
+      </TabPanel>
+
+      <TabPanel id="deployments" className="p-4 bg-layer-1 border border-subtle mt-2 rounded">
+        <h3 className="font-medium text-base mb-1">Recent Deployments</h3>
+        <p className="text-sm text-subtle">
+          Commit <code>7f1b2c4</code> successfully staged to canary.
+        </p>
+      </TabPanel>
+
+      <TabPanel id="activity" className="p-4 bg-layer-1 border border-subtle mt-2 rounded">
+        <h3 className="font-medium text-base mb-1">Audit Log</h3>
+        <p className="text-sm text-subtle">
+          No security policy violations detected within the last 24 hours.
+        </p>
+      </TabPanel>
+    </Tabs>
+  );
+}
+```
+
+### Visual Variants: Line vs. Contained
+
+Hashti supports two primary styling variants via the `variant` prop:
+- `variant="line"` (default): Underlined tabs with an animated accent indicator.
+- `variant="contained"`: Solid boxed tabs that resemble card or folder tabs.
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+
+export function ContainedTabsExample() {
+  return (
+    <Tabs variant="contained" defaultSelectedKey="tab1">
+      <TabList aria-label="Configuration Settings">
+        <Tab id="tab1">General</Tab>
+        <Tab id="tab2">Security</Tab>
+        <Tab id="tab3">Billing</Tab>
+      </TabList>
+
+      <TabPanel id="tab1" className="p-4 border border-subtle mt-2 rounded">
+        <p className="text-sm">General application settings and name configuration.</p>
+      </TabPanel>
+
+      <TabPanel id="tab2" className="p-4 border border-subtle mt-2 rounded">
+        <p className="text-sm">Two-factor authentication and SSO identity providers.</p>
+      </TabPanel>
+
+      <TabPanel id="tab3" className="p-4 border border-subtle mt-2 rounded">
+        <p className="text-sm">Current invoices, payment methods, and plan limits.</p>
+      </TabPanel>
+    </Tabs>
+  );
+}
+```
+
+### Vertical Orientation
+
+Set `orientation="vertical"` to render tabs in a side navigation column layout:
+
+```tsx
+import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+
+export function VerticalTabsExample() {
+  return (
+    <Tabs orientation="vertical" defaultSelectedKey="profile" className="flex gap-6">
+      <TabList aria-label="Account Settings" className="min-w-48">
+        <Tab id="profile">Profile Information</Tab>
+        <Tab id="notifications">Notification Preferences</Tab>
+        <Tab id="api">API Keys & Webhooks</Tab>
+        <Tab id="sessions">Active Sessions</Tab>
+      </TabList>
+
+      <div className="flex-1">
+        <TabPanel id="profile" className="p-4 bg-layer-1 border border-subtle rounded">
+          <h4 className="font-medium mb-2">Profile Information</h4>
+          <p className="text-sm text-subtle">Manage personal contact details and display names.</p>
+        </TabPanel>
+
+        <TabPanel id="notifications" className="p-4 bg-layer-1 border border-subtle rounded">
+          <h4 className="font-medium mb-2">Notification Preferences</h4>
+          <p className="text-sm text-subtle">Configure email digests and Slack webhook alerts.</p>
+        </TabPanel>
+
+        <TabPanel id="api" className="p-4 bg-layer-1 border border-subtle rounded">
+          <h4 className="font-medium mb-2">API Keys & Webhooks</h4>
+          <p className="text-sm text-subtle">Generate scoped access tokens for continuous integration.</p>
+        </TabPanel>
+
+        <TabPanel id="sessions" className="p-4 bg-layer-1 border border-subtle rounded">
+          <h4 className="font-medium mb-2">Active Sessions</h4>
+          <p className="text-sm text-subtle">Review logged-in devices and revoke stale tokens.</p>
+        </TabPanel>
+      </div>
+    </Tabs>
+  );
+}
+```
+
+### Controlled Selection & Disabled Tabs
+
+Pass `selectedKey` and `onSelectionChange` to manage active tabs programmatically, and use `disabledKeys` to disable specific items:
+
+```tsx
+import { useState } from "react";
+import { Tabs, TabList, Tab, TabPanel, Button } from "@cinder/react";
+import type { Key } from "@cinder/react";
+
+export function ControlledTabsExample() {
+  const [selectedKey, setSelectedKey] = useState<Key>("step1");
+
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-2">
+        <Button size="sm" variant="secondary" onPress={() => setSelectedKey("step1")}>
+          Jump to Step 1
+        </Button>
+        <Button size="sm" variant="secondary" onPress={() => setSelectedKey("step2")}>
+          Jump to Step 2
+        </Button>
+      </div>
+
+      <Tabs
+        selectedKey={selectedKey}
+        onSelectionChange={setSelectedKey}
+        disabledKeys={["step3"]}
+      >
+        <TabList aria-label="Onboarding Wizard">
+          <Tab id="step1">1. Account Setup</Tab>
+          <Tab id="step2">2. Team Members</Tab>
+          <Tab id="step3">3. Verification (Locked)</Tab>
+        </TabList>
+
+        <TabPanel id="step1" className="p-4 border border-subtle rounded mt-2">
+          Step 1: Fill in organization credentials.
+        </TabPanel>
+        <TabPanel id="step2" className="p-4 border border-subtle rounded mt-2">
+          Step 2: Invite team collaborators.
+        </TabPanel>
+        <TabPanel id="step3" className="p-4 border border-subtle rounded mt-2">
+          Step 3: Verification pending previous steps.
+        </TabPanel>
+      </Tabs>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### Tabs Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `variant` | `'line' \| 'contained'` | `'line'` | Visual styling variant. `'line'` displays underlined tabs; `'contained'` displays solid pill-like tabs. |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Layout direction of the tab strip. |
+| `selectedKey` | `Key` | — | The currently selected tab key (for controlled usage). |
+| `defaultSelectedKey` | `Key` | — | Initial active tab key when uncontrolled. |
+| `onSelectionChange` | `(key: Key) => void` | — | Handler invoked whenever the active tab changes. |
+| `disabledKeys` | `Iterable<Key>` | — | Collection of keys for tabs that should be disabled. |
+| `keyboardActivation` | `'automatic' \| 'manual'` | `'automatic'` | Whether arrow keys activate tabs immediately (`automatic`) or only move focus until <kbd>Enter</kbd> or <kbd>Space</kbd> is pressed (`manual`). |
+| `className` | `string` | — | Additional CSS class names applied to the container. |
+
+### TabList & Tab Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `aria-label` | `string` | — | Accessible label for the `<TabList>` describing the grouping to screen readers. |
+| `id` | `Key` | **Required** | Unique identifier for each `<Tab>` and corresponding `<TabPanel>`. |
+| `isDisabled` | `boolean` | `false` | Whether an individual `<Tab>` is disabled. |
+
+---
+
+## Accessibility (a11y)
+
+- **WAI-ARIA Pattern**: Adheres directly to the W3C Tabs design pattern. The tab list is given `role="tablist"`, tabs are assigned `role="tab"`, and panels are assigned `role="tabpanel"`.
+- **Roving Focus & Keyboard Navigation**:
+  - In horizontal tabs, press <kbd>ArrowRight</kbd> and <kbd>ArrowLeft</kbd> to move focus between tabs.
+  - In vertical tabs, press <kbd>ArrowDown</kbd> and <kbd>ArrowUp</kbd> to move focus.
+  - Press <kbd>Home</kbd> to jump to the first tab, and <kbd>End</kbd> to jump to the last tab.
+  - Press <kbd>Tab</kbd> to move focus directly from the active tab into the contents of the active tab panel.
+- **Dynamic Linking**: React Aria Components automatically connects `aria-controls` on each tab to the corresponding tab panel's `id`, and sets `aria-labelledby` on the panel pointing back to the tab.
+- **RTL Adaptability**: Arrow keys automatically reverse direction in right-to-left (RTL) scripts, ensuring seamless bidirectional usability.

@@ -1,0 +1,191 @@
+---
+title: Inline Notification
+description: Contextual feedback message rendered directly alongside relevant content or forms.
+---
+
+# Inline Notification
+
+Inline Notifications display contextual, non-disruptive feedback directly embedded within a workflow—such as next to form inputs, table headers, or inside configuration cards.
+
+Unlike floating toasts or assertive alerts, inline notifications stay in place alongside the content they describe, allowing users to reference guidance or error messages without losing their spatial context.
+
+---
+
+## Import
+
+```tsx
+import { InlineNotification, ActionableNotification } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Basic Inline Notifications
+
+Render contextual messages across four semantic kinds: `info`, `success`, `warning`, and `error`.
+
+```tsx
+import { InlineNotification } from "@cinder/react";
+
+export function BasicInlineExample() {
+  return (
+    <div className="space-y-4">
+      <InlineNotification
+        kind="info"
+        title="Form auto-save is enabled."
+      >
+        Drafts are securely persisted to local storage every 30 seconds.
+      </InlineNotification>
+
+      <InlineNotification
+        kind="success"
+        title="API key generated successfully."
+      >
+        Store this key safely; it cannot be retrieved again after leaving this page.
+      </InlineNotification>
+
+      <InlineNotification
+        kind="warning"
+        title="Deprecated API version detected."
+      >
+        GraphQL v1 schemas will reach end-of-life on December 31st.
+      </InlineNotification>
+
+      <InlineNotification
+        kind="error"
+        title="Invalid IP Range."
+      >
+        The CIDR block provided overlaps with an existing subnet in this VPC.
+      </InlineNotification>
+    </div>
+  );
+}
+```
+
+### Dismissible Notifications
+
+Pass an `onDismiss` handler to allow users to close the notification once read:
+
+```tsx
+import { useState } from "react";
+import { InlineNotification, Button } from "@cinder/react";
+
+export function DismissibleInlineExample() {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) {
+    return (
+      <Button variant="ghost" size="sm" onPress={() => setVisible(true)}>
+        Show notification again
+      </Button>
+    );
+  }
+
+  return (
+    <InlineNotification
+      kind="info"
+      title="Tips for optimal performance"
+      onDismiss={() => setVisible(false)}
+    >
+      Compress static assets before uploading to edge buckets for faster global latency.
+    </InlineNotification>
+  );
+}
+```
+
+### Low vs. High Contrast
+
+By default, inline notifications use low contrast (`lowContrast={true}` or `variant="subtle"`), providing a soft, unobtrusive visual tone that blends harmoniously into dense enterprise dashboards. Set `lowContrast={false}` for higher urgency:
+
+```tsx
+import { InlineNotification } from "@cinder/react";
+
+export function ContrastComparisonExample() {
+  return (
+    <div className="space-y-4">
+      {/* Low contrast (default subtle styling) */}
+      <InlineNotification
+        kind="warning"
+        lowContrast={true}
+        title="Low Contrast (Subtle)"
+      >
+        Recommended for routine status updates and secondary warnings.
+      </InlineNotification>
+
+      {/* High contrast (solid vibrant styling) */}
+      <InlineNotification
+        kind="warning"
+        lowContrast={false}
+        title="High Contrast (Solid)"
+      >
+        Recommended for persistent blockers or required administrative actions.
+      </InlineNotification>
+    </div>
+  );
+}
+```
+
+### Actionable Notification
+
+When an inline notification requires explicit user intervention, use `<ActionableNotification>`. It features dedicated action slots, manages keyboard focus into the primary action, and implements an accessible `role="alertdialog"`.
+
+```tsx
+import { ActionableNotification, Button } from "@cinder/react";
+
+export function ActionableNotificationExample() {
+  return (
+    <ActionableNotification
+      kind="error"
+      title="Session expired"
+      action={
+        <Button variant="primary" size="sm">
+          Log In Again
+        </Button>
+      }
+      onDismiss={() => console.log("Dismissed")}
+    >
+      Your credentials have timed out due to 15 minutes of inactivity.
+    </ActionableNotification>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### InlineNotification Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `ReactNode` | **Required** | The primary headline of the message. |
+| `children` | `ReactNode` | — | Explanatory description text or rich elements rendered below the title. |
+| `kind` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Semantic message kind dictating the icon and color palette. |
+| `onDismiss` | `() => void` | — | Callback fired when the user clicks the close button. If omitted, no close button is rendered. |
+| `lowContrast` | `boolean` | `true` | Whether to display the notification with soft subtle background tints. |
+| `variant` | `'subtle' \| 'solid' \| 'bordered'` | `'subtle'` | Visual styling variant. |
+| `action` | `ReactNode` | — | Optional secondary buttons or interactive elements rendered inline. |
+| `role` | `string` | `'status'` | ARIA role applied to the container. Defaults to `'status'` for polite screen reader announcements. |
+| `className` | `string` | — | Additional CSS class names. |
+
+### ActionableNotification Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `title` | `ReactNode` | **Required** | The bold heading describing the required action. |
+| `action` | `ReactNode` | **Required** | The primary action button or interactive element. |
+| `children` | `ReactNode` | — | Contextual details or consequences of the action. |
+| `kind` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Semantic severity of the actionable prompt. |
+| `onDismiss` | `() => void` | — | Callback fired when the notification is dismissed. |
+| `autoFocusAction` | `boolean` | `true` | Whether to automatically move focus to the first button inside `action` on mount. |
+| `closeButtonLabel` | `string` | `'Dismiss notification'` | Accessible label for the close button. |
+
+---
+
+## Accessibility (a11y)
+
+- **Polite Live Region**: Unlike `Alert`, `InlineNotification` uses `role="status"` by default. This translates to `aria-live="polite"`, waiting until the screen reader finishes announcing the current word or task before reading the message.
+- **Focus Management**: For routine inline notifications, user focus is **not** abruptly shifted to the message, avoiding disorienting keyboard users while they type in adjacent fields.
+- **Actionable Notification Alertdialog**: When using `<ActionableNotification>`, the container uses `role="alertdialog"` with `aria-labelledby` and `aria-describedby` automatically pointing to the title and description IDs. Focus is safely delegated to the action button when `autoFocusAction` is enabled.
+- **Icon Hiding**: Informational icons are accompanied by the strong headline and appropriate ARIA roles so that meaning is never conveyed by color alone (WCAG 1.4.1).

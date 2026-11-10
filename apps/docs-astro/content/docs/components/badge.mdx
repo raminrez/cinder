@@ -1,0 +1,172 @@
+---
+title: Badge
+description: Small visual counter or status indicator anchored to avatar or icon components.
+---
+
+# Badge
+
+A compact indicator designed to draw attention to status changes, unread notifications, item quantities, or active states. In Hashti's architectural philosophy, badges function like subtle brass studs (*gol-mikh*) on Persian entrance doors—understated signifiers that communicate status without disrupting structural serenity.
+
+Badges can wrap target elements (such as avatars, buttons, or navigation icons) using anchor placements, or stand alone as autonomous inline status counters.
+
+---
+
+## Import
+
+```tsx
+import { Badge } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Standalone Status Dot
+
+When `isDot` is specified (or when no count is provided), `Badge` renders a compact, high-contrast status dot.
+
+```tsx
+import { Badge } from "@cinder/react";
+
+export function StatusDotExample() {
+  return (
+    <div className="flex items-center gap-4">
+      <Badge isDot kind="success" />
+      <span className="text-sm">Service Online</span>
+
+      <Badge isDot kind="danger" />
+      <span className="text-sm">Incident Reported</span>
+
+      <Badge isDot kind="warning" />
+      <span className="text-sm">Degraded Performance</span>
+    </div>
+  );
+}
+```
+
+### Anchored to Avatars & Icons
+
+Wrap an element (such as an `Avatar` or an `Icon`) inside `<Badge>` to anchor the indicator to its corner.
+
+```tsx
+import { Badge, Avatar, Icon } from "@cinder/react";
+
+export function AnchoredBadgeExample() {
+  return (
+    <div className="flex items-center gap-6">
+      {/* Dot badge on Avatar */}
+      <Badge isDot kind="success" placement="bottom-end">
+        <Avatar name="Nazanin Tehrani" size="lg" />
+      </Badge>
+
+      {/* Count badge on Icon */}
+      <Badge count={5} kind="primary" placement="top-end">
+        <div className="p-2 rounded bg-layer-1 border border-subtle">
+          <Icon name="bell" size={24} />
+        </div>
+      </Badge>
+
+      {/* Overflow badge on Avatar */}
+      <Badge count={120} maxCount={99} kind="danger" placement="top-right">
+        <Avatar name="Farhad Moshiri" size="lg" />
+      </Badge>
+    </div>
+  );
+}
+```
+
+### Numeric Count & Ceiling Overflow
+
+When `count` is a number greater than `maxCount` (default `99`), the badge automatically clamps the display to `${maxCount}+`.
+
+```tsx
+import { Badge } from "@cinder/react";
+
+export function CountCeilingExample() {
+  return (
+    <div className="flex items-center gap-4">
+      <Badge count={8} kind="neutral" />
+      <Badge count={42} kind="info" />
+      <Badge count={100} maxCount={99} kind="danger" />
+      <Badge count={1500} maxCount={999} kind="warning" />
+    </div>
+  );
+}
+```
+
+### Semantic Kinds
+
+Badges support seven semantic colors aligned with Hashti's theme tokens to communicate meaning clearly:
+
+```tsx
+import { Badge } from "@cinder/react";
+
+export function BadgeKindsExample() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Badge count={3} kind="danger">Danger</Badge>
+      <Badge count={12} kind="warning">Warning</Badge>
+      <Badge count={8} kind="success">Success</Badge>
+      <Badge count={24} kind="info">Info</Badge>
+      <Badge count={5} kind="primary">Primary</Badge>
+      <Badge count={17} kind="neutral">Neutral</Badge>
+      <Badge count={9} kind="secondary">Secondary</Badge>
+    </div>
+  );
+}
+```
+
+### Placement Anchors
+
+Badges can be pinned to any of the four corners of a wrapped component. Both directional (`top-end`, `bottom-start`) and physical (`top-right`, `bottom-left`) notations are supported. Directional placements automatically adapt when rendering in RTL scripts.
+
+```tsx
+import { Badge, Avatar } from "@cinder/react";
+
+export function PlacementExample() {
+  return (
+    <div className="grid grid-cols-2 gap-8 max-w-xs">
+      <Badge count={1} placement="top-start" kind="info">
+        <Avatar name="Top Start" size="md" />
+      </Badge>
+
+      <Badge count={2} placement="top-end" kind="info">
+        <Avatar name="Top End" size="md" />
+      </Badge>
+
+      <Badge count={3} placement="bottom-start" kind="info">
+        <Avatar name="Bottom Start" size="md" />
+      </Badge>
+
+      <Badge count={4} placement="bottom-end" kind="info">
+        <Avatar name="Bottom End" size="md" />
+      </Badge>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `count` | `ReactNode` | — | Numeric value or text displayed inside the badge. When combined with `maxCount`, numeric values exceeding the maximum are capped with a `+` suffix. |
+| `content` | `ReactNode` | — | Alternative alias for `count`. |
+| `maxCount` | `number` | `99` | Maximum threshold before displaying `${maxCount}+`. |
+| `max` | `number` | — | Alias for `maxCount`. |
+| `isDot` | `boolean` | `false` | When `true`, displays a compact dot indicator with no numeric text. Defaults to `true` if no count or content is supplied. |
+| `kind` | `'danger' \| 'success' \| 'warning' \| 'info' \| 'primary' \| 'neutral' \| 'secondary'` | `'danger'` | Semantic color tone applied to the badge background and text. |
+| `placement` | `'top-end' \| 'top-start' \| 'bottom-end' \| 'bottom-start' \| 'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-end'` | Corner anchor placement when wrapping a child element. Directional placements (`*-start`, `*-end`) automatically mirror in RTL environments. |
+| `children` | `ReactNode` | — | The target component (e.g., `Avatar`, `Button`, or `Icon`) anchored by the badge. When omitted, the badge renders as an inline element. |
+| `className` | `string` | — | Optional custom CSS class name applied to the badge element. |
+
+---
+
+## Accessibility (a11y)
+
+- **Role Semantics**: Badges render with `role="status"` by default, allowing assistive technologies to announce count updates without stealing user focus.
+- **Screen Reader Announcements**: For standalone dot badges or unlabelled icon wrappers, always supply an `aria-label` on the wrapper or include hidden text (such as `<span className="cinder-visually-hidden">5 unread messages</span>`) so that non-sighted users receive the same contextual information.
+- **High Contrast**: Badge foreground text and background colors meet WCAG 2.2 AA contrast requirements (minimum 4.5:1) in both light and dark themes.
+- **RTL Support**: Using logical placements (`top-end`, `bottom-start`) ensures that badge positions flip correctly when switching between LTR (English) and RTL (Persian, Arabic) locales.

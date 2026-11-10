@@ -1,0 +1,206 @@
+---
+title: Table Batch Actions
+description: Floating toolbar surfacing bulk commands when one or more rows are selected in a table.
+---
+
+# Table Batch Actions
+
+The Table Batch Actions bar provides a contextual bulk-action toolbar that floats directly above a data table whenever one or more items are selected. It displays the active count of selected records alongside bulk operation buttons—such as "Delete", "Export", "Assign Tags", or "Archive"—and an immediate "Cancel" trigger to clear the selection.
+
+---
+
+## Import
+
+```tsx
+import { TableBatchActions, Button, Icon } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Standalone Batch Actions Bar
+
+When `totalSelected > 0`, the batch actions bar renders. When `totalSelected` is 0, the component automatically returns `null` to conserve visual space.
+
+```tsx
+import { useState } from "react";
+import { TableBatchActions, Button, Icon } from "@cinder/react";
+
+export function StandaloneBatchExample() {
+  const [selectedCount, setSelectedCount] = useState(3);
+
+  return (
+    <div className="space-y-4 max-w-2xl">
+      <div className="flex gap-2">
+        <Button size="sm" variant="secondary" onPress={() => setSelectedCount(1)}>
+          Select 1 Item
+        </Button>
+        <Button size="sm" variant="secondary" onPress={() => setSelectedCount(5)}>
+          Select 5 Items
+        </Button>
+        <Button size="sm" variant="ghost" onPress={() => setSelectedCount(0)}>
+          Clear Selection
+        </Button>
+      </div>
+
+      <TableBatchActions
+        totalSelected={selectedCount}
+        onCancel={() => setSelectedCount(0)}
+      >
+        <Button variant="danger" size="sm">
+          <Icon name="trashCan" size={16} />
+          <span>Delete</span>
+        </Button>
+        <Button variant="ghost" size="sm">
+          <Icon name="download" size={16} />
+          <span>Export CSV</span>
+        </Button>
+        <Button variant="ghost" size="sm">
+          <Icon name="tag" size={16} />
+          <span>Add Tag</span>
+        </Button>
+      </TableBatchActions>
+    </div>
+  );
+}
+```
+
+### Complete Integration with Selectable Table
+
+Here is how Table Batch Actions pairs with Hashti's `<Table>` component:
+
+```tsx
+import { useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  Column,
+  Row,
+  Cell,
+  TableBatchActions,
+  Button,
+  Icon,
+} from "@cinder/react";
+import type { Selection } from "@cinder/react";
+
+interface DocumentRecord {
+  id: string;
+  title: string;
+  author: string;
+  updatedAt: string;
+}
+
+const documents: DocumentRecord[] = [
+  { id: "1", title: "Architecture RFC #042", author: "Ramin", updatedAt: "2 hours ago" },
+  { id: "2", title: "Security Token Audit", author: "Sara", updatedAt: "Yesterday" },
+  { id: "3", title: "Kubernetes Ingress Manifests", author: "Farhad", updatedAt: "3 days ago" },
+  { id: "4", title: "Design System Guidelines", author: "Nazanin", updatedAt: "5 days ago" },
+];
+
+export function TableWithBatchActionsExample() {
+  const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set());
+
+  const selectedCount =
+    selectedKeys === "all" ? documents.length : selectedKeys.size;
+
+  const handleDelete = () => {
+    alert(`Deleting ${selectedCount} items`);
+    setSelectedKeys(new Set());
+  };
+
+  const handleExport = () => {
+    alert(`Exporting ${selectedCount} items to JSON`);
+  };
+
+  return (
+    <div className="space-y-2 max-w-2xl">
+      <TableBatchActions
+        totalSelected={selectedCount}
+        onCancel={() => setSelectedKeys(new Set())}
+        cancelLabel="Deselect All"
+      >
+        <Button variant="danger" size="sm" onPress={handleDelete}>
+          <Icon name="trashCan" size={16} />
+          <span>Delete</span>
+        </Button>
+        <Button variant="secondary" size="sm" onPress={handleExport}>
+          <Icon name="download" size={16} />
+          <span>Export</span>
+        </Button>
+      </TableBatchActions>
+
+      <Table
+        aria-label="Documents"
+        selectionMode="multiple"
+        selectedKeys={selectedKeys}
+        onSelectionChange={setSelectedKeys}
+      >
+        <TableHeader>
+          <Column isRowHeader>Title</Column>
+          <Column>Author</Column>
+          <Column>Last Updated</Column>
+        </TableHeader>
+
+        <TableBody items={documents}>
+          {(doc) => (
+            <Row id={doc.id}>
+              <Cell className="font-medium">{doc.title}</Cell>
+              <Cell>{doc.author}</Cell>
+              <Cell>{doc.updatedAt}</Cell>
+            </Row>
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+```
+
+### Custom Selected Label
+
+You can supply a custom label generator function via `selectedLabel` (e.g. for localization or specialized phrasing):
+
+```tsx
+import { TableBatchActions, Button } from "@cinder/react";
+
+export function CustomLabelExample() {
+  return (
+    <TableBatchActions
+      totalSelected={4}
+      selectedLabel={(count) => `${count} پرونده انتخاب شده`}
+      cancelLabel="انصراف"
+      onCancel={() => console.log("Cancelled")}
+    >
+      <Button variant="primary" size="sm">
+        تایید عملیات
+      </Button>
+    </TableBatchActions>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `totalSelected` | `number` | **Required** | The total number of items currently selected. When `<= 0`, the component renders `null`. |
+| `onCancel` | `() => void` | — | Callback fired when the cancel/deselect button is pressed. |
+| `cancelLabel` | `string` | `'Cancel'` | Text rendered inside the deselect button. |
+| `selectedLabel` | `(count: number) => ReactNode` | — | Custom function returning the selection count label. Defaults to `${totalSelected} item(s) selected`. |
+| `children` | `ReactNode` | — | Action buttons (such as Delete, Export, or Tag) rendered inside the action group. |
+| `className` | `string` | — | Additional CSS class names. |
+
+---
+
+## Accessibility (a11y)
+
+- **Toolbar Semantics**: Rendered with native `role="toolbar"` and `aria-label="Table batch actions"`.
+- **Keyboard Navigation**:
+  - Focus can be moved cleanly between action buttons and the cancel button using <kbd>Tab</kbd> or arrow keys.
+  - Activating the cancel button clears row selection and returns focus smoothly to the table header or previously focused row.
+- **Dynamic Mounting**: Because the component returns `null` when no rows are selected, it does not clutter the DOM or introduce extraneous tab stops when idle.
+- **High Contrast**: Designed with high-contrast surfaces ensuring that active action buttons are distinguishable from normal table borders.

@@ -1,0 +1,189 @@
+---
+title: AI Label
+description: Visual attribution badge signaling AI-generated insights, assistance, or automated content.
+---
+
+# AI Label
+
+The AI Label provides transparent, standardized attribution for artificial intelligence, automated reasoning, machine learning predictions, or generative text.
+
+In enterprise applications, transparent attribution builds user trust. The AI Label highlights synthetic or assisted content with Hashti's distinct sparkle glyph and can either act as an informational badge, an interactive popover trigger revealing model confidence, or an actionable button enabling users to revert AI modifications.
+
+---
+
+## Import
+
+```tsx
+import { AILabel, DialogTrigger, Popover, Dialog, Button } from "@cinder/react";
+```
+
+---
+
+## Examples
+
+### Default Informational Label
+
+By default, `<AILabel>` renders a tranquil, non-disruptive badge with an inline sparkle icon:
+
+```tsx
+import { AILabel } from "@cinder/react";
+
+export function DefaultAILabelExample() {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="p-4 border border-subtle rounded-lg bg-layer-1 max-w-md">
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-semibold text-sm">Summary Recommendation</h4>
+          <AILabel />
+        </div>
+        <p className="text-sm text-subtle">
+          Cluster load spikes predictably every Thursday at 14:00 UTC. We suggest pre-scaling 2 additional worker nodes.
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+### Custom Label Text
+
+You can supply custom text or localize the label using the `label` prop:
+
+```tsx
+import { AILabel } from "@cinder/react";
+
+export function CustomTextExample() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <AILabel label="AI" />
+      <AILabel label="AI Generated" />
+      <AILabel label="Copilot Insight" />
+      <AILabel label="هوش مصنوعی" />
+    </div>
+  );
+}
+```
+
+### Actionable Revert Mode
+
+When users edit an AI-generated suggestion, activate `revertActive` and provide an `onRevert` callback. The component transitions to an interactive button equipped with an undo icon and accessible keyboard triggers:
+
+```tsx
+import { useState } from "react";
+import { AILabel, TextField } from "@cinder/react";
+
+export function RevertExample() {
+  const originalAI = "Optimize database query cache for high read throughput.";
+  const [text, setText] = useState("Custom user modification here...");
+  const isModified = text !== originalAI;
+
+  return (
+    <div className="max-w-md space-y-3">
+      <div className="flex items-center justify-between">
+        <label className="text-sm font-medium">Architecture Note</label>
+        <AILabel
+          label="AI Suggested"
+          revertActive={isModified}
+          onRevert={() => setText(originalAI)}
+          revertLabel="Revert to original AI recommendation"
+        />
+      </div>
+
+      <input
+        className="w-full px-3 py-2 border border-subtle rounded bg-layer-1 text-sm"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+
+      {isModified && (
+        <p className="text-xs text-subtle">
+          Content was edited. Click the AI label to restore the original suggestion.
+        </p>
+      )}
+    </div>
+  );
+}
+```
+
+### Interactive Model Attribution Popover
+
+Pair `<AILabel>` with `<DialogTrigger>` and `<Popover>` to present transparent metadata including model versions, confidence scores, and feedback mechanisms:
+
+```tsx
+import {
+  AILabel,
+  DialogTrigger,
+  Button,
+  Popover,
+  Dialog,
+  Icon,
+} from "@cinder/react";
+
+export function AttributionPopoverExample() {
+  return (
+    <DialogTrigger>
+      <Button
+        variant="ghost"
+        className="p-0 h-auto border-none hover:bg-transparent"
+        aria-label="View AI generation details"
+      >
+        <AILabel label="AI Explained" />
+      </Button>
+
+      <Popover className="max-w-xs p-4 space-y-3">
+        <Dialog>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+              <Icon name="sparkle" size={16} />
+              <span>AI Generation Transparency</span>
+            </div>
+
+            <p className="text-xs text-subtle">
+              Generated using <strong>Gemini 2.5 Flash</strong> with temperature 0.2 across 4 architecture documents.
+            </p>
+
+            <div className="text-xs space-y-1 border-t border-subtle pt-2">
+              <div className="flex justify-between">
+                <span className="text-subtle">Model Confidence:</span>
+                <span className="font-semibold text-success">98.4%</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-subtle">Grounding Citations:</span>
+                <span className="font-semibold">3 Sources</span>
+              </div>
+            </div>
+
+            <div className="flex gap-2 pt-1 border-t border-subtle">
+              <Button size="sm" variant="secondary" className="flex-1">
+                Was this helpful?
+              </Button>
+            </div>
+          </div>
+        </Dialog>
+      </Popover>
+    </DialogTrigger>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `label` | `ReactNode` | `'AI'` | Text rendered adjacent to the icon. |
+| `revertActive` | `boolean` | `false` | When `true`, transitions the component into an interactive button with an undo icon. |
+| `onRevert` | `() => void` | — | Callback fired when the user activates the revert button. |
+| `revertLabel` | `string` | `'Revert to AI suggestion'` | Accessible `aria-label` applied when `revertActive` is `true`. |
+| `className` | `string` | — | Additional CSS class names. |
+| `ref` | `Ref<HTMLElement>` | — | Forwarded React ref to the underlying `<span>` or `<button>`. |
+
+---
+
+## Accessibility (a11y)
+
+- **Static Badge Semantics**: In default mode, renders as a `<span>` with `role="status"` so screen readers identify the badge without interrupting reading flow.
+- **Button Semantics in Revert Mode**: When `revertActive={true}`, renders a native `<button type="button">` with `aria-label={revertLabel}`. It is fully accessible via keyboard navigation (<kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>).
+- **Popover Trigger Semantics**: When wrapped inside `<DialogTrigger>`, accessibility attributes such as `aria-haspopup="dialog"`, `aria-expanded`, and keyboard focus trap management are handled automatically by React Aria Components.
+- **High Contrast**: Meets WCAG 2.2 AA standards with distinct foreground token colors and high-contrast icon strokes.
