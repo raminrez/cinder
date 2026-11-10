@@ -8,7 +8,7 @@ export function baseOptions(): BaseLayoutProps {
     links: [
       { text: 'Documentation', url: '/docs' },
       { text: 'Components', url: '/docs/components' },
-      { text: 'Brandbook', url: 'https://hashti.raminrez.dev/hashti-brandbook.html' },
+      { text: 'Brandbook', url: '/hashti-brandbook.html' },
       { text: 'GitHub', url: 'https://github.com/raminrez/cinder' },
     ],
   };

@@ -11,12 +11,14 @@ import {
   ListBox as RACListBox,
   ListBoxItem as RACListBoxItem,
   ListBoxSection as RACListBoxSection,
+  ListBoxLoadMoreItem as RACListBoxLoadMoreItem,
   Header as RACHeader,
   Button as RACButton,
   Checkbox as RACCheckbox,
   type ListBoxProps as RACListBoxProps,
   type ListBoxItemProps as RACListBoxItemProps,
   type ListBoxSectionProps as RACListBoxSectionProps,
+  type ListBoxLoadMoreItemProps as RACListBoxLoadMoreItemProps,
   type ListBoxRenderProps,
   type ListBoxItemRenderProps,
   type ButtonProps as RACButtonProps,
@@ -197,6 +199,67 @@ export function ListBoxEmptyState({
   );
 }
 
+export interface ListBoxLoadMoreProps
+  extends Omit<RACListBoxLoadMoreItemProps, "className" | "children"> {
+  id?: string;
+  label?: string;
+  isError?: boolean;
+  errorMessage?: string;
+  retryLabel?: string;
+  onRetry?: () => void;
+  className?: string;
+  children?: ReactNode;
+}
+
+export function ListBoxLoadMore({
+  isLoading,
+  isError = false,
+  errorMessage = "Failed to load more items",
+  retryLabel = "Retry",
+  onRetry,
+  label = "Loading more items…",
+  className,
+  children,
+  ...props
+}: ListBoxLoadMoreProps) {
+  const isVisible = Boolean(isLoading || isError);
+
+  return (
+    <RACListBoxLoadMoreItem
+      {...props}
+      isLoading={isVisible}
+      className={cx("cinder-listbox-load-more", className)}
+    >
+      {children ?? (
+        <div className="cinder-load-more-content" role="status">
+          {isError ? (
+            <div className="cinder-load-more-error">
+              <span className="cinder-load-more-error-message">{errorMessage}</span>
+              {onRetry && (
+                <button
+                  type="button"
+                  className="cinder-load-more-retry"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRetry();
+                  }}
+                >
+                  {retryLabel}
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="cinder-load-more-loading">
+              <span className="cinder-spinner" aria-hidden="true" />
+              <span>{label}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </RACListBoxLoadMoreItem>
+  );
+}
+
 export interface ListBoxProps<T extends object> extends ListBoxRootProps<T> {}
 
 function ListBoxDefault<T extends object>(props: ListBoxProps<T>) {
@@ -211,4 +274,5 @@ export const ListBox = Object.assign(ListBoxDefault, {
   DragHandle: ListBoxDragHandle,
   Checkbox: ListBoxCheckbox,
   EmptyState: ListBoxEmptyState,
+  LoadMore: ListBoxLoadMore,
 });

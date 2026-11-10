@@ -47,6 +47,7 @@ export {
   Switch,
   Select,
   ComboBox,
+  ComboBoxCreateItem,
   Slider,
 } from "./selection";
 export type {
@@ -57,6 +58,7 @@ export type {
   SwitchProps,
   SelectProps,
   ComboBoxProps,
+  ComboBoxCreateItemProps,
   SliderProps,
   SelectionColor,
   CheckboxGroupRootProps,
@@ -100,6 +102,7 @@ export type {
 } from "./dates";
 export {
   Table,
+  TableLoadMore,
   Column,
   Tabs,
   Accordion,
@@ -112,6 +115,7 @@ export {
 } from "./collections";
 export type {
   TableProps,
+  TableLoadMoreProps,
   ColumnProps,
   TabsProps,
   AccordionProps,
@@ -257,6 +261,7 @@ export {
   GridListDragHandle,
   GridListCheckbox,
   GridListEmptyState,
+  GridListLoadMore,
   GridListContext,
 } from "./grid-list";
 export type {
@@ -266,6 +271,7 @@ export type {
   GridListDragHandleProps,
   GridListCheckboxProps,
   GridListEmptyStateProps,
+  GridListLoadMoreProps,
   GridListContextValue,
 } from "./grid-list";
 export {
@@ -277,6 +283,7 @@ export {
   ListBoxDragHandle,
   ListBoxCheckbox,
   ListBoxEmptyState,
+  ListBoxLoadMore,
   ListBoxContext,
 } from "./list-box";
 export type {
@@ -288,6 +295,7 @@ export type {
   ListBoxDragHandleProps,
   ListBoxCheckboxProps,
   ListBoxEmptyStateProps,
+  ListBoxLoadMoreProps,
   ListBoxContextValue,
 } from "./list-box";
 export { Autocomplete } from "./autocomplete";
@@ -311,6 +319,26 @@ export type {
   TreeCheckboxProps,
   TreeContextValue,
 } from "./tree";
+export {
+  NavigationTree,
+  NavigationTreeRoot,
+  NavigationTreeItem,
+  NavigationTreeIndicator,
+  NavigationTreeItemContent,
+  NavigationTreeSection,
+  NavigationTreeHeader,
+  NavigationTreeContext,
+} from "./navigation-tree";
+export type {
+  NavigationTreeProps,
+  NavigationTreeRootProps,
+  NavigationTreeItemProps,
+  NavigationTreeIndicatorProps,
+  NavigationTreeItemContentProps,
+  NavigationTreeSectionProps,
+  NavigationTreeHeaderProps,
+  NavigationTreeContextValue,
+} from "./navigation-tree";
 export {
   Sheet,
   SheetRoot,
@@ -336,6 +364,46 @@ export type {
 } from "./sheet";
 export { PreviewTrigger, PreviewTriggerRoot } from "./preview-trigger";
 export type { PreviewTriggerProps } from "./preview-trigger";
+export {
+  ColorPicker,
+  ColorPickerRoot,
+  ColorPickerConvenience,
+  ColorArea,
+  ColorSlider,
+  ColorWheel,
+  ColorWheelTrack,
+  ColorField,
+  ColorSwatch,
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+  ColorThumb,
+  parseColor,
+} from "./color";
+export type {
+  Color,
+  ColorPickerProps,
+  ColorPickerRootProps,
+  ColorPickerConvenienceProps,
+  ColorPickerRenderProps,
+  ColorAreaProps,
+  ColorAreaRenderProps,
+  ColorSliderProps,
+  ColorSliderRenderProps,
+  ColorWheelProps,
+  ColorWheelRenderProps,
+  ColorWheelTrackProps,
+  ColorWheelTrackRenderProps,
+  ColorFieldProps,
+  ColorFieldRenderProps,
+  ColorSwatchProps,
+  ColorSwatchRenderProps,
+  ColorSwatchPickerProps,
+  ColorSwatchPickerRenderProps,
+  ColorSwatchPickerItemProps,
+  ColorSwatchPickerItemRenderProps,
+  ColorThumbProps,
+  ColorThumbRenderProps,
+} from "./color";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
 export type { ThemeName, LayerLevel } from "@cinder/tokens";

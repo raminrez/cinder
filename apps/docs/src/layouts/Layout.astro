@@ -16,6 +16,18 @@ const { title, description } = Astro.props;
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <ClientRouter />
+    <script is:inline>
+      (function() {
+        function syncCinderTheme() {
+          const isDark = document.documentElement.classList.contains('dark');
+          document.documentElement.setAttribute('data-cinder-theme', isDark ? 'g100' : 'white');
+        }
+        syncCinderTheme();
+        const observer = new MutationObserver(syncCinderTheme);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        document.addEventListener('astro:after-swap', syncCinderTheme);
+      })();
+    </script>
   </head>
   <body class="flex flex-col min-h-screen">
     <slot />

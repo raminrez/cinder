@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode, Ref } from "react";
+import { useContext, type ComponentProps, type ReactNode, type Ref } from "react";
 import {
   Checkbox as RACCheckbox,
   CheckboxGroup as RACCheckboxGroup,
@@ -13,6 +13,7 @@ import {
   RadioGroupContext,
   SelectContext,
   ComboBoxContext,
+  ComboBoxStateContext,
   useSlottedContext,
   ListBox,
   Slider as RACSlider,
@@ -47,7 +48,7 @@ import {
   fieldParts,
 } from "./field-parts";
 import { Icon } from "./icons";
-import { classes, type ControlSize } from "./utils";
+import { classes, cx, type ControlSize } from "./utils";
 
 export type SelectionColor = "primary" | "secondary" | "success" | "warning" | "danger";
 
@@ -510,12 +511,63 @@ function ComboBoxValuePart<T>({
   );
 }
 
+export interface ComboBoxCreateItemProps {
+  onCreateItem?: (val: string) => void;
+  className?: string;
+}
+
+export function ComboBoxCreateItem({
+  onCreateItem,
+  className,
+}: ComboBoxCreateItemProps) {
+  const state = useContext(ComboBoxStateContext);
+  if (!state) return null;
+
+  const trimmed = state.inputValue?.trim();
+  if (!trimmed) return null;
+
+  let hasExactMatch = false;
+  for (const item of state.collection) {
+    if (item.textValue?.toLowerCase() === trimmed.toLowerCase()) {
+      hasExactMatch = true;
+      break;
+    }
+  }
+  if (hasExactMatch) return null;
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      data-testid="combobox-create-item"
+      className={cx("cinder-combobox-create-item", className)}
+      onClick={() => {
+        onCreateItem?.(trimmed);
+        state.close();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onCreateItem?.(trimmed);
+          state.close();
+        }
+      }}
+    >
+      <span className="cinder-combobox-create-item-text">Create &quot;{trimmed}&quot;</span>
+    </div>
+  );
+}
+
 export interface ComboBoxProps<T extends object, M extends SelectionMode = "single">
   extends Omit<ComboBoxRootProps<T, M>, "children">, FieldContentProps {
   children: ListBoxProps<T>["children"];
   placeholder?: string;
   /** Display style when selectionMode is multiple: chips with remove button, count badge, or plain text */
   multipleDisplay?: "chips" | "badge" | "text";
+  /** Whether to allow dynamic creation of new items when entered text does not match any existing item */
+  allowCreateItem?: boolean;
+  /** Callback fired when the dynamic create item option is selected */
+  onCreateItem?: (val: string) => void;
 }
 
 function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
@@ -529,6 +581,8 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
   placeholder,
   size = "md",
   multipleDisplay = "chips",
+  allowCreateItem = false,
+  onCreateItem,
   ...props
 }: ComboBoxProps<T, M>) {
   const isMultiple = props.selectionMode === "multiple";
@@ -621,6 +675,7 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
       </FieldLayout>
       <SelectPopover>
         <SelectListBox items={items}>{children}</SelectListBox>
+        {allowCreateItem && <ComboBoxCreateItem onCreateItem={onCreateItem} />}
       </SelectPopover>
     </ComboBoxRoot>
   );
@@ -635,6 +690,7 @@ export const ComboBox = Object.assign(ComboBoxDefault, {
   Value: ComboBoxValuePart,
   Popover: SelectPopover,
   ListBox: SelectListBox,
+  CreateItem: ComboBoxCreateItem,
 });
 
 export interface SliderProps<T extends number | number[] = number> extends RACSliderProps<T> {

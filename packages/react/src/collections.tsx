@@ -9,6 +9,7 @@ import {
 } from "react";
 import {
   Table as RACTable,
+  TableLoadMoreItem as RACTableLoadMoreItem,
   Column as RACColumn,
   Tabs as RACTabs,
   DisclosureGroup,
@@ -23,6 +24,7 @@ import {
   Label,
   composeRenderProps,
   type TableProps as RACTableProps,
+  type TableLoadMoreItemProps as RACTableLoadMoreItemProps,
   type ColumnProps as RACColumnProps,
   type TabsProps as RACTabsProps,
   type DisclosureGroupProps,
@@ -34,15 +36,80 @@ import {
 } from "react-aria-components";
 import { Button, Link } from "./buttons";
 import { Icon } from "./icons";
-import { classes, type ControlSize } from "./utils";
+import { classes, cx, type ControlSize } from "./utils";
 
 export interface TableProps extends RACTableProps {
   size?: ControlSize | "xl";
   ref?: Ref<HTMLDivElement | HTMLTableElement>;
 }
-export function Table({ className, size = "lg", ...props }: TableProps) {
+function TableDefault({ className, size = "lg", ...props }: TableProps) {
   return <RACTable {...props} data-size={size} className={classes("cinder-table", className)} />;
 }
+
+export interface TableLoadMoreProps
+  extends Omit<RACTableLoadMoreItemProps, "className" | "children"> {
+  id?: string;
+  label?: string;
+  isError?: boolean;
+  errorMessage?: string;
+  retryLabel?: string;
+  onRetry?: () => void;
+  className?: string;
+  children?: ReactNode;
+}
+
+export function TableLoadMore({
+  isLoading,
+  isError = false,
+  errorMessage = "Failed to load more rows",
+  retryLabel = "Retry",
+  onRetry,
+  label = "Loading more rows…",
+  className,
+  children,
+  ...props
+}: TableLoadMoreProps) {
+  const isVisible = Boolean(isLoading || isError);
+
+  return (
+    <RACTableLoadMoreItem
+      {...props}
+      isLoading={isVisible}
+      className={cx("cinder-table-load-more", className)}
+    >
+      {children ?? (
+        <div className="cinder-load-more-content" role="status">
+          {isError ? (
+            <div className="cinder-load-more-error">
+              <span className="cinder-load-more-error-message">{errorMessage}</span>
+              {onRetry && (
+                <button
+                  type="button"
+                  className="cinder-load-more-retry"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRetry();
+                  }}
+                >
+                  {retryLabel}
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="cinder-load-more-loading">
+              <span className="cinder-spinner" aria-hidden="true" />
+              <span>{label}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </RACTableLoadMoreItem>
+  );
+}
+
+export const Table = Object.assign(TableDefault, {
+  LoadMore: TableLoadMore,
+});
 
 export interface ColumnProps extends RACColumnProps {
   ref?: Ref<HTMLTableCellElement | HTMLDivElement>;

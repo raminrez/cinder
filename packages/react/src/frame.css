@@ -3340,6 +3340,38 @@
     .cinder-toast[data-variant="solid"] > svg {
       color: #ffffff;
     }
+
+    /* Frame LoadMore for Collections */
+    .cinder-listbox-load-more,
+    .cinder-grid-list-load-more,
+    .cinder-table-load-more {
+      padding: var(--cinder-spacing-04);
+    }
+    .cinder-load-more-retry {
+      border-radius: var(--cinder-control-radius);
+    }
+
+    /* Frame NavigationTree */
+    .cinder-navigation-tree-item {
+      border-radius: var(--cinder-control-radius);
+      min-height: var(--cinder-size-md);
+      transition: background-color var(--cinder-duration-fast-01) var(--cinder-ease-standard-productive);
+    }
+    .cinder-navigation-tree-item[data-current] {
+      box-shadow: inset 3px 0 var(--cinder-interactive);
+      background: var(--cinder-layer-selected);
+    }
+    .cinder-navigation-tree-header {
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* Frame ComboBox Create Item */
+    .cinder-combobox-create-item {
+      border-radius: 0 0 var(--cinder-control-radius) var(--cinder-control-radius);
+      padding: var(--cinder-spacing-03) var(--cinder-spacing-04);
+      font-weight: 500;
+    }
   }
 }
 
