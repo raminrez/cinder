@@ -19,7 +19,8 @@
       "import": "./dist/index.js"
     },
     "./tokens.css": "./dist/tokens.css",
-    "./tokens.json": "./dist/tokens.json"
+    "./tokens.json": "./dist/tokens.json",
+    "./dist/*": "./dist/*"
   },
   "devDependencies": {
     "@carbon/themes": "11.85.0",

@@ -25,6 +25,8 @@
     "dev": "bun run build:tokens && bun --hot apps/docs/server.ts",
     "build": "bun scripts/build.ts",
     "build:packages": "bun scripts/build.ts --packages",
+    "build:docs-astro": "bun --cwd apps/docs-astro build",
+    "docs:astro": "bun --cwd apps/docs-astro dev",
     "build:tokens": "bun packages/tokens/scripts/generate.ts",
     "storybook": "bun run --cwd apps/storybook dev",
     "build:storybook": "bun run --cwd apps/storybook build",

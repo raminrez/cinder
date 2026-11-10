@@ -74,3 +74,5 @@ await Promise.all([
   Bun.write(`${root}/dist/site/THIRD_PARTY_LICENSES.txt`, await siteLicenses(root)),
 ]);
 console.log(`Built documentation · ${site.outputs.length} assets`);
+await run("bun", "run", "--cwd", "apps/docs-astro", "build");
+console.log("Built Fumadocs Astro documentation");
