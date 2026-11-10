@@ -22,11 +22,11 @@
     }
   },
   "scripts": {
-    "dev": "bun run build:tokens && bun --hot apps/docs/server.ts",
+    "dev": "bun run build:tokens && bun run --cwd apps/docs dev",
     "build": "bun scripts/build.ts",
     "build:packages": "bun scripts/build.ts --packages",
-    "build:docs-astro": "bun --cwd apps/docs-astro build",
-    "docs:astro": "bun --cwd apps/docs-astro dev",
+    "build:docs": "bun --cwd apps/docs build",
+    "docs": "bun --cwd apps/docs dev",
     "build:tokens": "bun packages/tokens/scripts/generate.ts",
     "storybook": "bun run --cwd apps/storybook dev",
     "build:storybook": "bun run --cwd apps/storybook build",

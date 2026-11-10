@@ -36,8 +36,10 @@ export async function siteLicenses(root: string) {
     "react",
     "react-dom",
     "react-aria-components",
-    "@fontsource/ibm-plex-sans",
-    "@fontsource/ibm-plex-mono",
+    "fumadocs-core",
+    "fumadocs-ui",
+    "@fumadocs/astro",
+    "astro",
   ])
     await collect(name, app);
   const tokens = resolve(root, "packages/tokens/package.json");

@@ -1,8 +1,6 @@
 import { mkdir, rm, copyFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { siteLicenses } from "./licenses";
-import { researchReports } from "../apps/docs/reports";
-
 const root = resolve(import.meta.dir, "..");
 const run = async (...command: string[]) => {
   const process = Bun.spawn(command, { cwd: root, stdout: "inherit", stderr: "inherit" });
@@ -52,27 +50,12 @@ for (const name of ["tokens", "react"]) {
 if (process.argv.includes("--packages")) process.exit(0);
 
 await rm(`${root}/dist/site`, { recursive: true, force: true });
-await mkdir(`${root}/dist/site/reports`, { recursive: true });
-const site = await Bun.build({
-  entrypoints: [`${root}/apps/docs/index.html`],
-  outdir: `${root}/dist/site`,
-  target: "browser",
-  minify: true,
-  splitting: true,
-  sourcemap: "linked",
-  publicPath: "/",
-  env: "disable",
-  define: { "process.env.NODE_ENV": JSON.stringify("production") },
-});
-if (!site.success) throw new AggregateError(site.logs, "Could not build the documentation site");
+await run("bun", "run", "--cwd", "apps/docs", "build");
+// Copy site build outputs to dist/site for preview/deployment
+await Bun.spawn(["cp", "-r", `${root}/apps/docs/dist/`, `${root}/dist/site`], { cwd: root }).exited;
 await Promise.all([
-  ...Object.values(researchReports).map((filename) =>
-    copyFile(`${root}/docs/${filename}`, `${root}/dist/site/reports/${filename}`),
-  ),
   copyFile(`${root}/LICENSE`, `${root}/dist/site/LICENSE.txt`),
   copyFile(`${root}/NOTICE`, `${root}/dist/site/NOTICE.txt`),
   Bun.write(`${root}/dist/site/THIRD_PARTY_LICENSES.txt`, await siteLicenses(root)),
 ]);
-console.log(`Built documentation · ${site.outputs.length} assets`);
-await run("bun", "run", "--cwd", "apps/docs-astro", "build");
 console.log("Built Fumadocs Astro documentation");
