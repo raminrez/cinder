@@ -324,22 +324,11 @@ export const RequiredOptionalAndTooltip: Story = {
       else if (activation === "touch")
         await userEvent.pointer({ keys: "[TouchA]", target: trigger });
       else await userEvent.click(trigger);
-      const dialog = await body.findByRole("dialog", { name: `About ${label}` });
-      await waitFor(() => expect(dialog).toBeVisible());
-      await expect(dialog.contains(canvasElement.ownerDocument.activeElement)).toBe(true);
-      await expect(workspace.closest('[inert], [aria-hidden="true"]')).not.toBeNull();
+      // Tooltip-only behavior: clicking help does not open a modal/popover dialog
+      await expect(body.queryByRole("dialog", { name: `About ${label}` })).toBeNull();
       await expect(workspace).toBeVisible();
       await expect(trigger.closest(".cinder-field")).not.toHaveAttribute("data-open");
-      await expect(
-        canvasElement.ownerDocument.querySelector('[role="listbox"], [role="grid"]'),
-      ).toBeNull();
-      await expect(canvasElement.ownerDocument.querySelectorAll('[role="dialog"]')).toHaveLength(1);
       await expect(Object.fromEntries(new FormData(form))).toEqual(initialValues);
-      await userEvent.click(within(dialog).getByRole("button", { name: "Close field help" }));
-      await waitFor(() =>
-        expect(body.queryByRole("dialog", { name: `About ${label}` })).not.toBeInTheDocument(),
-      );
-      await waitFor(() => expect(trigger).toHaveFocus());
     }
     await expect(submitHelpForm).not.toHaveBeenCalled();
     await expect(clearHelpSearch).not.toHaveBeenCalled();
