@@ -127,7 +127,6 @@ export {
   InlineNotification,
   Alert,
   ProgressBar,
-  Meter,
   Loading,
   InlineLoading,
   Skeleton,
@@ -140,12 +139,25 @@ export type {
   NotificationKind,
   NotificationVariant,
   ProgressBarProps,
-  MeterProps,
   LoadingProps,
   InlineLoadingProps,
   SkeletonProps,
   ToastMessage,
 } from "./feedback";
+export { Meter, deriveMeterTone, MeterContext } from "./meter";
+export type {
+  MeterProps,
+  MeterRootProps,
+  MeterLabelProps,
+  MeterValueProps,
+  MeterTrackProps,
+  MeterFillProps,
+  MeterHelperTextProps,
+  MeterCircleProps,
+  MeterSegment,
+  MeterTone,
+  MeterContextValue,
+} from "./meter";
 export {
   Tag,
   CodeSnippet,
@@ -174,6 +186,14 @@ export type {
 } from "./content";
 export { FileUploader, acceptsFile } from "./files";
 export type { FileUploaderProps } from "./files";
+export { DropZone, FileTrigger, DropZoneContext } from "./dropzone";
+export type {
+  DropZoneProps,
+  DropZoneRootProps,
+  DropZoneFeedbackProps,
+  FileTriggerProps,
+  DropZoneContextValue,
+} from "./dropzone";
 export { Stack, Grid, GridColumn, Header, HeaderName, HeaderNav, SideNav } from "./layout";
 export type { StackProps, ColumnLayoutProps, HeaderProps } from "./layout";
 export { Avatar, AvatarGroup, getInitials } from "./avatar";
@@ -206,6 +226,67 @@ export { ProgressCircle } from "./progress-circle";
 export type { ProgressCircleProps } from "./progress-circle";
 export { AILabel } from "./ai-label";
 export type { AILabelProps } from "./ai-label";
+export { Toolbar, ToolbarGroup, ToolbarItem, ToolbarSeparator } from "./toolbar";
+export type {
+  ToolbarProps,
+  ToolbarGroupProps,
+  ToolbarItemProps,
+  ToolbarSeparatorProps,
+  ToolbarContextValue,
+} from "./toolbar";
+export {
+  Disclosure,
+  DisclosureRoot,
+  DisclosureTrigger,
+  DisclosureIndicator,
+  DisclosurePanel,
+  DisclosureGroup,
+} from "./disclosure";
+export type {
+  DisclosureProps,
+  DisclosureTriggerProps,
+  DisclosureIndicatorProps,
+  DisclosurePanelProps,
+  DisclosureGroupProps,
+  DisclosureContextValue,
+} from "./disclosure";
+export {
+  GridList,
+  GridListRoot,
+  GridListItem,
+  GridListDragHandle,
+  GridListCheckbox,
+  GridListEmptyState,
+  GridListContext,
+} from "./grid-list";
+export type {
+  GridListProps,
+  GridListRootProps,
+  GridListItemProps,
+  GridListDragHandleProps,
+  GridListCheckboxProps,
+  GridListEmptyStateProps,
+  GridListContextValue,
+} from "./grid-list";
+export {
+  Tree,
+  TreeRoot,
+  TreeItem,
+  TreeIndicator,
+  TreeContent,
+  TreeItemContent,
+  TreeCheckbox,
+  TreeContext,
+} from "./tree";
+export type {
+  TreeProps,
+  TreeRootProps,
+  TreeItemProps,
+  TreeIndicatorProps,
+  TreeContentProps,
+  TreeCheckboxProps,
+  TreeContextValue,
+} from "./tree";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
 export type { ThemeName, LayerLevel } from "@cinder/tokens";
@@ -246,16 +327,7 @@ export {
   Tab,
   TabPanel,
   TabPanels,
-  Tree,
-  TreeItem,
-  TreeItemContent,
   TreeSection,
-  GridList,
-  GridListItem,
-  Toolbar,
-  Disclosure,
-  DisclosurePanel,
-  DisclosureGroup,
   DateInput,
   DateSegment,
   CalendarGrid,
@@ -264,8 +336,6 @@ export {
   SliderThumb,
   SliderFill,
   SliderOutput,
-  FileTrigger,
-  DropZone,
   Collection,
   VisuallyHidden,
   useFilter,
@@ -292,7 +362,5 @@ export type {
   RowProps,
   CellProps,
   TabProps,
-  TreeProps,
-  TreeItemProps,
   ValidationResult,
 } from "react-aria-components";
