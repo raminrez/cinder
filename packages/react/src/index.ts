@@ -250,6 +250,43 @@ export type {
   DisclosureGroupProps,
   DisclosureContextValue,
 } from "./disclosure";
+export {
+  GridList,
+  GridListRoot,
+  GridListItem,
+  GridListDragHandle,
+  GridListCheckbox,
+  GridListEmptyState,
+  GridListContext,
+} from "./grid-list";
+export type {
+  GridListProps,
+  GridListRootProps,
+  GridListItemProps,
+  GridListDragHandleProps,
+  GridListCheckboxProps,
+  GridListEmptyStateProps,
+  GridListContextValue,
+} from "./grid-list";
+export {
+  Tree,
+  TreeRoot,
+  TreeItem,
+  TreeIndicator,
+  TreeContent,
+  TreeItemContent,
+  TreeCheckbox,
+  TreeContext,
+} from "./tree";
+export type {
+  TreeProps,
+  TreeRootProps,
+  TreeItemProps,
+  TreeIndicatorProps,
+  TreeContentProps,
+  TreeCheckboxProps,
+  TreeContextValue,
+} from "./tree";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
 export type { ThemeName, LayerLevel } from "@cinder/tokens";
@@ -290,12 +327,7 @@ export {
   Tab,
   TabPanel,
   TabPanels,
-  Tree,
-  TreeItem,
-  TreeItemContent,
   TreeSection,
-  GridList,
-  GridListItem,
   DateInput,
   DateSegment,
   CalendarGrid,
@@ -330,7 +362,5 @@ export type {
   RowProps,
   CellProps,
   TabProps,
-  TreeProps,
-  TreeItemProps,
   ValidationResult,
 } from "react-aria-components";
