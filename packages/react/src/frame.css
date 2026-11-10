@@ -40,6 +40,22 @@
       --frame-button-ink: var(--cinder-text-primary);
       color: var(--frame-button-ink);
     }
+    .cinder-button[data-variant="secondary"] {
+      --frame-button-ink: var(--cinder-text-primary);
+      --button-bg: var(--cinder-button-secondary);
+      --button-hover: var(--cinder-button-secondary-hover);
+      --button-active: var(--cinder-button-secondary-active);
+      color: var(--frame-button-ink);
+      background: var(--button-bg);
+    }
+    .cinder-button[data-variant="secondary"]:is([data-hovered], :hover) {
+      background: var(--button-hover);
+      color: var(--frame-button-ink);
+    }
+    .cinder-button[data-variant="secondary"]:is([data-pressed], :active) {
+      background: var(--button-active);
+      color: var(--frame-button-ink);
+    }
     .cinder-button[data-variant="tertiary"] {
       background: transparent;
       border-color: var(--cinder-border-strong);
@@ -533,20 +549,31 @@
 
     :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
     :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
-      background: var(--cinder-background-inverse);
-      border-color: var(--cinder-background-inverse);
-      color: var(--cinder-background);
+      background: var(--cinder-icon-secondary);
+      border-color: var(--cinder-icon-secondary);
+      color: var(--cinder-text-on-color, #ffffff);
     }
     :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control {
-      border-color: var(--cinder-background-inverse);
+      border-color: var(--cinder-icon-secondary);
     }
     :is(.cinder-radio[data-color="secondary"], .cinder-radio-group[data-color="secondary"] .cinder-radio)[data-selected] .cinder-radio-control::after {
-      background: var(--cinder-background-inverse);
+      background: var(--cinder-icon-secondary);
     }
     .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-track {
-      background: var(--cinder-background-inverse);
+      background: var(--cinder-icon-secondary);
     }
     .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
+      background: var(--cinder-text-on-color, #ffffff);
+    }
+
+    :scope[data-cinder-theme="frame-dark"] :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+    :scope[data-cinder-theme="frame-dark"] :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control,
+    [data-cinder-theme="frame-dark"] :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+    [data-cinder-theme="frame-dark"] :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+      color: var(--cinder-background);
+    }
+    :scope[data-cinder-theme="frame-dark"] .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb,
+    [data-cinder-theme="frame-dark"] .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
       background: var(--cinder-background);
     }
 
@@ -2269,6 +2296,11 @@
       color: var(--cinder-text-primary);
       border: 1px solid var(--cinder-border-subtle);
     }
+    .cinder-badge[data-kind="secondary"] {
+      background: var(--cinder-layer-accent-01, var(--cinder-layer-accent));
+      color: var(--cinder-text-primary);
+      border: 1px solid var(--cinder-border-subtle);
+    }
     .cinder-badge--dot {
       min-width: 0.5rem;
       width: 0.5rem;
@@ -2746,6 +2778,7 @@
 
     .cinder-actionable-notification {
       border-radius: var(--cinder-control-radius);
+      background: var(--cinder-layer-01);
       border: 1px solid var(--cinder-border-subtle);
       border-inline-start-width: 4px;
       overflow: hidden;
@@ -2817,11 +2850,12 @@
       border-color: var(--cinder-text-on-color);
     }
     .cinder-table-batch-bar .cinder-button[data-variant="ghost"] {
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      --button-icon: currentColor;
+      border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
     }
     .cinder-table-batch-bar .cinder-button[data-variant="ghost"]:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.7);
+      background: color-mix(in srgb, currentColor 15%, transparent);
+      border-color: color-mix(in srgb, currentColor 70%, transparent);
     }
 
     /* ------------------------------------------------------------------ */

@@ -35,6 +35,28 @@
 }
 
 @layer cinder.components {
+  :root {
+    --cinder-button-secondary-ink: var(--cinder-text-on-color);
+  }
+  :where([data-cinder-theme="white"], [data-cinder-theme="g10"], [data-cinder-theme="g90"], [data-cinder-theme="g100"]) {
+    --cinder-button-secondary-ink: var(--cinder-text-on-color);
+  }
+  :where(
+    [data-cinder-theme="relay-light"],
+    [data-cinder-theme="relay-dark"],
+    [data-cinder-theme="frame-light"],
+    [data-cinder-theme="frame-dark"]
+  ) {
+    --cinder-button-secondary-ink: var(--cinder-text-primary);
+  }
+  :is(
+    [data-cinder-theme="relay-light"],
+    [data-cinder-theme="relay-dark"],
+    [data-cinder-theme="frame-light"],
+    [data-cinder-theme="frame-dark"]
+  ) {
+    --cinder-button-secondary-ink: var(--cinder-text-primary);
+  }
   .cinder-layer {
     background: var(--cinder-layer-background, var(--cinder-layer-01));
   }
@@ -128,6 +150,8 @@
     --button-bg: var(--cinder-button-secondary);
     --button-hover: var(--cinder-button-secondary-hover);
     --button-active: var(--cinder-button-secondary-active);
+    --button-ink: var(--cinder-button-secondary-ink, var(--cinder-text-on-color));
+    color: var(--button-ink);
   }
   .cinder-button[data-variant="danger"] {
     --button-bg: var(--cinder-button-danger-primary);
@@ -894,12 +918,21 @@
     background: var(--cinder-text-on-color, #ffffff);
   }
 
-  /* In dark Carbon themes, secondary controls use dark check/thumb against light gray icon-secondary */
-  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"]) :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
-  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"]) :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
+  /* In dark themes, secondary controls use dark check/thumb against light gray icon-secondary */
+  :where([data-cinder-theme="g90"], [data-cinder-theme="g100"], [data-cinder-theme="relay-dark"], [data-cinder-theme="frame-dark"])
+    :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :where([data-cinder-theme="g90"], [data-cinder-theme="g100"], [data-cinder-theme="relay-dark"], [data-cinder-theme="frame-dark"])
+    :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control,
+  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"], [data-cinder-theme="relay-dark"], [data-cinder-theme="frame-dark"])
+    :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-selected] .cinder-checkbox-control,
+  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"], [data-cinder-theme="relay-dark"], [data-cinder-theme="frame-dark"])
+    :is(.cinder-checkbox[data-color="secondary"], .cinder-checkbox-group[data-color="secondary"] .cinder-checkbox)[data-indeterminate] .cinder-checkbox-control {
     color: var(--cinder-background, #161616);
   }
-  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"]) .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
+  :where([data-cinder-theme="g90"], [data-cinder-theme="g100"], [data-cinder-theme="relay-dark"], [data-cinder-theme="frame-dark"])
+    .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb,
+  :is([data-cinder-theme="g90"], [data-cinder-theme="g100"], [data-cinder-theme="relay-dark"], [data-cinder-theme="frame-dark"])
+    .cinder-switch[data-color="secondary"][data-selected] .cinder-switch-thumb {
     background: var(--cinder-background, #161616);
   }
 
@@ -2915,6 +2948,11 @@
     color: var(--cinder-text-primary);
     border: 1px solid var(--cinder-border-subtle);
   }
+  .cinder-badge[data-kind="secondary"] {
+    background: var(--cinder-layer-accent-01, var(--cinder-layer-accent));
+    color: var(--cinder-text-primary);
+    border: 1px solid var(--cinder-border-subtle);
+  }
   .cinder-badge--dot {
     min-width: 0.5rem;
     width: 0.5rem;
@@ -3205,6 +3243,7 @@
   /* ActionableNotification base */
   .cinder-actionable-notification {
     border-radius: 4px;
+    background: var(--cinder-layer-01);
     border: 1px solid var(--cinder-border-subtle);
     border-inline-start-width: 4px;
     overflow: hidden;
@@ -3277,6 +3316,20 @@
     display: inline-flex;
     align-items: center;
     gap: var(--cinder-spacing-03);
+  }
+  .cinder-table-batch-bar .cinder-button {
+    color: var(--cinder-text-on-color);
+    border-color: var(--cinder-text-on-color);
+  }
+  .cinder-table-batch-bar .cinder-button[data-variant="ghost"] {
+    --button-icon: currentColor;
+    color: var(--cinder-text-on-color);
+    border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  }
+  .cinder-table-batch-bar .cinder-button[data-variant="ghost"]:is([data-hovered], :hover) {
+    background: color-mix(in srgb, currentColor 15%, transparent);
+    border-color: color-mix(in srgb, currentColor 70%, transparent);
+    color: var(--cinder-text-on-color);
   }
 
   /* InputOTP base */
