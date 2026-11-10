@@ -1,0 +1,170 @@
+---
+title: DropZone
+description: Drag-and-drop file target area with keyboard triggers, visual drop feedback, and native file selection integration.
+---
+
+# DropZone
+
+A **DropZone** is an interactive drop target allowing users to upload documents, images, and data files by dragging them directly from their operating system file explorer or desktop into the browser. It pairs seamlessly with `<FileTrigger>` to provide an accessible button alternative for keyboard and mobile users.
+
+Built on React Aria Components' `DropZone` and `FileTrigger`, Hashti's implementation manages hover and drag-over highlighting, file mime-type filtering, multi-file batch drops, and accessibility compliance.
+
+---
+
+## Import
+
+```tsx
+import { DropZone, FileTrigger } from "@cinder/react";
+// Or via compound subcomponents:
+// DropZone.Root, DropZone.Feedback, DropZone.FileTrigger
+```
+
+---
+
+## Anatomy
+
+```tsx
+<DropZone onDropFiles={(files) => handleUpload(files)}>
+  <DropZone.Feedback>
+    <Icon name="upload" />
+    <p>Drag files here, or</p>
+    <FileTrigger onSelect={(e) => handleFiles(e)}>
+      <Button variant="secondary">Browse Files</Button>
+    </FileTrigger>
+  </DropZone.Feedback>
+</DropZone>
+```
+
+---
+
+## Examples
+
+### Standard Dashed Upload Target
+
+A classic upload region featuring a dashed border, drop icon, and contextual instructions:
+
+```tsx
+import { useState } from "react";
+import { DropZone, FileTrigger, Button, Icon } from "@cinder/react";
+
+export function FileUploadExample() {
+  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+
+  return (
+    <div className="max-w-md space-y-4">
+      <DropZone
+        variant="dashed"
+        onDropFiles={(files) => {
+          setUploadedFiles(files.map((f) => `${f.name} (${Math.round(f.size / 1024)} KB)`));
+        }}
+      >
+        <div className="flex flex-col items-center justify-center p-8 text-center space-y-3">
+          <div className="p-3 bg-[var(--surface-raised)] rounded-full text-[var(--accent-turquoise)]">
+            <Icon name="upload" size={24} />
+          </div>
+          <div>
+            <p className="font-medium text-sm">Drag and drop documents here</p>
+            <p className="text-xs text-[var(--text-muted)]">PDF, PNG, JPG up to 25MB</p>
+          </div>
+          <FileTrigger
+            allowsMultiple
+            acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
+            onSelect={(e) => {
+              if (e) {
+                const files = Array.from(e);
+                setUploadedFiles(files.map((f) => `${f.name} (${Math.round(f.size / 1024)} KB)`));
+              }
+            }}
+          >
+            <Button variant="secondary" size="sm">Browse Files</Button>
+          </FileTrigger>
+        </div>
+      </DropZone>
+
+      {uploadedFiles.length > 0 && (
+        <ul className="text-sm space-y-1 bg-[var(--surface-raised)] p-3 rounded-md">
+          {uploadedFiles.map((file, i) => (
+            <li key={i} className="text-xs font-mono text-[var(--text)]">✓ {file}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+```
+
+### Visual Variants
+
+Hashti provides three stylistic variants for drop zones:
+- `dashed` (default): Standard tactile dashed border signaling file reception.
+- `solid`: Solid continuous border for high-contrast enterprise forms.
+- `card`: Elevated card plinth (`--surface-raised`) with subtle drop shadow for full-page empty states.
+
+```tsx
+import { DropZone, Button } from "@cinder/react";
+
+export function CardDropZoneExample() {
+  return (
+    <DropZone variant="card" className="max-w-md p-6 text-center">
+      <p className="text-sm font-medium">Add Attachments</p>
+      <p className="text-xs text-[var(--text-muted)] mb-3">Drop files anywhere inside this card</p>
+      <Button variant="ghost" size="sm">Select Local File</Button>
+    </DropZone>
+  );
+}
+```
+
+### File Type Filtering
+
+Restrict drops to specific MIME types or extensions by utilizing RAC's native drag filtering:
+
+```tsx
+<FileTrigger acceptedFileTypes={["image/*", ".csv", ".json"]}>
+  <Button variant="secondary">Import Data</Button>
+</FileTrigger>
+```
+
+---
+
+## Props Reference
+
+### DropZone (`DropZone.Root`)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `onDropFiles` | `(files: File[]) => void` | — | Convenience callback returning an array of standard Web `File` objects when items are dropped. |
+| `onDrop` | `(e: DropEvent) => void` | — | Raw React Aria drop event handler. |
+| `variant` | `'dashed' \| 'solid' \| 'card'` | `'dashed'` | Border styling and background surface presentation. |
+| `isDisabled` | `boolean` | `false` | Whether dropping files onto the area is prohibited. |
+| `className` | `string \| ((values) => string)` | — | Custom styling class or render prop function. |
+| `children` | `ReactNode \| ((values) => ReactNode)` | — | Children elements or render prop exposing `{ isDropTarget }`. |
+
+### FileTrigger
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `onSelect` | `(files: FileList \| null) => void` | — | Callback fired when the user selects files through the native OS dialog. |
+| `acceptedFileTypes` | `string[]` | — | Array of accepted MIME types or file extensions (e.g. `['image/*', '.pdf']`). |
+| `allowsMultiple` | `boolean` | `false` | Whether multiple files can be selected at once. |
+| `defaultCamera` | `'user' \| 'environment'` | — | Default capture camera on mobile devices. |
+| `children` | `ReactNode` | — | Interactive button element triggering the file selector. |
+
+---
+
+## Keyboard & Accessibility
+
+- **Keyboard Trigger**: Dropping files cannot be accomplished solely via keyboard; therefore, `<DropZone>` must always include a `<FileTrigger>` button inside its children.
+- **Drop Target Semantics**: When files are dragged over the target, `data-drop-target="true"` is applied to the root element, turning the border into the active Persian Turquoise token (`--accent-turquoise`).
+- **Screen Reader Announcements**: Informative text provides clear instructions on file limits, formats, and action shortcuts.
+
+---
+
+## Hashti Token Bindings
+
+| Token | CSS Variable | Applied State |
+| :--- | :--- | :--- |
+| Inactive Border | `--divider` | 2px dashed neutral border |
+| Active Drag Border | `--accent-turquoise` | Highlighted drop target outline |
+| Drag Surface | `--info-surface` | Subtle active wash during hover |
+| Background | `--surface` / `--surface-raised` | Card and default container fills |
+| Corner Radius | `--radius-lg` | 12px rounded corner geometry |
