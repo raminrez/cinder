@@ -1,0 +1,193 @@
+---
+title: Installation
+description: Install and configure Hashti Design System packages in your React, Next.js, Astro, or Vite application.
+---
+
+# Installation
+
+Hashti is distributed as two primary packages:
+
+1. **`@cinder/tokens`**: Comprehensive design tokens, CSS variables, Carbon & Frame themes, color scales, and spacing primitives.
+2. **`@cinder/react`**: 45+ enterprise React components built on top of [React Aria Components (RAC 1.22.1)](https://react-spectrum.adobe.com/react-aria/index.html).
+
+---
+
+## 1. Package Manager Installation
+
+Install both `@cinder/react` and `@cinder/tokens` alongside their peer dependencies (`react` and `react-dom` version 19+, and `react-aria-components`).
+
+### Bun (Recommended)
+
+```bash
+bun add @cinder/react @cinder/tokens react-aria-components
+```
+
+### npm
+
+```bash
+npm install @cinder/react @cinder/tokens react-aria-components
+```
+
+### pnpm
+
+```bash
+pnpm add @cinder/react @cinder/tokens react-aria-components
+```
+
+### Yarn
+
+```bash
+yarn add @cinder/react @cinder/tokens react-aria-components
+```
+
+---
+
+## 2. Importing Global Stylesheets
+
+Hashti uses two modular prebuilt stylesheets. Add them at your application's root entry point (e.g. `layout.tsx`, `main.tsx`, or `src/styles/global.css`):
+
+```css
+/* 1. Foundational design tokens & theme CSS variables */
+import "@cinder/tokens/tokens.css";
+
+/* 2. Component structural layouts, focus rings, and BEM styles */
+import "@cinder/react/styles.css";
+```
+
+> [!NOTE]
+> Hashti stylesheets are self-contained and pre-compiled with zero runtime CSS-in-JS overhead. If you are using Tailwind CSS v4, you can import them alongside `@import "tailwindcss";`.
+
+---
+
+## 3. Framework Setup
+
+### Next.js (App Router)
+
+In Next.js 14/15/16 App Router, configure your root layout (`app/layout.tsx`) with the `<Theme>` provider. Because `@cinder/react` components use client-side accessibility hooks, the root `<Theme>` handles client boundary wrapping cleanly:
+
+```tsx
+// app/layout.tsx
+import type { Metadata } from "next";
+import "@cinder/tokens/tokens.css";
+import "@cinder/react/styles.css";
+import { Theme } from "@cinder/react";
+
+export const metadata: Metadata = {
+  title: "My Hashti App",
+  description: "Built with Hashti Design System",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body>
+        <Theme theme="frame-light">
+          {children}
+        </Theme>
+      </body>
+    </html>
+  );
+}
+```
+
+### Astro
+
+To use Hashti components in an Astro project, enable the `@astrojs/react` integration and wrap your page or template with the `<Theme>` component:
+
+```astro
+---
+// src/layouts/BaseLayout.astro
+import "@cinder/tokens/tokens.css";
+import "@cinder/react/styles.css";
+import { Theme } from "@cinder/react";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Hashti App" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Theme client:load theme="frame-light">
+      <slot />
+    </Theme>
+  </body>
+</html>
+```
+
+### Vite + React
+
+In a Vite application, configure `src/main.tsx`:
+
+```tsx
+// src/main.tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "@cinder/tokens/tokens.css";
+import "@cinder/react/styles.css";
+import { Theme } from "@cinder/react";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <Theme theme="frame-light">
+      <App />
+    </Theme>
+  </React.StrictMode>
+);
+```
+
+---
+
+## 4. First Component Usage
+
+Once configured, import and use Hashti components directly in your application:
+
+```tsx
+// src/App.tsx
+import { Button, TextField, Card, Badge } from "@cinder/react";
+
+export default function App() {
+  return (
+    <main style={{ padding: "32px", maxWidth: "480px", margin: "0 auto" }}>
+      <Card style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2>Entrance Gate</h2>
+          <Badge variant="success">Active</Badge>
+        </div>
+
+        <TextField
+          label="Passkey"
+          description="Enter your architectural access token"
+          placeholder="e.g. hashti-2026-auth"
+        />
+
+        <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
+          <Button variant="ghost">Cancel</Button>
+          <Button variant="primary">Proceed Through Portal</Button>
+        </div>
+      </Card>
+    </main>
+  );
+}
+```
+
+---
+
+## Next Steps
+
+- Learn how to switch between dark mode and the 8 themes in [Theming](/docs/getting-started/theming).
+- Explore our WCAG 2.2 AAA accessibility and RTL Persian/Arabic guidelines in [Accessibility](/docs/getting-started/accessibility).
+- Discover color tokens and Persian architectural origins in [Colors](/docs/foundations/colors).

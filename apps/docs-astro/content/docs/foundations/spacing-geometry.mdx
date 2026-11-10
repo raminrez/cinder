@@ -1,0 +1,86 @@
+---
+title: Spacing & Geometry
+description: Explore Hashti's 8-point spatial grid, standardized control heights, arch ratios, and corner radii.
+---
+
+# Spacing & Geometry
+
+Hashti’s layout engine is built upon an **8-point spatial grid system** reinforced with geometric proportions derived from Persian architectural vaulting and courtyards.
+
+---
+
+## 1. The 8-Point Spatial Grid
+
+Every layout offset, container padding, and inter-component margin aligns strictly with powers or multiples of 8 (with 4px reserved as a half-step micro-grid unit):
+
+| Spacing Token | Pixel Value | Rem Equiv. | Common Application |
+| :--- | :--- | :--- | :--- |
+| `--cinder-spacing-01` | `4px` | `0.25rem` | Icon-to-text gaps, badge inner padding, micro offsets. |
+| `--cinder-spacing-02` | `8px` | `0.5rem` | Related item spacing, compact button inline padding. |
+| `--cinder-spacing-03` | `12px` | `0.75rem` | Control padding, input field horizontal gutter. |
+| `--cinder-spacing-04` | `16px` | `1.0rem` | Default card padding, compact stack gap, standard gutter. |
+| `--cinder-spacing-05` | `24px` | `1.5rem` | Modal dialog padding, section separation, form row gap. |
+| `--cinder-spacing-06` | `32px` | `2.0rem` | Page section margins, hero layout boundaries. |
+| `--cinder-spacing-07` | `48px` | `3.0rem` | Large section dividers, macro container margins. |
+| `--cinder-spacing-08` | `64px` | `4.0rem` | Page canvas gutters, major architectural thresholds. |
+
+---
+
+## 2. Standardized Control Heights
+
+All interactive controls (Buttons, TextFields, Select dropdowns, SearchFields, DatePickers) share synchronized vertical heights across three ergonomic sizes:
+
+| Size | Height | Typography | Ideal Context |
+| :--- | :--- | :--- | :--- |
+| **Small (`sm`)** | `32px` | `13px` / Caption | High-density tables, compact toolbars, data-heavy inspection drawers. |
+| **Medium (`md`)** | `40px` *(Default)* | `14px` / Body | Standard forms, general product workflows, dialogue action rows. |
+| **Large (`lg`)** | `48px` | `16px` / Title | Mobile-optimized touch surfaces, public landing pages, search hero bars. |
+
+> [!NOTE]
+> The default 40px height provides a comfortable 48px touch target buffer with padding, satisfying WCAG 2.2 Target Size (Minimum) criteria.
+
+---
+
+## 3. Geometric Arch Ratios
+
+The visual identity of Hashti is anchored in the classic **pointed ogival arch** that characterizes Persian portals from Isfahan’s Naqsh-e Jahan to Yazd’s Jameh Mosque:
+
+```
+        ▲  Apex (32° Included Angle)
+       / \
+      /   \
+     /     \     Golden Proportion (1 : 1.618)
+    /       \
+   |         |
+   |         |   Vertical Stilt Height
+   +---------+
+      Width
+```
+
+- **32° Arch Pitch:** The authentic angle found in Safavid vaulted entrances.
+- **Golden Ratio Proportion (1:1.618):** The relationship between the arch height and its span width follows the divine proportion, creating natural balance and calm.
+- **Concentric Offset:** In vector iconography, arch layers maintain a uniform 16px stroke weight separated by a 14px negative clearance channel.
+
+---
+
+## 4. Border Radius Scale
+
+Corners in Hashti are disciplined and intentional, avoiding the overly pill-shaped look of consumer apps while maintaining soft modern tactile edges:
+
+| Radius Token | Value | Applied To |
+| :--- | :--- | :--- |
+| `--cinder-radius-sm` | `2px` | Checkbox boxes, progress bar indicators, table row highlights. |
+| `--cinder-radius-md` | `6px` | Standard buttons, input controls, dropdown popovers, badges. |
+| `--cinder-radius-lg` | `12px` | Cards, modal dialogs, flyout drawers, floating sheets. |
+| `--cinder-radius-full` | `9999px` | Avatars, circular icon buttons, status indicator dots. |
+
+```css
+/* Example radius token usage */
+.cinder-button {
+  border-radius: var(--cinder-radius-md, 6px);
+}
+
+.cinder-card {
+  border-radius: var(--cinder-radius-lg, 12px);
+}
+```

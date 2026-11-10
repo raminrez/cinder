@@ -1,0 +1,168 @@
+---
+title: Theming & Layering
+description: Master Hashti's 8 design themes, nested contextual Layering system, and dark mode toggles.
+---
+
+# Theming & Layering
+
+Hashti features a multi-tiered theming engine designed around Carbon Design System's spatial logic and Frame's refined modern aesthetic. 
+
+Themes are applied via CSS custom properties scoped to the `data-cinder-theme` attribute or handled automatically using the `<Theme>` and `<Layer>` React components.
+
+---
+
+## The 8 Supported Themes
+
+Hashti provides 8 first-class themes divided into three aesthetic families:
+
+| Theme Family | Theme Identifier | Mode | Description |
+| :--- | :--- | :--- | :--- |
+| **Carbon Core** | `white` | Light | Carbon's pristine high-contrast white theme for document-heavy workspaces. |
+| | `g10` | Light | Soft warm grey (Gray 10) reducing eye strain for long analytical sessions. |
+| | `g90` | Dark | Charcoal dark grey (Gray 90) balanced for low-light developer workflows. |
+| | `g100` | Dark | Deep obsidian black (Gray 100) high-contrast dark environment. |
+| **Relay** | `relay-light` | Light | Purpose-built for operational command hubs and developer tooling. |
+| | `relay-dark` | Dark | Tactical high-density dark UI for status monitoring and logs. |
+| **Frame (Recommended)** | `frame-light` | Light | Hashti's default aesthetic: crisp borders, calm backgrounds, 10px control radiuses, and Persian architectural serenity. |
+| | `frame-dark` | Dark | Deep ink surface with refined translucent layers and luminous turquoise accents. |
+
+---
+
+## Using the `<Theme>` Component
+
+The `<Theme>` component wraps any subtree to set or switch the active theme. It injects `data-cinder-theme` and configures React Aria's `I18nProvider` automatically.
+
+```tsx
+import { Theme, Button } from "@cinder/react";
+
+export function CustomSection() {
+  return (
+    <Theme theme="frame-dark">
+      <div style={{ padding: "24px" }}>
+        <h3>Dark Frame Section</h3>
+        <Button variant="primary">Luminous Action</Button>
+      </div>
+    </Theme>
+  );
+}
+```
+
+### Direct HTML Attribute Usage
+
+If you prefer applying themes directly in HTML or server-rendered layouts without React context:
+
+```html
+<!-- Light theme root -->
+<html lang="en" data-cinder-theme="frame-light">
+  <body>
+    ...
+    <!-- Local dark theme island -->
+    <div data-cinder-theme="frame-dark" class="cinder-theme">
+      ...
+    </div>
+  </body>
+</html>
+```
+
+---
+
+## Nested Layering System (`<Layer>`)
+
+In Persian architecture, stepping through the Hashti reveals successive inner spaces (from vestibule to corridor to central court). Similarly, modern enterprise interfaces require visual elevation when components are nested inside containers (e.g. cards placed on a sidebar, or inputs placed inside a modal card).
+
+Rather than hardcoding arbitrary shadow levels or color overrides, Hashti uses a mathematical **3-tier Layering System**:
+
+- **Layer 0 (`data-cinder-layer="0"`):** The background canvas (e.g. the main page body).
+- **Layer 1 (`data-cinder-layer="1"`):** Primary raised surfaces (sidebars, data tables, main content cards).
+- **Layer 2 (`data-cinder-layer="2"`):** Nested elements inside containers (cards inside sidebars, input fields inside cards, floating popovers).
+
+### Contextual Layer Nesting
+
+Each `<Layer>` component automatically increments the layer depth of its children:
+
+```tsx
+import { Theme, Layer, Card, TextField, Button } from "@cinder/react";
+
+export function LayeredDashboard() {
+  return (
+    <Theme theme="frame-light">
+      {/* Layer 0: Page Canvas */}
+      <div style={{ background: "var(--cinder-background)", padding: "32px" }}>
+        <h1>Page Canvas (Layer 0)</h1>
+
+        {/* Layer 1: Container / Sidebar */}
+        <Layer>
+          <div style={{ background: "var(--cinder-layer-01)", padding: "24px", borderRadius: "8px" }}>
+            <h2>Sidebar Panel (Layer 1)</h2>
+
+            {/* Layer 2: Nested Card */}
+            <Layer>
+              <Card style={{ background: "var(--cinder-layer-02)", padding: "16px" }}>
+                <h3>Inspector Card (Layer 2)</h3>
+                <TextField label="Resource Identifier" placeholder="res-8492" />
+                <Button variant="primary" style={{ marginTop: "12px" }}>Update</Button>
+              </Card>
+            </Layer>
+          </div>
+        </Layer>
+      </div>
+    </Theme>
+  );
+}
+```
+
+---
+
+## Building a Dark Mode Toggle
+
+You can easily build a dark/light mode toggle utilizing React state or local storage:
+
+```tsx
+import { useState } from "react";
+import { Theme, Button, type ThemeName } from "@cinder/react";
+
+export function ThemeSwitcherApp({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<ThemeName>("frame-light");
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "frame-light" ? "frame-dark" : "frame-light"));
+  };
+
+  return (
+    <Theme theme={theme}>
+      <header style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span>Current Theme: <strong>{theme}</strong></span>
+        <Button variant="secondary" onPress={toggleTheme}>
+          Switch to {theme === "frame-light" ? "Dark Mode (🌙)" : "Light Mode (☀️)"}
+        </Button>
+      </header>
+      <main style={{ padding: "24px" }}>
+        {children}
+      </main>
+    </Theme>
+  );
+}
+```
+
+---
+
+## Accessing Theme Context: `useTheme`
+
+Use the `useTheme` hook inside any component to read the current active theme, layer depth, and text direction:
+
+```tsx
+import { useTheme } from "@cinder/react";
+
+export function ThemeStatusBadge() {
+  const { theme, layer, direction } = useTheme();
+
+  return (
+    <div style={{ fontSize: "12px", fontFamily: "var(--cinder-font-mono)" }}>
+      Active: {theme} | Depth: L{layer} | Direction: {direction.toUpperCase()}
+    </div>
+  );
+}
+```
+
+> [!TIP]
+> **Portals and Overlays**: Overlays like Modals and Tooltips render outside the main DOM tree. Hashti components automatically use `useOverlayTheme()` to forward `data-cinder-theme` and `data-cinder-layer` to portal roots, ensuring colors and typography remain strictly consistent.
