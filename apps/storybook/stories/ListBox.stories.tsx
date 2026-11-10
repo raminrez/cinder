@@ -116,3 +116,26 @@ export const Reorderable: Story = {
     expect(options).toHaveLength(3);
   },
 };
+
+export const InfiniteScrollingLoadMore: Story = {
+  render: () => (
+    <div style={{ maxWidth: 360 }}>
+      <ListBox aria-label="Infinite server logs" variant="bordered">
+        <ListBox.Item id="log-1" textValue="Log 1">Server initialized on port 3000</ListBox.Item>
+        <ListBox.Item id="log-2" textValue="Log 2">Connected to database pool</ListBox.Item>
+        <ListBox.Item id="log-3" textValue="Log 3">Loaded environment configuration</ListBox.Item>
+        <ListBox.LoadMore
+          id="load-more-logs"
+          isLoading={true}
+          label="Loading more logs…"
+        />
+      </ListBox>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const listbox = canvas.getByRole("listbox", { name: "Infinite server logs" });
+    expect(listbox).toBeInTheDocument();
+    expect(canvas.getByText("Loading more logs…")).toBeInTheDocument();
+  },
+};
