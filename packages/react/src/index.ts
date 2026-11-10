@@ -127,7 +127,6 @@ export {
   InlineNotification,
   Alert,
   ProgressBar,
-  Meter,
   Loading,
   InlineLoading,
   Skeleton,
@@ -140,12 +139,25 @@ export type {
   NotificationKind,
   NotificationVariant,
   ProgressBarProps,
-  MeterProps,
   LoadingProps,
   InlineLoadingProps,
   SkeletonProps,
   ToastMessage,
 } from "./feedback";
+export { Meter, deriveMeterTone, MeterContext } from "./meter";
+export type {
+  MeterProps,
+  MeterRootProps,
+  MeterLabelProps,
+  MeterValueProps,
+  MeterTrackProps,
+  MeterFillProps,
+  MeterHelperTextProps,
+  MeterCircleProps,
+  MeterSegment,
+  MeterTone,
+  MeterContextValue,
+} from "./meter";
 export {
   Tag,
   CodeSnippet,
@@ -174,6 +186,14 @@ export type {
 } from "./content";
 export { FileUploader, acceptsFile } from "./files";
 export type { FileUploaderProps } from "./files";
+export { DropZone, FileTrigger, DropZoneContext } from "./dropzone";
+export type {
+  DropZoneProps,
+  DropZoneRootProps,
+  DropZoneFeedbackProps,
+  FileTriggerProps,
+  DropZoneContextValue,
+} from "./dropzone";
 export { Stack, Grid, GridColumn, Header, HeaderName, HeaderNav, SideNav } from "./layout";
 export type { StackProps, ColumnLayoutProps, HeaderProps } from "./layout";
 export { Avatar, AvatarGroup, getInitials } from "./avatar";
@@ -264,8 +284,6 @@ export {
   SliderThumb,
   SliderFill,
   SliderOutput,
-  FileTrigger,
-  DropZone,
   Collection,
   VisuallyHidden,
   useFilter,

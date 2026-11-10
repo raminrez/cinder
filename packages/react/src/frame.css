@@ -1729,6 +1729,7 @@
       color: var(--cinder-text-secondary);
       margin: 0;
     }
+    .cinder-dropzone,
     .cinder-file-uploader .react-aria-DropZone {
       border: 1.5px dashed var(--cinder-border-strong);
       border-radius: var(--cinder-control-radius);
@@ -1740,15 +1741,35 @@
       justify-content: center;
       transition: border-color var(--cinder-duration-fast-01), background var(--cinder-duration-fast-01);
       outline: none;
+      box-sizing: border-box;
     }
+    .cinder-dropzone--solid {
+      border-style: solid;
+      background: var(--cinder-layer);
+    }
+    .cinder-dropzone--card {
+      border-style: solid;
+      background: var(--cinder-layer);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+    .cinder-dropzone[data-drop-target],
+    .cinder-dropzone:hover,
     .cinder-file-uploader .react-aria-DropZone[data-drop-target],
     .cinder-file-uploader .react-aria-DropZone:hover {
       border-color: var(--cinder-interactive);
       background: var(--cinder-layer-hover);
     }
+    .cinder-dropzone[data-focus-visible],
     .cinder-file-uploader .react-aria-DropZone[data-focus-visible] {
       outline: var(--cinder-focus-width) solid var(--cinder-focus);
       outline-offset: 2px;
+    }
+    .cinder-dropzone-feedback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--cinder-spacing-03);
+      text-align: center;
     }
     .cinder-file-list {
       list-style: none;
@@ -1828,8 +1849,91 @@
       background: var(--cinder-border-subtle);
       overflow: hidden;
     }
+    .cinder-meter[data-size="sm"] .cinder-progress-track {
+      height: 4px;
+    }
+    .cinder-meter[data-size="md"] .cinder-progress-track {
+      height: 8px;
+    }
+    .cinder-meter[data-size="lg"] .cinder-progress-track {
+      height: 12px;
+    }
+    .cinder-meter-track {
+      display: flex;
+      width: 100%;
+    }
     .cinder-progress-fill {
       border-radius: 9999px;
+    }
+    .cinder-meter-segment {
+      height: 100%;
+      flex-shrink: 0;
+      transition: width var(--cinder-duration-moderate-01, 200ms) ease;
+    }
+    .cinder-meter[data-tone="neutral"] .cinder-meter-fill {
+      background: var(--cinder-interactive);
+    }
+    .cinder-meter[data-tone="success"] .cinder-meter-fill {
+      background: var(--cinder-support-success);
+    }
+    .cinder-meter[data-tone="warning"] .cinder-meter-fill {
+      background: var(--cinder-support-warning);
+    }
+    .cinder-meter[data-tone="error"] .cinder-meter-fill {
+      background: var(--cinder-support-error);
+    }
+    .cinder-meter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--cinder-spacing-01);
+    }
+    .cinder-meter--circular {
+      align-items: center;
+      width: fit-content;
+    }
+    .cinder-meter-circle-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cinder-meter-circle-svg {
+      transform: rotate(-90deg);
+    }
+    .cinder-meter-circle-track {
+      fill: none;
+      stroke: var(--cinder-border-subtle);
+    }
+    .cinder-meter-circle-fill {
+      fill: none;
+      stroke: var(--cinder-interactive);
+      stroke-linecap: round;
+      transition: stroke-dashoffset var(--cinder-duration-moderate-01, 250ms) ease;
+    }
+    .cinder-meter-circle-container[data-tone="success"] .cinder-meter-circle-fill,
+    .cinder-meter[data-tone="success"] .cinder-meter-circle-fill {
+      stroke: var(--cinder-support-success);
+    }
+    .cinder-meter-circle-container[data-tone="warning"] .cinder-meter-circle-fill,
+    .cinder-meter[data-tone="warning"] .cinder-meter-circle-fill {
+      stroke: var(--cinder-support-warning);
+    }
+    .cinder-meter-circle-container[data-tone="error"] .cinder-meter-circle-fill,
+    .cinder-meter[data-tone="error"] .cinder-meter-circle-fill {
+      stroke: var(--cinder-support-error);
+    }
+    .cinder-meter-circle-value {
+      position: absolute;
+      font-size: var(--cinder-body-compact-01-font-size);
+      font-weight: 600;
+      color: var(--cinder-text-primary);
+    }
+    .cinder-meter-circle-container[data-size="sm"] .cinder-meter-circle-value {
+      font-size: 0.625rem;
+    }
+    .cinder-meter-circle-container[data-size="lg"] .cinder-meter-circle-value {
+      font-size: 0.875rem;
     }
     .cinder-progress[data-status="success"] .cinder-progress-fill {
       background: var(--cinder-support-success);

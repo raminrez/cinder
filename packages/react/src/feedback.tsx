@@ -8,7 +8,6 @@ import {
 } from "react";
 import {
   ProgressBar as RACProgressBar,
-  Meter as RACMeter,
   Label,
   Text,
   UNSTABLE_ToastQueue as ToastQueue,
@@ -16,7 +15,6 @@ import {
   UNSTABLE_Toast as Toast,
   UNSTABLE_ToastContent as ToastContent,
   type ProgressBarProps as RACProgressBarProps,
-  type MeterProps as RACMeterProps,
   type ToastOptions,
 } from "react-aria-components";
 import { Button } from "./buttons";
@@ -128,28 +126,19 @@ export function ProgressBar({
   );
 }
 
-export interface MeterProps extends RACMeterProps {
-  label?: ReactNode;
-  ref?: Ref<HTMLDivElement>;
-}
-export function Meter({ label, children, className, ...props }: MeterProps) {
-  return (
-    <RACMeter {...props} className={classes("cinder-progress cinder-meter", className)}>
-      {children ??
-        (({ percentage, valueText }) => (
-          <>
-            <div className="cinder-progress-label">
-              <Label>{label}</Label>
-              <span>{valueText}</span>
-            </div>
-            <div className="cinder-progress-track">
-              <div className="cinder-progress-fill" style={{ width: `${percentage}%` }} />
-            </div>
-          </>
-        ))}
-    </RACMeter>
-  );
-}
+export { Meter } from "./meter";
+export type {
+  MeterProps,
+  MeterRootProps,
+  MeterLabelProps,
+  MeterValueProps,
+  MeterTrackProps,
+  MeterFillProps,
+  MeterHelperTextProps,
+  MeterCircleProps,
+  MeterSegment,
+  MeterTone,
+} from "./meter";
 
 export interface LoadingProps {
   label?: string;
