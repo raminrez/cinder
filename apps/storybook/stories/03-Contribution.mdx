@@ -1,0 +1,81 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Getting Started/Contribution" />
+
+# Contributing to Hashti
+
+We welcome contributions to **هشتی Hashti Design System**. This guide outlines our monorepo structure, component authoring guidelines, and verification workflows.
+
+---
+
+## 1. Monorepo Anatomy
+
+Hashti uses Bun workspaces and a modular HeroUI v3-inspired component architecture:
+
+```
+├── apps/
+│   ├── docs/                   # Astro & Fumadocs documentation site
+│   └── storybook/              # Storybook 10 design workspace & interactive stories
+├── packages/
+│   ├── react/                  # @hashti/react component library
+│   │   └── src/
+│   │       ├── index.ts        # Package export barrel
+│   │       ├── styles.css      # Consolidated component stylesheets
+│   │       ├── theme.tsx       # Theme provider & Layer nesting
+│   │       └── [component].tsx # Individual components (HeroUI v3 architecture)
+│   └── tokens/                 # @hashti/tokens design tokens & generators
+└── tests/
+    ├── browser/                # Playwright end-to-end and accessibility tests
+    └── unit/                   # Bun unit tests
+```
+
+Each component is self-contained with typed props, RAC accessibility integration, and compound sub-parts.
+
+---
+
+## 2. Component Authoring Checklist
+
+When adding or updating a component in Hashti, adhere to the following checklist:
+
+1. **Component TSX (`packages/react/src/[component].tsx`):**
+   - Built on top of React Aria Components (`react-aria-components`).
+   - Clean TypeScript props extending standard RAC component interfaces.
+   - Compound composition support (e.g. `Root`, `Header`, `Body`, `Item`).
+   - Bidirectional LTR/RTL support.
+
+2. **Scoped CSS (`packages/react/src/styles.css`):**
+   - Zero-runtime scoped CSS using standard BEM class naming conventions.
+   - Interactive state hooks (`[data-hovered]`, `[data-focused]`, `[data-pressed]`, `[data-invalid]`, `[data-disabled]`).
+   - High-contrast focus rings (`:focus-visible` with 2px offset).
+
+3. **Colocated Storybook Story (`apps/storybook/stories/[Component].stories.tsx`):**
+   - Tagged with `tags: ['autodocs']`.
+   - Comprehensive `parameters.docs.description.component` explaining purpose and RAC role.
+   - Interactive stories with `play` function assertions (`userEvent`, `expect`, `within`).
+   - LTR, RTL, light, and dark mode variants.
+
+4. **Unit & A11y Tests:**
+   - Bun unit tests in `tests/unit/` verifying component rendering, edge cases, and accessibility attributes.
+   - Automated axe-core accessibility checks via Storybook a11y addon and Playwright.
+
+---
+
+## 3. Submitting Changes & Verification
+
+Before submitting a Pull Request, execute the full local verification pipeline:
+
+```bash
+# 1. Run unit and integration tests
+bun test
+
+# 2. Typecheck workspace packages and Storybook
+bun run typecheck:storybook
+
+# 3. Build Storybook static distribution
+bun run build:storybook
+
+# 4. Run complete workspace check gate (linting, tests, builds)
+bun run check
+```
+
+Ensure all verification gates pass with zero warnings or errors. Follow conventional semantic commit messages (e.g. `feat(react): add SegmentedControl component`, `fix(storybook): resolve RTL popover alignment`).
