@@ -46,7 +46,7 @@
   .hashti-radio[data-focus-visible] .hashti-radio-control,
   .cinder-radio[data-focus-visible] .cinder-radio-control {
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #08BDBA), 0 0 8px rgba(8, 189, 186, 0.35);
+    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 8px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-radio-options,

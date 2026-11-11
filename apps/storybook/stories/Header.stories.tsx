@@ -13,7 +13,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Header provides top-level persistent application navigation, branding, and global utilities based on Carbon and Frame design patterns.",
+          "Header provides top-level persistent application navigation, branding, and global utilities based on Hashti modern design patterns.",
       },
     },
   },

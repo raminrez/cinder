@@ -68,7 +68,7 @@ Frame defaults follow label → persistent guidance → control → recovery. Th
 library reserves a bounded one-line recovery minimum; `forms.css` applies **58px**
 required-field Help minimums and **78px** at or below a `24rem` container, at a 16px
 root. Long messages grow beyond those minimums instead of clipping; optional fields
-are not given blanket invalid styling. The six Carbon/Relay theme defaults remain
+are not given blanket invalid styling. The standard theme defaults remain
 unchanged. Grouped, collection, and date compounds were added for shared anatomy
 and API compatibility, not completed later-family Frame review. Form and raw RAC
 exports keep upstream validation ownership.

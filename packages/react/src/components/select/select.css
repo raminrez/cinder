@@ -25,8 +25,8 @@
   .hashti-select-trigger[data-focus-visible],
   .cinder-select-trigger[data-focus-visible] {
     outline: none;
-    border-color: var(--hashti-focus, #08BDBA);
-    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #08BDBA), 0 0 12px rgba(8, 189, 186, 0.35);
+    border-color: var(--hashti-focus, #0f62fe);
+    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-select-popover,
