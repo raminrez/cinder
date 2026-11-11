@@ -2,13 +2,9 @@
   "title": "Documentation",
   "pages": [
     "index",
-    "---Getting Started---",
     "getting-started",
-    "---Foundations---",
     "foundations",
-    "---Components---",
     "components",
-    "---Roadmap---",
     "roadmap"
   ]
 }

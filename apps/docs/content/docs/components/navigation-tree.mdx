@@ -1,0 +1,146 @@
+---
+title: Navigation Tree
+description: Hierarchical documentation and application navigation tree with link href integration, expandable sections, and active state indicators.
+---
+
+The **NavigationTree** component presents hierarchical navigation structures tailored for application sidebars, documentation hierarchies, and administrative menus. Built upon React Aria Components' tree navigation semantics, it provides keyboard navigation, smooth expand/collapse transitions, active link indicators, and nested branch support.
+
+## Import
+
+```tsx
+import {
+  NavigationTree,
+  NavigationTreeItem,
+  NavigationTreeSection,
+  NavigationTreeHeader,
+} from "@cinder/react";
+```
+
+## Anatomy & Compound Composition
+
+```tsx
+<NavigationTree aria-label="Documentation Tree" size="md">
+  <NavigationTree.Section>
+    <NavigationTree.Header>Getting Started</NavigationTree.Header>
+    <NavigationTree.Item href="/docs/installation">Installation</NavigationTree.Item>
+    <NavigationTree.Item href="/docs/theming">Theming</NavigationTree.Item>
+  </NavigationTree.Section>
+  <NavigationTree.Section>
+    <NavigationTree.Header>Components</NavigationTree.Header>
+    <NavigationTree.Item href="/docs/components/button">Button</NavigationTree.Item>
+    <NavigationTree.Item href="/docs/components/select">Select</NavigationTree.Item>
+  </NavigationTree.Section>
+</NavigationTree>
+```
+
+---
+
+## Examples
+
+### Application Navigation Tree
+
+`<NavigationTree>` automatically manages selection and handles navigation clicks with keyboard roving arrow support:
+
+```tsx
+import { NavigationTree, NavigationTreeSection, NavigationTreeHeader, NavigationTreeItem, Icon } from "@cinder/react";
+
+export function AppNavigationTreeDemo() {
+  return (
+    <div className="w-64 border rounded-xl p-3 bg-white dark:bg-black">
+      <NavigationTree aria-label="App Navigation">
+        <NavigationTreeSection>
+          <NavigationTreeHeader>Main Portal</NavigationTreeHeader>
+          <NavigationTreeItem href="/dashboard" textValue="Dashboard">
+            <span className="flex items-center gap-2">
+              <Icon name="search" size={16} />
+              <span>Overview</span>
+            </span>
+          </NavigationTreeItem>
+          <NavigationTreeItem href="/analytics" textValue="Analytics">
+            <span className="flex items-center gap-2">
+              <Icon name="filter" size={16} />
+              <span>Spatial Analytics</span>
+            </span>
+          </NavigationTreeItem>
+        </NavigationTreeSection>
+
+        <NavigationTreeSection>
+          <NavigationTreeHeader>Design Tokens</NavigationTreeHeader>
+          <NavigationTreeItem href="/tokens/colors" textValue="Colors">
+            Palette & Mineral Glazes
+          </NavigationTreeItem>
+          <NavigationTreeItem href="/tokens/geometry" textValue="Geometry">
+            Concentric Arches & Vaults
+          </NavigationTreeItem>
+        </NavigationTreeSection>
+      </NavigationTree>
+    </div>
+  );
+}
+```
+
+### Nested Hierarchy with Expandable Branches
+
+For deep folder structures, nest `<NavigationTreeItem>` children within an expandable item:
+
+```tsx
+import { NavigationTree, NavigationTreeItem } from "@cinder/react";
+
+export function NestedTreeDemo() {
+  return (
+    <div className="w-72 border rounded-xl p-3">
+      <NavigationTree aria-label="Project Structure">
+        <NavigationTreeItem id="packages" textValue="packages">
+          <span className="font-semibold text-sm">packages</span>
+          <NavigationTreeItem id="pkg-react" href="/packages/react" textValue="react">
+            @cinder/react
+          </NavigationTreeItem>
+          <NavigationTreeItem id="pkg-tokens" href="/packages/tokens" textValue="tokens">
+            @cinder/tokens
+          </NavigationTreeItem>
+        </NavigationTreeItem>
+        <NavigationTreeItem id="apps" textValue="apps">
+          <span className="font-semibold text-sm">apps</span>
+          <NavigationTreeItem id="app-docs" href="/apps/docs" textValue="docs">
+            Documentation (Astro + Fumadocs)
+          </NavigationTreeItem>
+          <NavigationTreeItem id="app-storybook" href="/apps/storybook" textValue="storybook">
+            Storybook Workshop
+          </NavigationTreeItem>
+        </NavigationTreeItem>
+      </NavigationTree>
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### NavigationTree (Root)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `size` | `"sm" \| "md"` | `"md"` | Density size preset governing item padding and typography scale. |
+| `selectedKeys` | `Selection` | `undefined` | Controlled active route keys. |
+| `defaultSelectedKeys` | `Selection` | `undefined` | Default active route keys. |
+| `onSelectionChange` | `(keys: Selection) => void` | `undefined` | Selection handler. |
+
+### NavigationTreeItem
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `href` | `string` | `undefined` | Link URL for navigation. When provided, renders a semantic anchor tag. |
+| `target` | `string` | `undefined` | Anchor target attribute (e.g. `"_blank"`). |
+| `textValue` | `string` | `undefined` | String representation used for typeahead search. |
+| `isDisabled` | `boolean` | `false` | Whether the item is disabled and non-interactive. |
+
+---
+
+## Accessibility & Keyboard Interaction
+
+- **Arrow Navigation**: `Up` and `Down` arrow keys move focus through visible tree items.
+- **Expand/Collapse**: `Right` arrow expands a collapsed branch; `Left` arrow collapses an open branch or moves to its parent.
+- **Link Activation**: Pressing `Enter` follows the `href` link.
+- **Typeahead Search**: Typing character keys jumps directly to matching items in the hierarchy.

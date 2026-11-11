@@ -1,0 +1,202 @@
+---
+title: Color Picker
+description: Precision color selection suite featuring 2D gradient areas, channel sliders, hue wheels, hex fields, and selectable swatch grids.
+---
+
+The **ColorPicker** suite coordinates color selection across multiple visual representations: 2D saturation/brightness areas, circular hue wheels, channel sliders, hex/RGB input fields, and preset swatch grids. Built upon React Aria Components' color primitives, it ensures precision manipulation, full keyboard accessibility, and screen reader announcements.
+
+## Import
+
+Hashti exports the composite `ColorPicker` as well as all individual primitives and compound parts:
+
+```tsx
+import {
+  ColorPicker,
+  ColorArea,
+  ColorSlider,
+  ColorWheel,
+  ColorField,
+  ColorSwatch,
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+  ColorThumb,
+  parseColor,
+} from "@cinder/react";
+```
+
+## Anatomy & Compound Composition
+
+```tsx
+// Complete composite picker
+<ColorPicker defaultValue="#08bdba" label="Portal Tile Accent" />
+
+// Or custom compound composition
+<ColorPicker.Root defaultValue="hsl(180, 75%, 45%)">
+  <ColorPicker.Area xChannel="saturation" yChannel="brightness">
+    <ColorPicker.Thumb />
+  </ColorPicker.Area>
+  <ColorPicker.Slider channel="hue" />
+  <ColorPicker.Slider channel="alpha" />
+  <ColorPicker.Field />
+  <ColorPicker.Swatch />
+</ColorPicker.Root>
+```
+
+---
+
+## Examples
+
+### Composite Color Picker
+
+The default `<ColorPicker>` provides a pre-assembled layout with saturation/brightness area, hue slider, alpha slider, swatch preview, and hex input:
+
+```tsx
+import { useState } from "react";
+import { ColorPicker, parseColor, type Color } from "@cinder/react";
+
+export function CompositeColorPickerDemo() {
+  const [color, setColor] = useState<Color>(parseColor("#08bdba"));
+
+  return (
+    <div className="flex flex-col gap-4 max-w-xs">
+      <ColorPicker
+        label="Archway Accent Glaze"
+        value={color}
+        onChange={setColor}
+        showAlpha
+        showHexField
+        showSwatch
+      />
+      <div className="text-xs text-gray-500">
+        Selected HSB: {color.toString("hsb")}
+      </div>
+    </div>
+  );
+}
+```
+
+### Color Wheel & Circular Hue Selection
+
+`<ColorWheel>` presents a continuous 360° circular track with an interactive thumb:
+
+```tsx
+import { useState } from "react";
+import { ColorWheel, ColorWheelTrack, ColorThumb, parseColor } from "@cinder/react";
+
+export function ColorWheelDemo() {
+  const [color, setColor] = useState(parseColor("hsl(30, 100%, 50%)"));
+
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <ColorWheel value={color} onChange={setColor} outerRadius={100} innerRadius={76}>
+        <ColorWheelTrack />
+        <ColorThumb />
+      </ColorWheel>
+      <span className="text-sm font-medium">Hue: {Math.round(color.getChannelValue("hue"))}°</span>
+    </div>
+  );
+}
+```
+
+### Preset Swatch Grid (`ColorSwatchPicker`)
+
+Use `<ColorSwatchPicker>` for curated architectural brand palettes and theme selection:
+
+```tsx
+import { useState } from "react";
+import { ColorSwatchPicker, ColorSwatchPickerItem, parseColor } from "@cinder/react";
+
+export function BrandSwatchPickerDemo() {
+  const [selected, setSelected] = useState(parseColor("#08bdba"));
+
+  const BRAND_PALETTE = [
+    { name: "Turquoise Glaze", value: "#08bdba" },
+    { name: "Persian Amber", value: "#d97706" },
+    { name: "Terracotta Earth", value: "#dc2626" },
+    { name: "Isfahan Lapis", value: "#2563eb" },
+    { name: "Pure Adobe", value: "#e5e7eb" },
+    { name: "Charcoal Obsidian", value: "#111827" },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <h4 className="text-sm font-medium">Historic Architectural Accents</h4>
+      <ColorSwatchPicker
+        value={selected}
+        onChange={setSelected}
+        aria-label="Architectural Accents"
+      >
+        {BRAND_PALETTE.map((swatch) => (
+          <ColorSwatchPickerItem
+            key={swatch.value}
+            color={swatch.value}
+            aria-label={swatch.name}
+          />
+        ))}
+      </ColorSwatchPicker>
+    </div>
+  );
+}
+```
+
+### Channel Sliders (`ColorSlider`)
+
+Channel sliders allow standalone manipulation of individual channels (hue, saturation, lightness, brightness, red, green, blue, alpha):
+
+```tsx
+import { ColorSlider, parseColor } from "@cinder/react";
+
+export function ChannelSlidersDemo() {
+  const color = parseColor("hsla(200, 80%, 50%, 0.8)");
+
+  return (
+    <div className="flex flex-col gap-4 max-w-sm">
+      <ColorSlider channel="hue" defaultValue={color} label="Hue Channel" />
+      <ColorSlider channel="saturation" defaultValue={color} label="Saturation" />
+      <ColorSlider channel="lightness" defaultValue={color} label="Lightness" />
+      <ColorSlider channel="alpha" defaultValue={color} label="Alpha Channel" />
+    </div>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### ColorPicker (Composite)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `string \| Color` | `undefined` | Controlled color value. Accepts hex strings or `Color` objects from `parseColor`. |
+| `defaultValue` | `string \| Color` | `"#000000"` | Initial color value for uncontrolled usage. |
+| `onChange` | `(color: Color) => void` | `undefined` | Callback fired when color changes during manipulation. |
+| `label` | `ReactNode` | `undefined` | Header label for the picker. |
+| `showAlpha` | `boolean` | `true` | Whether to display the alpha opacity slider. |
+| `showHexField` | `boolean` | `true` | Whether to display the hex/channel input field. |
+| `showSwatch` | `boolean` | `true` | Whether to display the current color preview swatch. |
+
+### ColorArea
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `xChannel` | `ColorChannel` | `"saturation"` | Color channel mapped to horizontal axis. |
+| `yChannel` | `ColorChannel` | `"brightness"` | Color channel mapped to vertical axis. |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Dimension size preset for the gradient box. |
+
+### ColorSwatchPicker
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `value` | `string \| Color` | `undefined` | Controlled selected swatch color. |
+| `onChange` | `(color: Color) => void` | `undefined` | Selection change handler. |
+| `columns` | `number` | `undefined` | Number of columns in the swatch grid layout. |
+
+---
+
+## Accessibility & Keyboard Navigation
+
+- **2D Area Arrow Keys**: Arrow keys adjust saturation and brightness by `1%` increments (`PageUp`/`PageDown` by `10%`).
+- **Slider Keyboard Support**: Left/Right arrows decrement and increment slider values. `Home` jumps to min, `End` jumps to max.
+- **Roving Focus Grid**: `<ColorSwatchPicker>` manages a single tab stop with roving arrow navigation among swatches.
+- **Color Format Conversion**: `parseColor` parses hex (`#fff`, `#08bdba`), rgb/rgba, hsl/hsla, and hsb strings with automatic color space conversions.

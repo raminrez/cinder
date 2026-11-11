@@ -1,0 +1,175 @@
+---
+title: Command Palette
+description: Fast, keyboard-first modal command menu composed from native Hashti primitives with global ⌘K shortcut support.
+---
+
+The **CommandPalette** (also known as `CommandMenu`) is an accessible, keyboard-driven search and command execution dialog. Designed for rapid navigation, action triggering, and AI workflows, it is composed entirely of native Hashti primitives: `Modal`, `Dialog`, `SearchField`, `ListBox`, `Kbd`, and `EmptyState`.
+
+## Import
+
+Hashti exports both the composite `CommandPalette` component and compound subcomponents:
+
+```tsx
+import {
+  CommandPalette,
+  useCommandPaletteContext,
+} from "@cinder/react";
+```
+
+## Anatomy & Compound Composition
+
+```tsx
+<CommandPalette.Root enableShortcut shortcutKey="k">
+  <CommandPalette.Dialog>
+    <CommandPalette.Input placeholder="Type a command or search..." />
+    <CommandPalette.List>
+      <CommandPalette.Group heading="Navigation">
+        <CommandPalette.Item id="home" shortcut="⇧H">Home Portal</CommandPalette.Item>
+        <CommandPalette.Item id="docs" shortcut="⇧D">Documentation</CommandPalette.Item>
+      </CommandPalette.Group>
+      <CommandPalette.Group heading="Actions">
+        <CommandPalette.Item id="theme" shortcut="⌘T">Toggle Theme</CommandPalette.Item>
+        <CommandPalette.Item id="copy">Copy Palette Tokens</CommandPalette.Item>
+      </CommandPalette.Group>
+      <CommandPalette.Empty>No matching commands found.</CommandPalette.Empty>
+    </CommandPalette.List>
+    <CommandPalette.Footer>
+      <span>Use <CommandPalette.Kbd>↑</CommandPalette.Kbd> <CommandPalette.Kbd>↓</CommandPalette.Kbd> to navigate</span>
+      <span>Press <CommandPalette.Kbd>ESC</CommandPalette.Kbd> to close</span>
+    </CommandPalette.Footer>
+  </CommandPalette.Dialog>
+</CommandPalette.Root>
+```
+
+---
+
+## Examples
+
+### Interactive Quick Launcher (with ⌘K / Ctrl+K)
+
+The composite `<CommandPalette>` automatically listens for <kbd>⌘K</kbd> (Mac) and <kbd>Ctrl+K</kbd> (Windows/Linux) when `enableShortcut={true}`:
+
+```tsx
+import { useState } from "react";
+import { CommandPalette, Button, Kbd, Icon } from "@cinder/react";
+
+export function CommandPaletteDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+
+  const ITEMS = [
+    {
+      heading: "Architectural Portals",
+      items: [
+        { id: "hasht", title: "Hashti (Octagonal Vestibule)", shortcut: "⌘1", icon: "menu" },
+        { id: "sardar", title: "Sar-Dar (Entrance Portal)", shortcut: "⌘2", icon: "filter" },
+        { id: "dalan", title: "Dalan (Bent Corridors)", shortcut: "⌘3", icon: "search" },
+      ],
+    },
+    {
+      heading: "Design System",
+      items: [
+        { id: "tokens", title: "Explore Design Tokens", shortcut: "⇧T" },
+        { id: "brandbook", title: "Open Official Brandbook", shortcut: "⇧B" },
+      ],
+    },
+  ];
+
+  return (
+    <div className="flex flex-col gap-4 items-start">
+      <Button variant="secondary" onPress={() => setIsOpen(true)}>
+        <Icon name="search" size={16} />
+        <span>Quick Launcher</span>
+        <Kbd>⌘K</Kbd>
+      </Button>
+
+      {selectedAction && (
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Last executed: <span className="font-semibold">{selectedAction}</span>
+        </p>
+      )}
+
+      <CommandPalette
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        placeholder="Type a command or portal..."
+        onSelect={(key) => setSelectedAction(String(key))}
+      >
+        {ITEMS.map((group) => (
+          <CommandPalette.Group key={group.heading} heading={group.heading}>
+            {group.items.map((item) => (
+              <CommandPalette.Item key={item.id} id={item.id} shortcut={item.shortcut}>
+                <div className="flex items-center gap-2">
+                  {item.icon && <Icon name={item.icon as any} size={16} />}
+                  <span>{item.title}</span>
+                </div>
+              </CommandPalette.Item>
+            ))}
+          </CommandPalette.Group>
+        ))}
+      </CommandPalette>
+    </div>
+  );
+}
+```
+
+### Controlled Query Filtering
+
+You can control the search `query` and react to input changes dynamically:
+
+```tsx
+import { useState } from "react";
+import { CommandPalette } from "@cinder/react";
+
+export function ControlledQueryDemo() {
+  const [query, setQuery] = useState("");
+
+  return (
+    <CommandPalette
+      query={query}
+      onQueryChange={setQuery}
+      placeholder="Filter by keyword..."
+    >
+      <CommandPalette.Group heading="Filtered Results">
+        <CommandPalette.Item id="item-1">Result Item 1</CommandPalette.Item>
+        <CommandPalette.Item id="item-2">Result Item 2</CommandPalette.Item>
+      </CommandPalette.Group>
+    </CommandPalette>
+  );
+}
+```
+
+---
+
+## Props Reference
+
+### CommandPalette (Root)
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `isOpen` | `boolean` | `undefined` | Controlled open dialog state. |
+| `defaultOpen` | `boolean` | `false` | Initial open dialog state for uncontrolled usage. |
+| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback fired when the command palette opens or closes. |
+| `enableShortcut` | `boolean` | `true` | When true, registers global keyboard listener for ⌘K and Ctrl+K. |
+| `shortcutKey` | `string` | `"k"` | Custom single character key to combine with Meta/Ctrl. |
+| `closeOnSelect` | `boolean` | `true` | Automatically close the modal when an item is selected. |
+| `query` | `string` | `undefined` | Controlled query search string. |
+| `onQueryChange` | `(query: string) => void` | `undefined` | Search query change handler. |
+
+### CommandPalette.Item
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `Key` | `required` | Unique identifier for the command item. |
+| `shortcut` | `string` | `undefined` | Keyboard shortcut text displayed as a `<Kbd>` badge on the trailing edge. |
+| `isDisabled` | `boolean` | `false` | Whether the command item is disabled. |
+
+---
+
+## Accessibility & Keyboard Navigation
+
+- **Global ⌘K Shortcut**: Pressing `Cmd+K` (macOS) or `Ctrl+K` (Windows/Linux) opens the palette from anywhere on the page without stealing focus unless open.
+- **Roving Focus**: Focus automatically lands inside the search input on opening. `Down` arrow moves focus directly into the command list.
+- **Selection**: Pressing `Enter` executes the focused command.
+- **Dismissal**: Pressing `Escape` instantly closes the palette and returns focus to the initiating element.
+- **Screen Reader Announcements**: Uses ARIA `combobox` / `listbox` pattern with `aria-expanded` and live query feedback.

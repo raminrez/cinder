@@ -5,11 +5,11 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: 'Hashti Design System',
     },
+    githubUrl: 'https://github.com/raminrez/cinder',
     links: [
       { text: 'Documentation', url: '/docs' },
-      { text: 'Components', url: '/docs/components' },
+      { text: 'Components', url: '/docs/components/button' },
       { text: 'Brandbook', url: '/hashti-brandbook.html' },
-      { text: 'GitHub', url: 'https://github.com/raminrez/cinder' },
     ],
   };
 }
