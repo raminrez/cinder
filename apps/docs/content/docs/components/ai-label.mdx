@@ -187,3 +187,21 @@ export function AttributionPopoverExample() {
 - **Button Semantics in Revert Mode**: When `revertActive={true}`, renders a native `<button type="button">` with `aria-label={revertLabel}`. It is fully accessible via keyboard navigation (<kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>).
 - **Popover Trigger Semantics**: When wrapped inside `<DialogTrigger>`, accessibility attributes such as `aria-haspopup="dialog"`, `aria-expanded`, and keyboard focus trap management are handled automatically by React Aria Components.
 - **High Contrast**: Meets WCAG 2.2 AA standards with distinct foreground token colors and high-contrast icon strokes.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Opens generative AI attribution popover when clicked or focused. |
+| <kbd>Esc</kbd> | Dismisses attribution popover card. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | AI Label Button | Present on pointer hover. |
+| `[data-focused]` | AI Label Button | Present on keyboard focus. |
+| `[data-pressed]` | AI Label Button | Active while pressed. |

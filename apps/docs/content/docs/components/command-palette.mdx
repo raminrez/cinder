@@ -49,7 +49,7 @@ import {
 
 ## Examples
 
-### Interactive Quick Launcher (with ⌘K / Ctrl+K)
+### Interactive Command Launcher (with ⌘K / Ctrl+K)
 
 The composite `<CommandPalette>` automatically listens for <kbd>⌘K</kbd> (Mac) and <kbd>Ctrl+K</kbd> (Windows/Linux) when `enableShortcut={true}`:
 
@@ -83,7 +83,7 @@ export function CommandPaletteDemo() {
     <div className="flex flex-col gap-4 items-start">
       <Button variant="secondary" onPress={() => setIsOpen(true)}>
         <Icon name="search" size={16} />
-        <span>Quick Launcher</span>
+        <span>Open Launcher</span>
         <Kbd>⌘K</Kbd>
       </Button>
 
@@ -177,3 +177,23 @@ export function ControlledQueryDemo() {
 - **Selection**: Pressing `Enter` executes the focused command.
 - **Dismissal**: Pressing `Escape` instantly closes the palette and returns focus to the initiating element.
 - **Screen Reader Announcements**: Uses ARIA `combobox` / `listbox` pattern with `aria-expanded` and live query feedback.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> | Global shortcut toggling the command palette open or closed. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates through filtered commands and options. |
+| <kbd>Enter</kbd> | Executes the selected command action and closes palette. |
+| <kbd>Esc</kbd> | Closes the command palette. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Item | Present when mouse hovers over an item. |
+| `[data-selected]` | Item | Present on currently focused command. |
+| `[data-disabled]` | Item | Applied on disabled commands. |

@@ -237,3 +237,24 @@ export function ControlledTabsExample() {
   - Press <kbd>Tab</kbd> to move focus directly from the active tab into the contents of the active tab panel.
 - **Dynamic Linking**: React Aria Components automatically connects `aria-controls` on each tab to the corresponding tab panel's `id`, and sets `aria-labelledby` on the panel pointing back to the tab.
 - **RTL Adaptability**: Arrow keys automatically reverse direction in right-to-left (RTL) scripts, ensuring seamless bidirectional usability.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Moves focus horizontally between tab triggers. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Moves focus vertically in vertical tab list. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jumps focus to first or last tab in the list. |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Activates focused tab if selection is manual. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Tab | Applied on pointer hover. |
+| `[data-selected]` | Tab | Active on currently selected tab. |
+| `[data-focused]` | Tab | Present when tab trigger receives focus. |
+| `[data-disabled]` | Tab | Present when tab is disabled. |

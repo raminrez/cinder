@@ -204,3 +204,20 @@ export function CustomLabelExample() {
   - Activating the cancel button clears row selection and returns focus smoothly to the table header or previously focused row.
 - **Dynamic Mounting**: Because the component returns `null` when no rows are selected, it does not clutter the DOM or introduce extraneous tab stops when idle.
 - **High Contrast**: Designed with high-contrast surfaces ensuring that active action buttons are distinguishable from normal table borders.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Cycles focus between batch action buttons and cancel button. |
+| <kbd>Esc</kbd> | Clears active multi-row selection and dismisses batch bar. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-active]` | Batch Bar | Present when one or more rows are selected. |
+| `[data-hovered]` | Batch Button | Present on pointer hover. |

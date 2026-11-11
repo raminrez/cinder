@@ -234,3 +234,21 @@ Modal strictly implements the **WAI-ARIA Dialog (Modal) Pattern**:
 - **Body Scroll Locking**: Document background scrolling is locked while the modal is open, preventing disorienting background scroll behavior.
 - **Inert Background**: Surrounding page content outside the modal container is automatically marked with the HTML `inert` attribute and `aria-hidden="true"`, ensuring assistive technologies can only inspect modal contents.
 - **Accessible Labelling**: When using `<Heading slot="title">`, the modal dialog is automatically linked via `aria-labelledby`.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Cycles focus forward through tabbable elements trapped inside modal. |
+| <kbd>Shift</kbd>+<kbd>Tab</kbd> | Cycles focus backward within modal dialog trap. |
+| <kbd>Esc</kbd> | Dismisses modal dialog and restores focus to open trigger. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Modal Overlay | Applied during entrance opacity transition. |
+| `[data-exiting]` | Modal Overlay | Applied during dismissal exit transition. |

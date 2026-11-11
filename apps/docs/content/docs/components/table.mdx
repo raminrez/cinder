@@ -304,3 +304,24 @@ export function TableSizesExample() {
 - **Selection**: Press <kbd>Space</kbd> to toggle the selection of the currently focused row. Hold <kbd>Shift</kbd> + <kbd>ArrowDown</kbd> to select contiguous ranges.
 - **Sort Announcements**: Sortable column headers announce their active sort status (`aria-sort="ascending"` or `aria-sort="descending"`), avoiding silent visual-only indicators.
 - **Row Headers**: Mark the primary identity column (such as name or ID) with `isRowHeader` so screen readers announce it when reading across subsequent data cells.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Moves focus between adjacent cells in the same row. |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Moves focus to the cell directly below or above. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jumps to the first or last cell in the row. |
+| <kbd>Space</kbd> | Toggles row selection in selectable tables. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Row | Present when pointer hovers over table row. |
+| `[data-selected]` | Row | Set when table row is selected. |
+| `[data-focused]` | Cell, Row | Active when cell or row holds focus. |
+| `[data-disabled]` | Row | Present on disabled table rows. |

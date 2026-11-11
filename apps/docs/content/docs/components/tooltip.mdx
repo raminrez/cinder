@@ -85,7 +85,7 @@ export function TooltipPlacementsDemo() {
 
 ### Delay Duration & Warm-Up Behavior
 
-By default, tooltips wait 500ms before appearing to avoid flicker during incidental pointer passes. When moving quickly between adjacent buttons with tooltips, React Aria's built-in warm-up timer reveals subsequent tooltips instantly:
+By default, tooltips wait 500ms before appearing to avoid flicker during incidental pointer passes. When moving rapidly between adjacent buttons with tooltips, React Aria's built-in warm-up timer reveals subsequent tooltips instantly:
 
 ```tsx
 import { Tooltip, TooltipTrigger, Button } from "@hashti/react";
@@ -134,3 +134,19 @@ Tooltip complies strictly with the **WAI-ARIA Tooltip Pattern** and **WCAG 2.1 C
 - **Escape Key Dismissal**: Users can press <kbd>Esc</kbd> to immediately dismiss a visible tooltip without changing pointer position or losing keyboard focus.
 - **Hoverable Content**: The pointer can be moved over the tooltip itself without causing it to disappear, allowing users with screen magnifiers to read its contents.
 - **ARIA Semantics**: Hashti links the trigger button and tooltip using `role="tooltip"` and `aria-describedby`, ensuring assistive technologies read the tooltip text upon focusing the trigger.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Esc</kbd> | Immediately dismisses the active tooltip without moving pointer. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Tooltip Surface | Active while fading in. |
+| `[data-exiting]` | Tooltip Surface | Active while fading out. |

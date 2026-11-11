@@ -220,3 +220,23 @@ NumberField implements the **WAI-ARIA `spinbutton`** role pattern:
 - **Home & End**: Pressing <kbd>Home</kbd> immediately jumps to `minValue` (if defined); pressing <kbd>End</kbd> jumps to `maxValue` (if defined).
 - **Accessible Stepper Buttons**: Decrement and increment buttons feature clear localized labels (`aria-label="Decrement"`, `aria-label="Increment"`) and are marked `tabIndex={-1}` so keyboard users navigate smoothly through form fields without extra tab stops.
 - **Screen Reader Announcements**: The component sets `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (reflecting internationalized currency and percentage strings) so screen readers accurately speak the formatted value.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Increments or decrements the numeric value by `step`. |
+| <kbd>Page Up</kbd> / <kbd>Page Down</kbd> | Increments or decrements value by larger page step. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jumps directly to minimum or maximum permitted value. |
+| <kbd>Tab</kbd> | Moves focus into or out of the number input control. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Stepper, Input | Present when hovered by pointer. |
+| `[data-focused]` | Stepper, Input | Active when receiving focus. |
+| `[data-disabled]` | Stepper, Input | Set when interaction is disabled. |

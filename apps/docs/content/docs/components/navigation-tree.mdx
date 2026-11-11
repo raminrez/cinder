@@ -148,3 +148,22 @@ export function NestedTreeDemo() {
 - **Expand/Collapse**: `Right` arrow expands a collapsed branch; `Left` arrow collapses an open branch or moves to its parent.
 - **Link Activation**: Pressing `Enter` follows the `href` link.
 - **Typeahead Search**: Typing character keys jumps directly to matching items in the hierarchy.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates through navigation items. |
+| <kbd>→</kbd> / <kbd>←</kbd> | Expands or collapses navigation group. |
+| <kbd>Enter</kbd> | Activates link or toggles group. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Item | Present on pointer hover. |
+| `[data-selected]` | Item | Set on the active route item. |
+| `[data-focused]` | Item | Present on keyboard focus. |

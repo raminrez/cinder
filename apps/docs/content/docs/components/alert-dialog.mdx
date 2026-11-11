@@ -196,3 +196,20 @@ AlertDialog implements the **WAI-ARIA `alertdialog`** specification:
 - **Initial Focus on the Safest Action**: In accordance with accessibility safety standards, focus is automatically initialized on the **Cancel** button rather than the destructive confirmation button. This guarantees that an accidental <kbd>Enter</kbd> or <kbd>Space</kbd> keystroke cancels rather than executes the dangerous action.
 - **Non-Dismissable Backdrop**: The background overlay click handler is disabled (`isDismissable={false}`), preventing inadvertent clicks outside from discarding critical prompts without a deliberate user choice.
 - **Escape Key Handling**: Pressing <kbd>Esc</kbd> triggers `onCancel` and closes the dialog safely.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus between Cancel and Confirm action buttons. |
+| <kbd>Esc</kbd> | Dismisses alert dialog if configured to permit backdrop cancel. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Dialog Surface | Active during mount animation. |
+| `[data-exiting]` | Dialog Surface | Active during exit animation. |

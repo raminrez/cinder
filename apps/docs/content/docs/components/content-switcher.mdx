@@ -198,3 +198,20 @@ export function BinarySwitcherExample() {
   - Press <kbd>Space</kbd> or <kbd>Enter</kbd> to select the focused option.
   - Focus order respects RTL layouts automatically.
 - **Group Labelling**: Always supply an `aria-label` (or `aria-labelledby`) on the `<ContentSwitcher>` so assistive technology users understand the grouping's purpose.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Moves selection across switcher segments. |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Activates focused segment. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-selected]` | Switcher Button | Active on selected view. |
+| `[data-focused]` | Switcher Button | Present on keyboard focus. |

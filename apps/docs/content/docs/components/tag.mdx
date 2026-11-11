@@ -219,3 +219,23 @@ export function SelectableTagsExample() {
 - **Dismissal Controls**: When `onRemove` is enabled, pressing <kbd>Delete</kbd> or <kbd>Backspace</kbd> on a focused tag triggers dismissal. The remove button within `<FilterTag>` is also accessible via keyboard and screen readers with an automatic `slot="remove"` designation.
 - **Selection**: Press <kbd>Space</kbd> or <kbd>Enter</kbd> to toggle the selection of a tag when `selectionMode` is enabled.
 - **Screen Reader Semantics**: `TagGroup` outputs an ARIA `role="grid"` or `role="listbox"` with appropriate group labelling via `<Label>`, and each tag provides `aria-selected` and accessible button states.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Moves focus between tags in a tag group. |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Selects tag or triggers remove action. |
+| <kbd>Delete</kbd> / <kbd>Backspace</kbd> | Removes focused tag if removable. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Tag | Present on hover. |
+| `[data-selected]` | Tag | Present when tag is selected. |
+| `[data-focused]` | Tag | Active on focus. |
+| `[data-disabled]` | Tag | Present when tag is disabled. |

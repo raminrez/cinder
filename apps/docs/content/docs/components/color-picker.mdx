@@ -204,3 +204,23 @@ export function ChannelSlidersDemo() {
 - **Slider Keyboard Support**: Left/Right arrows decrement and increment slider values. `Home` jumps to min, `End` jumps to max.
 - **Roving Focus Grid**: `<ColorSwatchPicker>` manages a single tab stop with roving arrow navigation among swatches.
 - **Color Format Conversion**: `parseColor` parses hex (`#fff`, `#08bdba`), rgb/rgba, hsl/hsla, and hsb strings with automatic color space conversions.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Opens the color picker popover dialog. |
+| <kbd>Arrow Keys</kbd> | Nudges 2D saturation/brightness thumb or 1D slider handle. |
+| <kbd>Shift</kbd>+<kbd>Arrow Keys</kbd> | Adjusts color channel value by larger increment. |
+| <kbd>Esc</kbd> | Closes the color picker popover. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Swatch, Thumb | Active on pointer hover. |
+| `[data-focused]` | Swatch, Thumb | Active on keyboard focus. |
+| `[data-disabled]` | Picker, Swatch | Present when picker is disabled. |

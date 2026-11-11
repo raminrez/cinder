@@ -291,3 +291,26 @@ Select complies with the **WAI-ARIA `combobox`** specification:
   - While open, `aria-activedescendant` is tracked on the focused item, ensuring screen readers announce options accurately.
 - **ARIA Attributes**:
   - The trigger has `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded="false|true"`, and `aria-labelledby` referencing the label.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> / <kbd>↓</kbd> | Opens the dropdown listbox and focuses the active item. |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Navigates between items in the listbox. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Moves focus to the first or last available option. |
+| <kbd>Esc</kbd> | Closes the dropdown listbox and restores focus to the trigger. |
+| <kbd>Tab</kbd> | Closes the listbox and moves focus to the next interactive page element. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Trigger, Item | Present when the pointer hovers over the element. |
+| `[data-focused]` | Trigger, Item | Present when the element holds keyboard or pointer focus. |
+| `[data-pressed]` | Trigger, Item | Active while the element is actively pressed. |
+| `[data-selected]` | Item | Present on currently selected listbox options. |
+| `[data-disabled]` | Trigger, Item | Present when the element is disabled from interaction. |

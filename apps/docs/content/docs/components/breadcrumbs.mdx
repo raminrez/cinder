@@ -5,7 +5,7 @@ description: Hierarchical navigational aid communicating page depth and location
 
 # Breadcrumbs
 
-Breadcrumbs provide a secondary, linear navigational hierarchy that shows users where they are within an application's nested site structure, enabling quick parent-level traversal.
+Breadcrumbs provide a secondary, linear navigational hierarchy that shows users where they are within an application's nested site structure, enabling parent-level traversal.
 
 In Hashti, Breadcrumbs are constructed using semantic ordered lists wrapped in accessible `<nav>` landmarks, automatically marking the terminal page with `aria-current="page"` and handling responsive truncation.
 
@@ -80,7 +80,7 @@ export function DynamicBreadcrumbsExample() {
 
 ### Action Callbacks
 
-Breadcrumb items can fire an `onAction` callback instead of navigating directly via `href`, making it easy to integrate with client routers or state machines:
+Breadcrumb items can fire an `onAction` callback instead of navigating directly via `href`, integrating with client routers or state machines:
 
 ```tsx
 import { Breadcrumbs, BreadcrumbItem } from "@hashti/react";

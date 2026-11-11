@@ -189,8 +189,8 @@ export function PressableCardDemo() {
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | `ReactNode` | — | Title text or node. Strings are automatically wrapped in an `<h3 className="cinder-card-title">`. |
-| `description` | `ReactNode` | — | Subtitle or description text, wrapped in `<p className="cinder-card-description">`. |
+| `title` | `ReactNode` | — | Title text or node. Strings are automatically wrapped in an `<h3 className="hashti-card-title">`. |
+| `description` | `ReactNode` | — | Subtitle or description text, wrapped in `<p className="hashti-card-description">`. |
 | `action` | `ReactNode` | — | Trailing element (such as a `<Button>`, `<Badge>`, or menu icon). |
 | `children` | `ReactNode` | — | Custom children when custom header layout is needed. |
 
@@ -218,3 +218,12 @@ export function PressableCardDemo() {
   - Responds to both <kbd>Enter</kbd> and <kbd>Space</kbd> keys, invoking `onPress()`.
   - Focus rings appear via `:focus-visible` without triggering on mouse clicks.
 - **Nested Controls Warning**: Avoid placing interactive nested buttons inside a pressable card without stopping event propagation, as nested buttons inside a `role="button"` violate accessibility guidelines. For cards containing nested buttons, use a non-pressable card and place discrete buttons in `CardFooter` or `CardHeader`.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-interactive]` | Card | Present when card has an associated press or link action. |
+| `[data-hovered]` | Card | Present on pointer hover when interactive. |
+| `[data-focused]` | Card | Present on keyboard focus when interactive. |

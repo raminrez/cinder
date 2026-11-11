@@ -203,3 +203,21 @@ export function SelectableRowsExample() {
 - **Screen Reader Pair Navigation**: Modern screen readers (VoiceOver, NVDA, JAWS) announce the total count of terms in the list and allow users to jump term-by-term, announcing corresponding values automatically.
 - **Form Controls in Rows**: When placing radio buttons or checkboxes inside rows for plan selection, each control should either be labeled by an `<input aria-label="...">` or linked to the row term via `id` and `htmlFor`.
 - **Keyboard Usability**: When interactive selection is enabled, radio elements receive native focus and arrow key navigation without requiring custom JavaScript listeners.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Moves focus between selectable rows when selection is enabled. |
+| <kbd>Space</kbd> | Toggles row selection in selectable mode. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Row | Present on pointer hover over row. |
+| `[data-selected]` | Row | Present on selected rows. |
+| `[data-focused]` | Row | Set on focused list row. |

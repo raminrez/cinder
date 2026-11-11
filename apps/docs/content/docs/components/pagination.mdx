@@ -211,3 +211,21 @@ export function NativeSelectExample() {
   - The "Next page" button is assigned `isDisabled={page >= pages}`.
   - Disabled buttons are announced as disabled and removed from the active keyboard tab cycle.
 - **Keyboard Navigation**: Buttons and the page size selector are fully focusable and activatable via standard <kbd>Tab</kbd>, <kbd>Enter</kbd>, and <kbd>Space</kbd> keys.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus through pagination buttons and select field. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Activates next, previous, or numbered page. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Page Button | Present on pointer hover. |
+| `[data-selected]` | Page Button | Active on current active page button. |
+| `[data-disabled]` | Page Button | Applied when button reaches first or last page boundary. |

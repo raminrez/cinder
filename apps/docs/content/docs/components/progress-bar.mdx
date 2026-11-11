@@ -202,3 +202,10 @@ export function MeterExample() {
 - **Indeterminate Mode**: When `isIndeterminate={true}`, the `aria-valuenow` attribute is omitted in accordance with ARIA specifications, signaling to screen readers that the task is underway with unknown duration.
 - **Accessible Labelling**: When the visual `label` prop is provided, it is linked automatically to the progress bar via an internal `id` reference. If omitting a visual label, you **must** supply an `aria-label` or `aria-labelledby` attribute.
 - **Value Text**: Screen readers read the localized `valueText` (e.g. "65 percent" or "$3,820.00"), ensuring internationalized clarity for non-visual users.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-indeterminate]` | ProgressBar | Present when progress value is indeterminate. |

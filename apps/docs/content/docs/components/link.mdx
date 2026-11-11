@@ -93,7 +93,7 @@ import { Link, Icon } from "@hashti/react";
 export function ExternalLinkDemo() {
   return (
     <Link
-      href="https://github.com/cinder/hashti"
+      href="https://github.com/raminrez/hashti"
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex items-center gap-1.5 font-medium text-blue-600 dark:text-blue-400"
@@ -159,3 +159,22 @@ Hashti links adhere to W3C ARIA practices for hyperlink controls:
 - **Native Anchors**: When `href` is supplied and `isDisabled` is false, renders standard `<a href="...">` elements that assistive technologies report as links.
 - **External Notifications**: Always provide visual and auditory indicators (such as `<span className="sr-only">(opens in new tab)</span>`) when a link opens a new browser window or tab.
 - **Color Distinguishability**: Under WCAG 2.2 Criterion 1.4.1 (Use of Color), links surrounded by text must be distinguishable by more than color alone. Using `inline={true}` applies an underline that guarantees compliance.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Enter</kbd> | Activates link navigation. |
+| <kbd>Tab</kbd> | Moves focus into and out of link. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Link | Present on pointer hover. |
+| `[data-focused]` | Link | Active on keyboard focus. |
+| `[data-pressed]` | Link | Active during click/press. |
+| `[data-disabled]` | Link | Present when link is disabled. |

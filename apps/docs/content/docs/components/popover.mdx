@@ -120,9 +120,9 @@ export function CustomOffsetDemo() {
 }
 ```
 
-### Contextual Quick Actions
+### Contextual Actions
 
-Popovers are ideal for quick multi-option toggles or filter panels:
+Popovers house multi-option toggles or filter panels:
 
 ```tsx
 import { useState } from "react";
@@ -183,3 +183,20 @@ export function QuickSettingsPopover() {
   - In non-modal popovers (`isNonModal={true}`), users can interact with elements on the page while the popover remains open until dismissed.
 - **Collision Avoidance**: Uses real-time boundary detection (`shouldFlip={true}`) to prevent content from rendering off-screen on small mobile viewports.
 - **Trigger ARIA Attributes**: The trigger automatically receives `aria-haspopup="dialog"`, `aria-expanded="false|true"`, and `aria-controls` referencing the popover dialog.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Navigates through interactive controls inside popover. |
+| <kbd>Esc</kbd> | Dismisses popover and returns focus to anchor element. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Popover Surface | Applied during mount transition. |
+| `[data-exiting]` | Popover Surface | Applied during unmount transition. |

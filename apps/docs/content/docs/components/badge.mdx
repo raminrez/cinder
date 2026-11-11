@@ -171,6 +171,14 @@ export function PlacementExample() {
 ## Accessibility (a11y)
 
 - **Role Semantics**: Badges render with `role="status"` by default, allowing assistive technologies to announce count updates without stealing user focus.
-- **Screen Reader Announcements**: For standalone dot badges or unlabelled icon wrappers, always supply an `aria-label` on the wrapper or include hidden text (such as `<span className="cinder-visually-hidden">5 unread messages</span>`) so that non-sighted users receive the same contextual information.
+- **Screen Reader Announcements**: For standalone dot badges or unlabelled icon wrappers, always supply an `aria-label` on the wrapper or include hidden text (such as `<span className="hashti-visually-hidden">5 unread messages</span>`) so that non-sighted users receive the same contextual information.
 - **High Contrast**: Badge foreground text and background colors meet WCAG 2.2 AA contrast requirements (minimum 4.5:1) in both light and dark themes.
 - **RTL Support**: Using logical placements (`top-end`, `bottom-start`) ensures that badge positions flip correctly when switching between LTR (English) and RTL (Persian, Arabic) locales.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-variant]` | Badge | Visual variant token indicator. |
+| `[data-size]` | Badge | Size token indicator (`sm`, `md`, `lg`). |

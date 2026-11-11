@@ -263,3 +263,24 @@ Hashti checkboxes adhere strictly to the [W3C WAI-ARIA Checkbox Pattern](https:/
 - **Group Association**: `CheckboxGroup` renders a semantic `<div role="group">` linked to its label via `aria-labelledby` and its helper/error message via `aria-describedby`.
 - **Validation Signals**: When `isInvalid` is true, the group applies `aria-invalid="true"`.
 - **High Contrast Focus**: Features an outer offset focus ring meeting the WCAG 2.2 AAA minimum 3:1 contrast ratio against both light and dark canvas surfaces.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> | Toggles checkbox between checked, unchecked, or indeterminate. |
+| <kbd>Tab</kbd> | Moves focus to or from the checkbox control. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Checkbox | Present when hovered by pointer. |
+| `[data-focused]` | Checkbox | Present when receiving keyboard focus. |
+| `[data-pressed]` | Checkbox | Active during mouse or space key press. |
+| `[data-selected]` | Checkbox | Active when checkbox is checked. |
+| `[data-indeterminate]` | Checkbox | Active when checkbox is in indeterminate state. |
+| `[data-disabled]` | Checkbox | Present when checkbox is disabled. |

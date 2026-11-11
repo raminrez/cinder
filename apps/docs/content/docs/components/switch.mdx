@@ -43,7 +43,7 @@ import type { SwitchProps, SelectionColor } from "@hashti/react";
 
 ### Basic Usage
 
-A simple binary toggle with an adjacent textual label:
+A binary toggle with an adjacent textual label:
 
 ```tsx
 import { useState } from "react";
@@ -217,3 +217,22 @@ Hashti switches conform to the [W3C WAI-ARIA Switch Pattern](https://www.w3.org/
 - **ARIA Role**: Renders a semantic element with `role="switch"` and `aria-checked="true"` or `"false"`.
 - **Contrast**: The track and thumb maintain WCAG 2.2 AAA minimum contrast ratios in both resting off and active on states.
 - **Switch vs. Checkbox**: Use a `Switch` when an action toggles on or off with immediate effect (e.g. Wifi, Dark Mode, Notification Sound). Use a `Checkbox` when the choice is part of a larger form requiring submission.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> | Toggles switch on or off. |
+| <kbd>Tab</kbd> | Moves focus onto or away from the switch. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Switch | Present on pointer hover. |
+| `[data-focused]` | Switch | Active on keyboard focus. |
+| `[data-selected]` | Switch | Set when switch is in the active (ON) state. |
+| `[data-disabled]` | Switch | Applied when switch is disabled. |

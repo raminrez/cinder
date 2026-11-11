@@ -164,3 +164,10 @@ export function HighContrastAlertExample() {
 - **Do Not Abuse**: Because `role="alert"` interrupts user flow, use alerts sparingly for critical, time-sensitive system errors. For normal inline form validation or passive status feedback, prefer [`InlineNotification`](./inline-notification) which uses `role="status"`.
 - **Keyboard Dismissal**: The close button rendered when `onDismiss` is provided has a descriptive `aria-label="Dismiss notification"` and is fully focusable and activatable via <kbd>Enter</kbd> or <kbd>Space</kbd>.
 - **High Contrast Ratios**: In both light and dark themes, text and icon colors maintain a minimum 4.5:1 contrast against the background surface.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-variant]` | Alert | Semantic variant (`info`, `success`, `warning`, `error`). |

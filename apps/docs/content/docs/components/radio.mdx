@@ -215,3 +215,24 @@ Hashti's `RadioGroup` strictly complies with the [W3C WAI-ARIA Radio Group Patte
 - The container receives `role="radiogroup"` linked via `aria-labelledby` to its `<Label>`.
 - Each option renders `role="radio"` with `aria-checked="true"` or `"false"`.
 - The helper description and error message are programmatically linked via `aria-describedby`, ensuring screen readers announce context when entering the group.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>→</kbd> | Moves focus and selection to the next radio in the group. |
+| <kbd>↑</kbd> / <kbd>←</kbd> | Moves focus and selection to the previous radio in the group. |
+| <kbd>Tab</kbd> | Enters or exits the radio group (single tab stop). |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Radio | Present on pointer hover. |
+| `[data-focused]` | Radio | Present when receiving focus. |
+| `[data-pressed]` | Radio | Active while pressed. |
+| `[data-selected]` | Radio | Set on the active selected radio option. |
+| `[data-disabled]` | Radio | Present when radio option is disabled. |

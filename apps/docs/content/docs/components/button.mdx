@@ -23,7 +23,7 @@ In Persian architectural spatial design, entrance portals (*darvazeh* and *sar-d
 
 - **Built on React Aria Components**: Leverages `RACButton` for cross-browser event normalization (`onPress`), roving focus integration, and screen-reader accessibility.
 - **Native Loading States**: Integrated `isPending` state that renders a localized indeterminate progress spinner while preserving layout dimensions.
-- **Eight Theme Adaptability**: Automatically shifts border radius, surface contrast, and shadow depth across Frame and Carbon design systems.
+- **Eight Theme Adaptability**: Automatically shifts border radius, surface contrast, and shadow depth across high-density and expressive themes.
 
 ---
 
@@ -92,7 +92,7 @@ export function ButtonVariantsDemo() {
 
 Hashti offers 5 control sizes. In the Frame theme family, the default control size is `lg` (44px target), matching touch-friendly human interface ergonomics:
 
-| Size | Height (Frame) | Height (Carbon) | Common Use Cases |
+| Size | Height (Expressive) | Height (Compact) | Common Use Cases |
 | :--- | :--- | :--- | :--- |
 | `sm` | 32px | 32px | Compact data tables, tight filters, compact card headers |
 | `md` | 38px | 40px | Standard dialogs, sidebar forms, secondary navigation |
@@ -160,7 +160,7 @@ export function IconButtonDemo() {
 
 ### Loading & Pending States
 
-When executing asynchronous requests (e.g., API mutation, Stripe checkout), set `isPending={true}`. Hashti automatically injects an indeterminate `<RACProgressBar className="cinder-spinner" />` while preserving button dimensions to avoid layout shift:
+When executing asynchronous requests (e.g., API mutation, Stripe checkout), set `isPending={true}`. Hashti automatically injects an indeterminate `<RACProgressBar className="hashti-spinner" />` while preserving button dimensions to avoid layout shift:
 
 ```tsx
 import { useState } from "react";
@@ -220,7 +220,7 @@ export function DisabledButtonDemo() {
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger' \| 'danger-tertiary' \| 'danger-ghost'` | `'primary'` | Visual hierarchy styling variant. |
-| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `'lg'` | Geometric control size (default 44px in Frame, 48px in Carbon). |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `'lg'` | Geometric control size (default 44px in Frame, 48px in high-density themes). |
 | `iconOnly` | `boolean` | `false` | When true, renders a square aspect-ratio target for an icon. |
 | `isPending` | `boolean` | `false` | Renders an inline indeterminate progress spinner. |
 | `pendingLabel` | `string` | `'Pending'` | Accessible label announced by screen readers during pending state. |
@@ -247,4 +247,4 @@ Hashti buttons strictly adhere to the [W3C WAI-ARIA Button Pattern](https://www.
 - **Native Semantics**: Renders a semantic `<button type="button">` element unless configured as `type="submit"` or `type="reset"`.
 - **Accessible Names**: Buttons containing text automatically inherit their accessible name from `children`. Icon-only buttons must supply `aria-label`.
 - **Pending Announcements**: When `isPending` is active, the spinner contains `role="progressbar"` with `aria-label={pendingLabel}`, immediately informing vision-impaired users of background work.
-- **Focus Rings**: Employs high-contrast focus rings (`outline: 2px solid var(--cinder-focus-ring)`) with double-offset separation that remains distinct in both light and dark themes.
+- **Focus Rings**: Employs high-contrast focus rings (`outline: 2px solid var(--hashti-focus-ring)`) with double-offset separation that remains distinct in both light and dark themes.

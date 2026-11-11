@@ -254,3 +254,21 @@ Each segment within the Time Field acts as an isolated, keyboard-controllable un
 | Error Status | `--error` (`#DC2626`) | Border and indicator on invalid time |
 | Valid Status | `--success` (`#246343`) | Success badge and confirmed indicator |
 | Geometry Radius | `--radius-md` | 6px rounded input container geometry |
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Moves cursor focus between hour, minute, second, and AM/PM segments. |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Increments or decrements active time segment. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Segment | Present on pointer hover. |
+| `[data-focused]` | Segment | Active on keyboard focus. |
+| `[data-invalid]` | Control | Set when entered time is outside valid range. |

@@ -225,3 +225,23 @@ Hashti GridList follows the **WAI-ARIA Grid Pattern**:
 | Selection Surface | `--selected` (`#e7edff`) | Selected item tint |
 | Focus Ring | `--focus` | 2px focus border on active item |
 | Border Divider | `--divider` | Separator line between rows |
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Moves keyboard focus between grid list items. |
+| <kbd>Space</kbd> | Toggles item selection in selectable mode. |
+| <kbd>⌘A</kbd> / <kbd>Ctrl</kbd>+<kbd>A</kbd> | Selects all items in multiple selection mode. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Item | Present when pointer hovers over item. |
+| `[data-selected]` | Item | Set on selected list items. |
+| `[data-focused]` | Item | Active on keyboard focus. |
+| `[data-disabled]` | Item | Present on disabled items. |

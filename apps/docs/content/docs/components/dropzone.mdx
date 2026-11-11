@@ -172,3 +172,21 @@ Restrict drops to specific MIME types or extensions by utilizing RAC's native dr
 | Drag Surface | `--info-surface` | Subtle active wash during hover |
 | Background | `--surface` / `--surface-raised` | Card and default container fills |
 | Corner Radius | `--radius-lg` | 12px rounded corner geometry |
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus to embedded upload trigger button. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Opens system file picker dialog when trigger is focused. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-drop-target]` | DropZone | Active when dragged file is hovering over drop zone. |
+| `[data-focused]` | DropZone | Present when dropzone receives focus. |
+| `[data-disabled]` | DropZone | Present when file ingestion is disabled. |

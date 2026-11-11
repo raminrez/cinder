@@ -5,9 +5,9 @@ description: Master Hashti's 8 design themes, nested contextual Layering system,
 
 # Theming & Layering
 
-Hashti features a multi-tiered theming engine designed around Carbon Design System's spatial logic and Frame's refined modern aesthetic. 
+Hashti features a multi-tiered theming engine designed around disciplined spatial logic and Frame's refined modern aesthetic. 
 
-Themes are applied via CSS custom properties scoped to the `data-cinder-theme` attribute or handled automatically using the `<Theme>` and `<Layer>` React components.
+Themes are applied via CSS custom properties scoped to the `data-hashti-theme` attribute or handled automatically using the `<Theme>` and `<Layer>` React components.
 
 ---
 
@@ -17,7 +17,7 @@ Hashti provides 8 first-class themes divided into three aesthetic families:
 
 | Theme Family | Theme Identifier | Mode | Description |
 | :--- | :--- | :--- | :--- |
-| **Carbon Core** | `white` | Light | Carbon's pristine high-contrast white theme for document-heavy workspaces. |
+| **Hashti Core** | `white` | Light | Pristine high-contrast white theme for document-heavy workspaces. |
 | | `g10` | Light | Soft warm grey (Gray 10) reducing eye strain for long analytical sessions. |
 | | `g90` | Dark | Charcoal dark grey (Gray 90) balanced for low-light developer workflows. |
 | | `g100` | Dark | Deep obsidian black (Gray 100) high-contrast dark environment. |
@@ -30,7 +30,7 @@ Hashti provides 8 first-class themes divided into three aesthetic families:
 
 ## Using the `<Theme>` Component
 
-The `<Theme>` component wraps any subtree to set or switch the active theme. It injects `data-cinder-theme` and configures React Aria's `I18nProvider` automatically.
+The `<Theme>` component wraps any subtree to set or switch the active theme. It injects `data-hashti-theme` and configures React Aria's `I18nProvider` automatically.
 
 ```tsx
 import { Theme, Button } from "@hashti/react";
@@ -53,11 +53,11 @@ If you prefer applying themes directly in HTML or server-rendered layouts withou
 
 ```html
 <!-- Light theme root -->
-<html lang="en" data-cinder-theme="frame-light">
+<html lang="en" data-hashti-theme="frame-light">
   <body>
     ...
     <!-- Local dark theme island -->
-    <div data-cinder-theme="frame-dark" class="cinder-theme">
+    <div data-hashti-theme="frame-dark" class="hashti-theme">
       ...
     </div>
   </body>
@@ -72,9 +72,9 @@ In Persian architecture, stepping through the Hashti reveals successive inner sp
 
 Rather than hardcoding arbitrary shadow levels or color overrides, Hashti uses a mathematical **3-tier Layering System**:
 
-- **Layer 0 (`data-cinder-layer="0"`):** The background canvas (e.g. the main page body).
-- **Layer 1 (`data-cinder-layer="1"`):** Primary raised surfaces (sidebars, data tables, main content cards).
-- **Layer 2 (`data-cinder-layer="2"`):** Nested elements inside containers (cards inside sidebars, input fields inside cards, floating popovers).
+- **Layer 0 (`data-hashti-layer="0"`):** The background canvas (e.g. the main page body).
+- **Layer 1 (`data-hashti-layer="1"`):** Primary raised surfaces (sidebars, data tables, main content cards).
+- **Layer 2 (`data-hashti-layer="2"`):** Nested elements inside containers (cards inside sidebars, input fields inside cards, floating popovers).
 
 ### Contextual Layer Nesting
 
@@ -87,17 +87,17 @@ export function LayeredDashboard() {
   return (
     <Theme theme="frame-light">
       {/* Layer 0: Page Canvas */}
-      <div style={{ background: "var(--cinder-background)", padding: "32px" }}>
+      <div style={{ background: "var(--hashti-background)", padding: "32px" }}>
         <h1>Page Canvas (Layer 0)</h1>
 
         {/* Layer 1: Container / Sidebar */}
         <Layer>
-          <div style={{ background: "var(--cinder-layer-01)", padding: "24px", borderRadius: "8px" }}>
+          <div style={{ background: "var(--hashti-layer-01)", padding: "24px", borderRadius: "8px" }}>
             <h2>Sidebar Panel (Layer 1)</h2>
 
             {/* Layer 2: Nested Card */}
             <Layer>
-              <Card style={{ background: "var(--cinder-layer-02)", padding: "16px" }}>
+              <Card style={{ background: "var(--hashti-layer-02)", padding: "16px" }}>
                 <h3>Inspector Card (Layer 2)</h3>
                 <TextField label="Resource Identifier" placeholder="res-8492" />
                 <Button variant="primary" style={{ marginTop: "12px" }}>Update</Button>
@@ -115,7 +115,7 @@ export function LayeredDashboard() {
 
 ## Building a Dark Mode Toggle
 
-You can easily build a dark/light mode toggle utilizing React state or local storage:
+Build a dark and light mode toggle with React state or local storage:
 
 ```tsx
 import { useState } from "react";
@@ -157,7 +157,7 @@ export function ThemeStatusBadge() {
   const { theme, layer, direction } = useTheme();
 
   return (
-    <div style={{ fontSize: "12px", fontFamily: "var(--cinder-font-mono)" }}>
+    <div style={{ fontSize: "12px", fontFamily: "var(--hashti-font-mono)" }}>
       Active: {theme} | Depth: L{layer} | Direction: {direction.toUpperCase()}
     </div>
   );
@@ -165,4 +165,4 @@ export function ThemeStatusBadge() {
 ```
 
 > [!TIP]
-> **Portals and Overlays**: Overlays like Modals and Tooltips render outside the main DOM tree. Hashti components automatically use `useOverlayTheme()` to forward `data-cinder-theme` and `data-cinder-layer` to portal roots, ensuring colors and typography remain strictly consistent.
+> **Portals and Overlays**: Overlays like Modals and Tooltips render outside the main DOM tree. Hashti components automatically use `useOverlayTheme()` to forward `data-hashti-theme` and `data-hashti-layer` to portal roots, ensuring colors and typography remain strictly consistent.

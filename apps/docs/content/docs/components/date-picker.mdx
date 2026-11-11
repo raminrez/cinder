@@ -236,3 +236,23 @@ The date suite implements the **WAI-ARIA Date Picker Pattern** with comprehensiv
 - <kbd>Home</kbd> moves to the first day of the month; <kbd>End</kbd> moves to the last day of the month.
 - <kbd>Enter</kbd> or <kbd>Space</kbd> selects the focused date and closes the popover (in single-date mode).
 - <kbd>Esc</kbd> closes the calendar popover and returns focus to the trigger button.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Steps between day, month, and year segments. |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Increments or decrements active date segment value. |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Opens the calendar popup dialog. |
+| <kbd>Esc</kbd> | Closes calendar popup and restores focus to input. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Segment, Calendar Cell | Active on pointer hover. |
+| `[data-focused]` | Segment, Calendar Cell | Active on focus. |
+| `[data-selected]` | Calendar Cell | Present on selected calendar date. |

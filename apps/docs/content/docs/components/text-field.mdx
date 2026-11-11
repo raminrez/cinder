@@ -281,3 +281,23 @@ In addition to the props above, `TextArea` accepts:
 - **Validation Linking**: When `isInvalid` is true, the input receives `aria-invalid="true"` and assistive technology automatically reads the error message upon focusing the field.
 - **Contrast**: Text, border lines, and focus outlines adhere to WCAG 2.2 AAA standards with a minimum 7:1 contrast ratio against the background layer.
 - **RTL & Dual Engine**: Automatically aligns cursor, text selection, and clear indicators with Arabic and Persian script standards.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus into or out of the input control. |
+| <kbd>Enter</kbd> | Submits the containing form (for single-line input). |
+| Any Printable Key | Inserts typed text at the current cursor selection point. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Control | Present when the pointer is hovering over the field control. |
+| `[data-focused]` | Control | Active when the field receives focus. |
+| `[data-invalid]` | Control | Set when the input fails schema or native validation. |
+| `[data-disabled]` | Control | Applied when the input is disabled. |

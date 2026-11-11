@@ -136,7 +136,7 @@ export function BottomSheetDemo() {
         size="md"
         isOpen={isOpen}
         onOpenChange={setIsOpen}
-        title="Quick Actions"
+        title="Actions"
         description="Select an operation for the highlighted survey segment."
       >
         <div className="grid grid-cols-2 gap-3 py-3">
@@ -155,7 +155,7 @@ export function BottomSheetDemo() {
 
 Drawer supports five standardized sizing tiers:
 
-- **`sm`**: 320px width (compact navigation or quick inspect)
+- **`sm`**: 320px width (compact navigation or inspection panels)
 - **`md`**: 480px width (default, standard forms and record cards)
 - **`lg`**: 640px width (complex forms with multi-column inputs)
 - **`xl`**: 800px width (code editors and CAD blueprint inspects)
@@ -256,3 +256,20 @@ export function RTLDrawerDemo() {
 - **Escape Key Dismissal**: Pressing <kbd>Esc</kbd> immediately dismisses the drawer and returns focus to the initiating button.
 - **Semantic Dialog Container**: Internally renders `<RACDialog role="dialog">` with automated `aria-labelledby` referencing the drawer's title heading.
 - **Motion Reduction**: Slide transitions and backdrop fades automatically disable or collapse into instantaneous cuts when the user has enabled `prefers-reduced-motion`.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Cycles focus within the drawer slideout container. |
+| <kbd>Esc</kbd> | Closes drawer panel and restores focus to trigger. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Drawer Surface | Present during slide-in animation. |
+| `[data-exiting]` | Drawer Surface | Present during slide-out animation. |

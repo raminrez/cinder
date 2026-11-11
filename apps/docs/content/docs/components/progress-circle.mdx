@@ -187,3 +187,10 @@ export function CircleStatusesExample() {
 - **Accessible Labelling**: Because circular indicators often omit a visible text heading, always supply an `aria-label` (e.g. `aria-label="Downloading assets"`) or `aria-labelledby` pointing to an adjacent descriptive title.
 - **Value Announcements**: Screen readers dynamically read `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` as values update.
 - **Decorative SVGs**: The internal SVG element is marked with `aria-hidden="true"`, preventing screen readers from vocalizing unnecessary geometric path or circle tags.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-indeterminate]` | ProgressCircle | Present when circular spinner is in continuous spin mode. |

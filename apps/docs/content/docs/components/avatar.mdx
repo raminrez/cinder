@@ -211,3 +211,10 @@ export function AvatarGroupDemo() {
 - **Presence Status Announcement**: Presence dots render with `role="status"` and `aria-label={presenceLabel ?? presence}`.
 - **International Grapheme Segmentation**: Uses `Intl.Segmenter` to avoid splitting compound characters or emoji ligatures, ensuring polite rendering across all languages.
 - **AvatarGroup Semantics**: The group wrapper receives `role="group"` with an accessible label on the overflow counter (e.g., `aria-label="3 more members"`).
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-size]` | Avatar | Avatar diameter scale (`xs`, `sm`, `md`, `lg`, `xl`). |

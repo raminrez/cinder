@@ -123,3 +123,21 @@ export function CustomFilterExample() {
 - **Arrow Key Delegation**: Pressing <kbd>↓</kbd> or <kbd>↑</kbd> inside the search input immediately shifts active focus down into the suggestions list.
 - **Escape Key Handling**: Pressing <kbd>Esc</kbd> clears the filter query or closes the suggestions list while restoring focus to the input.
 - **Screen Reader Announcements**: Live region announces the number of matching search results when query updates.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates through suggested matching items. |
+| <kbd>Enter</kbd> | Selects highlighted suggestion and populates input. |
+| <kbd>Esc</kbd> | Closes suggestion list. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Suggestion Item | Present on pointer hover. |
+| `[data-selected]` | Suggestion Item | Set on currently selected suggestion. |
