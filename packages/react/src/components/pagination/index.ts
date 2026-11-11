@@ -1,4 +1,4 @@
 "use client";
 
-export { Pagination } from "./pagination";
-export type { PaginationProps } from "./pagination";
+export { Pagination, NativeSelect, paginationRange } from "./pagination";
+export type { PaginationProps, NativeSelectProps } from "./pagination";

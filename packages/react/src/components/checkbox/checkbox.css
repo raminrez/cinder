@@ -1,17 +1,51 @@
-/* Hashti Modern Aesthetic - checkbox */
+/* Hashti Modern Aesthetic - Checkbox */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-checkbox,
-  [data-cinder-theme] .cinder-checkbox {
-    border-radius: var(--hashti-control-radius, 12px);
+  .hashti-checkbox,
+  .cinder-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--hashti-spacing-03, 8px);
+    cursor: pointer;
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
+    user-select: none;
+  }
+
+  .hashti-checkbox-control,
+  .cinder-checkbox-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--hashti-border-strong, #8d8d8d);
+    background-color: var(--hashti-field, #ffffff);
     transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    color: #ffffff;
   }
-  [data-hashti-theme] .cinder-checkbox[data-pressed],
-  [data-cinder-theme] .cinder-checkbox[data-pressed] {
-    transform: scale(0.98);
+
+  .hashti-checkbox[data-selected] .hashti-checkbox-control,
+  .cinder-checkbox[data-selected] .cinder-checkbox-control,
+  .hashti-checkbox[data-indeterminate] .hashti-checkbox-control,
+  .cinder-checkbox[data-indeterminate] .cinder-checkbox-control {
+    background-color: var(--hashti-primary, #08BDBA);
+    border-color: var(--hashti-primary, #08BDBA);
   }
-  [data-hashti-theme] .cinder-checkbox[data-focus-visible],
-  [data-cinder-theme] .cinder-checkbox[data-focus-visible] {
+
+  .hashti-checkbox[data-pressed] .hashti-checkbox-control,
+  .cinder-checkbox[data-pressed] .cinder-checkbox-control {
+    transform: scale(0.92);
+  }
+
+  .hashti-checkbox[data-focus-visible] .hashti-checkbox-control,
+  .cinder-checkbox[data-focus-visible] .cinder-checkbox-control {
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #08BDBA), 0 0 8px rgba(8, 189, 186, 0.35);
+  }
+
+  .hashti-checkbox[data-disabled],
+  .cinder-checkbox[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }

@@ -1,17 +1,81 @@
-/* Hashti Modern Aesthetic - table */
+/* Hashti Modern Aesthetic - Table */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-table,
-  [data-cinder-theme] .cinder-table {
+  .hashti-table,
+  .cinder-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
     border-radius: var(--hashti-control-radius, 12px);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    border: 1px solid var(--hashti-border-subtle, #e0e0e0);
+    background-color: var(--hashti-layer, #ffffff);
   }
-  [data-hashti-theme] .cinder-table[data-pressed],
-  [data-cinder-theme] .cinder-table[data-pressed] {
-    transform: scale(0.98);
+
+  .hashti-table th,
+  .cinder-table th {
+    background-color: var(--hashti-layer-accent-01, #f4f4f4);
+    padding: 12px 16px;
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
+    font-weight: 600;
+    text-align: left;
+    color: var(--hashti-text-primary, #161616);
+    border-bottom: 1px solid var(--hashti-border-subtle, #e0e0e0);
   }
-  [data-hashti-theme] .cinder-table[data-focus-visible],
-  [data-cinder-theme] .cinder-table[data-focus-visible] {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+
+  .hashti-table td,
+  .cinder-table td {
+    padding: 12px 16px;
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
+    color: var(--hashti-text-secondary, #525252);
+    border-bottom: 1px solid var(--hashti-border-subtle, #e0e0e0);
+    transition: background-color 150ms ease;
+  }
+
+  .hashti-table tr:last-child td,
+  .cinder-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .hashti-table tr[data-hovered] td,
+  .cinder-table tr[data-hovered] td {
+    background-color: var(--hashti-layer-accent-01, #f9f9f9);
+  }
+
+  .hashti-table tr[data-selected] td,
+  .cinder-table tr[data-selected] td {
+    background-color: var(--hashti-layer-accent-01, #e6f7f7);
+  }
+
+  .hashti-table-batch-actions,
+  .cinder-table-batch-actions {
+    display: flex;
+    align-items: center;
+    background-color: var(--hashti-primary, #08BDBA);
+    color: #ffffff;
+    border-radius: var(--hashti-control-radius, 12px);
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 12px rgba(8, 189, 186, 0.25);
+  }
+
+  .hashti-table-batch-bar,
+  .cinder-table-batch-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .hashti-table-batch-count,
+  .cinder-table-batch-count {
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .hashti-table-batch-action-list,
+  .cinder-table-batch-action-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 }

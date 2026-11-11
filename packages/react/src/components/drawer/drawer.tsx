@@ -8,7 +8,7 @@ import {
   Dialog as RACDialog,
   type ModalOverlayProps,
 } from "react-aria-components";
-import { Button } from "../../buttons";
+import { Button } from "../button";
 import { Icon } from "../../icons";
 import { useOverlayTheme } from "../../theme";
 import { classes } from "../../utils";

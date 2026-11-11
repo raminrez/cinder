@@ -1,4 +1,25 @@
 "use client";
 
-export { Sheet } from "./sheet";
-export type { SheetProps, SheetContextValue } from "./sheet";
+export {
+  Sheet,
+  SheetRoot,
+  SheetTrigger,
+  SheetOverlay,
+  SheetBackdrop,
+  SheetContent,
+  SheetHandle,
+  SheetContext,
+  SheetConvenience,
+} from "./sheet";
+export type {
+  SheetProps,
+  SheetRootProps,
+  SheetTriggerProps,
+  SheetOverlayProps,
+  SheetBackdropProps,
+  SheetContentProps,
+  SheetHandleProps,
+  SheetConvenienceProps,
+  SheetContextValue,
+  SheetRenderProps,
+} from "./sheet";

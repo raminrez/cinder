@@ -1,4 +1,4 @@
 "use client";
 
-export { Popover } from "./popover";
-export type { PopoverProps } from "./popover";
+export { Popover, OverflowMenu } from "./popover";
+export type { PopoverProps, OverflowMenuProps } from "./popover";

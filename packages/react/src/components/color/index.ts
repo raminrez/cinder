@@ -1,4 +1,42 @@
 "use client";
 
-export { ColorPicker, ColorArea, ColorSlider, ColorWheel, ColorField, ColorSwatch, ColorSwatchPicker } from "./color";
-export type { ColorPickerProps, ColorAreaProps, ColorSliderProps, ColorWheelProps, ColorFieldProps, ColorSwatchProps, ColorSwatchPickerProps } from "./color";
+export {
+  ColorPicker,
+  ColorPickerRoot,
+  ColorPickerConvenience,
+  ColorArea,
+  ColorSlider,
+  ColorWheel,
+  ColorWheelTrack,
+  ColorField,
+  ColorSwatch,
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+  ColorThumb,
+  parseColor,
+} from "./color";
+export type {
+  Color,
+  ColorPickerProps,
+  ColorPickerRootProps,
+  ColorPickerConvenienceProps,
+  ColorPickerRenderProps,
+  ColorAreaProps,
+  ColorAreaRenderProps,
+  ColorSliderProps,
+  ColorSliderRenderProps,
+  ColorWheelProps,
+  ColorWheelRenderProps,
+  ColorWheelTrackProps,
+  ColorWheelTrackRenderProps,
+  ColorFieldProps,
+  ColorFieldRenderProps,
+  ColorSwatchProps,
+  ColorSwatchRenderProps,
+  ColorSwatchPickerProps,
+  ColorSwatchPickerRenderProps,
+  ColorSwatchPickerItemProps,
+  ColorSwatchPickerItemRenderProps,
+  ColorThumbProps,
+  ColorThumbRenderProps,
+} from "./color";

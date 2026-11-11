@@ -1,17 +1,26 @@
-/* Hashti Modern Aesthetic - popover */
+/* Hashti Modern Aesthetic - Popover */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-popover,
-  [data-cinder-theme] .cinder-popover {
-    border-radius: var(--hashti-control-radius, 12px);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  [data-hashti-theme] .cinder-popover[data-pressed],
-  [data-cinder-theme] .cinder-popover[data-pressed] {
-    transform: scale(0.98);
-  }
-  [data-hashti-theme] .cinder-popover[data-focus-visible],
-  [data-cinder-theme] .cinder-popover[data-focus-visible] {
+  .hashti-popover,
+  .cinder-popover {
+    border-radius: var(--hashti-surface-radius, 16px);
+    border: 1px solid var(--hashti-border-subtle, #e0e0e0);
+    background-color: var(--hashti-layer, #ffffff);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    padding: var(--hashti-spacing-04, 12px);
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+    transition: opacity 150ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hashti-popover[data-entering],
+  .cinder-popover[data-entering] {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+
+  .hashti-popover[data-exiting],
+  .cinder-popover[data-exiting] {
+    transform: scale(0.96);
+    opacity: 0;
   }
 }

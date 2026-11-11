@@ -1,0 +1,59 @@
+/* Hashti Modern Aesthetic - Slider */
+@layer hashti.components {
+  .hashti-slider,
+  .cinder-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hashti-slider-label,
+  .cinder-slider-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
+    font-weight: 500;
+  }
+
+  .hashti-slider-track,
+  .cinder-slider-track {
+    position: relative;
+    height: 8px;
+    width: 100%;
+    border-radius: 9999px;
+    background-color: var(--hashti-border-subtle, #e0e0e0);
+  }
+
+  .hashti-slider-fill,
+  .cinder-slider-fill {
+    position: absolute;
+    height: 100%;
+    border-radius: 9999px;
+    background-color: var(--hashti-primary, #08BDBA);
+  }
+
+  .hashti-slider-thumb,
+  .cinder-slider-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 9999px;
+    background-color: #ffffff;
+    border: 2px solid var(--hashti-primary, #08BDBA);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: grab;
+    transition: transform 100ms ease;
+  }
+
+  .hashti-slider-thumb[data-dragging] {
+    cursor: grabbing;
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .hashti-slider-thumb[data-focus-visible] {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #08BDBA), 0 0 8px rgba(8, 189, 186, 0.35);
+  }
+}

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { acceptsFile } from "../../packages/react/src/files";
-import { paginationRange } from "../../packages/react/src/pagination";
+import { acceptsFile } from "../../packages/react/src/components/dropzone";
+import { paginationRange } from "../../packages/react/src/components/pagination";
 
 describe("file selection validation", () => {
   test("accepts extension, exact MIME, and MIME-family matches", () => {

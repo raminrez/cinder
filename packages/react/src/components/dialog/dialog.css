@@ -1,17 +1,53 @@
-/* Hashti Modern Aesthetic - dialog */
+/* Hashti Modern Aesthetic - Dialog & AlertDialog */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-dialog,
-  [data-cinder-theme] .cinder-dialog {
-    border-radius: var(--hashti-control-radius, 12px);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  [data-hashti-theme] .cinder-dialog[data-pressed],
-  [data-cinder-theme] .cinder-dialog[data-pressed] {
-    transform: scale(0.98);
-  }
-  [data-hashti-theme] .cinder-dialog[data-focus-visible],
-  [data-cinder-theme] .cinder-dialog[data-focus-visible] {
+  .hashti-dialog,
+  .cinder-dialog {
+    display: flex;
+    flex-direction: column;
+    padding: var(--hashti-spacing-05, 16px);
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+  }
+
+  .hashti-alert-dialog,
+  .cinder-alert-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    outline: none;
+  }
+
+  .hashti-alert-dialog-header,
+  .cinder-alert-dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hashti-alert-dialog-header h2,
+  .cinder-alert-dialog-header h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .hashti-alert-dialog-header[data-kind="danger"] svg,
+  .cinder-alert-dialog-header[data-kind="danger"] svg {
+    color: var(--hashti-text-error, #da1e28);
+  }
+
+  .hashti-alert-dialog-body,
+  .cinder-alert-dialog-body {
+    font-size: 0.875rem;
+    color: var(--hashti-text-secondary, #525252);
+    line-height: 1.5;
+  }
+
+  .hashti-alert-dialog-footer,
+  .cinder-alert-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
   }
 }

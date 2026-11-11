@@ -13,9 +13,10 @@ import {
   type Ref,
 } from "react";
 import type { Key } from "react-aria-components";
-import { Modal, Dialog, type ModalProps } from "../../overlays";
-import { ListBox, type ListBoxItemProps } from "../../list-box";
-import { Kbd } from "../../kbd";
+import { Modal, type ModalProps } from "../modal";
+import { Dialog } from "../dialog";
+import { ListBox, type ListBoxItemProps } from "../list-box";
+import { Kbd } from "../kbd";
 import { Icon } from "../../icons";
 import { classes, cx } from "../../utils";
 

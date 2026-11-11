@@ -1,17 +1,27 @@
-/* Hashti Modern Aesthetic - tooltip */
+/* Hashti Modern Aesthetic - Tooltip */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-tooltip,
-  [data-cinder-theme] .cinder-tooltip {
-    border-radius: var(--hashti-control-radius, 12px);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  [data-hashti-theme] .cinder-tooltip[data-pressed],
-  [data-cinder-theme] .cinder-tooltip[data-pressed] {
-    transform: scale(0.98);
-  }
-  [data-hashti-theme] .cinder-tooltip[data-focus-visible],
-  [data-cinder-theme] .cinder-tooltip[data-focus-visible] {
+  .hashti-tooltip,
+  .cinder-tooltip {
+    border-radius: 8px;
+    background-color: #161616;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+    transition: opacity 150ms ease, transform 150ms ease;
+  }
+
+  .hashti-tooltip[data-entering],
+  .cinder-tooltip[data-entering] {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  .hashti-tooltip[data-exiting],
+  .cinder-tooltip[data-exiting] {
+    opacity: 0;
+    transform: scale(0.95);
   }
 }

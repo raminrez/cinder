@@ -1,5 +1,5 @@
 import { useId, type ComponentPropsWithRef, type ReactNode } from "react";
-import { Button } from "../../buttons";
+import { Button } from "../button";
 import { Icon } from "../../icons";
 import type { ControlSize } from "../../utils";
 

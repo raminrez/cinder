@@ -17,7 +17,7 @@ import {
   type DisclosureGroupProps as RACDisclosureGroupProps,
   type DisclosurePanelProps as RACDisclosurePanelProps,
 } from "react-aria-components";
-import { Button } from "../../buttons";
+import { Button } from "../button";
 import { Icon } from "../../icons";
 import { classes, cx, type ControlSize } from "../../utils";
 

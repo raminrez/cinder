@@ -1,4 +1,4 @@
 "use client";
 
-export { Tabs } from "./tabs";
-export type { TabsProps } from "./tabs";
+export { Tabs, TabList, Tab, TabPanel, TabPanels } from "./tabs";
+export type { TabsProps, TabProps, TabListProps, TabPanelProps } from "./tabs";

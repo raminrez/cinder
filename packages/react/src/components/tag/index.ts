@@ -1,4 +1,4 @@
 "use client";
 
-export { Tag } from "./tag";
-export type { TagProps } from "./tag";
+export { Tag, TagGroup, FilterTag } from "./tag";
+export type { TagProps, TagGroupProps, FilterTagProps, TagColor } from "./tag";

@@ -12,3 +12,8 @@ export * from "./modal-demo";
 export * from "./tabs-demo";
 export * from "./disclosure-demo";
 export * from "./dropzone-demo";
+export * from "./fields-demo";
+export * from "./overlays-demo";
+export * from "./collections-demo";
+export * from "./content-demo";
+export * from "./notifications-demo";

@@ -5,7 +5,7 @@ import {
   PreviewTrigger as RACPreviewTrigger,
   type PreviewTriggerProps as RACPreviewTriggerProps,
 } from "react-aria-components";
-import { Popover } from "../../overlays";
+import { Popover } from "../popover";
 
 export interface PreviewTriggerProps extends RACPreviewTriggerProps {
   /** The trigger element and Popover making up the preview trigger. */

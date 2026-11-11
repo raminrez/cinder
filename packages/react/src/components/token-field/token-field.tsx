@@ -24,8 +24,9 @@ import {
   FieldHelp,
   useFieldPresentation,
   type FieldPresentationProps,
-} from "../../field-parts";
-import { FieldLayout, type FieldContentProps } from "../../fields";
+  FieldLayout,
+  type FieldContentProps,
+} from "../field";
 import { Icon } from "../../icons";
 import { classes, cx, type ControlSize } from "../../utils";
 

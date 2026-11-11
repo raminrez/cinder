@@ -1,17 +1,67 @@
-/* Hashti Modern Aesthetic - progress */
+/* Hashti Modern Aesthetic - Progress */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-progress,
-  [data-cinder-theme] .cinder-progress {
-    border-radius: var(--hashti-control-radius, 12px);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  .hashti-progress,
+  .cinder-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
   }
-  [data-hashti-theme] .cinder-progress[data-pressed],
-  [data-cinder-theme] .cinder-progress[data-pressed] {
-    transform: scale(0.98);
+
+  .hashti-progress-label,
+  .cinder-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
+    font-weight: 500;
   }
-  [data-hashti-theme] .cinder-progress[data-focus-visible],
-  [data-cinder-theme] .cinder-progress[data-focus-visible] {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+
+  .hashti-progress-track,
+  .cinder-progress-track {
+    height: 8px;
+    width: 100%;
+    border-radius: 9999px;
+    background-color: var(--hashti-border-subtle, #e0e0e0);
+    overflow: hidden;
+  }
+
+  .hashti-progress-fill,
+  .cinder-progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    background-color: var(--hashti-primary, #08BDBA);
+    transition: width 200ms ease;
+  }
+
+  .hashti-progress[data-status="success"] .hashti-progress-fill,
+  .cinder-progress[data-status="success"] .cinder-progress-fill {
+    background-color: var(--hashti-support-success, #198038);
+  }
+
+  .hashti-progress[data-status="error"] .hashti-progress-fill,
+  .cinder-progress[data-status="error"] .cinder-progress-fill {
+    background-color: var(--hashti-support-error, #da1e28);
+  }
+
+  .hashti-progress-circle,
+  .cinder-progress-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .hashti-progress-circle-track,
+  .cinder-progress-circle-track {
+    fill: none;
+    stroke: var(--hashti-border-subtle, #e0e0e0);
+  }
+
+  .hashti-progress-circle-fill,
+  .cinder-progress-circle-fill {
+    fill: none;
+    stroke: var(--hashti-primary, #08BDBA);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 200ms ease;
   }
 }

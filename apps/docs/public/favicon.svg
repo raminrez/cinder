@@ -1,9 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="7" fill="#000000"/>
-  <g transform="translate(4.5, 4.5) scale(0.0898)" stroke="#ffffff">
+  <style>
+    :root {
+      --bg-fill: #09090b;
+      --bg-stroke: #27272a;
+      --mark-stroke: #ffffff;
+      --mark-keystone: #08bdba;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-fill: #ffffff;
+        --bg-stroke: #e4e4e7;
+        --mark-stroke: #09090b;
+        --mark-keystone: #08bdba;
+      }
+    }
+    .hashti-fav-bg {
+      fill: var(--bg-fill);
+      stroke: var(--bg-stroke);
+      stroke-width: 1px;
+    }
+    .hashti-fav-mark {
+      stroke: var(--mark-stroke);
+    }
+    .hashti-fav-keystone {
+      fill: var(--mark-keystone);
+      stroke: var(--mark-keystone);
+    }
+  </style>
+  <rect class="hashti-fav-bg" x="0.5" y="0.5" width="31" height="31" rx="8" />
+  <g transform="translate(4.5, 4.5) scale(0.0898)" class="hashti-fav-mark">
     <path d="M 28 216 V 110 L 128 48 L 228 110 V 216" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round"/>
     <path d="M 62 216 V 132 L 128 91 L 194 132 V 216" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round"/>
     <path d="M 96 216 V 154 L 128 134 L 160 154 V 216" stroke-width="22" stroke-linecap="butt" stroke-linejoin="round"/>
-    <path d="M 115 216 V 180 L 128 168 L 141 180 V 216 Z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+    <path class="hashti-fav-keystone" d="M 115 216 V 180 L 128 168 L 141 180 V 216 Z" stroke-width="2" stroke-linejoin="round"/>
   </g>
 </svg>

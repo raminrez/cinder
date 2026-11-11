@@ -1,4 +1,19 @@
 "use client";
 
-export { Disclosure, DisclosureGroup, DisclosurePanel } from "./disclosure";
-export type { DisclosureProps, DisclosureGroupProps, DisclosurePanelProps } from "./disclosure";
+export {
+  Disclosure,
+  DisclosureRoot,
+  DisclosureTrigger,
+  DisclosureIndicator,
+  DisclosurePanel,
+  DisclosureGroup,
+  DisclosureContext,
+} from "./disclosure";
+export type {
+  DisclosureProps,
+  DisclosureTriggerProps,
+  DisclosureIndicatorProps,
+  DisclosurePanelProps,
+  DisclosureGroupProps,
+  DisclosureContextValue,
+} from "./disclosure";

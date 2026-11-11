@@ -1,65 +1,109 @@
 ---
-title: Brandbook & Identity Assets
-description: Official brand assets, vector lockups, identity presentation sheets, and brand voice guidelines for Hashti.
+title: Brandbook & Identity System
+description: Official brand assets, vector lockups, architectural geometry specifications, typography hierarchy, and voice guidelines for Hashti.
 ---
 
-# Brandbook & Identity Assets
+# Hashti Brandbook & Identity System
 
-Hashti represents the marriage of ancient Persian spatial wisdom with cutting-edge open-source software engineering. This section outlines our visual identity rules, vector brand marks, and voice guidelines.
-
----
-
-## Interactive Live Brandbook
-
-Experience the full interactive brand presentation sheet, real-time arch geometry visualizers, theme toggles, and live Persian calligraphic comparisons:
-
-👉 **[Open Live Hashti Brandbook](https://hashti.raminrez.dev/hashti-brandbook.html)**
+The **Hashti (هشتی)** brand identity unites ancient Persian spatial architectural traditions with rigorous modern software engineering. Every curve, ratio, and mineral tone reflects intentional transition, sensory calm, and uncompromising accessibility.
 
 ---
 
-## Official Vector Brand Assets
+## Official Vector Assets & Downloads
 
-All Hashti brand assets are rendered in crisp, scalable vector SVG format with retina-ready geometry. You can download and embed them directly in your applications or marketing collateral:
+All official Hashti marks are precision-drafted vectors rendered in crisp SVG format. They scale infinitely from a 16px favicon to monumental conference banners without loss of fidelity.
 
-| Asset | Preview | Filename & Path | Ideal Usage |
-| :--- | :--- | :--- | :--- |
-| **Hashti Mark** | ![Hashti Mark](/hashti-mark.svg) | [`/hashti-mark.svg`](/hashti-mark.svg) | Standalone favicon, app bar mark, square avatars, social avatars. |
-| **Horizontal Lockup** | ![Hashti Horizontal](/hashti-horizontal.svg) | [`/hashti-horizontal.svg`](/hashti-horizontal.svg) | Main navigation headers, documentation top bars, presentations. |
-| **Vertical Stack** | ![Hashti Vertical](/hashti-vertical.svg) | [`/hashti-vertical.svg`](/hashti-vertical.svg) | Splash screens, poster layouts, merchandise, full-page banners. |
-| **App Icon** | ![Hashti App Icon](/hashti-app-icon.svg) | [`/hashti-app-icon.svg`](/hashti-app-icon.svg) | Desktop dock icons, mobile homescreen shortcuts, PWA manifests. |
+<BrandbookAssets client:load />
 
-> [!TIP]
-> Dark-mode optimized vector variants are also available at `/hashti-mark-dark.svg`, `/hashti-horizontal-dark.svg`, and `/hashti-vertical-dark.svg`.
-
----
-
-## Brand Voice & Tone
-
-When writing documentation, interface copy, error messages, and release notes for Hashti, adhere to our four tonal tenets:
-
-### 1. Architectural & Serene
-- **Do:** Use dignified, clear, spatial language ("threshold", "elevation", "sanctuary", "surface", "pathway").
-- **Don't:** Use hyperbolic tech jargon, aggressive slang, or overly playful colloquialisms.
-
-### 2. Dignified Hospitality (*Ta'arof without Friction*)
-- **Do:** Greet the user with warmth, quiet confidence, and helpful error recovery.
-- **Don't:** Blame the user for errors or construct impenetrable walls of technical stack traces.
-
-### 3. Precise & Mathematical
-- **Do:** Quote exact WCAG contrast ratios (e.g. "7:1 contrast ratio"), stroke weights, and pixel measurements.
-- **Don't:** Make vague claims like "it looks nice" or "accessible enough".
-
-### 4. Truly Bilingual
-- **Do:** Respect Persian and Arabic grammar, typography, and cultural nuance. When authoring RTL specimens, use meaningful literary and architectural vocabulary.
-- **Don't:** Treat RTL as an automated translation afterthought or machine-flipped English copy.
+### Clear Space & Minimum Sizing
+- **Clear Margin:** Maintain a breathing boundary around the mark equal to at least half the width of the outer arch on all sides.
+- **Minimum Size:**
+  - Standalone mark: **16px** (favicons and compact status icons)
+  - Horizontal lockup: **24px** height (navigation bars and headers)
+  - Vertical lockup: **64px** height (splash screens and hero titles)
+- **Do Not Distort:** Never stretch, compress, rotate, or modify the 32° ogival apex pitch.
 
 ---
 
-## Usage Guidelines & Clear Space
+## Architectural Geometry & Drafting Formulas
 
-To maintain the architectural dignity of the Hashti mark:
+The Hashti emblem is mathematically derived from the **pointed ogival arch** (*chahar-gousheh*) characteristic of Iranian vaulted vestibules.
 
-- **Minimum Clear Space:** Maintain a clear margin around the mark equal to the width of the central gateway arch on all sides.
-- **Minimum Digital Size:** Do not render the primary logo lockup smaller than **24px** height in web interfaces or **16px** for standalone marks.
-- **Do Not Distort:** Never stretch, skew, or alter the 32° arch pitch of the concentric vaults.
-- **Do Not Colorize Arbitrarily:** Render the logo in obsidian black, chalk white, or our signature Persian Turquoise (`#0D9488`).
+```
+                  ▲ Zenith (0° / 180° Tangent)
+                /   \
+               /     \   32° Ogival Pitch
+              /   ▲   \
+             /   / \   \  Inner Concentric Vault
+            /   /   \   \
+           │   │  ▲  │   │
+           │   │  │  │   │ Keystone Entrance
+           ┴───┴─────┴───┴
+```
+
+### Proportional Relationships
+1. **Concentric Ratios**: The three nested vaults represent the spatial sequence:
+   - Outer Arch: **Darvazeh** (The monumental public threshold)
+   - Middle Vault: **Hashti** (The octagonal chamber of equilibrium)
+   - Inner Arch: **Dalan** (The bent protective corridor)
+   - Solid Keystone: **Hayati** (The grounded sanctuary)
+2. **Standard Arc Radii**:
+   - Component Control Radius: `12px` (matching 44px touch ergonomics)
+   - Surface Panel Radius: `16px` (for elevated modals and floating popovers)
+   - Pill Radius: `9999px` (for tags, badges, and status capsules)
+
+---
+
+## Color System Foundations
+
+The Hashti palette draws directly from the mineral glazes and raw earthen textures of Isfahan and Yazd:
+
+| Role | Color Name | Hex Token | CSS Variable | WCAG AAA Contrast |
+| :--- | :--- | :--- | :--- | :--- |
+| **Obsidian** | Basalt Black | `#000000` | `--hashti-background-base` | > 21:1 on white |
+| **Chalk** | Pure White | `#FFFFFF` | `--hashti-surface-0` | > 21:1 on black |
+| **Primary Accent** | Persian Turquoise | `#08BDBA` | `--hashti-accent-turquoise` | 4.6:1 on black, 5.2:1 on dark |
+| **Secondary Warmth** | Isfahan Amber | `#D97706` | `--hashti-accent-amber` | > 4.5:1 on light & dark layers |
+| **Alert / Danger** | Terracotta Clay | `#DC2626` | `--hashti-support-danger` | > 4.8:1 on light & dark layers |
+
+---
+
+## Typography Hierarchy
+
+Hashti pairs a modern geometric grotesque for Latin typography with an architectural typeface for Persian and Arabic:
+
+### 1. Latin Display & Body: Satoshi
+Designed by Indian Type Foundry, **Satoshi** balances industrial geometric discipline with subtle humanist warmth:
+- `900 Black`: Major page headlines and hero statements
+- `700 Bold`: Section titles, card headers, and button labels
+- `500 Medium`: Form inputs, table cells, and navigation links
+- `400 Regular`: Long-form documentation and explanatory prose
+
+### 2. Persian & Arabic: Vazirmatn
+Designed by Saber Rastikerdar, **Vazirmatn** is the gold standard for legible, modern Persian screen typography. It provides authentic Naskh proportions optimized for pixel grids:
+- Seamless RTL bidirectional alignment
+- Precise baseline harmony when paired with Satoshi
+- Strict diacritic rendering and Arabic numeral ligature clarity
+
+### 3. Monospace Code: JetBrains Mono
+For source code snippets, terminal commands, and token formulas:
+- Increased letter height and distinct punctuation glyphs
+- Custom ligatures for programming operators (`=>`, `===`, `!==`)
+
+---
+
+## Brand Voice & Principles
+
+When authoring documentation, error messages, and UI microcopy:
+
+1. **Architectural & Serene**
+   - Favor spatial, calm terminology: *threshold, elevation, sanctuary, surface, pathway*.
+   - Avoid frantic tech hype, noisy exclamation marks, or aggressive alert banners.
+
+2. **Dignified Hospitality (*Ta'arof without Friction*)**
+   - Welcome the developer with clarity and respect.
+   - Explain errors constructively with clear recovery actions rather than dead-ends.
+
+3. **Mathematical Precision**
+   - Quote exact contrast ratios, stroke dimensions, and accessibility conformance criteria.
+   - Ground visual design in demonstrable ergonomic measurements.

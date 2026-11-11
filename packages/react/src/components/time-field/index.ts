@@ -1,4 +1,9 @@
 "use client";
 
-export { TimeField } from "./time-field";
-export type { TimeFieldProps } from "./time-field";
+export { TimeField, DateField } from "./time-field";
+export type {
+  TimeFieldProps,
+  TimeFieldRootProps,
+  DateFieldProps,
+  DateFieldRootProps,
+} from "./time-field";

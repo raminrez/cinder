@@ -1,4 +1,4 @@
 "use client";
 
-export { Badge } from "./badge";
-export type { BadgeProps } from "./badge";
+export { Badge, AILabel } from "./badge";
+export type { BadgeProps, BadgeKind, BadgePlacement, AILabelProps } from "./badge";

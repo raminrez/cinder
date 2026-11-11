@@ -1,17 +1,71 @@
-/* Hashti Modern Aesthetic - modal */
+/* Hashti Modern Aesthetic - Modal */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-modal,
-  [data-cinder-theme] .cinder-modal {
-    border-radius: var(--hashti-control-radius, 12px);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  .hashti-modal-overlay,
+  .cinder-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    transition: opacity 200ms ease;
   }
-  [data-hashti-theme] .cinder-modal[data-pressed],
-  [data-cinder-theme] .cinder-modal[data-pressed] {
-    transform: scale(0.98);
+
+  .hashti-modal-overlay[data-entering],
+  .cinder-modal-overlay[data-entering] {
+    opacity: 0;
   }
-  [data-hashti-theme] .cinder-modal[data-focus-visible],
-  [data-cinder-theme] .cinder-modal[data-focus-visible] {
+
+  .hashti-modal-overlay[data-exiting],
+  .cinder-modal-overlay[data-exiting] {
+    opacity: 0;
+  }
+
+  .hashti-modal,
+  .cinder-modal {
+    position: relative;
+    max-width: 90vw;
+    width: 100%;
+    border-radius: var(--hashti-surface-radius, 16px);
+    border: 1px solid var(--hashti-border-subtle, #e0e0e0);
+    background-color: var(--hashti-layer, #ffffff);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+    overflow: hidden;
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+  }
+
+  .hashti-modal[data-size="xs"],
+  .cinder-modal[data-size="xs"] {
+    max-width: 320px;
+  }
+
+  .hashti-modal[data-size="sm"],
+  .cinder-modal[data-size="sm"] {
+    max-width: 440px;
+  }
+
+  .hashti-modal[data-size="md"],
+  .cinder-modal[data-size="md"] {
+    max-width: 560px;
+  }
+
+  .hashti-modal[data-size="lg"],
+  .cinder-modal[data-size="lg"] {
+    max-width: 720px;
+  }
+
+  .hashti-modal[data-entering],
+  .cinder-modal[data-entering] {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  .hashti-modal[data-exiting],
+  .cinder-modal[data-exiting] {
+    transform: scale(0.95);
+    opacity: 0;
   }
 }

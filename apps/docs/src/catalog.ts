@@ -23,7 +23,7 @@ const controlProps: [string, string, string][] = [
   [
     "className",
     "string | render function",
-    "Extend the base styles without removing Cinder's class.",
+    "Extend the base styles with custom class names.",
   ],
 ];
 const fieldProps: [string, string, string][] = [

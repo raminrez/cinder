@@ -1,17 +1,51 @@
-/* Hashti Modern Aesthetic - accordion */
+/* Hashti Modern Aesthetic - Accordion */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-accordion,
-  [data-cinder-theme] .cinder-accordion {
+  .hashti-accordion,
+  .cinder-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hashti-accordion-item,
+  .cinder-accordion-item {
     border-radius: var(--hashti-control-radius, 12px);
+    border: 1px solid var(--hashti-border-subtle, #e0e0e0);
+    background-color: var(--hashti-layer, #ffffff);
+    overflow: hidden;
     transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  [data-hashti-theme] .cinder-accordion[data-pressed],
-  [data-cinder-theme] .cinder-accordion[data-pressed] {
-    transform: scale(0.98);
+
+  .hashti-accordion-trigger,
+  .cinder-accordion-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 16px;
+    justify-content: flex-start;
+    font-weight: 600;
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
+    color: var(--hashti-text-primary, #161616);
+    border-radius: 0;
   }
-  [data-hashti-theme] .cinder-accordion[data-focus-visible],
-  [data-cinder-theme] .cinder-accordion[data-focus-visible] {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
+
+  .hashti-accordion-trigger svg,
+  .cinder-accordion-trigger svg {
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hashti-accordion-item[data-expanded] .hashti-accordion-trigger svg,
+  .cinder-accordion-item[data-expanded] .cinder-accordion-trigger svg {
+    transform: rotate(90deg);
+  }
+
+  .hashti-accordion-panel,
+  .cinder-accordion-panel {
+    padding: 0 16px 16px 16px;
+    font-size: 0.875rem;
+    color: var(--hashti-text-secondary, #525252);
+    line-height: 1.5;
   }
 }

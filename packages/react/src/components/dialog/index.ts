@@ -1,4 +1,4 @@
 "use client";
 
-export { Dialog } from "./dialog";
-export type { DialogProps } from "./dialog";
+export { Dialog, AlertDialog } from "./dialog";
+export type { DialogProps, AlertDialogProps, AlertDialogKind } from "./dialog";

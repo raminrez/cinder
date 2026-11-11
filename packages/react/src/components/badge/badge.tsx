@@ -91,3 +91,49 @@ export function Badge({
 
   return badgeElement;
 }
+
+export interface AILabelProps {
+  label?: ReactNode;
+  revertActive?: boolean;
+  onRevert?: () => void;
+  revertLabel?: string;
+  className?: string;
+  ref?: Ref<HTMLElement>;
+}
+
+export function AILabel({
+  label = "AI",
+  revertActive = false,
+  onRevert,
+  revertLabel = "Revert to AI suggestion",
+  className,
+  ref,
+}: AILabelProps) {
+  if (revertActive) {
+    return (
+      <button
+        type="button"
+        ref={ref as Ref<HTMLButtonElement>}
+        aria-label={revertLabel}
+        data-revert-active="true"
+        onClick={onRevert}
+        className={cx("hashti-ai-label cinder-ai-label", className)}
+      >
+        <span className="hashti-ai-icon" aria-hidden="true">↺</span>
+        <span>{label}</span>
+      </button>
+    );
+  }
+
+  return (
+    <span
+      ref={ref as Ref<HTMLSpanElement>}
+      role="status"
+      className={cx("hashti-ai-label cinder-ai-label", className)}
+    >
+      <span className="hashti-ai-icon" aria-hidden="true">✦</span>
+      <span>{label}</span>
+    </span>
+  );
+}
+

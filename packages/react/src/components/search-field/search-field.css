@@ -1,17 +1,38 @@
-/* Hashti Modern Aesthetic - search-field */
+/* Hashti Modern Aesthetic - SearchField */
 @layer hashti.components {
-  [data-hashti-theme] .cinder-search-field,
-  [data-cinder-theme] .cinder-search-field {
+  .hashti-search-field,
+  .cinder-search-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hashti-search-field .hashti-field__control,
+  .cinder-search-field .cinder-field__control {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 var(--hashti-spacing-03, 8px) 0 var(--hashti-spacing-04, 12px);
     border-radius: var(--hashti-control-radius, 12px);
+    border: 1px solid var(--hashti-border-strong, #8d8d8d);
+    background-color: var(--hashti-field, #ffffff);
     transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  [data-hashti-theme] .cinder-search-field[data-pressed],
-  [data-cinder-theme] .cinder-search-field[data-pressed] {
-    transform: scale(0.98);
+
+  .hashti-search-field .hashti-field__control:focus-within,
+  .cinder-search-field .cinder-field__control:focus-within {
+    border-color: var(--hashti-focus, #08BDBA);
+    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #08BDBA), 0 0 12px rgba(8, 189, 186, 0.35);
   }
-  [data-hashti-theme] .cinder-search-field[data-focus-visible],
-  [data-cinder-theme] .cinder-search-field[data-focus-visible] {
+
+  .hashti-search-field input,
+  .cinder-search-field input {
+    flex: 1;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--hashti-text-primary, #161616);
+    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--cinder-background)), 0 0 0 4px var(--hashti-focus, var(--cinder-focus)), 0 0 12px rgba(0, 180, 216, 0.35);
   }
 }

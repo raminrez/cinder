@@ -1,0 +1,43 @@
+/* Hashti Modern Aesthetic - Divider */
+@layer hashti.components {
+  .hashti-divider,
+  .cinder-divider {
+    border: none;
+    background-color: var(--hashti-border-subtle, #e0e0e0);
+  }
+
+  .hashti-divider[aria-orientation="horizontal"],
+  .cinder-divider[aria-orientation="horizontal"] {
+    height: 1px;
+    width: 100%;
+    margin: 16px 0;
+  }
+
+  .hashti-divider[aria-orientation="vertical"],
+  .cinder-divider[aria-orientation="vertical"] {
+    width: 1px;
+    height: 100%;
+    margin: 0 16px;
+  }
+
+  .hashti-divider-labeled,
+  .cinder-divider-labeled {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+    color: var(--hashti-text-secondary, #525252);
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .hashti-divider-labeled::before,
+  .hashti-divider-labeled::after,
+  .cinder-divider-labeled::before,
+  .cinder-divider-labeled::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--hashti-border-subtle, #e0e0e0);
+  }
+}

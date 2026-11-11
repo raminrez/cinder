@@ -1,4 +1,16 @@
 "use client";
 
-export { DatePicker, DateRangePicker, DateField, Calendar, RangeCalendar } from "./date-picker";
-export type { DatePickerProps, DateRangePickerProps, DateFieldProps, CalendarProps, RangeCalendarProps } from "./date-picker";
+export {
+  DatePicker,
+  DateRangePicker,
+  Calendar,
+  RangeCalendar,
+} from "./date-picker";
+export type {
+  DatePickerProps,
+  DatePickerRootProps,
+  DateRangePickerProps,
+  DateRangePickerRootProps,
+  CalendarProps,
+  RangeCalendarProps,
+} from "./date-picker";

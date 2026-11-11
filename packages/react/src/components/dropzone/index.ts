@@ -1,4 +1,4 @@
 "use client";
 
-export { DropZone, FileTrigger } from "./dropzone";
-export type { DropZoneProps, FileTriggerProps } from "./dropzone";
+export { DropZone, FileTrigger, FileUploader, acceptsFile } from "./dropzone";
+export type { DropZoneProps, FileTriggerProps, FileUploaderProps } from "./dropzone";
