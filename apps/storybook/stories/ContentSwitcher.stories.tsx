@@ -8,7 +8,7 @@ import {
   ToggleButton,
   useTheme,
   type Selection,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./navigation.css";
 
 const meta = {

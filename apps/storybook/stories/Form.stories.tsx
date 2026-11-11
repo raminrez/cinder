@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, waitFor, within } from "storybook/test";
-import { Button, Form, TextArea, TextField, Theme, useTheme, type FormProps } from "@cinder/react";
+import { Button, Form, TextArea, TextField, Theme, useTheme, type FormProps } from "@hashti/react";
 import "./forms.css";
 
 type SaveResult = FormProps["validationErrors"] | void;

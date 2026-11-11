@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Badge, Button, Icon, Theme } from "@cinder/react";
+import { Badge, Button, Icon, Theme } from "@hashti/react";
 import "./content.css";
 
 const meta = {

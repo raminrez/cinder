@@ -20,7 +20,7 @@ for (const name of ["tokens", "react"]) {
     format: "esm",
     jsx: { runtime: "automatic", development: false },
     packages: "external",
-    external: ["@cinder/tokens"],
+    external: ["@hashti/tokens"],
     sourcemap: "linked",
     minify: false,
     ...(name === "react" ? { banner: '"use client";' } : {}),
@@ -44,7 +44,7 @@ for (const name of ["tokens", "react"]) {
     });
     if (!css.success) throw new AggregateError(css.logs, "Could not build styles");
   }
-  console.log(`Built @cinder/${name}`);
+  console.log(`Built @hashti/${name}`);
 }
 
 if (process.argv.includes("--packages")) process.exit(0);

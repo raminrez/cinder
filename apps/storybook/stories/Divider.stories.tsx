@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Button, Divider } from "@cinder/react";
+import { Button, Divider } from "@hashti/react";
 import "./content.css";
 
 const meta = {

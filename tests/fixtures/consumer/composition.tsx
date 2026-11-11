@@ -41,7 +41,7 @@ import {
   type FieldInputProps,
   type Key,
   type SelectRootProps,
-} from "@cinder/react";
+} from "@hashti/react";
 
 interface Choice {
   id: number;

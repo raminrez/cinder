@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, waitFor, within } from "storybook/test";
-import { Button, Icon, Theme, Tooltip, TooltipTrigger, useTheme } from "@cinder/react";
+import { Button, Icon, Theme, Tooltip, TooltipTrigger, useTheme } from "@hashti/react";
 import "./overlays.css";
 import "./fields.css";
 

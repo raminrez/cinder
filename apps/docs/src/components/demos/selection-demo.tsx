@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Checkbox, RadioGroup, Radio, Switch } from "@cinder/react";
+import { Checkbox, RadioGroup, Radio, Switch } from "@hashti/react";
 
 export function SelectionLiveDemo() {
   const [checked, setChecked] = useState(true);

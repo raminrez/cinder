@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Badge, Tag, Meter } from "@cinder/react";
+import { Badge, Tag, Meter } from "@hashti/react";
 
 export function FeedbackLiveDemo() {
   const [meterValue, setMeterValue] = useState(72);

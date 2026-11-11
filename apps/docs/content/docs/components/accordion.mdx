@@ -18,7 +18,7 @@ Built on React Aria Components' `DisclosureGroup` and `Disclosure` primitives, H
 ## Import
 
 ```tsx
-import { Accordion, AccordionItem } from "@cinder/react";
+import { Accordion, AccordionItem } from "@hashti/react";
 ```
 
 ---
@@ -30,7 +30,7 @@ import { Accordion, AccordionItem } from "@cinder/react";
 Construct an accordion by nesting multiple `<AccordionItem>` components inside an `<Accordion>`. Each item takes a `title` string or element and renders its children within the collapsible panel:
 
 ```tsx
-import { Accordion, AccordionItem } from "@cinder/react";
+import { Accordion, AccordionItem } from "@hashti/react";
 
 export function BasicAccordionExample() {
   return (
@@ -59,7 +59,7 @@ export function BasicAccordionExample() {
 By default, an accordion allows only one item to be open at a time (closing the previous panel when a new one opens). Set `allowsMultipleExpanded` to allow multiple panels to remain open simultaneously:
 
 ```tsx
-import { Accordion, AccordionItem } from "@cinder/react";
+import { Accordion, AccordionItem } from "@hashti/react";
 
 export function MultiExpandedAccordionExample() {
   return (
@@ -86,7 +86,7 @@ Use `expandedKeys` and `onExpandedChange` to control which accordion panels are 
 
 ```tsx
 import { useState } from "react";
-import { Accordion, AccordionItem, Button } from "@cinder/react";
+import { Accordion, AccordionItem, Button } from "@hashti/react";
 
 export function ControlledAccordionExample() {
   const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(new Set(["panel-1"]));
@@ -127,7 +127,7 @@ export function ControlledAccordionExample() {
 To preserve proper document outline hierarchy for screen readers and search engines, specify the `headingLevel` (1 through 6, default 3) on `<AccordionItem>`:
 
 ```tsx
-import { Accordion, AccordionItem } from "@cinder/react";
+import { Accordion, AccordionItem } from "@hashti/react";
 
 export function HeadingLevelExample() {
   return (

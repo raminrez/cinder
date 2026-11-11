@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CommandPalette, Button, Kbd } from "@cinder/react";
+import { CommandPalette, Button, Kbd } from "@hashti/react";
 
 export function CommandPaletteLiveDemo() {
   const [isOpen, setIsOpen] = useState(false);

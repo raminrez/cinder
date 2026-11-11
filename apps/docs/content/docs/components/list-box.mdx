@@ -16,7 +16,7 @@ It is ideal for **dual-list transfer pickers, permission managers, category sele
 Hashti exports both compound and named subcomponents:
 
 ```tsx
-import { ListBox, ListBoxItem, ListBoxSection, ListBoxHeader } from "@cinder/react";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxHeader } from "@hashti/react";
 // Or via compound subcomponents:
 // ListBox.Root, ListBox.Item, ListBox.Section, ListBox.Header, ListBox.DragHandle, ListBox.Checkbox, ListBox.EmptyState
 ```
@@ -47,7 +47,7 @@ A classic inline listbox for picking a single option:
 
 ```tsx
 import { useState } from "react";
-import { ListBox } from "@cinder/react";
+import { ListBox } from "@hashti/react";
 import type { Selection } from "react-aria-components";
 
 const themes = [
@@ -93,7 +93,7 @@ Pair `<ListBox.Checkbox />` with `selectionMode="multiple"` for picking several 
 
 ```tsx
 import { useState } from "react";
-import { ListBox } from "@cinder/react";
+import { ListBox } from "@hashti/react";
 import type { Selection } from "react-aria-components";
 
 const features = [
@@ -135,7 +135,7 @@ export function MultiSelectListBoxExample() {
 Organize options into categories using `<ListBox.Section>` and `<ListBox.Header>`:
 
 ```tsx
-import { ListBox } from "@cinder/react";
+import { ListBox } from "@hashti/react";
 
 export function SectionedListBoxExample() {
   return (

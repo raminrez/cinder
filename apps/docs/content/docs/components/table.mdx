@@ -23,7 +23,7 @@ import {
   Cell,
   ResizableTableContainer,
   ColumnResizer,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -42,7 +42,7 @@ import {
   Column,
   Row,
   Cell,
-} from "@cinder/react";
+} from "@hashti/react";
 
 export function BasicTableExample() {
   return (
@@ -98,8 +98,8 @@ import {
   Column,
   Row,
   Cell,
-} from "@cinder/react";
-import type { SortDescriptor } from "@cinder/react";
+} from "@hashti/react";
+import type { SortDescriptor } from "@hashti/react";
 
 interface ServiceRecord {
   id: string;
@@ -174,8 +174,8 @@ import {
   Column,
   Row,
   Cell,
-} from "@cinder/react";
-import type { Selection } from "@cinder/react";
+} from "@hashti/react";
+import type { Selection } from "@hashti/react";
 
 export function SelectableTableExample() {
   const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(["2"]));
@@ -225,7 +225,7 @@ export function SelectableTableExample() {
 Use the `size` prop (`sm`, `md`, `lg`, `xl`) to adapt row height and text density to your data needs:
 
 ```tsx
-import { Table, TableHeader, TableBody, Column, Row, Cell } from "@cinder/react";
+import { Table, TableHeader, TableBody, Column, Row, Cell } from "@hashti/react";
 
 export function TableSizesExample() {
   return (

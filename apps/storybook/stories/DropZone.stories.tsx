@@ -5,7 +5,7 @@ import {
   DropZone,
   FileTrigger,
   Button,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./feedback.css";
 
 const meta = {

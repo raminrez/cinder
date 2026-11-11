@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, test } from "bun:test";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 import { expect } from "playwright/test";
 import index from "../fixtures/contracts.html";
-import { themeNames, themes } from "@cinder/tokens";
+import { themeNames, themes } from "@hashti/tokens";
 
 let server: ReturnType<typeof Bun.serve>;
 let browser: Browser;

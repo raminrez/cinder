@@ -14,7 +14,7 @@ In Hashti's visual philosophy, discovery tools must never obstruct the user's vi
 ## Import
 
 ```tsx
-import { SearchField, Kbd } from "@cinder/react";
+import { SearchField, Kbd } from "@hashti/react";
 ```
 
 Sub-components for custom layouts:
@@ -24,7 +24,7 @@ import {
   SearchField,
   FieldControl,
   FieldGroupInput,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -36,7 +36,7 @@ import {
 A basic search field with placeholder and label:
 
 ```tsx
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function BasicSearchFieldDemo() {
   return (
@@ -54,7 +54,7 @@ Hook into `onChange` for instant typeahead filtering, or `onSubmit` when the use
 
 ```tsx
 import { useState } from "react";
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function SearchHandlerDemo() {
   const [query, setQuery] = useState("");
@@ -87,7 +87,7 @@ export function SearchHandlerDemo() {
 Pair with Hashti's `<Kbd>` component to indicate a global command palette or focus shortcut:
 
 ```tsx
-import { SearchField, Kbd } from "@cinder/react";
+import { SearchField, Kbd } from "@hashti/react";
 
 export function ShortcutSearchDemo() {
   return (
@@ -110,7 +110,7 @@ export function ShortcutSearchDemo() {
 SearchField is available in `sm` (32px), `md` (40px, default), and `lg` (48px) sizes:
 
 ```tsx
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function SearchSizesDemo() {
   return (
@@ -126,7 +126,7 @@ export function SearchSizesDemo() {
 ### Disabled State
 
 ```tsx
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function DisabledSearchDemo() {
   return (

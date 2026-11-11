@@ -18,7 +18,7 @@ Built on React Aria Components, Hashti's Tabs adhere strictly to the WAI-ARIA Ta
 ## Import
 
 ```tsx
-import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+import { Tabs, TabList, Tab, TabPanel } from "@hashti/react";
 ```
 
 ---
@@ -30,7 +30,7 @@ import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
 Use `<Tabs>` with `<TabList>`, `<Tab>`, and `<TabPanel>` to construct layered panel navigation:
 
 ```tsx
-import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+import { Tabs, TabList, Tab, TabPanel } from "@hashti/react";
 
 export function BasicTabsExample() {
   return (
@@ -81,7 +81,7 @@ Hashti supports two primary styling variants via the `variant` prop:
 - `variant="contained"`: Solid boxed tabs that resemble card or folder tabs.
 
 ```tsx
-import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+import { Tabs, TabList, Tab, TabPanel } from "@hashti/react";
 
 export function ContainedTabsExample() {
   return (
@@ -113,7 +113,7 @@ export function ContainedTabsExample() {
 Set `orientation="vertical"` to render tabs in a side navigation column layout:
 
 ```tsx
-import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+import { Tabs, TabList, Tab, TabPanel } from "@hashti/react";
 
 export function VerticalTabsExample() {
   return (
@@ -157,8 +157,8 @@ Pass `selectedKey` and `onSelectionChange` to manage active tabs programmaticall
 
 ```tsx
 import { useState } from "react";
-import { Tabs, TabList, Tab, TabPanel, Button } from "@cinder/react";
-import type { Key } from "@cinder/react";
+import { Tabs, TabList, Tab, TabPanel, Button } from "@hashti/react";
+import type { Key } from "@hashti/react";
 
 export function ControlledTabsExample() {
   const [selectedKey, setSelectedKey] = useState<Key>("step1");

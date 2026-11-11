@@ -1,7 +1,7 @@
 import { useRef, useState, type ReactElement } from "react";
 import { createRoot } from "react-dom/client";
 import { CalendarDate, Time } from "@internationalized/date";
-import { isThemeName } from "@cinder/tokens";
+import { isThemeName } from "@hashti/tokens";
 import {
   Button,
   CheckboxGroup,
@@ -25,7 +25,7 @@ import {
   Theme,
   TimeField,
   type Key,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const choices = [
   { id: 1, name: "Reader", description: "Can view records" },

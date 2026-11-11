@@ -27,8 +27,8 @@ In architectural design, hallways and archways guide foot traffic with quiet cer
 ## Import
 
 ```tsx
-import { Link } from "@cinder/react";
-import type { LinkProps } from "@cinder/react";
+import { Link } from "@hashti/react";
+import type { LinkProps } from "@hashti/react";
 ```
 
 ---
@@ -40,7 +40,7 @@ import type { LinkProps } from "@cinder/react";
 Within running body copy or articles, pass `inline={true}`. This applies a persistent underline (`text-decoration: underline`) to ensure WCAG 2.2 AAA accessibility compliance for color-blind users who cannot differentiate links purely by hue:
 
 ```tsx
-import { Link } from "@cinder/react";
+import { Link } from "@hashti/react";
 
 export function InlineLinkDemo() {
   return (
@@ -62,7 +62,7 @@ export function InlineLinkDemo() {
 Standalone links are placed outside running body paragraphs (e.g., in footers, cards, or hero banners). They typically include directional icons:
 
 ```tsx
-import { Link, Icon } from "@cinder/react";
+import { Link, Icon } from "@hashti/react";
 
 export function StandaloneLinkDemo() {
   return (
@@ -88,7 +88,7 @@ export function StandaloneLinkDemo() {
 For links leading to external web resources, specify `target="_blank"` and `rel="noopener noreferrer"`. It is best practice to include an external link icon and an accessible screen-reader warning:
 
 ```tsx
-import { Link, Icon } from "@cinder/react";
+import { Link, Icon } from "@hashti/react";
 
 export function ExternalLinkDemo() {
   return (
@@ -113,7 +113,7 @@ export function ExternalLinkDemo() {
 Disabled links cannot be focused via keyboard navigation, reject pointer interactions, and communicate their inactive state via `aria-disabled="true"`:
 
 ```tsx
-import { Link } from "@cinder/react";
+import { Link } from "@hashti/react";
 
 export function DisabledLinkDemo() {
   return (

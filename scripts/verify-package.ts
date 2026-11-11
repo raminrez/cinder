@@ -1150,7 +1150,7 @@ try {
           entry,
           `import { createRoot } from "react-dom/client";
 import { CompositionConsumer } from "./composition";
-import "@cinder/react/styles.css";
+import "@hashti/react/styles.css";
 
 const theme: "frame-light" | "frame-dark" =
   new URLSearchParams(location.search).get("theme") === "frame-dark" ? "frame-dark" : "frame-light";
@@ -1199,8 +1199,8 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
           `Missing ${archive.name}/${file}`,
         );
       assert.match(await Bun.file(join(installed, "NOTICE")).text(), /Copyright 2015 IBM Corp\./);
-      if (archive.name === "@cinder/react") {
-        assert.equal(manifest.peerDependencies["@cinder/tokens"], "0.1.0");
+      if (archive.name === "@hashti/react") {
+        assert.equal(manifest.peerDependencies["@hashti/tokens"], "0.1.0");
         assert.equal(
           manifest.dependencies["@internationalized/date"],
           catalog["@internationalized/date"],
@@ -1213,9 +1213,9 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
         );
         assert.match(await Bun.file(join(installed, "dist/index.js")).text(), /^"use client";/);
       }
-      if (archive.name === "@cinder/tokens") {
+      if (archive.name === "@hashti/tokens") {
         const css = await Bun.file(
-          Bun.resolveSync("@cinder/tokens/tokens.css", consumer.directory),
+          Bun.resolveSync("@hashti/tokens/tokens.css", consumer.directory),
         ).text();
         assert.match(css, /frame-light/);
         assert.match(css, /frame-dark/);

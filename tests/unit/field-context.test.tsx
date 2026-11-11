@@ -30,7 +30,7 @@ import {
   TextArea,
   TextField,
   TimeField,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const inherited = {
   "aria-label": "Inherited field",

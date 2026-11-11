@@ -30,7 +30,7 @@ import {
   TimeField,
   type FieldStatus,
   type ThemeName,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const date = new CalendarDate(2026, 11, 8);
 const statusTypes = ["warning", "error", "success"] as const;

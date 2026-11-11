@@ -30,9 +30,9 @@ import {
   Theme,
   type ButtonVariant,
   type Key,
-} from "@cinder/react";
-import { isThemeName, themeNames, themes, token } from "@cinder/tokens";
-import tokenData from "@cinder/tokens/tokens.json";
+} from "@hashti/react";
+import { isThemeName, themeNames, themes, token } from "@hashti/tokens";
+import tokenData from "@hashti/tokens/tokens.json";
 import moduleBrand from "./brand.module.css";
 import "./frame.css";
 

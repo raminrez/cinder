@@ -1,4 +1,4 @@
-import { Tabs, TabList, Tab, TabPanel } from "@cinder/react";
+import { Tabs, TabList, Tab, TabPanel } from "@hashti/react";
 
 export function TabsLiveDemo() {
   return (

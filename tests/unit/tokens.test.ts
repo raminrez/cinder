@@ -11,7 +11,7 @@ import {
   token,
   typeStyles,
   type ThemeToken,
-} from "@cinder/tokens";
+} from "@hashti/tokens";
 
 const root = resolve(import.meta.dir, "../..");
 

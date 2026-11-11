@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { themeNames } from "@cinder/tokens";
+import { themeNames } from "@hashti/tokens";
 import {
   Button,
   Checkbox,
@@ -30,7 +30,7 @@ import {
   useToast,
   type Key,
   type ThemeName,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const items = [
   { id: "alpha", name: "Alpha" },

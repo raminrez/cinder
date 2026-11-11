@@ -25,7 +25,7 @@ import {
   TimeField,
   Calendar,
   RangeCalendar,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 Date values are manipulated using `@internationalized/date` (an industry-standard library included with React Aria):
@@ -47,7 +47,7 @@ import { parseDate, today, getLocalTimeZone } from "@internationalized/date";
 A standard DatePicker with an input field and calendar trigger button:
 
 ```tsx
-import { DatePicker } from "@cinder/react";
+import { DatePicker } from "@hashti/react";
 import { parseDate } from "@internationalized/date";
 
 export function SingleDatePickerDemo() {
@@ -68,7 +68,7 @@ export function SingleDatePickerDemo() {
 `DateRangePicker` manages paired start and end dates with integrated validation, perfect for hotel reservations, travel bookings, and project phases:
 
 ```tsx
-import { DateRangePicker } from "@cinder/react";
+import { DateRangePicker } from "@hashti/react";
 import { parseDate } from "@internationalized/date";
 
 export function DateRangePickerDemo() {
@@ -92,7 +92,7 @@ export function DateRangePickerDemo() {
 Hashti includes architectural support for the Persian Solar Hijri (*Jalali*) calendar system via `@internationalized/date`'s `PersianCalendar`. When paired with an Iranian locale (`fa-IR`), month names, day orders (Saturday to Friday), and numeral formats correspond directly to Persian standards:
 
 ```tsx
-import { DatePicker } from "@cinder/react";
+import { DatePicker } from "@hashti/react";
 import { today, PersianCalendar, toCalendar } from "@internationalized/date";
 
 export function PersianDatePickerDemo() {
@@ -116,7 +116,7 @@ export function PersianDatePickerDemo() {
 Set `minValue` and `maxValue` to restrict dates to a valid window. Dates outside this range are visually grayed out and unselectable:
 
 ```tsx
-import { DatePicker } from "@cinder/react";
+import { DatePicker } from "@hashti/react";
 import { today, getLocalTimeZone } from "@internationalized/date";
 
 export function BoundedDateDemo() {
@@ -140,7 +140,7 @@ export function BoundedDateDemo() {
 When a calendar popup is unnecessary or when screen space is tight, `DateField` and `TimeField` provide tactile segment-by-segment keyboard inputs:
 
 ```tsx
-import { DateField, TimeField } from "@cinder/react";
+import { DateField, TimeField } from "@hashti/react";
 import { parseDate, parseTime } from "@internationalized/date";
 
 export function StandaloneFieldsDemo() {
@@ -166,7 +166,7 @@ Use `<Calendar>` directly inline within a dashboard or sidebar panel:
 
 ```tsx
 import { useState } from "react";
-import { Calendar } from "@cinder/react";
+import { Calendar } from "@hashti/react";
 import { today, getLocalTimeZone, type DateValue } from "@internationalized/date";
 
 export function InlineCalendarDemo() {

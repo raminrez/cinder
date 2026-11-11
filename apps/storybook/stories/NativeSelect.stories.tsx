@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { NativeSelect, Theme, useTheme } from "@cinder/react";
+import { NativeSelect, Theme, useTheme } from "@hashti/react";
 import "./fields.css";
 
 const meta = {

@@ -1,7 +1,7 @@
 {
-  "name": "@cinder/react",
+  "name": "@hashti/react",
   "version": "0.1.0",
-  "description": "Carbon-aligned React components, built on React Aria Components.",
+  "description": "Hashti modern React components, built on React Aria Components.",
   "type": "module",
   "license": "Apache-2.0",
   "files": [
@@ -22,7 +22,7 @@
     "./dist/*": "./dist/*"
   },
   "peerDependencies": {
-    "@cinder/tokens": "0.1.0",
+    "@hashti/tokens": "0.1.0",
     "react": ">=19.0.0 <20",
     "react-dom": ">=19.0.0 <20",
     "react-aria-components": ">=1.22.0 <2"
@@ -31,7 +31,7 @@
     "@internationalized/date": "catalog:"
   },
   "devDependencies": {
-    "@cinder/tokens": "workspace:*",
+    "@hashti/tokens": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-aria-components": "catalog:",

@@ -5,7 +5,7 @@ import {
   Button,
   ToggleButton,
   Icon,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./actions.css";
 
 const meta = {

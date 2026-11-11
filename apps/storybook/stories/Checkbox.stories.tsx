@@ -9,7 +9,7 @@ import {
   Theme,
   useTheme,
   type FormProps,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./fields.css";
 
 const meta = {

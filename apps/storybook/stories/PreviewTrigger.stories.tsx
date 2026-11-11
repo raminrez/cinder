@@ -6,7 +6,7 @@ import {
   Link,
   Popover,
   PreviewTrigger,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./overlays.css";
 
 const meta = {

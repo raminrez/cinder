@@ -18,7 +18,7 @@ Built on React Aria Components' `DropZone` and `FileTrigger`, Hashti's implement
 ## Import
 
 ```tsx
-import { DropZone, FileTrigger } from "@cinder/react";
+import { DropZone, FileTrigger } from "@hashti/react";
 // Or via compound subcomponents:
 // DropZone.Root, DropZone.Feedback, DropZone.FileTrigger
 ```
@@ -49,7 +49,7 @@ A classic upload region featuring a dashed border, drop icon, and contextual ins
 
 ```tsx
 import { useState } from "react";
-import { DropZone, FileTrigger, Button, Icon } from "@cinder/react";
+import { DropZone, FileTrigger, Button, Icon } from "@hashti/react";
 
 export function FileUploadExample() {
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
@@ -105,7 +105,7 @@ Hashti provides three stylistic variants for drop zones:
 - `card`: Elevated card plinth (`--surface-raised`) with subtle drop shadow for full-page empty states.
 
 ```tsx
-import { DropZone, Button } from "@cinder/react";
+import { DropZone, Button } from "@hashti/react";
 
 export function CardDropZoneExample() {
   return (

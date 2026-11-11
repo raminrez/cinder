@@ -32,8 +32,8 @@ In technical application interfaces, keyboard shortcuts empower power users to t
 ## Import
 
 ```tsx
-import { Kbd } from "@cinder/react";
-import type { KbdProps } from "@cinder/react";
+import { Kbd } from "@hashti/react";
+import type { KbdProps } from "@hashti/react";
 ```
 
 ---
@@ -45,7 +45,7 @@ import type { KbdProps } from "@cinder/react";
 Render a single key by passing a string to `keys` or as direct `children`:
 
 ```tsx
-import { Kbd } from "@cinder/react";
+import { Kbd } from "@hashti/react";
 
 export function SingleKeyDemo() {
   return (
@@ -65,7 +65,7 @@ export function SingleKeyDemo() {
 Pass an array of keys to `keys` to render a grouped combination:
 
 ```tsx
-import { Kbd } from "@cinder/react";
+import { Kbd } from "@hashti/react";
 
 export function KeyCombinationDemo() {
   return (
@@ -96,7 +96,7 @@ export function KeyCombinationDemo() {
 Embed `Kbd` inside search field adornments to advertise global hotkeys:
 
 ```tsx
-import { Kbd, Icon } from "@cinder/react";
+import { Kbd, Icon } from "@hashti/react";
 
 export function SearchFieldWithKbdDemo() {
   return (

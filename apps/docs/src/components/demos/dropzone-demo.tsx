@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DropZone, FileTrigger, Button } from "@cinder/react";
+import { DropZone, FileTrigger, Button } from "@hashti/react";
 
 export function DropZoneLiveDemo() {
   const [droppedFiles, setDroppedFiles] = useState<string[]>([]);

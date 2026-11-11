@@ -14,7 +14,7 @@ Unlike standard buttons, all segments are joined in a single cohesive container 
 ## Import
 
 ```tsx
-import { ContentSwitcher, ToggleButton, Icon } from "@cinder/react";
+import { ContentSwitcher, ToggleButton, Icon } from "@hashti/react";
 ```
 
 ---
@@ -27,8 +27,8 @@ Construct a content switcher by wrapping two or more `<ToggleButton>` components
 
 ```tsx
 import { useState } from "react";
-import { ContentSwitcher, ToggleButton } from "@cinder/react";
-import type { Key } from "@cinder/react";
+import { ContentSwitcher, ToggleButton } from "@hashti/react";
+import type { Key } from "@hashti/react";
 
 export function BasicContentSwitcherExample() {
   const [view, setView] = useState<Key>("grid");
@@ -62,7 +62,7 @@ Combine icons with descriptive labels to provide instant visual affordances:
 
 ```tsx
 import { useState } from "react";
-import { ContentSwitcher, ToggleButton, Icon } from "@cinder/react";
+import { ContentSwitcher, ToggleButton, Icon } from "@hashti/react";
 
 export function IconContentSwitcherExample() {
   const [mode, setMode] = useState<string>("code");
@@ -100,7 +100,7 @@ export function IconContentSwitcherExample() {
 Hashti offers three density sizes (`sm`, `md`, `lg`) to match adjacent input heights and dense toolbars:
 
 ```tsx
-import { ContentSwitcher, ToggleButton } from "@cinder/react";
+import { ContentSwitcher, ToggleButton } from "@hashti/react";
 
 export function ContentSwitcherSizesExample() {
   return (
@@ -136,7 +136,7 @@ Ideal for two-option toggles such as pricing tiers or light/dark themes:
 
 ```tsx
 import { useState } from "react";
-import { ContentSwitcher, ToggleButton } from "@cinder/react";
+import { ContentSwitcher, ToggleButton } from "@hashti/react";
 
 export function BinarySwitcherExample() {
   const [billing, setBilling] = useState<string>("annual");
