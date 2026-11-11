@@ -14,7 +14,7 @@ Built on React Aria Components' toast architecture, Hashti's toast system featur
 ## Import
 
 ```tsx
-import { ToastProvider, useToast } from "@cinder/react";
+import { ToastProvider, useToast } from "@hashti/react";
 ```
 
 ---
@@ -25,7 +25,7 @@ To use toasts anywhere in your application, place `<ToastProvider>` near the roo
 
 ```tsx
 // Root application layout or provider wrapper
-import { Theme, ToastProvider } from "@cinder/react";
+import { Theme, ToastProvider } from "@hashti/react";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -47,7 +47,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 Call `toast.add()` inside event handlers or promise resolutions to surface instant feedback:
 
 ```tsx
-import { useToast, Button } from "@cinder/react";
+import { useToast, Button } from "@hashti/react";
 
 export function BasicToastExample() {
   const toast = useToast();
@@ -73,7 +73,7 @@ export function BasicToastExample() {
 Toasts support Hashti's four standard feedback kinds: `info`, `success`, `warning`, and `error`.
 
 ```tsx
-import { useToast, Button } from "@cinder/react";
+import { useToast, Button } from "@hashti/react";
 
 export function ToastKindsExample() {
   const toast = useToast();
@@ -141,7 +141,7 @@ export function ToastKindsExample() {
 By default, toasts automatically dismiss after 5,000 milliseconds (5 seconds). You can customize the duration per toast via `options.timeout`:
 
 ```tsx
-import { useToast, Button } from "@cinder/react";
+import { useToast, Button } from "@hashti/react";
 
 export function CustomTimeoutExample() {
   const toast = useToast();
@@ -170,7 +170,7 @@ export function CustomTimeoutExample() {
   return (
     <div className="flex gap-4">
       <Button variant="ghost" onPress={handleQuickToast}>
-        Quick Toast (2s)
+        Brief Toast (2s)
       </Button>
       <Button variant="ghost" onPress={handlePersistentToast}>
         Long Toast (15s)
@@ -186,7 +186,7 @@ The `toast.add()` method returns a unique string identifier that can be passed t
 
 ```tsx
 import { useRef } from "react";
-import { useToast, Button } from "@cinder/react";
+import { useToast, Button } from "@hashti/react";
 
 export function ProgrammaticDismissExample() {
   const toast = useToast();
@@ -264,3 +264,11 @@ The `useToast()` hook returns an object with the following methods:
 - **Keyboard Dismissal**: Every toast includes a focusable close button equipped with `aria-label="Dismiss notification"`. Users navigating via keyboard can tab to the button and press <kbd>Enter</kbd> or <kbd>Space</kbd> to dismiss.
 - **Timing Guidelines (WCAG 2.2.1)**: Critical error messages or required actions should not rely solely on auto-dismissing toasts. Because users with reading difficulties or screen magnifiers may need more time to comprehend content, provide ample duration or consider using [`Alert`](./alert) or [`InlineNotification`](./inline-notification) for essential recovery instructions.
 - **Maximum Visible Count**: The toast queue limits visible toasts to 3 at a time to prevent overcrowding the screen and overwhelming the user's field of view.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Toast | Applied during toast slide-in transition. |
+| `[data-exiting]` | Toast | Applied during toast dismissal transition. |

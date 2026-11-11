@@ -18,7 +18,7 @@ Built on React Aria Components' Select, it provides full typeahead searching, ke
 ## Import
 
 ```tsx
-import { Select, ListBoxItem, ListBoxSection, SectionHeader } from "@cinder/react";
+import { Select, ListBoxItem, ListBoxSection, SectionHeader } from "@hashti/react";
 ```
 
 Sub-parts for advanced composition:
@@ -29,7 +29,7 @@ import {
   FieldLayout,
   Popover,
   ListBox,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -41,7 +41,7 @@ import {
 A basic select dropdown using static `<ListBoxItem>` children:
 
 ```tsx
-import { Select, ListBoxItem } from "@cinder/react";
+import { Select, ListBoxItem } from "@hashti/react";
 
 export function BasicSelectDemo() {
   return (
@@ -63,7 +63,7 @@ Render options dynamically from an array of objects:
 
 ```tsx
 import { useState } from "react";
-import { Select, ListBoxItem } from "@cinder/react";
+import { Select, ListBoxItem } from "@hashti/react";
 import type { Key } from "react-aria-components";
 
 interface City {
@@ -111,7 +111,7 @@ export function DynamicSelectDemo() {
 You can disable specific individual options using `disabledKeys`, or disable the entire select component with `isDisabled`:
 
 ```tsx
-import { Select, ListBoxItem } from "@cinder/react";
+import { Select, ListBoxItem } from "@hashti/react";
 
 export function DisabledSelectDemo() {
   return (
@@ -146,7 +146,7 @@ export function DisabledSelectDemo() {
 When validation fails, pass `isInvalid` and an `errorMessage`:
 
 ```tsx
-import { Select, ListBoxItem } from "@cinder/react";
+import { Select, ListBoxItem } from "@hashti/react";
 
 export function InvalidSelectDemo() {
   return (
@@ -175,7 +175,7 @@ Set `selectionMode="multiple"` to enable picking several options. The `multipleD
 
 ```tsx
 import { useState } from "react";
-import { Select, ListBoxItem } from "@cinder/react";
+import { Select, ListBoxItem } from "@hashti/react";
 import type { Selection } from "react-aria-components";
 
 export function MultiSelectDemo() {
@@ -220,7 +220,7 @@ export function MultiSelectDemo() {
 Use `<ListBoxSection>` and `<SectionHeader>` to organize items into clear categorical groupings:
 
 ```tsx
-import { Select, ListBoxItem, ListBoxSection, SectionHeader } from "@cinder/react";
+import { Select, ListBoxItem, ListBoxSection, SectionHeader } from "@hashti/react";
 
 export function GroupedSelectDemo() {
   return (
@@ -291,3 +291,26 @@ Select complies with the **WAI-ARIA `combobox`** specification:
   - While open, `aria-activedescendant` is tracked on the focused item, ensuring screen readers announce options accurately.
 - **ARIA Attributes**:
   - The trigger has `role="combobox"`, `aria-haspopup="listbox"`, `aria-expanded="false|true"`, and `aria-labelledby` referencing the label.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> / <kbd>↓</kbd> | Opens the dropdown listbox and focuses the active item. |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Navigates between items in the listbox. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Moves focus to the first or last available option. |
+| <kbd>Esc</kbd> | Closes the dropdown listbox and restores focus to the trigger. |
+| <kbd>Tab</kbd> | Closes the listbox and moves focus to the next interactive page element. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Trigger, Item | Present when the pointer hovers over the element. |
+| `[data-focused]` | Trigger, Item | Present when the element holds keyboard or pointer focus. |
+| `[data-pressed]` | Trigger, Item | Active while the element is actively pressed. |
+| `[data-selected]` | Item | Present on currently selected listbox options. |
+| `[data-disabled]` | Trigger, Item | Present when the element is disabled from interaction. |

@@ -7,37 +7,37 @@ description: Install and configure Hashti Design System packages in your React, 
 
 Hashti is distributed as two primary packages:
 
-1. **`@cinder/tokens`**: Comprehensive design tokens, CSS variables, Carbon & Frame themes, color scales, and spacing primitives.
-2. **`@cinder/react`**: 45+ enterprise React components built on top of [React Aria Components (RAC 1.22.1)](https://react-spectrum.adobe.com/react-aria/index.html).
+1. **`@hashti/tokens`**: Comprehensive design tokens, CSS variables, Core, Relay & Frame themes, color scales, and spacing primitives.
+2. **`@hashti/react`**: 45+ enterprise React components built on top of [React Aria Components (RAC 1.22.1)](https://react-spectrum.adobe.com/react-aria/index.html).
 
 ---
 
 ## 1. Package Manager Installation
 
-Install both `@cinder/react` and `@cinder/tokens` alongside their peer dependencies (`react` and `react-dom` version 19+, and `react-aria-components`).
+Install both `@hashti/react` and `@hashti/tokens` alongside their peer dependencies (`react` and `react-dom` version 19+, and `react-aria-components`).
 
 ### Bun (Recommended)
 
 ```bash
-bun add @cinder/react @cinder/tokens react-aria-components
+bun add @hashti/react @hashti/tokens react-aria-components
 ```
 
 ### npm
 
 ```bash
-npm install @cinder/react @cinder/tokens react-aria-components
+npm install @hashti/react @hashti/tokens react-aria-components
 ```
 
 ### pnpm
 
 ```bash
-pnpm add @cinder/react @cinder/tokens react-aria-components
+pnpm add @hashti/react @hashti/tokens react-aria-components
 ```
 
 ### Yarn
 
 ```bash
-yarn add @cinder/react @cinder/tokens react-aria-components
+yarn add @hashti/react @hashti/tokens react-aria-components
 ```
 
 ---
@@ -48,10 +48,10 @@ Hashti uses two modular prebuilt stylesheets. Add them at your application's roo
 
 ```css
 /* 1. Foundational design tokens & theme CSS variables */
-import "@cinder/tokens/tokens.css";
+import "@hashti/tokens/tokens.css";
 
 /* 2. Component structural layouts, focus rings, and BEM styles */
-import "@cinder/react/styles.css";
+import "@hashti/react/styles.css";
 ```
 
 > [!NOTE]
@@ -63,14 +63,14 @@ import "@cinder/react/styles.css";
 
 ### Next.js (App Router)
 
-In Next.js 14/15/16 App Router, configure your root layout (`app/layout.tsx`) with the `<Theme>` provider. Because `@cinder/react` components use client-side accessibility hooks, the root `<Theme>` handles client boundary wrapping cleanly:
+In Next.js 14/15/16 App Router, configure your root layout (`app/layout.tsx`) with the `<Theme>` provider. Because `@hashti/react` components use client-side accessibility hooks, the root `<Theme>` handles client boundary wrapping cleanly:
 
 ```tsx
 // app/layout.tsx
 import type { Metadata } from "next";
-import "@cinder/tokens/tokens.css";
-import "@cinder/react/styles.css";
-import { Theme } from "@cinder/react";
+import "@hashti/tokens/tokens.css";
+import "@hashti/react/styles.css";
+import { Theme } from "@hashti/react";
 
 export const metadata: Metadata = {
   title: "My Hashti App",
@@ -101,9 +101,9 @@ To use Hashti components in an Astro project, enable the `@astrojs/react` integr
 ```astro
 ---
 // src/layouts/BaseLayout.astro
-import "@cinder/tokens/tokens.css";
-import "@cinder/react/styles.css";
-import { Theme } from "@cinder/react";
+import "@hashti/tokens/tokens.css";
+import "@hashti/react/styles.css";
+import { Theme } from "@hashti/react";
 
 interface Props {
   title?: string;
@@ -135,9 +135,9 @@ In a Vite application, configure `src/main.tsx`:
 // src/main.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@cinder/tokens/tokens.css";
-import "@cinder/react/styles.css";
-import { Theme } from "@cinder/react";
+import "@hashti/tokens/tokens.css";
+import "@hashti/react/styles.css";
+import { Theme } from "@hashti/react";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -157,7 +157,7 @@ Once configured, import and use Hashti components directly in your application:
 
 ```tsx
 // src/App.tsx
-import { Button, TextField, Card, Badge } from "@cinder/react";
+import { Button, TextField, Card, Badge } from "@hashti/react";
 
 export default function App() {
   return (

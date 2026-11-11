@@ -37,13 +37,13 @@ import {
   ClickableTile,
   SelectableTile,
   ExpandableTile,
-} from "@cinder/react";
+} from "@hashti/react";
 import type {
   TileProps,
   ClickableTileProps,
   SelectableTileProps,
   ExpandableTileProps,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -55,7 +55,7 @@ import type {
 The base `Tile` serves as a clean, rounded container surface. You can customize the rendered HTML element via the `as` prop (`div`, `article`, or `section`):
 
 ```tsx
-import { Tile } from "@cinder/react";
+import { Tile } from "@hashti/react";
 
 export function StandardTileDemo() {
   return (
@@ -78,7 +78,7 @@ export function StandardTileDemo() {
 Use `ClickableTile` when an entire tile acts as a link to another page or external site:
 
 ```tsx
-import { ClickableTile, Icon } from "@cinder/react";
+import { ClickableTile, Icon } from "@hashti/react";
 
 export function ClickableTileDemo() {
   return (
@@ -103,7 +103,7 @@ export function ClickableTileDemo() {
         <div className="flex justify-between items-start">
           <div>
             <h4 className="font-semibold text-neutral-900 dark:text-neutral-100">Theme System</h4>
-            <p className="mt-1 text-xs text-neutral-500">Learn how Hashti switches between Frame and Carbon</p>
+            <p className="mt-1 text-xs text-neutral-500">Learn how Hashti switches between Frame and Core themes</p>
           </div>
           <Icon name="arrowRight" size={16} />
         </div>
@@ -121,7 +121,7 @@ export function ClickableTileDemo() {
 
 ```tsx
 import { useState } from "react";
-import { SelectableTile } from "@cinder/react";
+import { SelectableTile } from "@hashti/react";
 
 export function SelectableTileDemo() {
   const [selectedAddons, setSelectedAddons] = useState<string[]>(["waf"]);
@@ -169,7 +169,7 @@ export function SelectableTileDemo() {
 `ExpandableTile` presents summary content above the fold, accompanied by an accessible toggle button that smoothly unfolds detailed information below the fold:
 
 ```tsx
-import { ExpandableTile } from "@cinder/react";
+import { ExpandableTile } from "@hashti/react";
 
 export function ExpandableTileDemo() {
   return (
@@ -255,3 +255,21 @@ export function ExpandableTileDemo() {
 - **ExpandableTile**:
   - Uses an explicit `<button>` control with `aria-expanded={isExpanded}`.
   - The button label alternates between "Show more" and "Show less", ensuring clear affordance for screen readers.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Selects or expands tile when configured as selectable or expandable. |
+| <kbd>Tab</kbd> | Navigates through interactive controls inside tile. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Tile | Present on pointer hover. |
+| `[data-selected]` | Tile | Active when tile is selected. |
+| `[data-focused]` | Tile | Active on keyboard focus. |

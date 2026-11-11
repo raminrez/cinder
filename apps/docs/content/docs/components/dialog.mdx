@@ -14,7 +14,7 @@ In Hashti, Dialog embodies the inner sanctum of an overlay experience—guarante
 ## Import
 
 ```tsx
-import { Dialog, DialogTrigger, Heading, Button } from "@cinder/react";
+import { Dialog, DialogTrigger, Heading, Button } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { Dialog, DialogTrigger, Heading, Button } from "@cinder/react";
 A clean three-tier structured dialog featuring a header with `<Heading slot="title">`, body content, and footer actions:
 
 ```tsx
-import { DialogTrigger, Button, Modal, Dialog, Heading } from "@cinder/react";
+import { DialogTrigger, Button, Modal, Dialog, Heading } from "@hashti/react";
 
 export function StandardDialogDemo() {
   return (
@@ -71,7 +71,7 @@ export function StandardDialogDemo() {
 Dialog integrates naturally with forms. Notice how the first interactive element automatically receives focus:
 
 ```tsx
-import { DialogTrigger, Button, Modal, Dialog, Heading, TextField } from "@cinder/react";
+import { DialogTrigger, Button, Modal, Dialog, Heading, TextField } from "@hashti/react";
 
 export function FormDialogDemo() {
   return (
@@ -125,7 +125,7 @@ export function FormDialogDemo() {
 Dialog is not limited to Modals; it also serves as the accessible content wrapper inside a `Popover`:
 
 ```tsx
-import { DialogTrigger, Button, Popover, Dialog, Heading } from "@cinder/react";
+import { DialogTrigger, Button, Popover, Dialog, Heading } from "@hashti/react";
 
 export function PopoverDialogDemo() {
   return (
@@ -184,3 +184,19 @@ export function PopoverDialogDemo() {
 - **Automated Title Linkage**: Any `<Heading slot="title">` child is automatically detected, and its generated ID is linked to the dialog container's `aria-labelledby` property.
 - **Initial Focus**: By default, focus moves to the first focusable element inside the dialog. You can override this by placing `autoFocus` on a specific input or button.
 - **Tab Loop**: Tab and Shift+Tab continuously cycle through interactive elements within the dialog boundary without escaping into other page regions.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus through interactive controls in dialog. |
+| <kbd>Esc</kbd> | Closes the dialog if configured as dismissable. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-focused]` | Dialog | Set when dialog or inner element is focused. |

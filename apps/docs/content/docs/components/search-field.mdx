@@ -14,7 +14,7 @@ In Hashti's visual philosophy, discovery tools must never obstruct the user's vi
 ## Import
 
 ```tsx
-import { SearchField, Kbd } from "@cinder/react";
+import { SearchField, Kbd } from "@hashti/react";
 ```
 
 Sub-components for custom layouts:
@@ -24,7 +24,7 @@ import {
   SearchField,
   FieldControl,
   FieldGroupInput,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -36,7 +36,7 @@ import {
 A basic search field with placeholder and label:
 
 ```tsx
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function BasicSearchFieldDemo() {
   return (
@@ -54,7 +54,7 @@ Hook into `onChange` for instant typeahead filtering, or `onSubmit` when the use
 
 ```tsx
 import { useState } from "react";
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function SearchHandlerDemo() {
   const [query, setQuery] = useState("");
@@ -87,7 +87,7 @@ export function SearchHandlerDemo() {
 Pair with Hashti's `<Kbd>` component to indicate a global command palette or focus shortcut:
 
 ```tsx
-import { SearchField, Kbd } from "@cinder/react";
+import { SearchField, Kbd } from "@hashti/react";
 
 export function ShortcutSearchDemo() {
   return (
@@ -110,12 +110,12 @@ export function ShortcutSearchDemo() {
 SearchField is available in `sm` (32px), `md` (40px, default), and `lg` (48px) sizes:
 
 ```tsx
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function SearchSizesDemo() {
   return (
     <div className="flex flex-col gap-4 max-w-sm">
-      <SearchField size="sm" label="Compact" placeholder="Quick search..." />
+      <SearchField size="sm" label="Compact" placeholder="Search..." />
       <SearchField size="md" label="Default" placeholder="Standard search..." />
       <SearchField size="lg" label="Spacious" placeholder="Hero search..." />
     </div>
@@ -126,7 +126,7 @@ export function SearchSizesDemo() {
 ### Disabled State
 
 ```tsx
-import { SearchField } from "@cinder/react";
+import { SearchField } from "@hashti/react";
 
 export function DisabledSearchDemo() {
   return (
@@ -172,3 +172,22 @@ SearchField implements the **WAI-ARIA `searchbox`** pattern:
 - **Clear Button Labeling**: The clear button includes an accessible label (`aria-label="Clear search"`) and is automatically hidden when the input is empty to avoid tab clutter.
 - **Search Landmark Semantics**: Rendered with `type="search"` to trigger native virtual keyboard search actions on iOS and Android devices.
 - **RTL Script Support**: In Persian/Arabic layouts, the magnifying glass icon and clear button gracefully swap positions to match reading direction.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus into input or clear button. |
+| <kbd>Esc</kbd> | Clears input text if text is present. |
+| <kbd>Enter</kbd> | Commits search query callback. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Input, Clear Button | Present when pointer hovers over element. |
+| `[data-focused]` | Input, Clear Button | Active when element has focus. |
+| `[data-disabled]` | Input, Clear Button | Set when search field is disabled. |

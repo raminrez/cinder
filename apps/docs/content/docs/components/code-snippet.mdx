@@ -15,12 +15,12 @@ Technical tools require immediate affordance for copying executable commands and
 
 ```
 ┌──────────────────────────────────────────────────────────┬───────┐
-│ $ bun add @cinder/react @cinder/tokens                   │ [Copy]│
+│ $ bun add @hashti/react @hashti/tokens                   │ [Copy]│
 └──────────────────────────────────────────────────────────┴───────┘
 ```
 
 - **Three Display Types**:
-  - `single`: Horizontal terminal bar with command line and quick copy button.
+  - `single`: Horizontal terminal bar with command line and copy button.
   - `multi`: Full multi-line syntax block with optional vertical scrolling and line wrapping.
   - `inline`: Compact prose badge for keywords, configuration parameters, and paths.
 - **Accessible Clipboard Announcements**: Includes a visually-hidden screen reader live region (`role="status"`) announcing "Copied to clipboard" upon successful copy.
@@ -31,8 +31,8 @@ Technical tools require immediate affordance for copying executable commands and
 ## Import
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
-import type { CodeSnippetProps } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
+import type { CodeSnippetProps } from "@hashti/react";
 ```
 
 ---
@@ -44,12 +44,12 @@ import type { CodeSnippetProps } from "@cinder/react";
 Ideal for package manager commands, curl requests, and terminal invocations:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 export function SingleLineSnippetDemo() {
   return (
     <CodeSnippet type="single" label="Package installation command">
-      bun add @cinder/react @cinder/tokens
+      bun add @hashti/react @hashti/tokens
     </CodeSnippet>
   );
 }
@@ -62,7 +62,7 @@ export function SingleLineSnippetDemo() {
 Designed for code blocks, JSON payloads, and configuration files. Supports setting `maxHeight` for contained scrolling and `wrapText` to prevent horizontal clipping:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 const configExample = `{
   "name": "hashti-cluster",
@@ -95,7 +95,7 @@ export function MultiLineSnippetDemo() {
 Use `type="inline"` within running documentation copy or tables to present actionable tokens, environment variables, or file paths:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 export function InlineSnippetDemo() {
   return (
@@ -117,7 +117,7 @@ export function InlineSnippetDemo() {
 For read-only logs or sensitive hashes where manual selection is preferred:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 export function NonCopyableSnippetDemo() {
   return (
@@ -155,6 +155,24 @@ export function NonCopyableSnippetDemo() {
 
 ### Screen Reader & Live Region Semantics
 
-- **Copy Status Announcement**: When the copy button is pressed, the component updates an internal status string inside a `<span role="status" className="cinder-visually-hidden">`. Assistive technologies immediately announce "Copied to clipboard" without disturbing screen reader cursor focus.
+- **Copy Status Announcement**: When the copy button is pressed, the component updates an internal status string inside a `<span role="status" className="hashti-visually-hidden">`. Assistive technologies immediately announce "Copied to clipboard" without disturbing screen reader cursor focus.
 - **Descriptive Button Label**: The copy button utilizes `aria-label={\`Copy ${label.toLowerCase()}\`}` (e.g. *"Copy package installation command"*), ensuring screen reader users understand what payload will be copied.
 - **Scroll Container Semantics**: Scrollable code blocks include `aria-label={label}` so that the scrollable region has an unambiguous accessible name.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus to copy action button or scrollable code box. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Triggers copy action to clipboard. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Copy Button | Present on pointer hover. |
+| `[data-focused]` | Copy Button | Active on focus. |
+| `[data-copied]` | Copy Button | Active for 2 seconds after successful copy. |

@@ -14,7 +14,7 @@ Like all Hashti components, NumberField reflects deliberate geometric proportion
 ## Import
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 ```
 
 Compositional sub-components are also available:
@@ -25,7 +25,7 @@ import {
   FieldControl,
   FieldGroupInput,
   FieldButton,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -37,7 +37,7 @@ import {
 A standard NumberField includes an accessible label, an input area, and increment/decrement buttons.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function StandardNumberFieldDemo() {
   return (
@@ -55,7 +55,7 @@ export function StandardNumberFieldDemo() {
 Use `minValue` and `maxValue` to enforce safe bounds. Stepper buttons automatically disable when limits are reached, and out-of-range typing triggers validation feedback.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function MinMaxDemo() {
   return (
@@ -75,7 +75,7 @@ export function MinMaxDemo() {
 The `step` prop defines the increment and decrement amount. By default, step is `1`. For decimal or large-interval measurements, pass fractions or custom integers.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function StepDemo() {
   return (
@@ -107,7 +107,7 @@ export function StepDemo() {
 Using the `formatOptions` property (powered by JavaScript's `Intl.NumberFormat`), you can format inputs in any currency while preserving numeric parsing under the hood.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function CurrencyDemo() {
   return (
@@ -143,7 +143,7 @@ export function CurrencyDemo() {
 Format ratios or commission percentages with automatic multiplication by 100 and localized percent symbols:
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function PercentageDemo() {
   return (
@@ -168,7 +168,7 @@ export function PercentageDemo() {
 NumberField supports Hashti's standard control sizes (`sm`, `md`, `lg`) and full disablement:
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function StatesDemo() {
   return (
@@ -220,3 +220,23 @@ NumberField implements the **WAI-ARIA `spinbutton`** role pattern:
 - **Home & End**: Pressing <kbd>Home</kbd> immediately jumps to `minValue` (if defined); pressing <kbd>End</kbd> jumps to `maxValue` (if defined).
 - **Accessible Stepper Buttons**: Decrement and increment buttons feature clear localized labels (`aria-label="Decrement"`, `aria-label="Increment"`) and are marked `tabIndex={-1}` so keyboard users navigate smoothly through form fields without extra tab stops.
 - **Screen Reader Announcements**: The component sets `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-valuetext` (reflecting internationalized currency and percentage strings) so screen readers accurately speak the formatted value.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↑</kbd> / <kbd>↓</kbd> | Increments or decrements the numeric value by `step`. |
+| <kbd>Page Up</kbd> / <kbd>Page Down</kbd> | Increments or decrements value by larger page step. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jumps directly to minimum or maximum permitted value. |
+| <kbd>Tab</kbd> | Moves focus into or out of the number input control. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Stepper, Input | Present when hovered by pointer. |
+| `[data-focused]` | Stepper, Input | Active when receiving focus. |
+| `[data-disabled]` | Stepper, Input | Set when interaction is disabled. |

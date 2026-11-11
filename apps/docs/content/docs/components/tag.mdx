@@ -19,7 +19,7 @@ Tags represent concise pieces of metadata, status descriptors, categories, or ac
 ## Import
 
 ```tsx
-import { Tag, FilterTag, TagGroup } from "@cinder/react";
+import { Tag, FilterTag, TagGroup } from "@hashti/react";
 ```
 
 ---
@@ -31,7 +31,7 @@ import { Tag, FilterTag, TagGroup } from "@cinder/react";
 Use `<Tag>` for read-only labels, statuses, and taxonomy indicators.
 
 ```tsx
-import { Tag } from "@cinder/react";
+import { Tag } from "@hashti/react";
 
 export function StaticTagsExample() {
   return (
@@ -52,7 +52,7 @@ export function StaticTagsExample() {
 Tags are available in two standard heights: `sm` (20px) for high-density tables and compact card metadata, and `md` (24px, default) for general UI layouts.
 
 ```tsx
-import { Tag } from "@cinder/react";
+import { Tag } from "@hashti/react";
 
 export function TagSizesExample() {
   return (
@@ -69,7 +69,7 @@ export function TagSizesExample() {
 Hashti includes ten distinct color tokens mapped to the design system's semantic color scales:
 
 ```tsx
-import { Tag } from "@cinder/react";
+import { Tag } from "@hashti/react";
 
 export function TagPaletteExample() {
   const colors = [
@@ -103,7 +103,7 @@ Use `<TagGroup>` combined with `<FilterTag>` to manage interactive filter collec
 
 ```tsx
 import { useState } from "react";
-import { TagGroup, FilterTag } from "@cinder/react";
+import { TagGroup, FilterTag } from "@hashti/react";
 
 export function FilterTagGroupExample() {
   const [filters, setFilters] = useState([
@@ -145,8 +145,8 @@ export function FilterTagGroupExample() {
 
 ```tsx
 import { useState } from "react";
-import { TagGroup, FilterTag } from "@cinder/react";
-import type { Selection } from "@cinder/react";
+import { TagGroup, FilterTag } from "@hashti/react";
+import type { Selection } from "@hashti/react";
 
 export function SelectableTagsExample() {
   const [selected, setSelected] = useState<Selection>(new Set(["architecture"]));
@@ -219,3 +219,23 @@ export function SelectableTagsExample() {
 - **Dismissal Controls**: When `onRemove` is enabled, pressing <kbd>Delete</kbd> or <kbd>Backspace</kbd> on a focused tag triggers dismissal. The remove button within `<FilterTag>` is also accessible via keyboard and screen readers with an automatic `slot="remove"` designation.
 - **Selection**: Press <kbd>Space</kbd> or <kbd>Enter</kbd> to toggle the selection of a tag when `selectionMode` is enabled.
 - **Screen Reader Semantics**: `TagGroup` outputs an ARIA `role="grid"` or `role="listbox"` with appropriate group labelling via `<Label>`, and each tag provides `aria-selected` and accessible button states.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>→</kbd> / <kbd>←</kbd> | Moves focus between tags in a tag group. |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Selects tag or triggers remove action. |
+| <kbd>Delete</kbd> / <kbd>Backspace</kbd> | Removes focused tag if removable. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Tag | Present on hover. |
+| `[data-selected]` | Tag | Present when tag is selected. |
+| `[data-focused]` | Tag | Active on focus. |
+| `[data-disabled]` | Tag | Present when tag is disabled. |

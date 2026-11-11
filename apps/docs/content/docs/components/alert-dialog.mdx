@@ -14,7 +14,7 @@ Unlike standard informational modals, an Alert Dialog strictly forces the user t
 ## Import
 
 ```tsx
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 ```
 
 ---
@@ -27,7 +27,7 @@ The default `danger` kind features high-contrast red warning accents and require
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function DeleteConfirmationDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +61,7 @@ Use `kind="warning"` when alerting users of potential data loss before navigatin
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function UnsavedChangesDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +95,7 @@ Use `kind="info"` for important non-destructive milestones:
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function InfoConfirmationDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -129,7 +129,7 @@ Pass `isPending={true}` to indicate ongoing network requests while disabling con
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function AsyncAlertDialogDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -196,3 +196,20 @@ AlertDialog implements the **WAI-ARIA `alertdialog`** specification:
 - **Initial Focus on the Safest Action**: In accordance with accessibility safety standards, focus is automatically initialized on the **Cancel** button rather than the destructive confirmation button. This guarantees that an accidental <kbd>Enter</kbd> or <kbd>Space</kbd> keystroke cancels rather than executes the dangerous action.
 - **Non-Dismissable Backdrop**: The background overlay click handler is disabled (`isDismissable={false}`), preventing inadvertent clicks outside from discarding critical prompts without a deliberate user choice.
 - **Escape Key Handling**: Pressing <kbd>Esc</kbd> triggers `onCancel` and closes the dialog safely.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus between Cancel and Confirm action buttons. |
+| <kbd>Esc</kbd> | Dismisses alert dialog if configured to permit backdrop cancel. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Dialog Surface | Active during mount animation. |
+| `[data-exiting]` | Dialog Surface | Active during exit animation. |

@@ -28,8 +28,8 @@ In international design systems, extracting the first letter of a name often fai
 ## Import
 
 ```tsx
-import { Avatar, AvatarGroup, getInitials } from "@cinder/react";
-import type { AvatarProps, AvatarGroupProps, AvatarSize, AvatarPresence } from "@cinder/react";
+import { Avatar, AvatarGroup, getInitials } from "@hashti/react";
+import type { AvatarProps, AvatarGroupProps, AvatarSize, AvatarPresence } from "@hashti/react";
 ```
 
 ---
@@ -41,7 +41,7 @@ import type { AvatarProps, AvatarGroupProps, AvatarSize, AvatarPresence } from "
 When a valid image URL is provided in `src`:
 
 ```tsx
-import { Avatar } from "@cinder/react";
+import { Avatar } from "@hashti/react";
 
 export function BasicAvatarDemo() {
   return (
@@ -67,7 +67,7 @@ export function BasicAvatarDemo() {
 When `src` is missing or fails to load, `Avatar` automatically derives initials from `name`. It safely handles both Latin and Persian/Arabic names:
 
 ```tsx
-import { Avatar } from "@cinder/react";
+import { Avatar } from "@hashti/react";
 
 export function InitialsAvatarDemo() {
   return (
@@ -95,7 +95,7 @@ export function InitialsAvatarDemo() {
 Hashti offers five standardized sizes from `xs` (24px) up to `xl` (64px):
 
 ```tsx
-import { Avatar } from "@cinder/react";
+import { Avatar } from "@hashti/react";
 
 export function AvatarSizesDemo() {
   return (
@@ -125,7 +125,7 @@ export function AvatarSizesDemo() {
 Add a live activity indicator using the `presence` prop:
 
 ```tsx
-import { Avatar } from "@cinder/react";
+import { Avatar } from "@hashti/react";
 
 export function AvatarPresenceDemo() {
   return (
@@ -147,7 +147,7 @@ export function AvatarPresenceDemo() {
 Group multiple team members with `AvatarGroup`. Use the `max` prop to constrain the display and show an overflow counter:
 
 ```tsx
-import { AvatarGroup, Avatar } from "@cinder/react";
+import { AvatarGroup, Avatar } from "@hashti/react";
 
 export function AvatarGroupDemo() {
   return (
@@ -211,3 +211,10 @@ export function AvatarGroupDemo() {
 - **Presence Status Announcement**: Presence dots render with `role="status"` and `aria-label={presenceLabel ?? presence}`.
 - **International Grapheme Segmentation**: Uses `Intl.Segmenter` to avoid splitting compound characters or emoji ligatures, ensuring polite rendering across all languages.
 - **AvatarGroup Semantics**: The group wrapper receives `role="group"` with an accessible label on the overflow counter (e.g., `aria-label="3 more members"`).
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-size]` | Avatar | Avatar diameter scale (`xs`, `sm`, `md`, `lg`, `xl`). |

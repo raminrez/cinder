@@ -28,8 +28,8 @@ In classical Persian architectural masonry, subtle course banding (*hazartaf* or
 ## Import
 
 ```tsx
-import { Divider } from "@cinder/react";
-import type { DividerProps } from "@cinder/react";
+import { Divider } from "@hashti/react";
+import type { DividerProps } from "@hashti/react";
 ```
 
 ---
@@ -41,7 +41,7 @@ import type { DividerProps } from "@cinder/react";
 The default divider creates a 1px architectural rule spanning the horizontal width of its container:
 
 ```tsx
-import { Divider } from "@cinder/react";
+import { Divider } from "@hashti/react";
 
 export function HorizontalDividerDemo() {
   return (
@@ -69,7 +69,7 @@ export function HorizontalDividerDemo() {
 Place a text label or badge directly within a horizontal divider using the `label` prop:
 
 ```tsx
-import { Divider, Button } from "@cinder/react";
+import { Divider, Button } from "@hashti/react";
 
 export function LabeledDividerDemo() {
   return (
@@ -100,7 +100,7 @@ export function LabeledDividerDemo() {
 In horizontal toolbars and button bars, set `orientation="vertical"` to visually partition groupings of tools:
 
 ```tsx
-import { Divider, Button, Icon } from "@cinder/react";
+import { Divider, Button, Icon } from "@hashti/react";
 
 export function VerticalDividerDemo() {
   return (
@@ -132,7 +132,7 @@ export function VerticalDividerDemo() {
 By default, dividers are semantic separators (`role="separator"`). When a divider is purely cosmetic and should not be announced by screen readers, set `decorative={true}`:
 
 ```tsx
-import { Divider } from "@cinder/react";
+import { Divider } from "@hashti/react";
 
 export function DecorativeDividerDemo() {
   return (
@@ -167,3 +167,10 @@ export function DecorativeDividerDemo() {
 - **Orientation Announcement**: Supplies `aria-orientation="horizontal"` or `aria-orientation="vertical"`.
 - **Labeled Dividers**: When `label` is provided on a horizontal divider, the component renders a semantic separator container around the textual content, ensuring the text remains legible and discoverable by assistive technologies.
 - **Decorative Use**: Whenever a visual line is used strictly for aesthetics and doesn't separate distinct semantic sections, use `decorative={true}` to prevent screen reader clutter.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-orientation]` | Divider | Orientation axis (`horizontal` or `vertical`). |

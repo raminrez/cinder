@@ -20,7 +20,7 @@ Built with React Aria Components' overlay primitives and touch gesture physics, 
 Hashti exports both compound and named subcomponents:
 
 ```tsx
-import { Sheet } from "@cinder/react";
+import { Sheet } from "@hashti/react";
 // Or via compound subcomponents:
 // Sheet.Root, Sheet.Trigger, Sheet.Overlay, Sheet.Backdrop, Sheet.Content, Sheet.Handle, Sheet.Header, Sheet.Body, Sheet.Footer
 ```
@@ -58,7 +58,7 @@ The standard bottom sheet layout with a drag handle, ideal for mobile action men
 
 ```tsx
 import { useState } from "react";
-import { Sheet, Button, Icon } from "@cinder/react";
+import { Sheet, Button, Icon } from "@hashti/react";
 
 export function MobileBottomSheetExample() {
   const [isOpen, setIsOpen] = useState(false);
@@ -103,7 +103,7 @@ export function MobileBottomSheetExample() {
 Snap points allow the sheet to rest at discrete height intervals (e.g. `[0.25, 0.5, 0.9]` representing 25%, 50%, and 90% of viewport height). Users can drag between snap points smoothly:
 
 ```tsx
-import { Sheet, Button, TextField } from "@cinder/react";
+import { Sheet, Button, TextField } from "@hashti/react";
 
 export function SnapPointsSheetExample() {
   return (
@@ -146,7 +146,7 @@ export function SnapPointsSheetExample() {
 On desktop viewports, sheets can emerge from the `right` or `left` edge to serve as deep filter sidebars or inspection drawers:
 
 ```tsx
-import { Sheet, Button, Checkbox, CheckboxGroup } from "@cinder/react";
+import { Sheet, Button, Checkbox, CheckboxGroup } from "@hashti/react";
 
 export function SideFilterSheetExample() {
   return (
@@ -222,3 +222,20 @@ export function SideFilterSheetExample() {
 | Top Border Radius | `--radius-lg` | 16px curved top corners on bottom sheets |
 | Shadow Elevation | `--elevation-overlay` | Multi-layered ambient drop shadow |
 | Motion Easing | `--motion-easing-standard` | Cubic-bezier slide-in and spring physics |
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Traps focus within sheet contents. |
+| <kbd>Esc</kbd> | Dismisses bottom sheet and returns focus to trigger. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-entering]` | Sheet Surface | Applied during slide-up entrance animation. |
+| `[data-exiting]` | Sheet Surface | Applied during dismissal slide-down animation. |

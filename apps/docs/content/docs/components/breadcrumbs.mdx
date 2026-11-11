@@ -5,7 +5,7 @@ description: Hierarchical navigational aid communicating page depth and location
 
 # Breadcrumbs
 
-Breadcrumbs provide a secondary, linear navigational hierarchy that shows users where they are within an application's nested site structure, enabling quick parent-level traversal.
+Breadcrumbs provide a secondary, linear navigational hierarchy that shows users where they are within an application's nested site structure, enabling parent-level traversal.
 
 In Hashti, Breadcrumbs are constructed using semantic ordered lists wrapped in accessible `<nav>` landmarks, automatically marking the terminal page with `aria-current="page"` and handling responsive truncation.
 
@@ -14,7 +14,7 @@ In Hashti, Breadcrumbs are constructed using semantic ordered lists wrapped in a
 ## Import
 
 ```tsx
-import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+import { Breadcrumbs, BreadcrumbItem } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
 Compose breadcrumbs using `<Breadcrumbs>` with nested `<BreadcrumbItem>` components. Set `isCurrent` on the last item to signify the active page:
 
 ```tsx
-import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+import { Breadcrumbs, BreadcrumbItem } from "@hashti/react";
 
 export function BasicBreadcrumbsExample() {
   return (
@@ -45,7 +45,7 @@ export function BasicBreadcrumbsExample() {
 Render breadcrumbs dynamically from an array of routes or navigation history items:
 
 ```tsx
-import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+import { Breadcrumbs, BreadcrumbItem } from "@hashti/react";
 
 interface Crumb {
   id: string;
@@ -80,10 +80,10 @@ export function DynamicBreadcrumbsExample() {
 
 ### Action Callbacks
 
-Breadcrumb items can fire an `onAction` callback instead of navigating directly via `href`, making it easy to integrate with client routers or state machines:
+Breadcrumb items can fire an `onAction` callback instead of navigating directly via `href`, integrating with client routers or state machines:
 
 ```tsx
-import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+import { Breadcrumbs, BreadcrumbItem } from "@hashti/react";
 
 export function ActionBreadcrumbsExample() {
   return (
@@ -101,7 +101,7 @@ export function ActionBreadcrumbsExample() {
 When nesting exceeds four levels, long labels can be truncated with ellipses while preserving full clarity in tooltips or page titles:
 
 ```tsx
-import { Breadcrumbs, BreadcrumbItem } from "@cinder/react";
+import { Breadcrumbs, BreadcrumbItem } from "@hashti/react";
 
 export function TruncatedBreadcrumbsExample() {
   return (

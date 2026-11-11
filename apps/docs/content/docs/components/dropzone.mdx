@@ -18,7 +18,7 @@ Built on React Aria Components' `DropZone` and `FileTrigger`, Hashti's implement
 ## Import
 
 ```tsx
-import { DropZone, FileTrigger } from "@cinder/react";
+import { DropZone, FileTrigger } from "@hashti/react";
 // Or via compound subcomponents:
 // DropZone.Root, DropZone.Feedback, DropZone.FileTrigger
 ```
@@ -49,7 +49,7 @@ A classic upload region featuring a dashed border, drop icon, and contextual ins
 
 ```tsx
 import { useState } from "react";
-import { DropZone, FileTrigger, Button, Icon } from "@cinder/react";
+import { DropZone, FileTrigger, Button, Icon } from "@hashti/react";
 
 export function FileUploadExample() {
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
@@ -105,7 +105,7 @@ Hashti provides three stylistic variants for drop zones:
 - `card`: Elevated card plinth (`--surface-raised`) with subtle drop shadow for full-page empty states.
 
 ```tsx
-import { DropZone, Button } from "@cinder/react";
+import { DropZone, Button } from "@hashti/react";
 
 export function CardDropZoneExample() {
   return (
@@ -172,3 +172,21 @@ Restrict drops to specific MIME types or extensions by utilizing RAC's native dr
 | Drag Surface | `--info-surface` | Subtle active wash during hover |
 | Background | `--surface` / `--surface-raised` | Card and default container fills |
 | Corner Radius | `--radius-lg` | 12px rounded corner geometry |
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus to embedded upload trigger button. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Opens system file picker dialog when trigger is focused. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-drop-target]` | DropZone | Active when dragged file is hovering over drop zone. |
+| `[data-focused]` | DropZone | Present when dropzone receives focus. |
+| `[data-disabled]` | DropZone | Present when file ingestion is disabled. |

@@ -16,7 +16,7 @@ import {
   TokenField,
   TokenFieldInput,
   TokenFieldToken,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ## Anatomy & Compound Composition
@@ -52,7 +52,7 @@ In modern AI engineering applications, developers need to combine natural langua
 
 ```tsx
 import { useState } from "react";
-import { TokenField } from "@cinder/react";
+import { TokenField } from "@hashti/react";
 
 export function AIPromptTokenFieldDemo() {
   const [value, setValue] = useState("");
@@ -94,7 +94,7 @@ export function AIPromptTokenFieldDemo() {
 TokenField integrates with Hashti's standard field presentation props, including validation error messages and helper descriptions:
 
 ```tsx
-import { TokenField } from "@cinder/react";
+import { TokenField } from "@hashti/react";
 
 export function ValidatedTokenFieldDemo() {
   return (
@@ -136,3 +136,22 @@ export function ValidatedTokenFieldDemo() {
 - **Token Deletion**: When cursor is placed immediately after a token, pressing `Backspace` selects the token; pressing `Backspace` again removes it.
 - **Arrow Navigation**: Left and Right arrows skip smoothly past token boundaries as atomic units.
 - **Copy & Paste**: Selecting a range of text containing tokens copies both raw text and token identifiers cleanly to the system clipboard.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Backspace</kbd> | Deletes character or removes preceding token chip. |
+| <kbd>Arrow Left</kbd> / <kbd>Arrow Right</kbd> | Traverses cursor across text and token boundaries. |
+| <kbd>Enter</kbd> | Commits token creation from input suggestion. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Token Chip | Present on pointer hover over chip. |
+| `[data-focused]` | Token Chip, Input | Present when receiving focus. |
+| `[data-selected]` | Token Chip | Set when token chip is highlighted for deletion. |

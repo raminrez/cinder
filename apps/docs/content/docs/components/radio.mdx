@@ -30,8 +30,8 @@ In architectural entrance design, an intersecting crossway presents definitive d
 ## Import
 
 ```tsx
-import { RadioGroup, Radio } from "@cinder/react";
-import type { RadioGroupProps, RadioProps, SelectionColor } from "@cinder/react";
+import { RadioGroup, Radio } from "@hashti/react";
+import type { RadioGroupProps, RadioProps, SelectionColor } from "@hashti/react";
 ```
 
 ---
@@ -44,7 +44,7 @@ The default vertical orientation provides maximum clarity and reading comfort fo
 
 ```tsx
 import { useState } from "react";
-import { RadioGroup, Radio } from "@cinder/react";
+import { RadioGroup, Radio } from "@hashti/react";
 
 export function BasicRadioGroupDemo() {
   const [tier, setTier] = useState("pro");
@@ -72,7 +72,7 @@ For compact settings or binary choices with short labels, configure `orientation
 
 ```tsx
 import { useState } from "react";
-import { RadioGroup, Radio } from "@cinder/react";
+import { RadioGroup, Radio } from "@hashti/react";
 
 export function HorizontalRadioGroupDemo() {
   const [storageType, setStorageType] = useState("ssd");
@@ -101,7 +101,7 @@ When a required choice has not been made, mark `isInvalid={true}` and provide an
 
 ```tsx
 import { useState } from "react";
-import { RadioGroup, Radio } from "@cinder/react";
+import { RadioGroup, Radio } from "@hashti/react";
 
 export function InvalidRadioGroupDemo() {
   const [region, setRegion] = useState("");
@@ -145,7 +145,7 @@ export function InvalidRadioGroupDemo() {
 Disable the entire group or individual options:
 
 ```tsx
-import { RadioGroup, Radio } from "@cinder/react";
+import { RadioGroup, Radio } from "@hashti/react";
 
 export function DisabledRadioDemo() {
   return (
@@ -215,3 +215,24 @@ Hashti's `RadioGroup` strictly complies with the [W3C WAI-ARIA Radio Group Patte
 - The container receives `role="radiogroup"` linked via `aria-labelledby` to its `<Label>`.
 - Each option renders `role="radio"` with `aria-checked="true"` or `"false"`.
 - The helper description and error message are programmatically linked via `aria-describedby`, ensuring screen readers announce context when entering the group.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>→</kbd> | Moves focus and selection to the next radio in the group. |
+| <kbd>↑</kbd> / <kbd>←</kbd> | Moves focus and selection to the previous radio in the group. |
+| <kbd>Tab</kbd> | Enters or exits the radio group (single tab stop). |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Radio | Present on pointer hover. |
+| `[data-focused]` | Radio | Present when receiving focus. |
+| `[data-pressed]` | Radio | Active while pressed. |
+| `[data-selected]` | Radio | Set on the active selected radio option. |
+| `[data-disabled]` | Radio | Present when radio option is disabled. |

@@ -25,7 +25,7 @@ import {
   ColorSwatchPickerItem,
   ColorThumb,
   parseColor,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ## Anatomy & Compound Composition
@@ -56,7 +56,7 @@ The default `<ColorPicker>` provides a pre-assembled layout with saturation/brig
 
 ```tsx
 import { useState } from "react";
-import { ColorPicker, parseColor, type Color } from "@cinder/react";
+import { ColorPicker, parseColor, type Color } from "@hashti/react";
 
 export function CompositeColorPickerDemo() {
   const [color, setColor] = useState<Color>(parseColor("#08bdba"));
@@ -85,7 +85,7 @@ export function CompositeColorPickerDemo() {
 
 ```tsx
 import { useState } from "react";
-import { ColorWheel, ColorWheelTrack, ColorThumb, parseColor } from "@cinder/react";
+import { ColorWheel, ColorWheelTrack, ColorThumb, parseColor } from "@hashti/react";
 
 export function ColorWheelDemo() {
   const [color, setColor] = useState(parseColor("hsl(30, 100%, 50%)"));
@@ -108,7 +108,7 @@ Use `<ColorSwatchPicker>` for curated architectural brand palettes and theme sel
 
 ```tsx
 import { useState } from "react";
-import { ColorSwatchPicker, ColorSwatchPickerItem, parseColor } from "@cinder/react";
+import { ColorSwatchPicker, ColorSwatchPickerItem, parseColor } from "@hashti/react";
 
 export function BrandSwatchPickerDemo() {
   const [selected, setSelected] = useState(parseColor("#08bdba"));
@@ -148,7 +148,7 @@ export function BrandSwatchPickerDemo() {
 Channel sliders allow standalone manipulation of individual channels (hue, saturation, lightness, brightness, red, green, blue, alpha):
 
 ```tsx
-import { ColorSlider, parseColor } from "@cinder/react";
+import { ColorSlider, parseColor } from "@hashti/react";
 
 export function ChannelSlidersDemo() {
   const color = parseColor("hsla(200, 80%, 50%, 0.8)");
@@ -204,3 +204,23 @@ export function ChannelSlidersDemo() {
 - **Slider Keyboard Support**: Left/Right arrows decrement and increment slider values. `Home` jumps to min, `End` jumps to max.
 - **Roving Focus Grid**: `<ColorSwatchPicker>` manages a single tab stop with roving arrow navigation among swatches.
 - **Color Format Conversion**: `parseColor` parses hex (`#fff`, `#08bdba`), rgb/rgba, hsl/hsla, and hsb strings with automatic color space conversions.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>Enter</kbd> | Opens the color picker popover dialog. |
+| <kbd>Arrow Keys</kbd> | Nudges 2D saturation/brightness thumb or 1D slider handle. |
+| <kbd>Shift</kbd>+<kbd>Arrow Keys</kbd> | Adjusts color channel value by larger increment. |
+| <kbd>Esc</kbd> | Closes the color picker popover. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Swatch, Thumb | Active on pointer hover. |
+| `[data-focused]` | Swatch, Thumb | Active on keyboard focus. |
+| `[data-disabled]` | Picker, Swatch | Present when picker is disabled. |

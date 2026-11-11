@@ -14,7 +14,7 @@ Both components are built on top of [React Aria Components](https://react-spectr
 ## Import
 
 ```tsx
-import { TextField, TextArea } from "@cinder/react";
+import { TextField, TextArea } from "@hashti/react";
 ```
 
 You can also import sub-parts for custom compositional layouts:
@@ -29,7 +29,7 @@ import {
   FieldInput,
   FieldTextArea,
   FieldControl,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -41,7 +41,7 @@ import {
 A standard text field consists of an input box with a label, optional helper description, and automated error message wiring.
 
 ```tsx
-import { TextField } from "@cinder/react";
+import { TextField } from "@hashti/react";
 
 export function BasicTextFieldDemo() {
   return (
@@ -59,7 +59,7 @@ export function BasicTextFieldDemo() {
 Hashti text inputs come in three standard heights: `sm` (32px), `md` (40px, default), and `lg` (48px).
 
 ```tsx
-import { TextField } from "@cinder/react";
+import { TextField } from "@hashti/react";
 
 export function SizesDemo() {
   return (
@@ -77,7 +77,7 @@ export function SizesDemo() {
 You can mark a field as required or explicitly optional. When `isRequired` is set, an asterisk or required indicator is rendered and native HTML validation constraints are attached.
 
 ```tsx
-import { TextField } from "@cinder/react";
+import { TextField } from "@hashti/react";
 
 export function RequiredDemo() {
   return (
@@ -102,7 +102,7 @@ export function RequiredDemo() {
 Text fields support built-in validation states (`isInvalid`, `errorMessage`) as well as presentation status badges (`error`, `warning`, `success`).
 
 ```tsx
-import { TextField } from "@cinder/react";
+import { TextField } from "@hashti/react";
 
 export function StatusDemo() {
   return (
@@ -145,7 +145,7 @@ export function StatusDemo() {
 Disabled fields prevent interaction and are grayed out. Read-only fields allow text selection and copying without permitting modification.
 
 ```tsx
-import { TextField } from "@cinder/react";
+import { TextField } from "@hashti/react";
 
 export function DisabledReadOnlyDemo() {
   return (
@@ -172,7 +172,7 @@ export function DisabledReadOnlyDemo() {
 The `TextArea` component shares the exact same API and styling model as `TextField`, but renders a multi-line `<textarea>` with a customizable `rows` property.
 
 ```tsx
-import { TextArea } from "@cinder/react";
+import { TextArea } from "@hashti/react";
 
 export function TextAreaDemo() {
   return (
@@ -191,7 +191,7 @@ export function TextAreaDemo() {
 Hashti is engineered from the ground up for right-to-left (RTL) scripts such as Persian (*Farsi*) and Arabic. When placed in an RTL container or passed `dir="rtl"`, text alignment, padding, icons, and error indicators mirror seamlessly.
 
 ```tsx
-import { TextField, TextArea } from "@cinder/react";
+import { TextField, TextArea } from "@hashti/react";
 
 export function RTLTextFieldDemo() {
   return (
@@ -216,7 +216,7 @@ export function RTLTextFieldDemo() {
 For advanced layouts requiring custom input prefixes, suffixes, or inline actions, use the compound sub-parts:
 
 ```tsx
-import { TextField, Icon, Button } from "@cinder/react";
+import { TextField, Icon, Button } from "@hashti/react";
 
 export function CompositionalDemo() {
   return (
@@ -281,3 +281,23 @@ In addition to the props above, `TextArea` accepts:
 - **Validation Linking**: When `isInvalid` is true, the input receives `aria-invalid="true"` and assistive technology automatically reads the error message upon focusing the field.
 - **Contrast**: Text, border lines, and focus outlines adhere to WCAG 2.2 AAA standards with a minimum 7:1 contrast ratio against the background layer.
 - **RTL & Dual Engine**: Automatically aligns cursor, text selection, and clear indicators with Arabic and Persian script standards.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus into or out of the input control. |
+| <kbd>Enter</kbd> | Submits the containing form (for single-line input). |
+| Any Printable Key | Inserts typed text at the current cursor selection point. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Control | Present when the pointer is hovering over the field control. |
+| `[data-focused]` | Control | Active when the field receives focus. |
+| `[data-invalid]` | Control | Set when the input fails schema or native validation. |
+| `[data-disabled]` | Control | Applied when the input is disabled. |

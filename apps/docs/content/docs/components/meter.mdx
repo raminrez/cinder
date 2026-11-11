@@ -18,7 +18,7 @@ Hashti's Meter extends React Aria Components' `Meter` with automatic semantic th
 ## Import
 
 ```tsx
-import { Meter } from "@cinder/react";
+import { Meter } from "@hashti/react";
 // Or named subcomponents:
 // Meter.Root, Meter.Label, Meter.Value, Meter.Track, Meter.Fill, Meter.HelperText, Meter.Circle
 ```
@@ -49,7 +49,7 @@ import { Meter } from "@cinder/react";
 By default, `<Meter>` renders a clear linear track with automated label and value presentation:
 
 ```tsx
-import { Meter } from "@cinder/react";
+import { Meter } from "@hashti/react";
 
 export function BasicMeterExample() {
   return (
@@ -79,7 +79,7 @@ Depending on whether lower values are better (e.g. CPU temperature, error rate) 
 - `error`: `--error` (Terracotta Red)
 
 ```tsx
-import { Meter } from "@cinder/react";
+import { Meter } from "@hashti/react";
 
 export function StorageTonesExample() {
   return (
@@ -123,7 +123,7 @@ export function StorageTonesExample() {
 For storage analyzers, budget allocators, and memory breakdowns, supply a `segments` array to partition the track across multiple colors:
 
 ```tsx
-import { Meter } from "@cinder/react";
+import { Meter } from "@hashti/react";
 
 export function SegmentedStorageMeter() {
   return (
@@ -149,7 +149,7 @@ export function SegmentedStorageMeter() {
 Set `variant="circular"` to render a compact, circular radial gauge ideal for server dashboards, stat cards, and battery widgets:
 
 ```tsx
-import { Meter } from "@cinder/react";
+import { Meter } from "@hashti/react";
 
 export function CircularMeterExample() {
   return (
@@ -220,3 +220,12 @@ export function CircularMeterExample() {
 | Neutral Tone | `--action` | Unspecified threshold fill |
 | Label Text | `--text` | Primary headline typography |
 | Subtitle Text | `--text-muted` | Descriptive helper text |
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-optimum]` | Meter | Set when value is within optimal range. |
+| `[data-sub-optimum]` | Meter | Set when value enters warning range. |
+| `[data-critical]` | Meter | Set when value enters critical threshold. |

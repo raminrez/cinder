@@ -14,7 +14,7 @@ Unlike floating toasts or assertive alerts, inline notifications stay in place a
 ## Import
 
 ```tsx
-import { InlineNotification, ActionableNotification } from "@cinder/react";
+import { InlineNotification, ActionableNotification } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { InlineNotification, ActionableNotification } from "@cinder/react";
 Render contextual messages across four semantic kinds: `info`, `success`, `warning`, and `error`.
 
 ```tsx
-import { InlineNotification } from "@cinder/react";
+import { InlineNotification } from "@hashti/react";
 
 export function BasicInlineExample() {
   return (
@@ -69,7 +69,7 @@ Pass an `onDismiss` handler to allow users to close the notification once read:
 
 ```tsx
 import { useState } from "react";
-import { InlineNotification, Button } from "@cinder/react";
+import { InlineNotification, Button } from "@hashti/react";
 
 export function DismissibleInlineExample() {
   const [visible, setVisible] = useState(true);
@@ -99,7 +99,7 @@ export function DismissibleInlineExample() {
 By default, inline notifications use low contrast (`lowContrast={true}` or `variant="subtle"`), providing a soft, unobtrusive visual tone that blends harmoniously into dense enterprise dashboards. Set `lowContrast={false}` for higher urgency:
 
 ```tsx
-import { InlineNotification } from "@cinder/react";
+import { InlineNotification } from "@hashti/react";
 
 export function ContrastComparisonExample() {
   return (
@@ -131,7 +131,7 @@ export function ContrastComparisonExample() {
 When an inline notification requires explicit user intervention, use `<ActionableNotification>`. It features dedicated action slots, manages keyboard focus into the primary action, and implements an accessible `role="alertdialog"`.
 
 ```tsx
-import { ActionableNotification, Button } from "@cinder/react";
+import { ActionableNotification, Button } from "@hashti/react";
 
 export function ActionableNotificationExample() {
   return (
@@ -189,3 +189,20 @@ export function ActionableNotificationExample() {
 - **Focus Management**: For routine inline notifications, user focus is **not** abruptly shifted to the message, avoiding disorienting keyboard users while they type in adjacent fields.
 - **Actionable Notification Alertdialog**: When using `<ActionableNotification>`, the container uses `role="alertdialog"` with `aria-labelledby` and `aria-describedby` automatically pointing to the title and description IDs. Focus is safely delegated to the action button when `autoFocusAction` is enabled.
 - **Icon Hiding**: Informational icons are accompanied by the strong headline and appropriate ARIA roles so that meaning is never conveyed by color alone (WCAG 1.4.1).
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Focuses action or close button inside notification. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Activates action or dismisses notification. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Close Button | Present on pointer hover. |
+| `[data-focused]` | Close Button | Present on keyboard focus. |

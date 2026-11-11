@@ -5,7 +5,7 @@ description: Strategic roadmap and architectural blueprints for elevating React 
 
 # RAC 1.22.1 Component Expansion Roadmap
 
-Hashti combines **Carbon Design System's** disciplined enterprise geometry, **React Aria Components' (RAC 1.22.1)** battle-tested W3C WAI-ARIA behavioral foundation, and **Frame's** brand aesthetic.
+Hashti combines disciplined enterprise geometry, **React Aria Components' (RAC 1.22.1)** battle-tested W3C WAI-ARIA behavioral foundation, and **Frame's** brand aesthetic.
 
 Currently, Hashti exports 45 polished component families. However, `react-aria-components@1.22.1` offers powerful low-level capabilities that are either raw re-exports, trapped inside monolithic wrappers, or unexposed. This roadmap outlines Hashti's phased architecture plan to systematically elevate these primitives into first-class, theme-aware, accessible building blocks.
 
@@ -80,7 +80,7 @@ flowchart TD
 Phase 4 delivers mission-critical controls for organizing and navigating complex, deeply nested datasets.
 
 #### 1. GridList (`GridList`)
-- **Carbon Alignment:** Elevates Carbon’s **ContainedList** to RAC’s accessible grid specification.
+- **Contained List Elevation:** Elevates enterprise contained lists to RAC’s accessible grid specification.
 - **Key Features:**
   - Roving arrow-key navigation with multi-item selection (<kbd>Shift</kbd>+<kbd>Click</kbd>, <kbd>Cmd</kbd>+<kbd>A</kbd>).
   - Drag-and-drop item reordering handles with accessible keyboard reordering (<kbd>Alt</kbd>+<kbd>Arrow Up/Down</kbd>).
@@ -142,7 +142,7 @@ A comprehensive, accessible 8-component suite for parsing, selecting, and manipu
 
 ## Production Verification & Quality Gates
 
-Every elevated component must satisfy Hashti’s four non-negotiable release gates before merging into `@cinder/react`:
+Every elevated component must satisfy Hashti’s four non-negotiable release gates before merging into `@hashti/react`:
 
 ### 1. Automated Accessibility Audit (Axe Core)
 - **Zero Violations:** Automated clean sweep across `color-contrast`, `aria-roles`, `aria-allowed-attr`, `aria-required-children`, and `nested-interactive`.

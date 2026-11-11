@@ -17,7 +17,7 @@ import {
   NavigationTreeItem,
   NavigationTreeSection,
   NavigationTreeHeader,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ## Anatomy & Compound Composition
@@ -46,7 +46,7 @@ import {
 `<NavigationTree>` automatically manages selection and handles navigation clicks with keyboard roving arrow support:
 
 ```tsx
-import { NavigationTree, NavigationTreeSection, NavigationTreeHeader, NavigationTreeItem, Icon } from "@cinder/react";
+import { NavigationTree, NavigationTreeSection, NavigationTreeHeader, NavigationTreeItem, Icon } from "@hashti/react";
 
 export function AppNavigationTreeDemo() {
   return (
@@ -88,7 +88,7 @@ export function AppNavigationTreeDemo() {
 For deep folder structures, nest `<NavigationTreeItem>` children within an expandable item:
 
 ```tsx
-import { NavigationTree, NavigationTreeItem } from "@cinder/react";
+import { NavigationTree, NavigationTreeItem } from "@hashti/react";
 
 export function NestedTreeDemo() {
   return (
@@ -97,10 +97,10 @@ export function NestedTreeDemo() {
         <NavigationTreeItem id="packages" textValue="packages">
           <span className="font-semibold text-sm">packages</span>
           <NavigationTreeItem id="pkg-react" href="/packages/react" textValue="react">
-            @cinder/react
+            @hashti/react
           </NavigationTreeItem>
           <NavigationTreeItem id="pkg-tokens" href="/packages/tokens" textValue="tokens">
-            @cinder/tokens
+            @hashti/tokens
           </NavigationTreeItem>
         </NavigationTreeItem>
         <NavigationTreeItem id="apps" textValue="apps">
@@ -148,3 +148,22 @@ export function NestedTreeDemo() {
 - **Expand/Collapse**: `Right` arrow expands a collapsed branch; `Left` arrow collapses an open branch or moves to its parent.
 - **Link Activation**: Pressing `Enter` follows the `href` link.
 - **Typeahead Search**: Typing character keys jumps directly to matching items in the hierarchy.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates through navigation items. |
+| <kbd>→</kbd> / <kbd>←</kbd> | Expands or collapses navigation group. |
+| <kbd>Enter</kbd> | Activates link or toggles group. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Item | Present on pointer hover. |
+| `[data-selected]` | Item | Set on the active route item. |
+| `[data-focused]` | Item | Present on keyboard focus. |

@@ -5,7 +5,7 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: 'Hashti Design System',
     },
-    githubUrl: 'https://github.com/raminrez/cinder',
+    githubUrl: 'https://github.com/raminrez/hashti',
     links: [
       { text: 'Documentation', url: '/docs' },
       { text: 'Components', url: '/docs/components/button' },

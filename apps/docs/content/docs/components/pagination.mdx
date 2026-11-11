@@ -14,7 +14,7 @@ In Hashti, Pagination renders as an accessible `<nav>` landmark with live region
 ## Import
 
 ```tsx
-import { Pagination, NativeSelect, paginationRange } from "@cinder/react";
+import { Pagination, NativeSelect, paginationRange } from "@hashti/react";
 ```
 
 ---
@@ -27,7 +27,7 @@ Configure pagination by specifying `totalItems`, the current `page` (1-indexed),
 
 ```tsx
 import { useState } from "react";
-import { Pagination } from "@cinder/react";
+import { Pagination } from "@hashti/react";
 
 export function BasicPaginationExample() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,7 +55,7 @@ Provide `onPageSizeChange` and `pageSizes` to enable users to toggle how many re
 
 ```tsx
 import { useState } from "react";
-import { Pagination } from "@cinder/react";
+import { Pagination } from "@hashti/react";
 
 export function PageSizePaginationExample() {
   const [page, setPage] = useState(1);
@@ -93,7 +93,7 @@ import {
   Row,
   Cell,
   Pagination,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const allRecords = Array.from({ length: 47 }, (_, i) => ({
   id: `svc-${i + 1}`,
@@ -150,7 +150,7 @@ The `<NativeSelect>` component used internally by Pagination is also exported fo
 
 ```tsx
 import { useState } from "react";
-import { NativeSelect } from "@cinder/react";
+import { NativeSelect } from "@hashti/react";
 
 export function NativeSelectExample() {
   const [region, setRegion] = useState("tehran");
@@ -211,3 +211,21 @@ export function NativeSelectExample() {
   - The "Next page" button is assigned `isDisabled={page >= pages}`.
   - Disabled buttons are announced as disabled and removed from the active keyboard tab cycle.
 - **Keyboard Navigation**: Buttons and the page size selector are fully focusable and activatable via standard <kbd>Tab</kbd>, <kbd>Enter</kbd>, and <kbd>Space</kbd> keys.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Tab</kbd> | Moves focus through pagination buttons and select field. |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Activates next, previous, or numbered page. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Page Button | Present on pointer hover. |
+| `[data-selected]` | Page Button | Active on current active page button. |
+| `[data-disabled]` | Page Button | Applied when button reaches first or last page boundary. |

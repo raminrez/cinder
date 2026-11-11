@@ -33,8 +33,8 @@ In architectural engineering, a valve or physical circuit breaker changes system
 ## Import
 
 ```tsx
-import { Switch } from "@cinder/react";
-import type { SwitchProps, SelectionColor } from "@cinder/react";
+import { Switch } from "@hashti/react";
+import type { SwitchProps, SelectionColor } from "@hashti/react";
 ```
 
 ---
@@ -43,11 +43,11 @@ import type { SwitchProps, SelectionColor } from "@cinder/react";
 
 ### Basic Usage
 
-A simple binary toggle with an adjacent textual label:
+A binary toggle with an adjacent textual label:
 
 ```tsx
 import { useState } from "react";
-import { Switch } from "@cinder/react";
+import { Switch } from "@hashti/react";
 
 export function BasicSwitchDemo() {
   const [airplaneMode, setAirplaneMode] = useState(false);
@@ -68,7 +68,7 @@ Pairing a switch with supporting descriptive text provides rich clarity for syst
 
 ```tsx
 import { useState } from "react";
-import { Switch } from "@cinder/react";
+import { Switch } from "@hashti/react";
 
 export function SwitchWithDescriptionDemo() {
   const [tlsProxy, setTlsProxy] = useState(true);
@@ -93,7 +93,7 @@ export function SwitchWithDescriptionDemo() {
 Hashti switches are available in two standardized sizes (`sm` and `md`):
 
 ```tsx
-import { Switch } from "@cinder/react";
+import { Switch } from "@hashti/react";
 
 export function SwitchSizesDemo() {
   return (
@@ -117,7 +117,7 @@ export function SwitchSizesDemo() {
 Switches support semantic color variants (`primary`, `secondary`, `success`, `warning`, `danger`):
 
 ```tsx
-import { Switch } from "@cinder/react";
+import { Switch } from "@hashti/react";
 
 export function SwitchColorsDemo() {
   return (
@@ -139,7 +139,7 @@ Hashti natively mirrors switches when placed inside an RTL container (`dir="rtl"
 
 ```tsx
 import { useState } from "react";
-import { Switch } from "@cinder/react";
+import { Switch } from "@hashti/react";
 
 export function RTLSwitchDemo() {
   const [isSecure, setIsSecure] = useState(true);
@@ -164,7 +164,7 @@ export function RTLSwitchDemo() {
 Disabled switches communicate an unalterable configuration:
 
 ```tsx
-import { Switch } from "@cinder/react";
+import { Switch } from "@hashti/react";
 
 export function DisabledSwitchDemo() {
   return (
@@ -217,3 +217,22 @@ Hashti switches conform to the [W3C WAI-ARIA Switch Pattern](https://www.w3.org/
 - **ARIA Role**: Renders a semantic element with `role="switch"` and `aria-checked="true"` or `"false"`.
 - **Contrast**: The track and thumb maintain WCAG 2.2 AAA minimum contrast ratios in both resting off and active on states.
 - **Switch vs. Checkbox**: Use a `Switch` when an action toggles on or off with immediate effect (e.g. Wifi, Dark Mode, Notification Sound). Use a `Checkbox` when the choice is part of a larger form requiring submission.
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> | Toggles switch on or off. |
+| <kbd>Tab</kbd> | Moves focus onto or away from the switch. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Switch | Present on pointer hover. |
+| `[data-focused]` | Switch | Active on keyboard focus. |
+| `[data-selected]` | Switch | Set when switch is in the active (ON) state. |
+| `[data-disabled]` | Switch | Applied when switch is disabled. |

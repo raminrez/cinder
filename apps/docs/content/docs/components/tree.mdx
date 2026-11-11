@@ -7,7 +7,7 @@ description: Hierarchical data grid for visualizing nested folders, file explore
 
 A **Tree** displays hierarchical data structured into expandable and collapsible branches. It is standard for **file directory browsers, organization charts, categorized product taxonomies, and nested JSON/code inspectors**.
 
-Built upon React Aria Components' `Tree` pattern, Hashti unites Carbon TreeView elegance with RAC's accessible `treegrid` implementation. Features include optional architectural guideline rules (`showGuideLines`), recursive chevron indicators, multi-item selection with checkboxes, and keyboard branch navigation.
+Built upon React Aria Components' `Tree` pattern, Hashti unites architectural TreeView elegance with RAC's accessible `treegrid` implementation. Features include optional architectural guideline rules (`showGuideLines`), recursive chevron indicators, multi-item selection with checkboxes, and keyboard branch navigation.
 
 <ComponentPreview title="Live Interactive Navigation Tree" description="Keyboard roving arrow navigation and link href routing.">
   <TreeLiveDemo />
@@ -18,7 +18,7 @@ Built upon React Aria Components' `Tree` pattern, Hashti unites Carbon TreeView 
 ## Import
 
 ```tsx
-import { Tree } from "@cinder/react";
+import { Tree } from "@hashti/react";
 // Or named subcomponents:
 // Tree.Root, Tree.Item, Tree.Indicator, Tree.Content, Tree.Checkbox
 ```
@@ -49,7 +49,7 @@ import { Tree } from "@cinder/react";
 Construct a multi-level file hierarchy with custom folder and document icons:
 
 ```tsx
-import { Tree, Icon } from "@cinder/react";
+import { Tree, Icon } from "@hashti/react";
 
 const fileHierarchy = [
   {
@@ -114,7 +114,7 @@ Enable batch selection across parent and child nodes by setting `selectionMode="
 
 ```tsx
 import { useState } from "react";
-import { Tree } from "@cinder/react";
+import { Tree } from "@hashti/react";
 import type { Selection } from "react-aria-components";
 
 export function SelectableTreeExample() {
@@ -230,3 +230,25 @@ Hashti Tree adheres to the **WAI-ARIA Treegrid Pattern**:
 | Hover State | `--surface-hover` | Subtle row hover feedback |
 | Text Main | `--text` | Primary node label |
 | Text Muted | `--text-muted` | File icons and metadata |
+---
+
+## Keyboard Interactions
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>↓</kbd> / <kbd>↑</kbd> | Navigates between visible tree nodes. |
+| <kbd>→</kbd> | Expands collapsed branch node, or moves into first child. |
+| <kbd>←</kbd> | Collapses expanded branch node, or moves back to parent. |
+| <kbd>Home</kbd> / <kbd>End</kbd> | Jumps to the first or last visible tree node. |
+| <kbd>Space</kbd> | Toggles node selection. |
+
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-hovered]` | Tree Node | Active on pointer hover. |
+| `[data-selected]` | Tree Node | Set when tree item is selected. |
+| `[data-expanded]` | Tree Branch | Present on expanded branch nodes. |
+| `[data-focused]` | Tree Node | Set when tree item holds focus. |

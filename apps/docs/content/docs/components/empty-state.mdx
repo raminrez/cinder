@@ -26,15 +26,15 @@ In classical Persian courtyards, an empty basin (*howz*) or open alcove is desig
 
 - **Clear Information Hierarchy**: Centered vertical stack comprising icon, title, description, and actionable buttons.
 - **Support for Both First-Run & Zero-Results**: Adaptable to onboarding wizards, empty table lists, no-network states, and search queries returning zero matches.
-- **Integrated Action Slots**: Easily accommodates single primary buttons or multi-action groups (e.g. "Create Cluster" and "Read Documentation").
+- **Integrated Action Slots**: Accommodates single primary buttons or multi-action groups (e.g. "Create Cluster" and "Read Documentation").
 
 ---
 
 ## Import
 
 ```tsx
-import { EmptyState } from "@cinder/react";
-import type { EmptyStateProps } from "@cinder/react";
+import { EmptyState } from "@hashti/react";
+import type { EmptyStateProps } from "@hashti/react";
 ```
 
 ---
@@ -46,7 +46,7 @@ import type { EmptyStateProps } from "@cinder/react";
 When a user opens a newly created workspace with no resources provisioned:
 
 ```tsx
-import { EmptyState, Button, Icon } from "@cinder/react";
+import { EmptyState, Button, Icon } from "@hashti/react";
 
 export function FirstRunEmptyStateDemo() {
   return (
@@ -74,7 +74,7 @@ export function FirstRunEmptyStateDemo() {
 When filtering or searching yielding no results, provide an action to clear the search filter:
 
 ```tsx
-import { EmptyState, Button, Icon } from "@cinder/react";
+import { EmptyState, Button, Icon } from "@hashti/react";
 
 export function SearchEmptyStateDemo() {
   return (
@@ -99,7 +99,7 @@ export function SearchEmptyStateDemo() {
 Provide both a primary action and a secondary learning or documentation link using the `actions` prop:
 
 ```tsx
-import { EmptyState, Button, Icon } from "@cinder/react";
+import { EmptyState, Button, Icon } from "@hashti/react";
 
 export function MultiActionEmptyStateDemo() {
   return (
@@ -124,7 +124,7 @@ export function MultiActionEmptyStateDemo() {
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | `ReactNode` | — | Primary heading. Strings are automatically wrapped in a semantic `<h3 className="cinder-empty-state-title">`. |
+| `title` | `ReactNode` | — | Primary heading. Strings are automatically wrapped in a semantic `<h3 className="hashti-empty-state-title">`. |
 | `description` | `ReactNode` | — | Descriptive body copy explaining why the screen is empty and what to do next. |
 | `icon` | `ReactNode` | — | Illustrative icon or graphic rendered at the top of the container. |
 | `action` | `ReactNode` | — | Primary call-to-action element (e.g. `<Button>`). |
@@ -141,3 +141,10 @@ export function MultiActionEmptyStateDemo() {
 - **Heading Structure**: The component wraps text titles in an `<h3>` by default. If your page outline requires an `<h2>` or `<h4>`, pass a custom heading element directly to `title` (e.g., `title={<h2>No projects found</h2>}`).
 - **Action Discovery**: Ensure the primary call-to-action button has descriptive text. Use specific phrases like *"Create Database"* instead of generic words like *"Submit"*.
 - **Live Regions for Search**: If the empty state appears dynamically following an asynchronous search query, consider wrapping the container in an `aria-live="polite"` region so screen reader users are notified that results have updated to zero.
+---
+
+## WAI-ARIA & Data Attributes
+
+| Attribute | Target | Description |
+| :--- | :--- | :--- |
+| `[data-layout]` | EmptyState | Orientation alignment mode (`vertical`, `horizontal`). |
