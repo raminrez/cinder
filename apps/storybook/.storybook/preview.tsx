@@ -1,8 +1,9 @@
 import type { Preview } from "@storybook/react-vite";
 import { Theme } from "@hashti/react";
-import "@cinder/react/styles.css";
+import "@hashti/react/styles.css";
 
 const preview: Preview = {
+  tags: ["autodocs"],
   globalTypes: {
     theme: {
       description: "Frame appearance",
