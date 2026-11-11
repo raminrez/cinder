@@ -17,7 +17,7 @@ Hashti exports both the composite `CommandPalette` component and compound subcom
 import {
   CommandPalette,
   useCommandPaletteContext,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ## Anatomy & Compound Composition
@@ -55,7 +55,7 @@ The composite `<CommandPalette>` automatically listens for <kbd>⌘K</kbd> (Mac)
 
 ```tsx
 import { useState } from "react";
-import { CommandPalette, Button, Kbd, Icon } from "@cinder/react";
+import { CommandPalette, Button, Kbd, Icon } from "@hashti/react";
 
 export function CommandPaletteDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,7 +123,7 @@ You can control the search `query` and react to input changes dynamically:
 
 ```tsx
 import { useState } from "react";
-import { CommandPalette } from "@cinder/react";
+import { CommandPalette } from "@hashti/react";
 
 export function ControlledQueryDemo() {
   const [query, setQuery] = useState("");

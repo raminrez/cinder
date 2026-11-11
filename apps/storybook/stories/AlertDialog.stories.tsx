@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
-import { AlertDialog, Button, Theme } from "@cinder/react";
+import { AlertDialog, Button, Theme } from "@hashti/react";
 import "./overlays.css";
 
 const onConfirm = fn();

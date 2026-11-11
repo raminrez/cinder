@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Accordion, AccordionItem, Button, Theme, useTheme, type Key } from "@cinder/react";
+import { Accordion, AccordionItem, Button, Theme, useTheme, type Key } from "@hashti/react";
 import "./navigation.css";
 
 const meta = {

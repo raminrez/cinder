@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { CalendarDate, Time } from "@internationalized/date";
-import { isThemeName } from "@cinder/tokens";
+import { isThemeName } from "@hashti/tokens";
 import {
   Accordion,
   AccordionItem,
@@ -49,7 +49,7 @@ import {
   useTheme,
   type ButtonVariant,
   type Key,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const variants: ButtonVariant[] = [
   "primary",

@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Theme, useTheme, useOverlayTheme, Layer } from "@cinder/react";
+import { Theme, useTheme, useOverlayTheme, Layer } from "@hashti/react";
 
 function ThemeInspector() {
   const theme = useTheme();

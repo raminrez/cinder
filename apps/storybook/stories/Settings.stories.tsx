@@ -18,7 +18,7 @@ import {
   TextField,
   Theme,
   useTheme,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./settings.css";
 import "./overlays.css";
 import "./fields.css";

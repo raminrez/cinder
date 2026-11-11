@@ -17,7 +17,7 @@ import {
   ComboBox,
   ListBoxItem,
   ComboBoxCreateItem,
-} from "@cinder/react";
+} from "@hashti/react";
 
 describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
   describe("LoadMore Infinite Scrolling", () => {

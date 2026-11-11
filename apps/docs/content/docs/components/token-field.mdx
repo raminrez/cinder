@@ -16,7 +16,7 @@ import {
   TokenField,
   TokenFieldInput,
   TokenFieldToken,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ## Anatomy & Compound Composition
@@ -52,7 +52,7 @@ In modern AI engineering applications, developers need to combine natural langua
 
 ```tsx
 import { useState } from "react";
-import { TokenField } from "@cinder/react";
+import { TokenField } from "@hashti/react";
 
 export function AIPromptTokenFieldDemo() {
   const [value, setValue] = useState("");
@@ -94,7 +94,7 @@ export function AIPromptTokenFieldDemo() {
 TokenField integrates with Hashti's standard field presentation props, including validation error messages and helper descriptions:
 
 ```tsx
-import { TokenField } from "@cinder/react";
+import { TokenField } from "@hashti/react";
 
 export function ValidatedTokenFieldDemo() {
   return (

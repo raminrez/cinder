@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
-import { InputOTP } from "@cinder/react";
+import { InputOTP } from "@hashti/react";
 import "./fields.css";
 
 const handleComplete = fn();

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Select, ListBoxItem } from "@cinder/react";
+import { Select, ListBoxItem } from "@hashti/react";
 import type { Key, Selection } from "react-aria-components";
 
 export function SelectLiveDemo() {

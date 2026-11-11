@@ -24,7 +24,7 @@ import {
   useTheme,
   type FieldStatus,
   type FormProps,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./fields.css";
 
 const readDraft = fn((values: FormData) => Object.fromEntries(values));

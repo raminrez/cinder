@@ -5,7 +5,7 @@ import {
   FileUploader,
   Theme,
   useTheme,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./feedback.css";
 
 const meta = {

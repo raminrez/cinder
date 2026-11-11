@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@cinder/react";
+import { Button } from "@hashti/react";
 
 export function ButtonLiveDemo() {
   const [clicked, setClicked] = useState(0);

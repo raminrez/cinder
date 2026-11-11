@@ -6,7 +6,7 @@ import {
   Button,
   Icon,
   Kbd,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./overlays.css";
 
 const meta = {

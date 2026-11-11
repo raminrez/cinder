@@ -15,7 +15,7 @@ import {
   useTheme,
   type Selection,
   type SortDescriptor,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./data.css";
 
 interface ServiceRecord {

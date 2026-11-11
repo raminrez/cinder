@@ -5,7 +5,7 @@ import {
   SearchField,
   Menu,
   MenuItem,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const meta = {
   title: "Collections/Autocomplete",

@@ -4,7 +4,7 @@ import {
   Button,
   Heading,
   Sheet,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./overlays.css";
 
 const meta = {

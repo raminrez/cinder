@@ -32,14 +32,14 @@ In Persian spatial planning (*Chahar Taq* and *Koushk* pavilions), perimeter pli
 ## Import
 
 ```tsx
-import { Card, CardHeader, CardBody, CardFooter } from "@cinder/react";
+import { Card, CardHeader, CardBody, CardFooter } from "@hashti/react";
 import type {
   CardProps,
   CardHeaderProps,
   CardBodyProps,
   CardFooterProps,
   CardElevation,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -51,7 +51,7 @@ import type {
 Use `CardHeader`, `CardBody`, and `CardFooter` to compose complete information units with built-in layout consistency:
 
 ```tsx
-import { Card, CardHeader, CardBody, CardFooter, Button, Badge } from "@cinder/react";
+import { Card, CardHeader, CardBody, CardFooter, Button, Badge } from "@hashti/react";
 
 export function StandardCardDemo() {
   return (
@@ -89,7 +89,7 @@ Hashti supports three calibrated elevations:
 - `overlay`: Deep floating shadow (`elevation-4`) designed for flyout panels, detached widgets, and focused items.
 
 ```tsx
-import { Card, CardBody } from "@cinder/react";
+import { Card, CardBody } from "@hashti/react";
 
 export function CardElevationsDemo() {
   return (
@@ -126,7 +126,7 @@ export function CardElevationsDemo() {
 To use a card as an entire clickable card (e.g. selecting a workspace, opening a project, or choosing a plan), provide `isPressable={true}` and an `onPress` callback. Hashti automatically injects `role="button"`, keyboard listener (`Enter` and `Space`), and visual hover/active transforms:
 
 ```tsx
-import { Card, CardHeader, CardBody, Icon } from "@cinder/react";
+import { Card, CardHeader, CardBody, Icon } from "@hashti/react";
 
 export function PressableCardDemo() {
   return (

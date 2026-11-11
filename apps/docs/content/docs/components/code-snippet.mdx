@@ -15,7 +15,7 @@ Technical tools require immediate affordance for copying executable commands and
 
 ```
 ┌──────────────────────────────────────────────────────────┬───────┐
-│ $ bun add @cinder/react @cinder/tokens                   │ [Copy]│
+│ $ bun add @hashti/react @hashti/tokens                   │ [Copy]│
 └──────────────────────────────────────────────────────────┴───────┘
 ```
 
@@ -31,8 +31,8 @@ Technical tools require immediate affordance for copying executable commands and
 ## Import
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
-import type { CodeSnippetProps } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
+import type { CodeSnippetProps } from "@hashti/react";
 ```
 
 ---
@@ -44,12 +44,12 @@ import type { CodeSnippetProps } from "@cinder/react";
 Ideal for package manager commands, curl requests, and terminal invocations:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 export function SingleLineSnippetDemo() {
   return (
     <CodeSnippet type="single" label="Package installation command">
-      bun add @cinder/react @cinder/tokens
+      bun add @hashti/react @hashti/tokens
     </CodeSnippet>
   );
 }
@@ -62,7 +62,7 @@ export function SingleLineSnippetDemo() {
 Designed for code blocks, JSON payloads, and configuration files. Supports setting `maxHeight` for contained scrolling and `wrapText` to prevent horizontal clipping:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 const configExample = `{
   "name": "hashti-cluster",
@@ -95,7 +95,7 @@ export function MultiLineSnippetDemo() {
 Use `type="inline"` within running documentation copy or tables to present actionable tokens, environment variables, or file paths:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 export function InlineSnippetDemo() {
   return (
@@ -117,7 +117,7 @@ export function InlineSnippetDemo() {
 For read-only logs or sensitive hashes where manual selection is preferred:
 
 ```tsx
-import { CodeSnippet } from "@cinder/react";
+import { CodeSnippet } from "@hashti/react";
 
 export function NonCopyableSnippetDemo() {
   return (

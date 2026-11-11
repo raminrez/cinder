@@ -33,8 +33,8 @@ The Hashti checkbox uses an architectural square glyph with precise corner radiu
 ## Import
 
 ```tsx
-import { Checkbox, CheckboxGroup } from "@cinder/react";
-import type { CheckboxProps, CheckboxGroupProps, SelectionColor } from "@cinder/react";
+import { Checkbox, CheckboxGroup } from "@hashti/react";
+import type { CheckboxProps, CheckboxGroupProps, SelectionColor } from "@hashti/react";
 ```
 
 ---
@@ -47,7 +47,7 @@ A standalone checkbox is commonly used for terms acceptance or opting into optio
 
 ```tsx
 import { useState } from "react";
-import { Checkbox } from "@cinder/react";
+import { Checkbox } from "@hashti/react";
 
 export function SingleCheckboxDemo() {
   const [agreed, setAgreed] = useState(false);
@@ -68,7 +68,7 @@ When a parent checkbox governs a set of child checkboxes where only some are sel
 
 ```tsx
 import { useState } from "react";
-import { Checkbox } from "@cinder/react";
+import { Checkbox } from "@hashti/react";
 
 export function IndeterminateCheckboxDemo() {
   const [selectedItems, setSelectedItems] = useState<string[]>(["read"]);
@@ -134,7 +134,7 @@ Group multiple related checkboxes under a single accessible fieldset using `Chec
 
 ```tsx
 import { useState } from "react";
-import { CheckboxGroup, Checkbox } from "@cinder/react";
+import { CheckboxGroup, Checkbox } from "@hashti/react";
 
 export function CheckboxGroupDemo() {
   const [notifications, setNotifications] = useState<string[]>(["security"]);
@@ -163,7 +163,7 @@ When validation fails (such as submitting an empty mandatory group), pass `isInv
 
 ```tsx
 import { useState } from "react";
-import { CheckboxGroup, Checkbox } from "@cinder/react";
+import { CheckboxGroup, Checkbox } from "@hashti/react";
 
 export function InvalidCheckboxGroupDemo() {
   const [selected, setSelected] = useState<string[]>([]);
@@ -193,7 +193,7 @@ export function InvalidCheckboxGroupDemo() {
 Checkboxes support five semantic color tokens (`primary`, `secondary`, `success`, `warning`, `danger`):
 
 ```tsx
-import { Checkbox } from "@cinder/react";
+import { Checkbox } from "@hashti/react";
 
 export function CheckboxColorsDemo() {
   return (

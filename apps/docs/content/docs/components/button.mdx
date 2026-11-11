@@ -30,8 +30,8 @@ In Persian architectural spatial design, entrance portals (*darvazeh* and *sar-d
 ## Import
 
 ```tsx
-import { Button } from "@cinder/react";
-import type { ButtonProps, ButtonVariant } from "@cinder/react";
+import { Button } from "@hashti/react";
+import type { ButtonProps, ButtonVariant } from "@hashti/react";
 ```
 
 ---
@@ -43,7 +43,7 @@ import type { ButtonProps, ButtonVariant } from "@cinder/react";
 The standard `Button` uses the `primary` variant by default and responds to both mouse clicks and keyboard trigger keys (`Enter` and `Space`):
 
 ```tsx
-import { Button } from "@cinder/react";
+import { Button } from "@hashti/react";
 
 export function BasicButtonDemo() {
   return (
@@ -69,7 +69,7 @@ Hashti provides a comprehensive palette of visual variants designed for clear vi
 - `danger-ghost`: Borderless destructive action designed for item deletion inside dense lists.
 
 ```tsx
-import { Button } from "@cinder/react";
+import { Button } from "@hashti/react";
 
 export function ButtonVariantsDemo() {
   return (
@@ -101,7 +101,7 @@ Hashti offers 5 control sizes. In the Frame theme family, the default control si
 | `2xl`| 56px | 64px | High-visibility onboarding steps, kiosk displays |
 
 ```tsx
-import { Button } from "@cinder/react";
+import { Button } from "@hashti/react";
 
 export function ButtonSizesDemo() {
   return (
@@ -123,7 +123,7 @@ export function ButtonSizesDemo() {
 Buttons support leading or trailing icons using the Hashti `<Icon />` component. For icon-only utility buttons, pass `iconOnly` and supply an accessible `aria-label`:
 
 ```tsx
-import { Button, Icon } from "@cinder/react";
+import { Button, Icon } from "@hashti/react";
 
 export function IconButtonDemo() {
   return (
@@ -164,7 +164,7 @@ When executing asynchronous requests (e.g., API mutation, Stripe checkout), set 
 
 ```tsx
 import { useState } from "react";
-import { Button } from "@cinder/react";
+import { Button } from "@hashti/react";
 
 export function PendingButtonDemo() {
   const [isDeploying, setIsDeploying] = useState(false);
@@ -195,7 +195,7 @@ export function PendingButtonDemo() {
 Disabled buttons reject all mouse and keyboard interactions, prevent focus where appropriate, and visually display reduced opacity:
 
 ```tsx
-import { Button } from "@cinder/react";
+import { Button } from "@hashti/react";
 
 export function DisabledButtonDemo() {
   return (

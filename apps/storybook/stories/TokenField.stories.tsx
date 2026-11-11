@@ -5,7 +5,7 @@ import {
   TokenField,
   TokenFieldValue,
   Icon,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./fields.css";
 
 const meta = {

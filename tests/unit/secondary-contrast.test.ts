@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { themes, themeNames, type ThemeName } from "@cinder/tokens";
+import { themes, themeNames, type ThemeName } from "@hashti/tokens";
 
 function luminance(hex: string): number {
   if (hex.startsWith("rgba") || hex.startsWith("rgb")) {

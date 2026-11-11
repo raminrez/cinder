@@ -11,7 +11,7 @@ import {
   Cell,
   Theme,
   useTheme,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./data.css";
 
 const meta = {

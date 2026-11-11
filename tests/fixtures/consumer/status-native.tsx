@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
-import { isThemeName } from "@cinder/tokens";
+import { isThemeName } from "@hashti/tokens";
 import { StatusConsumer } from "./status";
-import "@cinder/react/styles.css";
+import "@hashti/react/styles.css";
 
 const params = new URLSearchParams(location.search);
 const theme = params.get("theme");

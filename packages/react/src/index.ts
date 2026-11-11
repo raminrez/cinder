@@ -437,7 +437,7 @@ export type {
 } from "./color";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
-export type { ThemeName, LayerLevel } from "@cinder/tokens";
+export type { ThemeName, LayerLevel } from "@hashti/tokens";
 
 // Compositional RAC parts: their types, slots, refs and collection behavior are
 // preserved verbatim. The accompanying stylesheet supplies Carbon geometry/states.

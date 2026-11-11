@@ -15,8 +15,8 @@
     "noUncheckedIndexedAccess": true,
     "types": ["bun", "react", "react-dom"],
     "paths": {
-      "@cinder/react": ["./packages/react/src/index.ts"],
-      "@cinder/tokens": ["./packages/tokens/src/index.ts"]
+      "@hashti/react": ["./packages/react/src/index.ts"],
+      "@hashti/tokens": ["./packages/tokens/src/index.ts"]
     }
   },
   "include": ["packages", "scripts", "tests", "apps/storybook"],

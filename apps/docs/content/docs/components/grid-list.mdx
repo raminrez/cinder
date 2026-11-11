@@ -14,7 +14,7 @@ Built on React Aria Components' `GridList`, Hashti elevates this pattern with bu
 ## Import
 
 ```tsx
-import { GridList } from "@cinder/react";
+import { GridList } from "@hashti/react";
 // Or named subcomponents:
 // GridList.Root, GridList.Item, GridList.DragHandle, GridList.Checkbox, GridList.EmptyState
 ```
@@ -43,7 +43,7 @@ A multi-selection list featuring checkboxes and keyboard selection:
 
 ```tsx
 import { useState } from "react";
-import { GridList, Badge } from "@cinder/react";
+import { GridList, Badge } from "@hashti/react";
 import type { Selection } from "react-aria-components";
 
 const tasks = [
@@ -99,7 +99,7 @@ Hashti provides three container surface styles:
 - `card`: Floating raised card rows separated by discrete margins.
 
 ```tsx
-import { GridList } from "@cinder/react";
+import { GridList } from "@hashti/react";
 
 export function CardGridListExample() {
   return (
@@ -126,7 +126,7 @@ export function CardGridListExample() {
 Integrate `<GridList.DragHandle />` to enable intuitive touch, mouse, and keyboard item reordering:
 
 ```tsx
-import { GridList } from "@cinder/react";
+import { GridList } from "@hashti/react";
 
 export function ReorderableQueueList() {
   return (

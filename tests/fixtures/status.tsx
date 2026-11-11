@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { isThemeName } from "@cinder/tokens";
+import { isThemeName } from "@hashti/tokens";
 import { StatusConsumer } from "./consumer/status";
 
 const params = new URLSearchParams(location.search);

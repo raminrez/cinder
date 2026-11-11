@@ -5,7 +5,7 @@ import {
   Tree,
   Collection,
   Tag,
-} from "@cinder/react";
+} from "@hashti/react";
 
 describe("Phase 4 Collection Components unit tests", () => {
   describe("GridList suite", () => {

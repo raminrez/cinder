@@ -14,7 +14,7 @@ Built upon React Aria Components' `TimeField`, Hashti's implementation provides 
 ## Import
 
 ```tsx
-import { TimeField } from "@cinder/react";
+import { TimeField } from "@hashti/react";
 import { Time } from "@internationalized/date";
 // Or compound subcomponents:
 // TimeField.Root, TimeField.Input, TimeField.Segment, TimeField.Label, TimeField.Description, TimeField.ErrorMessage
@@ -39,7 +39,7 @@ import { Time } from "@internationalized/date";
 By default, `<TimeField>` renders a standard 12-hour or 24-hour time selector depending on user locale, dividing the value into hours, minutes, and day periods (AM/PM):
 
 ```tsx
-import { TimeField } from "@cinder/react";
+import { TimeField } from "@hashti/react";
 import { Time } from "@internationalized/date";
 
 export function BasicTimeFieldExample() {
@@ -63,7 +63,7 @@ Control the precision of the time input using the `granularity` prop:
 - `'second'`: Displays hours, minutes, seconds, and day period.
 
 ```tsx
-import { TimeField } from "@cinder/react";
+import { TimeField } from "@hashti/react";
 import { Time } from "@internationalized/date";
 
 export function GranularityTimeExample() {
@@ -86,7 +86,7 @@ Enforce business hours or booking limits with `minValue` and `maxValue`. Values 
 
 ```tsx
 import { useState } from "react";
-import { TimeField } from "@cinder/react";
+import { TimeField } from "@hashti/react";
 import { Time } from "@internationalized/date";
 
 export function BusinessHoursExample() {
@@ -116,7 +116,7 @@ Hashti provides three control heights adhering to our golden spatial geometry:
 - `lg` (48px): High-contrast prominent form controls.
 
 ```tsx
-import { TimeField } from "@cinder/react";
+import { TimeField } from "@hashti/react";
 import { Time } from "@internationalized/date";
 
 export function TimeFieldSizesExample() {
@@ -135,7 +135,7 @@ export function TimeFieldSizesExample() {
 TimeField supports Hashti's semantic status badge indicators (`valid`, `warning`, `invalid`):
 
 ```tsx
-import { TimeField } from "@cinder/react";
+import { TimeField } from "@hashti/react";
 import { Time } from "@internationalized/date";
 
 export function TimeFieldValidationExample() {
@@ -171,7 +171,7 @@ Use `@internationalized/date`'s `Time` object to maintain complete programmatic 
 
 ```tsx
 import { useState } from "react";
-import { TimeField, Button } from "@cinder/react";
+import { TimeField, Button } from "@hashti/react";
 import { Time } from "@internationalized/date";
 
 export function ControlledTimeExample() {

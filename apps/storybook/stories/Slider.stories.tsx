@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Slider, Theme, useTheme } from "@cinder/react";
+import { Slider, Theme, useTheme } from "@hashti/react";
 import "./navigation.css";
 
 const meta = {

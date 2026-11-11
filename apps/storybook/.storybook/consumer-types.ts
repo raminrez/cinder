@@ -1,2 +1,2 @@
-export * from "@cinder/react";
-export * from "@cinder/tokens";
+export * from "@hashti/react";
+export * from "@hashti/tokens";

@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, test } from "bun:test";
 import { basename, resolve } from "node:path";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 import { expect } from "playwright/test";
-import { themes } from "@cinder/tokens";
+import { themes } from "@hashti/tokens";
 import {
   expectNoDanglingStatusDescriptions,
   verifyAppearanceOnlyStatus,

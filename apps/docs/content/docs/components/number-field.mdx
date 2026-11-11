@@ -14,7 +14,7 @@ Like all Hashti components, NumberField reflects deliberate geometric proportion
 ## Import
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 ```
 
 Compositional sub-components are also available:
@@ -25,7 +25,7 @@ import {
   FieldControl,
   FieldGroupInput,
   FieldButton,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -37,7 +37,7 @@ import {
 A standard NumberField includes an accessible label, an input area, and increment/decrement buttons.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function StandardNumberFieldDemo() {
   return (
@@ -55,7 +55,7 @@ export function StandardNumberFieldDemo() {
 Use `minValue` and `maxValue` to enforce safe bounds. Stepper buttons automatically disable when limits are reached, and out-of-range typing triggers validation feedback.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function MinMaxDemo() {
   return (
@@ -75,7 +75,7 @@ export function MinMaxDemo() {
 The `step` prop defines the increment and decrement amount. By default, step is `1`. For decimal or large-interval measurements, pass fractions or custom integers.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function StepDemo() {
   return (
@@ -107,7 +107,7 @@ export function StepDemo() {
 Using the `formatOptions` property (powered by JavaScript's `Intl.NumberFormat`), you can format inputs in any currency while preserving numeric parsing under the hood.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function CurrencyDemo() {
   return (
@@ -143,7 +143,7 @@ export function CurrencyDemo() {
 Format ratios or commission percentages with automatic multiplication by 100 and localized percent symbols:
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function PercentageDemo() {
   return (
@@ -168,7 +168,7 @@ export function PercentageDemo() {
 NumberField supports Hashti's standard control sizes (`sm`, `md`, `lg`) and full disablement:
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 export function StatesDemo() {
   return (

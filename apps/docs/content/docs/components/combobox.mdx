@@ -18,7 +18,7 @@ ComboBox is particularly suited for high-density forms, long dataset lookups (su
 ## Import
 
 ```tsx
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 ```
 
 Sub-parts for advanced composition:
@@ -31,7 +31,7 @@ import {
   FieldButton,
   Popover,
   ListBox,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -43,7 +43,7 @@ import {
 A standard ComboBox that automatically filters suggestions matching the user's typed input:
 
 ```tsx
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 
 export function BasicComboBoxDemo() {
   return (
@@ -67,7 +67,7 @@ Track both the typed text (`inputValue`) and the selected key (`selectedKey`):
 
 ```tsx
 import { useState } from "react";
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 import type { Key } from "react-aria-components";
 
 export function ControlledComboBoxDemo() {
@@ -103,7 +103,7 @@ export function ControlledComboBoxDemo() {
 Set `allowsCustomValue` to enable users to type and submit free-form text that isn't present in the list of suggestions:
 
 ```tsx
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 
 export function CustomValueComboBoxDemo() {
   return (
@@ -129,7 +129,7 @@ export function CustomValueComboBoxDemo() {
 ListBox items can render custom layouts including secondary titles, status badges, and metadata:
 
 ```tsx
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 
 interface Member {
   id: string;
@@ -177,7 +177,7 @@ When `selectionMode="multiple"` is enabled, users can select several options. Th
 
 ```tsx
 import { useState } from "react";
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 import type { Selection } from "react-aria-components";
 
 export function MultiComboBoxDemo() {
@@ -207,7 +207,7 @@ export function MultiComboBoxDemo() {
 ### Validation Error State
 
 ```tsx
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 
 export function InvalidComboBoxDemo() {
   return (

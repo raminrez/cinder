@@ -4,7 +4,7 @@ import {
   Disclosure,
   DisclosureGroup,
   Button,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./navigation.css";
 
 const meta = {

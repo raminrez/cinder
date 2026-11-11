@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Dialog, Button } from "@cinder/react";
+import { Modal, Dialog, Button } from "@hashti/react";
 
 export function ModalLiveDemo() {
   const [isOpen, setIsOpen] = useState(false);

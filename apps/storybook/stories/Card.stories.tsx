@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
-import { Button, Card, CardBody, CardFooter, CardHeader } from "@cinder/react";
+import { Button, Card, CardBody, CardFooter, CardHeader } from "@hashti/react";
 import "./content.css";
 
 const handlePress = fn();

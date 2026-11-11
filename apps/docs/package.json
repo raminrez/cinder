@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.0.0",
-    "@cinder/react": "workspace:*",
-    "@cinder/tokens": "workspace:*",
+    "@hashti/react": "workspace:*",
+    "@hashti/tokens": "workspace:*",
     "@fumadocs/astro": "^0.2.2",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.10",

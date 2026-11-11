@@ -1,5 +1,5 @@
 {
-  "name": "@cinder/tokens",
+  "name": "@hashti/tokens",
   "version": "0.1.0",
   "description": "Carbon-derived semantic design tokens for Cinder.",
   "type": "module",

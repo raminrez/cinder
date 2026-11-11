@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { ActionableNotification, Button } from "@cinder/react";
+import { ActionableNotification, Button } from "@hashti/react";
 import "./feedback.css";
 
 const meta = {

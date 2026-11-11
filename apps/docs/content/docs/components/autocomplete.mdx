@@ -14,7 +14,7 @@ It is ideal for **global search bars, command palettes, URL address bars, live t
 ## Import
 
 ```tsx
-import { Autocomplete, SearchField, ListBox } from "@cinder/react";
+import { Autocomplete, SearchField, ListBox } from "@hashti/react";
 ```
 
 ---
@@ -40,7 +40,7 @@ Wrap a `<SearchField>` and `<ListBox>` in an `<Autocomplete>` to create a live s
 
 ```tsx
 import { useState } from "react";
-import { Autocomplete, SearchField, ListBox } from "@cinder/react";
+import { Autocomplete, SearchField, ListBox } from "@hashti/react";
 
 const componentsList = [
   { id: "btn", name: "Button", category: "Actions" },
@@ -80,7 +80,7 @@ export function SearchAutocompleteExample() {
 Customize matching logic using custom filter predicates (e.g. substring, prefix, or fuzzy matching):
 
 ```tsx
-import { Autocomplete, TextField, ListBox } from "@cinder/react";
+import { Autocomplete, TextField, ListBox } from "@hashti/react";
 
 export function CustomFilterExample() {
   const customFilter = (itemText: string, query: string) => {

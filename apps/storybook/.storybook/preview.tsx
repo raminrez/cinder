@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react-vite";
-import { Theme } from "@cinder/react";
+import { Theme } from "@hashti/react";
 import "@cinder/react/styles.css";
 
 const preview: Preview = {
