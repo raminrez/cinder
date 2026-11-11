@@ -10,9 +10,6 @@ const config: StorybookConfig = {
   ],
   framework: "@storybook/react-vite",
   addons: ["@storybook/addon-a11y"],
-  docs: {
-    autodocs: "tag",
-  },
   viteFinal(config) {
     return mergeConfig(config, {
       resolve: { dedupe: ["react", "react-dom"] },
