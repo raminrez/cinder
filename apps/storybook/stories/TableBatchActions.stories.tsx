@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Button, Icon, TableBatchActions } from "@cinder/react";
+import { Button, Icon, TableBatchActions } from "@hashti/react";
 import "./data.css";
 
 const meta = {

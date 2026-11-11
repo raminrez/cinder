@@ -9,7 +9,7 @@ import {
   ColorSwatch,
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./forms.css";
 
 const meta = {

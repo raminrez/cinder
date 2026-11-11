@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Button, Drawer, TextField, Theme, type DrawerPlacement } from "@cinder/react";
+import { Button, Drawer, TextField, Theme, type DrawerPlacement } from "@hashti/react";
 import "./overlays.css";
 
 const meta = {

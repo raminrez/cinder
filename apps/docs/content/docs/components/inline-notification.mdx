@@ -14,7 +14,7 @@ Unlike floating toasts or assertive alerts, inline notifications stay in place a
 ## Import
 
 ```tsx
-import { InlineNotification, ActionableNotification } from "@cinder/react";
+import { InlineNotification, ActionableNotification } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { InlineNotification, ActionableNotification } from "@cinder/react";
 Render contextual messages across four semantic kinds: `info`, `success`, `warning`, and `error`.
 
 ```tsx
-import { InlineNotification } from "@cinder/react";
+import { InlineNotification } from "@hashti/react";
 
 export function BasicInlineExample() {
   return (
@@ -69,7 +69,7 @@ Pass an `onDismiss` handler to allow users to close the notification once read:
 
 ```tsx
 import { useState } from "react";
-import { InlineNotification, Button } from "@cinder/react";
+import { InlineNotification, Button } from "@hashti/react";
 
 export function DismissibleInlineExample() {
   const [visible, setVisible] = useState(true);
@@ -99,7 +99,7 @@ export function DismissibleInlineExample() {
 By default, inline notifications use low contrast (`lowContrast={true}` or `variant="subtle"`), providing a soft, unobtrusive visual tone that blends harmoniously into dense enterprise dashboards. Set `lowContrast={false}` for higher urgency:
 
 ```tsx
-import { InlineNotification } from "@cinder/react";
+import { InlineNotification } from "@hashti/react";
 
 export function ContrastComparisonExample() {
   return (
@@ -131,7 +131,7 @@ export function ContrastComparisonExample() {
 When an inline notification requires explicit user intervention, use `<ActionableNotification>`. It features dedicated action slots, manages keyboard focus into the primary action, and implements an accessible `role="alertdialog"`.
 
 ```tsx
-import { ActionableNotification, Button } from "@cinder/react";
+import { ActionableNotification, Button } from "@hashti/react";
 
 export function ActionableNotificationExample() {
   return (

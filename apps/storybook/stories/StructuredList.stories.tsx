@@ -7,7 +7,7 @@ import {
   Tag,
   Theme,
   useTheme,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./content.css";
 
 const meta = {

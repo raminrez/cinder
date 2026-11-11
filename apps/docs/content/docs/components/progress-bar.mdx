@@ -14,7 +14,7 @@ Built on React Aria Components, it implements comprehensive WAI-ARIA `progressba
 ## Import
 
 ```tsx
-import { ProgressBar, Meter } from "@cinder/react";
+import { ProgressBar, Meter } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { ProgressBar, Meter } from "@cinder/react";
 Set `value` to display a determinate progress bar. By default, values range from `0` to `100`.
 
 ```tsx
-import { ProgressBar } from "@cinder/react";
+import { ProgressBar } from "@hashti/react";
 
 export function DeterminateProgressExample() {
   return (
@@ -52,7 +52,7 @@ export function DeterminateProgressExample() {
 When operation duration is unknown, pass `isIndeterminate`. This activates an animated shimmering pulse across the progress track.
 
 ```tsx
-import { ProgressBar } from "@cinder/react";
+import { ProgressBar } from "@hashti/react";
 
 export function IndeterminateProgressExample() {
   return (
@@ -72,7 +72,7 @@ export function IndeterminateProgressExample() {
 Use `formatOptions` to customize how the numeric value is localized and formatted (e.g. percentages, bytes, or currencies):
 
 ```tsx
-import { ProgressBar } from "@cinder/react";
+import { ProgressBar } from "@hashti/react";
 
 export function FormattingExample() {
   return (
@@ -118,7 +118,7 @@ export function FormattingExample() {
 The `status` prop allows you to highlight task health with semantic colors (`active`, `success`, `warning`, `error`):
 
 ```tsx
-import { ProgressBar } from "@cinder/react";
+import { ProgressBar } from "@hashti/react";
 
 export function StatusVariantsExample() {
   return (
@@ -159,7 +159,7 @@ export function StatusVariantsExample() {
 For representing a quantity within a known range that is **not** a progress indicator (such as disk storage, CPU load, or password strength), use the `<Meter>` component:
 
 ```tsx
-import { Meter } from "@cinder/react";
+import { Meter } from "@hashti/react";
 
 export function MeterExample() {
   return (

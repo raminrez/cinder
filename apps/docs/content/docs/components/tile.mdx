@@ -37,13 +37,13 @@ import {
   ClickableTile,
   SelectableTile,
   ExpandableTile,
-} from "@cinder/react";
+} from "@hashti/react";
 import type {
   TileProps,
   ClickableTileProps,
   SelectableTileProps,
   ExpandableTileProps,
-} from "@cinder/react";
+} from "@hashti/react";
 ```
 
 ---
@@ -55,7 +55,7 @@ import type {
 The base `Tile` serves as a clean, rounded container surface. You can customize the rendered HTML element via the `as` prop (`div`, `article`, or `section`):
 
 ```tsx
-import { Tile } from "@cinder/react";
+import { Tile } from "@hashti/react";
 
 export function StandardTileDemo() {
   return (
@@ -78,7 +78,7 @@ export function StandardTileDemo() {
 Use `ClickableTile` when an entire tile acts as a link to another page or external site:
 
 ```tsx
-import { ClickableTile, Icon } from "@cinder/react";
+import { ClickableTile, Icon } from "@hashti/react";
 
 export function ClickableTileDemo() {
   return (
@@ -121,7 +121,7 @@ export function ClickableTileDemo() {
 
 ```tsx
 import { useState } from "react";
-import { SelectableTile } from "@cinder/react";
+import { SelectableTile } from "@hashti/react";
 
 export function SelectableTileDemo() {
   const [selectedAddons, setSelectedAddons] = useState<string[]>(["waf"]);
@@ -169,7 +169,7 @@ export function SelectableTileDemo() {
 `ExpandableTile` presents summary content above the fold, accompanied by an accessible toggle button that smoothly unfolds detailed information below the fold:
 
 ```tsx
-import { ExpandableTile } from "@cinder/react";
+import { ExpandableTile } from "@hashti/react";
 
 export function ExpandableTileDemo() {
   return (

@@ -14,7 +14,7 @@ In Hashti's architectural philosophy, a Popover functions like an arched niche (
 ## Import
 
 ```tsx
-import { Popover, DialogTrigger, Dialog, Button, Heading } from "@cinder/react";
+import { Popover, DialogTrigger, Dialog, Button, Heading } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { Popover, DialogTrigger, Dialog, Button, Heading } from "@cinder/react";
 Pair `<DialogTrigger>` with a `<Button>`, `<Popover>`, and `<Dialog>`:
 
 ```tsx
-import { Popover, DialogTrigger, Dialog, Button, Heading } from "@cinder/react";
+import { Popover, DialogTrigger, Dialog, Button, Heading } from "@hashti/react";
 
 export function BasicPopoverDemo() {
   return (
@@ -62,7 +62,7 @@ export function BasicPopoverDemo() {
 Use the `placement` prop to position the popover relative to its anchor. Available placements include `'top'`, `'bottom'`, `'left'`, `'right'`, along with alignment variations like `'bottom start'`, `'top end'`, etc.:
 
 ```tsx
-import { Popover, DialogTrigger, Dialog, Button } from "@cinder/react";
+import { Popover, DialogTrigger, Dialog, Button } from "@hashti/react";
 
 export function PlacementsDemo() {
   return (
@@ -104,7 +104,7 @@ export function PlacementsDemo() {
 Customize spacing with `offset` (distance from trigger) and `crossOffset` (shift along trigger edge):
 
 ```tsx
-import { Popover, DialogTrigger, Dialog, Button } from "@cinder/react";
+import { Popover, DialogTrigger, Dialog, Button } from "@hashti/react";
 
 export function CustomOffsetDemo() {
   return (
@@ -126,7 +126,7 @@ Popovers are ideal for quick multi-option toggles or filter panels:
 
 ```tsx
 import { useState } from "react";
-import { Popover, DialogTrigger, Dialog, Button, Heading, Switch } from "@cinder/react";
+import { Popover, DialogTrigger, Dialog, Button, Heading, Switch } from "@hashti/react";
 
 export function QuickSettingsPopover() {
   const [wireframe, setWireframe] = useState(false);

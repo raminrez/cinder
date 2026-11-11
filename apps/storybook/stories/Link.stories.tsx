@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
-import { Button, Icon, Link, Theme, useTheme, type LinkProps } from "@cinder/react";
+import { Button, Icon, Link, Theme, useTheme, type LinkProps } from "@hashti/react";
 import "./actions.css";
 
 const meta = {

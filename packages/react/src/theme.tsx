@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, type ComponentPropsWithRef } from "react";
 import { I18nProvider, useLocale } from "react-aria-components";
-import { nextLayer, type LayerLevel, type ThemeName } from "@cinder/tokens";
+import { nextLayer, type LayerLevel, type ThemeName } from "@hashti/tokens";
 
 type ThemeContextValue = {
   theme: ThemeName;
@@ -56,9 +56,11 @@ function ThemeRoot({
         {...props}
         lang={lang}
         dir={direction}
+        data-hashti-theme={resolvedTheme}
         data-cinder-theme={resolvedTheme}
+        data-hashti-layer="0"
         data-cinder-layer="0"
-        className={["cinder-theme", appearance, className].filter(Boolean).join(" ")}
+        className={["hashti-theme", "cinder-theme", appearance, className].filter(Boolean).join(" ")}
       >
         {children}
       </div>
@@ -78,8 +80,9 @@ export function Layer({ level, className, children, ...props }: LayerProps) {
     <ThemeContext.Provider value={value}>
       <div
         {...props}
+        data-hashti-layer={layer}
         data-cinder-layer={layer}
-        className={["cinder-layer", className].filter(Boolean).join(" ")}
+        className={["hashti-layer", "cinder-layer", className].filter(Boolean).join(" ")}
       >
         {children}
       </div>
@@ -102,7 +105,9 @@ export function useTheme(): ThemeContextValue {
 export function useOverlayTheme() {
   const { theme, layer, direction, lang, appearanceClassName } = useTheme();
   return {
+    "data-hashti-theme": theme,
     "data-cinder-theme": theme,
+    "data-hashti-layer": layer,
     "data-cinder-layer": layer,
     dir: direction,
     lang,

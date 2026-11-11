@@ -8,7 +8,7 @@ bun run build:storybook       # dist/storybook
 bun run typecheck:storybook   # config, stories, and public declarations
 ```
 
-Each command first builds `@cinder/tokens` and `@cinder/react` with the existing
+Each command first builds `@hashti/tokens` and `@hashti/react` with the existing
 package builder. `bun run typecheck` includes the Storybook check. Its TypeScript
 configuration clears source aliases, so stories consume the same public `dist`
 exports as applications. Config and stories use the repository's strict settings
@@ -30,9 +30,9 @@ The rebuild queue's focused check is
 `bun run test`. The normal `bun run check` includes the static Storybook build.
 
 Stories live in `stories/**/*.stories.ts` or `.tsx`, import components from
-`@cinder/react`, use `Meta`/`StoryObj` from `@storybook/react-vite`, and use
+`@hashti/react`, use `Meta`/`StoryObj` from `@storybook/react-vite`, and use
 interaction helpers from `storybook/test`. The preview imports
-`@cinder/react/styles.css` once and wraps every story with the public `Theme`.
+`@hashti/react/styles.css` once and wraps every story with the public `Theme`.
 The standard toolbar selects `frame-light` or `frame-dark` through `globals.theme`.
 The Accessibility panel reports axe results, including incomplete checks for
 manual review; static builds alone do not execute interaction/accessibility tests.

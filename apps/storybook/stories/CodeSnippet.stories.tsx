@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
-import { CodeSnippet, Theme, useTheme } from "@cinder/react";
+import { CodeSnippet, Theme, useTheme } from "@hashti/react";
 import "./content.css";
 
 const meta = {
   title: "Content/CodeSnippet",
   component: CodeSnippet,
   args: {
-    children: "npm install @cinder/react",
+    children: "npm install @hashti/react",
   },
   parameters: {
     docs: {
@@ -22,7 +22,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const sampleTypeScript = `import { Button, TextField } from "@cinder/react";
+const sampleTypeScript = `import { Button, TextField } from "@hashti/react";
 
 export function LoginForm() {
   return (
@@ -62,7 +62,7 @@ export const Playground: Story = {
     const canvas = within(canvasElement);
     const pre = canvas.getByRole("generic", { name: "React login snippet" });
     expect(pre).toBeInTheDocument();
-    expect(pre).toHaveTextContent("import { Button, TextField } from \"@cinder/react\";");
+    expect(pre).toHaveTextContent("import { Button, TextField } from \"@hashti/react\";");
 
     const copyBtn = canvas.getByRole("button", { name: "Copy react login snippet" });
     expect(copyBtn).toBeInTheDocument();
@@ -86,7 +86,7 @@ function SnippetTypesExample() {
           type="single"
           copyable
         >
-          bun add @cinder/react @cinder/tokens
+          bun add @hashti/react @hashti/tokens
         </CodeSnippet>
       </div>
 
@@ -132,7 +132,7 @@ export const SnippetTypes: Story = {
     const canvas = within(canvasElement);
     const terminalSnippet = canvas.getByRole("generic", { name: "Install package command" });
     expect(terminalSnippet).toBeInTheDocument();
-    expect(terminalSnippet).toHaveTextContent("bun add @cinder/react @cinder/tokens");
+    expect(terminalSnippet).toHaveTextContent("bun add @hashti/react @hashti/tokens");
 
     const jsonSnippet = canvas.getByRole("generic", { name: "JSON cluster config" });
     expect(jsonSnippet).toBeInTheDocument();

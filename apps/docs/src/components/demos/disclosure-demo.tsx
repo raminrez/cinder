@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Disclosure, DisclosureTrigger, DisclosurePanel, Accordion, AccordionItem } from "@cinder/react";
+import { Disclosure, DisclosureTrigger, DisclosurePanel, Accordion, AccordionItem } from "@hashti/react";
 
 export function DisclosureLiveDemo() {
   const [isOpen, setIsOpen] = useState(true);

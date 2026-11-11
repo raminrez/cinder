@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, test } from "bun:test";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
 import { expect } from "playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-import { themes } from "@cinder/tokens";
+import { themes } from "@hashti/tokens";
 import { startPreview } from "../../scripts/preview";
 
 let server: Awaited<ReturnType<typeof startPreview>>;

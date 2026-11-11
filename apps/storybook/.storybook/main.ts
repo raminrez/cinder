@@ -9,7 +9,7 @@ const config: StorybookConfig = {
   viteFinal(config) {
     return mergeConfig(config, {
       resolve: { dedupe: ["react", "react-dom"] },
-      optimizeDeps: { exclude: ["@cinder/react", "@cinder/tokens"] },
+      optimizeDeps: { exclude: ["@hashti/react", "@hashti/tokens"] },
       plugins: [watchPackages()],
     });
   },

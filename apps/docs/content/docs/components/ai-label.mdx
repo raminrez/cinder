@@ -14,7 +14,7 @@ In enterprise applications, transparent attribution builds user trust. The AI La
 ## Import
 
 ```tsx
-import { AILabel, DialogTrigger, Popover, Dialog, Button } from "@cinder/react";
+import { AILabel, DialogTrigger, Popover, Dialog, Button } from "@hashti/react";
 ```
 
 ---
@@ -26,7 +26,7 @@ import { AILabel, DialogTrigger, Popover, Dialog, Button } from "@cinder/react";
 By default, `<AILabel>` renders a tranquil, non-disruptive badge with an inline sparkle icon:
 
 ```tsx
-import { AILabel } from "@cinder/react";
+import { AILabel } from "@hashti/react";
 
 export function DefaultAILabelExample() {
   return (
@@ -50,7 +50,7 @@ export function DefaultAILabelExample() {
 You can supply custom text or localize the label using the `label` prop:
 
 ```tsx
-import { AILabel } from "@cinder/react";
+import { AILabel } from "@hashti/react";
 
 export function CustomTextExample() {
   return (
@@ -70,7 +70,7 @@ When users edit an AI-generated suggestion, activate `revertActive` and provide 
 
 ```tsx
 import { useState } from "react";
-import { AILabel, TextField } from "@cinder/react";
+import { AILabel, TextField } from "@hashti/react";
 
 export function RevertExample() {
   const originalAI = "Optimize database query cache for high read throughput.";
@@ -117,7 +117,7 @@ import {
   Popover,
   Dialog,
   Icon,
-} from "@cinder/react";
+} from "@hashti/react";
 
 export function AttributionPopoverExample() {
   return (

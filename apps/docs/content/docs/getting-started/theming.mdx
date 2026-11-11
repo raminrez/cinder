@@ -33,7 +33,7 @@ Hashti provides 8 first-class themes divided into three aesthetic families:
 The `<Theme>` component wraps any subtree to set or switch the active theme. It injects `data-cinder-theme` and configures React Aria's `I18nProvider` automatically.
 
 ```tsx
-import { Theme, Button } from "@cinder/react";
+import { Theme, Button } from "@hashti/react";
 
 export function CustomSection() {
   return (
@@ -81,7 +81,7 @@ Rather than hardcoding arbitrary shadow levels or color overrides, Hashti uses a
 Each `<Layer>` component automatically increments the layer depth of its children:
 
 ```tsx
-import { Theme, Layer, Card, TextField, Button } from "@cinder/react";
+import { Theme, Layer, Card, TextField, Button } from "@hashti/react";
 
 export function LayeredDashboard() {
   return (
@@ -119,7 +119,7 @@ You can easily build a dark/light mode toggle utilizing React state or local sto
 
 ```tsx
 import { useState } from "react";
-import { Theme, Button, type ThemeName } from "@cinder/react";
+import { Theme, Button, type ThemeName } from "@hashti/react";
 
 export function ThemeSwitcherApp({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeName>("frame-light");
@@ -151,7 +151,7 @@ export function ThemeSwitcherApp({ children }: { children: React.ReactNode }) {
 Use the `useTheme` hook inside any component to read the current active theme, layer depth, and text direction:
 
 ```tsx
-import { useTheme } from "@cinder/react";
+import { useTheme } from "@hashti/react";
 
 export function ThemeStatusBadge() {
   const { theme, layer, direction } = useTheme();

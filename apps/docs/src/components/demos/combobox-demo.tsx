@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ComboBox, ListBoxItem } from "@cinder/react";
+import { ComboBox, ListBoxItem } from "@hashti/react";
 
 const INITIAL_ELEMENTS = [
   { id: "hasht", name: "Hashti (Octagonal Vestibule)" },

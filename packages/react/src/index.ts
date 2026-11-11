@@ -1,5 +1,51 @@
 "use client";
 
+// Component re-exports (HeroUI v3 modular architecture)
+export * from "./components/button";
+export * from "./components/select";
+export * from "./components/combobox";
+export * from "./components/color";
+export * from "./components/command-palette";
+export * from "./components/token-field";
+export * from "./components/sheet";
+export * from "./components/preview-trigger";
+export * from "./components/tree";
+export * from "./components/grid-list";
+export * from "./components/list-box";
+export * from "./components/autocomplete";
+export * from "./components/modal";
+export * from "./components/dialog";
+export * from "./components/popover";
+export * from "./components/drawer";
+export * from "./components/checkbox";
+export * from "./components/radio";
+export * from "./components/switch";
+export * from "./components/tabs";
+export * from "./components/accordion";
+export * from "./components/disclosure";
+export * from "./components/toolbar";
+export * from "./components/meter";
+export * from "./components/dropzone";
+export * from "./components/tag";
+export * from "./components/badge";
+export * from "./components/card";
+export * from "./components/text-field";
+export * from "./components/number-field";
+export * from "./components/search-field";
+export * from "./components/time-field";
+export * from "./components/date-picker";
+export * from "./components/pagination";
+export * from "./components/progress";
+export * from "./components/tooltip";
+export * from "./components/toast";
+export * from "./components/kbd";
+export * from "./components/empty-state";
+export * from "./components/avatar";
+export * from "./components/table";
+export * from "./components/theme";
+
+
+
 export { Theme, Layer, useTheme, useOverlayTheme } from "./theme";
 export type { ThemeProps, LayerProps } from "./theme";
 export { Icon } from "./icons";
@@ -437,7 +483,7 @@ export type {
 } from "./color";
 export { cx } from "./utils";
 export type { ControlSize } from "./utils";
-export type { ThemeName, LayerLevel } from "@cinder/tokens";
+export type { ThemeName, LayerLevel } from "@hashti/tokens";
 
 // Compositional RAC parts: their types, slots, refs and collection behavior are
 // preserved verbatim. The accompanying stylesheet supplies Carbon geometry/states.

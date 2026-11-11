@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
-import { ToastProvider, useToast, Button, Theme, useTheme } from "@cinder/react";
+import { ToastProvider, useToast, Button, Theme, useTheme } from "@hashti/react";
 import "./feedback.css";
 
 const meta = {

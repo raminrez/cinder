@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, waitFor, within } from "storybook/test";
-import { Button, Icon, Theme, useTheme, type ButtonProps, type ButtonVariant } from "@cinder/react";
+import { Button, Icon, Theme, useTheme, type ButtonProps, type ButtonVariant } from "@hashti/react";
 import "./actions.css";
 
 const variants = [

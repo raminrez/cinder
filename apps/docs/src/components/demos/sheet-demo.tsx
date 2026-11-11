@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sheet, Button } from "@cinder/react";
+import { Sheet, Button } from "@hashti/react";
 
 export function SheetLiveDemo() {
   const [isOpen, setIsOpen] = useState(false);

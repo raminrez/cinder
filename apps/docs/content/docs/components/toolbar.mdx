@@ -16,7 +16,7 @@ In accordance with the WAI-ARIA Toolbar pattern, Hashti's Toolbar treats the ent
 Hashti exports both compound and named subcomponents:
 
 ```tsx
-import { Toolbar, ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@cinder/react";
+import { Toolbar, ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@hashti/react";
 // Or via compound namespace:
 // Toolbar.Root, Toolbar.Group, Toolbar.Item, Toolbar.Separator
 ```
@@ -49,7 +49,7 @@ import { Toolbar, ToolbarGroup, ToolbarItem, ToolbarSeparator } from "@cinder/re
 In a standard toolbar, action buttons and toggles are grouped logically with separators. The roving tabindex ensures arrow keys move focus seamlessly between items:
 
 ```tsx
-import { Toolbar, Button, ToggleButton, Icon } from "@cinder/react";
+import { Toolbar, Button, ToggleButton, Icon } from "@hashti/react";
 
 export function RichTextToolbar() {
   return (
@@ -96,7 +96,7 @@ Hashti provides three design token surface variants for toolbars:
 - `floating`: Pill-style rounded elevation anchored above content areas or modals.
 
 ```tsx
-import { Toolbar, Button, Icon } from "@cinder/react";
+import { Toolbar, Button, Icon } from "@hashti/react";
 
 export function FloatingCanvasToolbar() {
   return (
@@ -121,7 +121,7 @@ export function FloatingCanvasToolbar() {
 For sidebars, creative drawing apps, or secondary inspectors, set `orientation="vertical"`. When vertical, arrow keys automatically flip to <kbd>↓</kbd> and <kbd>↑</kbd>, and separators orient horizontally:
 
 ```tsx
-import { Toolbar, Button, ToggleButton, Icon } from "@cinder/react";
+import { Toolbar, Button, ToggleButton, Icon } from "@hashti/react";
 
 export function DrawingSideToolbar() {
   return (

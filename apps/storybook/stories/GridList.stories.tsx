@@ -3,7 +3,7 @@ import { expect, within } from "storybook/test";
 import {
   GridList,
   Tag,
-} from "@cinder/react";
+} from "@hashti/react";
 
 const meta = {
   title: "Collections/GridList",

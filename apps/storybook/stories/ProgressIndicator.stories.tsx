@@ -6,7 +6,7 @@ import {
   Theme,
   useTheme,
   type ProgressStep,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./content.css";
 
 const defaultSteps: ProgressStep[] = [

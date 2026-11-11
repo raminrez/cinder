@@ -16,7 +16,7 @@ import {
   Theme,
   useTheme,
   type Selection,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./navigation.css";
 import "./overlays.css";
 

@@ -16,7 +16,7 @@ Build an elegant, theme-aware preview container matching Hashti's portal archite
 - Live component mounting inside standard Hashti `<Theme>` or inheriting `data-cinder-theme`
 
 ### 2. Build Interactive Demo Components (`apps/docs/src/components/demos/`)
-Create self-contained client components showcasing actual `@cinder/react` components:
+Create self-contained client components showcasing actual `@hashti/react` components:
 - `button-demo.tsx`: `<Button>` variants (primary, secondary, tertiary, ghost, danger) with click ripple, icon slots, loading state toggle.
 - `select-demo.tsx`: `<Select>` with single select and multi-select (`multipleDisplay="chips" | "badge" | "text"`) and remove buttons.
 - `combobox-demo.tsx`: `<ComboBox>` with dynamic item creation (`allowCreateItem`, `onCreateItem`).

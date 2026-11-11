@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { SideNav, Link, Icon, Theme, useTheme } from "@cinder/react";
+import { SideNav, Link, Icon, Theme, useTheme } from "@hashti/react";
 import "./layout.css";
 
 const meta = {

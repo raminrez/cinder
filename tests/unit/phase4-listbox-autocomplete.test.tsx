@@ -9,7 +9,7 @@ import {
   Input,
   Menu,
   MenuItem,
-} from "@cinder/react";
+} from "@hashti/react";
 
 describe("Phase 4 Collection & Selection Elevate unit tests", () => {
   describe("Standalone ListBox", () => {

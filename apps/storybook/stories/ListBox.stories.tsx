@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { ListBox } from "@cinder/react";
+import { ListBox } from "@hashti/react";
 
 const meta = {
   title: "Collections/ListBox",

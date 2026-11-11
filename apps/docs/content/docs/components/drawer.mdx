@@ -14,7 +14,7 @@ In classical Persian spatial design, the Drawer mirrors the concept of an arched
 ## Import
 
 ```tsx
-import { Drawer, Button } from "@cinder/react";
+import { Drawer, Button } from "@hashti/react";
 ```
 
 ---
@@ -27,7 +27,7 @@ By default, Drawer slides out from the trailing edge (`placement="end"`), includ
 
 ```tsx
 import { useState } from "react";
-import { Drawer, Button, TextField } from "@cinder/react";
+import { Drawer, Button, TextField } from "@hashti/react";
 
 export function RightDrawerDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -76,7 +76,7 @@ Use `placement="left"` (or `start` in LTR) for side navigation drawers:
 
 ```tsx
 import { useState } from "react";
-import { Drawer, Button } from "@cinder/react";
+import { Drawer, Button } from "@hashti/react";
 
 export function LeftSidebarDrawerDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -120,7 +120,7 @@ Set `placement="bottom"` to render a mobile bottom-sheet style drawer:
 
 ```tsx
 import { useState } from "react";
-import { Drawer, Button } from "@cinder/react";
+import { Drawer, Button } from "@hashti/react";
 
 export function BottomSheetDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -163,7 +163,7 @@ Drawer supports five standardized sizing tiers:
 
 ```tsx
 import { useState } from "react";
-import { Drawer, Button, type DrawerSize } from "@cinder/react";
+import { Drawer, Button, type DrawerSize } from "@hashti/react";
 
 export function DrawerSizesDemo() {
   const [activeSize, setActiveSize] = useState<DrawerSize | null>(null);
@@ -202,7 +202,7 @@ When using `placement="start"` or `placement="end"`, the drawer automatically ad
 
 ```tsx
 import { useState } from "react";
-import { Drawer, Button } from "@cinder/react";
+import { Drawer, Button } from "@hashti/react";
 
 export function RTLDrawerDemo() {
   const [isOpen, setIsOpen] = useState(false);

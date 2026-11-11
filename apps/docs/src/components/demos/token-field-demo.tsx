@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TokenField, TokenFieldValue } from "@cinder/react";
+import { TokenField, TokenFieldValue } from "@hashti/react";
 
 export function TokenFieldLiveDemo() {
   const [value, setValue] = useState(

@@ -14,7 +14,7 @@ Unlike standard informational modals, an Alert Dialog strictly forces the user t
 ## Import
 
 ```tsx
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 ```
 
 ---
@@ -27,7 +27,7 @@ The default `danger` kind features high-contrast red warning accents and require
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function DeleteConfirmationDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +61,7 @@ Use `kind="warning"` when alerting users of potential data loss before navigatin
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function UnsavedChangesDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +95,7 @@ Use `kind="info"` for important non-destructive milestones:
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function InfoConfirmationDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -129,7 +129,7 @@ Pass `isPending={true}` to indicate ongoing network requests while disabling con
 
 ```tsx
 import { useState } from "react";
-import { AlertDialog, Button } from "@cinder/react";
+import { AlertDialog, Button } from "@hashti/react";
 
 export function AsyncAlertDialogDemo() {
   const [isOpen, setIsOpen] = useState(false);

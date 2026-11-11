@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, within } from "storybook/test";
-import { AILabel, TextField } from "@cinder/react";
+import { AILabel, TextField } from "@hashti/react";
 import "./content.css";
 
 const handleRevert = fn();

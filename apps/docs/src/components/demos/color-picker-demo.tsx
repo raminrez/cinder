@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ColorPicker, parseColor, type Color } from "@cinder/react";
+import { ColorPicker, parseColor, type Color } from "@hashti/react";
 
 export function ColorPickerLiveDemo() {
   const [color, setColor] = useState<Color>(parseColor("#08bdba"));

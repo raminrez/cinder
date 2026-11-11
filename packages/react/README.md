@@ -1,4 +1,4 @@
-# @cinder/react
+# @hashti/react
 
 React Aria Components (**RAC**) with Carbon reference styling, Relay themes, and
 reusable Frame foundations.
@@ -19,14 +19,14 @@ archives are needed because the scope has not been published. The tested
 baseline is React/React DOM 19.3.1 and RAC 1.22.1. The declared peer ranges allow
 React 19 and RAC 1.22+, but those other versions have not been independently tested.
 
-ESM JavaScript and TypeScript declarations are exported from `@cinder/react`.
-Import `@cinder/react/styles.css` once; this static stylesheet includes all tokens,
+ESM JavaScript and TypeScript declarations are exported from `@hashti/react`.
+Import `@hashti/react/styles.css` once; this static stylesheet includes all tokens,
 themes, and component CSS. No Cinder CSS compiler is required.
 React, React DOM, RAC, and `@internationalized/date` are external to the JS bundle.
 
 ```tsx
-import { Button, Layer, Stack, TextField, Theme } from "@cinder/react";
-import "@cinder/react/styles.css";
+import { Button, Layer, Stack, TextField, Theme } from "@hashti/react";
+import "@hashti/react/styles.css";
 
 export function Settings() {
   return (
@@ -420,7 +420,7 @@ pass through every supplied DOM prop and ref; it is not a replacement state syst
 Raw aliases such as date Segment retain RAC's class-replacement behavior.
 
 ```tsx
-import { TextField } from "@cinder/react";
+import { TextField } from "@hashti/react";
 
 <TextField.Root name="email" type="email" autoComplete="email" isRequired>
   <TextField.Label>Work email</TextField.Label>
@@ -449,7 +449,7 @@ Help next to the control for attached Frame recovery. If using an explicit
 small/large size, also size the composed button parts to match.
 
 ```tsx
-import { NumberField } from "@cinder/react";
+import { NumberField } from "@hashti/react";
 
 <NumberField.Root name="reviewers" defaultValue={3} minValue={1} maxValue={12}>
   <NumberField.Label>Reviewers</NumberField.Label>
@@ -474,7 +474,7 @@ tree. Select's option `items` and item renderer go on Select.ListBox; ComboBox k
 its upstream `items`/`defaultItems` on its Root and the option renderer on ListBox.
 
 ```tsx
-import { Icon, ListBoxItem, Select } from "@cinder/react";
+import { Icon, ListBoxItem, Select } from "@hashti/react";
 
 <Select.Root name="access" defaultValue="viewer">
   <Select.Label>Access</Select.Label>
@@ -507,7 +507,7 @@ rearrange a custom tree:
 
 ```tsx
 import { useRef } from "react";
-import { FieldError, Input, Label, Text, TextField } from "@cinder/react";
+import { FieldError, Input, Label, Text, TextField } from "@hashti/react";
 
 export function WorkEmail() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -768,8 +768,8 @@ import {
   Select,
   TextField,
   Theme,
-} from "@cinder/react";
-import "@cinder/react/styles.css";
+} from "@hashti/react";
+import "@hashti/react/styles.css";
 import "./workspace.css";
 
 export function WorkspaceSharing() {
@@ -849,7 +849,7 @@ before the imports in the application's CSS entry:
 ```css
 @layer theme, base, cinder, components, utilities;
 @import "tailwindcss";
-@import "@cinder/react/styles.css";
+@import "@hashti/react/styles.css";
 ```
 
 Cinder already declares its own layer, so import it without a second `layer(cinder)`

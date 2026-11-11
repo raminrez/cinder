@@ -2,7 +2,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, test } from "bun:test";
 import { resolve } from "node:path";
 import { chromium, type Browser, type BrowserContext, type Locator, type Page } from "playwright";
 import { expect } from "playwright/test";
-import * as Cinder from "@cinder/react";
+import * as Cinder from "@hashti/react";
 import index from "../fixtures/composition.html";
 
 let server: ReturnType<typeof Bun.serve>;

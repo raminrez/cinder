@@ -24,9 +24,9 @@
       "version": "0.1.0",
       "dependencies": {
         "@astrojs/react": "^7.0.0",
-        "@cinder/react": "workspace:*",
-        "@cinder/tokens": "workspace:*",
         "@fumadocs/astro": "^0.2.2",
+        "@hashti/react": "workspace:*",
+        "@hashti/tokens": "workspace:*",
         "@tailwindcss/vite": "^4.3.5",
         "astro": "^7.4.10",
         "fumadocs-core": "^16.18.4",
@@ -46,8 +46,8 @@
       "name": "@cinder/storybook",
       "version": "0.1.0",
       "devDependencies": {
-        "@cinder/react": "workspace:*",
-        "@cinder/tokens": "workspace:*",
+        "@hashti/react": "workspace:*",
+        "@hashti/tokens": "workspace:*",
         "@storybook/addon-a11y": "10.6.6",
         "@storybook/react-vite": "10.6.6",
         "@types/react": "catalog:",
@@ -60,27 +60,27 @@
       },
     },
     "packages/react": {
-      "name": "@cinder/react",
+      "name": "@hashti/react",
       "version": "0.1.0",
       "dependencies": {
         "@internationalized/date": "catalog:",
       },
       "devDependencies": {
-        "@cinder/tokens": "workspace:*",
+        "@hashti/tokens": "workspace:*",
         "@types/react": "catalog:",
         "react": "catalog:",
         "react-aria-components": "catalog:",
         "react-dom": "catalog:",
       },
       "peerDependencies": {
-        "@cinder/tokens": "0.1.0",
+        "@hashti/tokens": "0.1.0",
         "react": ">=19.0.0 <20",
         "react-aria-components": ">=1.22.0 <2",
         "react-dom": ">=19.0.0 <20",
       },
     },
     "packages/tokens": {
-      "name": "@cinder/tokens",
+      "name": "@hashti/tokens",
       "version": "0.1.0",
       "devDependencies": {
         "@carbon/colors": "11.62.0",
@@ -221,11 +221,7 @@
 
     "@cinder/docs": ["@cinder/docs@workspace:apps/docs"],
 
-    "@cinder/react": ["@cinder/react@workspace:packages/react"],
-
     "@cinder/storybook": ["@cinder/storybook@workspace:apps/storybook"],
-
-    "@cinder/tokens": ["@cinder/tokens@workspace:packages/tokens"],
 
     "@clack/core": ["@clack/core@1.6.0", "", { "dependencies": { "fast-string-width": "^3.0.2", "fast-wrap-ansi": "^0.2.0", "sisteransi": "^2.0.0" } }, "sha512-4GZynIB2IIe431odxesswvWTCP6orvqd6e2b07b3VFWBQRqUqIHc/EPIZwFoKS692QBp+ooPuXKaJV8g4kXuYA=="],
 
@@ -308,6 +304,10 @@
     "@fumadocs/tailwind": ["@fumadocs/tailwind@0.1.5", "", { "peerDependencies": { "tailwindcss": "^4.0.0" }, "optionalPeers": ["tailwindcss"] }, "sha512-ohzmuLTfNNRvP6B/Xx31lWJ58xu40NcmI+6mc/jivYeOoofnmdxBKu5gCErTgOE/mUqyVv4GvYeqd9FhoLHphg=="],
 
     "@fumari/image-size": ["@fumari/image-size@0.1.1", "", {}, "sha512-iaiV2wyzJ4mW358NX4CX3yGit+WjKYzpaQ+rldK9BjL/5jFpeV6ruWnZVq7MEyMn3Gd0DLi8g/79NZAAQaGscw=="],
+
+    "@hashti/react": ["@hashti/react@workspace:packages/react"],
+
+    "@hashti/tokens": ["@hashti/tokens@workspace:packages/tokens"],
 
     "@ibm/telemetry-js": ["@ibm/telemetry-js@1.12.0", "", { "bin": { "ibmtelemetry": "dist/collect.js" } }, "sha512-tNgmk2k8loNDTnPInlu7yMP9YOCr9UMwSnXN7SCEsGIV8xHfTawhXlDnp1PV0Lbv+2GoLQKSgkShlJeGPi4jTg=="],
 

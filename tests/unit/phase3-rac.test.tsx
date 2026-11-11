@@ -6,7 +6,7 @@ import {
   DropZone,
   FileTrigger,
   Button,
-} from "@cinder/react";
+} from "@hashti/react";
 
 describe("Meter unit tests", () => {
   describe("deriveMeterTone logic", () => {

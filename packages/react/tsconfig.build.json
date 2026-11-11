@@ -8,9 +8,9 @@
     "rootDir": "src",
     "outDir": "dist",
     "paths": {
-      "@cinder/tokens": ["./packages/tokens/dist/index.d.ts"]
+      "@hashti/tokens": ["./packages/tokens/dist/index.d.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": []
+  "exclude": ["src/**/*.stories.tsx", "src/**/*.test.tsx"]
 }

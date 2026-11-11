@@ -12,7 +12,7 @@ An Alert communicates important, immediate messages about system states, errors,
 ## Import
 
 ```tsx
-import { Alert } from "@cinder/react";
+import { Alert } from "@hashti/react";
 ```
 
 ---
@@ -24,7 +24,7 @@ import { Alert } from "@cinder/react";
 Alerts support four standard severity levels (`info`, `success`, `warning`, and `error`), each paired with a dedicated icon and distinct color styling:
 
 ```tsx
-import { Alert } from "@cinder/react";
+import { Alert } from "@hashti/react";
 
 export function AlertSeveritiesExample() {
   return (
@@ -67,7 +67,7 @@ Supply `onDismiss` to display an accessible close button that allows users to ac
 
 ```tsx
 import { useState } from "react";
-import { Alert, Button } from "@cinder/react";
+import { Alert, Button } from "@hashti/react";
 
 export function DismissibleAlertExample() {
   const [showAlert, setShowAlert] = useState(true);
@@ -97,7 +97,7 @@ export function DismissibleAlertExample() {
 Embed an inline action button or link directly inside the alert to give users a clear recovery path:
 
 ```tsx
-import { Alert, Button } from "@cinder/react";
+import { Alert, Button } from "@hashti/react";
 
 export function ActionableAlertExample() {
   return (
@@ -126,7 +126,7 @@ export function ActionableAlertExample() {
 By default, alerts use a calm `lowContrast` (subtle) background. For mission-critical interruptions, set `lowContrast={false}` or `variant="solid"` for maximum visual prominence:
 
 ```tsx
-import { Alert } from "@cinder/react";
+import { Alert } from "@hashti/react";
 
 export function HighContrastAlertExample() {
   return (

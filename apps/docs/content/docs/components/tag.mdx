@@ -19,7 +19,7 @@ Tags represent concise pieces of metadata, status descriptors, categories, or ac
 ## Import
 
 ```tsx
-import { Tag, FilterTag, TagGroup } from "@cinder/react";
+import { Tag, FilterTag, TagGroup } from "@hashti/react";
 ```
 
 ---
@@ -31,7 +31,7 @@ import { Tag, FilterTag, TagGroup } from "@cinder/react";
 Use `<Tag>` for read-only labels, statuses, and taxonomy indicators.
 
 ```tsx
-import { Tag } from "@cinder/react";
+import { Tag } from "@hashti/react";
 
 export function StaticTagsExample() {
   return (
@@ -52,7 +52,7 @@ export function StaticTagsExample() {
 Tags are available in two standard heights: `sm` (20px) for high-density tables and compact card metadata, and `md` (24px, default) for general UI layouts.
 
 ```tsx
-import { Tag } from "@cinder/react";
+import { Tag } from "@hashti/react";
 
 export function TagSizesExample() {
   return (
@@ -69,7 +69,7 @@ export function TagSizesExample() {
 Hashti includes ten distinct color tokens mapped to the design system's semantic color scales:
 
 ```tsx
-import { Tag } from "@cinder/react";
+import { Tag } from "@hashti/react";
 
 export function TagPaletteExample() {
   const colors = [
@@ -103,7 +103,7 @@ Use `<TagGroup>` combined with `<FilterTag>` to manage interactive filter collec
 
 ```tsx
 import { useState } from "react";
-import { TagGroup, FilterTag } from "@cinder/react";
+import { TagGroup, FilterTag } from "@hashti/react";
 
 export function FilterTagGroupExample() {
   const [filters, setFilters] = useState([
@@ -145,8 +145,8 @@ export function FilterTagGroupExample() {
 
 ```tsx
 import { useState } from "react";
-import { TagGroup, FilterTag } from "@cinder/react";
-import type { Selection } from "@cinder/react";
+import { TagGroup, FilterTag } from "@hashti/react";
+import type { Selection } from "@hashti/react";
 
 export function SelectableTagsExample() {
   const [selected, setSelected] = useState<Selection>(new Set(["architecture"]));

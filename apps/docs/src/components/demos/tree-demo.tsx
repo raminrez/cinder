@@ -1,4 +1,4 @@
-import { NavigationTree, NavigationTreeSection, NavigationTreeHeader, NavigationTreeItem } from "@cinder/react";
+import { NavigationTree, NavigationTreeSection, NavigationTreeHeader, NavigationTreeItem } from "@hashti/react";
 
 export function TreeLiveDemo() {
   return (

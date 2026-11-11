@@ -18,7 +18,7 @@ Badges can wrap target elements (such as avatars, buttons, or navigation icons) 
 ## Import
 
 ```tsx
-import { Badge } from "@cinder/react";
+import { Badge } from "@hashti/react";
 ```
 
 ---
@@ -30,7 +30,7 @@ import { Badge } from "@cinder/react";
 When `isDot` is specified (or when no count is provided), `Badge` renders a compact, high-contrast status dot.
 
 ```tsx
-import { Badge } from "@cinder/react";
+import { Badge } from "@hashti/react";
 
 export function StatusDotExample() {
   return (
@@ -53,7 +53,7 @@ export function StatusDotExample() {
 Wrap an element (such as an `Avatar` or an `Icon`) inside `<Badge>` to anchor the indicator to its corner.
 
 ```tsx
-import { Badge, Avatar, Icon } from "@cinder/react";
+import { Badge, Avatar, Icon } from "@hashti/react";
 
 export function AnchoredBadgeExample() {
   return (
@@ -84,7 +84,7 @@ export function AnchoredBadgeExample() {
 When `count` is a number greater than `maxCount` (default `99`), the badge automatically clamps the display to `${maxCount}+`.
 
 ```tsx
-import { Badge } from "@cinder/react";
+import { Badge } from "@hashti/react";
 
 export function CountCeilingExample() {
   return (
@@ -103,7 +103,7 @@ export function CountCeilingExample() {
 Badges support seven semantic colors aligned with Hashti's theme tokens to communicate meaning clearly:
 
 ```tsx
-import { Badge } from "@cinder/react";
+import { Badge } from "@hashti/react";
 
 export function BadgeKindsExample() {
   return (
@@ -125,7 +125,7 @@ export function BadgeKindsExample() {
 Badges can be pinned to any of the four corners of a wrapped component. Both directional (`top-end`, `bottom-start`) and physical (`top-right`, `bottom-left`) notations are supported. Directional placements automatically adapt when rendering in RTL scripts.
 
 ```tsx
-import { Badge, Avatar } from "@cinder/react";
+import { Badge, Avatar } from "@hashti/react";
 
 export function PlacementExample() {
   return (

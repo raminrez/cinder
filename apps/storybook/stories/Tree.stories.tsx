@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import { Tree } from "@cinder/react";
+import { Tree } from "@hashti/react";
 
 const meta = {
   title: "Collections/Tree",

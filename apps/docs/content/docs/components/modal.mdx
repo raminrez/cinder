@@ -18,7 +18,7 @@ In Hashti's spatial vocabulary, a Modal functions much like entering an interior
 ## Import
 
 ```tsx
-import { Modal, Dialog, DialogTrigger, Button, Heading } from "@cinder/react";
+import { Modal, Dialog, DialogTrigger, Button, Heading } from "@hashti/react";
 ```
 
 ---
@@ -30,7 +30,7 @@ import { Modal, Dialog, DialogTrigger, Button, Heading } from "@cinder/react";
 Compose `<DialogTrigger>` with a trigger `<Button>`, a `<Modal>`, and a nested `<Dialog>`:
 
 ```tsx
-import { Modal, Dialog, DialogTrigger, Button, Heading } from "@cinder/react";
+import { Modal, Dialog, DialogTrigger, Button, Heading } from "@hashti/react";
 
 export function BasicModalDemo() {
   return (
@@ -70,7 +70,7 @@ Control modal visibility externally using `isOpen` and `onOpenChange`:
 
 ```tsx
 import { useState } from "react";
-import { Modal, Dialog, Button, Heading, TextField } from "@cinder/react";
+import { Modal, Dialog, Button, Heading, TextField } from "@hashti/react";
 
 export function ControlledModalDemo() {
   const [isOpen, setIsOpen] = useState(false);
@@ -117,7 +117,7 @@ Modals are available in four proportional size tiers: `xs` (384px), `sm` (448px)
 
 ```tsx
 import { useState } from "react";
-import { Modal, Dialog, Button, Heading } from "@cinder/react";
+import { Modal, Dialog, Button, Heading } from "@hashti/react";
 
 type ModalSize = "xs" | "sm" | "md" | "lg";
 
@@ -168,7 +168,7 @@ For mandatory, transactional flows (such as accepting terms or signing contracts
 
 ```tsx
 import { useState } from "react";
-import { Modal, Dialog, Button, Heading } from "@cinder/react";
+import { Modal, Dialog, Button, Heading } from "@hashti/react";
 
 export function NonDismissableModalDemo() {
   const [isOpen, setIsOpen] = useState(false);

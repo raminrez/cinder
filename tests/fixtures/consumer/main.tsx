@@ -19,10 +19,10 @@ import {
   Theme,
   type Key,
   type ThemeName,
-} from "@cinder/react";
-import { token, themes, typeStyles, type TypeStyleName } from "@cinder/tokens";
-import tokenData from "@cinder/tokens/tokens.json";
-import "@cinder/react/styles.css";
+} from "@hashti/react";
+import { token, themes, typeStyles, type TypeStyleName } from "@hashti/tokens";
+import tokenData from "@hashti/tokens/tokens.json";
+import "@hashti/react/styles.css";
 import "@fontsource/ibm-plex-sans/latin-400.css";
 import "@fontsource/ibm-plex-sans/latin-500.css";
 import "@fontsource/ibm-plex-sans/latin-600.css";

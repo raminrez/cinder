@@ -14,7 +14,7 @@ Rather than forcing users into an awkward monolithic text box, InputOTP distribu
 ## Import
 
 ```tsx
-import { InputOTP } from "@cinder/react";
+import { InputOTP } from "@hashti/react";
 ```
 
 ---
@@ -27,7 +27,7 @@ The default configuration renders 6 distinct digit slots suitable for standard a
 
 ```tsx
 import { useState } from "react";
-import { InputOTP } from "@cinder/react";
+import { InputOTP } from "@hashti/react";
 
 export function SixDigitOTPDemo() {
   const [code, setCode] = useState("");
@@ -57,7 +57,7 @@ Adjust the `length` property to render 4 slots for short transaction or access P
 
 ```tsx
 import { useState } from "react";
-import { InputOTP } from "@cinder/react";
+import { InputOTP } from "@hashti/react";
 
 export function FourDigitPINDemo() {
   const [pin, setPin] = useState("");
@@ -82,7 +82,7 @@ InputOTP intercepts clipboard paste events across any focused slot. When a user 
 
 ```tsx
 import { useState } from "react";
-import { InputOTP, Button } from "@cinder/react";
+import { InputOTP, Button } from "@hashti/react";
 
 export function PasteDemo() {
   const [otp, setOtp] = useState("");
@@ -130,7 +130,7 @@ Set `isInvalid` to display error borders when an incorrect code has been submitt
 
 ```tsx
 import { useState } from "react";
-import { InputOTP, Button } from "@cinder/react";
+import { InputOTP, Button } from "@hashti/react";
 
 export function InvalidOTPDemo() {
   const [code, setCode] = useState("123456");
@@ -164,7 +164,7 @@ export function InvalidOTPDemo() {
 ### Disabled State
 
 ```tsx
-import { InputOTP } from "@cinder/react";
+import { InputOTP } from "@hashti/react";
 
 export function DisabledOTPDemo() {
   return (

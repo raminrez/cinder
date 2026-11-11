@@ -11,7 +11,7 @@ import {
   Popover,
   Theme,
   useTheme,
-} from "@cinder/react";
+} from "@hashti/react";
 import "./overlays.css";
 import "./fields.css";
 
