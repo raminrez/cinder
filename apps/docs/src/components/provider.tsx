@@ -1,5 +1,4 @@
 import { navigate } from "astro:transitions/client";
-import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/astro";
 import SearchDialog from "@/components/search";
 

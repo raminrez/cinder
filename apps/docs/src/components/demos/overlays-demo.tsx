@@ -18,7 +18,6 @@ export function DialogLiveDemo() {
       <Button onPress={() => setOpen(true)}>Open Architectural Dialog</Button>
       {open && (
         <Dialog
-          role="dialog"
           aria-label="Spatial Configuration"
           className="p-6 bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-2xl max-w-md w-full"
         >

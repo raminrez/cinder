@@ -10,13 +10,8 @@ import {
   Column,
   GridList,
   NavigationTree,
-  NavigationTreeItem,
-  NavigationTreeSection,
-  NavigationTreeHeader,
-  NavigationTreeItemContent,
   ComboBox,
   ListBoxItem,
-  ComboBoxCreateItem,
 } from "@hashti/react";
 
 describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
@@ -146,7 +141,7 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
 
   describe("ComboBox Dynamic Creation", () => {
     test("ComboBox renders with allowCreateItem prop and CreateItem subcomponent", () => {
-      const handleCreate = mock((val: string) => {});
+      const handleCreate = mock(() => {});
       const html = renderToStaticMarkup(
         <ComboBox label="Tags" allowCreateItem={true} onCreateItem={handleCreate}>
           <ListBoxItem id="react">React</ListBoxItem>
@@ -159,7 +154,7 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
     });
 
     test("ComboBox.CreateItem renders creation item markup when mounted", () => {
-      const handleCreate = mock((val: string) => {});
+      const handleCreate = mock(() => {});
       const html = renderToStaticMarkup(
         <div className="custom-combobox-popover">
           <div
@@ -167,7 +162,8 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
             tabIndex={0}
             data-testid="combobox-create-item"
             className="hashti-combobox-create-item"
-            onClick={() => handleCreate("Svelte")}
+            onClick={() => handleCreate()}
+            onKeyDown={() => handleCreate()}
           >
             <span className="hashti-combobox-create-item-text">Create &quot;Svelte&quot;</span>
           </div>

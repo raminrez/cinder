@@ -67,7 +67,6 @@ async function main() {
 
   // Read source SVGs
   const markSvg = readFileSync(resolve(publicDir, "hashti-mark.svg"), "utf-8");
-  const markDarkSvg = readFileSync(resolve(publicDir, "hashti-mark-dark.svg"), "utf-8");
   const appIconSvg = readFileSync(resolve(publicDir, "hashti-app-icon.svg"), "utf-8");
   const horizontalSvg = readFileSync(resolve(publicDir, "hashti-horizontal.svg"), "utf-8");
   const horizontalDarkSvg = readFileSync(resolve(publicDir, "hashti-horizontal-dark.svg"), "utf-8");

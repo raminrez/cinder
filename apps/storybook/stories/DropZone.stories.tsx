@@ -20,64 +20,66 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {
-  render: () => {
-    const [droppedFiles, setDroppedFiles] = useState<string[]>([]);
+function PlaygroundDemo() {
+  const [droppedFiles, setDroppedFiles] = useState<string[]>([]);
 
-    return (
-      <div className="feedback-story-stack">
-        <div className="feedback-card">
-          <h4 className="feedback-card-title">Dataset File Ingestion</h4>
-          <p className="feedback-card-description">
-            Drag CSV, Parquet, or JSON datasets into the drop zone or browse your files.
-          </p>
+  return (
+    <div className="feedback-story-stack">
+      <div className="feedback-card">
+        <h4 className="feedback-card-title">Dataset File Ingestion</h4>
+        <p className="feedback-card-description">
+          Drag CSV, Parquet, or JSON datasets into the drop zone or browse your files.
+        </p>
 
-          <DropZone
-            aria-label="Upload dataset drop area"
-            variant="dashed"
-            onDropFiles={(files) => setDroppedFiles(files.map((f) => f.name))}
-          >
-            <DropZone.Feedback>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "0.75rem",
+        <DropZone
+          aria-label="Upload dataset drop area"
+          variant="dashed"
+          onDropFiles={(files) => setDroppedFiles(files.map((f) => f.name))}
+        >
+          <DropZone.Feedback>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "0.75rem",
+              }}
+            >
+              <span>Drag and drop your dataset files here, or</span>
+              <FileTrigger
+                acceptedFileTypes={[".csv", ".json", ".parquet"]}
+                onSelect={(e) => {
+                  if (e) {
+                    const files = Array.from(e);
+                    setDroppedFiles(files.map((f) => f.name));
+                  }
                 }}
               >
-                <span>Drag and drop your dataset files here, or</span>
-                <FileTrigger
-                  acceptedFileTypes={[".csv", ".json", ".parquet"]}
-                  onSelect={(e) => {
-                    if (e) {
-                      const files = Array.from(e);
-                      setDroppedFiles(files.map((f) => f.name));
-                    }
-                  }}
-                >
-                  <Button variant="secondary" size="md">
-                    Browse Files
-                  </Button>
-                </FileTrigger>
-              </div>
-            </DropZone.Feedback>
-          </DropZone>
-
-          {droppedFiles.length > 0 && (
-            <div style={{ marginTop: "1rem" }}>
-              <strong>Selected files:</strong>
-              <ul>
-                {droppedFiles.map((name, i) => (
-                  <li key={i}>{name}</li>
-                ))}
-              </ul>
+                <Button variant="secondary" size="md">
+                  Browse Files
+                </Button>
+              </FileTrigger>
             </div>
-          )}
-        </div>
+          </DropZone.Feedback>
+        </DropZone>
+
+        {droppedFiles.length > 0 && (
+          <div style={{ marginTop: "1rem" }}>
+            <strong>Selected files:</strong>
+            <ul>
+              {droppedFiles.map((name, i) => (
+                <li key={i}>{name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-    );
-  },
+    </div>
+  );
+}
+
+export const Playground: Story = {
+  render: () => <PlaygroundDemo />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const dropzone = canvas.getByRole("region", { name: "Upload dataset drop area" });
@@ -134,38 +136,40 @@ export const Variants: Story = {
   },
 };
 
-export const StandaloneFileTrigger: Story = {
-  render: () => {
-    const [fileName, setFileName] = useState<string | null>(null);
+function StandaloneFileTriggerDemo() {
+  const [fileName, setFileName] = useState<string | null>(null);
 
-    return (
-      <div className="feedback-story-stack">
-        <div className="feedback-card">
-          <h4 className="feedback-card-title">Decoupled FileTrigger</h4>
-          <p className="feedback-card-description">
-            Attach file picker actions to any arbitrary trigger (avatar button, link, action).
-          </p>
+  return (
+    <div className="feedback-story-stack">
+      <div className="feedback-card">
+        <h4 className="feedback-card-title">Decoupled FileTrigger</h4>
+        <p className="feedback-card-description">
+          Attach file picker actions to any arbitrary trigger (avatar button, link, action).
+        </p>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-            <FileTrigger
-              acceptedFileTypes={["image/*"]}
-              onSelect={(e) => {
-                if (e) {
-                  const file = Array.from(e)[0];
-                  if (file) setFileName(file.name);
-                }
-              }}
-            >
-              <Button variant="primary" size="md">
-                Upload User Avatar
-              </Button>
-            </FileTrigger>
-            {fileName && <span>Selected: {fileName}</span>}
-          </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <FileTrigger
+            acceptedFileTypes={["image/*"]}
+            onSelect={(e) => {
+              if (e) {
+                const file = Array.from(e)[0];
+                if (file) setFileName(file.name);
+              }
+            }}
+          >
+            <Button variant="primary" size="md">
+              Upload User Avatar
+            </Button>
+          </FileTrigger>
+          {fileName && <span>Selected: {fileName}</span>}
         </div>
       </div>
-    );
-  },
+    </div>
+  );
+}
+
+export const StandaloneFileTrigger: Story = {
+  render: () => <StandaloneFileTriggerDemo />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole("button", { name: "Upload User Avatar" });

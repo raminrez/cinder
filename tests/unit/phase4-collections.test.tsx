@@ -1,6 +1,6 @@
 import { expect, test, describe } from "bun:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { GridList, Tree, Collection, Tag } from "@hashti/react";
+import { GridList, Tree, Collection } from "@hashti/react";
 
 describe("Phase 4 Collection Components unit tests", () => {
   describe("GridList suite", () => {

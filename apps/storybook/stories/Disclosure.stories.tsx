@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
-import { Disclosure, DisclosureGroup, Button } from "@hashti/react";
+import { Disclosure, DisclosureGroup } from "@hashti/react";
 import "./navigation.css";
 
 const meta = {

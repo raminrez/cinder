@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, type ReactNode, type Ref } from "react";
+import { createContext, useContext, type Ref } from "react";
 import {
   Tree as RACTree,
   TreeItem as RACTreeItem,
@@ -10,7 +10,6 @@ import {
   type TreeProps as RACTreeProps,
   type TreeItemProps as RACTreeItemProps,
   type TreeItemContentProps,
-  type TreeItemContentRenderProps,
   type TreeRenderProps,
   type TreeItemRenderProps,
   type ButtonProps as RACButtonProps,

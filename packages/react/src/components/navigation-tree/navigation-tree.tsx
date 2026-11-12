@@ -18,7 +18,7 @@ import {
   type ButtonProps as RACButtonProps,
   type ButtonRenderProps,
 } from "react-aria-components";
-import { classes, cx, type ControlSize } from "../../utils";
+import { classes, cx } from "../../utils";
 import { Icon } from "../../icons";
 
 export interface NavigationTreeContextValue {

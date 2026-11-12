@@ -6,7 +6,6 @@ import {
   DisclosureGroup as RACDisclosureGroup,
   DisclosurePanel as RACDisclosurePanel,
   Heading,
-  composeRenderProps,
   type DisclosureProps as RACDisclosureProps,
   type DisclosureGroupProps as RACDisclosureGroupProps,
   type DisclosurePanelProps as RACDisclosurePanelProps,

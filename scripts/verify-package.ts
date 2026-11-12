@@ -52,8 +52,8 @@ for (const name of archives.map((archive) => archive.name)) {
 const installed = await readdir(join(consumer, "node_modules/@hashti"));
 assert.deepEqual(installed.sort(), ["react", "tokens"]);
 
-const reactCss = await Bun.file(join(consumer, "node_modules/@hashti/react/styles.css")).text();
-const tokenCss = await Bun.file(join(consumer, "node_modules/@hashti/tokens/tokens.css")).text();
+const reactCss = await Bun.file(Bun.resolveSync("@hashti/react/styles.css", consumer)).text();
+const tokenCss = await Bun.file(Bun.resolveSync("@hashti/tokens/tokens.css", consumer)).text();
 assert.match(tokenCss, /--hashti-popover-radius:\s*1\.125rem/, "popover radius token missing");
 assert.match(reactCss, /hashti-themes|hashti\.themes/, "theme layer missing from styles.css");
 
@@ -83,6 +83,14 @@ const bundle = await Bun.build({
   target: "browser",
 });
 assert.ok(bundle.success, `consumer bundle failed: ${bundle.logs.join("\n")}`);
+
+// Bun emits imported CSS as a sibling file; inline it so the page has its styles.
+const css = await Bun.file(join(consumer, "index.css")).text();
+await Bun.write(
+  join(consumer, "index.html"),
+  `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>consumer</title><style>${css}</style></head>
+<body><div id="root"></div><script type="module" src="./index.js"></script></body></html>\n`,
+);
 
 const server = Bun.serve({
   port: 0,
