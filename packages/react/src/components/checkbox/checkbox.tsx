@@ -32,11 +32,11 @@ export function Checkbox({ children, className, color, ...props }: CheckboxProps
     <RACCheckbox
       {...props}
       data-color={color}
-      className={classes("hashti-checkbox hashti-checkbox", className)}
+      className={classes("hashti-checkbox", className)}
     >
       {composeRenderProps(children, (content, state) => (
         <>
-          <span className="hashti-checkbox-control hashti-checkbox-control" aria-hidden="true">
+          <span className="hashti-checkbox-control" aria-hidden="true">
             {state.isIndeterminate ? (
               <Icon name="minus" />
             ) : state.isSelected ? (

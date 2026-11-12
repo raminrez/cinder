@@ -54,7 +54,7 @@ export function Breadcrumbs<T extends object>({
   return (
     <RACBreadcrumbs
       {...props}
-      className={["hashti-breadcrumbs hashti-breadcrumbs", className].filter(Boolean).join(" ")}
+      className={["hashti-breadcrumbs", className].filter(Boolean).join(" ")}
     >
       {transformed}
     </RACBreadcrumbs>

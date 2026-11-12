@@ -1,13 +1,11 @@
 /* Hashti Modern Aesthetic - InputOTP */
 @layer hashti.components {
-  .hashti-input-otp,
   .hashti-input-otp {
     display: inline-flex;
     gap: 8px;
     align-items: center;
   }
 
-  .hashti-input-otp-slot,
   .hashti-input-otp-slot {
     width: 44px;
     height: 48px;

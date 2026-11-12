@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - NumberField */
 @layer hashti.components {
-  .hashti-number-field,
   .hashti-number-field {
     display: flex;
     flex-direction: column;

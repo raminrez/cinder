@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - SearchField */
 @layer hashti.components {
-  .hashti-search-field,
   .hashti-search-field {
     display: flex;
     flex-direction: column;

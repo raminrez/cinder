@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Checkbox */
 @layer hashti.components {
-  .hashti-checkbox,
   .hashti-checkbox {
     display: inline-flex;
     align-items: center;
@@ -11,7 +10,6 @@
     user-select: none;
   }
 
-  .hashti-checkbox-control,
   .hashti-checkbox-control {
     display: inline-flex;
     align-items: center;

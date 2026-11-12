@@ -1,8 +1,6 @@
 /* Hashti Modern Aesthetic - TimeField & DateField */
 @layer hashti.components {
   .hashti-time-field,
-  .hashti-time-field,
-  .hashti-date-field,
   .hashti-date-field {
     display: flex;
     flex-direction: column;

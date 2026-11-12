@@ -1,5 +1,4 @@
-import { mkdir, rm, copyFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdir, rm, copyFile } from "node:fs/promises";import { resolve } from "node:path";
 import { siteLicenses } from "./licenses";
 const root = resolve(import.meta.dir, "..");
 const run = async (...command: string[]) => {
@@ -50,9 +49,10 @@ for (const name of ["tokens", "react"]) {
 if (process.argv.includes("--packages")) process.exit(0);
 
 await rm(`${root}/dist/site`, { recursive: true, force: true });
+await mkdir(`${root}/dist/site`, { recursive: true });
 await run("bun", "run", "--cwd", "apps/docs", "build");
 // Copy site build outputs to dist/site for preview/deployment
-await Bun.spawn(["cp", "-r", `${root}/apps/docs/dist/`, `${root}/dist/site`], { cwd: root }).exited;
+await run("cp", "-r", `${root}/apps/docs/dist/.`, `${root}/dist/site`);
 await Promise.all([
   copyFile(`${root}/LICENSE`, `${root}/dist/site/LICENSE.txt`),
   copyFile(`${root}/NOTICE`, `${root}/dist/site/NOTICE.txt`),

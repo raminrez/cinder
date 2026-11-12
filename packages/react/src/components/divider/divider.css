@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Divider */
 @layer hashti.components {
-  .hashti-divider,
   .hashti-divider {
     border: none;
     background-color: var(--hashti-border-subtle, #e0e0e0);
@@ -20,7 +19,6 @@
     margin: 0 16px;
   }
 
-  .hashti-divider-labeled,
   .hashti-divider-labeled {
     display: flex;
     align-items: center;

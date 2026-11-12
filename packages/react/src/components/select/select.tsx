@@ -94,7 +94,7 @@ function SelectValuePart<T>({
 }
 
 function SelectPopover({ className, offset = 6, ...props }: PopoverProps) {
-  return <Popover offset={offset} {...props} className={classes("hashti-select-popover hashti-select-popover", className)} />;
+  return <Popover offset={offset} {...props} className={classes("hashti-select-popover", className)} />;
 }
 
 function SelectListBox<T extends object>({
@@ -155,11 +155,11 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
 
                   if (multipleDisplay === "badge") {
                     return (
-                      <span className="hashti-select-multi-badge-wrapper hashti-select-multi-badge-wrapper">
-                        <span className="hashti-select-multi-first hashti-select-multi-first">
+                      <span className="hashti-select-multi-badge-wrapper">
+                        <span className="hashti-select-multi-first">
                           {itemsList[0]?.textValue ?? itemsList[0]?.name ?? itemsList[0]?.rendered ?? itemsList[0]?.id ?? "Selected"}
                         </span>
-                        <span className="hashti-badge hashti-badge" data-kind="info">
+                        <span className="hashti-badge" data-kind="info">
                           +{itemsList.length - 1}
                         </span>
                       </span>
@@ -168,14 +168,14 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
 
                   if (multipleDisplay === "chips") {
                     return (
-                      <span className="hashti-select-chips-wrapper hashti-select-chips-wrapper">
+                      <span className="hashti-select-chips-wrapper">
                         {itemsList.map((item, idx) => {
                           const text = item?.textValue ?? item?.name ?? item?.rendered ?? String(item?.id ?? item);
                           const key = item?.id ?? item?.key ?? idx;
                           return (
                             <span
                               key={key}
-                              className="hashti-tag hashti-tag hashti-select-chip hashti-select-chip"
+                              className="hashti-tag hashti-select-chip"
                               data-size="sm"
                               role="presentation"
                             >
@@ -184,7 +184,7 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
                                 role="button"
                                 tabIndex={-1}
                                 aria-label={`Remove ${text}`}
-                                className="hashti-select-chip-remove hashti-select-chip-remove"
+                                className="hashti-select-chip-remove"
                                 onPointerDown={(e) => {
                                   e.stopPropagation();
                                   e.preventDefault();

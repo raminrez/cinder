@@ -31,7 +31,7 @@ export function Accordion({ size = "md", className, ...props }: AccordionProps) 
       <DisclosureGroup
         {...props}
         data-size={size}
-        className={classes("hashti-accordion hashti-accordion", className)}
+        className={classes("hashti-accordion", className)}
       />
     </AccordionSizeContext.Provider>
   );
@@ -53,19 +53,19 @@ export function AccordionItem({
 }: AccordionItemProps) {
   const size = useContext(AccordionSizeContext);
   return (
-    <Disclosure {...props} className={classes("hashti-accordion-item hashti-accordion-item", className)}>
+    <Disclosure {...props} className={classes("hashti-accordion-item", className)}>
       <Heading level={headingLevel}>
         <Button
           slot="trigger"
           variant="ghost"
           size={size}
-          className="hashti-accordion-trigger hashti-accordion-trigger"
+          className="hashti-accordion-trigger"
         >
           <Icon name="chevronRight" />
           <span>{title}</span>
         </Button>
       </Heading>
-      <DisclosurePanel className="hashti-accordion-panel hashti-accordion-panel">
+      <DisclosurePanel className="hashti-accordion-panel">
         {children}
       </DisclosurePanel>
     </Disclosure>

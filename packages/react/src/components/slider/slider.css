@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Slider */
 @layer hashti.components {
-  .hashti-slider,
   .hashti-slider {
     display: flex;
     flex-direction: column;
@@ -8,7 +7,6 @@
     width: 100%;
   }
 
-  .hashti-slider-label,
   .hashti-slider-label {
     display: flex;
     justify-content: space-between;
@@ -16,7 +14,6 @@
     font-weight: 500;
   }
 
-  .hashti-slider-track,
   .hashti-slider-track {
     position: relative;
     height: 8px;
@@ -25,7 +22,6 @@
     background-color: var(--hashti-border-subtle, #e0e0e0);
   }
 
-  .hashti-slider-fill,
   .hashti-slider-fill {
     position: absolute;
     height: 100%;
@@ -33,7 +29,6 @@
     background-color: var(--hashti-primary, #08BDBA);
   }
 
-  .hashti-slider-thumb,
   .hashti-slider-thumb {
     position: relative;
     width: 20px;

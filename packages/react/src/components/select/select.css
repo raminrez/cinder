@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Select */
 @layer hashti.components {
-  .hashti-select-trigger,
   .hashti-select-trigger {
     display: flex;
     align-items: center;
@@ -29,7 +28,6 @@
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }
 
-  .hashti-select-popover,
   .hashti-select-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
@@ -40,7 +38,6 @@
     min-width: var(--trigger-width);
   }
 
-  .hashti-select-chips-wrapper,
   .hashti-select-chips-wrapper {
     display: inline-flex;
     flex-wrap: wrap;
@@ -48,7 +45,6 @@
     align-items: center;
   }
 
-  .hashti-select-chip,
   .hashti-select-chip {
     display: inline-flex;
     align-items: center;
@@ -61,7 +57,6 @@
     font-weight: 500;
   }
 
-  .hashti-select-chip-remove,
   .hashti-select-chip-remove {
     display: inline-flex;
     align-items: center;

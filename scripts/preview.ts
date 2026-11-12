@@ -33,7 +33,12 @@ export async function startPreview({
               : "no-cache",
           },
         });
-      if (/^\/(?:components(?:\/[^/]+)?|foundations|get-started|research|relay)?\/?$/.test(path))
+      // Directory routes (e.g. /docs, /docs/components/button) resolve to their index.html
+      const index = Bun.file(`${filename}/index.html`);
+      if (await index.exists())
+        return new Response(index, { headers: { "Cache-Control": "no-cache" } });
+      // Extensionless paths fall back to the SPA entry
+      if (!/\.[a-z0-9]+$/i.test(path))
         return new Response(Bun.file(`${root}/index.html`), {
           headers: { "Cache-Control": "no-cache" },
         });
@@ -44,5 +49,5 @@ export async function startPreview({
 
 if (import.meta.main) {
   const server = await startPreview();
-  console.log(`Cinder production preview · http://${server.hostname}:${server.port}`);
+  console.log(`Hashti production preview · http://${server.hostname}:${server.port}`);
 }

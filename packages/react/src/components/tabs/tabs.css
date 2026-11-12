@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Tabs */
 @layer hashti.components {
-  .hashti-tabs,
   .hashti-tabs {
     display: flex;
     flex-direction: column;

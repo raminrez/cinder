@@ -2,7 +2,6 @@
 @layer hashti.components {
   .hashti-text-field input,
   .hashti-text-field input,
-  .hashti-field-input,
   .hashti-field-input {
     width: 100%;
     height: 44px;
@@ -18,7 +17,6 @@
 
   .hashti-text-area textarea,
   .hashti-text-area textarea,
-  .hashti-field-textarea,
   .hashti-field-textarea {
     width: 100%;
     padding: var(--hashti-spacing-03, 8px) var(--hashti-spacing-04, 12px);

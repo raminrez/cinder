@@ -24,7 +24,7 @@ export function Tabs({ variant = "line", className, ...props }: TabsProps) {
     <RACTabs
       {...props}
       data-variant={variant}
-      className={classes("hashti-tabs hashti-tabs", className)}
+      className={classes("hashti-tabs", className)}
     />
   );
 }

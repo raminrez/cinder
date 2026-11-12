@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Popover */
 @layer hashti.components {
-  .hashti-popover,
   .hashti-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);

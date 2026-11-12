@@ -41,7 +41,7 @@ import { classes, type ControlSize } from "../../utils";
 function CalendarContent() {
   return (
     <>
-      <div className="hashti-calendar-header hashti-calendar-header">
+      <div className="hashti-calendar-header">
         <Button variant="ghost" iconOnly size="md" slot="previous">
           <Icon name="chevronLeft" />
         </Button>
@@ -65,7 +65,7 @@ export interface CalendarProps<T extends DateValue> extends RACCalendarProps<T> 
 }
 export function Calendar<T extends DateValue>({ className, children, ...props }: CalendarProps<T>) {
   return (
-    <RACCalendar {...props} className={classes("hashti-calendar hashti-calendar", className)}>
+    <RACCalendar {...props} className={classes("hashti-calendar", className)}>
       {children ?? <CalendarContent />}
     </RACCalendar>
   );
@@ -90,7 +90,7 @@ export function RangeCalendar<T extends DateValue>({
 }
 
 function DatePopover({ className, ...props }: PopoverProps) {
-  return <Popover {...props} className={classes("hashti-date-popover hashti-date-popover", className)} />;
+  return <Popover {...props} className={classes("hashti-date-popover", className)} />;
 }
 
 export interface DatePickerRootProps<T extends DateValue>

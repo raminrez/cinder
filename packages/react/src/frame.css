@@ -146,7 +146,7 @@
       letter-spacing: var(--hashti-label-01-letter-spacing);
     }
     .hashti-field
-      > :is(.hashti-field__label, .hashti-field__label-row)
+      > :is(.hashti-field__label-row)
       + .hashti-field__description {
       margin-block-start: calc(-1 * var(--hashti-spacing-02));
     }
@@ -296,7 +296,6 @@
     }
     :is(
       .hashti-field,
-      .hashti-field__status,
       .hashti-field__status-icon
     )[data-hashti-status="warning"] {
       --hashti-field-status-ink: var(--hashti-support-warning);
@@ -487,11 +486,11 @@
     :is(.hashti-checkbox, .hashti-radio, .hashti-switch)[data-readonly]:not([data-disabled]) {
       cursor: default;
     }
-    :is(.hashti-checkbox, .hashti-checkbox-group)[data-readonly] .hashti-checkbox-control {
+    :is(.hashti-checkbox-group)[data-readonly] .hashti-checkbox-control {
       border-style: dashed;
       background: var(--hashti-layer-accent);
     }
-    :is(.hashti-radio, .hashti-radio-group)[data-readonly] .hashti-radio-control {
+    :is(.hashti-radio-group)[data-readonly] .hashti-radio-control {
       border-style: dashed;
       background: var(--hashti-layer-accent);
     }
@@ -1114,14 +1113,12 @@
     .hashti-toolbar-separator {
       background: var(--hashti-border-subtle);
     }
-    .hashti-toolbar[data-orientation="horizontal"] .hashti-toolbar-separator,
-    .hashti-toolbar-separator[data-orientation="vertical"] {
+    .hashti-toolbar[data-orientation="horizontal"] .hashti-toolbar-separator[data-orientation="vertical"] {
       width: 1px;
       height: 20px;
       margin: 0 var(--hashti-spacing-02);
     }
-    .hashti-toolbar[data-orientation="vertical"] .hashti-toolbar-separator,
-    .hashti-toolbar-separator[data-orientation="horizontal"] {
+    .hashti-toolbar[data-orientation="vertical"] .hashti-toolbar-separator[data-orientation="horizontal"] {
       width: 100%;
       height: 1px;
       margin: var(--hashti-spacing-02) 0;
@@ -1884,7 +1881,7 @@
       color: var(--hashti-text-on-color);
       border-radius: calc(var(--hashti-control-radius) / 2);
     }
-    :is(:scope.hashti-date-popover, .hashti-date-popover, :scope.hashti-popover:has(.hashti-calendar), .hashti-popover:has(.hashti-calendar), :scope.hashti-popover:has(.hashti-range-calendar), .hashti-popover:has(.hashti-range-calendar)) {
+    :is(:scope.hashti-date-popover, :scope.hashti-popover:has(.hashti-calendar), .hashti-popover:has(.hashti-calendar), :scope.hashti-popover:has(.hashti-range-calendar), .hashti-popover:has(.hashti-range-calendar)) {
       border-radius: var(--hashti-popover-radius, var(--hashti-control-radius));
       border: 1px solid var(--hashti-border-subtle);
       background: var(--hashti-layer);
@@ -1892,12 +1889,12 @@
       padding: 0;
       overflow: hidden;
     }
-    :is(:scope.hashti-date-popover, .hashti-date-popover, :scope.hashti-popover:has(.hashti-calendar), .hashti-popover:has(.hashti-calendar), :scope.hashti-popover:has(.hashti-range-calendar), .hashti-popover:has(.hashti-range-calendar)) .hashti-dialog,
+    :is(:scope.hashti-date-popover, :scope.hashti-popover:has(.hashti-calendar), .hashti-popover:has(.hashti-calendar), :scope.hashti-popover:has(.hashti-range-calendar), .hashti-popover:has(.hashti-range-calendar)) .hashti-dialog,
     .hashti-popover .hashti-dialog:has(.hashti-calendar) {
       padding: 0 !important;
       outline: none;
     }
-    :is(:scope.hashti-date-popover, .hashti-date-popover, :scope.hashti-popover, .hashti-popover) :is(.hashti-calendar, .hashti-range-calendar) {
+    :is(:scope.hashti-date-popover, :scope.hashti-popover) :is(.hashti-calendar, .hashti-range-calendar) {
       border: none !important;
       background: transparent !important;
       box-shadow: none !important;
@@ -2520,8 +2517,7 @@
       user-select: none;
       pointer-events: auto;
     }
-    .hashti-badge-wrapper > .hashti-badge,
-    .hashti-badge-wrapper > .hashti-badge[data-placement="top-end"] {
+    .hashti-badge-wrapper > .hashti-badge-wrapper > .hashti-badge[data-placement="top-end"] {
       position: absolute;
       top: 0;
       bottom: auto;
@@ -2531,7 +2527,7 @@
       pointer-events: none;
       z-index: 1;
     }
-    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.hashti-badge-wrapper > .hashti-badge, .hashti-badge-wrapper > .hashti-badge[data-placement="top-end"]) {
+    :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.hashti-badge-wrapper > .hashti-badge-wrapper > .hashti-badge[data-placement="top-end"]) {
       transform: translate(-50%, -50%);
     }
 
@@ -3471,7 +3467,6 @@
         border-style: dashed;
       }
       :is(
-          .hashti-field__control,
           .hashti-field__control + input[hidden],
           .hashti-field__control + .hashti-field__status-icon,
           .hashti-field__control + input[hidden] + .hashti-field__status-icon

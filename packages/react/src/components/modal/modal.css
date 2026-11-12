@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Modal */
 @layer hashti.components {
-  .hashti-modal-overlay,
   .hashti-modal-overlay {
     position: fixed;
     inset: 0;
@@ -23,7 +22,6 @@
     opacity: 0;
   }
 
-  .hashti-modal,
   .hashti-modal {
     position: relative;
     max-width: 90vw;

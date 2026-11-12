@@ -1,15 +1,12 @@
 /* Hashti Modern Aesthetic - DatePicker & Calendar */
 @layer hashti.components {
   .hashti-date-picker,
-  .hashti-date-picker,
-  .hashti-date-range-picker,
   .hashti-date-range-picker {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
-  .hashti-date-popover,
   .hashti-date-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
@@ -19,14 +16,12 @@
     padding: 16px;
   }
 
-  .hashti-calendar,
   .hashti-calendar {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  .hashti-calendar-header,
   .hashti-calendar-header {
     display: flex;
     align-items: center;

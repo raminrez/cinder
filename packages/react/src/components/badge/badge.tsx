@@ -117,7 +117,7 @@ export function AILabel({
         aria-label={revertLabel}
         data-revert-active="true"
         onClick={onRevert}
-        className={cx("hashti-ai-label hashti-ai-label", className)}
+        className={cx("hashti-ai-label", className)}
       >
         <span className="hashti-ai-icon" aria-hidden="true">↺</span>
         <span>{label}</span>
@@ -129,7 +129,7 @@ export function AILabel({
     <span
       ref={ref as Ref<HTMLSpanElement>}
       role="status"
-      className={cx("hashti-ai-label hashti-ai-label", className)}
+      className={cx("hashti-ai-label", className)}
     >
       <span className="hashti-ai-icon" aria-hidden="true">✦</span>
       <span>{label}</span>

@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Progress */
 @layer hashti.components {
-  .hashti-progress,
   .hashti-progress {
     display: flex;
     flex-direction: column;
@@ -8,7 +7,6 @@
     width: 100%;
   }
 
-  .hashti-progress-label,
   .hashti-progress-label {
     display: flex;
     justify-content: space-between;
@@ -16,7 +14,6 @@
     font-weight: 500;
   }
 
-  .hashti-progress-track,
   .hashti-progress-track {
     height: 8px;
     width: 100%;
@@ -25,7 +22,6 @@
     overflow: hidden;
   }
 
-  .hashti-progress-fill,
   .hashti-progress-fill {
     height: 100%;
     border-radius: 9999px;
@@ -43,7 +39,6 @@
     background-color: var(--hashti-support-error, #da1e28);
   }
 
-  .hashti-progress-circle,
   .hashti-progress-circle {
     display: inline-flex;
     align-items: center;
@@ -51,13 +46,11 @@
     position: relative;
   }
 
-  .hashti-progress-circle-track,
   .hashti-progress-circle-track {
     fill: none;
     stroke: var(--hashti-border-subtle, #e0e0e0);
   }
 
-  .hashti-progress-circle-fill,
   .hashti-progress-circle-fill {
     fill: none;
     stroke: var(--hashti-primary, #08BDBA);

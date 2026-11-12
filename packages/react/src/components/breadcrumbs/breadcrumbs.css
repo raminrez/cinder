@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Breadcrumbs */
 @layer hashti.components {
-  .hashti-breadcrumbs,
   .hashti-breadcrumbs {
     display: flex;
     align-items: center;

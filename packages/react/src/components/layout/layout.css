@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Layout */
 @layer hashti.components {
-  .hashti-stack,
   .hashti-stack {
     display: flex;
     gap: var(--stack-gap, 16px);
@@ -17,7 +16,6 @@
     align-items: center;
   }
 
-  .hashti-grid,
   .hashti-grid {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
@@ -25,7 +23,6 @@
     width: 100%;
   }
 
-  .hashti-header,
   .hashti-header {
     display: flex;
     align-items: center;

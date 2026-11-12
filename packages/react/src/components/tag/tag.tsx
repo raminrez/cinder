@@ -42,7 +42,7 @@ export function Tag({ color = "gray", size = "md", className, style, ...props }:
     <span
       {...props}
       data-size={size}
-      className={["hashti-tag hashti-tag", className].filter(Boolean).join(" ")}
+      className={["hashti-tag", className].filter(Boolean).join(" ")}
       style={
         {
           "--tag-background": `var(--hashti-tag-background-${color}, var(--hashti-tag-background-${color}))`,
@@ -65,7 +65,7 @@ export function TagGroup<T>({ label, items, children, className, ...props }: Tag
   return (
     <RACTagGroup
       {...props}
-      className={["hashti-tag-group hashti-tag-group", className].filter(Boolean).join(" ")}
+      className={["hashti-tag-group", className].filter(Boolean).join(" ")}
     >
       {label && <Label>{label}</Label>}
       <TagList items={items}>{children}</TagList>
@@ -79,7 +79,7 @@ export interface FilterTagProps extends RACTagProps {
 
 export function FilterTag({ className, children, ...props }: FilterTagProps) {
   return (
-    <RACTag {...props} className={classes("hashti-filter-tag hashti-filter-tag", className)}>
+    <RACTag {...props} className={classes("hashti-filter-tag", className)}>
       {composeRenderProps(children, (content, { allowsRemoving }) => (
         <>
           {content}

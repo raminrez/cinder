@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Switch */
 @layer hashti.components {
-  .hashti-switch,
   .hashti-switch {
     display: inline-flex;
     align-items: center;
@@ -11,7 +10,6 @@
     user-select: none;
   }
 
-  .hashti-switch-track,
   .hashti-switch-track {
     display: inline-flex;
     align-items: center;
@@ -30,7 +28,6 @@
     height: 18px;
   }
 
-  .hashti-switch-thumb,
   .hashti-switch-thumb {
     width: 20px;
     height: 20px;

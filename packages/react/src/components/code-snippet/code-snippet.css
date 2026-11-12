@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - CodeSnippet */
 @layer hashti.components {
-  .hashti-code-snippet,
   .hashti-code-snippet {
     position: relative;
     border-radius: var(--hashti-control-radius, 12px);
@@ -11,7 +10,6 @@
     font-size: 0.8125rem;
   }
 
-  .hashti-code-snippet--inline,
   .hashti-code-snippet--inline {
     display: inline-flex;
     align-items: center;

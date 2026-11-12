@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - NavigationTree */
 @layer hashti.components {
-  .hashti-navigation-tree,
   .hashti-navigation-tree {
     display: flex;
     flex-direction: column;
@@ -8,14 +7,12 @@
     outline: none;
   }
 
-  .hashti-navigation-tree-item,
   .hashti-navigation-tree-item {
     display: flex;
     flex-direction: column;
     outline: none;
   }
 
-  .hashti-navigation-tree-item-content,
   .hashti-navigation-tree-item-content {
     display: flex;
     align-items: center;

@@ -1,6 +1,5 @@
 /* Hashti Modern Aesthetic - Tooltip */
 @layer hashti.components {
-  .hashti-tooltip,
   .hashti-tooltip {
     border-radius: 8px;
     background-color: #161616;

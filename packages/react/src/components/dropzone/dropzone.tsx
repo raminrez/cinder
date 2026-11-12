@@ -179,12 +179,12 @@ export function FileUploader({
   }
 
   return (
-    <div className={["hashti-file-uploader hashti-file-uploader", className].filter(Boolean).join(" ")}>
-      <div id={`${id}-label`} className="hashti-file-label hashti-file-label">
+    <div className={["hashti-file-uploader", className].filter(Boolean).join(" ")}>
+      <div id={`${id}-label`} className="hashti-file-label">
         {label}
       </div>
       {description && (
-        <p id={`${id}-description`} className="hashti-description hashti-description">
+        <p id={`${id}-description`} className="hashti-description">
           {description}
         </p>
       )}
@@ -211,16 +211,16 @@ export function FileUploader({
         </FileTrigger>
       </DropZoneRoot>
       {error && (
-        <p role="alert" className="hashti-error-message hashti-error-message">
+        <p role="alert" className="hashti-error-message">
           {error}
         </p>
       )}
-      <ul className="hashti-file-list hashti-file-list">
+      <ul className="hashti-file-list">
         {files.map((file, index) => (
           <li key={`${file.name}-${file.lastModified}-${index}`}>
             <Icon name="file" />
             <span>{file.name}</span>
-            <span className="hashti-description hashti-description">
+            <span className="hashti-description">
               {new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(
                 file.size / 1024,
               )}{" "}

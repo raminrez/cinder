@@ -1,6 +1,5 @@
 /* Hashti Modern Field Aesthetics */
 @layer hashti.components {
-  .hashti-field,
   .hashti-field {
     display: flex;
     flex-direction: column;
@@ -9,7 +8,6 @@
 
   .hashti-field label,
   .hashti-field label,
-  .hashti-field-label,
   .hashti-field-label {
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
     font-weight: 500;
@@ -24,7 +22,6 @@
     line-height: 1.4;
   }
 
-  .hashti-error-message,
   .hashti-error-message {
     font-size: var(--hashti-caption-01-font-size, 0.75rem);
     color: var(--hashti-text-error, #da1e28);
