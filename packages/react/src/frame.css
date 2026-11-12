@@ -87,6 +87,11 @@
       )[data-pressed] {
       background: var(--button-active);
     }
+    /* Focus is a state, not an animation: never slide or fade the ring in. */
+    :focus-visible,
+    [data-focus-visible] {
+      transition-property: none !important;
+    }
     .hashti-button[data-focus-visible] {
       outline: var(--hashti-focus-width) solid var(--hashti-focus);
       outline-offset: calc(var(--hashti-focus-offset) + 1px);
@@ -213,7 +218,7 @@
     .hashti-input-group[data-focus-within],
     .hashti-select-trigger[data-focus-visible] {
       outline: var(--hashti-focus-width, 2px) solid var(--hashti-focus);
-      outline-offset: -2px;
+      outline-offset: var(--hashti-focus-offset, 2px);
       box-shadow: none;
       position: relative;
       z-index: 3;
@@ -223,7 +228,7 @@
     .hashti-field[data-invalid] > .hashti-input-group[data-focus-within],
     .hashti-field[data-invalid] > .hashti-select-trigger[data-focus-visible] {
       outline: var(--hashti-focus-width, 2px) solid var(--hashti-focus);
-      outline-offset: -2px;
+      outline-offset: var(--hashti-focus-offset, 2px);
       position: relative;
       z-index: 3;
     }
@@ -332,8 +337,8 @@
         .hashti-input-group,
         .hashti-select-trigger
       ) {
-      border-end-start-radius: 0 !important;
-      border-end-end-radius: 0 !important;
+      border-end-start-radius: 3px !important;
+      border-end-end-radius: 3px !important;
     }
 
     :is(
@@ -363,8 +368,8 @@
       margin-block-start: 0 !important;
       border: 1px solid var(--hashti-field-status-ink) !important;
       border-block-start: none !important;
-      border-start-start-radius: 0 !important;
-      border-start-end-radius: 0 !important;
+      border-start-start-radius: 3px !important;
+      border-start-end-radius: 3px !important;
       border-end-start-radius: var(--hashti-control-radius) !important;
       border-end-end-radius: var(--hashti-control-radius) !important;
       background: var(--hashti-field-status-surface);
@@ -731,7 +736,7 @@
     .react-aria-ListBoxItem[data-focus-visible],
     .react-aria-MenuItem[data-focus-visible] {
       outline: var(--hashti-focus-width) solid var(--hashti-focus);
-      outline-offset: -2px;
+      outline-offset: var(--hashti-focus-offset, 2px);
     }
     .react-aria-ListBoxItem:is([data-hovered], [data-focused]),
     .react-aria-MenuItem:is([data-hovered], [data-focused]) {
@@ -766,6 +771,7 @@
       border-block-end: 1px solid var(--hashti-border-subtle);
       overflow-x: auto;
       scrollbar-width: thin;
+      padding-block: 2px;
     }
     .hashti-tabs .react-aria-Tab {
       display: inline-flex;
@@ -793,7 +799,7 @@
     }
     .hashti-tabs .react-aria-Tab[data-focus-visible] {
       outline: var(--hashti-focus-width) solid var(--hashti-focus);
-      outline-offset: -2px;
+      outline-offset: var(--hashti-focus-offset, 2px);
       border-radius: var(--hashti-control-radius);
     }
     .hashti-tabs .react-aria-Tab[data-disabled] {
@@ -825,7 +831,7 @@
       border: none;
       margin-block-end: 0;
       border-radius: calc(var(--hashti-control-radius) - 3px);
-      min-height: calc(var(--hashti-size-md) - 8px);
+      min-height: var(--hashti-size-md);
       padding: 0 var(--hashti-spacing-04);
       font-size: var(--hashti-body-compact-01-font-size);
       font-weight: 500;
@@ -1345,14 +1351,14 @@
       background: var(--hashti-layer-hover);
     }
     .hashti-content-switcher > .hashti-toggle-button[data-selected] {
-      background: var(--hashti-layer, #ffffff);
+      background: var(--hashti-layer-selected);
       color: var(--hashti-text-primary);
       font-weight: 600;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+      box-shadow: none;
     }
     .hashti-content-switcher > .hashti-toggle-button[data-focus-visible] {
       outline: var(--hashti-focus-width) solid var(--hashti-focus);
-      outline-offset: -2px;
+      outline-offset: var(--hashti-focus-offset, 2px);
     }
     .hashti-content-switcher > .hashti-toggle-button[data-disabled] {
       color: var(--hashti-text-disabled);
@@ -1545,9 +1551,9 @@
     .hashti-pagination-actions .hashti-button {
       border-radius: var(--hashti-control-radius);
       color: var(--hashti-icon-primary);
-      width: var(--hashti-size-sm);
-      height: var(--hashti-size-sm);
-      min-height: var(--hashti-size-sm);
+      width: var(--hashti-size-md);
+      height: var(--hashti-size-md);
+      min-height: var(--hashti-size-md);
       padding: 0;
     }
     :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl)) :is(.hashti-pagination-actions, .hashti-calendar-header) svg {
@@ -1701,7 +1707,7 @@
       margin: 0;
       background: var(--hashti-layer);
       border: 1px solid var(--hashti-border-subtle);
-      border-radius: var(--hashti-control-radius);
+      border-radius: var(--hashti-group-radius);
       overflow: hidden;
     }
     .hashti-structured-list > div,
@@ -2063,7 +2069,7 @@
       transition: width var(--hashti-duration-moderate-01, 200ms) ease;
     }
     .hashti-meter[data-tone="neutral"] .hashti-meter-fill {
-      background: var(--hashti-interactive);
+      background: var(--hashti-text-secondary);
     }
     .hashti-meter[data-tone="success"] .hashti-meter-fill {
       background: var(--hashti-support-success);
@@ -2099,7 +2105,7 @@
     }
     .hashti-meter-circle-fill {
       fill: none;
-      stroke: var(--hashti-interactive);
+      stroke: var(--hashti-text-secondary);
       stroke-linecap: round;
       transition: stroke-dashoffset var(--hashti-duration-moderate-01, 250ms) ease;
     }
@@ -2280,7 +2286,7 @@
       display: flex;
       align-items: center;
       gap: var(--hashti-spacing-03);
-      min-height: 2.25rem;
+      min-height: var(--hashti-size-md);
       padding: 0.375rem var(--hashti-spacing-04);
       font-size: var(--hashti-body-compact-01-font-size);
       font-weight: 500;
@@ -2676,7 +2682,7 @@
       flex-direction: column;
       background: var(--hashti-layer, var(--hashti-layer-01));
       border: 1px solid var(--hashti-border-subtle);
-      border-radius: var(--hashti-overlay-radius, var(--hashti-control-radius));
+      border-radius: var(--hashti-group-radius);
       overflow: clip;
       color: var(--hashti-text-primary);
       transition:
@@ -2750,6 +2756,7 @@
       text-align: center;
       padding: var(--hashti-spacing-08) var(--hashti-spacing-05);
       gap: var(--hashti-spacing-04);
+      border-radius: var(--hashti-group-radius);
     }
     .hashti-empty-state-icon {
       color: var(--hashti-text-placeholder, var(--hashti-text-secondary));
@@ -2826,7 +2833,7 @@
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--hashti-overlay);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       display: flex;
@@ -2987,7 +2994,7 @@
     .hashti-sheet-backdrop,
     .react-aria-SheetBackdrop {
       &[data-stack-index='0'] {
-        background: rgba(0, 0, 0, 0.4);
+        background: var(--hashti-overlay);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
       }
@@ -3064,7 +3071,11 @@
       gap: var(--hashti-spacing-02);
       padding: 0.125rem 0.5rem;
       border-radius: 9999px;
-      background: linear-gradient(135deg, var(--hashti-interactive) 0%, #a56eff 100%);
+      background: linear-gradient(
+        135deg,
+        var(--hashti-ai-gradient-start) 0%,
+        var(--hashti-ai-gradient-end) 100%
+      );
       color: var(--hashti-text-on-color);
       font-size: 0.6875rem;
       font-weight: 600;
@@ -3096,7 +3107,6 @@
       border-radius: var(--hashti-control-radius);
       background: var(--hashti-layer-01);
       border: 1px solid var(--hashti-border-subtle);
-      border-inline-start-width: 4px;
       overflow: hidden;
       padding: var(--hashti-spacing-04);
       gap: var(--hashti-spacing-03);
@@ -3146,7 +3156,7 @@
       align-items: center;
       gap: var(--hashti-spacing-04);
       padding: var(--hashti-spacing-03) var(--hashti-spacing-05);
-      background: var(--hashti-interactive);
+      background: var(--hashti-button-primary);
       color: var(--hashti-text-on-color);
       font-size: var(--hashti-body-compact-01-font-size);
       font-weight: 500;

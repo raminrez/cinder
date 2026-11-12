@@ -24,6 +24,8 @@ const palettes = {
     warningSurface: "#fff0ce",
     success: "#246343",
     successSurface: "#e1f2e8",
+    aiStart: "#5b3fc4",
+    aiEnd: "#8b3fb0",
   },
   "frame-dark": {
     canvas: "#18191d",
@@ -49,6 +51,8 @@ const palettes = {
     warningSurface: "#3e3321",
     success: "#a4d9b8",
     successSurface: "#203a2b",
+    aiStart: "#c4b0ff",
+    aiEnd: "#e6b3e0",
   },
 };
 
@@ -146,6 +150,8 @@ export const frameThemes = Object.fromEntries(
       "support-warning": p.warning,
       "support-success": p.success,
       "support-info": p.focus,
+      "ai-gradient-start": p.aiStart,
+      "ai-gradient-end": p.aiEnd,
       "support-error-inverse": inverse.error,
       "support-warning-inverse": inverse.warning,
       "support-success-inverse": inverse.success,
@@ -160,7 +166,8 @@ export const frameThemes = Object.fromEntries(
       overlay: "rgb(18 22 32 / 50%)",
       shadow: "rgb(0 0 0 / 14%)",
       "control-radius": "0.625rem",
-      "popover-radius": "0.875rem",
+      "group-radius": "0.875rem",
+      "popover-radius": "1.125rem",
       "overlay-radius": "1.125rem",
       "focus-width": "2px",
       "focus-offset": "2px",

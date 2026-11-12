@@ -82,7 +82,7 @@
     --hashti-surface-radius: 16px;
     --hashti-pill-radius: 9999px;
     --hashti-caption-01-font-size: 0.75rem;
-    --hashti-primary: #08BDBA;
+    --hashti-primary: var(--hashti-focus);
     --hashti-button-secondary-ink: var(--hashti-text-on-color);
   }
   :where([data-hashti-theme="white"], [data-hashti-theme="g10"], [data-hashti-theme="g90"], [data-hashti-theme="g100"]) {
@@ -3148,7 +3148,7 @@
   }
   .hashti-loading {
     display: inline-flex;
-    color: var(--hashti-interactive);
+    color: var(--hashti-text-secondary);
   }
   .hashti-loading[data-size="lg"] .hashti-spinner {
     width: 5.5rem;
@@ -4087,7 +4087,11 @@
     gap: var(--hashti-spacing-02);
     padding: 0.125rem 0.5rem;
     border-radius: 9999px;
-    background: linear-gradient(135deg, var(--hashti-interactive) 0%, #a56eff 100%);
+    background: linear-gradient(
+      135deg,
+      var(--hashti-ai-gradient-start) 0%,
+      var(--hashti-ai-gradient-end) 100%
+    );
     color: var(--hashti-text-on-color);
     font-size: 0.6875rem;
     font-weight: 600;
@@ -4266,7 +4270,7 @@
     width: 1rem;
     height: 1rem;
     border: 2px solid var(--hashti-border-subtle);
-    border-block-start-color: var(--hashti-interactive, #0f62fe);
+    border-block-start-color: var(--hashti-text-secondary);
     border-radius: 50%;
     animation: hashti-spin 0.8s linear infinite;
   }

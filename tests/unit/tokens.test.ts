@@ -322,7 +322,7 @@ for (const [name, expected] of frameCases) {
     const values = themes[name];
     for (const key of Object.keys(themes.white)) expect(values).toHaveProperty(key);
     expect(Object.keys(values)).toEqual(Object.keys(themes["frame-light"]));
-    expect(Object.keys(values)).toHaveLength(343);
+    expect(Object.keys(values)).toHaveLength(346);
     expect(values).toMatchObject(expected);
     expect(values["button-tertiary"]).toBe(values["border-strong-01"]);
     expect(values["button-tertiary-hover"]).toBe(values["layer-02"]);
@@ -442,7 +442,7 @@ test("Frame's scalable working type and geometry use the approved existing roles
     expect(values["helper-text-01-letter-spacing"]).toBe(0);
     for (const [role, pixels] of [
       ["control-radius", 10],
-      ["popover-radius", 14],
+      ["popover-radius", 18],
       ["overlay-radius", 18],
       ["size-md", 44],
     ] as const) {
