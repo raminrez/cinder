@@ -36,8 +36,7 @@ export interface ListBoxContextValue {
 
 export const ListBoxContext = createContext<ListBoxContextValue>({});
 
-export interface ListBoxRootProps<T extends object>
-  extends Omit<RACListBoxProps<T>, "className"> {
+export interface ListBoxRootProps<T extends object> extends Omit<RACListBoxProps<T>, "className"> {
   size?: ControlSize;
   variant?: "flat" | "bordered" | "card";
   emptyContent?: ReactNode;
@@ -55,9 +54,11 @@ export function ListBoxRoot<T extends object>({
   ref,
   ...props
 }: ListBoxRootProps<T>) {
-  const resolvedEmptyState = renderEmptyState ?? (emptyContent ? () => (
-    <div className="hashti-listbox-empty-content">{emptyContent}</div>
-  ) : undefined);
+  const resolvedEmptyState =
+    renderEmptyState ??
+    (emptyContent
+      ? () => <div className="hashti-listbox-empty-content">{emptyContent}</div>
+      : undefined);
 
   return (
     <ListBoxContext.Provider value={{ size, variant }}>
@@ -68,12 +69,8 @@ export function ListBoxRoot<T extends object>({
         data-size={size}
         data-variant={variant}
         className={classes(
-          cx(
-            "hashti-listbox",
-            `hashti-listbox--${size}`,
-            `hashti-listbox--${variant}`
-          ),
-          className
+          cx("hashti-listbox", `hashti-listbox--${size}`, `hashti-listbox--${variant}`),
+          className,
         )}
       >
         {children as any}
@@ -82,8 +79,10 @@ export function ListBoxRoot<T extends object>({
   );
 }
 
-export interface ListBoxItemProps<T extends object = object>
-  extends Omit<RACListBoxItemProps<T>, "className"> {
+export interface ListBoxItemProps<T extends object = object> extends Omit<
+  RACListBoxItemProps<T>,
+  "className"
+> {
   className?: string | ((values: ListBoxItemRenderProps) => string);
   ref?: Ref<HTMLDivElement>;
 }
@@ -103,11 +102,8 @@ export function ListBoxItem<T extends object = object>({
       data-size={size}
       data-variant={variant}
       className={classes(
-        cx(
-          "hashti-listbox-item",
-          size && `hashti-listbox-item--${size}`
-        ),
-        className
+        cx("hashti-listbox-item", size && `hashti-listbox-item--${size}`),
+        className,
       )}
     >
       {children as any}
@@ -115,8 +111,7 @@ export function ListBoxItem<T extends object = object>({
   );
 }
 
-export interface ListBoxSectionProps<T extends object = object>
-  extends RACListBoxSectionProps<T> {
+export interface ListBoxSectionProps<T extends object = object> extends RACListBoxSectionProps<T> {
   title?: ReactNode;
 }
 
@@ -188,19 +183,14 @@ export interface ListBoxEmptyStateProps {
   className?: string;
 }
 
-export function ListBoxEmptyState({
-  children,
-  className,
-}: ListBoxEmptyStateProps) {
-  return (
-    <div className={cx("hashti-listbox-empty-state", className)}>
-      {children as any}
-    </div>
-  );
+export function ListBoxEmptyState({ children, className }: ListBoxEmptyStateProps) {
+  return <div className={cx("hashti-listbox-empty-state", className)}>{children as any}</div>;
 }
 
-export interface ListBoxLoadMoreProps
-  extends Omit<RACListBoxLoadMoreItemProps, "className" | "children"> {
+export interface ListBoxLoadMoreProps extends Omit<
+  RACListBoxLoadMoreItemProps,
+  "className" | "children"
+> {
   id?: string;
   label?: string;
   isError?: boolean;

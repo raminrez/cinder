@@ -1,11 +1,7 @@
 "use client";
 
 import type { Ref } from "react";
-import {
-  Modal as RACModal,
-  ModalOverlay,
-  type ModalOverlayProps,
-} from "react-aria-components";
+import { Modal as RACModal, ModalOverlay, type ModalOverlayProps } from "react-aria-components";
 import { classes } from "../../utils";
 import { useOverlayTheme } from "../../theme";
 

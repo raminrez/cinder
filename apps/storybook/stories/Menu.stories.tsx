@@ -160,7 +160,9 @@ export const SectionsAndSeparators: Story = {
 
 function SelectionMenuExample() {
   const [selectedSort, setSelectedSort] = useState<Selection>(new Set(["date"]));
-  const [selectedColumns, setSelectedColumns] = useState<Selection>(new Set(["status", "reviewer"]));
+  const [selectedColumns, setSelectedColumns] = useState<Selection>(
+    new Set(["status", "reviewer"]),
+  );
 
   return (
     <div className="navigation-story-stack">
@@ -334,10 +336,7 @@ function OverflowMenuExample() {
             Current state: Running (Last action: {action})
           </p>
         </div>
-        <OverflowMenu
-          aria-label="Instance actions"
-          onAction={(k) => setAction(String(k))}
-        >
+        <OverflowMenu aria-label="Instance actions" onAction={(k) => setAction(String(k))}>
           <MenuItem id="restart">Restart instance</MenuItem>
           <MenuItem id="snapshot">Create snapshot</MenuItem>
           <Separator />

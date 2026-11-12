@@ -1,14 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import {
-  FilterTag,
-  Tag,
-  TagGroup,
-  Theme,
-  useTheme,
-  type Selection,
-} from "@hashti/react";
+import { FilterTag, Tag, TagGroup, Theme, useTheme, type Selection } from "@hashti/react";
 import "./navigation.css";
 
 const meta = {
@@ -116,11 +109,7 @@ function RemovableTagsExample() {
 
   return (
     <div className="navigation-story-stack">
-      <TagGroup
-        label="Active search criteria (removable)"
-        items={tags}
-        onRemove={handleRemove}
-      >
+      <TagGroup label="Active search criteria (removable)" items={tags} onRemove={handleRemove}>
         {(item) => <FilterTag id={item.id}>{item.name}</FilterTag>}
       </TagGroup>
     </div>

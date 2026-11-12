@@ -28,7 +28,10 @@
   .hashti-date-field .react-aria-DateInput:focus-within,
   .hashti-date-field .react-aria-DateInput:focus-within {
     border-color: var(--hashti-focus, #0f62fe);
-    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
+    box-shadow:
+      0 0 0 2px var(--hashti-background, #ffffff),
+      0 0 0 4px var(--hashti-focus, #0f62fe),
+      0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   .react-aria-DateSegment {
@@ -38,7 +41,7 @@
   }
 
   .react-aria-DateSegment:focus {
-    background-color: var(--hashti-primary, #08BDBA);
+    background-color: var(--hashti-primary, #08bdba);
     color: #ffffff;
   }
 }

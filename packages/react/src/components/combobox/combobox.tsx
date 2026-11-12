@@ -78,10 +78,7 @@ export interface ComboBoxCreateItemProps {
   className?: string;
 }
 
-export function ComboBoxCreateItem({
-  onCreateItem,
-  className,
-}: ComboBoxCreateItemProps) {
+export function ComboBoxCreateItem({ onCreateItem, className }: ComboBoxCreateItemProps) {
   const state = useContext(ComboBoxStateContext);
   if (!state) return null;
 
@@ -115,9 +112,7 @@ export function ComboBoxCreateItem({
         }
       }}
     >
-      <span className="hashti-combobox-create-item-text">
-        Create &quot;{trimmed}&quot;
-      </span>
+      <span className="hashti-combobox-create-item-text">Create &quot;{trimmed}&quot;</span>
     </div>
   );
 }
@@ -186,7 +181,11 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
                     return (
                       <div className="hashti-combobox-chips-wrapper">
                         {itemsList.map((item, idx) => {
-                          const text = item?.textValue ?? item?.name ?? item?.rendered ?? String(item?.id ?? item);
+                          const text =
+                            item?.textValue ??
+                            item?.name ??
+                            item?.rendered ??
+                            String(item?.id ?? item);
                           const key = item?.id ?? item?.key ?? idx;
                           return (
                             <span
@@ -209,7 +208,9 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
                                   if (e.key === "Enter" || e.key === " ") {
                                     e.stopPropagation();
                                     e.preventDefault();
-                                    const currentKeys = new Set(state.selectionManager.selectedKeys);
+                                    const currentKeys = new Set(
+                                      state.selectionManager.selectedKeys,
+                                    );
                                     currentKeys.delete(key);
                                     state.selectionManager.setSelectedKeys(currentKeys);
                                   }
@@ -237,7 +238,9 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
         )}
       </FieldLayout>
       <Popover offset={6} className="hashti-combobox-popover">
-        <RACListBox items={items} className="hashti-combobox-listbox react-aria-ListBox">{children}</RACListBox>
+        <RACListBox items={items} className="hashti-combobox-listbox react-aria-ListBox">
+          {children}
+        </RACListBox>
         {allowCreateItem && <ComboBoxCreateItem onCreateItem={onCreateItem} />}
       </Popover>
     </ComboBoxRoot>

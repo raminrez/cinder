@@ -69,7 +69,11 @@ export const Kinds: Story = {
         kind="error"
         autoFocusAction={false}
         title="Build deployment failed"
-        action={<Button variant="secondary" size="sm">View logs</Button>}
+        action={
+          <Button variant="secondary" size="sm">
+            View logs
+          </Button>
+        }
       >
         Docker image exited with status code 137 (OOM).
       </ActionableNotification>
@@ -78,7 +82,11 @@ export const Kinds: Story = {
         kind="success"
         autoFocusAction={false}
         title="Payment verified"
-        action={<Button variant="secondary" size="sm">Download receipt</Button>}
+        action={
+          <Button variant="secondary" size="sm">
+            Download receipt
+          </Button>
+        }
       >
         Your subscription invoice #INV-2026 has been settled.
       </ActionableNotification>
@@ -98,7 +106,11 @@ export const RTL: Story = {
         kind="info"
         autoFocusAction={false}
         title="نسخه جدید در دسترس است"
-        action={<Button variant="secondary" size="sm">به‌روزرسانی</Button>}
+        action={
+          <Button variant="secondary" size="sm">
+            به‌روزرسانی
+          </Button>
+        }
       >
         نسخه ۲.۴.۰ با بهبودهای عملکردی و امنیتی آماده نصب می‌باشد.
       </ActionableNotification>

@@ -27,8 +27,8 @@
   .hashti-checkbox[data-selected] .hashti-checkbox-control,
   .hashti-checkbox[data-indeterminate] .hashti-checkbox-control,
   .hashti-checkbox[data-indeterminate] .hashti-checkbox-control {
-    background-color: var(--hashti-primary, #08BDBA);
-    border-color: var(--hashti-primary, #08BDBA);
+    background-color: var(--hashti-primary, #08bdba);
+    border-color: var(--hashti-primary, #08bdba);
   }
 
   .hashti-checkbox[data-pressed] .hashti-checkbox-control,
@@ -39,7 +39,10 @@
   .hashti-checkbox[data-focus-visible] .hashti-checkbox-control,
   .hashti-checkbox[data-focus-visible] .hashti-checkbox-control {
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 8px rgba(15, 98, 254, 0.35);
+    box-shadow:
+      0 0 0 2px var(--hashti-background, #ffffff),
+      0 0 0 4px var(--hashti-focus, #0f62fe),
+      0 0 8px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-checkbox[data-disabled],

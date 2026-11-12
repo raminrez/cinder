@@ -210,12 +210,7 @@ export interface FieldLabelHelpProps {
   children?: ReactNode;
 }
 
-export function FieldLabelHelp({
-  labelId,
-  content,
-  tooltip,
-  children,
-}: FieldLabelHelpProps) {
+export function FieldLabelHelp({ labelId, content, tooltip, children }: FieldLabelHelpProps) {
   const messages = useFieldMessages();
   const prefixId = useId();
   const fallbackId = useId();
@@ -245,9 +240,7 @@ export function FieldLabelHelp({
             {tooltipContent && <Tooltip>{tooltipContent}</Tooltip>}
           </TooltipTrigger>
           <Popover placement="bottom start" offset={6} className="hashti-field__label-popover">
-            <Dialog aria-labelledby={labelledBy}>
-              {children}
-            </Dialog>
+            <Dialog aria-labelledby={labelledBy}>{children}</Dialog>
           </Popover>
         </DialogTrigger>
       </ButtonContext.Provider>

@@ -47,9 +47,7 @@ export function ComponentPreview({
             </span>
           )}
           {description && (
-            <span className="text-xs text-neutral-500 dark:text-neutral-400">
-              {description}
-            </span>
+            <span className="text-xs text-neutral-500 dark:text-neutral-400">{description}</span>
           )}
         </div>
 
@@ -92,9 +90,7 @@ export function ComponentPreview({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={`transition-transform duration-200 ${
-                  showCode ? "rotate-180" : ""
-                }`}
+                className={`transition-transform duration-200 ${showCode ? "rotate-180" : ""}`}
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
@@ -151,9 +147,7 @@ export function ComponentPreview({
 
       {/* Live Component Preview Arena */}
       <div className="relative p-8 md:p-10 flex items-center justify-center min-h-[180px] bg-neutral-50/40 dark:bg-neutral-900/20 [background-image:radial-gradient(rgba(8,189,186,0.2)_1px,transparent_1px)] [background-size:16px_16px]">
-        <div className="relative z-10 w-full flex items-center justify-center">
-          {children}
-        </div>
+        <div className="relative z-10 w-full flex items-center justify-center">{children}</div>
       </div>
 
       {/* Expandable Code Section with comfortable padding */}

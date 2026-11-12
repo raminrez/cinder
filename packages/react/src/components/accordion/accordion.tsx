@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { createContext, useContext, type ReactNode, type Ref } from "react";
 import {
   DisclosureGroup,
   Disclosure,
@@ -55,19 +50,12 @@ export function AccordionItem({
   return (
     <Disclosure {...props} className={classes("hashti-accordion-item", className)}>
       <Heading level={headingLevel}>
-        <Button
-          slot="trigger"
-          variant="ghost"
-          size={size}
-          className="hashti-accordion-trigger"
-        >
+        <Button slot="trigger" variant="ghost" size={size} className="hashti-accordion-trigger">
           <Icon name="chevronRight" />
           <span>{title}</span>
         </Button>
       </Heading>
-      <DisclosurePanel className="hashti-accordion-panel">
-        {children}
-      </DisclosurePanel>
+      <DisclosurePanel className="hashti-accordion-panel">{children}</DisclosurePanel>
     </Disclosure>
   );
 }

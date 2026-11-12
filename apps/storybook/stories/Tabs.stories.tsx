@@ -199,7 +199,9 @@ function ControlledTabsExample() {
   return (
     <div className="navigation-story-stack">
       <div className="navigation-story-row">
-        <span>Controlled active key: <strong>{String(selectedKey)}</strong></span>
+        <span>
+          Controlled active key: <strong>{String(selectedKey)}</strong>
+        </span>
         <Button size="sm" variant="secondary" onPress={() => setSelectedKey("deploy")}>
           Jump to Deploy
         </Button>

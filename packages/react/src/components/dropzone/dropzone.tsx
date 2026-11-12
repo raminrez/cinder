@@ -50,10 +50,7 @@ export function DropZoneRoot({
       {...props}
       ref={ref}
       data-variant={variant}
-      className={classes(
-        cx("hashti-dropzone", `hashti-dropzone--${variant}`),
-        className
-      )}
+      className={classes(cx("hashti-dropzone", `hashti-dropzone--${variant}`), className)}
       onDrop={async (e) => {
         onDrop?.(e);
         if (onDropFiles) {
@@ -242,4 +239,3 @@ export function FileUploader({
     </div>
   );
 }
-

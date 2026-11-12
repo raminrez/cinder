@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  type ReactNode,
-  type Ref,
-} from "react";
+import { type ReactNode, type Ref } from "react";
 import {
   ColorArea as RACColorArea,
   ColorField as RACColorField,
@@ -61,11 +58,7 @@ export interface ColorThumbProps extends RACColorThumbProps {
 
 export function ColorThumb({ className, ref, ...props }: ColorThumbProps) {
   return (
-    <RACColorThumb
-      {...props}
-      ref={ref}
-      className={classes("hashti-color-thumb", className)}
-    />
+    <RACColorThumb {...props} ref={ref} className={classes("hashti-color-thumb", className)} />
   );
 }
 
@@ -79,11 +72,7 @@ export interface ColorAreaProps extends RACColorAreaProps {
 
 export function ColorArea({ className, children, ref, ...props }: ColorAreaProps) {
   return (
-    <RACColorArea
-      {...props}
-      ref={ref}
-      className={classes("hashti-color-area", className)}
-    >
+    <RACColorArea {...props} ref={ref} className={classes("hashti-color-area", className)}>
       {(renderProps) => {
         if (typeof children === "function") {
           return children(renderProps);
@@ -113,11 +102,7 @@ export function ColorSlider({
   ...props
 }: ColorSliderProps) {
   return (
-    <RACColorSlider
-      {...props}
-      ref={ref}
-      className={classes("hashti-color-slider", className)}
-    >
+    <RACColorSlider {...props} ref={ref} className={classes("hashti-color-slider", className)}>
       {(renderProps) => {
         if (typeof children === "function") {
           return children(renderProps);
@@ -161,8 +146,7 @@ export function ColorWheelTrack({ className, ref, ...props }: ColorWheelTrackPro
   );
 }
 
-export interface ColorWheelProps
-  extends Omit<RACColorWheelProps, "innerRadius" | "outerRadius"> {
+export interface ColorWheelProps extends Omit<RACColorWheelProps, "innerRadius" | "outerRadius"> {
   innerRadius?: number;
   outerRadius?: number;
   ref?: Ref<HTMLDivElement>;
@@ -211,19 +195,9 @@ export interface ColorFieldProps extends RACColorFieldProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export function ColorField({
-  className,
-  label,
-  children,
-  ref,
-  ...props
-}: ColorFieldProps) {
+export function ColorField({ className, label, children, ref, ...props }: ColorFieldProps) {
   return (
-    <RACColorField
-      {...props}
-      ref={ref}
-      className={classes("hashti-color-field", className)}
-    >
+    <RACColorField {...props} ref={ref} className={classes("hashti-color-field", className)}>
       {(renderProps) => {
         if (typeof children === "function") {
           return children(renderProps);
@@ -269,9 +243,9 @@ export function ColorSwatch({
         cx(
           "hashti-color-swatch",
           `hashti-color-swatch--${size}`,
-          shape === "circle" ? "hashti-color-swatch--circle" : ""
+          shape === "circle" ? "hashti-color-swatch--circle" : "",
         ),
-        className
+        className,
       )}
     />
   );
@@ -338,9 +312,9 @@ export function ColorSwatchPicker({
         cx(
           "hashti-color-swatch-picker",
           `hashti-color-swatch-picker--${layout}`,
-          `hashti-color-swatch-picker--${size}`
+          `hashti-color-swatch-picker--${size}`,
         ),
-        className
+        className,
       )}
     />
   );
@@ -356,8 +330,10 @@ export function ColorPickerRoot(props: ColorPickerRootProps) {
   return <RACColorPicker {...props} />;
 }
 
-export interface ColorPickerConvenienceProps
-  extends Omit<RACColorPickerProps, "defaultValue" | "value" | "children"> {
+export interface ColorPickerConvenienceProps extends Omit<
+  RACColorPickerProps,
+  "defaultValue" | "value" | "children"
+> {
   defaultValue?: string | Color;
   value?: string | Color;
   className?: string;
@@ -385,25 +361,15 @@ export function ColorPickerConvenience({
   const normalizedValue = normalizeColor(value);
 
   return (
-    <RACColorPicker
-      {...props}
-      defaultValue={normalizedDefault}
-      value={normalizedValue}
-    >
+    <RACColorPicker {...props} defaultValue={normalizedDefault} value={normalizedValue}>
       {(renderProps) => {
         if (typeof children === "function") {
           return (
-            <div className={cx("hashti-color-picker", className)}>
-              {children(renderProps)}
-            </div>
+            <div className={cx("hashti-color-picker", className)}>{children(renderProps)}</div>
           );
         }
         if (children) {
-          return (
-            <div className={cx("hashti-color-picker", className)}>
-              {children}
-            </div>
-          );
+          return <div className={cx("hashti-color-picker", className)}>{children}</div>;
         }
         return (
           <div className={cx("hashti-color-picker", className)}>

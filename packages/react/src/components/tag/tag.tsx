@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  type CSSProperties,
-  type ComponentPropsWithRef,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { type CSSProperties, type ComponentPropsWithRef, type ReactNode, type Ref } from "react";
 import {
   TagGroup as RACTagGroup,
   TagList,
@@ -63,10 +58,7 @@ export interface TagGroupProps<T> extends Omit<RACTagGroupProps, "children"> {
 
 export function TagGroup<T>({ label, items, children, className, ...props }: TagGroupProps<T>) {
   return (
-    <RACTagGroup
-      {...props}
-      className={["hashti-tag-group", className].filter(Boolean).join(" ")}
-    >
+    <RACTagGroup {...props} className={["hashti-tag-group", className].filter(Boolean).join(" ")}>
       {label && <Label>{label}</Label>}
       <TagList items={items}>{children}</TagList>
     </RACTagGroup>

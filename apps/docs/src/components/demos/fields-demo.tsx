@@ -90,9 +90,7 @@ export function InputOTPLiveDemo() {
         onChange={setOtp}
         aria-label="Two-factor authentication code"
       />
-      <span className="text-xs text-neutral-500 font-mono">
-        Entered: {otp || "------"}
-      </span>
+      <span className="text-xs text-neutral-500 font-mono">Entered: {otp || "------"}</span>
     </div>
   );
 }

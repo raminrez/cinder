@@ -2,14 +2,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Header } from "react-aria-components";
 import { expect, waitFor, within } from "storybook/test";
-import {
-  ComboBox,
-  ListBoxItem,
-  ListBoxSection,
-  Theme,
-  useTheme,
-  type Key,
-} from "@hashti/react";
+import { ComboBox, ListBoxItem, ListBoxSection, Theme, useTheme, type Key } from "@hashti/react";
 import "./fields.css";
 
 const meta = {
@@ -168,10 +161,7 @@ const serviceGroups = [
 export const SectionsAndGroups: Story = {
   render: () => (
     <div className="field-story-stack">
-      <ComboBox
-        label="Service category"
-        placeholder="Search categorized catalog..."
-      >
+      <ComboBox label="Service category" placeholder="Search categorized catalog...">
         {serviceGroups.map((grp) => (
           <ListBoxSection key={grp.id} id={grp.id}>
             <Header className="hashti-select-section-header">{grp.title}</Header>

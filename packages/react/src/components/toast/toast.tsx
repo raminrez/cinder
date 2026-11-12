@@ -85,8 +85,7 @@ export function Alert(props: AlertProps) {
   return <InlineNotification role="alert" {...props} />;
 }
 
-export interface ActionableNotificationProps
-  extends Omit<ComponentPropsWithRef<"div">, "title"> {
+export interface ActionableNotificationProps extends Omit<ComponentPropsWithRef<"div">, "title"> {
   kind?: NotificationKind;
   title: ReactNode;
   action: ReactNode;

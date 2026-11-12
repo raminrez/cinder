@@ -44,7 +44,10 @@ function TextFieldRoot({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-text-field hashti-field hashti-text-field", className)}
+      className={classes(
+        "hashti-field hashti-text-field hashti-field hashti-text-field",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACTextField>

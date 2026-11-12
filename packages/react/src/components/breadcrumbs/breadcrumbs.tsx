@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Children,
-  isValidElement,
-  type ComponentProps,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { Children, isValidElement, type ComponentProps, type ReactNode, type Ref } from "react";
 import {
   Breadcrumbs as RACBreadcrumbs,
   Breadcrumb,
@@ -39,7 +33,12 @@ export function Breadcrumbs<T extends object>({
       ? children
       : Children.map(children, (child) => {
           if (isValidElement(child) && child.type === BreadcrumbItem) {
-            const { href, isCurrent, children: label, ...rest } = child.props as BreadcrumbItemProps;
+            const {
+              href,
+              isCurrent,
+              children: label,
+              ...rest
+            } = child.props as BreadcrumbItemProps;
             return (
               <Breadcrumb {...rest}>
                 <Link href={href} aria-current={isCurrent ? "page" : undefined}>

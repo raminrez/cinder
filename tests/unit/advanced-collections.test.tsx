@@ -25,16 +25,12 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
       const html = renderToStaticMarkup(
         <ListBox aria-label="Items List">
           <ListBox.Item id="item-1">Item 1</ListBox.Item>
-          <ListBox.LoadMore
-            id="load-more"
-            isLoading={true}
-            label="Loading more items…"
-          />
-        </ListBox>
+          <ListBox.LoadMore id="load-more" isLoading={true} label="Loading more items…" />
+        </ListBox>,
       );
 
       expect(html).toContain("hashti-listbox-load-more");
-      expect(html).toContain("data-testid=\"loadMoreSentinel\"");
+      expect(html).toContain('data-testid="loadMoreSentinel"');
       expect(html).toContain("hashti-spinner");
       expect(html).toContain("Loading more items…");
     });
@@ -51,7 +47,7 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
             retryLabel="Retry loading"
             onRetry={handleRetry}
           />
-        </ListBox>
+        </ListBox>,
       );
 
       expect(html).toContain("hashti-load-more-error");
@@ -64,7 +60,9 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
       const html = renderToStaticMarkup(
         <Table aria-label="Users Table">
           <TableHeader>
-            <Column id="name" isRowHeader>Name</Column>
+            <Column id="name" isRowHeader>
+              Name
+            </Column>
             <Column id="role">Role</Column>
           </TableHeader>
           <TableBody>
@@ -72,17 +70,13 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
               <Cell>Alice</Cell>
               <Cell>Admin</Cell>
             </Row>
-            <Table.LoadMore
-              id="load-more-row"
-              isLoading={true}
-              label="Loading more rows…"
-            />
+            <Table.LoadMore id="load-more-row" isLoading={true} label="Loading more rows…" />
           </TableBody>
-        </Table>
+        </Table>,
       );
 
       expect(html).toContain("hashti-table-load-more");
-      expect(html).toContain("data-testid=\"loadMoreSentinel\"");
+      expect(html).toContain('data-testid="loadMoreSentinel"');
       expect(html).toContain("Loading more rows…");
       expect(html).toContain("hashti-spinner");
     });
@@ -93,16 +87,12 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
           <GridList.Item id="photo-1" textValue="Photo 1">
             Photo 1
           </GridList.Item>
-          <GridList.LoadMore
-            id="load-more-photos"
-            isLoading={true}
-            label="Loading more photos…"
-          />
-        </GridList>
+          <GridList.LoadMore id="load-more-photos" isLoading={true} label="Loading more photos…" />
+        </GridList>,
       );
 
       expect(html).toContain("hashti-grid-list-load-more");
-      expect(html).toContain("data-testid=\"loadMoreSentinel\"");
+      expect(html).toContain('data-testid="loadMoreSentinel"');
       expect(html).toContain("Loading more photos…");
       expect(html).toContain("hashti-spinner");
     });
@@ -121,15 +111,15 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
               <NavigationTree.Content>Components</NavigationTree.Content>
             </NavigationTree.Item>
           </NavigationTree.Section>
-        </NavigationTree>
+        </NavigationTree>,
       );
 
       expect(html).toContain("hashti-navigation-tree");
       expect(html).toContain("hashti-navigation-tree-section");
       expect(html).toContain("hashti-navigation-tree-header");
       expect(html).toContain("Getting Started");
-      expect(html).toContain("data-href=\"/docs/components\"");
-      expect(html).toContain("data-current=\"true\"");
+      expect(html).toContain('data-href="/docs/components"');
+      expect(html).toContain('data-current="true"');
       expect(html).toContain("Components");
     });
 
@@ -145,12 +135,12 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
               <NavigationTree.Content>Profile</NavigationTree.Content>
             </NavigationTree.Item>
           </NavigationTree.Item>
-        </NavigationTree>
+        </NavigationTree>,
       );
 
       expect(html).toContain("hashti-navigation-tree-indicator");
       expect(html).toContain("Settings");
-      expect(html).toContain("data-has-child-items=\"true\"");
+      expect(html).toContain('data-has-child-items="true"');
     });
   });
 
@@ -158,14 +148,10 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
     test("ComboBox renders with allowCreateItem prop and CreateItem subcomponent", () => {
       const handleCreate = mock((val: string) => {});
       const html = renderToStaticMarkup(
-        <ComboBox
-          label="Tags"
-          allowCreateItem={true}
-          onCreateItem={handleCreate}
-        >
+        <ComboBox label="Tags" allowCreateItem={true} onCreateItem={handleCreate}>
           <ListBoxItem id="react">React</ListBoxItem>
           <ListBoxItem id="vue">Vue</ListBoxItem>
-        </ComboBox>
+        </ComboBox>,
       );
 
       expect(html).toContain("hashti-combobox");
@@ -185,7 +171,7 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
           >
             <span className="hashti-combobox-create-item-text">Create &quot;Svelte&quot;</span>
           </div>
-        </div>
+        </div>,
       );
 
       expect(html).toContain("hashti-combobox-create-item");

@@ -45,7 +45,10 @@ function NumberFieldRoot({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-number-field hashti-field hashti-number-field", className)}
+      className={classes(
+        "hashti-field hashti-number-field hashti-field hashti-number-field",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACNumberField>

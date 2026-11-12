@@ -1,11 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import {
-  DropZone,
-  FileTrigger,
-  Button,
-} from "@hashti/react";
+import { DropZone, FileTrigger, Button } from "@hashti/react";
 import "./feedback.css";
 
 const meta = {
@@ -42,7 +38,14 @@ export const Playground: Story = {
             onDropFiles={(files) => setDroppedFiles(files.map((f) => f.name))}
           >
             <DropZone.Feedback>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                }}
+              >
                 <span>Drag and drop your dataset files here, or</span>
                 <FileTrigger
                   acceptedFileTypes={[".csv", ".json", ".parquet"]}
@@ -111,7 +114,9 @@ export const Variants: Story = {
         <h4 className="feedback-card-title">Card Variant</h4>
         <DropZone variant="card" aria-label="Card drop zone">
           <DropZone.Feedback>
-            <p style={{ margin: 0 }}>Elevated surface card for dashboards and rich document trays.</p>
+            <p style={{ margin: 0 }}>
+              Elevated surface card for dashboards and rich document trays.
+            </p>
           </DropZone.Feedback>
         </DropZone>
       </div>

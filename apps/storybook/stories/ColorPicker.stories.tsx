@@ -31,11 +31,7 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {
   render: () => (
     <div className="form-story-stack">
-      <ColorPicker
-        defaultValue="#0f62fe"
-        label="Accent Theme Color"
-        showAlpha
-      />
+      <ColorPicker defaultValue="#0f62fe" label="Accent Theme Color" showAlpha />
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -96,7 +92,11 @@ export const CustomComposition: Story = {
         <div style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start", flexWrap: "wrap" }}>
           <ColorWheel aria-label="Hue ring" />
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", width: "220px" }}>
-            <ColorArea xChannel="saturation" yChannel="lightness" aria-label="Saturation and Lightness" />
+            <ColorArea
+              xChannel="saturation"
+              yChannel="lightness"
+              aria-label="Saturation and Lightness"
+            />
             <ColorSlider channel="alpha" label="Opacity" showOutput />
             <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
               <ColorSwatch size="lg" aria-label="Active selection" />
@@ -119,11 +119,29 @@ export const CustomComposition: Story = {
 
 export const StandaloneSliders: Story = {
   render: () => (
-    <div className="form-story-stack" style={{ maxWidth: "320px", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+    <div
+      className="form-story-stack"
+      style={{ maxWidth: "320px", display: "flex", flexDirection: "column", gap: "1.25rem" }}
+    >
       <ColorSlider channel="hue" defaultValue="hsl(0, 100%, 50%)" label="Hue Channel" showOutput />
-      <ColorSlider channel="saturation" defaultValue="hsl(200, 80%, 50%)" label="Saturation Channel" showOutput />
-      <ColorSlider channel="lightness" defaultValue="hsl(280, 100%, 60%)" label="Lightness Channel" showOutput />
-      <ColorSlider channel="alpha" defaultValue="hsla(150, 100%, 40%, 0.75)" label="Alpha Channel" showOutput />
+      <ColorSlider
+        channel="saturation"
+        defaultValue="hsl(200, 80%, 50%)"
+        label="Saturation Channel"
+        showOutput
+      />
+      <ColorSlider
+        channel="lightness"
+        defaultValue="hsl(280, 100%, 60%)"
+        label="Lightness Channel"
+        showOutput
+      />
+      <ColorSlider
+        channel="alpha"
+        defaultValue="hsla(150, 100%, 40%, 0.75)"
+        label="Alpha Channel"
+        showOutput
+      />
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -137,13 +155,21 @@ export const StandaloneSliders: Story = {
 
 export const SwatchGallery: Story = {
   render: () => (
-    <div className="form-story-stack" style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
+    <div
+      className="form-story-stack"
+      style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}
+    >
       <ColorSwatch color="#0f62fe" size="sm" aria-label="Blue Small" />
       <ColorSwatch color="#0f62fe" size="md" aria-label="Blue Medium" />
       <ColorSwatch color="#0f62fe" size="lg" aria-label="Blue Large" />
       <ColorSwatch color="#da1e28" size="md" shape="circle" aria-label="Red Circle" />
       <ColorSwatch color="rgba(15, 98, 254, 0.4)" size="lg" aria-label="Translucent Blue" />
-      <ColorSwatch color="rgba(218, 30, 40, 0.5)" size="lg" shape="circle" aria-label="Translucent Red Circle" />
+      <ColorSwatch
+        color="rgba(218, 30, 40, 0.5)"
+        size="lg"
+        shape="circle"
+        aria-label="Translucent Red Circle"
+      />
     </div>
   ),
   play: async ({ canvasElement }) => {

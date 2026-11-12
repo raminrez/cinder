@@ -66,15 +66,8 @@ export function ToastLiveDemo() {
 export function ProgressBarLiveDemo() {
   return (
     <div className="w-full max-w-xs flex flex-col gap-4">
-      <ProgressBar
-        label="Portal Synchronization"
-        value={68}
-        showValue
-      />
-      <ProgressBar
-        label="Indeterminate Calculation"
-        isIndeterminate
-      />
+      <ProgressBar label="Portal Synchronization" value={68} showValue />
+      <ProgressBar label="Indeterminate Calculation" isIndeterminate />
     </div>
   );
 }
@@ -82,16 +75,8 @@ export function ProgressBarLiveDemo() {
 export function ProgressCircleLiveDemo() {
   return (
     <div className="flex items-center gap-6">
-      <ProgressCircle
-        aria-label="Solar Window"
-        value={75}
-        size="md"
-      />
-      <ProgressCircle
-        aria-label="Buffering Telemetry"
-        isIndeterminate
-        size="md"
-      />
+      <ProgressCircle aria-label="Solar Window" value={75} size="md" />
+      <ProgressCircle aria-label="Buffering Telemetry" isIndeterminate size="md" />
     </div>
   );
 }

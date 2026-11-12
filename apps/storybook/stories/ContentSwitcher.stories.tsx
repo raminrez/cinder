@@ -34,7 +34,9 @@ function PlaygroundExample() {
   return (
     <div className="navigation-story-stack">
       <div className="navigation-story-row">
-        <span>Active view: <strong>{selectedStr}</strong></span>
+        <span>
+          Active view: <strong>{selectedStr}</strong>
+        </span>
       </div>
       <ContentSwitcher
         aria-label="Dataset presentation modes"
@@ -117,13 +119,12 @@ export const Sizes: Story = {
 export const DisabledOptions: Story = {
   render: () => (
     <div className="navigation-story-stack">
-      <ContentSwitcher
-        defaultSelectedKeys={["read"]}
-        aria-label="Access levels"
-      >
+      <ContentSwitcher defaultSelectedKeys={["read"]} aria-label="Access levels">
         <ToggleButton id="read">Read only</ToggleButton>
         <ToggleButton id="write">Read / Write</ToggleButton>
-        <ToggleButton id="admin" isDisabled>Administrator (Restricted)</ToggleButton>
+        <ToggleButton id="admin" isDisabled>
+          Administrator (Restricted)
+        </ToggleButton>
       </ContentSwitcher>
     </div>
   ),
@@ -144,11 +145,17 @@ export const WithIcons: Story = {
   render: () => (
     <div className="navigation-story-stack">
       <ContentSwitcher defaultSelectedKeys={["search"]} aria-label="Navigation modes">
-        <ToggleButton id="search" style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}>
+        <ToggleButton
+          id="search"
+          style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}
+        >
           <Icon name="search" />
           <span>Search</span>
         </ToggleButton>
-        <ToggleButton id="settings" style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}>
+        <ToggleButton
+          id="settings"
+          style={{ display: "inline-flex", gap: "0.5rem", alignItems: "center" }}
+        >
           <Icon name="settings" />
           <span>Settings</span>
         </ToggleButton>

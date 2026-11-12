@@ -19,9 +19,7 @@ export function DropZoneLiveDemo() {
           <p className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
             Drag & drop architectural drawings here
           </p>
-          <p className="text-xs text-neutral-500">
-            Supports PNG, SVG, PDF up to 25MB
-          </p>
+          <p className="text-xs text-neutral-500">Supports PNG, SVG, PDF up to 25MB</p>
           <FileTrigger
             onSelect={(e) => {
               const files = Array.from(e ?? []).map((file) => file.name);

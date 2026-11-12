@@ -65,11 +65,15 @@ export function MultiExpandedAccordionExample() {
   return (
     <Accordion allowsMultipleExpanded defaultExpandedKeys={["network", "storage"]}>
       <AccordionItem id="compute" title="Compute Configuration">
-        <p className="text-sm">Configure CPU allocation, worker isolation, and memory boundaries.</p>
+        <p className="text-sm">
+          Configure CPU allocation, worker isolation, and memory boundaries.
+        </p>
       </AccordionItem>
 
       <AccordionItem id="network" title="Networking & Ingress">
-        <p className="text-sm">Manage edge routing rules, TLS 1.3 termination, and custom domains.</p>
+        <p className="text-sm">
+          Manage edge routing rules, TLS 1.3 termination, and custom domains.
+        </p>
       </AccordionItem>
 
       <AccordionItem id="storage" title="Persistent Object Storage">
@@ -138,7 +142,8 @@ export function HeadingLevelExample() {
           Packages are distributed via npm and tagged with semantic versioning.
         </AccordionItem>
         <AccordionItem id="faq-2" headingLevel={3} title="Can I use custom themes?">
-          Yes, Hashti exposes comprehensive CSS custom property tokens that can be overridden at the root layer.
+          Yes, Hashti exposes comprehensive CSS custom property tokens that can be overridden at the
+          root layer.
         </AccordionItem>
       </Accordion>
     </section>
@@ -152,27 +157,27 @@ export function HeadingLevelExample() {
 
 ### Accordion Props
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Height and padding density of accordion item triggers. |
-| `allowsMultipleExpanded` | `boolean` | `false` | Whether multiple accordion items can be expanded simultaneously. |
-| `expandedKeys` | `Iterable<Key>` | — | The keys of currently expanded items (for controlled state). |
-| `defaultExpandedKeys` | `Iterable<Key>` | — | Initial expanded keys when uncontrolled. |
-| `onExpandedChange` | `(keys: Set<Key>) => void` | — | Callback fired when expanded items change. |
-| `disabledKeys` | `Iterable<Key>` | — | Keys of items that are disabled and cannot be expanded. |
-| `className` | `string` | — | Additional CSS class names. |
+| Prop                     | Type                       | Default | Description                                                      |
+| :----------------------- | :------------------------- | :------ | :--------------------------------------------------------------- |
+| `size`                   | `'sm' \| 'md' \| 'lg'`     | `'md'`  | Height and padding density of accordion item triggers.           |
+| `allowsMultipleExpanded` | `boolean`                  | `false` | Whether multiple accordion items can be expanded simultaneously. |
+| `expandedKeys`           | `Iterable<Key>`            | —       | The keys of currently expanded items (for controlled state).     |
+| `defaultExpandedKeys`    | `Iterable<Key>`            | —       | Initial expanded keys when uncontrolled.                         |
+| `onExpandedChange`       | `(keys: Set<Key>) => void` | —       | Callback fired when expanded items change.                       |
+| `disabledKeys`           | `Iterable<Key>`            | —       | Keys of items that are disabled and cannot be expanded.          |
+| `className`              | `string`                   | —       | Additional CSS class names.                                      |
 
 ### AccordionItem Props
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `title` | `ReactNode` | **Required** | The header label rendered inside the interactive trigger button. |
-| `children` | `ReactNode` | **Required** | Content rendered inside the expandable panel container. |
-| `id` | `Key` | — | Unique identifier for tracking expansion state. |
-| `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `3` | The HTML heading level (`<h1>` - `<h6>`) wrapping the button trigger. |
-| `isExpanded` | `boolean` | — | Controlled expansion state for an individual item. |
-| `defaultExpanded` | `boolean` | `false` | Uncontrolled initial expansion state. |
-| `isDisabled` | `boolean` | `false` | Whether this specific item is disabled. |
+| Prop              | Type                         | Default      | Description                                                           |
+| :---------------- | :--------------------------- | :----------- | :-------------------------------------------------------------------- |
+| `title`           | `ReactNode`                  | **Required** | The header label rendered inside the interactive trigger button.      |
+| `children`        | `ReactNode`                  | **Required** | Content rendered inside the expandable panel container.               |
+| `id`              | `Key`                        | —            | Unique identifier for tracking expansion state.                       |
+| `headingLevel`    | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | `3`          | The HTML heading level (`<h1>` - `<h6>`) wrapping the button trigger. |
+| `isExpanded`      | `boolean`                    | —            | Controlled expansion state for an individual item.                    |
+| `defaultExpanded` | `boolean`                    | `false`      | Uncontrolled initial expansion state.                                 |
+| `isDisabled`      | `boolean`                    | `false`      | Whether this specific item is disabled.                               |
 
 ---
 

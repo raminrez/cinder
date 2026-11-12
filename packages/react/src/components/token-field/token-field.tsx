@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { createContext, useContext, type ReactNode, type Ref } from "react";
 import {
   TokenField as AriaTokenField,
   TokenInput as AriaTokenInput,
@@ -110,8 +105,10 @@ export function TokenFieldRoot<T extends TokenFieldValue = TokenFieldValue>({
   );
 }
 
-export interface TokenInputProps<T extends TokenFieldValue = TokenFieldValue>
-  extends Omit<AriaTokenInputProps<T>, "children" | "className"> {
+export interface TokenInputProps<T extends TokenFieldValue = TokenFieldValue> extends Omit<
+  AriaTokenInputProps<T>,
+  "children" | "className"
+> {
   placeholder?: string;
   className?: string;
   children?: (segment: TokenSegment<any>) => React.ReactElement;
@@ -131,9 +128,7 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
   const multiline = ctx.multiline;
 
   const defaultRender = (segment: TokenSegment<any>) => (
-    <TokenFieldToken key={segment.text}>
-      {segment.text}
-    </TokenFieldToken>
+    <TokenFieldToken key={segment.text}>{segment.text}</TokenFieldToken>
   );
 
   return (
@@ -254,9 +249,7 @@ function TokenFieldDefault<T extends TokenFieldValue = TokenFieldValue>({
           description={description}
           errorMessage={errorMessage}
         >
-          <TokenFieldInput
-            placeholder={placeholder}
-          >
+          <TokenFieldInput placeholder={placeholder}>
             {isFunctionChildren
               ? (children as (segment: TokenSegment<any>) => React.ReactElement)
               : undefined}

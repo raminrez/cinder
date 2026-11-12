@@ -82,7 +82,10 @@ export function RangeCalendar<T extends DateValue>({
   return (
     <RACRangeCalendar
       {...props}
-      className={classes("hashti-calendar hashti-range-calendar hashti-calendar hashti-range-calendar", className)}
+      className={classes(
+        "hashti-calendar hashti-range-calendar hashti-calendar hashti-range-calendar",
+        className,
+      )}
     >
       {children ?? <CalendarContent />}
     </RACRangeCalendar>
@@ -119,7 +122,10 @@ function DatePickerRoot<T extends DateValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-date-picker hashti-field hashti-date-picker", className)}
+      className={classes(
+        "hashti-field hashti-date-picker hashti-field hashti-date-picker",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACDatePicker>
@@ -206,7 +212,10 @@ function DateRangePickerRoot<T extends DateValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-date-range-picker hashti-field hashti-date-range-picker", className)}
+      className={classes(
+        "hashti-field hashti-date-range-picker hashti-field hashti-date-range-picker",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACDateRangePicker>

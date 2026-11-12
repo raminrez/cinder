@@ -1,4 +1,5 @@
-import { mkdir, rm, copyFile } from "node:fs/promises";import { resolve } from "node:path";
+import { mkdir, rm, copyFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { siteLicenses } from "./licenses";
 const root = resolve(import.meta.dir, "..");
 const run = async (...command: string[]) => {

@@ -73,7 +73,9 @@ describe("Secondary colors contrast audit across all 8 themes", () => {
         const bg = t["layer-accent-01"];
         const ratio = contrast(text, bg);
 
-        expect(ratio, `${theme}: secondary badge text on layer-accent-01`).toBeGreaterThanOrEqual(4.5);
+        expect(ratio, `${theme}: secondary badge text on layer-accent-01`).toBeGreaterThanOrEqual(
+          4.5,
+        );
       });
 
       test("supporting gray tag (tag-color-gray on tag-background-gray) has >= 4.5:1 contrast", () => {
@@ -90,7 +92,9 @@ describe("Secondary colors contrast audit across all 8 themes", () => {
         const ratio = contrast(ink, bg);
 
         // WCAG AA for graphical components / UI elements is >= 3.0:1
-        expect(ratio, `${theme}: batch bar text-on-color on interactive`).toBeGreaterThanOrEqual(3.0);
+        expect(ratio, `${theme}: batch bar text-on-color on interactive`).toBeGreaterThanOrEqual(
+          3.0,
+        );
       });
     });
   }

@@ -18,10 +18,7 @@ export interface DialogProps extends RACDialogProps {
 
 export function Dialog({ className, ...props }: DialogProps) {
   return (
-    <RACDialog
-      {...props}
-      className={["hashti-dialog", className].filter(Boolean).join(" ")}
-    />
+    <RACDialog {...props} className={["hashti-dialog", className].filter(Boolean).join(" ")} />
   );
 }
 
@@ -60,7 +57,13 @@ export function AlertDialog({
   const bodyContent = children ?? description;
 
   return (
-    <Modal {...props} dir={dir} size="sm" isDismissable={false} className={classes("hashti-alert-modal", className)}>
+    <Modal
+      {...props}
+      dir={dir}
+      size="sm"
+      isDismissable={false}
+      className={classes("hashti-alert-modal", className)}
+    >
       <Dialog role="alertdialog" className="hashti-alert-dialog" ref={ref}>
         {({ close }) => (
           <>

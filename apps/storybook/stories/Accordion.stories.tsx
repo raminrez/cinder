@@ -55,7 +55,7 @@ export const Playground: Story = {
     await userEvent.click(netTrigger);
     expect(netTrigger).toHaveAttribute("aria-expanded", "true");
     expect(
-      canvas.getByText(/Configure DNS records, VPC peering, and subnet route tables/)
+      canvas.getByText(/Configure DNS records, VPC peering, and subnet route tables/),
     ).toBeVisible();
 
     // Click another accordion item (default single-select accordion closes previous)
@@ -115,7 +115,11 @@ export const Sizes: Story = {
 export const AllowsMultipleExpanded: Story = {
   render: () => (
     <div className="navigation-story-stack">
-      <Accordion allowsMultipleExpanded defaultExpandedKeys={["item-1"]} aria-label="Multiple expanded accordion">
+      <Accordion
+        allowsMultipleExpanded
+        defaultExpandedKeys={["item-1"]}
+        aria-label="Multiple expanded accordion"
+      >
         <AccordionItem id="item-1" title="Overview and SLA">
           Guaranteed 99.99% uptime with automated failover across three availability zones.
         </AccordionItem>
@@ -159,11 +163,7 @@ function ControlledAccordionExample() {
         >
           Expand all
         </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          onPress={() => setExpandedKeys(new Set())}
-        >
+        <Button size="sm" variant="ghost" onPress={() => setExpandedKeys(new Set())}>
           Collapse all
         </Button>
       </div>

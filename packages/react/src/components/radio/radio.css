@@ -25,7 +25,7 @@
 
   .hashti-radio[data-selected] .hashti-radio-control,
   .hashti-radio[data-selected] .hashti-radio-control {
-    border-color: var(--hashti-primary, #08BDBA);
+    border-color: var(--hashti-primary, #08bdba);
   }
 
   .hashti-radio[data-selected] .hashti-radio-control::after,
@@ -34,7 +34,7 @@
     width: 10px;
     height: 10px;
     border-radius: 9999px;
-    background-color: var(--hashti-primary, #08BDBA);
+    background-color: var(--hashti-primary, #08bdba);
   }
 
   .hashti-radio[data-pressed] .hashti-radio-control,
@@ -45,7 +45,10 @@
   .hashti-radio[data-focus-visible] .hashti-radio-control,
   .hashti-radio[data-focus-visible] .hashti-radio-control {
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 8px rgba(15, 98, 254, 0.35);
+    box-shadow:
+      0 0 0 2px var(--hashti-background, #ffffff),
+      0 0 0 4px var(--hashti-focus, #0f62fe),
+      0 0 8px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-radio-options {

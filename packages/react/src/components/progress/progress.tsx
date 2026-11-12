@@ -80,9 +80,7 @@ export function ProgressCircle({
 
   const currentVal = value ?? 0;
   const percent = Math.min(Math.max((currentVal - minValue) / (maxValue - minValue), 0), 1);
-  const strokeDashoffset = isIndeterminate
-    ? circumference * 0.25
-    : circumference * (1 - percent);
+  const strokeDashoffset = isIndeterminate ? circumference * 0.25 : circumference * (1 - percent);
 
   return (
     <RACProgressBar

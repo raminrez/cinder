@@ -34,7 +34,7 @@
   .hashti-navigation-tree-item-content[data-selected],
   .hashti-navigation-tree-item-content[data-selected] {
     background-color: var(--hashti-layer-accent-01, #e6f7f7);
-    color: var(--hashti-primary, #08BDBA);
+    color: var(--hashti-primary, #08bdba);
     font-weight: 600;
   }
 }

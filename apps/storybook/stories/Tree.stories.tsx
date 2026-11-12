@@ -68,11 +68,7 @@ export const Playground: Story = {
 export const MultiSelectWithCheckboxes: Story = {
   render: () => (
     <div style={{ maxWidth: 400 }}>
-      <Tree
-        aria-label="Department permissions"
-        selectionMode="multiple"
-        showGuideLines
-      >
+      <Tree aria-label="Department permissions" selectionMode="multiple" showGuideLines>
         <Tree.Item id="engineering" textValue="Engineering">
           <Tree.Content>
             <Tree.Indicator />

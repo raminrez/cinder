@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useRef,
-  useState,
-  type ClipboardEvent,
-  type KeyboardEvent,
-  type Ref,
-} from "react";
+import { useRef, useState, type ClipboardEvent, type KeyboardEvent, type Ref } from "react";
 import { cx } from "../../utils";
 
 export interface InputOTPProps {

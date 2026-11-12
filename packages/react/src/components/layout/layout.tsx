@@ -115,10 +115,7 @@ export function StructuredListRow({
   ...props
 }: StructuredListRowProps) {
   return (
-    <div
-      {...props}
-      className={["hashti-structured-list-row", className].filter(Boolean).join(" ")}
-    >
+    <div {...props} className={["hashti-structured-list-row", className].filter(Boolean).join(" ")}>
       {label && <dt>{label}</dt>}
       {value && <dd>{value}</dd>}
       {children}

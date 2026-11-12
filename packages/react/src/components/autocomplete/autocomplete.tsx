@@ -7,6 +7,9 @@ import {
 
 export interface AutocompleteProps<T extends object = object> extends RACAutocompleteProps<T> {}
 
-export function Autocomplete<T extends object = object>({ children, ...props }: AutocompleteProps<T>) {
+export function Autocomplete<T extends object = object>({
+  children,
+  ...props
+}: AutocompleteProps<T>) {
   return <RACAutocomplete {...props}>{children}</RACAutocomplete>;
 }

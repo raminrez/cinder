@@ -345,6 +345,7 @@ explicitly state that it is a draft, as detailed in the system specification.
 ### Feedback and notifications
 
 Alerts, inline notifications, and toasts provide three rich visual variants:
+
 - **Subtle (default):** Soft surface tint with a matched, full 1px border. Per the
   Impeccable craft floor, heavy colored left-accent borders (>1px) are avoided in favor of
   complete, balanced boundary definitions.

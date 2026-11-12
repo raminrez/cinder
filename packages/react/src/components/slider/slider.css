@@ -26,7 +26,7 @@
     position: absolute;
     height: 100%;
     border-radius: 9999px;
-    background-color: var(--hashti-primary, #08BDBA);
+    background-color: var(--hashti-primary, #08bdba);
   }
 
   .hashti-slider-thumb {
@@ -35,7 +35,7 @@
     height: 20px;
     border-radius: 9999px;
     background-color: #ffffff;
-    border: 2px solid var(--hashti-primary, #08BDBA);
+    border: 2px solid var(--hashti-primary, #08bdba);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     top: 50%;
     transform: translateY(-50%);
@@ -61,6 +61,9 @@
 
   .hashti-slider-thumb[data-focus-visible] {
     outline: none;
-    box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 8px rgba(15, 98, 254, 0.35);
+    box-shadow:
+      0 0 0 2px var(--hashti-background, #ffffff),
+      0 0 0 4px var(--hashti-focus, #0f62fe),
+      0 0 8px rgba(15, 98, 254, 0.35);
   }
 }

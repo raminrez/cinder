@@ -60,7 +60,8 @@ export function AlertDialogLiveDemo() {
           onCancel={() => setIsOpen(false)}
           tone="danger"
         >
-          This action will immediately terminate all active TLS sessions through the Darvazeh portal.
+          This action will immediately terminate all active TLS sessions through the Darvazeh
+          portal.
         </AlertDialog>
       )}
     </div>
@@ -77,7 +78,8 @@ export function PopoverLiveDemo() {
             Vestibule Optics
           </span>
           <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            Zenith angle is currently aligned at 32° incidence. Ambient temperature is normalized at 21°C.
+            Zenith angle is currently aligned at 32° incidence. Ambient temperature is normalized at
+            21°C.
           </p>
         </div>
       </Popover>
@@ -90,9 +92,7 @@ export function TooltipLiveDemo() {
     <div className="flex items-center gap-4">
       <TooltipTrigger delay={100}>
         <Button variant="ghost">Hover for Tooltip</Button>
-        <Tooltip>
-          Tactile touch target meets WCAG 2.2 AAA specifications
-        </Tooltip>
+        <Tooltip>Tactile touch target meets WCAG 2.2 AAA specifications</Tooltip>
       </TooltipTrigger>
     </div>
   );
@@ -113,7 +113,8 @@ export function DrawerLiveDemo() {
       >
         <div className="p-6 flex flex-col gap-4">
           <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-            The 90-degree indirect corridor protects the domestic courtyard from sudden public scrutiny while exposing progressive state controls.
+            The 90-degree indirect corridor protects the domestic courtyard from sudden public
+            scrutiny while exposing progressive state controls.
           </p>
           <div className="pt-4 border-t border-neutral-200 dark:border-neutral-800 flex justify-end">
             <Button size="sm" onPress={() => setOpen(false)}>
@@ -132,7 +133,9 @@ export function PreviewTriggerLiveDemo() {
       preview={
         <div className="p-3 max-w-xs text-xs bg-white dark:bg-neutral-900 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800">
           <strong className="block font-semibold text-[#08BDBA]">Isfahan Pavilion</strong>
-          <span className="text-neutral-500">Historical vaulted octagonal chamber with central zenithal skylight.</span>
+          <span className="text-neutral-500">
+            Historical vaulted octagonal chamber with central zenithal skylight.
+          </span>
         </div>
       }
     >

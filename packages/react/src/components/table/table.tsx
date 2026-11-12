@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  type ReactNode,
-  type Ref,
-} from "react";
+import { type ReactNode, type Ref } from "react";
 import {
   Table as RACTable,
   TableLoadMoreItem as RACTableLoadMoreItem,
@@ -33,17 +30,13 @@ export interface TableProps extends RACTableProps {
 }
 
 function TableDefault({ className, size = "lg", ...props }: TableProps) {
-  return (
-    <RACTable
-      {...props}
-      data-size={size}
-      className={classes("hashti-table", className)}
-    />
-  );
+  return <RACTable {...props} data-size={size} className={classes("hashti-table", className)} />;
 }
 
-export interface TableLoadMoreProps
-  extends Omit<RACTableLoadMoreItemProps, "className" | "children"> {
+export interface TableLoadMoreProps extends Omit<
+  RACTableLoadMoreItemProps,
+  "className" | "children"
+> {
   id?: string;
   label?: string;
   isError?: boolean;
@@ -77,9 +70,7 @@ export function TableLoadMore({
         <div className="hashti-load-more-content" role="status">
           {isError ? (
             <div className="hashti-load-more-error">
-              <span className="hashti-load-more-error-message">
-                {errorMessage}
-              </span>
+              <span className="hashti-load-more-error-message">{errorMessage}</span>
               {onRetry && (
                 <button
                   type="button"
@@ -117,11 +108,7 @@ export function Column({ className, children, id, ...props }: ColumnProps) {
         <>
           {content}
           {allowsSorting && (
-            <span
-              className="hashti-sort-icon"
-              aria-hidden="true"
-              data-direction={sortDirection}
-            >
+            <span className="hashti-sort-icon" aria-hidden="true" data-direction={sortDirection}>
               {sortDirection === "ascending" ? "↑" : "↓"}
             </span>
           )}
@@ -183,18 +170,5 @@ export const Table = Object.assign(TableDefault, {
   BatchActions: TableBatchActions,
 });
 
-export {
-  TableHeader,
-  TableBody,
-  TableFooter,
-  Row,
-  Cell,
-  ColumnResizer,
-  ResizableTableContainer,
-};
-export type {
-  TableHeaderProps,
-  TableBodyProps,
-  RowProps,
-  CellProps,
-};
+export { TableHeader, TableBody, TableFooter, Row, Cell, ColumnResizer, ResizableTableContainer };
+export type { TableHeaderProps, TableBodyProps, RowProps, CellProps };

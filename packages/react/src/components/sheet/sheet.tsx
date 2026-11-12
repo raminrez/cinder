@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  type ComponentProps,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { createContext, useContext, type ComponentProps, type ReactNode, type Ref } from "react";
 import {
   Sheet as RACSheet,
   SheetBackdrop as RACSheetBackdrop,
@@ -54,10 +48,7 @@ export function SheetOverlay({
         ref={ref}
         position={position}
         preventDismissal={preventDismissal}
-        className={classes(
-          "hashti-sheet-overlay",
-          classes(appearanceClassName ?? "", className)
-        )}
+        className={classes("hashti-sheet-overlay", classes(appearanceClassName ?? "", className))}
       >
         {children}
       </RACSheetOverlay>
@@ -89,18 +80,9 @@ export interface SheetContentProps extends RACSheetContentProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export function SheetContent({
-  className,
-  children,
-  ref,
-  ...props
-}: SheetContentProps) {
+export function SheetContent({ className, children, ref, ...props }: SheetContentProps) {
   return (
-    <RACSheetContent
-      {...props}
-      ref={ref}
-      className={cx("hashti-sheet-content", className)}
-    >
+    <RACSheetContent {...props} ref={ref} className={cx("hashti-sheet-content", className)}>
       {children}
     </RACSheetContent>
   );
@@ -111,13 +93,7 @@ export interface SheetHandleProps extends ComponentProps<"div"> {
 }
 
 export function SheetHandle({ className, ...props }: SheetHandleProps) {
-  return (
-    <div
-      aria-hidden="true"
-      {...props}
-      className={cx("hashti-sheet-handle", className)}
-    />
-  );
+  return <div aria-hidden="true" {...props} className={cx("hashti-sheet-handle", className)} />;
 }
 
 export interface SheetRootProps extends RACSheetProps {

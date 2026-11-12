@@ -20,5 +20,12 @@
     }
   },
   "include": ["packages", "scripts", "tests", "apps/storybook"],
-  "exclude": ["node_modules", "**/dist", ".research", ".tools", "tests/fixtures/consumer", "apps/docs"]
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    ".research",
+    ".tools",
+    "tests/fixtures/consumer",
+    "apps/docs"
+  ]
 }

@@ -1,12 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, waitFor, within, userEvent } from "storybook/test";
-import {
-  CommandPalette,
-  Button,
-  Icon,
-  Kbd,
-} from "@hashti/react";
+import { CommandPalette, Button, Icon, Kbd } from "@hashti/react";
 import "./overlays.css";
 
 const meta = {
@@ -116,15 +111,15 @@ function PlaygroundExample() {
         enableShortcut
       >
         <CommandPalette.Dialog aria-label="Quick Commands">
-          <CommandPalette.Input
-            placeholder="Type a command or search..."
-          />
-          <CommandPalette.List emptyContent={
-            <CommandPalette.Empty
-              title="No matching commands"
-              description={`No results found for "${query}"`}
-            />
-          }>
+          <CommandPalette.Input placeholder="Type a command or search..." />
+          <CommandPalette.List
+            emptyContent={
+              <CommandPalette.Empty
+                title="No matching commands"
+                description={`No results found for "${query}"`}
+              />
+            }
+          >
             {groups.map((group) => (
               <CommandPalette.Group key={group} heading={group}>
                 {filteredCommands
@@ -187,9 +182,7 @@ function EmptyStateExample() {
 
   return (
     <div className="overlay-story-stack">
-      <Button onPress={() => setIsOpen(true)}>
-        Open Empty Palette Demo
-      </Button>
+      <Button onPress={() => setIsOpen(true)}>Open Empty Palette Demo</Button>
 
       <CommandPalette
         isOpen={isOpen}

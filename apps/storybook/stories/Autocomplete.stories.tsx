@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import {
-  Autocomplete,
-  SearchField,
-  Menu,
-  MenuItem,
-} from "@hashti/react";
+import { Autocomplete, SearchField, Menu, MenuItem } from "@hashti/react";
 
 const meta = {
   title: "Collections/Autocomplete",

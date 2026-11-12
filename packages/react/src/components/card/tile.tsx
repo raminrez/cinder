@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  useState,
-  type ComponentPropsWithRef,
-  type ReactNode,
-} from "react";
+import { useState, type ComponentPropsWithRef, type ReactNode } from "react";
 import { Icon } from "../../icons";
 
 export interface TileProps extends ComponentPropsWithRef<"div"> {
@@ -12,12 +8,7 @@ export interface TileProps extends ComponentPropsWithRef<"div"> {
   as?: "div" | "article" | "section";
 }
 export function Tile({ className, as: Component = "div", ...props }: TileProps) {
-  return (
-    <Component
-      {...props}
-      className={["hashti-tile", className].filter(Boolean).join(" ")}
-    />
-  );
+  return <Component {...props} className={["hashti-tile", className].filter(Boolean).join(" ")} />;
 }
 
 export interface ClickableTileProps extends ComponentPropsWithRef<"a"> {
@@ -27,17 +18,12 @@ export interface ClickableTileProps extends ComponentPropsWithRef<"a"> {
   rel?: string;
   disabled?: boolean;
 }
-export function ClickableTile({
-  className,
-  disabled,
-  children,
-  ...props
-}: ClickableTileProps) {
+export function ClickableTile({ className, disabled, children, ...props }: ClickableTileProps) {
   return (
     <a
       {...props}
       aria-disabled={disabled || undefined}
-      tabIndex={disabled ? -1 : props.tabIndex ?? 0}
+      tabIndex={disabled ? -1 : (props.tabIndex ?? 0)}
       data-clickable="true"
       className={[
         "hashti-tile",
@@ -175,9 +161,7 @@ export function ExpandableTile({
         <span>{isExpanded ? "Show less" : "Show more"}</span>
         <Icon name="chevronDown" />
       </button>
-      {isExpanded && (
-        <div className="hashti-tile-below-fold">{tileBelowTheFoldContent}</div>
-      )}
+      {isExpanded && <div className="hashti-tile-below-fold">{tileBelowTheFoldContent}</div>}
     </div>
   );
 }

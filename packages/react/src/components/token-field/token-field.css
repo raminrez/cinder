@@ -33,7 +33,10 @@
   [data-hashti-theme] .hashti-token-input:focus-within {
     outline: none;
     border-color: var(--hashti-focus, #0f62fe);
-    box-shadow: 0 0 0 2px var(--hashti-background, var(--hashti-background, #ffffff)), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
+    box-shadow:
+      0 0 0 2px var(--hashti-background, var(--hashti-background, #ffffff)),
+      0 0 0 4px var(--hashti-focus, #0f62fe),
+      0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   [data-hashti-theme] .hashti-token,

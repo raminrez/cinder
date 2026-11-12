@@ -10,7 +10,9 @@
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
     background-color: var(--hashti-layer, #ffffff);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
     padding: 4px;
     min-width: var(--trigger-width);
@@ -26,7 +28,7 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
-    color: var(--hashti-primary, #08BDBA);
+    color: var(--hashti-primary, #08bdba);
     font-weight: 500;
     transition: background-color 150ms ease;
   }

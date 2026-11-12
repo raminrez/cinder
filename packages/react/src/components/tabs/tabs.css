@@ -40,8 +40,8 @@
 
   .hashti-tabs .react-aria-Tab[data-selected],
   .hashti-tabs .react-aria-Tab[data-selected] {
-    color: var(--hashti-primary, #08BDBA);
-    border-bottom-color: var(--hashti-primary, #08BDBA);
+    color: var(--hashti-primary, #08bdba);
+    border-bottom-color: var(--hashti-primary, #08bdba);
   }
 
   .hashti-tabs[data-variant="contained"] .react-aria-Tab,

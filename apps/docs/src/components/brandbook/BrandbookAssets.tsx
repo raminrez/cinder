@@ -104,9 +104,7 @@ export function BrandbookAssets() {
             </div>
 
             <div className="flex items-center justify-between pt-2 border-t border-neutral-100 dark:border-neutral-800">
-              <span className="text-xs font-mono text-neutral-400">
-                {asset.filename}
-              </span>
+              <span className="text-xs font-mono text-neutral-400">{asset.filename}</span>
               <button
                 type="button"
                 onClick={() => handleDownload(asset.path, asset.filename)}

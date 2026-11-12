@@ -9,7 +9,9 @@
     padding: 6px 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     outline: none;
-    transition: opacity 150ms ease, transform 150ms ease;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
   }
 
   .hashti-tooltip[data-entering],
