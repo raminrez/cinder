@@ -74,7 +74,7 @@ export function InputOTP({
   };
 
   const handleChange = (index: number, char: string) => {
-    const clean = char.replace(/[^0-9a-zA-Z]/g, "");
+    const clean = char.replace(/[^0-9]/g, "");
     if (!clean) return;
 
     const currentDigits = Array.from({ length }, (_, i) => digits[i] ?? "");
@@ -89,7 +89,7 @@ export function InputOTP({
 
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData("text").replace(/[^0-9a-zA-Z]/g, "");
+    const pasted = e.clipboardData.getData("text").replace(/[^0-9]/g, "");
     if (!pasted) return;
 
     updateValue(pasted);

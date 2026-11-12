@@ -115,7 +115,7 @@ export function ActionableNotification({
   useEffect(() => {
     if (autoFocusAction && containerRef.current) {
       const btn = containerRef.current.querySelector<HTMLButtonElement>(
-        ".hashti-actionable-notification-actions button, .hashti-actionable-notification-actions button",
+        ".hashti-actionable-notification-actions button",
       );
       btn?.focus();
     }
@@ -124,7 +124,11 @@ export function ActionableNotification({
   return (
     <div
       {...props}
-      ref={ref ?? containerRef}
+      ref={(node) => {
+        containerRef.current = node;
+        if (typeof ref === "function") ref(node);
+        else if (ref) (ref as any).current = node;
+      }}
       role="alertdialog"
       aria-labelledby={titleId}
       aria-describedby={children ? descId : undefined}

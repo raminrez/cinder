@@ -68,14 +68,11 @@ export function CommandPaletteRoot({
 
   const setIsOpen = useCallback(
     (nextOpen: boolean | ((prev: boolean) => boolean)) => {
-      setUncontrolledIsOpen((current) => {
-        const actualCurrent = controlledIsOpen !== undefined ? controlledIsOpen : current;
-        const value = typeof nextOpen === "function" ? nextOpen(actualCurrent) : nextOpen;
-        onOpenChange?.(value);
-        return controlledIsOpen === undefined ? value : current;
-      });
+      const value = typeof nextOpen === "function" ? nextOpen(isOpen) : nextOpen;
+      onOpenChange?.(value);
+      if (controlledIsOpen === undefined) setUncontrolledIsOpen(value);
     },
-    [controlledIsOpen, onOpenChange],
+    [controlledIsOpen, isOpen, onOpenChange],
   );
 
   const [uncontrolledQuery, setUncontrolledQuery] = useState(defaultQuery);
