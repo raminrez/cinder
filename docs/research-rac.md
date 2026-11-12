@@ -82,7 +82,7 @@ Cinder's [Button wrapper](../packages/react/src/buttons.tsx) uses `composeRender
 
 ### Two class-name contracts
 
-**Cinder wrappers:** components using `classes("cinder-…", className)` always retain their Cinder base classes. String-only wrappers such as Breadcrumbs also explicitly concatenate their base class.
+**Cinder wrappers:** components using `classes("hashti-…", className)` always retain their Cinder base classes. String-only wrappers such as Breadcrumbs also explicitly concatenate their base class.
 
 **Direct RAC re-exports:** `ListBoxItem`, `Menu`, `MenuItem`, `Tab`, `Row`, `Cell`, `Tree`, `GridList`, and other parts in the [public barrel](../packages/react/src/index.ts) retain RAC's original behavior. Upstream **replaces** the default class when a custom `className` is supplied. Because Cinder styles these parts with `react-aria-*` selectors, a custom class must retain the required hook:
 
@@ -249,7 +249,7 @@ This illustrates the API, not a new executed test. Server error keys must match 
 
 ### Cinder's help-row adaptation
 
-[`FieldHelp`](../packages/react/src/fields.tsx) always renders a `.cinder-field-help` wrapper, with optional description text and a FieldError. Its [CSS](../packages/react/src/styles.css) creates one grid area and reserves **`min-block-size: 1.125rem`**. When the field is invalid and a nonempty error exists, the description is visually hidden and the error occupies the shared row.
+[`FieldHelp`](../packages/react/src/fields.tsx) always renders a `.hashti-field-help` wrapper, with optional description text and a FieldError. Its [CSS](../packages/react/src/styles.css) creates one grid area and reserves **`min-block-size: 1.125rem`**. When the field is invalid and a nonempty error exists, the description is visually hidden and the error occupies the shared row.
 
 This stabilizes ordinary helper/error changes, including validation clearing during a blur before a submit interaction completes. It retains RAC's description/error wiring rather than replacing errors with unrelated text. The rule is a **minimum**: multiline descriptions, translations, or longer errors can still increase the row's height. Custom field children must recreate the desired help composition themselves.
 
@@ -263,7 +263,7 @@ Cinder addresses that distinction in [`theme.tsx`](../packages/react/src/theme.t
 
 - `Theme` establishes a theme, resets its layer to `0`, and obtains locale/direction through RAC.
 - `Layer` advances the current layer or uses an explicit level. The normal sequence saturates at level `2`.
-- `useOverlayTheme()` returns `data-cinder-theme`, `data-cinder-layer`, and `dir` from context.
+- `useOverlayTheme()` returns `data-hashti-theme`, `data-hashti-layer`, and `dir` from context.
 - Cinder Popover, ModalOverlay, Tooltip, and ToastRegion receive these attributes so their token scopes and direction survive their upstream portal behavior.
 
 A modal composition keeps its trigger, accessible title, and theme context together:

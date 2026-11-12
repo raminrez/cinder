@@ -92,7 +92,7 @@ export const States: Story = {
     await expect(readonly).toHaveValue("WS-1042");
     await expect(readonly).toHaveFocus();
     await expect(
-      within(readonly.closest<HTMLElement>(".cinder-field")!).getByRole("button"),
+      within(readonly.closest<HTMLElement>(".hashti-field")!).getByRole("button"),
     ).toBeDisabled();
   },
 };
@@ -114,7 +114,7 @@ export const Sizes: Story = {
     ] as const) {
       const group = canvas
         .getByRole("searchbox", { name })
-        .closest<HTMLElement>(".cinder-input-group")!;
+        .closest<HTMLElement>(".hashti-input-group")!;
       const clear = within(group).getByRole("button");
       await expect(group.getBoundingClientRect().height).toBeGreaterThanOrEqual(minimum);
       // Measure the clear target itself, not the enclosing control boundary.

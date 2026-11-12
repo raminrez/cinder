@@ -57,7 +57,7 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
 
       expect(html).toContain('role="img"');
       expect(html).toContain('aria-roledescription="color swatch"');
-      expect(html).toContain("cinder-color-swatch");
+      expect(html).toContain("hashti-color-swatch");
       expect(html).toContain("rgba(255, 0, 0, 1)");
       expect(html).toContain('data-size="md"');
       expect(html).toContain('data-shape="square"');
@@ -67,15 +67,15 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
       const smHtml = ReactDOMServer.renderToString(
         <ColorSwatch color="#00ff00" size="sm" shape="circle" aria-label="Green Circle" />
       );
-      expect(smHtml).toContain("cinder-color-swatch--sm");
-      expect(smHtml).toContain("cinder-color-swatch--circle");
+      expect(smHtml).toContain("hashti-color-swatch--sm");
+      expect(smHtml).toContain("hashti-color-swatch--circle");
       expect(smHtml).toContain('data-size="sm"');
       expect(smHtml).toContain('data-shape="circle"');
 
       const lgHtml = ReactDOMServer.renderToString(
         <ColorSwatch color="#0000ff" size="lg" aria-label="Blue Square" />
       );
-      expect(lgHtml).toContain("cinder-color-swatch--lg");
+      expect(lgHtml).toContain("hashti-color-swatch--lg");
       expect(lgHtml).toContain('data-size="lg"');
     });
   });
@@ -86,9 +86,9 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         <ColorArea defaultValue="hsb(210, 100%, 100%)" xChannel="saturation" yChannel="brightness" />
       );
 
-      expect(html).toContain("cinder-color-area");
+      expect(html).toContain("hashti-color-area");
       expect(html).toContain('role="group"');
-      expect(html).toContain("cinder-color-thumb");
+      expect(html).toContain("hashti-color-thumb");
       expect(html).toContain('type="range"');
       expect(html).toContain('aria-roledescription="2D slider"');
     });
@@ -98,7 +98,7 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         <ColorArea defaultValue="hsl(0, 100%, 50%)" isDisabled />
       );
 
-      expect(html).toContain("cinder-color-area");
+      expect(html).toContain("hashti-color-area");
       expect(html).toContain('data-disabled="true"');
     });
   });
@@ -114,11 +114,11 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         />
       );
 
-      expect(html).toContain("cinder-color-slider");
-      expect(html).toContain("cinder-color-slider__label");
+      expect(html).toContain("hashti-color-slider");
+      expect(html).toContain("hashti-color-slider__label");
       expect(html).toContain("Hue Channel");
-      expect(html).toContain("cinder-color-slider__track");
-      expect(html).toContain("cinder-color-thumb");
+      expect(html).toContain("hashti-color-slider__track");
+      expect(html).toContain("hashti-color-thumb");
       expect(html).toContain('data-orientation="horizontal"');
     });
 
@@ -132,7 +132,7 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         />
       );
 
-      expect(html).toContain("cinder-color-slider");
+      expect(html).toContain("hashti-color-slider");
       expect(html).toContain('data-orientation="vertical"');
     });
   });
@@ -143,9 +143,9 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         <ColorWheel defaultValue="hsl(120, 100%, 50%)" aria-label="Hue Wheel" />
       );
 
-      expect(html).toContain("cinder-color-wheel");
-      expect(html).toContain("cinder-color-wheel-track");
-      expect(html).toContain("cinder-color-thumb");
+      expect(html).toContain("hashti-color-wheel");
+      expect(html).toContain("hashti-color-wheel-track");
+      expect(html).toContain("hashti-color-thumb");
       expect(html).toContain('type="range"');
     });
   });
@@ -156,10 +156,10 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         <ColorField defaultValue="#4a90e2" label="Hex Code" />
       );
 
-      expect(html).toContain("cinder-color-field");
-      expect(html).toContain("cinder-color-field__label");
+      expect(html).toContain("hashti-color-field");
+      expect(html).toContain("hashti-color-field__label");
       expect(html).toContain("Hex Code");
-      expect(html).toContain("cinder-color-field__input");
+      expect(html).toContain("hashti-color-field__input");
       expect(html).toContain('value="#4A90E2"');
     });
   });
@@ -174,13 +174,13 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         </ColorSwatchPicker>
       );
 
-      expect(html).toContain("cinder-color-swatch-picker");
-      expect(html).toContain("cinder-color-swatch-picker--grid");
+      expect(html).toContain("hashti-color-swatch-picker");
+      expect(html).toContain("hashti-color-swatch-picker--grid");
       expect(html).toContain('role="listbox"');
-      expect(html).toContain("cinder-color-swatch-picker-item");
+      expect(html).toContain("hashti-color-swatch-picker-item");
       expect(html).toContain('role="option"');
       expect(html).toContain('data-selected="true"');
-      expect(html).toContain("cinder-color-swatch-picker-item__check");
+      expect(html).toContain("hashti-color-swatch-picker-item__check");
     });
 
     test("supports stack layout and size variants", () => {
@@ -195,8 +195,8 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         </ColorSwatchPicker>
       );
 
-      expect(html).toContain("cinder-color-swatch-picker--stack");
-      expect(html).toContain("cinder-color-swatch-picker--sm");
+      expect(html).toContain("hashti-color-swatch-picker--stack");
+      expect(html).toContain("hashti-color-swatch-picker--sm");
     });
   });
 
@@ -210,15 +210,15 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         />
       );
 
-      expect(html).toContain("cinder-color-picker");
-      expect(html).toContain("cinder-color-picker__label");
+      expect(html).toContain("hashti-color-picker");
+      expect(html).toContain("hashti-color-picker__label");
       expect(html).toContain("Accent Color");
-      expect(html).toContain("cinder-color-picker__area");
-      expect(html).toContain("cinder-color-area");
-      expect(html).toContain("cinder-color-picker__controls");
-      expect(html).toContain("cinder-color-picker__swatch");
-      expect(html).toContain("cinder-color-slider");
-      expect(html).toContain("cinder-color-field");
+      expect(html).toContain("hashti-color-picker__area");
+      expect(html).toContain("hashti-color-area");
+      expect(html).toContain("hashti-color-picker__controls");
+      expect(html).toContain("hashti-color-picker__swatch");
+      expect(html).toContain("hashti-color-slider");
+      expect(html).toContain("hashti-color-field");
       expect(html).toContain('value="#3B82F6"');
     });
 
@@ -230,9 +230,9 @@ describe("Phase 5: Color Primitives Suite unit tests", () => {
         </ColorPicker>
       );
 
-      expect(html).toContain("cinder-color-picker");
-      expect(html).toContain("cinder-color-wheel");
-      expect(html).toContain("cinder-color-swatch");
+      expect(html).toContain("hashti-color-picker");
+      expect(html).toContain("hashti-color-wheel");
+      expect(html).toContain("hashti-color-swatch");
     });
   });
 });

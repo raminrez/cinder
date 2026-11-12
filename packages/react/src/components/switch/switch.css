@@ -1,9 +1,10 @@
 /* Hashti Modern Aesthetic - Switch */
 @layer hashti.components {
   .hashti-switch,
-  .cinder-switch {
+  .hashti-switch {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
     gap: var(--hashti-spacing-03, 8px);
     cursor: pointer;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
@@ -11,7 +12,7 @@
   }
 
   .hashti-switch-track,
-  .cinder-switch-track {
+  .hashti-switch-track {
     display: inline-flex;
     align-items: center;
     width: 44px;
@@ -24,13 +25,13 @@
   }
 
   .hashti-switch[data-size="sm"] .hashti-switch-track,
-  .cinder-switch[data-size="sm"] .cinder-switch-track {
+  .hashti-switch[data-size="sm"] .hashti-switch-track {
     width: 34px;
     height: 18px;
   }
 
   .hashti-switch-thumb,
-  .cinder-switch-thumb {
+  .hashti-switch-thumb {
     width: 20px;
     height: 20px;
     border-radius: 9999px;
@@ -40,28 +41,28 @@
   }
 
   .hashti-switch[data-size="sm"] .hashti-switch-thumb,
-  .cinder-switch[data-size="sm"] .cinder-switch-thumb {
+  .hashti-switch[data-size="sm"] .hashti-switch-thumb {
     width: 14px;
     height: 14px;
   }
 
   .hashti-switch[data-selected] .hashti-switch-track,
-  .cinder-switch[data-selected] .cinder-switch-track {
+  .hashti-switch[data-selected] .hashti-switch-track {
     background-color: var(--hashti-primary, #08BDBA);
   }
 
   .hashti-switch[data-selected] .hashti-switch-thumb,
-  .cinder-switch[data-selected] .cinder-switch-thumb {
+  .hashti-switch[data-selected] .hashti-switch-thumb {
     transform: translateX(20px);
   }
 
   .hashti-switch[data-size="sm"][data-selected] .hashti-switch-thumb,
-  .cinder-switch[data-size="sm"][data-selected] .cinder-switch-thumb {
+  .hashti-switch[data-size="sm"][data-selected] .hashti-switch-thumb {
     transform: translateX(16px);
   }
 
   .hashti-switch[data-focus-visible] .hashti-switch-track,
-  .cinder-switch[data-focus-visible] .cinder-switch-track {
+  .hashti-switch[data-focus-visible] .hashti-switch-track {
     outline: none;
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 8px rgba(15, 98, 254, 0.35);
   }

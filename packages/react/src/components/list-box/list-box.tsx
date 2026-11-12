@@ -56,7 +56,7 @@ export function ListBoxRoot<T extends object>({
   ...props
 }: ListBoxRootProps<T>) {
   const resolvedEmptyState = renderEmptyState ?? (emptyContent ? () => (
-    <div className="cinder-listbox-empty-content">{emptyContent}</div>
+    <div className="hashti-listbox-empty-content">{emptyContent}</div>
   ) : undefined);
 
   return (
@@ -69,9 +69,9 @@ export function ListBoxRoot<T extends object>({
         data-variant={variant}
         className={classes(
           cx(
-            "cinder-listbox",
-            `cinder-listbox--${size}`,
-            `cinder-listbox--${variant}`
+            "hashti-listbox",
+            `hashti-listbox--${size}`,
+            `hashti-listbox--${variant}`
           ),
           className
         )}
@@ -104,8 +104,8 @@ export function ListBoxItem<T extends object = object>({
       data-variant={variant}
       className={classes(
         cx(
-          "cinder-listbox-item",
-          size && `cinder-listbox-item--${size}`
+          "hashti-listbox-item",
+          size && `hashti-listbox-item--${size}`
         ),
         className
       )}
@@ -127,8 +127,8 @@ export function ListBoxSection<T extends object = object>({
   ...props
 }: ListBoxSectionProps<T>) {
   return (
-    <RACListBoxSection {...props} className={cx("cinder-listbox-section", className)}>
-      {title && <RACHeader className="cinder-listbox-header">{title}</RACHeader>}
+    <RACListBoxSection {...props} className={cx("hashti-listbox-section", className)}>
+      {title && <RACHeader className="hashti-listbox-header">{title}</RACHeader>}
       {children as any}
     </RACListBoxSection>
   );
@@ -138,7 +138,7 @@ export interface ListBoxHeaderProps extends ComponentPropsWithRef<typeof RACHead
 
 export function ListBoxHeader({ className, children, ...props }: ListBoxHeaderProps) {
   return (
-    <RACHeader {...props} className={cx("cinder-listbox-header", className)}>
+    <RACHeader {...props} className={cx("hashti-listbox-header", className)}>
       {children as any}
     </RACHeader>
   );
@@ -160,7 +160,7 @@ export function ListBoxDragHandle({
       slot="drag"
       aria-label={ariaLabel}
       {...props}
-      className={classes("cinder-listbox-drag-handle", className)}
+      className={classes("hashti-listbox-drag-handle", className)}
     >
       {children ?? <Icon name="menu" size={16} />}
     </RACButton>
@@ -176,7 +176,7 @@ export function ListBoxCheckbox({ className, children, ...props }: ListBoxCheckb
     <RACCheckbox
       slot="selection"
       {...props}
-      className={classes("cinder-listbox-checkbox", className)}
+      className={classes("hashti-listbox-checkbox", className)}
     >
       {children as any}
     </RACCheckbox>
@@ -193,7 +193,7 @@ export function ListBoxEmptyState({
   className,
 }: ListBoxEmptyStateProps) {
   return (
-    <div className={cx("cinder-listbox-empty-state", className)}>
+    <div className={cx("hashti-listbox-empty-state", className)}>
       {children as any}
     </div>
   );
@@ -228,17 +228,17 @@ export function ListBoxLoadMore({
     <RACListBoxLoadMoreItem
       {...props}
       isLoading={isVisible}
-      className={cx("cinder-listbox-load-more", className)}
+      className={cx("hashti-listbox-load-more", className)}
     >
       {children ?? (
-        <div className="cinder-load-more-content" role="status">
+        <div className="hashti-load-more-content" role="status">
           {isError ? (
-            <div className="cinder-load-more-error">
-              <span className="cinder-load-more-error-message">{errorMessage}</span>
+            <div className="hashti-load-more-error">
+              <span className="hashti-load-more-error-message">{errorMessage}</span>
               {onRetry && (
                 <button
                   type="button"
-                  className="cinder-load-more-retry"
+                  className="hashti-load-more-retry"
                   onClick={(e) => {
                     e.stopPropagation();
                     onRetry();
@@ -249,8 +249,8 @@ export function ListBoxLoadMore({
               )}
             </div>
           ) : (
-            <div className="cinder-load-more-loading">
-              <span className="cinder-spinner" aria-hidden="true" />
+            <div className="hashti-load-more-loading">
+              <span className="hashti-spinner" aria-hidden="true" />
               <span>{label}</span>
             </div>
           )}

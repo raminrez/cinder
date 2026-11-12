@@ -152,7 +152,7 @@ describe("complete component catalog", () => {
           .getByRole("radiogroup", { name: "Preview theme" })
           .getByRole("radio", { name: label, exact: true })
           .click();
-        await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", theme);
+        await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", theme);
         await accessible(`${entry.slug}-${theme}`, ".example-canvas");
       }
       for (const width of [1440, 768, 390]) await fits(width);

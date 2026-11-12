@@ -16,7 +16,7 @@ const generated = new Set(
 export function watchPackages() {
   let dispose = () => {};
   return {
-    name: "cinder-package-rebuild",
+    name: "hashti-package-rebuild",
     apply: "serve",
     hotUpdate({ file }) {
       // Keep resolver caches fresh; the completed build owns the preview reload.

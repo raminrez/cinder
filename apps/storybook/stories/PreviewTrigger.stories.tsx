@@ -34,7 +34,7 @@ export const Playground: Story = {
       <p style={{ margin: 0 }}>
         Collaborators on this document:{" "}
         <PreviewTrigger delay={200} closeDelay={150}>
-          <Link href="#alice" style={{ fontWeight: 600, color: "var(--cinder-link-primary, #0f62fe)" }}>
+          <Link href="#alice" style={{ fontWeight: 600, color: "var(--hashti-link-primary, #0f62fe)" }}>
             @alice_smith
           </Link>
           <Popover>
@@ -45,7 +45,7 @@ export const Playground: Story = {
                     width: "40px",
                     height: "40px",
                     borderRadius: "50%",
-                    backgroundColor: "var(--cinder-layer-accent-01, #0f62fe)",
+                    backgroundColor: "var(--hashti-layer-accent-01, #0f62fe)",
                     color: "#ffffff",
                     display: "flex",
                     alignItems: "center",
@@ -57,7 +57,7 @@ export const Playground: Story = {
                 </div>
                 <div>
                   <Heading slot="title" style={{ fontSize: "1rem", margin: 0 }}>Alice Smith</Heading>
-                  <span style={{ fontSize: "0.75rem", color: "var(--cinder-text-secondary, #525252)" }}>
+                  <span style={{ fontSize: "0.75rem", color: "var(--hashti-text-secondary, #525252)" }}>
                     @alice_smith
                   </span>
                 </div>

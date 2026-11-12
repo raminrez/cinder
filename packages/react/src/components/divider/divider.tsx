@@ -28,7 +28,7 @@ export function Divider({
         ref={ref as Ref<HTMLDivElement>}
         role="separator"
         aria-orientation="horizontal"
-        className={cx("hashti-divider-labeled cinder-divider-labeled", className)}
+        className={cx("hashti-divider-labeled hashti-divider-labeled", className)}
       >
         <span>{label}</span>
       </div>
@@ -41,7 +41,7 @@ export function Divider({
       slot={slot}
       ref={ref}
       orientation={orientation}
-      className={cx("hashti-divider cinder-divider", className)}
+      className={cx("hashti-divider hashti-divider", className)}
     />
   );
 }

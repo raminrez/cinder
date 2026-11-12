@@ -52,7 +52,7 @@ afterAll(async () => {
 async function open(fixture: string, theme: FrameTheme) {
   await page.goto(`/?case=${fixture}&theme=${theme}`);
   await expect(page.getByRole("heading", { name: "Cinder composed fields" })).toBeVisible();
-  await expect(page.locator(".cinder-theme")).toHaveAttribute("data-cinder-theme", theme);
+  await expect(page.locator(".hashti-theme")).toHaveAttribute("data-hashti-theme", theme);
 }
 
 function output(name: string) {
@@ -68,10 +68,10 @@ async function expectGroupedControl(
   inputSelector = ".react-aria-Input",
   count = 1,
 ) {
-  await expect(field.locator(":scope > .cinder-field__control.cinder-input-group")).toHaveCount(1);
-  await expect(field.locator(".cinder-field__control")).toHaveCount(1);
+  await expect(field.locator(":scope > .hashti-field__control.hashti-input-group")).toHaveCount(1);
+  await expect(field.locator(".hashti-field__control")).toHaveCount(1);
   await expect(field.locator(inputSelector)).toHaveCount(count);
-  await expect(field.locator(`${inputSelector}.cinder-field__control`)).toHaveCount(0);
+  await expect(field.locator(`${inputSelector}.hashti-field__control`)).toHaveCount(0);
 }
 
 test("all twelve field namespaces remain callable, share common parts, and leave raw RAC exports intact", async () => {
@@ -129,11 +129,11 @@ for (const theme of frameThemes) {
     await open("text", theme);
     const field = page.getByTestId("composed-text");
     const input = page.getByRole("textbox", { name: "Composed text", exact: true });
-    const description = field.locator(".cinder-field__description");
-    const error = field.locator(".cinder-field__error");
+    const description = field.locator(".hashti-field__description");
+    const error = field.locator(".hashti-field__error");
     const descriptionId = await description.getAttribute("id");
     const errorId = await error.getAttribute("id");
-    await expect(field).toHaveClass(/cinder-field cinder-text-field.*consumer-invalid/);
+    await expect(field).toHaveClass(/cinder-field hashti-text-field.*consumer-invalid/);
     await expect(field).toHaveAttribute("slot", "consumer-field");
     await expect(field).toHaveAttribute("data-custom-root", "invalid");
     await expect(field).toHaveCSS("max-width", "320px");
@@ -155,10 +155,10 @@ for (const theme of frameThemes) {
     await expect(error).toHaveClass(/cinder-field__error react-aria-FieldError.*consumer-recovery/);
     await expect(error).toHaveAttribute("data-custom-error", "true");
     await expect(error).toHaveCSS("letter-spacing", "0.5px");
-    await expect(field.locator(".cinder-field__help")).toHaveClass(
-      /cinder-field__help cinder-field-help.*consumer-help/,
+    await expect(field.locator(".hashti-field__help")).toHaveClass(
+      /cinder-field__help hashti-field-help.*consumer-help/,
     );
-    await expect(field.locator(".cinder-field__label")).toHaveAttribute(
+    await expect(field.locator(".hashti-field__label")).toHaveAttribute(
       "for",
       (await input.getAttribute("id"))!,
     );
@@ -224,7 +224,7 @@ for (const theme of frameThemes) {
     await expect(nullRoot.getByRole("textbox")).toHaveValue("Independent root");
     await expectGroupedControl(nullRoot);
     const shorthand = page.getByTestId("default-text");
-    await expect(shorthand.locator(".cinder-field__control.react-aria-Input")).toHaveCount(1);
+    await expect(shorthand.locator(".hashti-field__control.react-aria-Input")).toHaveCount(1);
     await expect(shorthand.getByRole("textbox")).toHaveValue("Default value");
     await page.getByRole("button", { name: "Submit text composition" }).click();
     await expect(output("Text FormData")).toHaveText(
@@ -241,16 +241,16 @@ for (const theme of frameThemes) {
     const input = field.getByRole("textbox", { name: "0", exact: true });
     for (const id of ["composed-area", "default-area"]) {
       const root = page.getByTestId(id);
-      await expect(root.locator(".cinder-field__label")).toHaveText("0");
-      await expect(root.locator(".cinder-field__description")).toHaveText("0");
-      await expect(root.locator("textarea.cinder-field__control.react-aria-TextArea")).toHaveCount(
+      await expect(root.locator(".hashti-field__label")).toHaveText("0");
+      await expect(root.locator(".hashti-field__description")).toHaveText("0");
+      await expect(root.locator("textarea.hashti-field__control.react-aria-TextArea")).toHaveCount(
         1,
       );
-      await expect(root.locator(".cinder-field__control")).toHaveCount(1);
+      await expect(root.locator(".hashti-field__control")).toHaveCount(1);
       await expect(root.getByRole("textbox")).toHaveAccessibleDescription("0");
     }
     await expect(page.getByTestId("zero-help")).toHaveText("0");
-    await expect(field.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(field.locator(".hashti-field__error")).toHaveCount(0);
     await expect(input).toHaveAttribute("rows", "2");
     await expect(input).toHaveClass(/react-aria-TextArea.*consumer-area-input/);
     await page.getByRole("button", { name: "Inspect area refs" }).click();
@@ -349,7 +349,7 @@ for (const theme of frameThemes) {
     await page.getByRole("button", { name: "Submit search composition" }).click();
     await expect(output("Search FormData")).toHaveText(JSON.stringify([["query", ""]]));
     const shorthand = page.getByTestId("default-search");
-    await expect(shorthand.locator(".cinder-field__control")).toHaveCount(1);
+    await expect(shorthand.locator(".hashti-field__control")).toHaveCount(1);
     const raw = shorthand.getByRole("searchbox", { name: "Default search" });
     await expect(raw).toHaveClass("consumer-raw-search");
     await expect(raw).toHaveAttribute("placeholder", "Raw override");
@@ -362,9 +362,9 @@ for (const theme of frameThemes) {
     await open("collections", theme);
     const field = page.getByTestId("composed-select");
     const trigger = page.getByTestId("single-trigger");
-    await expect(field.locator(".cinder-field__control.cinder-select-trigger")).toHaveCount(1);
-    await expect(field.locator(".cinder-field__control")).toHaveCount(1);
-    await expect(field.locator(".cinder-select__value.react-aria-SelectValue")).toContainText(
+    await expect(field.locator(".hashti-field__control.hashti-select-trigger")).toHaveCount(1);
+    await expect(field.locator(".hashti-field__control")).toHaveCount(1);
+    await expect(field.locator(".hashti-select__value.react-aria-SelectValue")).toContainText(
       "Reader",
     );
     await trigger.click();
@@ -377,7 +377,7 @@ for (const theme of frameThemes) {
     await expect(page.getByTestId("single-popover")).toHaveClass(
       /cinder-popover.*cinder-select-popover/,
     );
-    await expect(page.getByTestId("single-popover")).toHaveAttribute("data-cinder-theme", theme);
+    await expect(page.getByTestId("single-popover")).toHaveAttribute("data-hashti-theme", theme);
     await expect(output("Select child callback")).toHaveText("open");
     await expect(field).toHaveClass(/consumer-open/);
     await page.keyboard.press("Home");
@@ -421,8 +421,8 @@ for (const theme of frameThemes) {
     await open("collections", theme);
     const field = page.getByTestId("composed-combo");
     const input = field.getByRole("combobox", { name: "Composed searchable roles" });
-    const description = field.locator(".cinder-field__description");
-    const value = field.locator(".cinder-combobox-values.react-aria-ComboBoxValue");
+    const description = field.locator(".hashti-field__description");
+    const value = field.locator(".hashti-combobox-values.react-aria-ComboBoxValue");
     // RAC hides the callback output from assistive technology while the menu is open.
     const callback = field.locator('output[aria-label="ComboBox child callback"]');
     await expectGroupedControl(field);
@@ -444,7 +444,7 @@ for (const theme of frameThemes) {
     const writer = list.getByRole("option", { name: /^Writer/ });
     await expect(writer.getByText("Can edit records", { exact: true })).toBeVisible();
     await expect(callback).toHaveText("open");
-    await expect(page.getByTestId("combo-popover")).toHaveAttribute("data-cinder-theme", theme);
+    await expect(page.getByTestId("combo-popover")).toHaveAttribute("data-hashti-theme", theme);
     await input.press("ArrowDown");
     await expect(input).toHaveAttribute(
       "aria-activedescendant",
@@ -490,16 +490,16 @@ for (const theme of frameThemes) {
     const immediate = radio.getByRole("radio", { name: "Immediate delivery" });
     const quiet = radio.getByRole("radio", { name: "Quiet delivery" });
     const submit = page.getByRole("button", { name: "Validate composed groups" });
-    const controls = page.locator(".cinder-checkbox-control, .cinder-radio-control");
+    const controls = page.locator(".hashti-checkbox-control, .hashti-radio-control");
     const restingPaint = await controls.evaluateAll((elements) =>
       elements.map((element) => getComputedStyle(element).borderTopColor),
     );
     const descriptionIds = await Promise.all(
       [checkbox, radio].map((group) =>
-        group.locator(".cinder-field__description").getAttribute("id"),
+        group.locator(".hashti-field__description").getAttribute("id"),
       ),
     );
-    await expect(page.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(page.locator(".hashti-field__error")).toHaveCount(0);
     await expect(page.getByTestId("radio-options")).toHaveClass(
       /cinder-radio-options.*consumer-options/,
     );
@@ -517,8 +517,8 @@ for (const theme of frameThemes) {
       await expect(option).toHaveAttribute("aria-invalid", "true");
     }
     for (const [index, group] of [checkbox, radio].entries()) {
-      const description = group.locator(".cinder-field__description");
-      const error = group.locator(".cinder-field__error.react-aria-FieldError");
+      const description = group.locator(".hashti-field__description");
+      const error = group.locator(".hashti-field__error.react-aria-FieldError");
       await expect(group).toHaveAttribute("data-invalid");
       await expect(group).toHaveAccessibleDescription(/guidance stays visible\..*Choose/);
       await expect(description).toBeVisible();
@@ -555,7 +555,7 @@ for (const theme of frameThemes) {
           };
         }),
       ).toEqual({ multiline: true, fitsError: true, fitsHelp: true });
-      await expect(group.locator(".cinder-field__control")).toHaveCount(0);
+      await expect(group.locator(".hashti-field__control")).toHaveCount(0);
     }
     const invalidPaint = await controls.evaluateAll((elements) =>
       elements.map((element) => getComputedStyle(element).borderTopColor),
@@ -580,12 +580,12 @@ for (const theme of frameThemes) {
         ["delivery", "quiet"],
       ]),
     );
-    await expect(page.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(page.locator(".hashti-field__error")).toHaveCount(0);
     await expect(output("CheckboxGroup child callback")).toHaveText("valid");
     for (const [index, group] of [checkbox, radio].entries()) {
       await expect(group).not.toHaveAttribute("data-invalid");
       await expect(group).not.toHaveAttribute("aria-invalid", "true");
-      await expect(group.locator(".cinder-field__description")).toHaveAttribute(
+      await expect(group.locator(".hashti-field__description")).toHaveAttribute(
         "id",
         descriptionIds[index]!,
       );
@@ -606,9 +606,9 @@ for (const theme of frameThemes) {
     for (const id of ["default-date", "default-time", "composed-date", "composed-time"]) {
       const field = page.getByTestId(id);
       await expect(
-        field.locator(":scope > .cinder-field__control.react-aria-DateInput"),
+        field.locator(":scope > .hashti-field__control.react-aria-DateInput"),
       ).toHaveCount(1);
-      await expect(field.locator(".cinder-field__control")).toHaveCount(1);
+      await expect(field.locator(".hashti-field__control")).toHaveCount(1);
     }
     await page.getByRole("button", { name: "Inspect date refs" }).click();
     await expect(output("Date ref targets")).toHaveText("DIV,DIV,SPAN,true,true");
@@ -693,7 +693,7 @@ for (const theme of frameThemes) {
     await expect(page.getByTestId("date-popover")).toHaveClass(
       /cinder-popover.*cinder-date-popover/,
     );
-    await expect(page.getByTestId("date-popover")).toHaveAttribute("data-cinder-theme", theme);
+    await expect(page.getByTestId("date-popover")).toHaveAttribute("data-hashti-theme", theme);
     await expect(output("Picker child callback")).toHaveText("open");
     await expect(
       calendar.getByRole("button", { name: /Thursday, November 12, 2026/ }),

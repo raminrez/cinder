@@ -44,9 +44,9 @@ function DrawerDemo({ placement = "end" }: { placement?: DrawerPlacement }) {
         }
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <TextField label="Deployment Name" defaultValue="cinder-production" />
+          <TextField label="Deployment Name" defaultValue="hashti-production" />
           <TextField label="Domain" defaultValue="app.cinder.dev" />
-          <p style={{ margin: 0, color: "var(--cinder-text-secondary)", fontSize: "0.875rem" }}>
+          <p style={{ margin: 0, color: "var(--hashti-text-secondary)", fontSize: "0.875rem" }}>
             Changes will be deployed automatically after commit.
           </p>
         </div>
@@ -126,7 +126,7 @@ function DrawerRtlDemo() {
           }
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <TextField label="نام استقرار" defaultValue="cinder-production" />
+            <TextField label="نام استقرار" defaultValue="hashti-production" />
             <TextField label="دامنه اصلی" defaultValue="app.cinder.dev" />
           </div>
         </Drawer>

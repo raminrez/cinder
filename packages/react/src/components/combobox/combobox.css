@@ -1,14 +1,14 @@
 /* Hashti Modern Aesthetic - ComboBox */
 @layer hashti.components {
   .hashti-combobox,
-  .cinder-combobox {
+  .hashti-combobox {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
   .hashti-combobox-popover,
-  .cinder-combobox-popover {
+  .hashti-combobox-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
     background-color: var(--hashti-layer, #ffffff);
@@ -19,7 +19,7 @@
   }
 
   .hashti-combobox-create-item,
-  .cinder-combobox-create-item {
+  .hashti-combobox-create-item {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -35,12 +35,12 @@
   }
 
   .hashti-combobox-create-item:hover,
-  .cinder-combobox-create-item:hover {
+  .hashti-combobox-create-item:hover {
     background-color: var(--hashti-layer-accent-01, #e6f7f7);
   }
 
   .hashti-combobox-chips-wrapper,
-  .cinder-combobox-chips-wrapper {
+  .hashti-combobox-chips-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
@@ -48,7 +48,7 @@
   }
 
   .hashti-combobox-chip,
-  .cinder-combobox-chip {
+  .hashti-combobox-chip {
     display: inline-flex;
     align-items: center;
     gap: 4px;

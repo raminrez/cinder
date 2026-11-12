@@ -1,7 +1,7 @@
 /* Hashti Modern Aesthetic - Popover */
 @layer hashti.components {
   .hashti-popover,
-  .cinder-popover {
+  .hashti-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
     background-color: var(--hashti-layer, #ffffff);
@@ -13,13 +13,13 @@
   }
 
   .hashti-popover[data-entering],
-  .cinder-popover[data-entering] {
+  .hashti-popover[data-entering] {
     transform: scale(0.96);
     opacity: 0;
   }
 
   .hashti-popover[data-exiting],
-  .cinder-popover[data-exiting] {
+  .hashti-popover[data-exiting] {
     transform: scale(0.96);
     opacity: 0;
   }

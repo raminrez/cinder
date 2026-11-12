@@ -1,7 +1,7 @@
 /* Hashti Modern Aesthetic - Progress */
 @layer hashti.components {
   .hashti-progress,
-  .cinder-progress {
+  .hashti-progress {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -9,7 +9,7 @@
   }
 
   .hashti-progress-label,
-  .cinder-progress-label {
+  .hashti-progress-label {
     display: flex;
     justify-content: space-between;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
@@ -17,7 +17,7 @@
   }
 
   .hashti-progress-track,
-  .cinder-progress-track {
+  .hashti-progress-track {
     height: 8px;
     width: 100%;
     border-radius: 9999px;
@@ -26,7 +26,7 @@
   }
 
   .hashti-progress-fill,
-  .cinder-progress-fill {
+  .hashti-progress-fill {
     height: 100%;
     border-radius: 9999px;
     background-color: var(--hashti-primary, #08BDBA);
@@ -34,17 +34,17 @@
   }
 
   .hashti-progress[data-status="success"] .hashti-progress-fill,
-  .cinder-progress[data-status="success"] .cinder-progress-fill {
+  .hashti-progress[data-status="success"] .hashti-progress-fill {
     background-color: var(--hashti-support-success, #198038);
   }
 
   .hashti-progress[data-status="error"] .hashti-progress-fill,
-  .cinder-progress[data-status="error"] .cinder-progress-fill {
+  .hashti-progress[data-status="error"] .hashti-progress-fill {
     background-color: var(--hashti-support-error, #da1e28);
   }
 
   .hashti-progress-circle,
-  .cinder-progress-circle {
+  .hashti-progress-circle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -52,13 +52,13 @@
   }
 
   .hashti-progress-circle-track,
-  .cinder-progress-circle-track {
+  .hashti-progress-circle-track {
     fill: none;
     stroke: var(--hashti-border-subtle, #e0e0e0);
   }
 
   .hashti-progress-circle-fill,
-  .cinder-progress-circle-fill {
+  .hashti-progress-circle-fill {
     fill: none;
     stroke: var(--hashti-primary, #08BDBA);
     stroke-linecap: round;

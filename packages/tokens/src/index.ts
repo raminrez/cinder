@@ -25,8 +25,8 @@ export type FoundationToken = keyof typeof foundations;
 export type TokenName = ThemeToken | FoundationToken;
 
 /** A semantic CSS reference that follows the nearest Theme and Layer. */
-export function token(name: TokenName): `var(--cinder-${TokenName})` {
-  return `var(--cinder-${name})`;
+export function token(name: TokenName): `var(--hashti-${TokenName})` {
+  return `var(--hashti-${name})`;
 }
 
 export function isThemeName(value: unknown): value is ThemeName {

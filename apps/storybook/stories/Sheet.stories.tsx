@@ -35,7 +35,7 @@ export const Playground: Story = {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <Heading slot="title">Order Summary</Heading>
-            <p style={{ color: "var(--cinder-text-secondary, #525252)", margin: 0 }}>
+            <p style={{ color: "var(--hashti-text-secondary, #525252)", margin: 0 }}>
               Review your selected items and shipping details before completing payment.
             </p>
             <div
@@ -44,7 +44,7 @@ export const Playground: Story = {
                 justifyContent: "space-between",
                 padding: "0.75rem",
                 borderRadius: "8px",
-                background: "var(--cinder-layer-01, #f4f4f4)",
+                background: "var(--hashti-layer-01, #f4f4f4)",
               }}
             >
               <span>Subtotal (3 items)</span>

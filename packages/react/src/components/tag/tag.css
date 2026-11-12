@@ -1,9 +1,9 @@
 /* Hashti Modern Aesthetic - Tag */
 @layer hashti.components {
   .hashti-tag,
-  .cinder-tag,
+  .hashti-tag,
   .hashti-filter-tag,
-  .cinder-filter-tag {
+  .hashti-filter-tag {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -18,13 +18,13 @@
   }
 
   .hashti-tag[data-size="sm"],
-  .cinder-tag[data-size="sm"] {
+  .hashti-tag[data-size="sm"] {
     padding: 2px 8px;
     font-size: 0.6875rem;
   }
 
   .hashti-tag-group,
-  .cinder-tag-group {
+  .hashti-tag-group {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;

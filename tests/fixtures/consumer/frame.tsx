@@ -125,21 +125,21 @@ function Brand({ kind, theme }: { kind: "plain" | "module"; theme: FrameTheme })
           className={() => recipe.field}
           data-testid={`${kind}-composed-field`}
         >
-          <Label className={`react-aria-Label cinder-field__label ${recipe.label}`}>
+          <Label className={`react-aria-Label hashti-field__label ${recipe.label}`}>
             {label} team (required)
           </Label>
           <Text
             slot="description"
-            className={`react-aria-Text cinder-field__description ${recipe.description}`}
+            className={`react-aria-Text hashti-field__description ${recipe.description}`}
           >
             Use at least three characters.
           </Text>
           <Input
-            className={`react-aria-Input cinder-field__control ${recipe.control}`}
+            className={`react-aria-Input hashti-field__control ${recipe.control}`}
             style={{ textAlign: "start" }}
           />
-          <div className="cinder-field__help cinder-field-help">
-            <FieldError className={`react-aria-FieldError cinder-field__error ${recipe.error}`}>
+          <div className="hashti-field__help hashti-field-help">
+            <FieldError className={`react-aria-FieldError hashti-field__error ${recipe.error}`}>
               Enter at least 3 characters.
             </FieldError>
           </div>
@@ -219,8 +219,8 @@ function Brand({ kind, theme }: { kind: "plain" | "module"; theme: FrameTheme })
                   onPress={() =>
                     setModalRefs(
                       JSON.stringify({
-                        outer: overlay.current?.classList.contains("cinder-modal-overlay"),
-                        inner: modal.current?.classList.contains("cinder-modal"),
+                        outer: overlay.current?.classList.contains("hashti-modal-overlay"),
+                        inner: modal.current?.classList.contains("hashti-modal"),
                         distinct: overlay.current !== modal.current,
                         contains: overlay.current?.contains(modal.current),
                       }),

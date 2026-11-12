@@ -157,28 +157,28 @@ for (const theme of fieldThemes) {
     await openFieldParts(theme);
     const isFrame = theme === "frame-light" || theme === "frame-dark";
     const fields = page.locator('[data-fixture="default-field-parts"]');
-    await expect(fields.locator(".cinder-field")).toHaveCount(12);
+    await expect(fields.locator(".hashti-field")).toHaveCount(12);
     for (const [name, controlSelector] of [
       ["text", "input.react-aria-Input"],
       ["area", "textarea.react-aria-TextArea"],
-      ["number", ".cinder-input-group"],
-      ["search", ".cinder-input-group"],
-      ["checkbox", ".cinder-checkbox"],
-      ["radio", ".cinder-radio-options"],
-      ["select", "button.cinder-button.cinder-select-trigger"],
-      ["combobox", ".cinder-input-group"],
-      ["date-picker", ".cinder-input-group"],
-      ["date-range", ".cinder-input-group"],
+      ["number", ".hashti-input-group"],
+      ["search", ".hashti-input-group"],
+      ["checkbox", ".hashti-checkbox"],
+      ["radio", ".hashti-radio-options"],
+      ["select", "button.hashti-button.hashti-select-trigger"],
+      ["combobox", ".hashti-input-group"],
+      ["date-picker", ".hashti-input-group"],
+      ["date-range", ".hashti-input-group"],
       ["date", ".react-aria-DateInput"],
       ["time", ".react-aria-DateInput"],
     ] as const) {
       const field = fields.locator(`[data-field="${name}"]`);
-      const label = field.locator(":scope > .cinder-field__label.react-aria-Label");
-      const help = field.locator(":scope > .cinder-field__help.cinder-field-help");
+      const label = field.locator(":scope > .hashti-field__label.react-aria-Label");
+      const help = field.locator(":scope > .hashti-field__help.hashti-field-help");
       await expect(label).toHaveCount(1);
       await expect(help).toHaveCount(1);
-      const description = field.locator(".cinder-field__description.react-aria-Text");
-      const error = help.locator(".cinder-field__error.react-aria-FieldError");
+      const description = field.locator(".hashti-field__description.react-aria-Text");
+      const error = help.locator(".hashti-field__error.react-aria-FieldError");
       const content = field.locator(`:scope > ${controlSelector}`);
       await expect(description).toHaveCount(1);
       await expect(description).toHaveAttribute("slot", "description");
@@ -186,20 +186,20 @@ for (const theme of fieldThemes) {
       await expect(error).toHaveText("Field recovery");
       if (name !== "checkbox" && name !== "radio") {
         await expect(
-          field.locator(`:scope > ${controlSelector}.cinder-field__control`),
+          field.locator(`:scope > ${controlSelector}.hashti-field__control`),
         ).toHaveCount(1);
-        await expect(field.locator(".cinder-field__control")).toHaveCount(1);
+        await expect(field.locator(".hashti-field__control")).toHaveCount(1);
       } else {
-        await expect(field.locator(".cinder-field__control")).toHaveCount(0);
+        await expect(field.locator(".hashti-field__control")).toHaveCount(0);
       }
       await expect(content).toHaveCount(1);
       expect(
         await field.evaluate(
           (element, { isFrame, controlSelector }) => {
-            const label = element.querySelector(":scope > .cinder-field__label")!;
-            const description = element.querySelector(".cinder-field__description")!;
+            const label = element.querySelector(":scope > .hashti-field__label")!;
+            const description = element.querySelector(".hashti-field__description")!;
             const control = element.querySelector(`:scope > ${controlSelector}`)!;
-            const help = element.querySelector(":scope > .cinder-field__help")!;
+            const help = element.querySelector(":scope > .hashti-field__help")!;
             const sequence = isFrame ? [label, description, control, help] : [label, control, help];
             return sequence
               .slice(1)
@@ -213,7 +213,7 @@ for (const theme of fieldThemes) {
         ),
       ).toEqual(isFrame ? [true, true, true] : [true, true]);
       if (isFrame) {
-        await expect(field.locator(":scope > .cinder-field__description")).toHaveCount(1);
+        await expect(field.locator(":scope > .hashti-field__description")).toHaveCount(1);
         await expect(description).toBeVisible();
         if (name !== "checkbox" && name !== "radio") {
           const controlBounds = await content.boundingBox();
@@ -229,12 +229,12 @@ for (const theme of fieldThemes) {
           await expect(content).toHaveCSS("border-end-start-radius", "3px");
         }
       } else {
-        await expect(help.locator(".cinder-field__description")).toHaveCount(1);
+        await expect(help.locator(".hashti-field__description")).toHaveCount(1);
         await expect(description).not.toBeVisible();
       }
     }
     for (const control of await fields
-      .locator(".cinder-checkbox-control, .cinder-radio-control")
+      .locator(".hashti-checkbox-control, .hashti-radio-control")
       .all()) {
       await expect(control).toHaveCSS(
         "border-top-color",
@@ -242,27 +242,27 @@ for (const theme of fieldThemes) {
       );
     }
     const standaloneInvalid = page.locator('[data-fixture="standalone-invalid-checkbox"]');
-    const invalidMark = standaloneInvalid.locator(".cinder-checkbox-control");
+    const invalidMark = standaloneInvalid.locator(".hashti-checkbox-control");
     await expect(invalidMark).toHaveCSS("border-top-color", await color(theme, "support-error"));
     await standaloneInvalid.hover();
     await expect(standaloneInvalid).toHaveAttribute("data-hovered");
     await expect(invalidMark).toHaveCSS("border-top-color", await color(theme, "support-error"));
     const disabledOptions = page.locator(
-      '[data-fixture="disabled-invalid-checkbox"] .cinder-checkbox-control, [data-fixture="disabled-invalid-radio"] .cinder-radio-control',
+      '[data-fixture="disabled-invalid-checkbox"] .hashti-checkbox-control, [data-fixture="disabled-invalid-radio"] .hashti-radio-control',
     );
     await expect(disabledOptions).toHaveCount(2);
     for (const control of await disabledOptions.all()) {
       await expect(control).toHaveCSS("border-top-color", await color(theme, "icon-disabled"));
     }
-    await expect(fields.locator('[data-field="text"] .cinder-field__label')).toHaveText("0");
+    await expect(fields.locator('[data-field="text"] .hashti-field__label')).toHaveText("0");
     await expect(fields.getByRole("textbox", { name: "0", exact: true })).toBeVisible();
     expect(
       await fields
-        .locator(".cinder-button")
+        .locator(".hashti-button")
         .evaluateAll((buttons) =>
           buttons.map((button) => [
             button.getAttribute("data-size"),
-            button.hasAttribute("data-cinder-size-default"),
+            button.hasAttribute("data-hashti-size-default"),
           ]),
         ),
     ).toEqual(Array.from({ length: 7 }, () => ["md", false]));
@@ -281,7 +281,7 @@ for (const theme of fieldThemes) {
       "Controlled update",
     );
     const textRoot = page.locator('[data-field="text"]');
-    await expect(textRoot).toHaveClass(/cinder-field cinder-text-field.*consumer-invalid/);
+    await expect(textRoot).toHaveClass(/cinder-field hashti-text-field.*consumer-invalid/);
     await expect(textRoot).toHaveCSS("max-width", "320px");
     await expect(text).toHaveCSS("max-width", "none");
     await page.getByRole("button", { name: "Focus area control" }).click();
@@ -291,13 +291,13 @@ for (const theme of fieldThemes) {
     await area.fill("Uncontrolled update");
     await expect(area).toHaveValue("Uncontrolled update");
     await expect(page.locator('[data-field="area"]')).toHaveClass(
-      /cinder-field cinder-text-area.*consumer-area/,
+      /cinder-field hashti-text-area.*consumer-area/,
     );
     await expect(page.locator('[data-field="area"]')).toHaveCSS("max-width", "336px");
     await expect(area).toHaveCSS("max-width", "none");
 
     const custom = page.locator('[data-fixture="custom-field"]');
-    await expect(custom.locator("[class*='cinder-field__']")).toHaveCount(0);
+    await expect(custom.locator("[class*='hashti-field__']")).toHaveCount(0);
     await expect(custom.locator("label")).toHaveClass("consumer-label");
     await expect(custom.getByRole("textbox", { name: "Custom invalid field" })).toHaveClass(
       "consumer-input",
@@ -324,17 +324,17 @@ for (const theme of fieldThemes) {
     const native = page.getByRole("textbox", { name: "Native required" });
     const custom = page.getByRole("textbox", { name: "Custom required" });
     const submit = page.getByRole("button", { name: "Validate fields" });
-    const nativeRoot = page.locator(".cinder-text-field").filter({ has: native });
-    const customRoot = page.locator(".cinder-text-area").filter({ has: custom });
-    const description = nativeRoot.locator(".cinder-field__description.react-aria-Text");
+    const nativeRoot = page.locator(".hashti-text-field").filter({ has: native });
+    const customRoot = page.locator(".hashti-text-area").filter({ has: custom });
+    const description = nativeRoot.locator(".hashti-field__description.react-aria-Text");
     const descriptionId = await description.getAttribute("id");
-    await expect(nativeRoot.locator(".cinder-field__error")).toHaveCount(0);
-    await expect(customRoot.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(nativeRoot.locator(".hashti-field__error")).toHaveCount(0);
+    await expect(customRoot.locator(".hashti-field__error")).toHaveCount(0);
     await submit.click();
     await expect(native).toBeFocused();
     await expect(native).toHaveAttribute("aria-invalid", "true");
     await expect(native).toHaveAccessibleDescription(/fill out this field/i);
-    const nativeError = nativeRoot.locator(".cinder-field__error.react-aria-FieldError");
+    const nativeError = nativeRoot.locator(".hashti-field__error.react-aria-FieldError");
     await expect(nativeError).toHaveText(/fill out this field/i);
     await expect(description).toHaveText("Native guidance");
     expect((await native.getAttribute("aria-describedby"))!.split(" ")).toEqual(
@@ -343,15 +343,15 @@ for (const theme of fieldThemes) {
         await nativeError.getAttribute("id"),
       ]),
     );
-    await expect(customRoot.locator(".cinder-field__error.react-aria-FieldError")).toHaveText(
+    await expect(customRoot.locator(".hashti-field__error.react-aria-FieldError")).toHaveText(
       "Add a note.",
     );
     await expect(custom).toHaveAccessibleDescription(/Add a note\./);
-    await expect(customRoot.locator(".cinder-field__description")).toHaveText("Custom guidance");
+    await expect(customRoot.locator(".hashti-field__description")).toHaveText("Custom guidance");
     await expect(description).toHaveAttribute("id", descriptionId!);
     if (theme === "frame-light" || theme === "frame-dark") {
       await expect(description).toBeVisible();
-      await expect(customRoot.locator(".cinder-field__description")).toBeVisible();
+      await expect(customRoot.locator(".hashti-field__description")).toBeVisible();
     }
     await native.fill("Entered");
     await custom.fill("Details");
@@ -361,8 +361,8 @@ for (const theme of fieldThemes) {
     );
     await expect(native).not.toHaveAttribute("aria-invalid", "true");
     await expect(custom).not.toHaveAttribute("aria-invalid", "true");
-    await expect(nativeRoot.locator(".cinder-field__error")).toHaveCount(0);
-    await expect(customRoot.locator(".cinder-field__error")).toHaveCount(0);
+    await expect(nativeRoot.locator(".hashti-field__error")).toHaveCount(0);
+    await expect(customRoot.locator(".hashti-field__error")).toHaveCount(0);
     await expect(description).toHaveAttribute("id", descriptionId!);
     await expect(description).toBeVisible();
   });
@@ -384,7 +384,7 @@ test("SearchField inputProps still replace raw input classes and override the pa
 test("Select part aliases preserve rich option children and numeric single/multiple keys", async () => {
   await openFieldParts();
   const single = page.locator('[data-field="select"]');
-  const value = single.locator(".cinder-select__value.react-aria-SelectValue");
+  const value = single.locator(".hashti-select__value.react-aria-SelectValue");
   await expect(value).toContainText("Reader");
   await single.getByRole("button").click();
   const options = page.getByRole("listbox", { name: "Part select" });
@@ -409,11 +409,11 @@ test("Button marks only omitted sizes while retaining resolved sizes and all six
     await openFieldParts(theme);
     expect(
       await page
-        .locator('[data-fixture="button-sizes"] .cinder-button')
+        .locator('[data-fixture="button-sizes"] .hashti-button')
         .evaluateAll((buttons) =>
           buttons.map((button) => [
             button.getAttribute("data-size"),
-            button.getAttribute("data-cinder-size-default"),
+            button.getAttribute("data-hashti-size-default"),
             getComputedStyle(button).minHeight,
           ]),
         ),
@@ -441,7 +441,7 @@ test("Button omission marker survives custom rendering, refs, render props, and 
   await expect(button).toHaveClass(/cinder-button.*consumer-pending/);
   await expect(button).toHaveText("Working");
   await expect(button.getByRole("progressbar", { name: "Saving contract" })).toBeVisible();
-  await expect(button).toHaveAttribute("data-cinder-size-default", "");
+  await expect(button).toHaveAttribute("data-hashti-size-default", "");
   await expect(button).toHaveAttribute("data-size", "lg");
   await button.press("Enter");
   await expect(button).toBeFocused();
@@ -530,19 +530,19 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
     await openFieldParts(theme);
     expect(
       await page
-        .locator('[data-fixture="button-sizes"] .cinder-button')
+        .locator('[data-fixture="button-sizes"] .hashti-button')
         .evaluateAll((buttons) => buttons.map((button) => button.getBoundingClientRect().height)),
     ).toEqual([44, 44, 32, 44, 48, 64, 80]);
     const field = page.locator('[data-field="text"]');
     const input = field.getByRole("textbox");
-    const label = field.locator(".cinder-field__label");
-    const error = field.locator(".cinder-field__error");
+    const label = field.locator(".hashti-field__label");
+    const error = field.locator(".hashti-field__error");
     await expect(label).toHaveCSS("font-size", "14px");
     await expect(label).toHaveCSS("line-height", "20px");
     await expect(label).toHaveCSS("font-weight", "600");
     await expect(error).toHaveCSS("font-size", "13px");
     await expect(error).toHaveCSS("line-height", "20px");
-    for (const control of [input, page.locator('[data-field="select"] .cinder-select-trigger')]) {
+    for (const control of [input, page.locator('[data-field="select"] .hashti-select-trigger')]) {
       expect((await control.boundingBox())!.height).toBe(44);
       await expect(control).toHaveCSS("font-size", "16px");
       await expect(control).toHaveCSS("line-height", "24px");
@@ -560,7 +560,7 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
     }
     const legacyNumber = page.getByRole("textbox", { name: "Legacy composed number" });
     await legacyNumber.focus();
-    const legacyGroup = page.locator(".cinder-input-group", { has: legacyNumber });
+    const legacyGroup = page.locator(".hashti-input-group", { has: legacyNumber });
     await expect(legacyGroup).toHaveCSS("outline-color", await color(theme, "focus"));
     await expect(legacyGroup).toHaveCSS("outline-style", "solid");
     await expect(legacyGroup).toHaveCSS("border-top-color", await color(theme, "support-error"));
@@ -569,20 +569,20 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
     await expect(disabled.locator("label")).toHaveCSS("color", await color(theme, "text-disabled"));
 
     await page.addStyleTag({
-      content: `.cinder-theme {
-      --cinder-body-01-font-weight: 500;
-      --cinder-body-01-letter-spacing: 0.5px;
-      --cinder-body-compact-01-font-size: 1rem;
-      --cinder-body-compact-01-font-weight: 700;
-      --cinder-body-compact-01-letter-spacing: 1px;
-      --cinder-label-01-font-weight: 500;
-      --cinder-label-01-letter-spacing: 0.75px;
-      --cinder-body-02-font-weight: 600;
-      --cinder-body-02-letter-spacing: 0.25px;
+      content: `.hashti-theme {
+      --hashti-body-01-font-weight: 500;
+      --hashti-body-01-letter-spacing: 0.5px;
+      --hashti-body-compact-01-font-size: 1rem;
+      --hashti-body-compact-01-font-weight: 700;
+      --hashti-body-compact-01-letter-spacing: 1px;
+      --hashti-label-01-font-weight: 500;
+      --hashti-label-01-letter-spacing: 0.75px;
+      --hashti-body-02-font-weight: 600;
+      --hashti-body-02-letter-spacing: 0.25px;
     }`,
     });
-    await expect(page.locator(".cinder-theme")).toHaveCSS("font-weight", "500");
-    await expect(page.locator(".cinder-theme")).toHaveCSS("letter-spacing", "0.5px");
+    await expect(page.locator(".hashti-theme")).toHaveCSS("font-weight", "500");
+    await expect(page.locator(".hashti-theme")).toHaveCSS("letter-spacing", "0.5px");
     const action = page.getByRole("button", { name: "Omitted size", exact: true });
     await expect(action).toHaveCSS("font-size", "16px");
     await expect(action).toHaveCSS("font-weight", "700");
@@ -599,7 +599,7 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
     const systemColors = await page.evaluate(() => {
       const probe = document.createElement("span");
       probe.style.forcedColorAdjust = "none";
-      document.querySelector("[data-cinder-theme]")!.append(probe);
+      document.querySelector("[data-hashti-theme]")!.append(probe);
       const color = (value: string) => {
         probe.style.color = value;
         return getComputedStyle(probe).color;
@@ -618,7 +618,7 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
     await expect(input).toHaveCSS("outline-color", systemColors.focus);
     const legacyNumber = page.getByRole("textbox", { name: "Legacy composed number" });
     await legacyNumber.focus();
-    const legacyGroup = page.locator(".cinder-input-group", { has: legacyNumber });
+    const legacyGroup = page.locator(".hashti-input-group", { has: legacyNumber });
     await expect(legacyGroup).toHaveCSS("border-top-style", "dashed");
     await expect(legacyGroup).toHaveCSS("outline-color", systemColors.focus);
     const disabled = page.locator('[data-fixture="legacy-disabled-field"]');
@@ -646,7 +646,7 @@ test("compound sizes produce 32/40/48px controls and equal bounded switcher segm
   ] as const) {
     const section = page.locator(`[data-density="${size}"]`);
     const triggerHeights = await section
-      .locator(".cinder-accordion-trigger")
+      .locator(".hashti-accordion-trigger")
       .evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect().height));
     expect(triggerHeights).toEqual([height, height]);
     const group = section.getByRole("radiogroup");
@@ -695,8 +695,8 @@ test("standard and compact toggles retain exact thumb size, inset, and logical t
           const control = page.locator(`[data-fixture="toggle-${size}-${direction}"]`);
           const geometry = () =>
             control.evaluate((element) => {
-              const track = element.querySelector(".cinder-switch-track")!.getBoundingClientRect();
-              const thumb = element.querySelector(".cinder-switch-thumb")!.getBoundingClientRect();
+              const track = element.querySelector(".hashti-switch-track")!.getBoundingClientRect();
+              const thumb = element.querySelector(".hashti-switch-thumb")!.getBoundingClientRect();
               return {
                 width: track.width,
                 height: track.height,
@@ -737,7 +737,7 @@ for (const theme of fieldThemes) {
       );
     }
     const mixed = page.locator('[data-fixture="choice-checkbox-disabled-mixed"]');
-    const mixedMark = mixed.locator(".cinder-checkbox-control");
+    const mixedMark = mixed.locator(".hashti-checkbox-control");
     await expect(mixed).toHaveAttribute("data-indeterminate");
     expect(
       await mixed.locator("input").evaluate((input: HTMLInputElement) => input.indeterminate),
@@ -745,7 +745,7 @@ for (const theme of fieldThemes) {
     await expect(mixedMark).toHaveCSS("background-color", await color(theme, "icon-disabled"));
     await expect(mixedMark).toHaveCSS("border-top-color", await color(theme, "icon-disabled"));
     const disabledSelectedMark = page.locator(
-      '[data-fixture="choice-checkbox-disabled-selected"] .cinder-checkbox-control',
+      '[data-fixture="choice-checkbox-disabled-selected"] .hashti-checkbox-control',
     );
     await expect(disabledSelectedMark).toHaveCSS(
       "background-color",
@@ -759,7 +759,7 @@ for (const theme of fieldThemes) {
     const grayText = await systemColor("GrayText");
     for (const state of ["selected", "mixed"]) {
       const mark = page.locator(
-        `[data-fixture="choice-checkbox-${state}"] .cinder-checkbox-control`,
+        `[data-fixture="choice-checkbox-${state}"] .hashti-checkbox-control`,
       );
       await expect(mark).toHaveCSS("background-color", highlight);
       await expect(mark).toHaveCSS("color", highlightText);
@@ -770,29 +770,29 @@ for (const theme of fieldThemes) {
     await expect(disabledSelectedMark).toHaveCSS("background-color", buttonFace);
     await expect(disabledSelectedMark).toHaveCSS("color", grayText);
     const selectedRadio = page.locator(
-      '[data-fixture="choice-radio-selected"] .cinder-radio-control',
+      '[data-fixture="choice-radio-selected"] .hashti-radio-control',
     );
     expect(
       await selectedRadio.evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
     ).toBe(highlight);
     const disabledRadio = page.locator(
-      '[data-fixture="choice-radio-disabled-selected"] .cinder-radio-control',
+      '[data-fixture="choice-radio-disabled-selected"] .hashti-radio-control',
     );
     expect(
       await disabledRadio.evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
     ).toBe(grayText);
     for (const name of ["selected", "small"]) {
       const toggle = page.locator(`[data-fixture="choice-switch-${name}"]`);
-      await expect(toggle.locator(".cinder-switch-track")).toHaveCSS("background-color", highlight);
-      await expect(toggle.locator(".cinder-switch-thumb")).toHaveCSS(
+      await expect(toggle.locator(".hashti-switch-track")).toHaveCSS("background-color", highlight);
+      await expect(toggle.locator(".hashti-switch-thumb")).toHaveCSS(
         "background-color",
         highlightText,
       );
       expect(highlight).not.toBe(highlightText);
       expect(
         await toggle.evaluate((toggle) => {
-          const track = toggle.querySelector(".cinder-switch-track")!.getBoundingClientRect();
-          const thumb = toggle.querySelector(".cinder-switch-thumb")!.getBoundingClientRect();
+          const track = toggle.querySelector(".hashti-switch-track")!.getBoundingClientRect();
+          const thumb = toggle.querySelector(".hashti-switch-thumb")!.getBoundingClientRect();
           return [
             track.width,
             track.height,
@@ -804,15 +804,15 @@ for (const theme of fieldThemes) {
       ).toEqual(name === "small" ? [32, 16, 10, 3, 3] : [48, 24, 18, 3, 3]);
     }
     const disabledSwitch = page.locator('[data-fixture="choice-switch-disabled"]');
-    await expect(disabledSwitch.locator(".cinder-switch-track")).toHaveCSS(
+    await expect(disabledSwitch.locator(".hashti-switch-track")).toHaveCSS(
       "background-color",
       buttonFace,
     );
-    await expect(disabledSwitch.locator(".cinder-switch-track")).toHaveCSS(
+    await expect(disabledSwitch.locator(".hashti-switch-track")).toHaveCSS(
       "border-top-color",
       grayText,
     );
-    await expect(disabledSwitch.locator(".cinder-switch-thumb")).toHaveCSS(
+    await expect(disabledSwitch.locator(".hashti-switch-thumb")).toHaveCSS(
       "background-color",
       grayText,
     );
@@ -820,10 +820,10 @@ for (const theme of fieldThemes) {
     await toggle.getByRole("switch").focus();
     await page.keyboard.press("Space");
     await expect(toggle).toHaveAttribute("data-focus-visible");
-    await expect(toggle.locator(".cinder-switch-track")).toHaveCSS("outline-color", highlight);
+    await expect(toggle.locator(".hashti-switch-track")).toHaveCSS("outline-color", highlight);
     for (const [name, role, control] of [
-      ["checkbox-off", "checkbox", ".cinder-checkbox-control"],
-      ["radio-selected", "radio", ".cinder-radio-control"],
+      ["checkbox-off", "checkbox", ".hashti-checkbox-control"],
+      ["radio-selected", "radio", ".hashti-radio-control"],
     ] as const) {
       const choice = page.locator(`[data-fixture="choice-${name}"]`);
       await choice.getByRole(role).press("Space");
@@ -841,7 +841,7 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
       expect((await choice.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     }
     const checkbox = page.locator('[data-fixture="choice-checkbox-off"]');
-    const mark = checkbox.locator(".cinder-checkbox-control");
+    const mark = checkbox.locator(".hashti-checkbox-control");
     await expect(mark).toHaveCSS("width", "18px");
     await expect(mark).toHaveCSS("height", "18px");
     await expect(mark).toHaveCSS("border-radius", "5px");
@@ -861,35 +861,35 @@ for (const theme of ["frame-light", "frame-dark"] as const) {
     await expect(mark).toHaveCSS("outline-color", await color(theme, "focus"));
     for (const name of ["checkbox-selected", "checkbox-mixed"]) {
       await expect(
-        page.locator(`[data-fixture="choice-${name}"] .cinder-checkbox-control`),
+        page.locator(`[data-fixture="choice-${name}"] .hashti-checkbox-control`),
       ).toHaveCSS("background-color", await color(theme, "focus"));
     }
     expect(
       await page
-        .locator('[data-fixture="choice-radio-selected"] .cinder-radio-control')
+        .locator('[data-fixture="choice-radio-selected"] .hashti-radio-control')
         .evaluate((mark) => getComputedStyle(mark, "::after").backgroundColor),
     ).toBe(await color(theme, "focus"));
     await expect(
-      page.locator('[data-fixture="choice-switch-selected"] .cinder-switch-track'),
+      page.locator('[data-fixture="choice-switch-selected"] .hashti-switch-track'),
     ).toHaveCSS("background-color", await color(theme, "focus"));
     for (const name of ["checkbox", "radio"]) {
       await expect(
-        page.locator(`[data-fixture="choice-group-${name}-off"] .cinder-${name}-control`),
+        page.locator(`[data-fixture="choice-group-${name}-off"] .hashti-${name}-control`),
       ).toHaveCSS("border-top-color", await color(theme, "border-strong-01"));
       await expect(
-        page.locator(`[data-fixture="choice-group-${name}-selected"] .cinder-${name}-control`),
+        page.locator(`[data-fixture="choice-group-${name}-selected"] .hashti-${name}-control`),
       ).toHaveCSS("border-top-color", await color(theme, "focus"));
       await expect(
-        page.locator(`[data-fixture="choice-group-${name}-disabled"] .cinder-${name}-control`),
+        page.locator(`[data-fixture="choice-group-${name}-disabled"] .hashti-${name}-control`),
       ).toHaveCSS("border-top-color", await color(theme, "icon-disabled"));
     }
     await expect(
-      page.locator('[data-fixture="choice-group-checkbox-mixed"] .cinder-checkbox-control'),
+      page.locator('[data-fixture="choice-group-checkbox-mixed"] .hashti-checkbox-control'),
     ).toHaveCSS("border-top-color", await color(theme, "focus"));
     const table = page.getByRole("grid", { name: "Compact report selection" });
     const selection = table.getByRole("checkbox", { name: "Select weekly report" });
     const target = selection.locator("xpath=ancestor::label[1]");
-    const compactMark = target.locator(".cinder-checkbox-control");
+    const compactMark = target.locator(".hashti-checkbox-control");
     await expect(target).toHaveCSS("min-height", "16px");
     await expect(target).toHaveCSS("padding-top", "0px");
     await expect(compactMark).toHaveCSS("width", "16px");
@@ -910,13 +910,13 @@ for (const theme of fieldThemes) {
       for (const locale of ["de-DE", "fa-IR", "ar"]) {
         const region = page.locator(`[data-fixture="choice-translation-${locale}"]`);
         await expect(region).toHaveAttribute("dir", locale === "de-DE" ? "ltr" : "rtl");
-        const choices = region.locator(".cinder-checkbox, .cinder-radio, .cinder-switch");
+        const choices = region.locator(".hashti-checkbox, .hashti-radio, .hashti-switch");
         await expect(choices).toHaveCount(3);
         for (const choice of await choices.all()) {
           const bounds = await choice.evaluate((choice) => {
             const label = choice.lastElementChild as HTMLElement;
             const mark = choice.querySelector<HTMLElement>(
-              ".cinder-checkbox-control, .cinder-radio-control, .cinder-switch-track",
+              ".hashti-checkbox-control, .hashti-radio-control, .hashti-switch-track",
             )!;
             return {
               overflow: label.scrollWidth - label.clientWidth,
@@ -925,8 +925,8 @@ for (const theme of fieldThemes) {
               labelHeight: label.getBoundingClientRect().height,
               lineHeight: parseFloat(getComputedStyle(label).lineHeight),
               markWidth: mark.getBoundingClientRect().width,
-              isCheckbox: choice.classList.contains("cinder-checkbox"),
-              isSwitch: choice.classList.contains("cinder-switch"),
+              isCheckbox: choice.classList.contains("hashti-checkbox"),
+              isSwitch: choice.classList.contains("hashti-switch"),
             };
           });
           expect(bounds.overflow).toBeLessThanOrEqual(1);
@@ -947,7 +947,7 @@ for (const theme of fieldThemes) {
 
 test("slider tracks and active thumbs match the single/range geometry without shifting their centers", async () => {
   await open();
-  const single = page.locator(".cinder-slider").first();
+  const single = page.locator(".hashti-slider").first();
   const thumb = single.locator(".react-aria-SliderThumb");
   const track = single.locator(".react-aria-SliderTrack");
   expect(await track.evaluate((element) => getComputedStyle(element, "::before").height)).toBe(
@@ -965,7 +965,7 @@ test("slider tracks and active thumbs match the single/range geometry without sh
   expect(active.x + active.width / 2).toBeCloseTo(before.x + before.width / 2, 1);
   expect(active.y + active.height / 2).toBeCloseTo(before.y + before.height / 2, 1);
   await page.mouse.up();
-  const rangeThumbs = page.locator(".cinder-slider").last().locator(".react-aria-SliderThumb");
+  const rangeThumbs = page.locator(".hashti-slider").last().locator(".react-aria-SliderThumb");
   for (const rangeThumb of await rangeThumbs.all()) {
     await expect(rangeThumb).toHaveCSS("width", "16px");
     await expect(rangeThumb).toHaveCSS("height", "16px");
@@ -984,7 +984,7 @@ test("supporting text and block code use Carbon's compact type roles", async () 
     "letter-spacing",
     "0.32px",
   );
-  const code = page.locator(".cinder-code-snippet pre");
+  const code = page.locator(".hashti-code-snippet pre");
   await expect(code).toHaveCSS("font-size", "12px");
   expect(
     await code.evaluate((element) => Number.parseFloat(getComputedStyle(element).lineHeight)),
@@ -1057,7 +1057,7 @@ for (const theme of carbonThemes) {
     for (const kind of ["info", "success", "warning", "error"] as const) {
       for (const inverse of [false, true]) {
         const notification = page.locator(
-          `.cinder-notification[data-kind="${kind}"]${inverse ? ":not([data-low-contrast])" : "[data-low-contrast]"}`,
+          `.hashti-notification[data-kind="${kind}"]${inverse ? ":not([data-low-contrast])" : "[data-low-contrast]"}`,
         );
         const support = await color(theme, inverse ? `support-${kind}-inverse` : `support-${kind}`);
         await expect(notification).toHaveCSS("border-inline-start-color", support);
@@ -1066,7 +1066,7 @@ for (const theme of carbonThemes) {
           "background-color",
           await color(theme, inverse ? "background-inverse" : `notification-background-${kind}`),
         );
-        await expect(notification.locator(".cinder-notification-content")).toHaveCSS(
+        await expect(notification.locator(".hashti-notification-content")).toHaveCSS(
           "padding-top",
           "15px",
         );
@@ -1082,7 +1082,7 @@ for (const theme of carbonThemes) {
       }
     }
     await page.getByRole("button", { name: "Show contract toast" }).click();
-    const toast = page.locator(".cinder-toast");
+    const toast = page.locator(".hashti-toast");
     await expect(toast).toBeVisible();
     expect((await toast.boundingBox())!.width).toBe(288);
     const close = toast.getByRole("button", { name: "Dismiss notification" });
@@ -1095,11 +1095,11 @@ for (const theme of carbonThemes) {
 
   test(`${theme}: calendar geometry, blue selection, range interior, and inner focus stay distinct`, async () => {
     await open(theme);
-    const single = page.locator(".cinder-calendar:not(.cinder-range-calendar)");
+    const single = page.locator(".hashti-calendar:not(.hashti-range-calendar)");
     expect((await single.boundingBox())!.width).toBe(288);
     await expect(single).toHaveCSS("padding", "4px 4px 8px");
     const navigation = single
-      .locator(".cinder-calendar-header")
+      .locator(".hashti-calendar-header")
       .getByRole("button", { name: "Next", exact: true });
     expect((await navigation.boundingBox())!.height).toBe(40);
     const selected = single.locator(".react-aria-CalendarCell[data-selected]");
@@ -1116,7 +1116,7 @@ for (const theme of carbonThemes) {
     await expect(ordinary).not.toHaveAttribute("data-selected");
     await expect(ordinary).toHaveCSS("outline-width", "2px");
     await expect(ordinary).toHaveCSS("outline-color", await color(theme, "button-primary"));
-    const range = page.locator(".cinder-range-calendar");
+    const range = page.locator(".hashti-range-calendar");
     const endpoints = range.locator(
       ".react-aria-CalendarCell:is([data-selection-start], [data-selection-end])",
     );

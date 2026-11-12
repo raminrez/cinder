@@ -4,5 +4,5 @@ import { ColorSwatch } from "./color";
 
 test("renders ColorSwatch", () => {
   const html = renderToStaticMarkup(<ColorSwatch color="#00b4d8" />);
-  expect(html).toContain("cinder-color-swatch");
+  expect(html).toContain("hashti-color-swatch");
 });

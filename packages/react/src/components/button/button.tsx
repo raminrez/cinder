@@ -40,17 +40,17 @@ export function Button({
   return (
     <RACButton
       {...props}
-      className={classes("cinder-button", className)}
+      className={classes("hashti-button", className)}
       data-variant={variant}
       data-size={size}
-      data-cinder-size-default={requestedSize === undefined ? "" : undefined}
+      data-hashti-size-default={requestedSize === undefined ? "" : undefined}
       data-icon-only={iconOnly || undefined}
     >
       {composeRenderProps(children, (content, { isPending }) => (
         <>
           {content}
           {isPending && (
-            <RACProgressBar className="cinder-spinner" isIndeterminate aria-label={pendingLabel} />
+            <RACProgressBar className="hashti-spinner" isIndeterminate aria-label={pendingLabel} />
           )}
         </>
       ))}
@@ -69,7 +69,7 @@ export function Link({ className, inline, ...props }: LinkProps) {
     <RACLink
       {...props}
       data-inline={inline || undefined}
-      className={classes("cinder-link", className)}
+      className={classes("hashti-link", className)}
     />
   );
 }
@@ -86,7 +86,7 @@ export function ToggleButton({ className, size, ...props }: ToggleButtonProps) {
     <RACToggleButton
       {...props}
       data-size={size ?? inheritedSize}
-      className={classes("cinder-toggle-button", className)}
+      className={classes("hashti-toggle-button", className)}
     />
   );
 }
@@ -103,7 +103,7 @@ export function ContentSwitcher({ className, size = "md", ...props }: ContentSwi
         disallowEmptySelection
         {...props}
         data-size={size}
-        className={classes("cinder-content-switcher", className)}
+        className={classes("hashti-content-switcher", className)}
       />
     </ContentSwitcherSizeContext.Provider>
   );

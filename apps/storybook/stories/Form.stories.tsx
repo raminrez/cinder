@@ -307,7 +307,7 @@ function deferredRequest() {
 
 function fieldDescription(control: HTMLElement) {
   const description = control.parentElement?.querySelector<HTMLElement>(
-    ".cinder-field__description",
+    ".hashti-field__description",
   );
   if (!description) throw new Error("The default field must retain its description.");
   return description;

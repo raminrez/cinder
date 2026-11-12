@@ -1,14 +1,14 @@
 /* Hashti Modern Aesthetic - NumberField */
 @layer hashti.components {
   .hashti-number-field,
-  .cinder-number-field {
+  .hashti-number-field {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
   .hashti-number-field .hashti-field__control,
-  .cinder-number-field .cinder-field__control {
+  .hashti-number-field .hashti-field__control {
     display: inline-flex;
     align-items: center;
     border-radius: var(--hashti-control-radius, 12px);
@@ -19,13 +19,13 @@
   }
 
   .hashti-number-field .hashti-field__control:focus-within,
-  .cinder-number-field .cinder-field__control:focus-within {
+  .hashti-number-field .hashti-field__control:focus-within {
     border-color: var(--hashti-focus, #0f62fe);
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-number-field input,
-  .cinder-number-field input {
+  .hashti-number-field input {
     flex: 1;
     height: 44px;
     padding: 0 var(--hashti-spacing-04, 12px);

@@ -104,7 +104,7 @@ function SnippetTypesExample() {
           maxHeight="8rem"
           copyable
         >
-          {`{\n  "name": "cinder-edge-gateway",\n  "replicas": 4,\n  "regions": ["us-east", "eu-central", "ap-southeast"],\n  "monitoring": { "enabled": true, "sampleRate": 0.05 }\n}`}
+          {`{\n  "name": "hashti-edge-gateway",\n  "replicas": 4,\n  "regions": ["us-east", "eu-central", "ap-southeast"],\n  "monitoring": { "enabled": true, "sampleRate": 0.05 }\n}`}
         </CodeSnippet>
       </div>
 
@@ -114,10 +114,10 @@ function SnippetTypesExample() {
           <h4 className="content-card-title">Inline Code Reference</h4>
           <p className="content-card-description">Embedded directly into descriptive prose.</p>
         </div>
-        <p style={{ margin: 0, color: "var(--cinder-text-primary)", fontSize: "0.875rem" }}>
+        <p style={{ margin: 0, color: "var(--hashti-text-primary)", fontSize: "0.875rem" }}>
           To apply dark mode styling, set the property{" "}
           <CodeSnippet label="Theme attribute" type="inline" copyable={false}>
-            data-cinder-theme="frame-dark"
+            data-hashti-theme="frame-dark"
           </CodeSnippet>{" "}
           on your application root element.
         </p>
@@ -137,7 +137,7 @@ export const SnippetTypes: Story = {
     const jsonSnippet = canvas.getByRole("generic", { name: "JSON cluster config" });
     expect(jsonSnippet).toBeInTheDocument();
 
-    const inlineCode = canvas.getByText('data-cinder-theme="frame-dark"');
+    const inlineCode = canvas.getByText('data-hashti-theme="frame-dark"');
     expect(inlineCode).toBeInTheDocument();
   },
 };

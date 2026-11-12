@@ -1,16 +1,16 @@
 /* Hashti Modern Aesthetic - DatePicker & Calendar */
 @layer hashti.components {
   .hashti-date-picker,
-  .cinder-date-picker,
+  .hashti-date-picker,
   .hashti-date-range-picker,
-  .cinder-date-range-picker {
+  .hashti-date-range-picker {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
   .hashti-date-popover,
-  .cinder-date-popover {
+  .hashti-date-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
     background-color: var(--hashti-layer, #ffffff);
@@ -20,33 +20,33 @@
   }
 
   .hashti-calendar,
-  .cinder-calendar {
+  .hashti-calendar {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
   .hashti-calendar-header,
-  .cinder-calendar-header {
+  .hashti-calendar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
   .hashti-calendar-header h2,
-  .cinder-calendar-header h2 {
+  .hashti-calendar-header h2 {
     font-size: 0.875rem;
     font-weight: 600;
   }
 
   .hashti-calendar td,
-  .cinder-calendar td {
+  .hashti-calendar td {
     padding: 2px;
     text-align: center;
   }
 
   .hashti-calendar .react-aria-CalendarCell,
-  .cinder-calendar .react-aria-CalendarCell {
+  .hashti-calendar .react-aria-CalendarCell {
     width: 32px;
     height: 32px;
     display: inline-flex;
@@ -59,12 +59,12 @@
   }
 
   .hashti-calendar .react-aria-CalendarCell[data-hovered],
-  .cinder-calendar .react-aria-CalendarCell[data-hovered] {
+  .hashti-calendar .react-aria-CalendarCell[data-hovered] {
     background-color: var(--hashti-layer-accent-01, #f4f4f4);
   }
 
   .hashti-calendar .react-aria-CalendarCell[data-selected],
-  .cinder-calendar .react-aria-CalendarCell[data-selected] {
+  .hashti-calendar .react-aria-CalendarCell[data-selected] {
     background-color: var(--hashti-primary, #08BDBA);
     color: #ffffff;
     font-weight: 600;

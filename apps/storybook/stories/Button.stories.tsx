@@ -351,7 +351,7 @@ export const Customization: Story = {
     const button = canvas.getByRole("button", { name: "Save draft" });
     await userEvent.click(canvas.getByRole("button", { name: "Focus save action" }));
     await expect(button).toHaveFocus();
-    await expect(button).toHaveClass("cinder-button", "action-story-custom-button");
+    await expect(button).toHaveClass("hashti-button", "action-story-custom-button");
     await expect(button).toHaveAttribute("data-custom-render", "true");
     await userEvent.keyboard("[Space>]");
     await expect(button).toHaveClass("action-story-custom-button--pressed");

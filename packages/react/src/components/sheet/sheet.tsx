@@ -55,7 +55,7 @@ export function SheetOverlay({
         position={position}
         preventDismissal={preventDismissal}
         className={classes(
-          "cinder-sheet-overlay",
+          "hashti-sheet-overlay",
           classes(appearanceClassName ?? "", className)
         )}
       >
@@ -80,7 +80,7 @@ export function SheetBackdrop({
       {...props}
       ref={ref}
       swipeAnimation={swipeAnimation}
-      className={classes("cinder-sheet-backdrop", className)}
+      className={classes("hashti-sheet-backdrop", className)}
     />
   );
 }
@@ -99,7 +99,7 @@ export function SheetContent({
     <RACSheetContent
       {...props}
       ref={ref}
-      className={cx("cinder-sheet-content", className)}
+      className={cx("hashti-sheet-content", className)}
     >
       {children}
     </RACSheetContent>
@@ -115,7 +115,7 @@ export function SheetHandle({ className, ...props }: SheetHandleProps) {
     <div
       aria-hidden="true"
       {...props}
-      className={cx("cinder-sheet-handle", className)}
+      className={cx("hashti-sheet-handle", className)}
     />
   );
 }
@@ -140,7 +140,7 @@ export function SheetRoot({
       ref={ref}
       overscrollPadding={overscrollPadding}
       stackAnimation={stackAnimation}
-      className={classes("cinder-sheet", className)}
+      className={classes("hashti-sheet", className)}
     >
       {(renderProps) => (
         <>

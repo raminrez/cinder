@@ -50,7 +50,7 @@ export function Card({
           onPress?.();
         }}
         onKeyDown={handleKeyDown}
-        className={cx("cinder-card", className)}
+        className={cx("hashti-card", className)}
       >
         {children}
       </div>
@@ -62,7 +62,7 @@ export function Card({
       {...props}
       ref={ref}
       data-elevation={elevation}
-      className={cx("cinder-card", className)}
+      className={cx("hashti-card", className)}
     >
       {children}
     </div>
@@ -86,11 +86,11 @@ export function CardHeader({
   ...props
 }: CardHeaderProps) {
   return (
-    <div {...props} ref={ref} className={cx("cinder-card-header", className)}>
+    <div {...props} ref={ref} className={cx("hashti-card-header", className)}>
       {title || description ? (
-        <div className="cinder-card-header-content">
-          {title && (typeof title === "string" ? <h3 className="cinder-card-title">{title}</h3> : title)}
-          {description && (typeof description === "string" ? <p className="cinder-card-description">{description}</p> : description)}
+        <div className="hashti-card-header-content">
+          {title && (typeof title === "string" ? <h3 className="hashti-card-title">{title}</h3> : title)}
+          {description && (typeof description === "string" ? <p className="hashti-card-description">{description}</p> : description)}
         </div>
       ) : (
         children
@@ -106,7 +106,7 @@ export interface CardBodyProps extends ComponentPropsWithRef<"div"> {
 
 export function CardBody({ children, className, ref, ...props }: CardBodyProps) {
   return (
-    <div {...props} ref={ref} className={cx("cinder-card-body", className)}>
+    <div {...props} ref={ref} className={cx("hashti-card-body", className)}>
       {children}
     </div>
   );
@@ -118,7 +118,7 @@ export interface CardFooterProps extends ComponentPropsWithRef<"div"> {
 
 export function CardFooter({ children, className, ref, ...props }: CardFooterProps) {
   return (
-    <div {...props} ref={ref} className={cx("cinder-card-footer", className)}>
+    <div {...props} ref={ref} className={cx("hashti-card-footer", className)}>
       {children}
     </div>
   );

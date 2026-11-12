@@ -1,9 +1,9 @@
 /* Hashti Modern Aesthetic - TextField & TextArea */
 @layer hashti.components {
   .hashti-text-field input,
-  .cinder-text-field input,
+  .hashti-text-field input,
   .hashti-field-input,
-  .cinder-field-input {
+  .hashti-field-input {
     width: 100%;
     height: 44px;
     padding: 0 var(--hashti-spacing-04, 12px);
@@ -17,9 +17,9 @@
   }
 
   .hashti-text-area textarea,
-  .cinder-text-area textarea,
+  .hashti-text-area textarea,
   .hashti-field-textarea,
-  .cinder-field-textarea {
+  .hashti-field-textarea {
     width: 100%;
     padding: var(--hashti-spacing-03, 8px) var(--hashti-spacing-04, 12px);
     border-radius: var(--hashti-control-radius, 12px);
@@ -33,13 +33,13 @@
   }
 
   .hashti-text-field input:focus,
-  .cinder-text-field input:focus,
+  .hashti-text-field input:focus,
   .hashti-field-input:focus,
-  .cinder-field-input:focus,
+  .hashti-field-input:focus,
   .hashti-text-area textarea:focus,
-  .cinder-text-area textarea:focus,
+  .hashti-text-area textarea:focus,
   .hashti-field-textarea:focus,
-  .cinder-field-textarea:focus {
+  .hashti-field-textarea:focus {
     outline: none;
     border-color: var(--hashti-focus, #0f62fe);
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);

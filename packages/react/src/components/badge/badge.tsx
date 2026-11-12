@@ -71,8 +71,8 @@ export function Badge({
       data-kind={kind}
       data-placement={normalizedPlacement}
       className={cx(
-        "cinder-badge",
-        isDotMode ? "cinder-badge--dot" : undefined,
+        "hashti-badge",
+        isDotMode ? "hashti-badge--dot" : undefined,
         className,
       )}
     >
@@ -82,7 +82,7 @@ export function Badge({
 
   if (children) {
     return (
-      <span className="cinder-badge-wrapper">
+      <span className="hashti-badge-wrapper">
         {children}
         {badgeElement}
       </span>
@@ -117,7 +117,7 @@ export function AILabel({
         aria-label={revertLabel}
         data-revert-active="true"
         onClick={onRevert}
-        className={cx("hashti-ai-label cinder-ai-label", className)}
+        className={cx("hashti-ai-label hashti-ai-label", className)}
       >
         <span className="hashti-ai-icon" aria-hidden="true">↺</span>
         <span>{label}</span>
@@ -129,7 +129,7 @@ export function AILabel({
     <span
       ref={ref as Ref<HTMLSpanElement>}
       role="status"
-      className={cx("hashti-ai-label cinder-ai-label", className)}
+      className={cx("hashti-ai-label hashti-ai-label", className)}
     >
       <span className="hashti-ai-icon" aria-hidden="true">✦</span>
       <span>{label}</span>

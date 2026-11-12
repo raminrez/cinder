@@ -52,9 +52,9 @@ describe("Meter unit tests", () => {
           optimum={20}
         />
       );
-      expect(html).toContain("cinder-meter");
-      expect(html).toContain("cinder-meter-track");
-      expect(html).toContain("cinder-meter-fill");
+      expect(html).toContain("hashti-meter");
+      expect(html).toContain("hashti-meter-track");
+      expect(html).toContain("hashti-meter-fill");
       expect(html).toContain("Disk Usage");
       expect(html).toContain('data-tone="success"');
       expect(html).toContain('role="meter"');
@@ -75,7 +75,7 @@ describe("Meter unit tests", () => {
           segments={segments}
         />
       );
-      expect(html).toContain("cinder-meter-segment");
+      expect(html).toContain("hashti-meter-segment");
       expect(html).toContain("background-color:#0f62fe");
       expect(html).toContain("background-color:#8a3ffc");
       expect(html).toContain("background-color:#6f6f6f");
@@ -94,11 +94,11 @@ describe("Meter unit tests", () => {
           size="lg"
         />
       );
-      expect(html).toContain("cinder-meter--circular");
-      expect(html).toContain("cinder-meter-circle-container");
-      expect(html).toContain("cinder-meter-circle-svg");
-      expect(html).toContain("cinder-meter-circle-track");
-      expect(html).toContain("cinder-meter-circle-fill");
+      expect(html).toContain("hashti-meter--circular");
+      expect(html).toContain("hashti-meter-circle-container");
+      expect(html).toContain("hashti-meter-circle-svg");
+      expect(html).toContain("hashti-meter-circle-track");
+      expect(html).toContain("hashti-meter-circle-fill");
       expect(html).toContain('data-tone="error"');
       expect(html).toContain('data-size="lg"');
     });
@@ -114,11 +114,11 @@ describe("Meter unit tests", () => {
           <Meter.HelperText>Approaching limit</Meter.HelperText>
         </Meter.Root>
       );
-      expect(html).toContain("cinder-meter-label-text");
+      expect(html).toContain("hashti-meter-label-text");
       expect(html).toContain("Compound Meter");
-      expect(html).toContain("cinder-meter-value-text");
+      expect(html).toContain("hashti-meter-value-text");
       expect(html).toContain("75%");
-      expect(html).toContain("cinder-meter-helper");
+      expect(html).toContain("hashti-meter-helper");
       expect(html).toContain("Approaching limit");
       expect(html).toContain('data-tone="warning"');
     });
@@ -132,8 +132,8 @@ describe("DropZone & FileTrigger unit tests", () => {
         <span>Drop files here</span>
       </DropZone>
     );
-    expect(html).toContain("cinder-dropzone");
-    expect(html).toContain("cinder-dropzone--dashed");
+    expect(html).toContain("hashti-dropzone");
+    expect(html).toContain("hashti-dropzone--dashed");
     expect(html).toContain('data-variant="dashed"');
     expect(html).toContain("Drop files here");
   });
@@ -144,7 +144,7 @@ describe("DropZone & FileTrigger unit tests", () => {
         <span>Drop files</span>
       </DropZone>
     );
-    expect(solidHtml).toContain("cinder-dropzone--solid");
+    expect(solidHtml).toContain("hashti-dropzone--solid");
     expect(solidHtml).toContain('data-variant="solid"');
 
     const cardHtml = renderToStaticMarkup(
@@ -152,7 +152,7 @@ describe("DropZone & FileTrigger unit tests", () => {
         <span>Drop files</span>
       </DropZone>
     );
-    expect(cardHtml).toContain("cinder-dropzone--card");
+    expect(cardHtml).toContain("hashti-dropzone--card");
     expect(cardHtml).toContain('data-variant="card"');
   });
 
@@ -167,7 +167,7 @@ describe("DropZone & FileTrigger unit tests", () => {
         </DropZone.Feedback>
       </DropZone>
     );
-    expect(html).toContain("cinder-dropzone-feedback");
+    expect(html).toContain("hashti-dropzone-feedback");
     expect(html).toContain("Browse files");
     // FileTrigger renders an invisible input[type=file]
     expect(html).toContain('type="file"');
@@ -183,8 +183,8 @@ describe("DropZone & FileTrigger unit tests", () => {
         </DropZone.FileTrigger>
       </DropZone.Root>
     );
-    expect(html).toContain("cinder-dropzone--card");
-    expect(html).toContain("cinder-dropzone-feedback");
+    expect(html).toContain("hashti-dropzone--card");
+    expect(html).toContain("hashti-dropzone-feedback");
     expect(html).toContain("Drop Zone Content");
     expect(html).toContain("Upload");
   });

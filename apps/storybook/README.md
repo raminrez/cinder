@@ -129,8 +129,8 @@ now indexes **104 stories**.
 The Select trigger inherits Frame's 44px ordinary control height (32/44/48px for `sm`/`md`/`lg`),
 10px corners, chevron down rotation on open, and attached recovery band when invalid.
 Overlays receive the portable Theme `appearanceClassName` and effective language across portals.
-Modal uses Frame's 18px corners (`--cinder-overlay-radius`), an opaque surface, and 50% dark backdrop;
-Popover uses 14px corners (`--cinder-popover-radius`) with `0 8px 24px` elevation; Tooltip uses 10px corners.
+Modal uses Frame's 18px corners (`--hashti-overlay-radius`), an opaque surface, and 50% dark backdrop;
+Popover uses 14px corners (`--hashti-popover-radius`) with `0 8px 24px` elevation; Tooltip uses 10px corners.
 
 Run `bun test --timeout 60000 tests/browser/storybook.test.ts` after the static build
 to execute the indexed stories in both Frame themes and require successful play

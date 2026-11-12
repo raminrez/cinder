@@ -50,7 +50,7 @@ afterAll(async () => {
 async function visit(theme: RelayTheme) {
   await page.goto(`/relay?theme=${theme}`);
   await expect(page.getByRole("heading", { name: "Relay components" })).toBeVisible();
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", theme);
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", theme);
   await page.evaluate(() => document.fonts.ready);
 }
 
@@ -66,7 +66,7 @@ async function expectAccessible() {
   // Axe 4.14 treats option descriptions as labels; verify their RAC associations explicitly.
   const describedOptions: string[] = [];
   for (const option of await page
-    .locator('.cinder-select-popover [role="option"][aria-describedby]')
+    .locator('.hashti-select-popover [role="option"][aria-describedby]')
     .all()) {
     await expect(option).toHaveAccessibleName(await option.locator('[slot="label"]').innerText());
     await expect(option).toHaveAccessibleDescription(
@@ -251,8 +251,8 @@ for (const theme of relayThemes) {
     const dialog = page.getByRole("dialog", { name: "Invite a teammate", exact: true });
     const email = dialog.getByRole("textbox", { name: "Email address (required)" });
     await expect(email).toBeFocused();
-    await expect(page.locator(".cinder-modal")).toHaveCSS("border-radius", "20px");
-    await expect(page.locator(".cinder-modal-overlay")).toHaveAttribute("data-cinder-theme", theme);
+    await expect(page.locator(".hashti-modal")).toHaveCSS("border-radius", "20px");
+    await expect(page.locator(".hashti-modal-overlay")).toHaveAttribute("data-hashti-theme", theme);
     await dialog.getByRole("button", { name: "Preview invitation" }).focus();
     await page.keyboard.press("Tab");
     await expect(dialog.getByRole("button", { name: "Close invitation dialog" })).toBeFocused();
@@ -263,8 +263,8 @@ for (const theme of relayThemes) {
     await email.fill("alex@example.com");
     const role = dialog.getByRole("button", { name: "Viewer Workspace role", exact: true });
     await role.click();
-    const popover = page.locator(".cinder-select-popover");
-    await expect(popover).toHaveAttribute("data-cinder-theme", theme);
+    const popover = page.locator(".hashti-select-popover");
+    await expect(popover).toHaveAttribute("data-hashti-theme", theme);
     await expect(popover).toHaveCSS("border-radius", "12px");
     await expect(popover).toHaveCSS("border-color", await color(theme, "border-subtle-00"));
     await expect(
@@ -298,7 +298,7 @@ for (const theme of relayThemes) {
       ).toBeLessThanOrEqual(1);
       if (width === 390) await expectAccessible();
       await role.click();
-      for (const surface of [page.locator(".cinder-modal"), popover]) {
+      for (const surface of [page.locator(".hashti-modal"), popover]) {
         const bounds = (await surface.boundingBox())!;
         expect(bounds.x).toBeGreaterThanOrEqual(0);
         expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
@@ -326,7 +326,7 @@ for (const theme of relayThemes) {
     await expect(customField).toHaveCSS("border-radius", "8px");
     await expect(restore).toHaveCSS("border-radius", "8px");
     await expect(page.getByTestId("relay-live-button")).toHaveCSS("transition-duration", "0s");
-    await expect(page.locator(".relay-pinned .cinder-spinner").first()).toHaveCSS(
+    await expect(page.locator(".relay-pinned .hashti-spinner").first()).toHaveCSS(
       "animation-name",
       "none",
     );
@@ -357,35 +357,35 @@ for (const theme of relayThemes) {
       ),
     );
     for (const row of await page.locator(".relay-state-table tbody tr").all()) {
-      const button = row.locator(".cinder-button").first();
+      const button = row.locator(".hashti-button").first();
       await expect(button).toHaveCSS("color", system.ButtonText!);
       await expect(button).toHaveCSS("background-color", system.ButtonFace!);
-      await expect(row.locator(".cinder-spinner")).toHaveCSS("color", system.ButtonText!);
+      await expect(row.locator(".hashti-spinner")).toHaveCSS("color", system.ButtonText!);
       await expect(row.locator("[data-focus-visible]")).toHaveCSS(
         "outline-color",
         system.Highlight!,
       );
       await expect(row.locator("[data-disabled]")).toHaveCSS("color", system.GrayText!);
     }
-    await expect(page.locator(".relay-playground .cinder-select-trigger")).toHaveCSS(
+    await expect(page.locator(".relay-playground .hashti-select-trigger")).toHaveCSS(
       "color",
       system.ButtonText!,
     );
-    await expect(page.locator(".relay-playground .cinder-select-trigger > svg")).toHaveCSS(
+    await expect(page.locator(".relay-playground .hashti-select-trigger > svg")).toHaveCSS(
       "color",
       system.ButtonText!,
     );
-    const themeChoice = page.locator(".relay-page-heading .cinder-toggle-button[data-selected]");
+    const themeChoice = page.locator(".relay-page-heading .hashti-toggle-button[data-selected]");
     await expect(themeChoice).toHaveCSS("background-color", system.Highlight!);
     await expect(themeChoice).toHaveCSS("color", system.HighlightText!);
     const selected = page
-      .locator(".relay-selection-examples .cinder-switch[data-selected]:not([data-disabled])")
+      .locator(".relay-selection-examples .hashti-switch[data-selected]:not([data-disabled])")
       .first();
-    await expect(selected.locator(".cinder-switch-track")).toHaveCSS(
+    await expect(selected.locator(".hashti-switch-track")).toHaveCSS(
       "background-color",
       system.Highlight!,
     );
-    await expect(selected.locator(".cinder-switch-thumb")).toHaveCSS(
+    await expect(selected.locator(".hashti-switch-thumb")).toHaveCSS(
       "background-color",
       system.HighlightText!,
     );
@@ -394,15 +394,15 @@ for (const theme of relayThemes) {
 
 test("Relay and Carbon routes select valid themes and retain Relay preference on reload", async () => {
   await page.goto("/relay?theme=g100");
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", "relay-light");
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", "relay-light");
   await page
     .getByRole("radiogroup", { name: "Relay theme" })
     .getByRole("radio", { name: "Dark", exact: true })
     .click();
   await page.goto("/relay/");
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", "relay-dark");
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", "relay-dark");
   await page.reload();
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", "relay-dark");
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", "relay-dark");
   await page.goto("/components/button?theme=relay-dark");
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", "g10");
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", "g10");
 });

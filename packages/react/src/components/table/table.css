@@ -1,81 +1,30 @@
-/* Hashti Modern Aesthetic - Table */
+/* Hashti Modern Aesthetic - table */
 @layer hashti.components {
-  .hashti-table,
-  .cinder-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: var(--hashti-control-radius, 12px);
-    overflow: hidden;
-    border: 1px solid var(--hashti-border-subtle, #e0e0e0);
-    background-color: var(--hashti-layer, #ffffff);
+  [data-hashti-theme] .hashti-table,
+  [data-hashti-theme] .hashti-table,
+  [data-hashti-theme] .hashti-table,
+  [data-hashti-theme] .hashti-table {
+    border-radius: var(--hashti-surface-radius, 16px);
   }
-
-  .hashti-table th,
-  .cinder-table th {
-    background-color: var(--hashti-layer-accent-01, #f4f4f4);
-    padding: 12px 16px;
-    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
-    font-weight: 600;
-    text-align: left;
-    color: var(--hashti-text-primary, #161616);
-    border-bottom: 1px solid var(--hashti-border-subtle, #e0e0e0);
+  [data-hashti-theme] th,
+  [data-hashti-theme] .hashti-table th,
+  [data-hashti-theme] .hashti-table th,
+  [data-hashti-theme] th,
+  [data-hashti-theme] .hashti-table th,
+  [data-hashti-theme] .hashti-table th {
+    text-align: start;
   }
-
-  .hashti-table td,
-  .cinder-table td {
-    padding: 12px 16px;
-    font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
-    color: var(--hashti-text-secondary, #525252);
-    border-bottom: 1px solid var(--hashti-border-subtle, #e0e0e0);
-    transition: background-color 150ms ease;
+  [data-hashti-theme] .hashti-table-row[data-pressed],
+  [data-hashti-theme] .hashti-table-row[data-pressed],
+  [data-hashti-theme] .hashti-table-row[data-pressed],
+  [data-hashti-theme] .hashti-table-row[data-pressed] {
+    transform: scale(0.995);
   }
-
-  .hashti-table tr:last-child td,
-  .cinder-table tr:last-child td {
-    border-bottom: none;
-  }
-
-  .hashti-table tr[data-hovered] td,
-  .cinder-table tr[data-hovered] td {
-    background-color: var(--hashti-layer-accent-01, #f9f9f9);
-  }
-
-  .hashti-table tr[data-selected] td,
-  .cinder-table tr[data-selected] td {
-    background-color: var(--hashti-layer-accent-01, #e6f7f7);
-  }
-
-  .hashti-table-batch-actions,
-  .cinder-table-batch-actions {
-    display: flex;
-    align-items: center;
-    background-color: var(--hashti-primary, #08BDBA);
-    color: #ffffff;
-    border-radius: var(--hashti-control-radius, 12px);
-    padding: 8px 16px;
-    margin-bottom: 8px;
-    box-shadow: 0 4px 12px rgba(8, 189, 186, 0.25);
-  }
-
-  .hashti-table-batch-bar,
-  .cinder-table-batch-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .hashti-table-batch-count,
-  .cinder-table-batch-count {
-    font-weight: 600;
-    font-size: 0.875rem;
-  }
-
-  .hashti-table-batch-action-list,
-  .cinder-table-batch-action-list {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  [data-hashti-theme] .hashti-table-row[data-focus-visible],
+  [data-hashti-theme] .hashti-table-row[data-focus-visible],
+  [data-hashti-theme] .hashti-table-row[data-focus-visible],
+  [data-hashti-theme] .hashti-table-row[data-focus-visible] {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--hashti-focus, #0f62fe);
   }
 }

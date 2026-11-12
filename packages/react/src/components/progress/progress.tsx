@@ -29,25 +29,25 @@ export function ProgressBar({
     <RACProgressBar
       {...props}
       data-status={status}
-      className={classes("hashti-progress cinder-progress", className)}
+      className={classes("hashti-progress hashti-progress", className)}
     >
       {children ??
         (({ percentage, valueText, isIndeterminate }) => (
           <>
-            <div className="hashti-progress-label cinder-progress-label">
+            <div className="hashti-progress-label hashti-progress-label">
               <Label>{label}</Label>
               {valueText && <span>{valueText}</span>}
             </div>
             <div
-              className="hashti-progress-track cinder-progress-track"
+              className="hashti-progress-track hashti-progress-track"
               data-indeterminate={isIndeterminate || undefined}
             >
               <div
-                className="hashti-progress-fill cinder-progress-fill"
+                className="hashti-progress-fill hashti-progress-fill"
                 style={{ width: percentage == null ? "30%" : `${percentage}%` }}
               />
             </div>
-            {helperText && <span className="hashti-description cinder-description">{helperText}</span>}
+            {helperText && <span className="hashti-description hashti-description">{helperText}</span>}
           </>
         ))}
     </RACProgressBar>
@@ -95,7 +95,7 @@ export function ProgressCircle({
       data-size={size}
       data-status={status}
       data-indeterminate={isIndeterminate || undefined}
-      className={classes("hashti-progress-circle cinder-progress-circle", className)}
+      className={classes("hashti-progress-circle hashti-progress-circle", className)}
     >
       {({ valueText }) => (
         <>
@@ -106,14 +106,14 @@ export function ProgressCircle({
             aria-hidden="true"
           >
             <circle
-              className="hashti-progress-circle-track cinder-progress-circle-track"
+              className="hashti-progress-circle-track hashti-progress-circle-track"
               cx={pixelSize / 2}
               cy={pixelSize / 2}
               r={radius}
               strokeWidth={strokeWidth}
             />
             <circle
-              className="hashti-progress-circle-fill cinder-progress-circle-fill"
+              className="hashti-progress-circle-fill hashti-progress-circle-fill"
               cx={pixelSize / 2}
               cy={pixelSize / 2}
               r={radius}
@@ -123,7 +123,7 @@ export function ProgressCircle({
             />
           </svg>
           {showValueLabel && !isIndeterminate && (
-            <span className="hashti-progress-circle-value cinder-progress-circle-value">{valueText}</span>
+            <span className="hashti-progress-circle-value hashti-progress-circle-value">{valueText}</span>
           )}
         </>
       )}
@@ -141,11 +141,11 @@ export function Loading({ label = "Loading", size = "lg", className }: LoadingPr
   return (
     <div
       role="status"
-      className={["hashti-loading cinder-loading", className].filter(Boolean).join(" ")}
+      className={["hashti-loading hashti-loading", className].filter(Boolean).join(" ")}
       data-size={size}
     >
-      <span className="hashti-spinner cinder-spinner" aria-hidden="true" />
-      <span className="hashti-visually-hidden cinder-visually-hidden">{label}</span>
+      <span className="hashti-spinner hashti-spinner" aria-hidden="true" />
+      <span className="hashti-visually-hidden hashti-visually-hidden">{label}</span>
     </div>
   );
 }
@@ -157,9 +157,9 @@ export interface InlineLoadingProps {
 
 export function InlineLoading({ children = "Loading…", status = "active" }: InlineLoadingProps) {
   return (
-    <div role="status" className="hashti-inline-loading cinder-inline-loading" data-status={status}>
+    <div role="status" className="hashti-inline-loading hashti-inline-loading" data-status={status}>
       {status === "active" ? (
-        <span className="hashti-spinner cinder-spinner" aria-hidden="true" />
+        <span className="hashti-spinner hashti-spinner" aria-hidden="true" />
       ) : (
         <Icon name={status} />
       )}
@@ -178,7 +178,7 @@ export function Skeleton({ width, height, lines = 1, style, className, ...props 
   return (
     <div
       {...props}
-      className={["hashti-skeleton cinder-skeleton", className].filter(Boolean).join(" ")}
+      className={["hashti-skeleton hashti-skeleton", className].filter(Boolean).join(" ")}
       aria-hidden="true"
       style={{ width, ...style }}
     >
@@ -215,7 +215,7 @@ export function ProgressIndicator({
   return (
     <ol
       aria-label={label}
-      className={["hashti-progress-indicator cinder-progress-indicator", className].filter(Boolean).join(" ")}
+      className={["hashti-progress-indicator hashti-progress-indicator", className].filter(Boolean).join(" ")}
       data-orientation={orientation}
     >
       {steps.map((step) => (
@@ -224,7 +224,7 @@ export function ProgressIndicator({
           data-status={step.status ?? "incomplete"}
           aria-current={step.status === "current" ? "step" : undefined}
         >
-          <span className="hashti-step-marker cinder-step-marker" aria-hidden="true">
+          <span className="hashti-step-marker hashti-step-marker" aria-hidden="true">
             {step.status === "complete" ? (
               <Icon name="check" />
             ) : step.status === "invalid" ? (
@@ -233,7 +233,7 @@ export function ProgressIndicator({
               <span />
             )}
           </span>
-          <div className="hashti-step-details cinder-step-details">
+          <div className="hashti-step-details hashti-step-details">
             {onStepChange ? (
               <Button
                 variant="ghost"
@@ -244,10 +244,10 @@ export function ProgressIndicator({
                 {step.label}
               </Button>
             ) : (
-              <span className="hashti-step-label cinder-step-label">{step.label}</span>
+              <span className="hashti-step-label hashti-step-label">{step.label}</span>
             )}
-            <span className="hashti-visually-hidden cinder-visually-hidden"> — {step.status ?? "incomplete"}</span>
-            {step.description && <p className="hashti-step-description cinder-step-description">{step.description}</p>}
+            <span className="hashti-visually-hidden hashti-visually-hidden"> — {step.status ?? "incomplete"}</span>
+            {step.description && <p className="hashti-step-description hashti-step-description">{step.description}</p>}
           </div>
         </li>
       ))}

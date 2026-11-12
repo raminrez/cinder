@@ -193,9 +193,9 @@ integration and current-page `aria-current` value.
 
 | Component/part   | Actual target and responsibility                                                                                                                                                                                                |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Button           | One `<button>` with `cinder-button`; `ref`, `className`, and `style` target it.                                                                                                                                                 |
-| Pending progress | A `div.cinder-spinner` with `role="progressbar"` inside Button while pending. RAC supplies the announcement relationship; Cinder supplies the indeterminate appearance and `pendingLabel`.                                      |
-| Link             | `cinder-link` on the anchor, or on RAC's fallback span. `className`, `style`, and the ref reach that same element. The inherited ref type is `HTMLAnchorElement`; it is an actual anchor only with an enabled, nonempty `href`. |
+| Button           | One `<button>` with `hashti-button`; `ref`, `className`, and `style` target it.                                                                                                                                                 |
+| Pending progress | A `div.hashti-spinner` with `role="progressbar"` inside Button while pending. RAC supplies the announcement relationship; Cinder supplies the indeterminate appearance and `pendingLabel`.                                      |
+| Link             | `hashti-link` on the anchor, or on RAC's fallback span. `className`, `style`, and the ref reach that same element. The inherited ref type is `HTMLAnchorElement`; it is an actual anchor only with an enabled, nonempty `href`. |
 
 Both components preserve RAC `children`, `className`, and `style` render functions.
 Custom classes are appended to the Cinder root hook. A `render` function must
@@ -213,10 +213,10 @@ and `data-inline` on Link. RAC owns `data-hovered`, `data-pressed`, `data-focuse
 real input rather than writing the attributes yourself. Button's omitted-size
 marker remains private.
 
-Use public semantic variables such as `--cinder-button-primary`,
-`--cinder-button-primary-hover`, `--cinder-button-primary-active`,
-`--cinder-text-on-color`, `--cinder-link-primary`, `--cinder-focus`, and
-`--cinder-control-radius`, or an ordinary custom class. The stories show root refs,
+Use public semantic variables such as `--hashti-button-primary`,
+`--hashti-button-primary-hover`, `--hashti-button-primary-active`,
+`--hashti-text-on-color`, `--hashti-link-primary`, `--hashti-focus`, and
+`--hashti-control-radius`, or an ordinary custom class. The stories show root refs,
 class/style render functions, and a custom DOM render while retaining the base
 classes, labels, and interaction. Private recipe variables are not customization
 contracts. See [CSS integration](#css-integration) for cascade order.
@@ -290,33 +290,33 @@ pagination, content, layout, and shell primitives. Run the docs for all 45 famil
 
 ### Default and custom field anatomy
 
-Default field roots and compound `.Root`s keep `cinder-field` and their family
-classes, such as `cinder-text-field`, `cinder-text-area`, and `cinder-select`.
+Default field roots and compound `.Root`s keep `hashti-field` and their family
+classes, such as `hashti-text-field`, `hashti-text-area`, and `hashti-select`.
 Cinder-owned default anatomy and compound parts share these stable BEM-style hooks
 alongside the existing classes:
 
 | Hook                        | Default part                                                  |
 | --------------------------- | ------------------------------------------------------------- |
-| `cinder-field__label`       | Associated label                                              |
-| `cinder-field__label-row`   | Label and its separate help button                            |
-| `cinder-field__necessity`   | Localized required/optional wording                           |
-| `cinder-field__label-help`  | Named field-help button                                       |
-| `cinder-field__control`     | Standalone input/textarea, grouped control, or Select trigger |
-| `cinder-field__help`        | Recovery container; also `cinder-field-help`                  |
-| `cinder-field__description` | Description text                                              |
-| `cinder-field__error`       | Validation error                                              |
-| `cinder-field__status`      | Appearance-only feedback, with its own description ID         |
-| `cinder-field__status-icon` | Decorative inline feedback icon                               |
-| `cinder-select__value`      | Selected value                                                |
-| `cinder-select__listbox`    | Options in the detached Select popover                        |
+| `hashti-field__label`       | Associated label                                              |
+| `hashti-field__label-row`   | Label and its separate help button                            |
+| `hashti-field__necessity`   | Localized required/optional wording                           |
+| `hashti-field__label-help`  | Named field-help button                                       |
+| `hashti-field__control`     | Standalone input/textarea, grouped control, or Select trigger |
+| `hashti-field__help`        | Recovery container; also `hashti-field-help`                  |
+| `hashti-field__description` | Description text                                              |
+| `hashti-field__error`       | Validation error                                              |
+| `hashti-field__status`      | Appearance-only feedback, with its own description ID         |
+| `hashti-field__status-icon` | Decorative inline feedback icon                               |
+| `hashti-select__value`      | Selected value                                                |
+| `hashti-select__listbox`    | Options in the detached Select popover                        |
 
 RAC classes such as `react-aria-Label`, `react-aria-Input`, `react-aria-Text`,
 `react-aria-FieldError`, `react-aria-SelectValue`, and `react-aria-ListBox` are
 retained on the default parts, as are existing Cinder family/part classes.
 RAC slots establish relationships; the BEM classes provide styling hooks.
 State selectors belong on the element that owns the state: for example,
-`.cinder-field[data-invalid]` for the field and
-`.cinder-field__control[data-focused]` for a RAC Input's focus state.
+`.hashti-field[data-invalid]` for the field and
+`.hashti-field__control[data-focused]` for a RAC Input's focus state.
 
 The convenience API remains callable:
 
@@ -514,13 +514,13 @@ export function WorkEmail() {
 
   return (
     <TextField name="email" type="email" isRequired>
-      <Label className="react-aria-Label cinder-field__label">Work email</Label>
-      <Input ref={inputRef} className="react-aria-Input cinder-field__control" />
-      <div className="cinder-field-help cinder-field__help">
-        <Text slot="description" className="react-aria-Text cinder-field__description">
+      <Label className="react-aria-Label hashti-field__label">Work email</Label>
+      <Input ref={inputRef} className="react-aria-Input hashti-field__control" />
+      <div className="hashti-field-help hashti-field__help">
+        <Text slot="description" className="react-aria-Text hashti-field__description">
           Use your work address.
         </Text>
-        <FieldError className="react-aria-FieldError cinder-field__error">
+        <FieldError className="react-aria-FieldError hashti-field__error">
           Enter a valid work email.
         </FieldError>
       </div>
@@ -572,7 +572,7 @@ Existing guidance and caller `aria-describedby` remain associated. A compound Ro
 does not insert Status: place `.Status` in `.Help` explicitly; omitting or unmounting
 it leaves no dangling status description. `.Control` includes the inline icon for
 grouped controls. For a bare Input/textarea/date input, place `.StatusIcon` next to
-the control and opt into `data-cinder-input-icon` on Root to share the grid cell
+the control and opt into `data-hashti-input-icon` on Root to share the grid cell
 without wrapping or replacing the native element. Raw exports remain raw.
 
 ```tsx
@@ -618,7 +618,7 @@ focus shows a Tooltip; RAC tooltips dismiss on scroll. Click, Enter/Space, or ta
 opens a dialog Popover with reachable dismissal and focus return. The popover uses
 RAC's default focus/accessibility behavior and does not open the field's select,
 calendar, clear, or stepper action. Help's accessible name is localized “About” plus
-the label. The `cinder-field__label-popover` hook targets the detached help surface;
+the label. The `hashti-field__label-popover` hook targets the detached help surface;
 Theme supplies its appearance and locale. Coarse-pointer help/dismissal targets
 have a 44px minimum.
 
@@ -742,16 +742,16 @@ selectors stop at nested Theme boundaries and start again on matching portal roo
 ```css
 /* workspace.css */
 .workspace-appearance {
-  --cinder-focus: #0b57b5;
+  --hashti-focus: #0b57b5;
   --workspace-label-weight: 600;
 }
 
-@scope (.workspace-appearance) to ([data-cinder-theme]) {
-  .cinder-field__label {
+@scope (.workspace-appearance) to ([data-hashti-theme]) {
+  .hashti-field__label {
     font-weight: var(--workspace-label-weight);
   }
 
-  .cinder-select__listbox {
+  .hashti-select__listbox {
     padding: 0.5rem;
   }
 }
@@ -801,17 +801,17 @@ second portal. A selector depending on a page-only ancestor would not do that.
 ### Overlay targets
 
 Popover and Tooltip keep `className`, `style`, and `ref` on the same portalled
-surface (`cinder-popover` / `cinder-tooltip`). Their custom classes merge with the
+surface (`hashti-popover` / `hashti-tooltip`). Their custom classes merge with the
 base and effective appearance classes.
 
 Modal has two elements, with additive access to each:
 
 | Modal prop                                              | Target                                |
 | ------------------------------------------------------- | ------------------------------------- |
-| `className`, `ref`                                      | Inner `cinder-modal` surface          |
-| `modalStyle`                                            | Inner `cinder-modal` surface          |
-| `overlayClassName`, `overlayRef`                        | Outer `cinder-modal-overlay` backdrop |
-| `style`, `render`, native props such as `id` and `lang` | Outer `cinder-modal-overlay` backdrop |
+| `className`, `ref`                                      | Inner `hashti-modal` surface          |
+| `modalStyle`                                            | Inner `hashti-modal` surface          |
+| `overlayClassName`, `overlayRef`                        | Outer `hashti-modal-overlay` backdrop |
+| `style`, `render`, native props such as `id` and `lang` | Outer `hashti-modal-overlay` backdrop |
 
 The inherited appearance class and theme/layer/language attributes are on the
 outer overlay; the inner surface inherits through it. `className` and
@@ -829,13 +829,13 @@ a modern browser. Current browser verification is Chromium-only; see the
 
 Use ordinary CSS or CSS Modules with your application's bundler. To adapt the
 recipe above to a CSS Module, rename `.workspace-appearance` to `.appearance`
-and keep the Cinder part selectors global: `:global(.cinder-field__label)` and
-`:global(.cinder-select__listbox)`. Import the module as `styles`, then pass
+and keep the Cinder part selectors global: `:global(.hashti-field__label)` and
+`:global(.hashti-select__listbox)`. Import the module as `styles`, then pass
 `appearanceClassName={styles.appearance}`. The variables stay on the recipe class
 itself so each portal can resolve them.
 
 Carbon and Relay boundaries keep their typography defaults. Baseline styles for
-raw RAC parts are scoped within `[data-cinder-theme]`. A raw RAC component imported
+raw RAC parts are scoped within `[data-hashti-theme]`. A raw RAC component imported
 directly inside Theme is indistinguishable from the same component re-exported by
 Cinder and receives those styles. The boundary isolates neighboring raw RAC
 controls outside it, not raw components intentionally placed inside it.

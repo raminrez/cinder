@@ -165,7 +165,7 @@ export const CollapsibleOrOverflow: Story = {
 
     await userEvent.click(menuTrigger);
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -205,7 +205,7 @@ function CustomBreadcrumbWithRef() {
         variant="secondary"
         onPress={() => {
           if (breadcrumbRef.current) {
-            breadcrumbRef.current.style.outline = "2px solid var(--cinder-focus)";
+            breadcrumbRef.current.style.outline = "2px solid var(--hashti-focus)";
           }
         }}
       >

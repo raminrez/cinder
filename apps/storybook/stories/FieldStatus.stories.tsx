@@ -108,19 +108,19 @@ export const AttachedStatuses: Story = {
         canvas.getByRole("textbox", { name: `${title} reviewers` }),
         canvas.getByRole("searchbox", { name: `${title} review search` }),
       ]) {
-        const root = control.closest<HTMLElement>(".cinder-field")!;
-        const status = root.querySelector<HTMLElement>(".cinder-field__status")!;
-        await expect(root).toHaveAttribute("data-cinder-status", type);
+        const root = control.closest<HTMLElement>(".hashti-field")!;
+        const status = root.querySelector<HTMLElement>(".hashti-field__status")!;
+        await expect(root).toHaveAttribute("data-hashti-status", type);
         await expect(root).not.toHaveAttribute("data-invalid");
         await expect(control).not.toHaveAttribute("aria-invalid", "true");
         await expect(control).toBeValid();
         await expect(status).toBeVisible();
         await expect(status).toHaveTextContent(message);
-        await expect(status.parentElement).toHaveClass("cinder-field__help");
+        await expect(status.parentElement).toHaveClass("hashti-field__help");
         await expect(control).toHaveAccessibleDescription(new RegExp(message));
-        await expect(root.querySelectorAll(".cinder-field__status-icon")).toHaveLength(1);
-        await expect(root.querySelector(".cinder-field__status-icon")).toHaveAttribute(
-          "data-cinder-status",
+        await expect(root.querySelectorAll(".hashti-field__status-icon")).toHaveLength(1);
+        await expect(root.querySelector(".hashti-field__status-icon")).toHaveAttribute(
+          "data-hashti-status",
           type,
         );
       }
@@ -180,8 +180,8 @@ export const DetachedGroupStatus: Story = {
       canvas.getByRole("group", { name: "Review updates (optional)" }),
       canvas.getByRole("radiogroup", { name: "Review schedule (optional)" }),
     ]) {
-      await expect(group.querySelector(".cinder-field__status")).toBeVisible();
-      await expect(group.querySelector(".cinder-field__status-icon")).not.toBeInTheDocument();
+      await expect(group.querySelector(".hashti-field__status")).toBeVisible();
+      await expect(group.querySelector(".hashti-field__status-icon")).not.toBeInTheDocument();
       await expect(group).not.toHaveAttribute("data-invalid");
     }
     for (const control of [...canvas.getAllByRole("checkbox"), ...canvas.getAllByRole("radio")]) {
@@ -195,12 +195,12 @@ export const DetachedGroupStatus: Story = {
     const owner = canvas.getByRole("group", { name: "Owner checks (optional)" });
     await expect(owner).toHaveAccessibleDescription(/owner review/);
     await expect(owner).toHaveAccessibleDescription(/Success/);
-    await expect(owner.querySelector(".cinder-field__status-icon")).toHaveAttribute(
+    await expect(owner.querySelector(".hashti-field__status-icon")).toHaveAttribute(
       "aria-hidden",
       "true",
     );
-    await expect(owner.querySelector(".cinder-field__status-icon")?.parentElement).toHaveClass(
-      "cinder-field__help",
+    await expect(owner.querySelector(".hashti-field__status-icon")?.parentElement).toHaveClass(
+      "hashti-field__help",
     );
   },
 };
@@ -288,7 +288,7 @@ export const RequiredOptionalAndTooltip: Story = {
       canvas.getByRole("textbox", { name: "Handoff notes (optional)" }),
     ).not.toBeRequired();
     await expect(
-      workspace.closest(".cinder-field")?.querySelectorAll(".cinder-field__necessity"),
+      workspace.closest(".hashti-field")?.querySelectorAll(".hashti-field__necessity"),
     ).toHaveLength(1);
     await expect(help.closest("label")).toBeNull();
     // RAC checks pointer modality at hover-start, before userEvent.hover emits pointermove.
@@ -327,7 +327,7 @@ export const RequiredOptionalAndTooltip: Story = {
       // Tooltip-only behavior: clicking help does not open a modal/popover dialog
       await expect(body.queryByRole("dialog", { name: `About ${label}` })).toBeNull();
       await expect(workspace).toBeVisible();
-      await expect(trigger.closest(".cinder-field")).not.toHaveAttribute("data-open");
+      await expect(trigger.closest(".hashti-field")).not.toHaveAttribute("data-open");
       await expect(Object.fromEntries(new FormData(form))).toEqual(initialValues);
     }
     await expect(submitHelpForm).not.toHaveBeenCalled();
@@ -418,12 +418,12 @@ function ValidationExamples() {
 }
 
 async function expectValidationWins(control: HTMLElement) {
-  const root = control.closest<HTMLElement>(".cinder-field")!;
+  const root = control.closest<HTMLElement>(".hashti-field")!;
   await expect(root).toHaveAttribute("data-invalid");
   await expect(control).toHaveAttribute("aria-invalid", "true");
-  await expect(root.querySelector(".cinder-field__status")).toBeNull();
-  await expect(root.querySelector(".cinder-field__status-icon")).toHaveAttribute(
-    "data-cinder-status",
+  await expect(root.querySelector(".hashti-field__status")).toBeNull();
+  await expect(root.querySelector(".hashti-field__status-icon")).toHaveAttribute(
+    "data-hashti-status",
     "error",
   );
 }
@@ -574,8 +574,8 @@ export const AppearanceOnlySubmission: Story = {
     const parent = input.parentElement;
     await expect(input.tagName).toBe("INPUT");
     await expect(input).toHaveAttribute("type", "email");
-    await expect(input).toHaveClass("react-aria-Input", "cinder-field__control");
-    await expect(parent).toHaveClass("cinder-text-field");
+    await expect(input).toHaveClass("react-aria-Input", "hashti-field__control");
+    await expect(parent).toHaveClass("hashti-text-field");
     await expect(input).toBeRequired();
     await expect(input).toBeValid();
     await expect(input).not.toHaveAttribute("aria-invalid", "true");
@@ -748,15 +748,15 @@ export const CompoundParts: Story = {
     const canvas = within(canvasElement);
     const body = within(canvasElement.ownerDocument.body);
     const input = canvas.getByRole("textbox", { name: "Composed contact (required)" });
-    const root = input.closest<HTMLElement>(".cinder-field")!;
+    const root = input.closest<HTMLElement>(".hashti-field")!;
     await expect(root).toHaveAttribute("data-composed-root", "true");
     await expect(input).toHaveAttribute("data-composed-input", "true");
-    await expect(input).not.toHaveClass("cinder-field__control");
-    await expect(input.parentElement).toHaveClass("cinder-field__control", "cinder-input-group");
-    await expect(root.querySelectorAll(".cinder-field__control")).toHaveLength(1);
-    await expect(root.querySelectorAll(".cinder-field__status-icon")).toHaveLength(1);
-    await expect(root.querySelector(".cinder-field__status")?.parentElement).toHaveClass(
-      "cinder-field__help",
+    await expect(input).not.toHaveClass("hashti-field__control");
+    await expect(input.parentElement).toHaveClass("hashti-field__control", "hashti-input-group");
+    await expect(root.querySelectorAll(".hashti-field__control")).toHaveLength(1);
+    await expect(root.querySelectorAll(".hashti-field__status-icon")).toHaveLength(1);
+    await expect(root.querySelector(".hashti-field__status")?.parentElement).toHaveClass(
+      "hashti-field__help",
     );
     await expect(input).toBeRequired();
     await expect(input).toHaveAccessibleDescription(/reachable address/);
@@ -769,7 +769,7 @@ export const CompoundParts: Story = {
     await expect(input).toHaveValue("handoff@example.com");
     const number = canvas.getByRole("textbox", { name: "Composed reviewers (optional)" });
     await userEvent.click(
-      within(number.closest<HTMLElement>(".cinder-field")!).getByRole("button", {
+      within(number.closest<HTMLElement>(".hashti-field")!).getByRole("button", {
         name: /^More reviewers/,
       }),
     );
@@ -780,12 +780,12 @@ export const CompoundParts: Story = {
     await userEvent.click(await body.findByRole("option", { name: "Release handoff" }));
     await expect(combo).toHaveValue("Release handoff");
     for (const message of ["Confirm against the team schedule.", "The review time is recorded."]) {
-      const dateRoot = canvas.getByText(message).closest<HTMLElement>(".cinder-field")!;
+      const dateRoot = canvas.getByText(message).closest<HTMLElement>(".hashti-field")!;
       const dateInput = dateRoot.querySelector(".react-aria-DateInput")!;
       await expect(dateInput.tagName).toBe("DIV");
-      await expect(dateInput).toHaveClass("cinder-field__control");
+      await expect(dateInput).toHaveClass("hashti-field__control");
       await expect(dateInput.parentElement).toBe(dateRoot);
-      await expect(dateRoot.querySelectorAll(".cinder-field__status-icon")).toHaveLength(1);
+      await expect(dateRoot.querySelectorAll(".hashti-field__status-icon")).toHaveLength(1);
     }
   },
 };
@@ -843,7 +843,7 @@ export const LongContent: Story = {
     const canvas = within(canvasElement);
     const body = within(canvasElement.ownerDocument.body);
     for (const part of canvasElement.querySelectorAll<HTMLElement>(
-      ".cinder-field__label, .cinder-field__description, .cinder-field__status:not(.cinder-visually-hidden)",
+      ".hashti-field__label, .hashti-field__description, .hashti-field__status:not(.hashti-visually-hidden)",
     )) {
       await expect(part).toBeVisible();
       await expect(part.scrollWidth).toBeLessThanOrEqual(part.clientWidth + 1);
@@ -1018,13 +1018,13 @@ export const LocalizedContent: Story = {
     const body = within(canvasElement.ownerDocument.body);
     for (const copy of localeExamples) {
       const input = canvas.getByRole("textbox", { name: `${copy.label} (${copy.required})` });
-      const root = input.closest<HTMLElement>(".cinder-field")!;
-      const theme = input.closest<HTMLElement>("[data-cinder-theme]")!;
+      const root = input.closest<HTMLElement>(".hashti-field")!;
+      const theme = input.closest<HTMLElement>("[data-hashti-theme]")!;
       await expect(theme).toHaveAttribute("lang", copy.locale);
       await expect(theme).toHaveAttribute("dir", copy.direction);
       await expect(getComputedStyle(input).direction).toBe(copy.direction);
       await expect(input).toBeRequired();
-      await expect(root.querySelectorAll(".cinder-field__necessity")).toHaveLength(1);
+      await expect(root.querySelectorAll(".hashti-field__necessity")).toHaveLength(1);
       await expect(input).not.toHaveAttribute("aria-invalid", "true");
       for (const identifier of within(root).getAllByText("WS-1042")) {
         await expect(identifier.tagName).toBe("BDI");
@@ -1039,13 +1039,13 @@ export const LocalizedContent: Story = {
       await expect(number).not.toHaveAttribute("aria-invalid", "true");
       await userEvent.click(canvas.getByRole("button", { name: copy.about }));
       const dialog = await body.findByRole("dialog", { name: copy.about });
-      const overlay = dialog.closest<HTMLElement>("[data-cinder-theme]")!;
+      const overlay = dialog.closest<HTMLElement>("[data-hashti-theme]")!;
       await expect(dialog).toHaveTextContent(copy.tooltip);
       await expect(overlay).toHaveAttribute("lang", copy.locale);
       await expect(overlay).toHaveAttribute("dir", copy.direction);
       await expect(overlay).toHaveAttribute(
-        "data-cinder-theme",
-        theme.getAttribute("data-cinder-theme")!,
+        "data-hashti-theme",
+        theme.getAttribute("data-hashti-theme")!,
       );
       await userEvent.click(within(dialog).getByRole("button", { name: copy.close }));
       await waitFor(() =>

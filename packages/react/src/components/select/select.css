@@ -1,7 +1,7 @@
 /* Hashti Modern Aesthetic - Select */
 @layer hashti.components {
   .hashti-select-trigger,
-  .cinder-select-trigger {
+  .hashti-select-trigger {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,19 +18,19 @@
   }
 
   .hashti-select-trigger[data-hovered],
-  .cinder-select-trigger[data-hovered] {
+  .hashti-select-trigger[data-hovered] {
     border-color: var(--hashti-border-subtle, #525252);
   }
 
   .hashti-select-trigger[data-focus-visible],
-  .cinder-select-trigger[data-focus-visible] {
+  .hashti-select-trigger[data-focus-visible] {
     outline: none;
     border-color: var(--hashti-focus, #0f62fe);
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-select-popover,
-  .cinder-select-popover {
+  .hashti-select-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);
     background-color: var(--hashti-layer, #ffffff);
@@ -41,7 +41,7 @@
   }
 
   .hashti-select-chips-wrapper,
-  .cinder-select-chips-wrapper {
+  .hashti-select-chips-wrapper {
     display: inline-flex;
     flex-wrap: wrap;
     gap: 4px;
@@ -49,7 +49,7 @@
   }
 
   .hashti-select-chip,
-  .cinder-select-chip {
+  .hashti-select-chip {
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -62,7 +62,7 @@
   }
 
   .hashti-select-chip-remove,
-  .cinder-select-chip-remove {
+  .hashti-select-chip-remove {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +73,7 @@
   }
 
   .hashti-select-chip-remove:hover,
-  .cinder-select-chip-remove:hover {
+  .hashti-select-chip-remove:hover {
     opacity: 1;
   }
 }

@@ -89,11 +89,11 @@ export function Kbd({ keys, children, className, ref, ...props }: KbdProps) {
     <kbd
       {...props}
       ref={ref}
-      className={cx("cinder-kbd", className)}
+      className={cx("hashti-kbd", className)}
     >
       {keyList
         ? keyList.map((k, i) => (
-            <span key={i} className="cinder-kbd-key">
+            <span key={i} className="hashti-kbd-key">
               {formatKey(k, isMac)}
             </span>
           ))

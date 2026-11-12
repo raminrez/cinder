@@ -20,9 +20,9 @@ describe("Phase 4 Collection Components unit tests", () => {
           </GridList.Item>
         </GridList>
       );
-      expect(html).toContain("cinder-grid-list");
-      expect(html).toContain("cinder-grid-list--bordered");
-      expect(html).toContain("cinder-grid-list-item");
+      expect(html).toContain("hashti-grid-list");
+      expect(html).toContain("hashti-grid-list--bordered");
+      expect(html).toContain("hashti-grid-list-item");
       expect(html).toContain("Design Team");
       expect(html).toContain("Engineering Team");
       expect(html).toContain('role="grid"');
@@ -36,9 +36,9 @@ describe("Phase 4 Collection Components unit tests", () => {
           </GridList.Item>
         </GridList>
       );
-      expect(cardHtml).toContain("cinder-grid-list--card");
-      expect(cardHtml).toContain("cinder-grid-list--lg");
-      expect(cardHtml).toContain("cinder-grid-list-item--lg");
+      expect(cardHtml).toContain("hashti-grid-list--card");
+      expect(cardHtml).toContain("hashti-grid-list--lg");
+      expect(cardHtml).toContain("hashti-grid-list-item--lg");
 
       const flatHtml = renderToStaticMarkup(
         <GridList aria-label="Projects" variant="flat" size="sm">
@@ -47,9 +47,9 @@ describe("Phase 4 Collection Components unit tests", () => {
           </GridList.Item>
         </GridList>
       );
-      expect(flatHtml).toContain("cinder-grid-list--flat");
-      expect(flatHtml).toContain("cinder-grid-list--sm");
-      expect(flatHtml).toContain("cinder-grid-list-item--sm");
+      expect(flatHtml).toContain("hashti-grid-list--flat");
+      expect(flatHtml).toContain("hashti-grid-list--sm");
+      expect(flatHtml).toContain("hashti-grid-list-item--sm");
     });
 
     test("renders selection checkboxes and drag handles for drag-and-drop reordering", () => {
@@ -62,8 +62,8 @@ describe("Phase 4 Collection Components unit tests", () => {
           </GridList.Item>
         </GridList>
       );
-      expect(html).toContain("cinder-grid-list-drag-handle");
-      expect(html).toContain("cinder-grid-list-checkbox");
+      expect(html).toContain("hashti-grid-list-drag-handle");
+      expect(html).toContain("hashti-grid-list-checkbox");
       expect(html).toContain('slot="drag"');
       expect(html).toContain('slot="selection"');
       expect(html).toContain("Item 1 Content");
@@ -78,7 +78,7 @@ describe("Phase 4 Collection Components unit tests", () => {
           {[]}
         </GridList>
       );
-      expect(html).toContain("cinder-grid-list-empty-state");
+      expect(html).toContain("hashti-grid-list-empty-state");
       expect(html).toContain("No items available");
     });
   });
@@ -95,11 +95,11 @@ describe("Phase 4 Collection Components unit tests", () => {
           </Tree.Item>
         </Tree>
       );
-      expect(html).toContain("cinder-tree");
-      expect(html).toContain("cinder-tree--guidelines");
-      expect(html).toContain("cinder-tree-item");
-      expect(html).toContain("cinder-tree-content");
-      expect(html).toContain("cinder-tree-indicator");
+      expect(html).toContain("hashti-tree");
+      expect(html).toContain("hashti-tree--guidelines");
+      expect(html).toContain("hashti-tree-item");
+      expect(html).toContain("hashti-tree-content");
+      expect(html).toContain("hashti-tree-indicator");
       expect(html).toContain('slot="chevron"');
       expect(html).toContain("src");
       expect(html).toContain('role="treegrid"');
@@ -117,9 +117,9 @@ describe("Phase 4 Collection Components unit tests", () => {
           </Tree.Item>
         </Tree>
       );
-      expect(html).toContain("cinder-tree--sm");
-      expect(html).toContain("cinder-tree-item--sm");
-      expect(html).toContain("cinder-tree-checkbox");
+      expect(html).toContain("hashti-tree--sm");
+      expect(html).toContain("hashti-tree-item--sm");
+      expect(html).toContain("hashti-tree-checkbox");
       expect(html).toContain('slot="selection"');
       expect(html).toContain("settings");
     });

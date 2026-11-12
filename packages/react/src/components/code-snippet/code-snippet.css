@@ -1,7 +1,7 @@
 /* Hashti Modern Aesthetic - CodeSnippet */
 @layer hashti.components {
   .hashti-code-snippet,
-  .cinder-code-snippet {
+  .hashti-code-snippet {
     position: relative;
     border-radius: var(--hashti-control-radius, 12px);
     background-color: var(--hashti-layer-accent-01, #f4f4f4);
@@ -12,7 +12,7 @@
   }
 
   .hashti-code-snippet--inline,
-  .cinder-code-snippet--inline {
+  .hashti-code-snippet--inline {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -21,7 +21,7 @@
   }
 
   .hashti-code-snippet pre,
-  .cinder-code-snippet pre {
+  .hashti-code-snippet pre {
     margin: 0;
     overflow-x: auto;
     outline: none;

@@ -1,13 +1,13 @@
 .settings-story-container {
   max-inline-size: 72rem;
   margin-inline: auto;
-  padding: var(--cinder-spacing-05);
+  padding: var(--hashti-spacing-05);
 }
 
 .settings-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
-  gap: var(--cinder-spacing-08, 2.5rem);
+  gap: var(--hashti-spacing-08, 2.5rem);
   align-items: start;
 }
 
@@ -18,12 +18,12 @@
 }
 
 .workspace-form {
-  padding: var(--cinder-spacing-07, 1.75rem);
-  background: var(--cinder-surface, var(--cinder-layer-01, #fff));
-  border: 1px solid var(--cinder-border-subtle, rgba(0, 0, 0, 0.12));
-  border-radius: var(--cinder-corner-lg, 12px);
+  padding: var(--hashti-spacing-07, 1.75rem);
+  background: var(--hashti-surface, var(--hashti-layer-01, #fff));
+  border: 1px solid var(--hashti-border-subtle, rgba(0, 0, 0, 0.12));
+  border-radius: var(--hashti-corner-lg, 12px);
   display: grid;
-  gap: var(--cinder-spacing-06, 1.5rem);
+  gap: var(--hashti-spacing-06, 1.5rem);
 }
 
 .workspace-form fieldset {
@@ -31,14 +31,14 @@
   padding: 0;
   border: none;
   display: grid;
-  gap: var(--cinder-spacing-07, 1.75rem);
+  gap: var(--hashti-spacing-07, 1.75rem);
 }
 
 .settings-section {
   display: grid;
-  gap: var(--cinder-spacing-04, 1rem);
-  padding-block-end: var(--cinder-spacing-06, 1.5rem);
-  border-block-end: 1px solid var(--cinder-border-subtle, rgba(0, 0, 0, 0.08));
+  gap: var(--hashti-spacing-04, 1rem);
+  padding-block-end: var(--hashti-spacing-06, 1.5rem);
+  border-block-end: 1px solid var(--hashti-border-subtle, rgba(0, 0, 0, 0.08));
 }
 
 .settings-section:last-of-type {
@@ -48,108 +48,108 @@
 
 .settings-section-copy h2,
 .settings-section-copy h3 {
-  margin: 0 0 var(--cinder-spacing-02, 0.5rem) 0;
-  font-size: var(--cinder-font-size-heading-01, 1.125rem);
+  margin: 0 0 var(--hashti-spacing-02, 0.5rem) 0;
+  font-size: var(--hashti-font-size-heading-01, 1.125rem);
   font-weight: 600;
-  color: var(--cinder-text-primary);
+  color: var(--hashti-text-primary);
 }
 
 .settings-section-copy p {
   margin: 0;
-  font-size: var(--cinder-font-size-body-01, 0.875rem);
-  color: var(--cinder-text-secondary);
+  font-size: var(--hashti-font-size-body-01, 0.875rem);
+  color: var(--hashti-text-secondary);
 }
 
 .settings-fields {
   display: grid;
-  gap: var(--cinder-spacing-05, 1rem);
+  gap: var(--hashti-spacing-05, 1rem);
 }
 
 .settings-fields-pair {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--cinder-spacing-05, 1rem);
+  gap: var(--hashti-spacing-05, 1rem);
 }
 
 .settings-save {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--cinder-spacing-04, 1rem);
-  padding-block-start: var(--cinder-spacing-04, 1rem);
-  border-block-start: 1px solid var(--cinder-border-subtle, rgba(0, 0, 0, 0.08));
+  gap: var(--hashti-spacing-04, 1rem);
+  padding-block-start: var(--hashti-spacing-04, 1rem);
+  border-block-start: 1px solid var(--hashti-border-subtle, rgba(0, 0, 0, 0.08));
   flex-wrap: wrap;
 }
 
 .settings-save > [role="status"] {
   display: inline-flex;
   align-items: center;
-  gap: var(--cinder-spacing-02, 0.5rem);
-  font-size: var(--cinder-font-size-body-01, 0.875rem);
-  color: var(--cinder-text-secondary);
+  gap: var(--hashti-spacing-02, 0.5rem);
+  font-size: var(--hashti-font-size-body-01, 0.875rem);
+  color: var(--hashti-text-secondary);
 }
 
 .settings-save[data-state="saved"] > [role="status"] {
-  color: var(--cinder-support-success, #24a148);
+  color: var(--hashti-support-success, #24a148);
 }
 
 .settings-save[data-state="error"] > [role="status"] {
-  color: var(--cinder-support-error, #da1e28);
+  color: var(--hashti-support-error, #da1e28);
 }
 
 .save-feedback {
   display: flex;
   align-items: flex-start;
-  gap: var(--cinder-spacing-03, 0.75rem);
-  padding: var(--cinder-spacing-04, 1rem);
-  border-radius: var(--cinder-corner-md, 8px);
-  background: var(--cinder-support-error-inverse, rgba(218, 30, 40, 0.08));
-  border: 1px solid var(--cinder-support-error, #da1e28);
-  color: var(--cinder-text-primary);
-  font-size: var(--cinder-font-size-body-01, 0.875rem);
+  gap: var(--hashti-spacing-03, 0.75rem);
+  padding: var(--hashti-spacing-04, 1rem);
+  border-radius: var(--hashti-corner-md, 8px);
+  background: var(--hashti-support-error-inverse, rgba(218, 30, 40, 0.08));
+  border: 1px solid var(--hashti-support-error, #da1e28);
+  color: var(--hashti-text-primary);
+  font-size: var(--hashti-font-size-body-01, 0.875rem);
 }
 
 .save-feedback strong {
   display: block;
   font-weight: 600;
-  margin-block-end: var(--cinder-spacing-01, 0.25rem);
+  margin-block-end: var(--hashti-spacing-01, 0.25rem);
 }
 
 .save-feedback p {
   margin: 0;
-  color: var(--cinder-text-secondary);
+  color: var(--hashti-text-secondary);
 }
 
 .summary-preview {
-  padding: var(--cinder-spacing-05, 1.25rem);
-  background: var(--cinder-layer-01, rgba(0, 0, 0, 0.02));
-  border: 1px dashed var(--cinder-border-subtle, rgba(0, 0, 0, 0.15));
-  border-radius: var(--cinder-corner-lg, 12px);
+  padding: var(--hashti-spacing-05, 1.25rem);
+  background: var(--hashti-layer-01, rgba(0, 0, 0, 0.02));
+  border: 1px dashed var(--hashti-border-subtle, rgba(0, 0, 0, 0.15));
+  border-radius: var(--hashti-corner-lg, 12px);
   display: grid;
-  gap: var(--cinder-spacing-03, 0.75rem);
+  gap: var(--hashti-spacing-03, 0.75rem);
 }
 
 .summary-preview h2,
 .summary-preview h3 {
   margin: 0;
-  font-size: var(--cinder-font-size-heading-01, 1rem);
+  font-size: var(--hashti-font-size-heading-01, 1rem);
   font-weight: 600;
-  color: var(--cinder-text-primary);
+  color: var(--hashti-text-primary);
 }
 
 .summary-preview dl {
   display: grid;
-  gap: var(--cinder-spacing-02, 0.5rem);
+  gap: var(--hashti-spacing-02, 0.5rem);
   margin: 0;
-  font-size: var(--cinder-font-size-body-01, 0.875rem);
+  font-size: var(--hashti-font-size-body-01, 0.875rem);
 }
 
 .summary-preview dt {
-  color: var(--cinder-text-secondary);
+  color: var(--hashti-text-secondary);
 }
 
 .summary-preview dd {
   margin: 0;
   font-weight: 500;
-  color: var(--cinder-text-primary);
+  color: var(--hashti-text-primary);
 }

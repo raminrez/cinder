@@ -57,10 +57,8 @@ function ThemeRoot({
         lang={lang}
         dir={direction}
         data-hashti-theme={resolvedTheme}
-        data-cinder-theme={resolvedTheme}
         data-hashti-layer="0"
-        data-cinder-layer="0"
-        className={["hashti-theme", "cinder-theme", appearance, className].filter(Boolean).join(" ")}
+        className={["hashti-theme", appearance, className].filter(Boolean).join(" ")}
       >
         {children}
       </div>
@@ -81,8 +79,7 @@ export function Layer({ level, className, children, ...props }: LayerProps) {
       <div
         {...props}
         data-hashti-layer={layer}
-        data-cinder-layer={layer}
-        className={["hashti-layer", "cinder-layer", className].filter(Boolean).join(" ")}
+        className={["hashti-layer", className].filter(Boolean).join(" ")}
       >
         {children}
       </div>
@@ -106,9 +103,7 @@ export function useOverlayTheme() {
   const { theme, layer, direction, lang, appearanceClassName } = useTheme();
   return {
     "data-hashti-theme": theme,
-    "data-cinder-theme": theme,
     "data-hashti-layer": layer,
-    "data-cinder-layer": layer,
     dir: direction,
     lang,
     appearanceClassName,

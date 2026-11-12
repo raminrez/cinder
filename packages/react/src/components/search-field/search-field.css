@@ -1,14 +1,14 @@
 /* Hashti Modern Aesthetic - SearchField */
 @layer hashti.components {
   .hashti-search-field,
-  .cinder-search-field {
+  .hashti-search-field {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
   .hashti-search-field .hashti-field__control,
-  .cinder-search-field .cinder-field__control {
+  .hashti-search-field .hashti-field__control {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -20,13 +20,13 @@
   }
 
   .hashti-search-field .hashti-field__control:focus-within,
-  .cinder-search-field .cinder-field__control:focus-within {
+  .hashti-search-field .hashti-field__control:focus-within {
     border-color: var(--hashti-focus, #0f62fe);
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-search-field input,
-  .cinder-search-field input {
+  .hashti-search-field input {
     flex: 1;
     height: 44px;
     border: none;

@@ -36,7 +36,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Modal wraps RAC ModalOverlay and RAC Modal, rendering a portalled backdrop and surface. Dialog supplies heading semantics and reachable dismissal. Modal supports size (xs, sm, md, lg), isDismissable, and independent part access through overlayClassName, overlayRef, and modalStyle. Frame uses an opaque surface with 18px corners (var(--cinder-overlay-radius)), a dark translucent backdrop, and inner-first Escape handling for nested overlays.",
+          "Modal wraps RAC ModalOverlay and RAC Modal, rendering a portalled backdrop and surface. Dialog supplies heading semantics and reachable dismissal. Modal supports size (xs, sm, md, lg), isDismissable, and independent part access through overlayClassName, overlayRef, and modalStyle. Frame uses an opaque surface with 18px corners (var(--hashti-overlay-radius)), a dark translucent backdrop, and inner-first Escape handling for nested overlays.",
       },
     },
   },
@@ -66,7 +66,7 @@ export const Playground: Story = {
                   <Icon name="close" />
                 </Button>
                 <p>Configure team permissions and shared notification preferences.</p>
-                <div className="cinder-dialog-footer">
+                <div className="hashti-dialog-footer">
                   <Button variant="tertiary" onPress={close}>
                     Cancel
                   </Button>
@@ -111,7 +111,7 @@ export const Sizes: Story = {
                         This modal demonstrates size <code>{size}</code> with Frame border-radius
                         and responsive padding.
                       </p>
-                      <div className="cinder-dialog-footer">
+                      <div className="hashti-dialog-footer">
                         <Button variant="primary" onPress={close}>
                           Close size dialog
                         </Button>
@@ -132,7 +132,7 @@ export const Sizes: Story = {
     await userEvent.click(trigger);
 
     const dialog = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>('.cinder-modal[data-size="md"]');
+      const el = document.querySelector<HTMLElement>('.hashti-modal[data-size="md"]');
       expect(el).not.toBeNull();
       return el!;
     });
@@ -142,7 +142,7 @@ export const Sizes: Story = {
     await userEvent.click(closeBtn);
 
     await waitFor(() => {
-      expect(document.querySelector('.cinder-modal[data-size="md"]')).toBeNull();
+      expect(document.querySelector('.hashti-modal[data-size="md"]')).toBeNull();
     });
     await waitFor(() => expect(trigger).toHaveFocus());
   },
@@ -192,7 +192,7 @@ function FormDialogExample() {
                   <Checkbox name="notify" defaultSelected style={{ marginTop: "0.75rem" }}>
                     Send onboarding digest email
                   </Checkbox>
-                  <div className="cinder-dialog-footer">
+                  <div className="hashti-dialog-footer">
                     <Button variant="tertiary" onPress={close}>
                       Cancel
                     </Button>
@@ -218,7 +218,7 @@ export const FormDialog: Story = {
 
     await userEvent.click(trigger);
     const modal = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-modal");
+      const el = document.querySelector<HTMLElement>(".hashti-modal");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -230,7 +230,7 @@ export const FormDialog: Story = {
     await userEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(document.querySelector(".cinder-modal")).toBeNull();
+      expect(document.querySelector(".hashti-modal")).toBeNull();
     });
     await expect(output).toHaveTextContent("Invited: alex@cinder.dev (notify=yes)");
     await waitFor(() => expect(trigger).toHaveFocus());
@@ -270,7 +270,7 @@ export const NestedSelect: Story = {
                       <ListBoxItem id="viewer">Viewer</ListBoxItem>
                     </Select>
                   </div>
-                  <div className="cinder-dialog-footer">
+                  <div className="hashti-dialog-footer">
                     <Button variant="tertiary" onPress={close}>
                       Close
                     </Button>
@@ -289,7 +289,7 @@ export const NestedSelect: Story = {
     await userEvent.click(trigger);
 
     const modal = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-modal");
+      const el = document.querySelector<HTMLElement>(".hashti-modal");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -299,7 +299,7 @@ export const NestedSelect: Story = {
     await userEvent.click(selectTrigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-select-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-select-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -308,7 +308,7 @@ export const NestedSelect: Story = {
     // First Escape: closes nested Select popover, modal remains open!
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector(".cinder-select-popover")).toBeNull();
+      expect(document.querySelector(".hashti-select-popover")).toBeNull();
     });
     await expect(modal).toBeVisible();
     await waitFor(() => expect(selectTrigger).toHaveFocus());
@@ -316,7 +316,7 @@ export const NestedSelect: Story = {
     // Second Escape: closes Modal, focus returns to original trigger!
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector(".cinder-modal")).toBeNull();
+      expect(document.querySelector(".hashti-modal")).toBeNull();
     });
     await waitFor(() => expect(trigger).toHaveFocus());
   },
@@ -334,7 +334,7 @@ function CustomPartTargetingExample() {
         <Modal
           isDismissable
           overlayClassName="overlay-custom-backdrop"
-          modalStyle={{ outline: "2px dashed var(--cinder-focus)" }}
+          modalStyle={{ outline: "2px dashed var(--hashti-focus)" }}
           overlayRef={overlayRef}
           ref={modalRef}
         >
@@ -356,7 +356,7 @@ function CustomPartTargetingExample() {
                   This modal verifies <code>overlayClassName</code>, <code>modalStyle</code>, and
                   independent <code>overlayRef</code> / <code>ref</code> targets.
                 </p>
-                <div className="cinder-dialog-footer">
+                <div className="hashti-dialog-footer">
                   <Button
                     variant="secondary"
                     onPress={() => {
@@ -392,13 +392,13 @@ export const CustomPartTargeting: Story = {
 
     await userEvent.click(trigger);
     const overlay = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-modal-overlay");
+      const el = document.querySelector<HTMLElement>(".hashti-modal-overlay");
       expect(el).not.toBeNull();
       return el!;
     });
     await expect(overlay).toHaveClass(/overlay-custom-backdrop/);
 
-    const modal = document.querySelector<HTMLElement>(".cinder-modal")!;
+    const modal = document.querySelector<HTMLElement>(".hashti-modal")!;
     expect(modal.style.outline).toContain("dashed");
 
     const verifyBtn = within(modal).getByRole("button", { name: "Verify refs" });
@@ -408,7 +408,7 @@ export const CustomPartTargeting: Story = {
     const doneBtn = within(modal).getByRole("button", { name: "Done" });
     await userEvent.click(doneBtn);
     await waitFor(() => {
-      expect(document.querySelector(".cinder-modal-overlay")).toBeNull();
+      expect(document.querySelector(".hashti-modal-overlay")).toBeNull();
     });
   },
 };
@@ -454,7 +454,7 @@ function LocalizedModalExamples() {
                       following project decommission.
                     </p>
                   </div>
-                  <div className="cinder-dialog-footer">
+                  <div className="hashti-dialog-footer">
                     <Button variant="primary" onPress={close}>
                       Accept terms
                     </Button>
@@ -490,7 +490,7 @@ function LocalizedModalExamples() {
                       آیا از بازنشانی کلیدهای دسترسی خوشه <code>atlas-sec-01</code> اطمینان دارید؟
                       این عملیات بلافاصله اعمال خواهد شد.
                     </p>
-                    <div className="cinder-dialog-footer">
+                    <div className="hashti-dialog-footer">
                       <Button variant="tertiary" onPress={close}>
                         انصراف
                       </Button>
@@ -517,7 +517,7 @@ export const LongContentAndLocales: Story = {
     await userEvent.click(trigger);
 
     const modal = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-modal");
+      const el = document.querySelector<HTMLElement>(".hashti-modal");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -527,7 +527,7 @@ export const LongContentAndLocales: Story = {
     await userEvent.click(cancelBtn);
 
     await waitFor(() => {
-      expect(document.querySelector(".cinder-modal")).toBeNull();
+      expect(document.querySelector(".hashti-modal")).toBeNull();
     });
     await waitFor(() => expect(trigger).toHaveFocus());
   },

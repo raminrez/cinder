@@ -44,7 +44,7 @@ function TextFieldRoot({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-text-field cinder-field cinder-text-field", className)}
+      className={classes("hashti-field hashti-text-field hashti-field hashti-text-field", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACTextField>
@@ -73,7 +73,7 @@ function TextFieldDefault({
       {...props}
       size={size}
       className={className}
-      data-cinder-input-icon={children == null ? "" : undefined}
+      data-hashti-input-icon={children == null ? "" : undefined}
     >
       {children ?? (
         <FieldLayout
@@ -120,7 +120,7 @@ function TextAreaRoot({
     <RACTextField
       {...props}
       {...presentation.props}
-      className={classes("hashti-field hashti-text-area cinder-field cinder-text-area", className)}
+      className={classes("hashti-field hashti-text-area hashti-field hashti-text-area", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACTextField>
@@ -149,7 +149,7 @@ function TextAreaDefault({
     <TextAreaRoot
       {...props}
       className={className}
-      data-cinder-input-icon={children == null ? "" : undefined}
+      data-hashti-input-icon={children == null ? "" : undefined}
     >
       {children ?? (
         <FieldLayout

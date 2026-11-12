@@ -38,14 +38,14 @@ function PlaygroundExample() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
           <div>
-            <span style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.75rem", color: "var(--cinder-text-secondary)" }}>
+            <span style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.75rem", color: "var(--hashti-text-secondary)" }}>
               Large Spinner
             </span>
             <Loading size="lg" label="Synchronizing cloud resources" />
           </div>
 
           <div>
-            <span style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.75rem", color: "var(--cinder-text-secondary)" }}>
+            <span style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.75rem", color: "var(--hashti-text-secondary)" }}>
               Small Spinner
             </span>
             <Loading size="sm" label="Fetching data" />

@@ -234,9 +234,9 @@ export const LongContent: Story = {
     </div>
   ),
   play: async ({ canvasElement }) => {
-    const root = canvasElement.querySelector<HTMLElement>(".cinder-field")!;
+    const root = canvasElement.querySelector<HTMLElement>(".hashti-field")!;
     for (const part of root.querySelectorAll<HTMLElement>(
-      ".cinder-field__label, .cinder-field__description, .cinder-field__error",
+      ".hashti-field__label, .hashti-field__description, .hashti-field__error",
     )) {
       await expect(part).toBeVisible();
       await expect(part.scrollWidth).toBeLessThanOrEqual(part.clientWidth + 1);

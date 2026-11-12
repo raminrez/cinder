@@ -132,7 +132,7 @@ function StandaloneCalendarExample() {
         </div>
         <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
           <div>
-            <div style={{ fontWeight: 600, margin: "0 0 0.5rem", fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+            <div style={{ fontWeight: 600, margin: "0 0 0.5rem", fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
               Single Day Selection
             </div>
             <Calendar
@@ -142,7 +142,7 @@ function StandaloneCalendarExample() {
             />
           </div>
           <div>
-            <div style={{ fontWeight: 600, margin: "0 0 0.5rem", fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+            <div style={{ fontWeight: 600, margin: "0 0 0.5rem", fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
               Range Selection Calendar
             </div>
             <RangeCalendar

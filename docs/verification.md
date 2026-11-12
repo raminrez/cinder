@@ -954,8 +954,8 @@ The current Frame-action archives are identified by the
 
 | Archive                                                               | Bytes  | SHA-256                                                            |
 | --------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
-| [`cinder-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 46,455 | `4a51a948bea67a854ba2fdc8e184054e6d449d3618c1de49884ae1c4a8520edd` |
-| [`cinder-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 85,477 | `bd5f0ae7f65f50000915e175baf0df5acbdfc75ede7c59e5935dadbaa21e45d8` |
+| [`hashti-tokens-0.1.0.tgz`](../dist/packages/cinder-tokens-0.1.0.tgz) | 46,455 | `4a51a948bea67a854ba2fdc8e184054e6d449d3618c1de49884ae1c4a8520edd` |
+| [`hashti-react-0.1.0.tgz`](../dist/packages/cinder-react-0.1.0.tgz)   | 85,477 | `bd5f0ae7f65f50000915e175baf0df5acbdfc75ede7c59e5935dadbaa21e45d8` |
 
 The [current identity check](../test-results/frame-actions-identities-2026-11-07.json) confirms that
 the manifest, actual archive bytes, package-consumer record, and README-install

@@ -1,2 +1,2 @@
 /* Import first so bundlers establish the order before inlining theme rules. */
-@layer cinder.tokens, cinder.reset, cinder.components, cinder.themes, cinder.accessibility;
+@layer hashti.tokens, hashti.reset, hashti.components, hashti.themes, hashti.accessibility;

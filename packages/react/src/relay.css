@@ -1,313 +1,313 @@
 /* A nested Theme is a styling boundary, including when its root is a portal. */
-@layer cinder.themes {
-  @scope ([data-cinder-theme="relay-light"], [data-cinder-theme="relay-dark"]) to ([data-cinder-theme]) {
-    .cinder-button {
-      --relay-button-ink: var(--cinder-text-on-color);
+@layer hashti.themes {
+  @scope ([data-hashti-theme="relay-light"], [data-hashti-theme="relay-dark"]) to ([data-hashti-theme]) {
+    .hashti-button {
+      --relay-button-ink: var(--hashti-text-on-color);
       justify-content: center;
-      gap: var(--cinder-spacing-03);
-      padding: 0 calc(var(--cinder-spacing-05) - 1px);
-      border-radius: var(--cinder-control-radius);
+      gap: var(--hashti-spacing-03);
+      padding: 0 calc(var(--hashti-spacing-05) - 1px);
+      border-radius: var(--hashti-control-radius);
       color: var(--relay-button-ink);
       font-weight: 500;
-      line-height: var(--cinder-body-01-line-height);
+      line-height: var(--hashti-body-01-line-height);
       letter-spacing: 0;
       transition:
-        background-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive),
-        border-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive);
+        background-color var(--hashti-duration-fast-02) var(--hashti-ease-standard-productive),
+        border-color var(--hashti-duration-fast-02) var(--hashti-ease-standard-productive);
     }
-    .cinder-button > svg:last-child {
+    .hashti-button > svg:last-child {
       margin-inline-end: 0;
     }
-    .cinder-button[data-size="xl"],
-    .cinder-button[data-size="2xl"] {
+    .hashti-button[data-size="xl"],
+    .hashti-button[data-size="2xl"] {
       align-items: center;
-      padding-block: var(--cinder-spacing-04);
+      padding-block: var(--hashti-spacing-04);
     }
-    .cinder-button[data-icon-only] {
+    .hashti-button[data-icon-only] {
       padding: 0;
     }
-    .cinder-button:is(
+    .hashti-button:is(
       [data-variant="secondary"],
       [data-variant="tertiary"],
       [data-variant="ghost"]
     ) {
-      --relay-button-ink: var(--cinder-text-primary);
+      --relay-button-ink: var(--hashti-text-primary);
       color: var(--relay-button-ink);
     }
-    .cinder-button[data-variant="tertiary"] {
+    .hashti-button[data-variant="tertiary"] {
       background: transparent;
-      border-color: var(--cinder-button-tertiary);
+      border-color: var(--hashti-button-tertiary);
     }
-    .cinder-button[data-variant="tertiary"][data-hovered] {
-      background: var(--cinder-button-tertiary-hover);
+    .hashti-button[data-variant="tertiary"][data-hovered] {
+      background: var(--hashti-button-tertiary-hover);
     }
-    .cinder-button[data-variant="tertiary"][data-pressed] {
-      background: var(--cinder-button-tertiary-active);
+    .hashti-button[data-variant="tertiary"][data-pressed] {
+      background: var(--hashti-button-tertiary-active);
     }
-    .cinder-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]) {
-      --relay-button-ink: var(--cinder-button-danger-secondary);
+    .hashti-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]) {
+      --relay-button-ink: var(--hashti-button-danger-secondary);
       color: var(--relay-button-ink);
       background: transparent;
     }
-    .cinder-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]):is(
+    .hashti-button:is([data-variant="danger-tertiary"], [data-variant="danger-ghost"]):is(
         [data-hovered],
         [data-pressed]
       ) {
-      --relay-button-ink: var(--cinder-text-on-color);
+      --relay-button-ink: var(--hashti-text-on-color);
       background: var(--button-hover);
     }
-    .cinder-button:is(
+    .hashti-button:is(
         [data-variant="danger-tertiary"],
         [data-variant="danger-ghost"]
       )[data-pressed] {
       background: var(--button-active);
     }
-    .cinder-button[data-focus-visible] {
-      outline: var(--cinder-focus-width) solid var(--cinder-focus);
-      outline-offset: var(--cinder-focus-offset);
+    .hashti-button[data-focus-visible] {
+      outline: var(--hashti-focus-width) solid var(--hashti-focus);
+      outline-offset: var(--hashti-focus-offset);
       box-shadow: none;
       border-color: transparent;
     }
-    .cinder-button[data-variant="tertiary"][data-focus-visible] {
-      border-color: var(--cinder-button-tertiary);
+    .hashti-button[data-variant="tertiary"][data-focus-visible] {
+      border-color: var(--hashti-button-tertiary);
     }
-    .cinder-button[data-variant="danger-tertiary"][data-focus-visible] {
-      border-color: var(--cinder-button-danger-secondary);
+    .hashti-button[data-variant="danger-tertiary"][data-focus-visible] {
+      border-color: var(--hashti-button-danger-secondary);
     }
-    .cinder-button[data-disabled] {
-      --relay-button-ink: var(--cinder-text-disabled);
+    .hashti-button[data-disabled] {
+      --relay-button-ink: var(--hashti-text-disabled);
       color: var(--relay-button-ink);
-      background: var(--cinder-button-disabled);
+      background: var(--hashti-button-disabled);
       border-color: transparent;
     }
-    .cinder-button[data-disabled][data-variant*="tertiary"] {
+    .hashti-button[data-disabled][data-variant*="tertiary"] {
       background: transparent;
-      border-color: var(--cinder-border-disabled);
+      border-color: var(--hashti-border-disabled);
     }
-    .cinder-button[data-disabled][data-variant*="ghost"] {
+    .hashti-button[data-disabled][data-variant*="ghost"] {
       background: transparent;
     }
     /* Keep the label's width and accessible name while the progress mark replaces it. */
-    .cinder-button[data-pending] {
+    .hashti-button[data-pending] {
       color: transparent;
     }
-    .cinder-button[data-pending] > svg {
+    .hashti-button[data-pending] > svg {
       visibility: hidden;
     }
-    .cinder-button > .cinder-spinner {
+    .hashti-button > .hashti-spinner {
       position: absolute;
       color: var(--relay-button-ink);
       margin: 0;
     }
 
-    .cinder-field > .react-aria-Label,
-    .cinder-field__label-row > .cinder-field__label {
-      font-size: var(--cinder-body-01-font-size);
-      line-height: var(--cinder-body-01-line-height);
+    .hashti-field > .react-aria-Label,
+    .hashti-field__label-row > .hashti-field__label {
+      font-size: var(--hashti-body-01-font-size);
+      line-height: var(--hashti-body-01-line-height);
       font-weight: 500;
       letter-spacing: 0;
-      color: var(--cinder-text-primary);
+      color: var(--hashti-text-primary);
     }
-    .cinder-field :is(.react-aria-Input, .react-aria-TextArea),
-    .cinder-input-group,
-    .cinder-select-trigger {
-      border: 1px solid var(--cinder-border-strong);
-      border-radius: var(--cinder-control-radius);
-      background: var(--cinder-field);
-      color: var(--cinder-text-primary);
-      caret-color: var(--cinder-text-primary);
+    .hashti-field :is(.react-aria-Input, .react-aria-TextArea),
+    .hashti-input-group,
+    .hashti-select-trigger {
+      border: 1px solid var(--hashti-border-strong);
+      border-radius: var(--hashti-control-radius);
+      background: var(--hashti-field);
+      color: var(--hashti-text-primary);
+      caret-color: var(--hashti-text-primary);
     }
-    .cinder-field :is(.react-aria-Input, .react-aria-TextArea) {
-      padding-inline: calc(var(--cinder-spacing-05) - 1px);
-      padding-inline-end: var(--cinder-input-padding-end, calc(var(--cinder-spacing-05) - 1px));
-      line-height: var(--cinder-body-01-line-height);
+    .hashti-field :is(.react-aria-Input, .react-aria-TextArea) {
+      padding-inline: calc(var(--hashti-spacing-05) - 1px);
+      padding-inline-end: var(--hashti-input-padding-end, calc(var(--hashti-spacing-05) - 1px));
+      line-height: var(--hashti-body-01-line-height);
       transition:
-        background-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive),
-        border-color var(--cinder-duration-fast-02) var(--cinder-ease-standard-productive);
+        background-color var(--hashti-duration-fast-02) var(--hashti-ease-standard-productive),
+        border-color var(--hashti-duration-fast-02) var(--hashti-ease-standard-productive);
     }
-    .cinder-field :is(.react-aria-Input, .react-aria-TextArea):is(:hover, [data-hovered]),
-    .cinder-input-group[data-hovered],
-    .cinder-select-trigger[data-hovered] {
-      background: var(--cinder-field-hover);
-      border-color: var(--cinder-text-primary);
+    .hashti-field :is(.react-aria-Input, .react-aria-TextArea):is(:hover, [data-hovered]),
+    .hashti-input-group[data-hovered],
+    .hashti-select-trigger[data-hovered] {
+      background: var(--hashti-field-hover);
+      border-color: var(--hashti-text-primary);
     }
-    .cinder-select-trigger {
+    .hashti-select-trigger {
       justify-content: space-between;
       text-align: start;
       font-weight: 400;
     }
-    .cinder-field :is(.react-aria-Input, .react-aria-TextArea):is(:focus, [data-focused]),
-    .cinder-input-group[data-focus-within],
-    .cinder-select-trigger[data-focus-visible] {
-      outline: var(--cinder-focus-width) solid var(--cinder-focus);
-      outline-offset: var(--cinder-focus-offset);
+    .hashti-field :is(.react-aria-Input, .react-aria-TextArea):is(:focus, [data-focused]),
+    .hashti-input-group[data-focus-within],
+    .hashti-select-trigger[data-focus-visible] {
+      outline: var(--hashti-focus-width) solid var(--hashti-focus);
+      outline-offset: var(--hashti-focus-offset);
       box-shadow: none;
     }
-    .cinder-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group),
-    .cinder-field[data-invalid] .cinder-select-trigger {
-      border-color: var(--cinder-support-error);
+    .hashti-field[data-invalid] > :is(.react-aria-Input, .react-aria-TextArea, .hashti-input-group),
+    .hashti-field[data-invalid] .hashti-select-trigger {
+      border-color: var(--hashti-support-error);
       outline: none;
     }
-    .cinder-field[data-invalid]
+    .hashti-field[data-invalid]
       :is(.react-aria-Input, .react-aria-TextArea):is(:focus, [data-focused]),
-    .cinder-field[data-invalid] > .cinder-input-group[data-focus-within],
-    .cinder-field[data-invalid] .cinder-select-trigger[data-focus-visible] {
-      outline: var(--cinder-focus-width) solid var(--cinder-focus);
-      outline-offset: var(--cinder-focus-offset);
+    .hashti-field[data-invalid] > .hashti-input-group[data-focus-within],
+    .hashti-field[data-invalid] .hashti-select-trigger[data-focus-visible] {
+      outline: var(--hashti-focus-width) solid var(--hashti-focus);
+      outline-offset: var(--hashti-focus-offset);
     }
-    .cinder-field[data-readonly] :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group) {
+    .hashti-field[data-readonly] :is(.react-aria-Input, .react-aria-TextArea, .hashti-input-group) {
       background: transparent;
-      border-color: var(--cinder-border-subtle);
+      border-color: var(--hashti-border-subtle);
     }
-    .cinder-field[data-disabled] > .react-aria-Label,
-    .cinder-field[data-disabled] > .cinder-field__label-row > .cinder-field__label {
-      color: var(--cinder-text-disabled);
+    .hashti-field[data-disabled] > .react-aria-Label,
+    .hashti-field[data-disabled] > .hashti-field__label-row > .hashti-field__label {
+      color: var(--hashti-text-disabled);
     }
-    .cinder-field[data-disabled]
-      :is(.react-aria-Input, .react-aria-TextArea, .cinder-input-group, .cinder-select-trigger) {
-      background: var(--cinder-button-disabled);
-      border-color: var(--cinder-border-disabled);
-      color: var(--cinder-text-disabled);
+    .hashti-field[data-disabled]
+      :is(.react-aria-Input, .react-aria-TextArea, .hashti-input-group, .hashti-select-trigger) {
+      background: var(--hashti-button-disabled);
+      border-color: var(--hashti-border-disabled);
+      color: var(--hashti-text-disabled);
     }
-    .cinder-field[data-disabled] .react-aria-SelectValue {
-      color: var(--cinder-text-disabled);
+    .hashti-field[data-disabled] .react-aria-SelectValue {
+      color: var(--hashti-text-disabled);
     }
-    .cinder-input-group > .react-aria-Input {
+    .hashti-input-group > .react-aria-Input {
       border: 0;
       background: transparent;
     }
-    .cinder-input-group > .cinder-button {
+    .hashti-input-group > .hashti-button {
       min-height: calc(var(--control-height, 2.5rem) - 2px);
       align-self: stretch;
     }
 
-    .cinder-checkbox,
-    .cinder-radio,
-    .cinder-switch {
-      min-height: var(--cinder-size-md);
-      gap: var(--cinder-spacing-03);
-      font-size: var(--cinder-body-01-font-size);
-      line-height: var(--cinder-body-01-line-height);
+    .hashti-checkbox,
+    .hashti-radio,
+    .hashti-switch {
+      min-height: var(--hashti-size-md);
+      gap: var(--hashti-spacing-03);
+      font-size: var(--hashti-body-01-font-size);
+      line-height: var(--hashti-body-01-line-height);
     }
-    .cinder-checkbox,
-    .cinder-radio {
+    .hashti-checkbox,
+    .hashti-radio {
       padding-block: 0.625rem;
     }
-    .cinder-checkbox[data-readonly] {
+    .hashti-checkbox[data-readonly] {
       cursor: default;
     }
-    .cinder-checkbox-control,
-    .cinder-radio-control {
+    .hashti-checkbox-control,
+    .hashti-radio-control {
       width: 1.125rem;
       height: 1.125rem;
       margin-top: 1px;
-      border-color: var(--cinder-border-strong);
+      border-color: var(--hashti-border-strong);
     }
-    .cinder-checkbox-control {
+    .hashti-checkbox-control {
       border-radius: 4px;
     }
-    .cinder-checkbox:is([data-selected], [data-indeterminate]) .cinder-checkbox-control {
-      background: var(--cinder-button-primary);
-      border-color: var(--cinder-button-primary);
-      color: var(--cinder-text-on-color);
+    .hashti-checkbox:is([data-selected], [data-indeterminate]) .hashti-checkbox-control {
+      background: var(--hashti-button-primary);
+      border-color: var(--hashti-button-primary);
+      color: var(--hashti-text-on-color);
     }
-    .cinder-radio[data-selected] .cinder-radio-control {
-      border-color: var(--cinder-button-primary);
+    .hashti-radio[data-selected] .hashti-radio-control {
+      border-color: var(--hashti-button-primary);
     }
-    .cinder-checkbox[data-hovered] .cinder-checkbox-control,
-    .cinder-radio[data-hovered] .cinder-radio-control {
-      border-color: var(--cinder-text-primary);
+    .hashti-checkbox[data-hovered] .hashti-checkbox-control,
+    .hashti-radio[data-hovered] .hashti-radio-control {
+      border-color: var(--hashti-text-primary);
     }
-    .cinder-checkbox:not([data-selected], [data-indeterminate])[data-pressed]
-      .cinder-checkbox-control,
-    .cinder-radio:not([data-selected])[data-pressed] .cinder-radio-control {
-      background: var(--cinder-layer-active);
+    .hashti-checkbox:not([data-selected], [data-indeterminate])[data-pressed]
+      .hashti-checkbox-control,
+    .hashti-radio:not([data-selected])[data-pressed] .hashti-radio-control {
+      background: var(--hashti-layer-active);
     }
-    .cinder-checkbox:is([data-selected], [data-indeterminate])[data-pressed]
-      .cinder-checkbox-control {
-      background: var(--cinder-button-primary-active);
+    .hashti-checkbox:is([data-selected], [data-indeterminate])[data-pressed]
+      .hashti-checkbox-control {
+      background: var(--hashti-button-primary-active);
     }
-    .cinder-checkbox[data-invalid] .cinder-checkbox-control,
-    .cinder-radio[data-invalid] .cinder-radio-control {
-      border-color: var(--cinder-support-error);
+    .hashti-checkbox[data-invalid] .hashti-checkbox-control,
+    .hashti-radio[data-invalid] .hashti-radio-control {
+      border-color: var(--hashti-support-error);
     }
-    .cinder-checkbox[data-focus-visible] .cinder-checkbox-control,
-    .cinder-radio[data-focus-visible] .cinder-radio-control,
-    .cinder-switch[data-focus-visible] .cinder-switch-track {
-      outline: var(--cinder-focus-width) solid var(--cinder-focus);
-      outline-offset: var(--cinder-focus-offset);
+    .hashti-checkbox[data-focus-visible] .hashti-checkbox-control,
+    .hashti-radio[data-focus-visible] .hashti-radio-control,
+    .hashti-switch[data-focus-visible] .hashti-switch-track {
+      outline: var(--hashti-focus-width) solid var(--hashti-focus);
+      outline-offset: var(--hashti-focus-offset);
     }
-    .cinder-checkbox[data-disabled] .cinder-checkbox-control,
-    .cinder-radio[data-disabled] .cinder-radio-control {
-      border-color: var(--cinder-icon-disabled);
+    .hashti-checkbox[data-disabled] .hashti-checkbox-control,
+    .hashti-radio[data-disabled] .hashti-radio-control {
+      border-color: var(--hashti-icon-disabled);
     }
-    .cinder-checkbox[data-disabled]:is([data-selected], [data-indeterminate])
-      .cinder-checkbox-control {
-      background: var(--cinder-icon-disabled);
-      color: var(--cinder-field);
+    .hashti-checkbox[data-disabled]:is([data-selected], [data-indeterminate])
+      .hashti-checkbox-control {
+      background: var(--hashti-icon-disabled);
+      color: var(--hashti-field);
     }
-    .cinder-switch[data-selected] .cinder-switch-track {
-      background: var(--cinder-button-primary);
+    .hashti-switch[data-selected] .hashti-switch-track {
+      background: var(--hashti-button-primary);
     }
-    .cinder-switch-thumb {
-      background: var(--cinder-field);
+    .hashti-switch-thumb {
+      background: var(--hashti-field);
     }
-    .cinder-switch[data-disabled] .cinder-switch-track {
-      background: var(--cinder-border-disabled);
+    .hashti-switch[data-disabled] .hashti-switch-track {
+      background: var(--hashti-border-disabled);
     }
-    .cinder-content-switcher {
-      border-radius: var(--cinder-control-radius);
-      outline-color: var(--cinder-border-strong);
+    .hashti-content-switcher {
+      border-radius: var(--hashti-control-radius);
+      outline-color: var(--hashti-border-strong);
     }
-    .cinder-content-switcher > .cinder-toggle-button {
+    .hashti-content-switcher > .hashti-toggle-button {
       border-color: transparent;
     }
-    .cinder-content-switcher > .cinder-toggle-button:first-child {
-      border-start-start-radius: var(--cinder-control-radius);
-      border-end-start-radius: var(--cinder-control-radius);
+    .hashti-content-switcher > .hashti-toggle-button:first-child {
+      border-start-start-radius: var(--hashti-control-radius);
+      border-end-start-radius: var(--hashti-control-radius);
     }
-    .cinder-content-switcher > .cinder-toggle-button:last-child {
-      border-start-end-radius: var(--cinder-control-radius);
-      border-end-end-radius: var(--cinder-control-radius);
+    .hashti-content-switcher > .hashti-toggle-button:last-child {
+      border-start-end-radius: var(--hashti-control-radius);
+      border-end-end-radius: var(--hashti-control-radius);
     }
 
-    :scope.cinder-popover {
-      border: 1px solid var(--cinder-border-subtle);
-      border-radius: var(--cinder-popover-radius);
-      box-shadow: 0 8px 24px var(--cinder-shadow);
+    :scope.hashti-popover {
+      border: 1px solid var(--hashti-border-subtle);
+      border-radius: var(--hashti-popover-radius);
+      box-shadow: 0 8px 24px var(--hashti-shadow);
     }
     .react-aria-ListBox,
     .react-aria-Menu {
-      padding: var(--cinder-spacing-02);
+      padding: var(--hashti-spacing-02);
     }
     .react-aria-ListBoxItem,
     .react-aria-MenuItem {
-      border-radius: var(--cinder-control-radius);
+      border-radius: var(--hashti-control-radius);
     }
-    .cinder-modal {
-      border: 1px solid var(--cinder-border-subtle);
-      border-radius: var(--cinder-overlay-radius);
-      box-shadow: 0 16px 48px var(--cinder-shadow);
+    .hashti-modal {
+      border: 1px solid var(--hashti-border-subtle);
+      border-radius: var(--hashti-overlay-radius);
+      box-shadow: 0 16px 48px var(--hashti-shadow);
     }
-    .cinder-dialog {
-      padding: var(--cinder-spacing-06);
+    .hashti-dialog {
+      padding: var(--hashti-spacing-06);
     }
-    .cinder-dialog .react-aria-Heading[slot="title"] {
+    .hashti-dialog .react-aria-Heading[slot="title"] {
       font-weight: 500;
       margin-inline-end: 2.5rem;
-      margin-block-end: var(--cinder-spacing-03);
+      margin-block-end: var(--hashti-spacing-03);
     }
-    .cinder-dialog > .cinder-button[slot="close"] {
-      top: var(--cinder-spacing-04);
-      inset-inline-end: var(--cinder-spacing-04);
+    .hashti-dialog > .hashti-button[slot="close"] {
+      top: var(--hashti-spacing-04);
+      inset-inline-end: var(--hashti-spacing-04);
     }
-    .cinder-dialog-footer {
+    .hashti-dialog-footer {
       justify-content: flex-end;
       flex-wrap: wrap;
-      gap: var(--cinder-spacing-03);
-      margin: var(--cinder-spacing-06) 0 0;
+      gap: var(--hashti-spacing-03);
+      margin: var(--hashti-spacing-06) 0 0;
     }
-    .cinder-dialog-footer .cinder-button {
+    .hashti-dialog-footer .hashti-button {
       width: auto;
       min-height: var(--control-height, 3rem);
       align-items: center;
@@ -317,67 +317,67 @@
 }
 
 /* System colors must outrank variant and interaction-state colors. */
-@layer cinder.accessibility {
+@layer hashti.accessibility {
   @media (forced-colors: active) {
-    @scope ([data-cinder-theme="relay-light"], [data-cinder-theme="relay-dark"]) to ([data-cinder-theme]) {
-      .cinder-button,
-      .cinder-toggle-button {
+    @scope ([data-hashti-theme="relay-light"], [data-hashti-theme="relay-dark"]) to ([data-hashti-theme]) {
+      .hashti-button,
+      .hashti-toggle-button {
         --relay-button-ink: ButtonText;
         --button-icon: currentColor;
         background: ButtonFace;
         color: ButtonText;
         border-color: ButtonText;
       }
-      .cinder-toggle-button[data-selected] {
+      .hashti-toggle-button[data-selected] {
         background: Highlight;
         color: HighlightText;
       }
-      .cinder-button[data-disabled],
-      .cinder-toggle-button[data-disabled] {
+      .hashti-button[data-disabled],
+      .hashti-toggle-button[data-disabled] {
         --relay-button-ink: GrayText;
         background: ButtonFace;
         color: GrayText;
         border-color: GrayText;
       }
-      .cinder-select-trigger .react-aria-SelectValue[data-placeholder],
-      .cinder-field[data-disabled] .react-aria-SelectValue {
+      .hashti-select-trigger .react-aria-SelectValue[data-placeholder],
+      .hashti-field[data-disabled] .react-aria-SelectValue {
         color: GrayText;
       }
-      .cinder-button[data-pending] {
+      .hashti-button[data-pending] {
         color: transparent;
       }
-      .cinder-button[data-focus-visible],
-      .cinder-toggle-button[data-focus-visible],
-      .cinder-checkbox[data-focus-visible] .cinder-checkbox-control,
-      .cinder-radio[data-focus-visible] .cinder-radio-control,
-      .cinder-switch[data-focus-visible] .cinder-switch-track {
+      .hashti-button[data-focus-visible],
+      .hashti-toggle-button[data-focus-visible],
+      .hashti-checkbox[data-focus-visible] .hashti-checkbox-control,
+      .hashti-radio[data-focus-visible] .hashti-radio-control,
+      .hashti-switch[data-focus-visible] .hashti-switch-track {
         outline-color: Highlight;
       }
-      .cinder-checkbox-control,
-      .cinder-radio-control,
-      .cinder-switch-track {
+      .hashti-checkbox-control,
+      .hashti-radio-control,
+      .hashti-switch-track {
         border-color: ButtonText;
       }
-      .cinder-checkbox:is([data-selected], [data-indeterminate]) .cinder-checkbox-control,
-      .cinder-switch[data-selected] .cinder-switch-track {
+      .hashti-checkbox:is([data-selected], [data-indeterminate]) .hashti-checkbox-control,
+      .hashti-switch[data-selected] .hashti-switch-track {
         background: Highlight;
         color: HighlightText;
       }
-      .cinder-switch-thumb {
+      .hashti-switch-thumb {
         background: ButtonText;
       }
-      .cinder-switch[data-selected] .cinder-switch-thumb {
+      .hashti-switch[data-selected] .hashti-switch-thumb {
         background: HighlightText;
       }
-      .cinder-checkbox[data-disabled] .cinder-checkbox-control,
-      .cinder-radio[data-disabled] .cinder-radio-control,
-      .cinder-switch[data-disabled] .cinder-switch-track {
+      .hashti-checkbox[data-disabled] .hashti-checkbox-control,
+      .hashti-radio[data-disabled] .hashti-radio-control,
+      .hashti-switch[data-disabled] .hashti-switch-track {
         background: ButtonFace;
         border-color: GrayText;
         color: GrayText;
       }
-      .cinder-radio[data-disabled] .cinder-radio-control::after,
-      .cinder-switch[data-disabled] .cinder-switch-thumb {
+      .hashti-radio[data-disabled] .hashti-radio-control::after,
+      .hashti-switch[data-disabled] .hashti-switch-thumb {
         background: GrayText;
       }
     }

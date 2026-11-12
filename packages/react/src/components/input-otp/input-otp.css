@@ -1,14 +1,14 @@
 /* Hashti Modern Aesthetic - InputOTP */
 @layer hashti.components {
   .hashti-input-otp,
-  .cinder-input-otp {
+  .hashti-input-otp {
     display: inline-flex;
     gap: 8px;
     align-items: center;
   }
 
   .hashti-input-otp-slot,
-  .cinder-input-otp-slot {
+  .hashti-input-otp-slot {
     width: 44px;
     height: 48px;
     text-align: center;
@@ -24,13 +24,13 @@
   }
 
   .hashti-input-otp-slot:focus,
-  .cinder-input-otp-slot:focus {
+  .hashti-input-otp-slot:focus {
     border-color: var(--hashti-focus, #0f62fe);
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-input-otp-slot[data-invalid],
-  .cinder-input-otp-slot[data-invalid] {
+  .hashti-input-otp-slot[data-invalid] {
     border-color: var(--hashti-support-error, #da1e28);
   }
 }

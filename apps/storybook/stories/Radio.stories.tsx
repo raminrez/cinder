@@ -314,7 +314,7 @@ export const CompositionAndFormData: Story = {
     await expect(immediate.closest("label")).toHaveAttribute("data-composed-radio", "true");
     await userEvent.keyboard(" ");
     await expect(immediate).toBeChecked();
-    await expect(immediate.closest("label")).toHaveClass("cinder-radio", "selected-delivery");
+    await expect(immediate.closest("label")).toHaveClass("hashti-radio", "selected-delivery");
     await expect(immediate.closest("label")).toHaveStyle({ fontWeight: 600 });
     await userEvent.click(submit);
     await expect(output).toHaveTextContent(JSON.stringify([["delivery", "immediate"]]));
@@ -535,7 +535,7 @@ export const LongContentAndLocales: Story = {
       await expect(identifier.tagName).toBe("BDI");
       await expect(identifier).toHaveAttribute("dir", "ltr");
       for (const part of group.querySelectorAll<HTMLElement>(
-        ".cinder-field__label, .cinder-field__description, .cinder-field__error, .cinder-radio",
+        ".hashti-field__label, .hashti-field__description, .hashti-field__error, .hashti-radio",
       )) {
         await expect(part).toBeVisible();
         await expect(part.scrollWidth).toBeLessThanOrEqual(part.clientWidth + 1);
@@ -599,24 +599,24 @@ export const DetachedStatusShowcase: Story = {
     const canvas = within(canvasElement);
 
     const warnGroup = canvas.getByRole("radiogroup", { name: "Deployment strategy" });
-    const warnStatus = warnGroup.querySelector(".cinder-field__status");
+    const warnStatus = warnGroup.querySelector(".hashti-field__status");
     await expect(warnStatus).toBeVisible();
-    await expect(warnStatus).toHaveAttribute("data-cinder-status", "warning");
+    await expect(warnStatus).toHaveAttribute("data-hashti-status", "warning");
     await expect(warnStatus).toHaveAttribute("data-variant", "detached");
     await expect(warnStatus).toHaveTextContent("Canary rollouts take up to 45 minutes to reach full capacity.");
     await expect(warnGroup).toHaveAccessibleDescription(/Canary rollouts take up to 45 minutes to reach full capacity/);
 
     const errGroup = canvas.getByRole("radiogroup", { name: "Artifact retention window" });
-    const errStatus = errGroup.querySelector(".cinder-field__status");
+    const errStatus = errGroup.querySelector(".hashti-field__status");
     await expect(errStatus).toBeVisible();
-    await expect(errStatus).toHaveAttribute("data-cinder-status", "error");
+    await expect(errStatus).toHaveAttribute("data-hashti-status", "error");
     await expect(errStatus).toHaveAttribute("data-variant", "detached");
     await expect(errStatus).toHaveTextContent("Selected retention window requires enterprise quota approval.");
 
     const successGroup = canvas.getByRole("radiogroup", { name: "Key management service" });
-    const successStatus = successGroup.querySelector(".cinder-field__status");
+    const successStatus = successGroup.querySelector(".hashti-field__status");
     await expect(successStatus).toBeVisible();
-    await expect(successStatus).toHaveAttribute("data-cinder-status", "success");
+    await expect(successStatus).toHaveAttribute("data-hashti-status", "success");
     await expect(successStatus).toHaveAttribute("data-variant", "detached");
     await expect(successStatus).toHaveTextContent("Hardware security module (HSM) keys active and verified.");
 

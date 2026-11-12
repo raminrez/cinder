@@ -106,15 +106,15 @@ for (const theme of ["frame-light", "frame-dark"]) {
       "range",
     ]) {
       const field = page.locator(`[data-status-field="${name}"]`);
-      const control = field.locator(":scope > .cinder-field__control");
-      const status = field.locator(".cinder-field__status");
+      const control = field.locator(":scope > .hashti-field__control");
+      const status = field.locator(".hashti-field__status");
       const a = await control.boundingBox();
       const b = await status.boundingBox();
       expect(Math.abs(a!.x - b!.x), `${name} attached start`).toBeLessThanOrEqual(1);
       expect(Math.abs(a!.width - b!.width), `${name} attached width`).toBeLessThanOrEqual(1);
       expect(Math.abs(a!.y + a!.height - b!.y), `${name} attached edge`).toBeLessThanOrEqual(1);
       await expect(status).toHaveCSS("border-top-width", "0px");
-      const icon = field.locator(".cinder-field__status-icon");
+      const icon = field.locator(".hashti-field__status-icon");
       const mark = await icon.boundingBox();
       expect(mark!.x, `${name} icon start`).toBeGreaterThanOrEqual(a!.x);
       expect(mark!.x + mark!.width, `${name} icon end`).toBeLessThan(a!.x + a!.width);
@@ -131,7 +131,7 @@ for (const theme of ["frame-light", "frame-dark"]) {
       }
     }
     for (const name of ["checkbox", "radio"]) {
-      await expect(page.locator(`[data-status-field="${name}"] .cinder-field__status`)).toHaveCSS(
+      await expect(page.locator(`[data-status-field="${name}"] .hashti-field__status`)).toHaveCSS(
         "border-bottom-width",
         "0px",
       );
@@ -154,13 +154,13 @@ for (const theme of Object.keys(themes)) {
       const field = page.getByTestId("status-disabled-help");
       const disabledInk = await field.evaluate((node) => {
         const probe = document.createElement("span");
-        probe.style.color = "var(--cinder-text-disabled)";
+        probe.style.color = "var(--hashti-text-disabled)";
         node.append(probe);
         const color = getComputedStyle(probe).color;
         probe.remove();
         return color;
       });
-      await expect(field.locator(".cinder-field__label")).toHaveCSS("color", disabledInk);
+      await expect(field.locator(".hashti-field__label")).toHaveCSS("color", disabledInk);
     });
   }
   test(`${theme}: status text and icons retain readable contrast`, async () => {
@@ -195,9 +195,9 @@ for (const theme of Object.keys(themes)) {
           const y = luminance(b);
           return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
         };
-        const status = field.querySelector(".cinder-field__status")!;
-        const icon = field.querySelector(".cinder-field__status-icon")!;
-        const control = field.querySelector(".cinder-field__control")!;
+        const status = field.querySelector(".hashti-field__status")!;
+        const icon = field.querySelector(".hashti-field__status-icon")!;
+        const control = field.querySelector(".hashti-field__control")!;
         return {
           text: contrast(rgb(getComputedStyle(status).color), background(status)),
           icon: contrast(rgb(getComputedStyle(icon).color), background(control)),
@@ -219,11 +219,11 @@ for (const [locale, required, optional, warning, about, close] of [
   test(`${locale}: required wins, optional is explicit, and icon-only status/help are localized`, async () => {
     await open("frame-light", locale);
     const field = page.getByTestId("status-localized");
-    await expect(field.locator(".cinder-field__necessity")).toHaveText(`(${required})`);
+    await expect(field.locator(".hashti-field__necessity")).toHaveText(`(${required})`);
     await expect(
-      page.getByTestId("status-optional").locator(".cinder-field__necessity"),
+      page.getByTestId("status-optional").locator(".hashti-field__necessity"),
     ).toHaveText(`(${optional})`);
-    await expect(field.locator(".cinder-field__status.cinder-visually-hidden")).toHaveText(
+    await expect(field.locator(".hashti-field__status.hashti-visually-hidden")).toHaveText(
       warning!,
     );
     await expect(field.getByRole("textbox")).toHaveAccessibleDescription(warning!);
@@ -233,7 +233,7 @@ for (const [locale, required, optional, warning, about, close] of [
     const trigger = field.getByRole("button");
     await expect(trigger).toHaveAccessibleName(new RegExp(`^${about} `));
     await trigger.click();
-    const popover = page.locator(".cinder-field__label-popover");
+    const popover = page.locator(".hashti-field__label-popover");
     await expect(popover).toHaveAttribute("lang", locale!);
     await expect(popover).toHaveAttribute(
       "dir",
@@ -262,11 +262,11 @@ test("forced colors: status meaning and control descriptions survive system colo
   const field = page.locator('[data-status-field="text"]');
   for (const type of ["warning", "error", "success"]) {
     await page.getByRole("button", { name: `Show ${type}`, exact: true }).click();
-    const status = field.locator(".cinder-field__status");
+    const status = field.locator(".hashti-field__status");
     await expect(status).toHaveText("Review this value before saving.");
     await expect(status).toHaveCSS("color", colors.text);
     await expect(status).toHaveCSS("background-color", colors.background);
-    await expect(field.locator(".cinder-field__status-icon")).toHaveCSS("color", colors.text);
+    await expect(field.locator(".hashti-field__status-icon")).toHaveCSS("color", colors.text);
     await expect(field.getByRole("textbox")).toHaveAccessibleDescription(
       "Use a name your team recognizes. Review this value before saving.",
     );

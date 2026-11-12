@@ -64,7 +64,7 @@ export function ColorThumb({ className, ref, ...props }: ColorThumbProps) {
     <RACColorThumb
       {...props}
       ref={ref}
-      className={classes("cinder-color-thumb", className)}
+      className={classes("hashti-color-thumb", className)}
     />
   );
 }
@@ -82,7 +82,7 @@ export function ColorArea({ className, children, ref, ...props }: ColorAreaProps
     <RACColorArea
       {...props}
       ref={ref}
-      className={classes("cinder-color-area", className)}
+      className={classes("hashti-color-area", className)}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -116,7 +116,7 @@ export function ColorSlider({
     <RACColorSlider
       {...props}
       ref={ref}
-      className={classes("cinder-color-slider", className)}
+      className={classes("hashti-color-slider", className)}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -128,12 +128,12 @@ export function ColorSlider({
         return (
           <>
             {(label || showOutput) && (
-              <div className="cinder-color-slider__header">
-                {label && <Label className="cinder-color-slider__label">{label}</Label>}
-                {showOutput && <SliderOutput className="cinder-color-slider__output" />}
+              <div className="hashti-color-slider__header">
+                {label && <Label className="hashti-color-slider__label">{label}</Label>}
+                {showOutput && <SliderOutput className="hashti-color-slider__output" />}
               </div>
             )}
-            <SliderTrack className="cinder-color-slider__track">
+            <SliderTrack className="hashti-color-slider__track">
               <ColorThumb />
             </SliderTrack>
           </>
@@ -156,7 +156,7 @@ export function ColorWheelTrack({ className, ref, ...props }: ColorWheelTrackPro
     <RACColorWheelTrack
       {...props}
       ref={ref}
-      className={classes("cinder-color-wheel-track", className)}
+      className={classes("hashti-color-wheel-track", className)}
     />
   );
 }
@@ -182,7 +182,7 @@ export function ColorWheel({
       innerRadius={innerRadius}
       outerRadius={outerRadius}
       ref={ref}
-      className={classes("cinder-color-wheel", className)}
+      className={classes("hashti-color-wheel", className)}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -193,7 +193,7 @@ export function ColorWheel({
         }
         return (
           <>
-            <ColorWheelTrack className="cinder-color-wheel__track" />
+            <ColorWheelTrack className="hashti-color-wheel__track" />
             <ColorThumb />
           </>
         );
@@ -222,7 +222,7 @@ export function ColorField({
     <RACColorField
       {...props}
       ref={ref}
-      className={classes("cinder-color-field", className)}
+      className={classes("hashti-color-field", className)}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -233,8 +233,8 @@ export function ColorField({
         }
         return (
           <>
-            {label && <Label className="cinder-color-field__label">{label}</Label>}
-            <Input className="cinder-color-field__input" />
+            {label && <Label className="hashti-color-field__label">{label}</Label>}
+            <Input className="hashti-color-field__input" />
           </>
         );
       }}
@@ -267,9 +267,9 @@ export function ColorSwatch({
       data-shape={shape}
       className={classes(
         cx(
-          "cinder-color-swatch",
-          `cinder-color-swatch--${size}`,
-          shape === "circle" ? "cinder-color-swatch--circle" : ""
+          "hashti-color-swatch",
+          `hashti-color-swatch--${size}`,
+          shape === "circle" ? "hashti-color-swatch--circle" : ""
         ),
         className
       )}
@@ -295,7 +295,7 @@ export function ColorSwatchPickerItem({
     <RACColorSwatchPickerItem
       {...props}
       ref={ref}
-      className={classes("cinder-color-swatch-picker-item", className)}
+      className={classes("hashti-color-swatch-picker-item", className)}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -305,7 +305,7 @@ export function ColorSwatchPickerItem({
           <>
             {children ?? <ColorSwatch />}
             {renderProps.isSelected && (
-              <span className="cinder-color-swatch-picker-item__check" aria-hidden="true">
+              <span className="hashti-color-swatch-picker-item__check" aria-hidden="true">
                 <Icon name="check" size={16} />
               </span>
             )}
@@ -336,9 +336,9 @@ export function ColorSwatchPicker({
       data-size={size}
       className={classes(
         cx(
-          "cinder-color-swatch-picker",
-          `cinder-color-swatch-picker--${layout}`,
-          `cinder-color-swatch-picker--${size}`
+          "hashti-color-swatch-picker",
+          `hashti-color-swatch-picker--${layout}`,
+          `hashti-color-swatch-picker--${size}`
         ),
         className
       )}
@@ -393,35 +393,35 @@ export function ColorPickerConvenience({
       {(renderProps) => {
         if (typeof children === "function") {
           return (
-            <div className={cx("cinder-color-picker", className)}>
+            <div className={cx("hashti-color-picker", className)}>
               {children(renderProps)}
             </div>
           );
         }
         if (children) {
           return (
-            <div className={cx("cinder-color-picker", className)}>
+            <div className={cx("hashti-color-picker", className)}>
               {children}
             </div>
           );
         }
         return (
-          <div className={cx("cinder-color-picker", className)}>
-            {label && <Label className="cinder-color-picker__label">{label}</Label>}
+          <div className={cx("hashti-color-picker", className)}>
+            {label && <Label className="hashti-color-picker__label">{label}</Label>}
             <ColorArea
               xChannel="saturation"
               yChannel="brightness"
-              className="cinder-color-picker__area"
+              className="hashti-color-picker__area"
             />
-            <div className="cinder-color-picker__controls">
-              {showSwatch && <ColorSwatch className="cinder-color-picker__swatch" size="lg" />}
-              <div className="cinder-color-picker__sliders">
+            <div className="hashti-color-picker__controls">
+              {showSwatch && <ColorSwatch className="hashti-color-picker__swatch" size="lg" />}
+              <div className="hashti-color-picker__sliders">
                 <ColorSlider channel="hue" aria-label="Hue" />
                 {showAlpha && <ColorSlider channel="alpha" aria-label="Alpha" />}
               </div>
             </div>
             {showHexField && (
-              <div className="cinder-color-picker__fields">
+              <div className="hashti-color-picker__fields">
                 <ColorField aria-label="Hex color" />
               </div>
             )}

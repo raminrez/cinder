@@ -144,12 +144,12 @@ export function CommandPaletteDialog({
       ref={ref}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
-      overlayClassName={classes("cinder-command-palette-overlay", overlayClassName)}
-      className={classes("cinder-command-palette-modal", className)}
+      overlayClassName={classes("hashti-command-palette-overlay", overlayClassName)}
+      className={classes("hashti-command-palette-modal", className)}
     >
       <Dialog
         aria-label={ariaLabel}
-        className={cx("cinder-command-palette-dialog", dialogClassName)}
+        className={cx("hashti-command-palette-dialog", dialogClassName)}
       >
         {children}
       </Dialog>
@@ -205,8 +205,8 @@ export function CommandPaletteInput({
   };
 
   return (
-    <div className={cx("cinder-command-palette__input-wrapper", className)}>
-      <span className="cinder-command-palette__search-icon" aria-hidden="true">
+    <div className={cx("hashti-command-palette__input-wrapper", className)}>
+      <span className="hashti-command-palette__search-icon" aria-hidden="true">
         <Icon name="search" size={16} />
       </span>
       <input
@@ -229,19 +229,19 @@ export function CommandPaletteInput({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="cinder-command-palette__input"
+        className="hashti-command-palette__input"
       />
       {currentQuery ? (
         <button
           type="button"
           aria-label="Clear search"
-          className="cinder-command-palette__clear"
+          className="hashti-command-palette__clear"
           onClick={handleClear}
         >
           <Icon name="close" size={16} />
         </button>
       ) : (
-        <Kbd keys={["esc"]} className="cinder-command-palette__input-kbd" />
+        <Kbd keys={["esc"]} className="hashti-command-palette__input-kbd" />
       )}
     </div>
   );
@@ -282,7 +282,7 @@ export function CommandPaletteList<T extends object = object>({
           setIsOpen(false);
         }
       }}
-      className={cx("cinder-command-palette__list", className)}
+      className={cx("hashti-command-palette__list", className)}
     >
       {children}
     </ListBox.Root>
@@ -305,9 +305,9 @@ export function CommandPaletteGroup({
   const headerContent = heading ?? title;
 
   return (
-    <ListBox.Section className={cx("cinder-command-palette__group", className)}>
+    <ListBox.Section className={cx("hashti-command-palette__group", className)}>
       {headerContent && (
-        <ListBox.Header className="cinder-command-palette__group-header">
+        <ListBox.Header className="hashti-command-palette__group-header">
           {headerContent}
         </ListBox.Header>
       )}
@@ -350,8 +350,8 @@ export function CommandPaletteItem<T extends object = object>({
 
   const resolvedClassName =
     typeof className === "function"
-      ? (values: any) => cx("cinder-command-palette__item", className(values))
-      : cx("cinder-command-palette__item", className);
+      ? (values: any) => cx("hashti-command-palette__item", className(values))
+      : cx("hashti-command-palette__item", className);
 
   return (
     <ListBox.Item
@@ -359,19 +359,19 @@ export function CommandPaletteItem<T extends object = object>({
       onAction={handleAction}
       className={resolvedClassName}
     >
-      <div className="cinder-command-palette__item-content">
-        {icon && <span className="cinder-command-palette__item-icon">{icon}</span>}
-        <div className="cinder-command-palette__item-text">
-          <span className="cinder-command-palette__item-title">{children}</span>
+      <div className="hashti-command-palette__item-content">
+        {icon && <span className="hashti-command-palette__item-icon">{icon}</span>}
+        <div className="hashti-command-palette__item-text">
+          <span className="hashti-command-palette__item-title">{children}</span>
           {description && (
-            <span className="cinder-command-palette__item-desc">{description}</span>
+            <span className="hashti-command-palette__item-desc">{description}</span>
           )}
         </div>
       </div>
       {(shortcut || addon) && (
-        <div className="cinder-command-palette__item-extra">
+        <div className="hashti-command-palette__item-extra">
           {addon}
-          {shortcut && <Kbd keys={shortcut} className="cinder-command-palette__kbd" />}
+          {shortcut && <Kbd keys={shortcut} className="hashti-command-palette__kbd" />}
         </div>
       )}
     </ListBox.Item>
@@ -395,22 +395,22 @@ export function CommandPaletteEmpty({
 }: CommandPaletteEmptyProps) {
   if (children) {
     return (
-      <div className={cx("cinder-command-palette__empty", className)}>
+      <div className={cx("hashti-command-palette__empty", className)}>
         {children}
       </div>
     );
   }
 
   return (
-    <div className={cx("cinder-command-palette__empty", className)}>
-      <div className="cinder-command-palette__empty-icon" aria-hidden="true">
+    <div className={cx("hashti-command-palette__empty", className)}>
+      <div className="hashti-command-palette__empty-icon" aria-hidden="true">
         {icon ?? <Icon name="search" size={24} />}
       </div>
-      <div className="cinder-command-palette__empty-title">
+      <div className="hashti-command-palette__empty-title">
         {title ?? "No results found"}
       </div>
       {description && (
-        <div className="cinder-command-palette__empty-desc">{description}</div>
+        <div className="hashti-command-palette__empty-desc">{description}</div>
       )}
     </div>
   );
@@ -427,23 +427,23 @@ export function CommandPaletteFooter({
 }: CommandPaletteFooterProps) {
   if (children) {
     return (
-      <footer className={cx("cinder-command-palette__footer", className)}>
+      <footer className={cx("hashti-command-palette__footer", className)}>
         {children}
       </footer>
     );
   }
 
   return (
-    <footer className={cx("cinder-command-palette__footer", className)}>
-      <div className="cinder-command-palette__shortcut-item">
+    <footer className={cx("hashti-command-palette__footer", className)}>
+      <div className="hashti-command-palette__shortcut-item">
         <Kbd keys={["up", "down"]} />
         <span>Navigate</span>
       </div>
-      <div className="cinder-command-palette__shortcut-item">
+      <div className="hashti-command-palette__shortcut-item">
         <Kbd keys={["enter"]} />
         <span>Select</span>
       </div>
-      <div className="cinder-command-palette__shortcut-item">
+      <div className="hashti-command-palette__shortcut-item">
         <Kbd keys={["escape"]} />
         <span>Dismiss</span>
       </div>

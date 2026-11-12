@@ -58,9 +58,9 @@ export function TreeRoot<T extends object>({
         data-guide-lines={showGuideLines ? "true" : undefined}
         className={classes(
           cx(
-            "cinder-tree",
-            `cinder-tree--${size}`,
-            showGuideLines && "cinder-tree--guidelines"
+            "hashti-tree",
+            `hashti-tree--${size}`,
+            showGuideLines && "hashti-tree--guidelines"
           ),
           className
         )}
@@ -93,8 +93,8 @@ export function TreeItem<T extends object = object>({
       data-guide-lines={showGuideLines ? "true" : undefined}
       className={classes(
         cx(
-          "cinder-tree-item",
-          size && `cinder-tree-item--${size}`
+          "hashti-tree-item",
+          size && `hashti-tree-item--${size}`
         ),
         className
       )}
@@ -120,7 +120,7 @@ export function TreeIndicator({
       slot="chevron"
       aria-label={ariaLabel}
       {...props}
-      className={classes("cinder-tree-indicator", className)}
+      className={classes("hashti-tree-indicator", className)}
     >
       {children ?? <Icon name="chevronRight" size={16} />}
     </RACButton>
@@ -137,7 +137,7 @@ export function TreeContent({ className, children, ...props }: TreeContentProps)
       {(renderProps) => {
         const content = typeof children === "function" ? children(renderProps) : children;
         return (
-          <div className={cx("cinder-tree-content", className)}>
+          <div className={cx("hashti-tree-content", className)}>
             {content}
           </div>
         );
@@ -155,7 +155,7 @@ export function TreeCheckbox({ className, children, ...props }: TreeCheckboxProp
     <RACCheckbox
       slot="selection"
       {...props}
-      className={classes("cinder-tree-checkbox", className)}
+      className={classes("hashti-tree-checkbox", className)}
     >
       {children}
     </RACCheckbox>

@@ -734,7 +734,7 @@ export const components: ComponentEntry[] = [
     category: "Overlays",
     description: "A focused decision with a clear return path.",
     anatomy:
-      "An outer cinder-modal-overlay carries the backdrop and Theme's appearance, layer, direction, and language through the portal. An inner cinder-modal holds the named Dialog, title, and actions. RAC contains focus and blocks background scrolling. className/ref target the inner surface; style/render/native props target the outer overlay.",
+      "An outer hashti-modal-overlay carries the backdrop and Theme's appearance, layer, direction, and language through the portal. An inner hashti-modal holds the named Dialog, title, and actions. RAC contains focus and blocks background scrolling. className/ref target the inner surface; style/render/native props target the outer overlay.",
     keyboard:
       "Opening moves focus into the dialog. Tab stays inside. Escape closes; focus returns to the trigger.",
     rac: rac("Modal"),
@@ -746,12 +746,12 @@ export const components: ComponentEntry[] = [
       [
         "className / ref",
         "string | render function / Ref<HTMLDivElement>",
-        "Class and ref for the inner cinder-modal surface; the base class is retained.",
+        "Class and ref for the inner hashti-modal surface; the base class is retained.",
       ],
       [
         "style / render / native props",
         "RAC ModalOverlayProps",
-        "Target the outer cinder-modal-overlay, preserving the existing contract.",
+        "Target the outer hashti-modal-overlay, preserving the existing contract.",
       ],
       [
         "overlayClassName / overlayRef",
@@ -804,7 +804,7 @@ export const components: ComponentEntry[] = [
     category: "Overlays",
     description: "Contextual information with room for interaction.",
     anatomy:
-      "An anchored, portalled cinder-popover surface with automatic positioning and dismissal. className, style, and ref target this same surface, which receives Theme's appearance class, layer, direction, and language. The default dialog moves and contains focus and makes outside content unavailable, unlike Carbon's trigger-retaining disclosure. Use Dialog inside for interactive content and a visible title or aria-label.",
+      "An anchored, portalled hashti-popover surface with automatic positioning and dismissal. className, style, and ref target this same surface, which receives Theme's appearance class, layer, direction, and language. The default dialog moves and contains focus and makes outside content unavailable, unlike Carbon's trigger-retaining disclosure. Use Dialog inside for interactive content and a visible title or aria-label.",
     keyboard:
       "Trigger opens the dialog and moves focus inside. Tab stays within its controls. Escape closes and restores focus. RAC manages non-modal focus for selection popovers such as ComboBox.",
     rac: rac("Popover"),
@@ -833,7 +833,7 @@ export const components: ComponentEntry[] = [
     category: "Overlays",
     description: "A short description when a label needs more context.",
     anatomy:
-      "A compact inverse cinder-tooltip surface and arrow, connected to its trigger. className, style, and ref target the same portalled surface, which receives Theme's appearance class, layer, direction, and language. Tooltips contain descriptive text; use a Popover for interactive content.",
+      "A compact inverse hashti-tooltip surface and arrow, connected to its trigger. className, style, and ref target the same portalled surface, which receives Theme's appearance class, layer, direction, and language. Tooltips contain descriptive text; use a Popover for interactive content.",
     keyboard:
       "Keyboard focus reveals the description. Escape dismisses it. The tooltip itself is not focusable.",
     rac: rac("Tooltip"),

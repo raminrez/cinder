@@ -52,7 +52,7 @@ function SelectRoot<T, M extends SelectionMode = "single">({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-select cinder-field cinder-select", className)}
+      className={classes("hashti-field hashti-select hashti-field hashti-select", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACSelect>
@@ -65,7 +65,7 @@ function SelectTrigger({ className, children, size = "md", ...props }: ButtonPro
       variant="ghost"
       {...props}
       size={size}
-      className={classes("hashti-field__control hashti-select-trigger cinder-field__control cinder-select-trigger", className)}
+      className={classes("hashti-field__control hashti-select-trigger hashti-field__control hashti-select-trigger", className)}
     >
       {composeTriggerContent(children)}
     </Button>
@@ -88,13 +88,13 @@ function SelectValuePart<T>({
   return (
     <SelectValue<T>
       {...props}
-      className={classes("hashti-select__value cinder-select__value react-aria-SelectValue", className)}
+      className={classes("hashti-select__value hashti-select__value react-aria-SelectValue", className)}
     />
   );
 }
 
 function SelectPopover({ className, offset = 6, ...props }: PopoverProps) {
-  return <Popover offset={offset} {...props} className={classes("hashti-select-popover cinder-select-popover", className)} />;
+  return <Popover offset={offset} {...props} className={classes("hashti-select-popover hashti-select-popover", className)} />;
 }
 
 function SelectListBox<T extends object>({
@@ -104,7 +104,7 @@ function SelectListBox<T extends object>({
   return (
     <RACListBox<T>
       {...props}
-      className={classes("hashti-select__listbox cinder-select__listbox react-aria-ListBox", className)}
+      className={classes("hashti-select__listbox hashti-select__listbox react-aria-ListBox", className)}
     />
   );
 }
@@ -155,11 +155,11 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
 
                   if (multipleDisplay === "badge") {
                     return (
-                      <span className="hashti-select-multi-badge-wrapper cinder-select-multi-badge-wrapper">
-                        <span className="hashti-select-multi-first cinder-select-multi-first">
+                      <span className="hashti-select-multi-badge-wrapper hashti-select-multi-badge-wrapper">
+                        <span className="hashti-select-multi-first hashti-select-multi-first">
                           {itemsList[0]?.textValue ?? itemsList[0]?.name ?? itemsList[0]?.rendered ?? itemsList[0]?.id ?? "Selected"}
                         </span>
-                        <span className="hashti-badge cinder-badge" data-kind="info">
+                        <span className="hashti-badge hashti-badge" data-kind="info">
                           +{itemsList.length - 1}
                         </span>
                       </span>
@@ -168,14 +168,14 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
 
                   if (multipleDisplay === "chips") {
                     return (
-                      <span className="hashti-select-chips-wrapper cinder-select-chips-wrapper">
+                      <span className="hashti-select-chips-wrapper hashti-select-chips-wrapper">
                         {itemsList.map((item, idx) => {
                           const text = item?.textValue ?? item?.name ?? item?.rendered ?? String(item?.id ?? item);
                           const key = item?.id ?? item?.key ?? idx;
                           return (
                             <span
                               key={key}
-                              className="hashti-tag cinder-tag hashti-select-chip cinder-select-chip"
+                              className="hashti-tag hashti-tag hashti-select-chip hashti-select-chip"
                               data-size="sm"
                               role="presentation"
                             >
@@ -184,7 +184,7 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
                                 role="button"
                                 tabIndex={-1}
                                 aria-label={`Remove ${text}`}
-                                className="hashti-select-chip-remove cinder-select-chip-remove"
+                                className="hashti-select-chip-remove hashti-select-chip-remove"
                                 onPointerDown={(e) => {
                                   e.stopPropagation();
                                   e.preventDefault();

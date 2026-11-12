@@ -81,9 +81,9 @@ export function Avatar({
       role="img"
       aria-label={props["aria-label"] ?? name ?? alt ?? "Avatar"}
       data-size={size}
-      className={cx("cinder-avatar", className)}
+      className={cx("hashti-avatar", className)}
     >
-      <div className="cinder-avatar-inner">
+      <div className="hashti-avatar-inner">
         {showImage ? (
           <img
             src={src}
@@ -101,7 +101,7 @@ export function Avatar({
 
       {presence && (
         <span
-          className="cinder-avatar-presence"
+          className="hashti-avatar-presence"
           data-status={presence}
           role="status"
           aria-label={presenceLabel ?? presence}
@@ -140,12 +140,12 @@ export function AvatarGroup({
         {...props}
         ref={ref}
         role="group"
-        className={cx("cinder-avatar-group", className)}
+        className={cx("hashti-avatar-group", className)}
       >
         {visibleChildren}
 
         {overflowCount > 0 && (
-          <span className="cinder-avatar-group-count" aria-label={`${overflowCount} more members`}>
+          <span className="hashti-avatar-group-count" aria-label={`${overflowCount} more members`}>
             {overflowRenderer ? overflowRenderer(overflowCount) : `+${overflowCount}`}
           </span>
         )}

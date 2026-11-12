@@ -43,7 +43,7 @@ function PlaygroundExample() {
       <div className="navigation-menu-card">
         <div>
           <strong>Repository actions</strong>
-          <p style={{ margin: 0, color: "var(--cinder-text-secondary)" }}>
+          <p style={{ margin: 0, color: "var(--hashti-text-secondary)" }}>
             Selected action: {lastAction}
           </p>
         </div>
@@ -75,7 +75,7 @@ export const Playground: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -141,7 +141,7 @@ export const SectionsAndSeparators: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -209,7 +209,7 @@ export const SelectionModes: Story = {
     await userEvent.click(sortTrigger);
 
     const popover1 = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -226,7 +226,7 @@ export const SelectionModes: Story = {
     // Verify change on reopening
     await userEvent.click(sortTrigger);
     const popover2 = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -241,7 +241,7 @@ export const SelectionModes: Story = {
     await userEvent.click(colTrigger);
 
     const popover3 = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -291,7 +291,7 @@ export const KeyboardAndSubmenus: Story = {
     await userEvent.click(trigger);
 
     const popover1 = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -303,7 +303,7 @@ export const KeyboardAndSubmenus: Story = {
     await userEvent.keyboard("{ArrowRight}");
 
     const subpopover = await waitFor(() => {
-      const popovers = Array.from(document.querySelectorAll<HTMLElement>(".cinder-popover"));
+      const popovers = Array.from(document.querySelectorAll<HTMLElement>(".hashti-popover"));
       expect(popovers.length).toBeGreaterThan(1);
       return popovers[popovers.length - 1]!;
     });
@@ -330,7 +330,7 @@ function OverflowMenuExample() {
       <div className="navigation-menu-card">
         <div>
           <strong>Compute instance #04</strong>
-          <p style={{ margin: 0, color: "var(--cinder-text-secondary)" }}>
+          <p style={{ margin: 0, color: "var(--hashti-text-secondary)" }}>
             Current state: Running (Last action: {action})
           </p>
         </div>
@@ -361,7 +361,7 @@ export const OverflowMenuStory: Story = {
 
     await userEvent.click(trigger);
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -411,7 +411,7 @@ export const LongContentAndLocales: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });

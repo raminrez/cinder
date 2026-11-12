@@ -1,6 +1,6 @@
 .overlay-story-stack {
   display: grid;
-  gap: var(--cinder-spacing-05);
+  gap: var(--hashti-spacing-05);
   inline-size: 100%;
   max-inline-size: 36rem;
   min-inline-size: 0;
@@ -10,27 +10,27 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   align-items: start;
-  gap: var(--cinder-spacing-06);
+  gap: var(--hashti-spacing-06);
   max-inline-size: 76rem;
 }
 
 .overlay-story-case {
   display: grid;
-  gap: var(--cinder-spacing-04);
+  gap: var(--hashti-spacing-04);
   min-inline-size: 0;
 }
 
 .overlay-story-case > h2 {
   margin: 0;
-  font-size: var(--cinder-heading-compact-02-font-size);
-  line-height: var(--cinder-heading-compact-02-line-height);
+  font-size: var(--hashti-heading-compact-02-font-size);
+  line-height: var(--hashti-heading-compact-02-line-height);
 }
 
 .overlay-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cinder-spacing-04);
+  gap: var(--hashti-spacing-04);
 }
 
 .overlay-placement-canvas {
@@ -38,7 +38,7 @@
   align-items: center;
   justify-content: center;
   min-height: 18rem;
-  padding: var(--cinder-spacing-07);
+  padding: var(--hashti-spacing-07);
 }
 
 .overlay-custom-backdrop {
@@ -46,24 +46,24 @@
 }
 
 .overlay-custom-surface {
-  border: 2px dashed var(--cinder-focus);
+  border: 2px dashed var(--hashti-focus);
 }
 
 .overlay-dialog-content {
   display: grid;
-  gap: var(--cinder-spacing-04);
+  gap: var(--hashti-spacing-04);
 }
 
 .overlay-filter-list {
   display: grid;
-  gap: var(--cinder-spacing-03);
-  margin-block: var(--cinder-spacing-03);
+  gap: var(--hashti-spacing-03);
+  margin-block: var(--hashti-spacing-03);
 }
 
 .overlay-tooltip-grid {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cinder-spacing-05);
-  padding: var(--cinder-spacing-06);
+  gap: var(--hashti-spacing-05);
+  padding: var(--hashti-spacing-06);
 }

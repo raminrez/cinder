@@ -96,14 +96,14 @@ function PlaygroundExample() {
         <Button variant="primary" onPress={() => setIsOpen(true)}>
           Open Command Palette
         </Button>
-        <span style={{ fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+        <span style={{ fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
           or press <Kbd keys={["mod", "k"]} /> anywhere
         </span>
       </div>
 
       <output
         data-testid="selected-action-output"
-        style={{ marginTop: "1rem", fontSize: "0.875rem", color: "var(--cinder-text-primary)" }}
+        style={{ marginTop: "1rem", fontSize: "0.875rem", color: "var(--hashti-text-primary)" }}
       >
         {selectedAction ? `Selected action: ${selectedAction}` : "No command executed yet."}
       </output>
@@ -161,7 +161,7 @@ export const Playground: Story = {
     await userEvent.click(trigger);
 
     const dialog = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-command-palette-modal");
+      const el = document.querySelector<HTMLElement>(".hashti-command-palette-modal");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -220,7 +220,7 @@ export const FilteredEmptyState: Story = {
     await userEvent.click(trigger);
 
     const dialog = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-command-palette-modal");
+      const el = document.querySelector<HTMLElement>(".hashti-command-palette-modal");
       expect(el).not.toBeNull();
       return el!;
     });

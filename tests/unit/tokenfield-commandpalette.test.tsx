@@ -59,11 +59,11 @@ describe("TokenField & CommandPalette Unit Tests", () => {
 
       expect(html).toContain("AI Model Directives");
       expect(html).toContain("Type prompts and mention context tokens with @");
-      expect(html).toContain("cinder-token-field");
-      expect(html).toContain("cinder-token-input");
+      expect(html).toContain("hashti-token-field");
+      expect(html).toContain("hashti-token-input");
       expect(html).toContain('data-placeholder="Ask a question..."');
       expect(html).toContain("tag1");
-      expect(html).toContain("cinder-token");
+      expect(html).toContain("hashti-token");
     });
 
     test("renders compound TokenField anatomy with custom tokens, icons, and remove button", () => {
@@ -93,10 +93,10 @@ describe("TokenField & CommandPalette Unit Tests", () => {
 
       expect(html).toContain("Context Selector");
       expect(html).toContain("data-size=\"lg\"");
-      expect(html).toContain("cinder-token-input");
+      expect(html).toContain("hashti-token-input");
       expect(html).toContain("gpt-4o");
-      expect(html).toContain("cinder-token__icon");
-      expect(html).toContain("cinder-token__remove");
+      expect(html).toContain("hashti-token__icon");
+      expect(html).toContain("hashti-token__remove");
       expect(html).toContain('aria-label="Remove token"');
       expect(html).toContain("Active workspace agents");
     });
@@ -116,8 +116,8 @@ describe("TokenField & CommandPalette Unit Tests", () => {
       );
 
       expect(html).toContain('data-multiline="true"');
-      expect(html).toContain("cinder-token-field--multiline");
-      expect(html).toContain("cinder-token-input--multiline");
+      expect(html).toContain("hashti-token-field--multiline");
+      expect(html).toContain("hashti-token-input--multiline");
     });
 
     test("supports isDisabled and isReadOnly states", () => {
@@ -188,14 +188,14 @@ describe("TokenField & CommandPalette Unit Tests", () => {
         </CommandPalette.Root>
       );
 
-      expect(html).toContain("cinder-command-palette__input-wrapper");
-      expect(html).toContain("cinder-command-palette__input");
+      expect(html).toContain("hashti-command-palette__input-wrapper");
+      expect(html).toContain("hashti-command-palette__input");
       expect(html).toContain('placeholder="Search actions or commands..."');
       expect(html).toContain("Productivity Actions");
       expect(html).toContain("Create Document");
       expect(html).toContain("Create a new workspace document");
       expect(html).toContain("Preferences");
-      expect(html).toContain("cinder-command-palette__footer");
+      expect(html).toContain("hashti-command-palette__footer");
       expect(html).toContain("Navigate");
       expect(html).toContain("Select");
       expect(html).toContain("Dismiss");
@@ -214,7 +214,7 @@ describe("TokenField & CommandPalette Unit Tests", () => {
         </CommandPalette.Root>
       );
 
-      expect(html).toContain("cinder-command-palette__empty");
+      expect(html).toContain("hashti-command-palette__empty");
       expect(html).toContain("No commands matching your query");
       expect(html).toContain("Try searching for files, settings, or AI actions.");
     });
@@ -231,7 +231,7 @@ describe("TokenField & CommandPalette Unit Tests", () => {
         </CommandPalette.Root>
       );
 
-      expect(html).toContain("cinder-command-palette__footer");
+      expect(html).toContain("hashti-command-palette__footer");
       expect(html).toContain("custom-footer-hint");
       expect(html).toContain("Next section");
     });
@@ -272,8 +272,8 @@ describe("TokenField & CommandPalette Unit Tests", () => {
         </ComboBox>
       );
 
-      expect(html).toContain("cinder-combobox");
-      expect(html).toContain("cinder-combobox-values");
+      expect(html).toContain("hashti-combobox");
+      expect(html).toContain("hashti-combobox-values");
     });
   });
 });

@@ -1,7 +1,7 @@
 /* Hashti Modern Aesthetic - Slider */
 @layer hashti.components {
   .hashti-slider,
-  .cinder-slider {
+  .hashti-slider {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -9,7 +9,7 @@
   }
 
   .hashti-slider-label,
-  .cinder-slider-label {
+  .hashti-slider-label {
     display: flex;
     justify-content: space-between;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
@@ -17,7 +17,7 @@
   }
 
   .hashti-slider-track,
-  .cinder-slider-track {
+  .hashti-slider-track {
     position: relative;
     height: 8px;
     width: 100%;
@@ -26,7 +26,7 @@
   }
 
   .hashti-slider-fill,
-  .cinder-slider-fill {
+  .hashti-slider-fill {
     position: absolute;
     height: 100%;
     border-radius: 9999px;
@@ -34,7 +34,8 @@
   }
 
   .hashti-slider-thumb,
-  .cinder-slider-thumb {
+  .hashti-slider-thumb {
+    position: relative;
     width: 20px;
     height: 20px;
     border-radius: 9999px;
@@ -45,6 +46,17 @@
     transform: translateY(-50%);
     cursor: grab;
     transition: transform 100ms ease;
+  }
+
+  .hashti-slider-thumb::before,
+  .hashti-slider-thumb::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .hashti-slider-thumb[data-dragging] {

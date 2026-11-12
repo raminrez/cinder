@@ -99,7 +99,7 @@ export const States: Story = {
     await userEvent.keyboard("9{ArrowUp}");
     await expect(readonly).toHaveValue("3");
     await expect(readonly).toHaveFocus();
-    for (const button of within(readonly.closest<HTMLElement>(".cinder-field")!).getAllByRole(
+    for (const button of within(readonly.closest<HTMLElement>(".hashti-field")!).getAllByRole(
       "button",
     )) {
       await expect(button).toBeDisabled();
@@ -124,7 +124,7 @@ export const Sizes: Story = {
     ] as const) {
       const group = canvas
         .getByRole("textbox", { name })
-        .closest<HTMLElement>(".cinder-input-group")!;
+        .closest<HTMLElement>(".hashti-input-group")!;
       await expect(group.getBoundingClientRect().height).toBeGreaterThanOrEqual(minimum);
       for (const button of within(group).getAllByRole("button")) {
         // Embedded targets fit inside the group's one-pixel boundary on each side.

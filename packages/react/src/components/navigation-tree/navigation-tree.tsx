@@ -54,8 +54,8 @@ export function NavigationTreeRoot<T extends object = object>({
         data-size={size}
         className={classes(
           cx(
-            "cinder-navigation-tree",
-            `cinder-navigation-tree--${size}`
+            "hashti-navigation-tree",
+            `hashti-navigation-tree--${size}`
           ),
           className
         )}
@@ -87,8 +87,8 @@ export function NavigationTreeItem<T extends object = object>({
       data-size={size}
       className={classes(
         cx(
-          "cinder-navigation-tree-item",
-          size && `cinder-navigation-tree-item--${size}`
+          "hashti-navigation-tree-item",
+          size && `hashti-navigation-tree-item--${size}`
         ),
         className
       )}
@@ -114,7 +114,7 @@ export function NavigationTreeIndicator({
       slot="chevron"
       aria-label={ariaLabel}
       {...props}
-      className={classes("cinder-navigation-tree-indicator", className)}
+      className={classes("hashti-navigation-tree-indicator", className)}
     >
       {children ?? <Icon name="chevronRight" size={16} />}
     </RACButton>
@@ -135,7 +135,7 @@ export function NavigationTreeItemContent({
       {(renderProps) => {
         const content = typeof children === "function" ? children(renderProps) : children;
         return (
-          <div className={cx("cinder-navigation-tree-content", className)}>
+          <div className={cx("hashti-navigation-tree-content", className)}>
             {content}
           </div>
         );
@@ -157,9 +157,9 @@ export function NavigationTreeSection<T extends object = object>({
   ...props
 }: NavigationTreeSectionProps<T>) {
   return (
-    <RACNavigationTreeSection {...props} className={cx("cinder-navigation-tree-section", className)}>
+    <RACNavigationTreeSection {...props} className={cx("hashti-navigation-tree-section", className)}>
       {title && (
-        <RACNavigationTreeHeader className="cinder-navigation-tree-header">
+        <RACNavigationTreeHeader className="hashti-navigation-tree-header">
           {title}
         </RACNavigationTreeHeader>
       )}
@@ -178,7 +178,7 @@ export function NavigationTreeHeader({
   ...props
 }: NavigationTreeHeaderProps) {
   return (
-    <RACNavigationTreeHeader className={cx("cinder-navigation-tree-header", className)} {...props}>
+    <RACNavigationTreeHeader className={cx("hashti-navigation-tree-header", className)} {...props}>
       {children as any}
     </RACNavigationTreeHeader>
   );

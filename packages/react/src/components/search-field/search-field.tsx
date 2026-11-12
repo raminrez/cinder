@@ -47,7 +47,7 @@ function SearchFieldRoot({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-search-field cinder-field cinder-search-field", className)}
+      className={classes("hashti-field hashti-search-field hashti-field hashti-search-field", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACSearchField>

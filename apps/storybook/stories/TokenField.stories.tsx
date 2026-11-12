@@ -45,7 +45,7 @@ function PlaygroundExample() {
         value={value}
         onChange={setValue}
       />
-      <div style={{ marginTop: "1rem", fontSize: "0.8125rem", color: "var(--cinder-text-secondary)" }}>
+      <div style={{ marginTop: "1rem", fontSize: "0.8125rem", color: "var(--hashti-text-secondary)" }}>
         Current serialized value: <code>{value.toString()}</code>
       </div>
     </div>

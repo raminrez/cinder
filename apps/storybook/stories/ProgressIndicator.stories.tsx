@@ -105,7 +105,7 @@ function InteractiveStepsExample() {
             <h4 className="content-card-title">Interactive Wizard Steps</h4>
             <p className="content-card-description">Click any step to jump directly to that configuration section.</p>
           </div>
-          <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--cinder-interactive)" }}>
+          <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "var(--hashti-interactive)" }}>
             Active: {steps.find((s) => s.id === currentStepId)?.label}
           </span>
         </div>

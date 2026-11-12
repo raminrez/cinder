@@ -4,6 +4,6 @@ import { Button } from "./button";
 
 test("renders Button with Hashti modern styling", () => {
   const html = renderToStaticMarkup(<Button variant="primary">Click</Button>);
-  expect(html).toContain("cinder-button");
+  expect(html).toContain("hashti-button");
   expect(html).toContain("Click");
 });

@@ -45,7 +45,7 @@ function RadioGroupRoot({
       {...props}
       {...presentation.props}
       data-color={color}
-      className={classes("hashti-field hashti-radio-group cinder-field cinder-radio-group", className)}
+      className={classes("hashti-field hashti-radio-group hashti-field hashti-radio-group", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACRadioGroup>
@@ -56,7 +56,7 @@ function RadioOptions({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       {...props}
-      className={["hashti-radio-options cinder-radio-options", className].filter(Boolean).join(" ")}
+      className={["hashti-radio-options hashti-radio-options", className].filter(Boolean).join(" ")}
     />
   );
 }
@@ -101,11 +101,11 @@ export function Radio({ className, children, color, ...props }: RadioProps) {
     <RACRadio
       {...props}
       data-color={color}
-      className={classes("hashti-radio cinder-radio", className)}
+      className={classes("hashti-radio hashti-radio", className)}
     >
       {composeRenderProps(children, (content) => (
         <>
-          <span className="hashti-radio-control cinder-radio-control" aria-hidden="true" />
+          <span className="hashti-radio-control hashti-radio-control" aria-hidden="true" />
           <span>{content}</span>
         </>
       ))}

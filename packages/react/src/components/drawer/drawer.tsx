@@ -54,7 +54,7 @@ export function Drawer({
       dir={resolvedDir}
       isDismissable={isDismissable}
       className={classes(
-        "cinder-drawer-overlay",
+        "hashti-drawer-overlay",
         classes(appearanceClassName ?? "", overlayClassName),
       )}
     >
@@ -63,21 +63,21 @@ export function Drawer({
         dir={resolvedDir}
         data-placement={placement}
         data-size={size}
-        className={classes("cinder-drawer", className)}
+        className={classes("hashti-drawer", className)}
       >
-        <RACDialog role="dialog" className="cinder-drawer-dialog">
+        <RACDialog role="dialog" className="hashti-drawer-dialog">
           {({ close }) => (
             <>
               {(title != null || isDismissable) && (
-                <div className="cinder-drawer-header">
-                  <div className="cinder-drawer-header-content">
+                <div className="hashti-drawer-header">
+                  <div className="hashti-drawer-header-content">
                     {title != null && (
-                      <Heading slot="title" className="cinder-drawer-title">
+                      <Heading slot="title" className="hashti-drawer-title">
                         {title}
                       </Heading>
                     )}
                     {description != null && (
-                      <div className="cinder-drawer-description">{description}</div>
+                      <div className="hashti-drawer-description">{description}</div>
                     )}
                   </div>
                   {isDismissable && (
@@ -86,7 +86,7 @@ export function Drawer({
                       size="sm"
                       iconOnly
                       aria-label="Close drawer"
-                      className="cinder-drawer-close"
+                      className="hashti-drawer-close"
                       onPress={close}
                     >
                       <Icon name="close" />
@@ -94,8 +94,8 @@ export function Drawer({
                   )}
                 </div>
               )}
-              <div className="cinder-drawer-body">{children}</div>
-              {footer != null && <div className="cinder-drawer-footer">{footer}</div>}
+              <div className="hashti-drawer-body">{children}</div>
+              {footer != null && <div className="hashti-drawer-footer">{footer}</div>}
             </>
           )}
         </RACDialog>

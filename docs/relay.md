@@ -67,7 +67,7 @@ Field borders are stronger than surface dividers because they identify an
 interactive boundary. Dark mode uses a light neutral primary action rather than
 reusing a dark button against a dark canvas.
 
-| Semantic role            | CSS suffix after `--cinder-`                        | Light     | Dark      |
+| Semantic role            | CSS suffix after `--hashti-`                        | Light     | Dark      |
 | ------------------------ | --------------------------------------------------- | --------- | --------- |
 | Page                     | `background`                                        | `#f5f5f5` | `#151515` |
 | Surface                  | `layer-01`                                          | `#ffffff` | `#242424` |
@@ -183,14 +183,14 @@ const [name, setName] = useState("Atlas design");
 ```
 
 Use CSS variables for shared visual changes. For example,
-`.my-controls { --cinder-control-radius: 1rem; }` changes both Button and TextField
+`.my-controls { --hashti-control-radius: 1rem; }` changes both Button and TextField
 corners inside that wrapper. Keep RAC's Label, Input, Text, and FieldError when
 composing a field so those parts retain their accessible relationships. Direct
 RAC re-exports replace their default class when given `className`; retain their
 `react-aria-*` class to keep Cinder's styles.
 
-`Layer` changes contextual aliases such as `--cinder-field` and
-`--cinder-border-subtle`. React locale context crosses portals; the overlay bridge
+`Layer` changes contextual aliases such as `--hashti-field` and
+`--hashti-border-subtle`. React locale context crosses portals; the overlay bridge
 copies theme, layer, effective language, direction, and the selected
 `Theme appearanceClassName` recipe to detached roots. The recipe inherits when
 omitted, is replaced by a supplied string, and clears with `""`. Arbitrary inline
@@ -201,7 +201,7 @@ for Modal's independent backdrop/surface props and language precedence.
 Native CSS `@scope` stops Relay selectors at each nested Theme. A nested Carbon
 Theme keeps its baseline styling. The stylesheet now uses one `cinder` layer with
 `tokens`, `reset`, `components`, `themes`, and `accessibility` sublayers. Replace
-old `cinder-relay` / `cinder-relay-forced-colors` ordering declarations with
+old `hashti-relay` / `hashti-relay-forced-colors` ordering declarations with
 `cinder`. Use a browser with native nesting, layers, and `@scope` support. Reduced
 motion disables transitions and animations while leaving progress and focus visible.
 

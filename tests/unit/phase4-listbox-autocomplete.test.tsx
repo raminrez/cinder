@@ -21,9 +21,9 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           <ListBox.Item id="windows">Windows</ListBox.Item>
         </ListBox>
       );
-      expect(html).toContain("cinder-listbox");
-      expect(html).toContain("cinder-listbox--bordered");
-      expect(html).toContain("cinder-listbox-item");
+      expect(html).toContain("hashti-listbox");
+      expect(html).toContain("hashti-listbox--bordered");
+      expect(html).toContain("hashti-listbox-item");
       expect(html).toContain("macOS");
       expect(html).toContain("Linux");
       expect(html).toContain("Windows");
@@ -36,18 +36,18 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           <ListBox.Item id="ts">TypeScript</ListBox.Item>
         </ListBox>
       );
-      expect(cardHtml).toContain("cinder-listbox--card");
-      expect(cardHtml).toContain("cinder-listbox--lg");
-      expect(cardHtml).toContain("cinder-listbox-item--lg");
+      expect(cardHtml).toContain("hashti-listbox--card");
+      expect(cardHtml).toContain("hashti-listbox--lg");
+      expect(cardHtml).toContain("hashti-listbox-item--lg");
 
       const flatHtml = renderToStaticMarkup(
         <ListBox aria-label="Languages" variant="flat" size="sm">
           <ListBox.Item id="rs">Rust</ListBox.Item>
         </ListBox>
       );
-      expect(flatHtml).toContain("cinder-listbox--flat");
-      expect(flatHtml).toContain("cinder-listbox--sm");
-      expect(flatHtml).toContain("cinder-listbox-item--sm");
+      expect(flatHtml).toContain("hashti-listbox--flat");
+      expect(flatHtml).toContain("hashti-listbox--sm");
+      expect(flatHtml).toContain("hashti-listbox-item--sm");
     });
 
     test("renders ListBox with sections and section headers", () => {
@@ -62,8 +62,8 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           </ListBox.Section>
         </ListBox>
       );
-      expect(html).toContain("cinder-listbox-section");
-      expect(html).toContain("cinder-listbox-header");
+      expect(html).toContain("hashti-listbox-section");
+      expect(html).toContain("hashti-listbox-header");
       expect(html).toContain("Fruits");
       expect(html).toContain("Vegetables");
       expect(html).toContain("Apple");
@@ -80,8 +80,8 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           </ListBox.Item>
         </ListBox>
       );
-      expect(html).toContain("cinder-listbox-drag-handle");
-      expect(html).toContain("cinder-listbox-checkbox");
+      expect(html).toContain("hashti-listbox-drag-handle");
+      expect(html).toContain("hashti-listbox-checkbox");
       expect(html).toContain('slot="drag"');
       expect(html).toContain('slot="selection"');
       expect(html).toContain("Item 1");
@@ -96,7 +96,7 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           {[]}
         </ListBox>
       );
-      expect(html).toContain("cinder-listbox-empty-state");
+      expect(html).toContain("hashti-listbox-empty-state");
       expect(html).toContain("No options found");
     });
   });
@@ -115,7 +115,7 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           </Menu>
         </Autocomplete>
       );
-      expect(html).toContain("cinder-search-field");
+      expect(html).toContain("hashti-search-field");
       expect(html).toContain("react-aria-Menu");
       expect(html).toContain("Cut");
       expect(html).toContain("Copy");
@@ -135,8 +135,8 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           <ListBox.Item id="engineering">Engineering</ListBox.Item>
         </Select>
       );
-      expect(html).toContain("cinder-select");
-      expect(html).toContain("cinder-select-trigger");
+      expect(html).toContain("hashti-select");
+      expect(html).toContain("hashti-select-trigger");
       expect(html).toContain('data-placeholder="true"');
     });
 
@@ -152,8 +152,8 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           <ListBox.Item id="cat-2">Category 2</ListBox.Item>
         </Select>
       );
-      expect(html).toContain("cinder-select");
-      expect(html).toContain("cinder-select-trigger");
+      expect(html).toContain("hashti-select");
+      expect(html).toContain("hashti-select-trigger");
     });
 
     test("ComboBox supports multiple selection mode with multipleDisplay", () => {
@@ -168,9 +168,9 @@ describe("Phase 4 Collection & Selection Elevate unit tests", () => {
           <ListBox.Item id="vue">Vue</ListBox.Item>
         </ComboBox>
       );
-      expect(html).toContain("cinder-combobox");
+      expect(html).toContain("hashti-combobox");
       expect(html).toContain('role="combobox"');
-      expect(html).toContain("cinder-combobox-values");
+      expect(html).toContain("hashti-combobox-values");
     });
   });
 });

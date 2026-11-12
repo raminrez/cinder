@@ -32,11 +32,11 @@ export function Checkbox({ children, className, color, ...props }: CheckboxProps
     <RACCheckbox
       {...props}
       data-color={color}
-      className={classes("hashti-checkbox cinder-checkbox", className)}
+      className={classes("hashti-checkbox hashti-checkbox", className)}
     >
       {composeRenderProps(children, (content, state) => (
         <>
-          <span className="hashti-checkbox-control cinder-checkbox-control" aria-hidden="true">
+          <span className="hashti-checkbox-control hashti-checkbox-control" aria-hidden="true">
             {state.isIndeterminate ? (
               <Icon name="minus" />
             ) : state.isSelected ? (
@@ -75,7 +75,7 @@ function CheckboxGroupRoot({
       {...props}
       {...presentation.props}
       data-color={color}
-      className={classes("hashti-field hashti-checkbox-group cinder-field cinder-checkbox-group", className)}
+      className={classes("hashti-field hashti-checkbox-group hashti-field hashti-checkbox-group", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACCheckboxGroup>

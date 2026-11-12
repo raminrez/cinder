@@ -31,7 +31,7 @@ The following matrix compares every component primitive provided by `react-aria-
 
 ### Status Legend
 
-- 🟢 **Elevated**: First-class Hashti component with custom tokens, BEM classes (`cinder-*`), Frame theme support, and documented API.
+- 🟢 **Elevated**: First-class Hashti component with custom tokens, BEM classes (`hashti-*`), Frame theme support, and documented API.
 - 🟡 **Raw Re-export**: Exported verbatim from RAC in `packages/react/src/index.ts` with minimal or base `react-aria-*` styling.
 - 🟠 **Internal/Monolithic**: Buried inside a convenience wrapper with no standalone API.
 - 🔴 **Missing**: Available in RAC 1.22.1 but not exported or exposed by Hashti.
@@ -224,10 +224,10 @@ export interface GridListItemProps<T extends object> extends Omit<
 #### 5. Hashti Token & Theme Bindings
 
 - **Row Height:** `sm: 36px`, `md: 44px (Frame standard)`, `lg: 56px`.
-- **Backgrounds:** Resting: `var(--cinder-surface)`; Hover: `var(--cinder-raised)`; Selected: `var(--cinder-selected)`.
-- **Border:** `1px solid var(--cinder-divider)`.
-- **Focus Ring:** `2px solid var(--cinder-focus)`, `outline-offset: -2px`.
-- **Drag Target Indicator:** `2px solid var(--cinder-focus)` with glowing drop line.
+- **Backgrounds:** Resting: `var(--hashti-surface)`; Hover: `var(--hashti-raised)`; Selected: `var(--hashti-selected)`.
+- **Border:** `1px solid var(--hashti-divider)`.
+- **Focus Ring:** `2px solid var(--hashti-focus)`, `outline-offset: -2px`.
+- **Drag Target Indicator:** `2px solid var(--hashti-focus)` with glowing drop line.
 
 #### 6. Accessibility & Keyboard Contract
 
@@ -289,10 +289,10 @@ export interface TreeItemProps<T extends object> extends Omit<RACTreeItemProps<T
 
 #### 5. Hashti Token & Theme Bindings
 
-- **Indentation Guide:** `border-inline-start: 1px solid var(--cinder-divider)`.
+- **Indentation Guide:** `border-inline-start: 1px solid var(--hashti-divider)`.
 - **Expand Chevron:** Smooth 90deg CSS rotation transition: `transform 150ms cubic-bezier(0.2, 0, 0.38, 0.9)`.
-- **Selected Node:** `background: var(--cinder-selected)`, `color: var(--cinder-primary)`.
-- **Hover Node:** `background: var(--cinder-raised)`.
+- **Selected Node:** `background: var(--hashti-selected)`, `color: var(--hashti-primary)`.
+- **Hover Node:** `background: var(--hashti-raised)`.
 
 #### 6. Accessibility & Keyboard Contract
 
@@ -354,8 +354,8 @@ export interface ToolbarSeparatorProps extends ComponentProps<"hr"> {
 
 #### 5. Hashti Token & Theme Bindings
 
-- **Floating Surface:** `background: var(--cinder-surface)`, `box-shadow: 0 4px 16px rgba(0,0,0,0.12)`, `border-radius: 8px`.
-- **Separator:** `width: 1px`, `height: 20px`, `background: var(--cinder-divider)`, `margin: 0 6px`.
+- **Floating Surface:** `background: var(--hashti-surface)`, `box-shadow: 0 4px 16px rgba(0,0,0,0.12)`, `border-radius: 8px`.
+- **Separator:** `width: 1px`, `height: 20px`, `background: var(--hashti-divider)`, `margin: 0 6px`.
 - **Inner Items:** Flush margins, integrated active and focus states.
 
 #### 6. Accessibility & Keyboard Contract
@@ -422,7 +422,7 @@ export interface DisclosurePanelProps extends ComponentProps<typeof RACDisclosur
 
 - **Indicator:** 16px chevron rotating 90deg on expansion.
 - **Panel Transition:** Zero-JS CSS grid animation (`grid-template-rows: 0fr -> 1fr`) ensuring smooth height transition without fixed pixel limits.
-- **Border:** `border-bottom: 1px solid var(--cinder-divider)`.
+- **Border:** `border-bottom: 1px solid var(--hashti-divider)`.
 
 ---
 
@@ -469,9 +469,9 @@ export interface FileTriggerProps extends RACFileTriggerProps {
 
 #### 5. Hashti Token & Theme Bindings
 
-- **Dashed Border:** `2px dashed var(--cinder-divider)`.
-- **Drag-Over Active:** `background: var(--cinder-infoSurface)`, `border-color: var(--cinder-focus)`, `transform: scale(1.005)`.
-- **Invalid Drop (Rejection):** `background: var(--cinder-errorSurface)`, `border-color: var(--cinder-error)`.
+- **Dashed Border:** `2px dashed var(--hashti-divider)`.
+- **Drag-Over Active:** `background: var(--hashti-infoSurface)`, `border-color: var(--hashti-focus)`, `transform: scale(1.005)`.
+- **Invalid Drop (Rejection):** `background: var(--hashti-errorSurface)`, `border-color: var(--hashti-error)`.
 
 ---
 
@@ -516,10 +516,10 @@ export interface MeterProps extends Omit<RACMeterProps, "className"> {
 
 #### 4. Hashti Token & Theme Bindings
 
-- **Success Tone:** `var(--cinder-success)` (`#246343` / `#a4d9b8`).
-- **Warning Tone:** `var(--cinder-warning)` (`#75500d` / `#e7c383`).
-- **Error Tone:** `var(--cinder-error)` (`#aa2735` / `#ffacb3`).
-- **Track Surface:** `var(--cinder-raised)`.
+- **Success Tone:** `var(--hashti-success)` (`#246343` / `#a4d9b8`).
+- **Warning Tone:** `var(--hashti-warning)` (`#75500d` / `#e7c383`).
+- **Error Tone:** `var(--hashti-error)` (`#aa2735` / `#ffacb3`).
+- **Track Surface:** `var(--hashti-raised)`.
 
 ---
 
@@ -563,7 +563,7 @@ graph TD
 
 - **Color Thumb:** 20px circle with `border: 2px solid #ffffff`, `box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.2)`.
 - **Alpha Checkerboard:** CSS `conic-gradient(#808080 90deg, #c0c0c0 90deg 180deg, #808080 180deg 270deg, #c0c0c0 270deg)`.
-- **Focus Ring:** `2px solid var(--cinder-focus)`, offset 2px.
+- **Focus Ring:** `2px solid var(--hashti-focus)`, offset 2px.
 
 #### 5. Accessibility & Keyboard Contract
 
@@ -666,7 +666,7 @@ timeline
   6. `RangeCalendar` Presets (Today, Last 7 Days, Last 30 Days, MTD, YTD)
 - **Primary Deliverables:**
   - Component TSX files in `packages/react/src/`.
-  - CSS module / BEM rules in `packages/react/src/styles.css` bound to `--cinder-*` tokens.
+  - CSS module / BEM rules in `packages/react/src/styles.css` bound to `--hashti-*` tokens.
   - Storybook stories for each component across all 8 themes.
   - Additions to `apps/docs/src/catalog.ts` and documentation website.
 

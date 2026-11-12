@@ -380,7 +380,7 @@ export const CompositionAndFormData: Story = {
     await expect(group).toHaveAttribute("data-composed-root", "true");
     await expect(email.closest("label")).toHaveAttribute("data-composed-checkbox", "true");
     await userEvent.keyboard(" ");
-    await expect(email.closest("label")).toHaveClass("cinder-checkbox", "selected-channel");
+    await expect(email.closest("label")).toHaveClass("hashti-checkbox", "selected-channel");
     await expect(email.closest("label")).toHaveStyle({ fontWeight: 600 });
     await userEvent.click(inApp);
     await userEvent.click(submit);
@@ -496,7 +496,7 @@ export const LongContentAndLocales: Story = {
       await expect(identifier.tagName).toBe("BDI");
       await expect(identifier).toHaveAttribute("dir", "ltr");
       for (const part of group.querySelectorAll<HTMLElement>(
-        ".cinder-field__label, .cinder-field__description, .cinder-field__error, .cinder-checkbox",
+        ".hashti-field__label, .hashti-field__description, .hashti-field__error, .hashti-checkbox",
       )) {
         await expect(part).toBeVisible();
         await expect(part.scrollWidth).toBeLessThanOrEqual(part.clientWidth + 1);
@@ -560,24 +560,24 @@ export const DetachedStatusShowcase: Story = {
     const canvas = within(canvasElement);
 
     const warnGroup = canvas.getByRole("group", { name: "Notification preferences" });
-    const warnStatus = warnGroup.querySelector(".cinder-field__status");
+    const warnStatus = warnGroup.querySelector(".hashti-field__status");
     await expect(warnStatus).toBeVisible();
-    await expect(warnStatus).toHaveAttribute("data-cinder-status", "warning");
+    await expect(warnStatus).toHaveAttribute("data-hashti-status", "warning");
     await expect(warnStatus).toHaveAttribute("data-variant", "detached");
     await expect(warnStatus).toHaveTextContent("Digest delivery is temporarily experiencing minor delays.");
     await expect(warnGroup).toHaveAccessibleDescription(/Digest delivery is temporarily experiencing minor delays/);
 
     const errGroup = canvas.getByRole("group", { name: "Repository access permissions" });
-    const errStatus = errGroup.querySelector(".cinder-field__status");
+    const errStatus = errGroup.querySelector(".hashti-field__status");
     await expect(errStatus).toBeVisible();
-    await expect(errStatus).toHaveAttribute("data-cinder-status", "error");
+    await expect(errStatus).toHaveAttribute("data-hashti-status", "error");
     await expect(errStatus).toHaveAttribute("data-variant", "detached");
     await expect(errStatus).toHaveTextContent("At least one production branch must be selected for deployment.");
 
     const successGroup = canvas.getByRole("group", { name: "Compliance verification" });
-    const successStatus = successGroup.querySelector(".cinder-field__status");
+    const successStatus = successGroup.querySelector(".hashti-field__status");
     await expect(successStatus).toBeVisible();
-    await expect(successStatus).toHaveAttribute("data-cinder-status", "success");
+    await expect(successStatus).toHaveAttribute("data-hashti-status", "success");
     await expect(successStatus).toHaveAttribute("data-variant", "detached");
     await expect(successStatus).toHaveTextContent("All compliance requirements are verified for this release.");
 

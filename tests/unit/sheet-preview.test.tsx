@@ -31,14 +31,14 @@ describe("Sheet & PreviewTrigger unit tests", () => {
     test("renders SheetHandle with default aria-hidden and class names", () => {
       const html = ReactDOMServer.renderToString(<SheetHandle />);
       expect(html).toContain('aria-hidden="true"');
-      expect(html).toContain("cinder-sheet-handle");
+      expect(html).toContain("hashti-sheet-handle");
     });
 
     test("renders SheetHandle with custom className and data attributes", () => {
       const html = ReactDOMServer.renderToString(
         <SheetHandle className="custom-handle-class" data-testid="grab-handle" />
       );
-      expect(html).toContain("cinder-sheet-handle");
+      expect(html).toContain("hashti-sheet-handle");
       expect(html).toContain("custom-handle-class");
       expect(html).toContain('data-testid="grab-handle"');
     });
@@ -53,7 +53,7 @@ describe("Sheet & PreviewTrigger unit tests", () => {
         </SheetTrigger>
       );
       expect(html).toContain("Open Drawer");
-      expect(html).toContain("cinder-button");
+      expect(html).toContain("hashti-button");
       expect(html).toContain('aria-expanded="false"');
       expect(html).toContain('type="button"');
     });
@@ -108,7 +108,7 @@ describe("Sheet & PreviewTrigger unit tests", () => {
         </PreviewTrigger>
       );
       expect(html).toContain("@author");
-      expect(html).toContain("cinder-button");
+      expect(html).toContain("hashti-button");
       expect(html).toContain('aria-haspopup="dialog"');
       expect(html).toContain('aria-expanded="false"');
     });

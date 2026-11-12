@@ -196,7 +196,7 @@ export const Customization: Story = {
     const link = canvas.getByRole("link", { name: "Publishing guidelines" });
     await userEvent.click(canvas.getByRole("button", { name: "Focus guidelines link" }));
     await expect(link).toHaveFocus();
-    await expect(link).toHaveClass("cinder-link", "action-story-custom-link");
+    await expect(link).toHaveClass("hashti-link", "action-story-custom-link");
     await expect(link).toHaveAttribute("data-custom-render", "true");
     await userEvent.hover(link);
     await expect(link).toHaveAttribute("data-hovered");

@@ -513,7 +513,7 @@ export const InputOTP = Object.assign(InputOTPRoot, {
 Implement `ScrollShadow` with modern CSS `@property` in `packages/react/src/scroll-shadow.tsx` and `frame.css`. This gives Cinder tables, sidebars, and select menus smooth, modern fade indicators without layout observers.
 
 #### Recipe 4: Cinder Synchronized Skeleton Shimmer
-Update Cinder's `Skeleton` component in `packages/react/src/feedback.tsx` and `frame.css` with the `&:has(.cinder-skeleton)` overlay trick.
+Update Cinder's `Skeleton` component in `packages/react/src/feedback.tsx` and `frame.css` with the `&:has(.hashti-skeleton)` overlay trick.
 
 #### Recipe 5: Tactile Press Physics in Cinder Buttons
 Update `buttons.tsx` and `frame.css` in Cinder:

@@ -49,7 +49,7 @@ function DateFieldRoot<T extends DateValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-date-field cinder-field cinder-date-field", className)}
+      className={classes("hashti-field hashti-date-field hashti-field hashti-date-field", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACDateField>
@@ -74,7 +74,7 @@ function DateFieldDefault<T extends DateValue>({
       {...props}
       size={size}
       className={className}
-      data-cinder-input-icon={children == null ? "" : undefined}
+      data-hashti-input-icon={children == null ? "" : undefined}
     >
       {children ?? (
         <FieldLayout
@@ -124,7 +124,7 @@ function TimeFieldRoot<T extends TimeValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-time-field cinder-field cinder-date-field", className)}
+      className={classes("hashti-field hashti-time-field hashti-field hashti-date-field", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACTimeField>
@@ -149,7 +149,7 @@ function TimeFieldDefault<T extends TimeValue>({
       {...props}
       size={size}
       className={className}
-      data-cinder-input-icon={children == null ? "" : undefined}
+      data-hashti-input-icon={children == null ? "" : undefined}
     >
       {children ?? (
         <FieldLayout

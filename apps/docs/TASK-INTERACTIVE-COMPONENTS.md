@@ -13,7 +13,7 @@ Build an elegant, theme-aware preview container matching Hashti's portal archite
 - Crisp border (`border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden`)
 - Preview stage with centered alignment, flexible padding (`p-6 md:p-8 flex items-center justify-center min-h-[160px] bg-neutral-50/60 dark:bg-neutral-900/40 relative`)
 - Subtle dot pattern or architectural grid background
-- Live component mounting inside standard Hashti `<Theme>` or inheriting `data-cinder-theme`
+- Live component mounting inside standard Hashti `<Theme>` or inheriting `data-hashti-theme`
 
 ### 2. Build Interactive Demo Components (`apps/docs/src/components/demos/`)
 Create self-contained client components showcasing actual `@hashti/react` components:

@@ -168,7 +168,7 @@ export const source = loader({
         { text: 'Documentation', url: '/docs' },
         { text: 'Components', url: '/docs/components' },
         { text: 'Brandbook', url: 'https://hashti.raminrez.dev/hashti-brandbook.html' },
-        { text: 'GitHub', url: 'https://github.com/raminrez/cinder' },
+        { text: 'GitHub', url: 'https://github.com/raminrez/hashti' },
       ],
     };
   }
@@ -248,7 +248,7 @@ export const source = loader({
 - `content/docs/index.mdx`: Introduction, Persian architectural philosophy of Hashti, core values (Accessible, Elegant, Open Source, International)
 - `content/docs/getting-started/`:
   - `installation.mdx` (Bun/NPM installation of `@cinder/react` & `@cinder/tokens`)
-  - `theming.mdx` (The 8 supported themes: Carbon 4 themes, Relay themes, Frame themes, theme attributes `data-cinder-theme`)
+  - `theming.mdx` (The 8 supported themes: Carbon 4 themes, Relay themes, Frame themes, theme attributes `data-hashti-theme`)
   - `accessibility.mdx` (Keyboard navigation, ARIA landmarks, WCAG 2.1 compliance)
 - `content/docs/foundations/`:
   - `colors.mdx` (Black `#000000`, White `#FFFFFF`, Turquoise `#0D9488`, Amber `#D97706`, Terracotta `#DC2626`)

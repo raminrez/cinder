@@ -52,7 +52,7 @@ export function GridListRoot<T extends object>({
   ...props
 }: GridListRootProps<T>) {
   const resolvedEmptyState = renderEmptyState ?? (emptyContent ? () => (
-    <div className="cinder-grid-list-empty-content">{emptyContent}</div>
+    <div className="hashti-grid-list-empty-content">{emptyContent}</div>
   ) : undefined);
 
   return (
@@ -65,9 +65,9 @@ export function GridListRoot<T extends object>({
         data-variant={variant}
         className={classes(
           cx(
-            "cinder-grid-list",
-            `cinder-grid-list--${size}`,
-            `cinder-grid-list--${variant}`
+            "hashti-grid-list",
+            `hashti-grid-list--${size}`,
+            `hashti-grid-list--${variant}`
           ),
           className
         )}
@@ -100,8 +100,8 @@ export function GridListItem<T extends object = object>({
       data-variant={variant}
       className={classes(
         cx(
-          "cinder-grid-list-item",
-          size && `cinder-grid-list-item--${size}`
+          "hashti-grid-list-item",
+          size && `hashti-grid-list-item--${size}`
         ),
         className
       )}
@@ -127,7 +127,7 @@ export function GridListDragHandle({
       slot="drag"
       aria-label={ariaLabel}
       {...props}
-      className={classes("cinder-grid-list-drag-handle", className)}
+      className={classes("hashti-grid-list-drag-handle", className)}
     >
       {children ?? <Icon name="menu" size={16} />}
     </RACButton>
@@ -143,7 +143,7 @@ export function GridListCheckbox({ className, children, ...props }: GridListChec
     <RACCheckbox
       slot="selection"
       {...props}
-      className={classes("cinder-grid-list-checkbox", className)}
+      className={classes("hashti-grid-list-checkbox", className)}
     >
       {children}
     </RACCheckbox>
@@ -160,7 +160,7 @@ export function GridListEmptyState({
   className,
 }: GridListEmptyStateProps) {
   return (
-    <div className={cx("cinder-grid-list-empty-state", className)}>
+    <div className={cx("hashti-grid-list-empty-state", className)}>
       {children}
     </div>
   );
@@ -195,17 +195,17 @@ export function GridListLoadMore({
     <RACGridListLoadMoreItem
       {...props}
       isLoading={isVisible}
-      className={cx("cinder-grid-list-load-more", className)}
+      className={cx("hashti-grid-list-load-more", className)}
     >
       {children ?? (
-        <div className="cinder-load-more-content" role="status">
+        <div className="hashti-load-more-content" role="status">
           {isError ? (
-            <div className="cinder-load-more-error">
-              <span className="cinder-load-more-error-message">{errorMessage}</span>
+            <div className="hashti-load-more-error">
+              <span className="hashti-load-more-error-message">{errorMessage}</span>
               {onRetry && (
                 <button
                   type="button"
-                  className="cinder-load-more-retry"
+                  className="hashti-load-more-retry"
                   onClick={(e) => {
                     e.stopPropagation();
                     onRetry();
@@ -216,8 +216,8 @@ export function GridListLoadMore({
               )}
             </div>
           ) : (
-            <div className="cinder-load-more-loading">
-              <span className="cinder-spinner" aria-hidden="true" />
+            <div className="hashti-load-more-loading">
+              <span className="hashti-spinner" aria-hidden="true" />
               <span>{label}</span>
             </div>
           )}

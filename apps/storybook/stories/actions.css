@@ -1,7 +1,7 @@
 .action-story-stack {
   display: grid;
   justify-items: start;
-  gap: var(--cinder-spacing-05);
+  gap: var(--hashti-spacing-05);
   max-inline-size: 40rem;
 }
 
@@ -14,12 +14,12 @@
   display: grid;
   grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
   align-items: center;
-  gap: var(--cinder-spacing-04) var(--cinder-spacing-05);
+  gap: var(--hashti-spacing-04) var(--hashti-spacing-05);
   margin: 0;
 }
 
 .action-story-matrix > dt {
-  color: var(--cinder-text-secondary);
+  color: var(--hashti-text-secondary);
 }
 
 .action-story-matrix > dd {
@@ -31,7 +31,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cinder-spacing-05);
+  gap: var(--hashti-spacing-05);
 }
 
 .action-story-prose {
@@ -44,7 +44,7 @@
 }
 
 .action-story-error {
-  color: var(--cinder-support-error);
+  color: var(--hashti-support-error);
 }
 
 .action-story-narrow {
@@ -53,11 +53,11 @@
 
 .action-story-custom-button {
   border-radius: 0;
-  border-color: var(--cinder-border-strong);
+  border-color: var(--hashti-border-strong);
 }
 
 .action-story-custom-link {
-  font-weight: var(--cinder-label-01-font-weight);
+  font-weight: var(--hashti-label-01-font-weight);
 }
 
 .action-story-custom-link--pressed {

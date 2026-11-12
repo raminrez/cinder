@@ -41,7 +41,7 @@ import { classes, type ControlSize } from "../../utils";
 function CalendarContent() {
   return (
     <>
-      <div className="hashti-calendar-header cinder-calendar-header">
+      <div className="hashti-calendar-header hashti-calendar-header">
         <Button variant="ghost" iconOnly size="md" slot="previous">
           <Icon name="chevronLeft" />
         </Button>
@@ -65,7 +65,7 @@ export interface CalendarProps<T extends DateValue> extends RACCalendarProps<T> 
 }
 export function Calendar<T extends DateValue>({ className, children, ...props }: CalendarProps<T>) {
   return (
-    <RACCalendar {...props} className={classes("hashti-calendar cinder-calendar", className)}>
+    <RACCalendar {...props} className={classes("hashti-calendar hashti-calendar", className)}>
       {children ?? <CalendarContent />}
     </RACCalendar>
   );
@@ -82,7 +82,7 @@ export function RangeCalendar<T extends DateValue>({
   return (
     <RACRangeCalendar
       {...props}
-      className={classes("hashti-calendar hashti-range-calendar cinder-calendar cinder-range-calendar", className)}
+      className={classes("hashti-calendar hashti-range-calendar hashti-calendar hashti-range-calendar", className)}
     >
       {children ?? <CalendarContent />}
     </RACRangeCalendar>
@@ -90,7 +90,7 @@ export function RangeCalendar<T extends DateValue>({
 }
 
 function DatePopover({ className, ...props }: PopoverProps) {
-  return <Popover {...props} className={classes("hashti-date-popover cinder-date-popover", className)} />;
+  return <Popover {...props} className={classes("hashti-date-popover hashti-date-popover", className)} />;
 }
 
 export interface DatePickerRootProps<T extends DateValue>
@@ -119,7 +119,7 @@ function DatePickerRoot<T extends DateValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-date-picker cinder-field cinder-date-picker", className)}
+      className={classes("hashti-field hashti-date-picker hashti-field hashti-date-picker", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACDatePicker>
@@ -206,7 +206,7 @@ function DateRangePickerRoot<T extends DateValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-date-range-picker cinder-field cinder-date-range-picker", className)}
+      className={classes("hashti-field hashti-date-range-picker hashti-field hashti-date-range-picker", className)}
     >
       {presentation.wrap(children, context?.children)}
     </RACDateRangePicker>

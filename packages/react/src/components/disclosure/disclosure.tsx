@@ -60,7 +60,7 @@ export function DisclosureRoot({
         {...props}
         data-size={resolvedSize}
         data-variant={resolvedVariant}
-        className={classes("cinder-disclosure", className)}
+        className={classes("hashti-disclosure", className)}
       >
         {children}
       </RACDisclosure>
@@ -91,7 +91,7 @@ export function DisclosureTrigger({
       variant={variant}
       size={resolvedSize}
       {...props}
-      className={classes("cinder-disclosure-trigger", className)}
+      className={classes("hashti-disclosure-trigger", className)}
     >
       {children}
     </Button>
@@ -118,7 +118,7 @@ export function DisclosureIndicator({
     <span
       aria-hidden="true"
       {...props}
-      className={cx("cinder-disclosure-indicator", className)}
+      className={cx("hashti-disclosure-indicator", className)}
     >
       {children ?? <Icon name="chevronRight" />}
     </span>
@@ -139,9 +139,9 @@ export function DisclosurePanel({
   return (
     <RACDisclosurePanel
       {...props}
-      className={classes("cinder-disclosure-panel", className)}
+      className={classes("hashti-disclosure-panel", className)}
     >
-      <div className="cinder-disclosure-panel-inner">{children}</div>
+      <div className="hashti-disclosure-panel-inner">{children}</div>
     </RACDisclosurePanel>
   );
 }
@@ -172,7 +172,7 @@ export function DisclosureGroup({
         {...props}
         data-size={size}
         data-variant={variant}
-        className={classes("cinder-disclosure-group", className)}
+        className={classes("hashti-disclosure-group", className)}
       >
         {children}
       </RACDisclosureGroup>

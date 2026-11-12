@@ -51,7 +51,7 @@ export function DropZoneRoot({
       ref={ref}
       data-variant={variant}
       className={classes(
-        cx("cinder-dropzone", `cinder-dropzone--${variant}`),
+        cx("hashti-dropzone", `hashti-dropzone--${variant}`),
         className
       )}
       onDrop={async (e) => {
@@ -89,7 +89,7 @@ export function DropZoneFeedback({ children, className, ...props }: DropZoneFeed
     <div
       {...props}
       data-drop-target={isDropTarget || undefined}
-      className={cx("cinder-dropzone-feedback", className)}
+      className={cx("hashti-dropzone-feedback", className)}
     >
       {children}
     </div>
@@ -179,12 +179,12 @@ export function FileUploader({
   }
 
   return (
-    <div className={["hashti-file-uploader cinder-file-uploader", className].filter(Boolean).join(" ")}>
-      <div id={`${id}-label`} className="hashti-file-label cinder-file-label">
+    <div className={["hashti-file-uploader hashti-file-uploader", className].filter(Boolean).join(" ")}>
+      <div id={`${id}-label`} className="hashti-file-label hashti-file-label">
         {label}
       </div>
       {description && (
-        <p id={`${id}-description`} className="hashti-description cinder-description">
+        <p id={`${id}-description`} className="hashti-description hashti-description">
           {description}
         </p>
       )}
@@ -211,16 +211,16 @@ export function FileUploader({
         </FileTrigger>
       </DropZoneRoot>
       {error && (
-        <p role="alert" className="hashti-error-message cinder-error-message">
+        <p role="alert" className="hashti-error-message hashti-error-message">
           {error}
         </p>
       )}
-      <ul className="hashti-file-list cinder-file-list">
+      <ul className="hashti-file-list hashti-file-list">
         {files.map((file, index) => (
           <li key={`${file.name}-${file.lastModified}-${index}`}>
             <Icon name="file" />
             <span>{file.name}</span>
-            <span className="hashti-description cinder-description">
+            <span className="hashti-description hashti-description">
               {new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(
                 file.size / 1024,
               )}{" "}

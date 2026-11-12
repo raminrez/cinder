@@ -141,7 +141,7 @@ test("single and multiple selects preserve controlled values, typeahead, and foc
   await trigger.focus();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("listbox")).toBeVisible();
-  await audit(".cinder-popover");
+  await audit(".hashti-popover");
   await page.keyboard.press("End");
   await page.keyboard.press("Enter");
   await expect(canvas.getByRole("status")).toHaveText("Selected: production");
@@ -263,7 +263,7 @@ test("calendar selection, range endpoints, and time segments update their actual
   await trigger.click();
   const dialog = page.getByRole("dialog", { name: "Choose a date", exact: true });
   await expect(dialog).toBeVisible();
-  await audit(".cinder-date-popover");
+  await audit(".hashti-date-popover");
   await page.keyboard.press("ArrowRight");
   await page.keyboard.press("Enter");
   await expect(dialog).toBeHidden();
@@ -273,7 +273,7 @@ test("calendar selection, range endpoints, and time segments update their actual
 
   canvas = await example("date-range-picker");
   await canvas.getByRole("button", { name: "Calendar Reporting period" }).click();
-  await audit(".cinder-date-popover");
+  await audit(".hashti-date-popover");
   const range = page.getByRole("dialog", { name: "Choose a date range" });
   await range.getByRole("button", { name: /Tuesday, November 10, 2026/ }).click();
   await range.getByRole("button", { name: /Friday, November 20, 2026/ }).click();
@@ -381,7 +381,7 @@ test("modal contains focus, saves controlled values, dismisses with Escape, and 
   const dialog = page.getByRole("dialog", { name: "Workspace settings" });
   const input = dialog.getByRole("textbox", { name: "Workspace name" });
   await expect(input).toBeFocused();
-  await audit(".cinder-modal-overlay");
+  await audit(".hashti-modal-overlay");
   await dialog.getByRole("button", { name: "Save changes" }).focus();
   await page.keyboard.press("Tab");
   expect(await dialog.evaluate((element) => element.contains(document.activeElement))).toBe(true);
@@ -400,7 +400,7 @@ test("menus skip disabled actions and popovers restore focus after dismissal", a
   const trigger = canvas.getByRole("button", { name: "Actions", exact: true });
   await trigger.focus();
   await trigger.press("Enter");
-  await audit(".cinder-popover");
+  await audit(".hashti-popover");
   await page.keyboard.press("End");
   await expect(page.getByRole("menuitem", { name: "Archive", exact: true })).toBeFocused();
   await page.keyboard.press("Enter");
@@ -410,7 +410,7 @@ test("menus skip disabled actions and popovers restore focus after dismissal", a
   canvas = await example("popover");
   const display = canvas.getByRole("button", { name: "Display settings" });
   await display.click();
-  await audit(".cinder-popover");
+  await audit(".hashti-popover");
   await page.getByText("Compact layout", { exact: true }).click();
   await expect(page.getByRole("switch", { name: "Compact layout" })).toBeChecked();
   await page.keyboard.press("Escape");
@@ -422,16 +422,16 @@ test("tooltip is available on keyboard focus and toast is dismissible", async ()
   await page.keyboard.press("Tab");
   await canvas.getByRole("button", { name: "Settings", exact: true }).focus();
   await expect(page.getByRole("tooltip")).toHaveText("Manage workspace settings");
-  await audit(".cinder-tooltip");
+  await audit(".hashti-tooltip");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("tooltip")).toBeHidden();
 
   canvas = await example("toast");
   await canvas.getByRole("button", { name: "Show notification" }).click();
-  await expect(page.locator(".cinder-toast")).toContainText("Preferences saved");
-  await audit(".cinder-toast-region");
-  await page.locator(".cinder-toast").getByRole("button", { name: "Dismiss notification" }).click();
-  await expect(page.locator(".cinder-toast")).toHaveCount(0);
+  await expect(page.locator(".hashti-toast")).toContainText("Preferences saved");
+  await audit(".hashti-toast-region");
+  await page.locator(".hashti-toast").getByRole("button", { name: "Dismiss notification" }).click();
+  await expect(page.locator(".hashti-toast")).toHaveCount(0);
 });
 
 test("tags remove from the keyboard and tree branches expand and collapse", async () => {
@@ -455,10 +455,10 @@ test("global search, persisted theme, and mobile navigation reach actual documen
   await page.goto("/?theme=g10");
   await page.getByRole("button", { name: "Change theme, current theme Gray 10" }).click();
   await page.getByRole("menuitemradio", { name: "Gray 100" }).click();
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", "g100");
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", "g100");
   await page.goto("/");
   await page.reload();
-  await expect(page.locator(".site-root")).toHaveAttribute("data-cinder-theme", "g100");
+  await expect(page.locator(".site-root")).toHaveAttribute("data-hashti-theme", "g100");
   await page.getByRole("button", { name: /Search/ }).click();
   await page.getByRole("searchbox", { name: "Find components" }).fill("date range");
   await page

@@ -38,26 +38,26 @@ function PlaygroundExample() {
       <div className="content-tile-grid">
         {/* Base Tile */}
         <Tile>
-          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "var(--cinder-text-secondary)", letterSpacing: "0.05em" }}>
+          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "var(--hashti-text-secondary)", letterSpacing: "0.05em" }}>
             Base Tile
           </span>
-          <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--cinder-text-primary)" }}>
+          <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--hashti-text-primary)" }}>
             Cluster Health
           </h4>
-          <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+          <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
             99.98% operational uptime across 12 pods.
           </p>
         </Tile>
 
         {/* Clickable Tile */}
         <ClickableTile href="#metrics">
-          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "var(--cinder-interactive)", letterSpacing: "0.05em" }}>
+          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "var(--hashti-interactive)", letterSpacing: "0.05em" }}>
             Clickable Tile →
           </span>
-          <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--cinder-text-primary)" }}>
+          <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--hashti-text-primary)" }}>
             View Telemetry
           </h4>
-          <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+          <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
             Analyze p99 latency and ingress distribution.
           </p>
         </ClickableTile>
@@ -70,13 +70,13 @@ function PlaygroundExample() {
           onChange={setSelected}
           title="Enable SSD Persistent Storage"
         >
-          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "var(--cinder-text-secondary)", letterSpacing: "0.05em" }}>
+          <span style={{ fontSize: "0.75rem", textTransform: "uppercase", color: "var(--hashti-text-secondary)", letterSpacing: "0.05em" }}>
             Selectable Choice
           </span>
-          <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--cinder-text-primary)" }}>
+          <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--hashti-text-primary)" }}>
             SSD Storage Pool
           </h4>
-          <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+          <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
             Provision high-IOPS NVMe drive tier.
           </p>
         </SelectableTile>
@@ -119,19 +119,19 @@ function ExpandableExample() {
           onToggle={setIsExpanded}
           tileAboveTheFoldContent={
             <div>
-              <span style={{ fontSize: "0.75rem", color: "var(--cinder-text-secondary)", textTransform: "uppercase" }}>
+              <span style={{ fontSize: "0.75rem", color: "var(--hashti-text-secondary)", textTransform: "uppercase" }}>
                 Audit Record #9482
               </span>
-              <h4 style={{ margin: "0.25rem 0 0", color: "var(--cinder-text-primary)" }}>
+              <h4 style={{ margin: "0.25rem 0 0", color: "var(--hashti-text-primary)" }}>
                 Deployment Pipeline Executed
               </h4>
-              <p style={{ margin: "0.25rem 0 0", fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+              <p style={{ margin: "0.25rem 0 0", fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
                 Triggered by commit a4f89d1 on branch main.
               </p>
             </div>
           }
           tileBelowTheFoldContent={
-            <div style={{ paddingTop: "0.75rem", borderTop: "1px dashed var(--cinder-border-subtle)", fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+            <div style={{ paddingTop: "0.75rem", borderTop: "1px dashed var(--hashti-border-subtle)", fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
               <p style={{ margin: "0 0 0.5rem" }}>
                 <strong>Target Cluster:</strong> edge-prod-us-east-1
               </p>
@@ -175,13 +175,13 @@ function LongContentAndLocalesExample() {
         <div dir="rtl" className="content-story-stack">
           <div className="content-tile-grid">
             <Tile>
-              <span style={{ fontSize: "0.75rem", color: "var(--cinder-text-secondary)" }}>
+              <span style={{ fontSize: "0.75rem", color: "var(--hashti-text-secondary)" }}>
                 کارت اطلاعات پایه
               </span>
-              <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--cinder-text-primary)" }}>
+              <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--hashti-text-primary)" }}>
                 وضعیت سرورهای ابری
               </h4>
-              <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+              <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
                 تمام سرویس‌های منطقه تهران با پایداری ۱۰۰٪ فعال هستند.
               </p>
             </Tile>
@@ -192,13 +192,13 @@ function LongContentAndLocalesExample() {
               onChange={setFaSelected}
               title="پشتیبان‌گیری خودکار روزانه"
             >
-              <span style={{ fontSize: "0.75rem", color: "var(--cinder-text-secondary)" }}>
+              <span style={{ fontSize: "0.75rem", color: "var(--hashti-text-secondary)" }}>
                 گزینه انتخابی
               </span>
-              <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--cinder-text-primary)" }}>
+              <h4 style={{ margin: "0.5rem 0 0.25rem", color: "var(--hashti-text-primary)" }}>
                 پشتیبان‌گیری ابری
               </h4>
-              <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+              <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
                 تهیه نسخه پشتیبان به‌صورت خودکار هر شب ساعت ۱۲.
               </p>
             </SelectableTile>

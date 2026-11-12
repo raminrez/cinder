@@ -48,7 +48,7 @@ const semantic: Record<string, Record<string, string | number>> = Object.fromEnt
     // Preserve those dark-theme aliases rather than inheriting white's values.
     if (theme === "g90" || theme === "g100") {
       entries.push(
-        ["notification-action-hover", "var(--cinder-layer-hover)"],
+        ["notification-action-hover", "var(--hashti-layer-hover)"],
         ["status-orange-outline", statusTokens.statusOrange[theme]],
         ["status-yellow-outline", statusTokens.statusYellow[theme]],
       );
@@ -100,7 +100,7 @@ for (const [name, modes] of Object.entries(motion.easings)) {
 
 const declarations = (values: Record<string, string | number>) =>
   Object.entries(values)
-    .map(([name, value]) => `  --cinder-${name}: ${value};`)
+    .map(([name, value]) => `  --hashti-${name}: ${value};`)
     .join("\n");
 
 // Capture only the document baseline outside Frame. A same-element alias would
@@ -113,16 +113,16 @@ const foundationNames = [
   ),
 ].sort();
 const themeSelector = (names: string[]) =>
-  `:where(${names.map((name) => `[data-cinder-theme="${name}"]`).join(", ")})`;
+  `:where(${names.map((name) => `[data-hashti-theme="${name}"]`).join(", ")})`;
 const frameSelector = themeSelector(Object.keys(frameThemes));
 const legacySelector = themeSelector(
   Object.keys(semantic).filter((name) => !Object.hasOwn(frameThemes, name)),
 );
 const documentBaseline = foundationNames
-  .map((name) => `  --cinder-internal-legacy-${name}: var(--cinder-${name});`)
+  .map((name) => `  --hashti-internal-legacy-${name}: var(--hashti-${name});`)
   .join("\n");
 const legacyFoundations = foundationNames
-  .map((name) => `  --cinder-${name}: var(--cinder-internal-legacy-${name}, ${global[name]});`)
+  .map((name) => `  --hashti-${name}: var(--hashti-internal-legacy-${name}, ${global[name]});`)
   .join("\n");
 
 // A layer changes contextual aliases, not the source theme. A new Theme resets
@@ -149,7 +149,7 @@ const aliases = (layer: number) =>
     // Carbon's subtle separators start at 00; the other sets start at 01.
     .map(
       (name) =>
-        `  --cinder-${name}: var(--cinder-${name}-0${Math.min(layer, 2) + (name === "border-subtle" ? 0 : 1)});`,
+        `  --hashti-${name}: var(--hashti-${name}-0${Math.min(layer, 2) + (name === "border-subtle" ? 0 : 1)});`,
     )
     .join("\n");
 
@@ -157,20 +157,20 @@ const css = `/* Carbon-derived tokens. Copyright IBM Corp. Apache-2.0.
  * Cinder changes: namespace, scoped foundations, layer aliases, and Relay/Frame themes.
  * Regenerate with: bun run build:tokens
  */
-@layer cinder.tokens {
+@layer hashti.tokens {
 :root {\n${declarations(global)}\n}
 :root:not(${frameSelector}),
 :root:not(${frameSelector}) > body:not(${frameSelector}) {\n${documentBaseline}\n}
 ${Object.entries(semantic)
   .map(
     ([name, values]) =>
-      `${name === "white" ? ":root,\n" : ""}[data-cinder-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${values["color-scheme"]};\n}`,
+      `${name === "white" ? ":root,\n" : ""}[data-hashti-theme="${name}"] {\n${declarations(values)}\n  color-scheme: ${values["color-scheme"]};\n}`,
   )
   .join("\n")}
 ${frameSelector} ${legacySelector} {\n${legacyFoundations}\n}
-:root, [data-cinder-theme], [data-cinder-layer="0"] {\n${aliases(0)}\n}
-[data-cinder-layer="1"] {\n${aliases(1)}\n}
-[data-cinder-layer="2"], [data-cinder-layer="3"] {\n${aliases(2)}\n}
+:root, [data-hashti-theme], [data-hashti-layer="0"] {\n${aliases(0)}\n}
+[data-hashti-layer="1"] {\n${aliases(1)}\n}
+[data-hashti-layer="2"], [data-hashti-layer="3"] {\n${aliases(2)}\n}
 }
 `;
 

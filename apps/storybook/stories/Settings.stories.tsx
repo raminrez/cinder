@@ -127,7 +127,7 @@ function SettingsForm({
                 <TextField
                   isReadOnly
                   label="Workspace ID"
-                  value="cinder-studio-demo"
+                  value="hashti-studio-demo"
                   description="This identifier stays fixed when you rename the workspace."
                 />
               </div>
@@ -379,7 +379,7 @@ function NestedReviewDialogExample() {
                     rows={3}
                   />
 
-                  <div className="cinder-dialog-footer">
+                  <div className="hashti-dialog-footer">
                     <DialogTrigger>
                       <Button variant="tertiary">Discard changes</Button>
                       <Modal size="xs" isDismissable>
@@ -388,7 +388,7 @@ function NestedReviewDialogExample() {
                             <>
                               <Heading slot="title">Discard changes?</Heading>
                               <p>All unsaved modifications to this review will be lost.</p>
-                              <div className="cinder-dialog-footer">
+                              <div className="hashti-dialog-footer">
                                 <Button variant="ghost" onPress={closeDiscardModal}>
                                   Keep editing
                                 </Button>
@@ -427,7 +427,7 @@ export const NestedReviewDialog: Story = {
     await userEvent.click(trigger);
 
     const taskModal = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>('.cinder-modal[data-size="md"]');
+      const el = document.querySelector<HTMLElement>('.hashti-modal[data-size="md"]');
       expect(el).not.toBeNull();
       return el!;
     });
@@ -438,7 +438,7 @@ export const NestedReviewDialog: Story = {
     await userEvent.click(discardTrigger);
 
     const confirmModal = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>('.cinder-modal[data-size="xs"]');
+      const el = document.querySelector<HTMLElement>('.hashti-modal[data-size="xs"]');
       expect(el).not.toBeNull();
       return el!;
     });
@@ -447,7 +447,7 @@ export const NestedReviewDialog: Story = {
     // Press Escape to dismiss nested modal first
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector('.cinder-modal[data-size="xs"]')).toBeNull();
+      expect(document.querySelector('.hashti-modal[data-size="xs"]')).toBeNull();
     });
 
     // Parent task modal is still open
@@ -457,7 +457,7 @@ export const NestedReviewDialog: Story = {
     const closeBtn = within(taskModal).getByRole("button", { name: "Close task dialog" });
     await userEvent.click(closeBtn);
     await waitFor(() => {
-      expect(document.querySelector('.cinder-modal[data-size="md"]')).toBeNull();
+      expect(document.querySelector('.hashti-modal[data-size="md"]')).toBeNull();
     });
     expect(trigger).toHaveFocus();
   },

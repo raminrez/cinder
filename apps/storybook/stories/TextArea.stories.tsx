@@ -179,7 +179,7 @@ export const Composition: Story = {
     await expect(canvas.queryByText("Add the next review task.")).not.toBeInTheDocument();
     await userEvent.click(canvas.getByRole("button", { name: "Save notes" }));
     await expect(notes).toHaveFocus();
-    const error = canvas.getByText("Add the next review task.").closest(".cinder-field__error")!;
+    const error = canvas.getByText("Add the next review task.").closest(".hashti-field__error")!;
     await expect(error.tagName).toBe("DIV");
     await expect(error).toBeVisible();
     await expect(notes).toHaveAccessibleDescription(

@@ -72,7 +72,7 @@ export const Playground: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -174,7 +174,7 @@ export const SectionsAndGroups: Story = {
       >
         {serviceGroups.map((grp) => (
           <ListBoxSection key={grp.id} id={grp.id}>
-            <Header className="cinder-select-section-header">{grp.title}</Header>
+            <Header className="hashti-select-section-header">{grp.title}</Header>
             {grp.items.map((it) => (
               <ListBoxItem key={it.id} id={it.id} textValue={it.name}>
                 {it.name}
@@ -192,7 +192,7 @@ export const SectionsAndGroups: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -325,7 +325,7 @@ export const LongContentAndLocales: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });

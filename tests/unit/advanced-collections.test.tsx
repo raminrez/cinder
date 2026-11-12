@@ -33,9 +33,9 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </ListBox>
       );
 
-      expect(html).toContain("cinder-listbox-load-more");
+      expect(html).toContain("hashti-listbox-load-more");
       expect(html).toContain("data-testid=\"loadMoreSentinel\"");
-      expect(html).toContain("cinder-spinner");
+      expect(html).toContain("hashti-spinner");
       expect(html).toContain("Loading more items…");
     });
 
@@ -54,10 +54,10 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </ListBox>
       );
 
-      expect(html).toContain("cinder-load-more-error");
+      expect(html).toContain("hashti-load-more-error");
       expect(html).toContain("Network timeout");
       expect(html).toContain("Retry loading");
-      expect(html).toContain("cinder-load-more-retry");
+      expect(html).toContain("hashti-load-more-retry");
     });
 
     test("Table.LoadMore renders with table-row role and column span sentinel", () => {
@@ -81,10 +81,10 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </Table>
       );
 
-      expect(html).toContain("cinder-table-load-more");
+      expect(html).toContain("hashti-table-load-more");
       expect(html).toContain("data-testid=\"loadMoreSentinel\"");
       expect(html).toContain("Loading more rows…");
-      expect(html).toContain("cinder-spinner");
+      expect(html).toContain("hashti-spinner");
     });
 
     test("GridList.LoadMore renders with loading indicator and sentinel", () => {
@@ -101,10 +101,10 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </GridList>
       );
 
-      expect(html).toContain("cinder-grid-list-load-more");
+      expect(html).toContain("hashti-grid-list-load-more");
       expect(html).toContain("data-testid=\"loadMoreSentinel\"");
       expect(html).toContain("Loading more photos…");
-      expect(html).toContain("cinder-spinner");
+      expect(html).toContain("hashti-spinner");
     });
   });
 
@@ -124,9 +124,9 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </NavigationTree>
       );
 
-      expect(html).toContain("cinder-navigation-tree");
-      expect(html).toContain("cinder-navigation-tree-section");
-      expect(html).toContain("cinder-navigation-tree-header");
+      expect(html).toContain("hashti-navigation-tree");
+      expect(html).toContain("hashti-navigation-tree-section");
+      expect(html).toContain("hashti-navigation-tree-header");
       expect(html).toContain("Getting Started");
       expect(html).toContain("data-href=\"/docs/components\"");
       expect(html).toContain("data-current=\"true\"");
@@ -148,7 +148,7 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </NavigationTree>
       );
 
-      expect(html).toContain("cinder-navigation-tree-indicator");
+      expect(html).toContain("hashti-navigation-tree-indicator");
       expect(html).toContain("Settings");
       expect(html).toContain("data-has-child-items=\"true\"");
     });
@@ -168,7 +168,7 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
         </ComboBox>
       );
 
-      expect(html).toContain("cinder-combobox");
+      expect(html).toContain("hashti-combobox");
       expect(html).toContain("Tags");
     });
 
@@ -180,15 +180,15 @@ describe("Phase 5: Advanced RAC Collection Features and Ergonomics", () => {
             role="button"
             tabIndex={0}
             data-testid="combobox-create-item"
-            className="cinder-combobox-create-item"
+            className="hashti-combobox-create-item"
             onClick={() => handleCreate("Svelte")}
           >
-            <span className="cinder-combobox-create-item-text">Create &quot;Svelte&quot;</span>
+            <span className="hashti-combobox-create-item-text">Create &quot;Svelte&quot;</span>
           </div>
         </div>
       );
 
-      expect(html).toContain("cinder-combobox-create-item");
+      expect(html).toContain("hashti-combobox-create-item");
       expect(html).toContain("Create &quot;Svelte&quot;");
     });
   });

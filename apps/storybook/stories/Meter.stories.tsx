@@ -159,9 +159,9 @@ export const MultiSegment: Story = {
           minValue={0}
           maxValue={100}
           segments={[
-            { value: 30, color: "var(--cinder-interactive, #0f62fe)", label: "System OS" },
-            { value: 40, color: "var(--cinder-support-info, #0043ce)", label: "Applications" },
-            { value: 15, color: "var(--cinder-support-warning, #f1c21b)", label: "User Cache" },
+            { value: 30, color: "var(--hashti-interactive, #0f62fe)", label: "System OS" },
+            { value: 40, color: "var(--hashti-support-info, #0043ce)", label: "Applications" },
+            { value: 15, color: "var(--hashti-support-warning, #f1c21b)", label: "User Cache" },
           ]}
           helperText="15 GB free of 100 GB."
         />

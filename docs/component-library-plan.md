@@ -152,7 +152,7 @@ Owners: `utils.ts`'s existing class composition, `fields.tsx`, `selection.tsx`,
 1. Inventory the actual element/ref/class/style targets and `children` semantics
    before changing shared helpers. Enumerate every `FieldLabel` / `FieldHelp`
    caller, including dates and grouped selection.
-2. Keep useful `cinder-*` hooks. Add stable namespaced field/label/control/help/error
+2. Keep useful `hashti-*` hooks. Add stable namespaced field/label/control/help/error
    hooks where absent, retaining existing hooks as compatibility aliases.
 3. For direct RAC parts used by the slice, either preserve the documented raw
    contract or wrap them with exact upstream types and tested class merging.

@@ -262,7 +262,7 @@ function FieldPartContracts() {
         )}
       </TextField>
       <NumberField aria-label="Legacy composed number" isInvalid defaultValue={1}>
-        <Group className="cinder-input-group">
+        <Group className="hashti-input-group">
           <Input />
         </Group>
       </NumberField>

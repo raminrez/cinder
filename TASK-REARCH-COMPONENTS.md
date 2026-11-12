@@ -10,7 +10,7 @@ Restructure `packages/react/src/` into a modular, per-component architecture (re
 - Update `packages/react/package.json`: `"name": "@hashti/react"` with dependency `"@hashti/tokens": "workspace:*"`
 - Update root `package.json`, `tsconfig.json`, `tsconfig.build.json` in packages
 - Update all imports from `@cinder/tokens` to `@hashti/tokens` and `@cinder/react` to `@hashti/react` across all packages, tests, docs, and apps.
-- Update CSS variable prefix `--cds-*` and `--cinder-*` to `--hashti-*`.
+- Update CSS variable prefix `--cds-*` and `--hashti-*` to `--hashti-*`.
 
 ---
 

@@ -370,16 +370,16 @@ does not require a Cinder compiler or styling runtime.
 | Choice                 | Role and tradeoff                                                                                                                                                     |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Native CSS + variables | Implemented foundation: ordinary browser CSS, no consumer compiler requirement, direct theming and devtools inspection                                                |
-| BEM-style naming       | Stable block/part identity alongside existing `cinder-*` hooks; punctuation alone does not create encapsulation or accessibility                                      |
+| BEM-style naming       | Stable block/part identity alongside existing `hashti-*` hooks; punctuation alone does not create encapsulation or accessibility                                      |
 | Sass                   | Can compile authoring conveniences, but adds little to the current token generator, native nesting, and custom-property model                                         |
 | Tailwind               | Optional in applications. Generate utilities there and document cascade/preflight interaction; do not require it to consume Cinder                                    |
 | StyleX                 | A different compiler, style-authoring API, and integration contract. The current task does not justify that migration; any future choice needs its own consumer proof |
 
 ### Naming, states, and ownership
 
-Use `.cinder-button`, `.cinder-field`, `.cinder-input-group`, and existing useful
-part hooks. Default field anatomy adds `.cinder-field__label`, `__control`,
-`__help`, `__description`, and `__error`; Select adds `.cinder-select__value` and
+Use `.hashti-button`, `.hashti-field`, `.hashti-input-group`, and existing useful
+part hooks. Default field anatomy adds `.hashti-field__label`, `__control`,
+`__help`, `__description`, and `__error`; Select adds `.hashti-select__value` and
 `__listbox`. The existing classes remain alongside them. These hooks identify
 real elements: `__control` is the bordered input, compound Group, Select trigger,
 or standalone DateInput. It is not a new wrapper or a relationship slot.
@@ -475,7 +475,7 @@ the current execution matrix is Chromium. A custom appearance recipe intentional
 inherits until replaced or cleared. Scope limits selector matching, not custom
 property inheritance; theme-varying foundations are resolved at each theme boundary.
 
-Raw RAC selector groups are limited to `[data-cinder-theme]`. Neighboring RAC
+Raw RAC selector groups are limited to `[data-hashti-theme]`. Neighboring RAC
 controls outside that boundary and unrelated generic `data-size` elements keep
 their own styling. Inside the boundary, a direct RAC import is indistinguishable
 from the same raw part re-exported by Cinder.

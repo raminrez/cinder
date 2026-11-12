@@ -15,7 +15,7 @@ export function Tile({ className, as: Component = "div", ...props }: TileProps) 
   return (
     <Component
       {...props}
-      className={["hashti-tile cinder-tile", className].filter(Boolean).join(" ")}
+      className={["hashti-tile hashti-tile", className].filter(Boolean).join(" ")}
     />
   );
 }
@@ -40,9 +40,9 @@ export function ClickableTile({
       tabIndex={disabled ? -1 : props.tabIndex ?? 0}
       data-clickable="true"
       className={[
-        "hashti-tile cinder-tile",
-        "hashti-tile--clickable cinder-tile--clickable",
-        disabled && "hashti-tile--disabled cinder-tile--disabled",
+        "hashti-tile hashti-tile",
+        "hashti-tile--clickable hashti-tile--clickable",
+        disabled && "hashti-tile--disabled hashti-tile--disabled",
         className,
       ]
         .filter(Boolean)
@@ -95,10 +95,10 @@ export function SelectableTile({
       data-selected={isSelected || undefined}
       data-disabled={disabled || undefined}
       className={[
-        "hashti-tile cinder-tile",
-        "hashti-tile--selectable cinder-tile--selectable",
-        isSelected && "hashti-tile--selected cinder-tile--selected",
-        disabled && "hashti-tile--disabled cinder-tile--disabled",
+        "hashti-tile hashti-tile",
+        "hashti-tile--selectable hashti-tile--selectable",
+        isSelected && "hashti-tile--selected hashti-tile--selected",
+        disabled && "hashti-tile--disabled hashti-tile--disabled",
         className,
       ]
         .filter(Boolean)
@@ -112,13 +112,13 @@ export function SelectableTile({
         checked={isSelected}
         disabled={disabled}
         onChange={handleChange}
-        className="hashti-visually-hidden cinder-visually-hidden"
+        className="hashti-visually-hidden hashti-visually-hidden"
         title={title}
       />
-      <span className="hashti-tile-checkmark cinder-tile-checkmark" aria-hidden="true">
+      <span className="hashti-tile-checkmark hashti-tile-checkmark" aria-hidden="true">
         <Icon name="check" />
       </span>
-      <div className="hashti-tile-content cinder-tile-content">{children}</div>
+      <div className="hashti-tile-content hashti-tile-content">{children}</div>
     </label>
   );
 }
@@ -157,26 +157,26 @@ export function ExpandableTile({
       data-expandable="true"
       data-expanded={isExpanded || undefined}
       className={[
-        "hashti-tile cinder-tile",
-        "hashti-tile--expandable cinder-tile--expandable",
-        isExpanded && "hashti-tile--expanded cinder-tile--expanded",
+        "hashti-tile hashti-tile",
+        "hashti-tile--expandable hashti-tile--expandable",
+        isExpanded && "hashti-tile--expanded hashti-tile--expanded",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="hashti-tile-above-fold cinder-tile-above-fold">{tileAboveTheFoldContent}</div>
+      <div className="hashti-tile-above-fold hashti-tile-above-fold">{tileAboveTheFoldContent}</div>
       <button
         type="button"
         aria-expanded={isExpanded}
-        className="hashti-tile-expand-button cinder-tile-expand-button"
+        className="hashti-tile-expand-button hashti-tile-expand-button"
         onClick={toggle}
       >
         <span>{isExpanded ? "Show less" : "Show more"}</span>
         <Icon name="chevronDown" />
       </button>
       {isExpanded && (
-        <div className="hashti-tile-below-fold cinder-tile-below-fold">{tileBelowTheFoldContent}</div>
+        <div className="hashti-tile-below-fold hashti-tile-below-fold">{tileBelowTheFoldContent}</div>
       )}
     </div>
   );

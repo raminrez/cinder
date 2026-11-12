@@ -1,7 +1,7 @@
 /* Hashti Modern Aesthetic - Breadcrumbs */
 @layer hashti.components {
   .hashti-breadcrumbs,
-  .cinder-breadcrumbs {
+  .hashti-breadcrumbs {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -12,32 +12,32 @@
   }
 
   .hashti-breadcrumbs li,
-  .cinder-breadcrumbs li {
+  .hashti-breadcrumbs li {
     display: inline-flex;
     align-items: center;
     gap: 8px;
   }
 
   .hashti-breadcrumbs li:not(:last-child)::after,
-  .cinder-breadcrumbs li:not(:last-child)::after {
+  .hashti-breadcrumbs li:not(:last-child)::after {
     content: "/";
     color: var(--hashti-text-secondary, #8d8d8d);
   }
 
   .hashti-breadcrumbs a,
-  .cinder-breadcrumbs a {
+  .hashti-breadcrumbs a {
     color: var(--hashti-text-secondary, #525252);
     text-decoration: none;
     transition: color 150ms ease;
   }
 
   .hashti-breadcrumbs a:hover,
-  .cinder-breadcrumbs a:hover {
+  .hashti-breadcrumbs a:hover {
     color: var(--hashti-text-primary, #161616);
   }
 
   .hashti-breadcrumbs a[aria-current="page"],
-  .cinder-breadcrumbs a[aria-current="page"] {
+  .hashti-breadcrumbs a[aria-current="page"] {
     color: var(--hashti-text-primary, #161616);
     font-weight: 600;
   }

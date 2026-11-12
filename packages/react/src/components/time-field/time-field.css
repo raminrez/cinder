@@ -1,18 +1,18 @@
 /* Hashti Modern Aesthetic - TimeField & DateField */
 @layer hashti.components {
   .hashti-time-field,
-  .cinder-time-field,
+  .hashti-time-field,
   .hashti-date-field,
-  .cinder-date-field {
+  .hashti-date-field {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 
   .hashti-time-field .react-aria-DateInput,
-  .cinder-time-field .react-aria-DateInput,
+  .hashti-time-field .react-aria-DateInput,
   .hashti-date-field .react-aria-DateInput,
-  .cinder-date-field .react-aria-DateInput {
+  .hashti-date-field .react-aria-DateInput {
     display: inline-flex;
     align-items: center;
     height: 44px;
@@ -26,9 +26,9 @@
   }
 
   .hashti-time-field .react-aria-DateInput:focus-within,
-  .cinder-time-field .react-aria-DateInput:focus-within,
+  .hashti-time-field .react-aria-DateInput:focus-within,
   .hashti-date-field .react-aria-DateInput:focus-within,
-  .cinder-date-field .react-aria-DateInput:focus-within {
+  .hashti-date-field .react-aria-DateInput:focus-within {
     border-color: var(--hashti-focus, #0f62fe);
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 12px rgba(15, 98, 254, 0.35);
   }

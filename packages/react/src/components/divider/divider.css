@@ -1,27 +1,27 @@
 /* Hashti Modern Aesthetic - Divider */
 @layer hashti.components {
   .hashti-divider,
-  .cinder-divider {
+  .hashti-divider {
     border: none;
     background-color: var(--hashti-border-subtle, #e0e0e0);
   }
 
   .hashti-divider[aria-orientation="horizontal"],
-  .cinder-divider[aria-orientation="horizontal"] {
+  .hashti-divider[aria-orientation="horizontal"] {
     height: 1px;
     width: 100%;
     margin: 16px 0;
   }
 
   .hashti-divider[aria-orientation="vertical"],
-  .cinder-divider[aria-orientation="vertical"] {
+  .hashti-divider[aria-orientation="vertical"] {
     width: 1px;
     height: 100%;
     margin: 0 16px;
   }
 
   .hashti-divider-labeled,
-  .cinder-divider-labeled {
+  .hashti-divider-labeled {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -33,8 +33,8 @@
 
   .hashti-divider-labeled::before,
   .hashti-divider-labeled::after,
-  .cinder-divider-labeled::before,
-  .cinder-divider-labeled::after {
+  .hashti-divider-labeled::before,
+  .hashti-divider-labeled::after {
     content: "";
     flex: 1;
     height: 1px;

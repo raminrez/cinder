@@ -253,7 +253,7 @@ export const CompositionAndFormData: Story = {
     await expect(live).toHaveAttribute("name", "liveUpdates");
     await expect(live).toHaveAttribute("value", "enabled");
     await expect(live.closest("label")).toHaveAttribute("data-composed-switch", "true");
-    await expect(live.closest("label")).toHaveClass("cinder-switch", "selected-setting");
+    await expect(live.closest("label")).toHaveClass("hashti-switch", "selected-setting");
     await expect(live.closest("label")).toHaveStyle({ fontWeight: 600 });
 
     const readonlyOn = canvas.getByRole<HTMLInputElement>("switch", {
@@ -295,7 +295,7 @@ export const CompositionAndFormData: Story = {
     await userEvent.click(canvas.getByRole("button", { name: "Focus live updates" }));
     await userEvent.keyboard(" ");
     await expect(live).not.toBeChecked();
-    await expect(live.closest("label")).toHaveClass("cinder-switch", "setting-option");
+    await expect(live.closest("label")).toHaveClass("hashti-switch", "setting-option");
     await expect(live.closest("label")).toHaveStyle({ fontWeight: 400 });
     await userEvent.click(submit);
     await expect(output).toHaveTextContent(JSON.stringify([["managedUpdates", "enabled"]]));

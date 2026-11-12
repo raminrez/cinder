@@ -52,7 +52,7 @@ function PlaygroundExample() {
           <span className="data-table-status-badge">Total: {totalItems}</span>
         </div>
         <div style={{ padding: "1.5rem", minHeight: "8rem" }}>
-          <p style={{ margin: 0, color: "var(--cinder-text-primary)" }}>
+          <p style={{ margin: 0, color: "var(--hashti-text-primary)" }}>
             Viewing entries for page <strong>{page}</strong> (Page size: {pageSize})
           </p>
         </div>

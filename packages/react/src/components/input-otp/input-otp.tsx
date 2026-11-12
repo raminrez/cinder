@@ -102,7 +102,7 @@ export function InputOTP({
       ref={ref}
       role="group"
       aria-label={ariaLabel}
-      className={cx("hashti-input-otp cinder-input-otp", className)}
+      className={cx("hashti-input-otp hashti-input-otp", className)}
     >
       {Array.from({ length }, (_, index) => {
         const digit = digits[index] ?? "";
@@ -121,7 +121,7 @@ export function InputOTP({
             aria-label={`Digit ${index + 1} of ${length}`}
             data-filled={digit ? "true" : undefined}
             data-invalid={isInvalid ? "true" : undefined}
-            className="hashti-input-otp-slot cinder-input-otp-slot"
+            className="hashti-input-otp-slot hashti-input-otp-slot"
             onChange={(e) => handleChange(index, e.target.value)}
             onKeyDown={(e) => handleKeyDown(index, e)}
             onPaste={handlePaste}

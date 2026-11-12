@@ -132,7 +132,7 @@ export function MeterRoot({
       data-size={size}
       data-variant={variant}
       className={classes(
-        cx("cinder-progress cinder-meter", variant === "circular" && "cinder-meter--circular"),
+        cx("hashti-progress hashti-meter", variant === "circular" && "hashti-meter--circular"),
         className
       )}
     >
@@ -162,7 +162,7 @@ export function MeterRoot({
 
 export interface MeterLabelProps extends ComponentPropsWithRef<typeof Label> {}
 export function MeterLabel({ className, ...props }: MeterLabelProps) {
-  return <Label {...props} className={cx("cinder-meter-label-text", className)} />;
+  return <Label {...props} className={cx("hashti-meter-label-text", className)} />;
 }
 
 export interface MeterValueProps extends ComponentPropsWithRef<"span"> {
@@ -171,7 +171,7 @@ export interface MeterValueProps extends ComponentPropsWithRef<"span"> {
 export function MeterValue({ children, className, ...props }: MeterValueProps) {
   const { valueText } = useContext(MeterContext);
   return (
-    <span {...props} className={cx("cinder-meter-value-text", className)}>
+    <span {...props} className={cx("hashti-meter-value-text", className)}>
       {children ?? valueText}
     </span>
   );
@@ -182,7 +182,7 @@ export interface MeterTrackProps extends ComponentPropsWithRef<"div"> {
 }
 export function MeterTrack({ children, className, ...props }: MeterTrackProps) {
   return (
-    <div {...props} className={cx("cinder-progress-track cinder-meter-track", className)}>
+    <div {...props} className={cx("hashti-progress-track hashti-meter-track", className)}>
       {children}
     </div>
   );
@@ -197,7 +197,7 @@ export function MeterFill({ percentage: propPercentage, style, className, ...pro
   return (
     <div
       {...props}
-      className={cx("cinder-progress-fill cinder-meter-fill", className)}
+      className={cx("hashti-progress-fill hashti-meter-fill", className)}
       style={{ width: `${percent}%`, ...style }}
     />
   );
@@ -208,7 +208,7 @@ export interface MeterHelperTextProps extends ComponentPropsWithRef<"span"> {
 }
 export function MeterHelperText({ children, className, ...props }: MeterHelperTextProps) {
   return (
-    <span {...props} className={cx("cinder-description cinder-meter-helper", className)}>
+    <span {...props} className={cx("hashti-description hashti-meter-helper", className)}>
       {children}
     </span>
   );
@@ -228,7 +228,7 @@ export function MeterCircle({ showValueLabel = true, className, ...props }: Mete
   return (
     <div
       {...props}
-      className={cx("cinder-meter-circle-container", className)}
+      className={cx("hashti-meter-circle-container", className)}
       data-size={size}
       data-tone={derivedTone}
     >
@@ -237,17 +237,17 @@ export function MeterCircle({ showValueLabel = true, className, ...props }: Mete
         height={pixelSize}
         viewBox={`0 0 ${pixelSize} ${pixelSize}`}
         aria-hidden="true"
-        className="cinder-meter-circle-svg"
+        className="hashti-meter-circle-svg"
       >
         <circle
-          className="cinder-meter-circle-track"
+          className="hashti-meter-circle-track"
           cx={pixelSize / 2}
           cy={pixelSize / 2}
           r={radius}
           strokeWidth={strokeWidth}
         />
         <circle
-          className="cinder-meter-circle-fill"
+          className="hashti-meter-circle-fill"
           cx={pixelSize / 2}
           cy={pixelSize / 2}
           r={radius}
@@ -257,7 +257,7 @@ export function MeterCircle({ showValueLabel = true, className, ...props }: Mete
         />
       </svg>
       {showValueLabel && (
-        <span className="cinder-meter-circle-value">{valueText}</span>
+        <span className="hashti-meter-circle-value">{valueText}</span>
       )}
     </div>
   );
@@ -287,7 +287,7 @@ function MeterDefault({
             return (
               <>
                 {label && (
-                  <div className="cinder-progress-label cinder-meter-header">
+                  <div className="hashti-progress-label hashti-meter-header">
                     <MeterLabel>{label}</MeterLabel>
                   </div>
                 )}
@@ -302,7 +302,7 @@ function MeterDefault({
           return (
             <>
               {(label || valueText) && (
-                <div className="cinder-progress-label cinder-meter-header">
+                <div className="hashti-progress-label hashti-meter-header">
                   {label && <MeterLabel>{label}</MeterLabel>}
                   {valueText && <MeterValue>{valueText}</MeterValue>}
                 </div>
@@ -314,7 +314,7 @@ function MeterDefault({
                     return (
                       <div
                         key={i}
-                        className="cinder-meter-segment"
+                        className="hashti-meter-segment"
                         style={{
                           width: `${segPercent}%`,
                           backgroundColor: seg.color,

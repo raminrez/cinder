@@ -37,7 +37,7 @@ function TableDefault({ className, size = "lg", ...props }: TableProps) {
     <RACTable
       {...props}
       data-size={size}
-      className={classes("hashti-table cinder-table", className)}
+      className={classes("hashti-table hashti-table", className)}
     />
   );
 }
@@ -71,19 +71,19 @@ export function TableLoadMore({
     <RACTableLoadMoreItem
       {...props}
       isLoading={isVisible}
-      className={cx("hashti-table-load-more cinder-table-load-more", className)}
+      className={cx("hashti-table-load-more hashti-table-load-more", className)}
     >
       {children ?? (
-        <div className="hashti-load-more-content cinder-load-more-content" role="status">
+        <div className="hashti-load-more-content hashti-load-more-content" role="status">
           {isError ? (
-            <div className="hashti-load-more-error cinder-load-more-error">
-              <span className="hashti-load-more-error-message cinder-load-more-error-message">
+            <div className="hashti-load-more-error hashti-load-more-error">
+              <span className="hashti-load-more-error-message hashti-load-more-error-message">
                 {errorMessage}
               </span>
               {onRetry && (
                 <button
                   type="button"
-                  className="hashti-load-more-retry cinder-load-more-retry"
+                  className="hashti-load-more-retry hashti-load-more-retry"
                   onClick={(e) => {
                     e.stopPropagation();
                     onRetry();
@@ -94,8 +94,8 @@ export function TableLoadMore({
               )}
             </div>
           ) : (
-            <div className="hashti-load-more-loading cinder-load-more-loading">
-              <span className="hashti-spinner cinder-spinner" aria-hidden="true" />
+            <div className="hashti-load-more-loading hashti-load-more-loading">
+              <span className="hashti-spinner hashti-spinner" aria-hidden="true" />
               <span>{label}</span>
             </div>
           )}
@@ -112,13 +112,13 @@ export interface ColumnProps extends RACColumnProps {
 export function Column({ className, children, id, ...props }: ColumnProps) {
   const derivedId = id ?? (typeof children === "string" ? children : undefined);
   return (
-    <RACColumn {...props} id={derivedId} className={classes("hashti-column cinder-column", className)}>
+    <RACColumn {...props} id={derivedId} className={classes("hashti-column hashti-column", className)}>
       {composeRenderProps(children, (content, { allowsSorting, sortDirection }) => (
         <>
           {content}
           {allowsSorting && (
             <span
-              className="hashti-sort-icon cinder-sort-icon"
+              className="hashti-sort-icon hashti-sort-icon"
               aria-hidden="true"
               data-direction={sortDirection}
             >
@@ -161,11 +161,11 @@ export function TableBatchActions({
       ref={ref}
       role="toolbar"
       aria-label="Table batch actions"
-      className={cx("hashti-table-batch-actions cinder-table-batch-actions", className)}
+      className={cx("hashti-table-batch-actions hashti-table-batch-actions", className)}
     >
-      <div className="hashti-table-batch-bar cinder-table-batch-bar">
-        <span className="hashti-table-batch-count cinder-table-batch-count">{countText}</span>
-        <div className="hashti-table-batch-action-list cinder-table-batch-action-list">
+      <div className="hashti-table-batch-bar hashti-table-batch-bar">
+        <span className="hashti-table-batch-count hashti-table-batch-count">{countText}</span>
+        <div className="hashti-table-batch-action-list hashti-table-batch-action-list">
           {children}
           {onCancel && (
             <Button variant="ghost" size="sm" onPress={onCancel}>

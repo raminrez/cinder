@@ -35,9 +35,9 @@ describe("Toolbar & Disclosure unit tests", () => {
       expect(html).toContain('data-size="md"');
       expect(html).toContain('data-orientation="horizontal"');
       expect(html).toContain('data-variant="flat"');
-      expect(html).toContain('cinder-toolbar');
-      expect(html).toContain('cinder-toolbar-group');
-      expect(html).toContain('cinder-toolbar-separator');
+      expect(html).toContain('hashti-toolbar');
+      expect(html).toContain('hashti-toolbar-group');
+      expect(html).toContain('hashti-toolbar-separator');
       expect(html).toContain('aria-orientation="vertical"');
     });
 
@@ -66,10 +66,10 @@ describe("Toolbar & Disclosure unit tests", () => {
       expect(html).toContain('data-orientation="vertical"');
       expect(html).toContain('data-variant="floating"');
       expect(html).toContain('data-size="sm"');
-      expect(html).toContain('cinder-toolbar-item');
+      expect(html).toContain('hashti-toolbar-item');
       // In vertical toolbar, the separator renders as horizontal divider (<hr>)
       expect(html).toContain('<hr');
-      expect(html).toContain('cinder-toolbar-separator');
+      expect(html).toContain('hashti-toolbar-separator');
     });
 
     test("supports disabled toolbar state and standalone component imports", () => {
@@ -103,15 +103,15 @@ describe("Toolbar & Disclosure unit tests", () => {
         </Disclosure>
       );
 
-      expect(html).toContain('cinder-disclosure');
+      expect(html).toContain('hashti-disclosure');
       expect(html).toContain('data-size="md"');
       expect(html).toContain('data-variant="default"');
       expect(html).toContain('data-expanded="true"');
       expect(html).toContain('<h2');
-      expect(html).toContain('cinder-disclosure-trigger');
-      expect(html).toContain('cinder-disclosure-indicator');
-      expect(html).toContain('cinder-disclosure-panel');
-      expect(html).toContain('cinder-disclosure-panel-inner');
+      expect(html).toContain('hashti-disclosure-trigger');
+      expect(html).toContain('hashti-disclosure-indicator');
+      expect(html).toContain('hashti-disclosure-panel');
+      expect(html).toContain('hashti-disclosure-panel-inner');
       expect(html).toContain('Panel details and content');
     });
 
@@ -160,7 +160,7 @@ describe("Toolbar & Disclosure unit tests", () => {
         </DisclosureGroup>
       );
 
-      expect(html).toContain('cinder-disclosure-group');
+      expect(html).toContain('hashti-disclosure-group');
       expect(html).toContain('data-variant="card"');
       expect(html).toContain('data-size="sm"');
       // id="security" is expanded
@@ -176,10 +176,10 @@ describe("Toolbar & Disclosure unit tests", () => {
         </DisclosureRoot>
       );
 
-      expect(html).toContain('cinder-disclosure');
-      expect(html).toContain('cinder-disclosure-trigger');
-      expect(html).toContain('cinder-disclosure-indicator');
-      expect(html).toContain('cinder-disclosure-panel');
+      expect(html).toContain('hashti-disclosure');
+      expect(html).toContain('hashti-disclosure-trigger');
+      expect(html).toContain('hashti-disclosure-indicator');
+      expect(html).toContain('hashti-disclosure-panel');
     });
   });
 });

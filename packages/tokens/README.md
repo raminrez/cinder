@@ -26,12 +26,12 @@ import {
 } from "@cinder/tokens";
 import "@cinder/tokens/tokens.css";
 
-token("text-primary"); // "var(--cinder-text-primary)"
+token("text-primary"); // "var(--hashti-text-primary)"
 themes.g90.background; // "#262626"
 themes["relay-light"].background; // "#f5f5f5"
 themes["frame-light"].background; // "#f5f6f8"
 themes["frame-dark"]["size-md"]; // "2.75rem": Frame's 44px minimum at 16px root size
-token("control-radius"); // "var(--cinder-control-radius)": an authored-theme token
+token("control-radius"); // "var(--hashti-control-radius)": an authored-theme token
 token("font-sans"); // A live CSS reference; follows the nearest theme/override
 foundations["spacing-05"]; // "1rem"
 foundations["size-md"]; // "2.5rem": the unchanged legacy foundation
@@ -61,7 +61,7 @@ is their key union. Each definition retains its original property names and any
 sparse `breakpoints` overrides from `@carbon/type`.
 
 The scalar `foundations` entries and CSS variables describe **base values only**.
-For example, `--cinder-fluid-heading-05-font-size` stays `2rem`; importing the CSS
+For example, `--hashti-fluid-heading-05-font-size` stays `2rem`; importing the CSS
 does not apply breakpoint changes or interpolate fluid typography. Consumers can
 use `typeStyles` together with `breakpoints` to implement their responsive rules.
 An override may omit properties that continue from an earlier breakpoint, so it
@@ -77,8 +77,8 @@ either export. Reading a JavaScript theme value gives a fixed value, whereas
 Use the React package's `Theme` and `Layer`, or the same attributes in other markup:
 
 ```html
-<div data-cinder-theme="g10" data-cinder-layer="0">
-  <section data-cinder-layer="1">A nested surface</section>
+<div data-hashti-theme="g10" data-hashti-layer="0">
+  <section data-hashti-layer="1">A nested surface</section>
 </div>
 ```
 
@@ -89,22 +89,22 @@ select suffixes 01/02/03 at levels 0/1/2. `border-subtle` selects 00/01/02 inste
 `layer-background` identifies the containing surface. These attributes establish
 tokens; the React package supplies surface painting and component styling.
 
-The CSS namespace is `--cinder-*`. Prefer semantic references such as
-`var(--cinder-text-primary)` to hard-coded color values. The typed `token()` helper
+The CSS namespace is `--hashti-*`. Prefer semantic references such as
+`var(--hashti-text-primary)` to hard-coded color values. The typed `token()` helper
 accepts exported token names; contextual aliases are available directly in CSS.
 
 ```css
 .task-surface {
-  color: var(--cinder-text-primary);
-  background: var(--cinder-layer); /* Contextual CSS alias; not token("layer"). */
-  border: 1px solid var(--cinder-border-subtle);
+  color: var(--hashti-text-primary);
+  background: var(--hashti-layer); /* Contextual CSS alias; not token("layer"). */
+  border: 1px solid var(--hashti-border-subtle);
 }
 ```
 
 ### Cascade, foundations, and override placement
 
 Every generated declaration, including the original root foundations, belongs to
-`@layer cinder.tokens`. The React stylesheet establishes
+`@layer hashti.tokens`. The React stylesheet establishes
 `cinder.tokens, cinder.reset, cinder.components, cinder.themes, cinder.accessibility`
 in that order. Normal unlayered application rules beat these layered declarations;
 an application layer placed after `cinder` can also supply overrides.
@@ -121,9 +121,9 @@ live changes, when their owner is outside Frame:
 
 ```css
 :root {
-  --cinder-font-sans: Georgia, serif;
-  --cinder-size-md: 3rem;
-  --cinder-body-01-line-height: 1.6;
+  --hashti-font-sans: Georgia, serif;
+  --hashti-size-md: 3rem;
+  --hashti-body-01-line-height: 1.6;
 }
 ```
 
@@ -142,9 +142,9 @@ For portable custom foundations, declare variables directly on a recipe class:
 
 ```css
 .account-appearance {
-  --cinder-font-sans: Georgia, serif;
-  --cinder-size-md: 3rem;
-  --cinder-helper-text-01-line-height: 1.5rem;
+  --hashti-font-sans: Georgia, serif;
+  --hashti-size-md: 3rem;
+  --hashti-helper-text-01-line-height: 1.5rem;
 }
 ```
 
@@ -154,7 +154,7 @@ direct application declarations win over generated Frame values and legacy
 restoration. Omission inherits the recipe, a string replaces it, and `""` clears
 it. Ordinary `className`, inline styles, and arbitrary ancestor values are
 DOM-local. Document aliases remain live CSS values, not runtime style snapshots.
-`--cinder-internal-legacy-*` is private generation machinery and is not exported
+`--hashti-internal-legacy-*` is private generation machinery and is not exported
 through JSON or `token()`.
 
 ## Authored Relay values

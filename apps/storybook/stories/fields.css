@@ -1,6 +1,6 @@
 .field-story-stack {
   display: grid;
-  gap: var(--cinder-spacing-05);
+  gap: var(--hashti-spacing-05);
   inline-size: 100%;
   max-inline-size: 36rem;
   min-inline-size: 0;
@@ -10,20 +10,20 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   align-items: start;
-  gap: var(--cinder-spacing-06);
+  gap: var(--hashti-spacing-06);
   max-inline-size: 76rem;
 }
 
 .field-story-case {
   display: grid;
-  gap: var(--cinder-spacing-04);
+  gap: var(--hashti-spacing-04);
   min-inline-size: 0;
 }
 
 .field-story-case > h2 {
   margin: 0;
-  font-size: var(--cinder-heading-compact-02-font-size);
-  line-height: var(--cinder-heading-compact-02-line-height);
+  font-size: var(--hashti-heading-compact-02-font-size);
+  line-height: var(--hashti-heading-compact-02-line-height);
 }
 
 .field-story-stack > p,
@@ -38,12 +38,12 @@
 
 .field-story-custom-input {
   border-style: dashed;
-  background: var(--cinder-layer-accent);
+  background: var(--hashti-layer-accent);
 }
 
 .field-story-rich-error > ul {
   margin: 0;
-  padding-inline-start: var(--cinder-spacing-05);
+  padding-inline-start: var(--hashti-spacing-05);
 }
 
 .field-story-latin-value {
@@ -52,6 +52,6 @@
   text-align: start;
 }
 
-.field-story-grid > .cinder-theme {
+.field-story-grid > .hashti-theme {
   min-inline-size: 0;
 }

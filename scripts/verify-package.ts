@@ -19,10 +19,10 @@ const catalog = workspace.workspaces.catalog;
 const docs = await Bun.file(join(root, "apps/docs/package.json")).json();
 const archives = await Bun.file(join(root, "dist/packages/manifest.json")).json();
 const directory = await mkdtemp(
-  join(process.env.CINDER_TEST_TMPDIR ?? tmpdir(), "cinder-consumer-"),
+  join(process.env.CINDER_TEST_TMPDIR ?? tmpdir(), "hashti-consumer-"),
 );
 const tailwindDirectory = await mkdtemp(
-  join(process.env.CINDER_TEST_TMPDIR ?? tmpdir(), "cinder-tailwind-consumer-"),
+  join(process.env.CINDER_TEST_TMPDIR ?? tmpdir(), "hashti-tailwind-consumer-"),
 );
 const tailwindVersion = "4.3.5";
 const consumers = [
@@ -64,8 +64,8 @@ async function verifyStatusConsumer(page: Page, baseURL: URL) {
       await expect(
         page.getByRole("heading", { name: "Field status contracts", exact: true }),
       ).toBeVisible();
-      const themeRoot = page.locator(".cinder-theme").first();
-      await expect(themeRoot).toHaveAttribute("data-cinder-theme", theme);
+      const themeRoot = page.locator(".hashti-theme").first();
+      await expect(themeRoot).toHaveAttribute("data-hashti-theme", theme);
       await expect(themeRoot).toHaveCSS("background-color", background);
       await verify(page);
     }
@@ -80,62 +80,62 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     const url = new URL("composition.html", baseURL);
     url.searchParams.set("theme", theme);
     await page.goto(url.href);
-    const themeRoot = page.locator(".cinder-theme").first();
-    await expect(themeRoot).toHaveAttribute("data-cinder-theme", theme);
-    await expect(themeRoot).toHaveAttribute("data-cinder-layer", "0");
+    const themeRoot = page.locator(".hashti-theme").first();
+    await expect(themeRoot).toHaveAttribute("data-hashti-theme", theme);
+    await expect(themeRoot).toHaveAttribute("data-hashti-layer", "0");
     await expect(themeRoot).toHaveCSS("background-color", background);
     async function expectPortal(portal: Locator) {
-      await expect(portal).toHaveAttribute("data-cinder-theme", theme);
-      await expect(portal).toHaveAttribute("data-cinder-layer", "0");
+      await expect(portal).toHaveAttribute("data-hashti-theme", theme);
+      await expect(portal).toHaveAttribute("data-hashti-layer", "0");
       await expect(portal).toHaveAttribute("lang", "en-US");
       await expect(portal).toHaveAttribute("dir", "ltr");
       await expect(portal).toHaveCSS("background-color", surface);
       await expect(portal).toHaveCSS("font-family", /system-ui/);
     }
     const form = page.locator("form").first();
-    const text = form.locator(".cinder-text-field").first();
-    const area = form.locator(".cinder-text-area");
-    const number = form.locator(".cinder-number-field");
-    const search = form.locator(".cinder-search-field");
-    const checkbox = form.locator(".cinder-checkbox-group");
-    const radio = form.locator(".cinder-radio-group");
-    const select = form.locator(".cinder-select").first();
-    const combo = form.locator(".cinder-combobox").first();
-    const date = form.locator(".cinder-date-field").first();
-    const time = form.locator(".cinder-date-field").nth(1);
-    const picker = form.locator(".cinder-date-picker");
-    const range = form.locator(".cinder-date-range-picker");
+    const text = form.locator(".hashti-text-field").first();
+    const area = form.locator(".hashti-text-area");
+    const number = form.locator(".hashti-number-field");
+    const search = form.locator(".hashti-search-field");
+    const checkbox = form.locator(".hashti-checkbox-group");
+    const radio = form.locator(".hashti-radio-group");
+    const select = form.locator(".hashti-select").first();
+    const combo = form.locator(".hashti-combobox").first();
+    const date = form.locator(".hashti-date-field").first();
+    const time = form.locator(".hashti-date-field").nth(1);
+    const picker = form.locator(".hashti-date-picker");
+    const range = form.locator(".hashti-date-range-picker");
     for (const [name, field, leaf, count] of [
-      ["TextField", text, "input.cinder-field__control.react-aria-Input", 1],
-      ["TextArea", area, "textarea.cinder-field__control.react-aria-TextArea", 1],
-      ["NumberField", number, ".cinder-field__control.cinder-input-group", 1],
-      ["SearchField", search, ".cinder-field__control.cinder-input-group", 1],
-      ["CheckboxGroup", checkbox, ".cinder-checkbox", 2],
-      ["RadioGroup", radio, ".cinder-radio-options .cinder-radio", 2],
-      ["Select", select, ".cinder-field__control.cinder-select-trigger", 1],
-      ["ComboBox", combo, ".cinder-field__control.cinder-input-group", 1],
-      ["DateField", date, ".cinder-field__control.react-aria-DateInput", 1],
-      ["TimeField", time, ".cinder-field__control.react-aria-DateInput", 1],
-      ["DatePicker", picker, ".cinder-field__control.cinder-input-group", 1],
-      ["DateRangePicker", range, ".cinder-field__control.cinder-input-group", 1],
+      ["TextField", text, "input.hashti-field__control.react-aria-Input", 1],
+      ["TextArea", area, "textarea.hashti-field__control.react-aria-TextArea", 1],
+      ["NumberField", number, ".hashti-field__control.hashti-input-group", 1],
+      ["SearchField", search, ".hashti-field__control.hashti-input-group", 1],
+      ["CheckboxGroup", checkbox, ".hashti-checkbox", 2],
+      ["RadioGroup", radio, ".hashti-radio-options .hashti-radio", 2],
+      ["Select", select, ".hashti-field__control.hashti-select-trigger", 1],
+      ["ComboBox", combo, ".hashti-field__control.hashti-input-group", 1],
+      ["DateField", date, ".hashti-field__control.react-aria-DateInput", 1],
+      ["TimeField", time, ".hashti-field__control.react-aria-DateInput", 1],
+      ["DatePicker", picker, ".hashti-field__control.hashti-input-group", 1],
+      ["DateRangePicker", range, ".hashti-field__control.hashti-input-group", 1],
     ] as const) {
       await expect(field, `${name}.Root`).toBeVisible();
-      await expect(field.locator(".cinder-field__label.react-aria-Label")).toHaveCount(1);
-      await expect(field.locator(".cinder-field__description.react-aria-Text")).toHaveCount(1);
-      await expect(field.locator(".cinder-field__help.cinder-field-help")).toHaveCount(1);
+      await expect(field.locator(".hashti-field__label.react-aria-Label")).toHaveCount(1);
+      await expect(field.locator(".hashti-field__description.react-aria-Text")).toHaveCount(1);
+      await expect(field.locator(".hashti-field__help.hashti-field-help")).toHaveCount(1);
       await expect(field.locator(leaf)).toHaveCount(count);
     }
     const nativeInput = page.getByRole("status", { name: "Consumer native input", exact: true });
     const saved = page.getByRole("status", { name: "Consumer FormData", exact: true });
     const workspace = text.getByRole("textbox", { name: "Workspace (required)", exact: true });
-    const description = text.locator(".cinder-field__description");
+    const description = text.locator(".hashti-field__description");
     const descriptionId = await description.getAttribute("id");
     await expect(workspace).toHaveValue("Workspace");
     await expect(workspace).toHaveAttribute("slot", "consumer-input");
     await expect(workspace).toHaveAttribute("placeholder", "Workspace name");
     await expect(workspace).toHaveAttribute("spellcheck", "false");
     await expect(text).not.toHaveAttribute("placeholder");
-    await expect(text.locator(".cinder-field__label")).toHaveAttribute(
+    await expect(text.locator(".hashti-field__label")).toHaveAttribute(
       "for",
       (await workspace.getAttribute("id"))!,
     );
@@ -149,7 +149,7 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await expect(text).toHaveAttribute("data-consumer-validation", "invalid");
     await expect(text).toHaveCSS("max-width", "320px");
     await expect(text.locator("output")).toHaveText("Needs attention");
-    const textError = text.locator(".cinder-field__error.react-aria-FieldError");
+    const textError = text.locator(".hashti-field__error.react-aria-FieldError");
     await expect(textError).toHaveCount(1);
     await expect(textError).toHaveClass(/consumer-error/);
     await expect(textError).toHaveCSS("letter-spacing", "0.5px");
@@ -224,22 +224,22 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await expect(description).toHaveAttribute("id", descriptionId!);
 
     const independent = form.getByRole("textbox", { name: "Independent root", exact: true });
-    const independentRoot = form.locator(".cinder-text-field").nth(1);
+    const independentRoot = form.locator(".hashti-text-field").nth(1);
     await expect(independentRoot).not.toHaveAttribute("slot");
     await expect(independent).toBeEnabled();
     await expect(independent).toHaveAttribute("slot", "native-input");
     await expect(independent).toHaveValue("Independent value");
     await independent.fill("Local edit");
     await expect(independent).toHaveValue("Local edit");
-    await expect(independentRoot.locator(".cinder-field__control")).toHaveCount(1);
-    await expect(independentRoot.locator(".cinder-input-group")).toHaveClass(/consumer-focus/);
+    await expect(independentRoot.locator(".hashti-field__control")).toHaveCount(1);
+    await expect(independentRoot.locator(".hashti-input-group")).toHaveClass(/consumer-focus/);
     await expect(workspace).toHaveValue("Design studio");
     const notes = area.getByRole("textbox", { name: "0", exact: true });
     await expect(notes).toHaveValue("Initial note");
     await expect(notes).toHaveAttribute("slot", "native-area");
     await expect(notes).toHaveAttribute("rows", "3");
     await expect(notes).toHaveAccessibleDescription("0");
-    await expect(area.locator(".cinder-field__help")).toHaveText("0");
+    await expect(area.locator(".hashti-field__help")).toHaveText("0");
     await notes.fill("First line\nSecond line");
     await expect(notes).toHaveClass(/consumer-focused/);
     await expect(notes).toHaveCSS("min-height", "96px");
@@ -276,9 +276,9 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
       exact: true,
     });
     const requiredRoot = form
-      .locator(".cinder-text-field")
+      .locator(".hashti-text-field")
       .filter({ hasText: "Native required text" });
-    const requiredDescription = requiredRoot.locator(".cinder-field__description");
+    const requiredDescription = requiredRoot.locator(".hashti-field__description");
     const requiredDescriptionId = await requiredDescription.getAttribute("id");
     const requiredGuidance = "Required text guidance stays visible.";
     await expect(requiredDescription).toHaveText(requiredGuidance);
@@ -286,13 +286,13 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await expect(required).toHaveAttribute("required");
     await expect(required).toHaveAccessibleDescription(requiredGuidance);
     const email = checkbox.getByRole("checkbox", { name: "Email", exact: true });
-    const checkboxDescription = checkbox.locator(".cinder-field__description");
+    const checkboxDescription = checkbox.locator(".hashti-field__description");
     const checkboxDescriptionId = await checkboxDescription.getAttribute("id");
     await submit.click();
     await expect(saved).toHaveText("");
     await expect(required).toBeFocused();
     await expect(required).toHaveAttribute("aria-invalid", "true");
-    const requiredError = requiredRoot.locator(".cinder-field__error.react-aria-FieldError");
+    const requiredError = requiredRoot.locator(".hashti-field__error.react-aria-FieldError");
     await expect(requiredError).toHaveText("Enter the required text.");
     await expect(required).toHaveAccessibleDescription(
       `${requiredGuidance} Enter the required text.`,
@@ -305,7 +305,7 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await expect(checkbox).toHaveAttribute("data-invalid");
     await expect(email).toHaveAttribute("aria-invalid", "true");
     await expect(checkbox.locator("output")).toHaveText("Choose a channel");
-    const checkboxError = checkbox.locator(".cinder-field__error.react-aria-FieldError");
+    const checkboxError = checkbox.locator(".hashti-field__error.react-aria-FieldError");
     await expect(checkboxError).toBeVisible();
     const associated = (await checkbox.getAttribute("aria-describedby"))!.split(" ");
     for (const id of [checkboxDescriptionId, await checkboxError.getAttribute("id")]) {
@@ -324,7 +324,7 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await expect(
       checkbox.getByRole("checkbox", { name: "Email enabled", exact: true }),
     ).toBeChecked();
-    await expect(checkbox.locator(".cinder-checkbox").first()).toHaveClass(/consumer-selected/);
+    await expect(checkbox.locator(".hashti-checkbox").first()).toHaveClass(/consumer-selected/);
     await radio.getByRole("radio", { name: "Immediate selected", exact: true }).press("ArrowRight");
     await expect(radio.getByRole("radio", { name: "Quiet", exact: true })).toBeChecked();
 
@@ -332,7 +332,7 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     const trigger = select.getByRole("button");
     await expect(trigger.locator('[title="Can view records"]')).toHaveText("Reader");
     await trigger.click();
-    await expectPortal(page.locator(".cinder-select-popover"));
+    await expectPortal(page.locator(".hashti-select-popover"));
     const list = page.getByRole("listbox", { name: "Single role", exact: true });
     await expect(list).toHaveClass(/cinder-select__listbox.*consumer-listbox/);
     await expect(list.getByRole("option", { name: /^Reader/ })).toHaveAccessibleDescription(
@@ -366,7 +366,7 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
       name: "Suggestions Searchable role",
       exact: true,
     });
-    await expectPortal(page.locator(".cinder-select-popover"));
+    await expectPortal(page.locator(".hashti-select-popover"));
     await expect(comboList.getByRole("option")).toHaveCount(1);
     await expect(comboInput).toHaveAttribute(
       "aria-controls",
@@ -394,9 +394,9 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
     await comboInput.press("Enter");
     await expect(comboInput).toHaveValue("Writer");
     await comboInput.press("Escape");
-    const multipleCombo = form.locator(".cinder-combobox").nth(1);
+    const multipleCombo = form.locator(".hashti-combobox").nth(1);
     await expect(
-      multipleCombo.locator('.cinder-combobox-values [title="Can view records"]'),
+      multipleCombo.locator('.hashti-combobox-values [title="Can view records"]'),
     ).toHaveText("Reader");
     const day = date.getByRole("spinbutton", { name: /^day,/ });
     await expect(day.locator("span")).toHaveText("12");
@@ -416,8 +416,8 @@ async function verifyCompositionConsumer(page: Page, baseURL: URL) {
       await button.click();
       const dialog = page.getByRole("dialog", { name: dialogName, exact: true });
       await expect(dialog).toBeVisible();
-      await expectPortal(page.locator(".cinder-date-popover"));
-      await expect(dialog.locator(".cinder-calendar")).toHaveCount(1);
+      await expectPortal(page.locator(".hashti-date-popover"));
+      await expect(dialog.locator(".hashti-calendar")).toHaveCount(1);
       await page.keyboard.press("Escape");
       await expect(dialog).toBeHidden();
       await expect(button).toBeFocused();
@@ -481,7 +481,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     .getByTestId("module-brand")
     .evaluate((element) =>
       [...element.classList].find(
-        (name) => !["cinder-theme", "fixture-brand", "fixture-stack"].includes(name),
+        (name) => !["hashti-theme", "fixture-brand", "fixture-stack"].includes(name),
       ),
     );
   assert.ok(
@@ -499,7 +499,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     "frame-light",
     "frame-dark",
   ]);
-  assert.equal(exported.cssRadius, "var(--cinder-control-radius)");
+  assert.equal(exported.cssRadius, "var(--hashti-control-radius)");
   const brands = [
     {
       kind: "plain",
@@ -536,8 +536,8 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     appearance: string,
     dir = "ltr",
   ) {
-    await expect(portal).toHaveAttribute("data-cinder-theme", theme);
-    await expect(portal).toHaveAttribute("data-cinder-layer", "1");
+    await expect(portal).toHaveAttribute("data-hashti-theme", theme);
+    await expect(portal).toHaveAttribute("data-hashti-layer", "1");
     await expect(portal).toHaveAttribute("lang", lang);
     await expect(portal).toHaveAttribute("dir", dir);
     for (const brand of brands)
@@ -562,7 +562,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
   ] as const) {
     await page.getByTestId(`use-${theme}`).click();
     const baseline = page.getByTestId("frame-baseline");
-    await expect(baseline).toHaveAttribute("data-cinder-theme", theme);
+    await expect(baseline).toHaveAttribute("data-hashti-theme", theme);
     await expect(baseline).toHaveCSS("background-color", background);
     assert.equal(exported.frames[theme].accepted, true);
     assert.deepEqual(exported.frames[theme].js, exported.frames[theme].json);
@@ -576,7 +576,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
       (element, values: { radius: string; font: string }) => {
         // Compare computed values: CSS minifiers may normalize rems and font quoting.
         const probe = document.createElement("span");
-        probe.style.borderRadius = "var(--cinder-control-radius)";
+        probe.style.borderRadius = "var(--hashti-control-radius)";
         element.append(probe);
         const radius = getComputedStyle(probe).borderTopLeftRadius;
         probe.style.borderRadius = values.radius;
@@ -613,10 +613,10 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     }
     await expect(page.getByTestId("size-default-button")).toHaveAttribute("data-size", "lg");
     await expect(page.getByTestId("size-default-button")).toHaveAttribute(
-      "data-cinder-size-default",
+      "data-hashti-size-default",
     );
     await expect(page.getByTestId("size-lg-button")).not.toHaveAttribute(
-      "data-cinder-size-default",
+      "data-hashti-size-default",
     );
     const sizesLink = page.getByRole("link", { name: "Review control sizes", exact: true });
     const disabledLink = page.getByRole("link", { name: "Unavailable export", exact: true });
@@ -685,14 +685,14 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     const choiceFocus = theme === "frame-light" ? "rgb(54, 92, 203)" : "rgb(169, 189, 255)";
     const choiceGray = theme === "frame-light" ? "rgb(127, 135, 149)" : "rgb(125, 132, 147)";
     for (const target of await choices
-      .locator(".cinder-checkbox, .cinder-radio, .cinder-switch")
+      .locator(".hashti-checkbox, .hashti-radio, .hashti-switch")
       .all()) {
       assert.equal(await target.evaluate((label) => label.tagName), "LABEL");
       assert.ok((await target.boundingBox())!.height >= 44, "Frame choice label target >=44px");
     }
     const checkboxMark = email
       .locator("xpath=ancestor::label[1]")
-      .locator(".cinder-checkbox-control");
+      .locator(".hashti-checkbox-control");
     await expect(checkboxMark).toHaveCSS("width", "18px");
     await expect(checkboxMark).toHaveCSS("height", "18px");
     await expect(checkboxMark).toHaveCSS("border-radius", "5px");
@@ -703,7 +703,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     ] as const) {
       await expect(input).toHaveJSProperty("indeterminate", true);
       await expect(input).not.toBeChecked();
-      const mark = input.locator("xpath=ancestor::label[1]").locator(".cinder-checkbox-control");
+      const mark = input.locator("xpath=ancestor::label[1]").locator(".hashti-checkbox-control");
       await expect(mark).toHaveCSS("background-color", paint);
       await expect(mark).toHaveCSS("border-top-color", paint);
       await expect(mark.locator("svg")).toBeVisible();
@@ -711,7 +711,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(mixed.locator("xpath=ancestor::label[1]")).toHaveAttribute("data-readonly");
     const radioMark = immediate
       .locator("xpath=ancestor::label[1]")
-      .locator(".cinder-radio-control");
+      .locator(".hashti-radio-control");
     await expect(radioMark).toHaveCSS("width", "18px");
     await expect(radioMark).toHaveCSS("height", "18px");
     assert.equal(
@@ -735,7 +735,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
       await expect(input).toBeChecked();
     }
     const invalid = choices.getByTestId("installed-invalid-checkbox");
-    const invalidMark = invalid.locator(".cinder-checkbox-control");
+    const invalidMark = invalid.locator(".hashti-checkbox-control");
     const errorInk = theme === "frame-light" ? "rgb(170, 39, 53)" : "rgb(255, 172, 179)";
     await expect(invalid.getByRole("checkbox")).toHaveAttribute("aria-invalid", "true");
     await expect(invalidMark).toHaveCSS("border-top-color", errorInk);
@@ -780,18 +780,18 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(live).toHaveAttribute("name", "liveUpdates");
     await expect(live).toHaveAttribute("value", "enabled");
     await expect(liveLabel).toHaveAttribute("data-consumer-switch", "true");
-    await expect(liveLabel).toHaveClass("cinder-switch consumer-switch-off");
+    await expect(liveLabel).toHaveClass("hashti-switch consumer-switch-off");
     await expect(liveLabel).toHaveCSS("font-weight", "400");
     await expect(liveLabel).toContainText("(Off)");
-    await expect(liveLabel.locator(".cinder-switch-thumb")).toHaveCSS("transform", "none");
+    await expect(liveLabel.locator(".hashti-switch-thumb")).toHaveCSS("transform", "none");
     await liveLabel.click();
     await expect(live).toBeChecked();
-    await expect(liveLabel).toHaveClass("cinder-switch consumer-switch-on");
+    await expect(liveLabel).toHaveClass("hashti-switch consumer-switch-on");
     await expect(liveLabel).toHaveCSS("font-weight", "600");
     await expect(liveLabel).toContainText("(On)");
     await live.press("Space");
     await expect(live).not.toBeChecked();
-    await expect(liveLabel).toHaveClass("cinder-switch consumer-switch-off");
+    await expect(liveLabel).toHaveClass("hashti-switch consumer-switch-off");
     await expect(liveLabel).toHaveCSS("font-weight", "400");
     await live.press("Space");
     await expect(live).toBeChecked();
@@ -805,8 +805,8 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
         [managed, "md", 48, 24, 18, 24],
       ] as const) {
         const label = input.locator("xpath=ancestor::label[1]");
-        const track = label.locator(".cinder-switch-track");
-        const thumb = label.locator(".cinder-switch-thumb");
+        const track = label.locator(".hashti-switch-track");
+        const thumb = label.locator(".hashti-switch-thumb");
         await expect(input).toBeChecked();
         await expect(label).toHaveAttribute("data-size", size);
         await expect(label).toHaveCSS("direction", direction);
@@ -839,7 +839,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     await expect(
       carbon.getByRole("textbox", { name: "Carbon default field", exact: true }),
     ).toHaveCSS("font-size", "14px");
-    await expect(carbon.locator(".cinder-field__label").first()).toHaveCSS("font-size", "12px");
+    await expect(carbon.locator(".hashti-field__label").first()).toHaveCSS("font-size", "12px");
     const nested = page.getByTestId("nested-frame");
     await expect(nested).toHaveCSS("font-family", /system-ui/);
     await expect(page.getByTestId("nested-frame-button")).toHaveCSS("height", "44px");
@@ -854,20 +854,20 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
       await expect(field).toHaveCSS("max-width", "480px");
       await expect(field.getByRole("textbox")).toHaveCSS("padding-left", brand.padding);
       await expect(field.getByRole("textbox")).toHaveCSS("border-radius", brand.radius);
-      await expect(field.locator(".cinder-field__label.react-aria-Label")).toHaveText(
+      await expect(field.locator(".hashti-field__label.react-aria-Label")).toHaveText(
         `${brand.label} workspace`,
       );
-      await expect(field.locator(".cinder-field__control.react-aria-Input")).toHaveCount(1);
-      await expect(field.locator(".cinder-field__help.cinder-field-help")).toHaveCount(1);
-      await expect(field.locator(".cinder-field__description")).toHaveText(
+      await expect(field.locator(".hashti-field__control.react-aria-Input")).toHaveCount(1);
+      await expect(field.locator(".hashti-field__help.hashti-field-help")).toHaveCount(1);
+      await expect(field.locator(".hashti-field__description")).toHaveText(
         "This name appears in invitations.",
       );
       const trigger = page.getByTestId(`${brand.kind}-open-dialog`);
       await expect(trigger).toHaveCSS("background-color", brand.color);
       await trigger.click();
       const dialog = page.getByRole("dialog", { name: `${brand.label} invitation`, exact: true });
-      const overlay = page.locator(".cinder-modal-overlay");
-      const modal = page.locator(".cinder-modal");
+      const overlay = page.locator(".hashti-modal-overlay");
+      const modal = page.locator(".hashti-modal");
       await expect(dialog).toBeVisible();
       await expectPortal(
         overlay,
@@ -906,16 +906,16 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
       );
       const select = page.getByTestId(`${brand.kind}-role`).getByRole("button");
       await expect(select).toHaveCSS("height", "44px");
-      await expect(select.locator(".cinder-select__value.react-aria-SelectValue")).toHaveCount(1);
+      await expect(select.locator(".hashti-select__value.react-aria-SelectValue")).toHaveCount(1);
       await select.click();
-      const popover = page.locator(".cinder-select-popover");
+      const popover = page.locator(".hashti-select-popover");
       await expectPortal(popover, theme, "en-US", brand.appearance);
       await expect(popover).toHaveCSS("font-family", new RegExp(brand.font));
       await expect(popover).toHaveCSS("border-radius", brand.popoverRadius);
       await expect(popover).toHaveCSS("background-color", raised);
       await expect(popover).toHaveCSS("border-top-width", "2px");
       await expect(popover).toHaveCSS("border-top-color", brand.color);
-      await expect(popover.locator(".cinder-select__listbox.react-aria-ListBox")).toHaveCount(1);
+      await expect(popover.locator(".hashti-select__listbox.react-aria-ListBox")).toHaveCount(1);
       await expect(
         page.getByRole("option", { name: "Viewer", exact: true }),
       ).toHaveAccessibleDescription("Can read and comment");
@@ -942,7 +942,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
 
   const globalOverride = await page.addStyleTag({
     content:
-      ":root { --cinder-font-sans: Georgia, serif; --cinder-size-md: 2.625rem; --cinder-body-01-font-size: 1rem; }",
+      ":root { --hashti-font-sans: Georgia, serif; --hashti-size-md: 2.625rem; --hashti-body-01-font-size: 1rem; }",
   });
   const carbon = page.getByTestId("nested-carbon");
   await expect(carbon).toHaveCSS("font-family", /Georgia/);
@@ -1014,11 +1014,11 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
     .getByTestId("use-frame-dark")
     .evaluate((element: HTMLButtonElement) => element.click());
   await page.getByTestId("use-persian").evaluate((element: HTMLButtonElement) => element.click());
-  const overlay = page.locator(".cinder-modal-overlay");
-  const popover = page.locator(".cinder-select-popover");
+  const overlay = page.locator(".hashti-modal-overlay");
+  const popover = page.locator(".hashti-select-popover");
   for (const portal of [overlay, popover])
     await expectPortal(portal, "frame-dark", "fa-IR", "plain-appearance", "rtl");
-  await expect(page.locator(".cinder-modal")).toHaveCSS("background-color", "rgb(44, 47, 56)");
+  await expect(page.locator(".hashti-modal")).toHaveCSS("background-color", "rgb(44, 47, 56)");
   await expect(popover).toHaveCSS("background-color", "rgb(44, 47, 56)");
   await page
     .getByTestId("replace-recipe")
@@ -1104,7 +1104,7 @@ async function verifyFrameConsumer(page: Page, baseURL: URL, integration: "nativ
   const disabledMixedMark = page
     .getByRole("checkbox", { name: "Unavailable mixed review snapshot", exact: true })
     .locator("xpath=ancestor::label[1]")
-    .locator(".cinder-checkbox-control");
+    .locator(".hashti-checkbox-control");
   await expect(disabledMixedMark).toHaveCSS("background-color", system.ButtonFace!);
   await expect(disabledMixedMark).toHaveCSS("border-top-color", system.GrayText!);
   await expect(disabledMixedMark).toHaveCSS("color", system.GrayText!);
@@ -1161,7 +1161,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
       join(consumer.directory, "package.json"),
       JSON.stringify(
         {
-          name: `cinder-external-${consumer.name}-consumer`,
+          name: `hashti-external-${consumer.name}-consumer`,
           private: true,
           type: "module",
           scripts: { typecheck: "tsc --noEmit" },
@@ -1206,7 +1206,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
           catalog["@internationalized/date"],
         );
         const css = await Bun.file(join(installed, "dist/styles.css")).text();
-        assert.match(css, /--cinder-background/);
+        assert.match(css, /--hashti-background/);
         assert.match(
           css,
           /@layer\s+cinder\.tokens\s*,\s*cinder\.reset\s*,\s*cinder\.components\s*,\s*cinder\.themes\s*,\s*cinder\.accessibility\s*;/,
@@ -1299,7 +1299,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
   await page.goto(String(server.url));
   await expect(page.getByRole("heading", { name: "Installed from tarballs" })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator("[data-cinder-theme]").first()).toHaveCSS(
+  await expect(page.locator("[data-hashti-theme]").first()).toHaveCSS(
     "background-color",
     "rgb(38, 38, 38)",
   );
@@ -1320,8 +1320,8 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
   );
   await page.getByRole("button", { name: "Open details" }).click();
   await expect(page.getByRole("dialog", { name: "Package details" })).toBeVisible();
-  await expect(page.locator(".cinder-modal-overlay")).toHaveAttribute("data-cinder-theme", "g90");
-  await expect(page.locator(".cinder-modal-overlay")).toHaveAttribute("data-cinder-layer", "1");
+  await expect(page.locator(".hashti-modal-overlay")).toHaveAttribute("data-hashti-theme", "g90");
+  await expect(page.locator(".hashti-modal-overlay")).toHaveAttribute("data-hashti-layer", "1");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", { name: "Open details" })).toBeFocused();
   await expect(page.getByLabel("Token exports", { exact: true })).toContainText(
@@ -1335,7 +1335,7 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
   assert.equal(exportedTokens.typeStyle.breakpoints.md.fontSize, "2.25rem");
   assert.equal(exportedTokens.typeStyle.breakpoints.md.fontWeight, 300);
   assert.equal(Object.hasOwn(exportedTokens.typeStyle.breakpoints.lg, "fontWeight"), false);
-  assert.equal(exportedTokens.cssRadius, "var(--cinder-control-radius)");
+  assert.equal(exportedTokens.cssRadius, "var(--hashti-control-radius)");
   assert.equal(exportedTokens.relayRadius, "0.5rem");
   assert.equal(exportedTokens.jsonRelayRadius, exportedTokens.relayRadius);
   for (const [theme, label, background] of [
@@ -1343,8 +1343,8 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
     ["relay-dark", "Relay dark", "rgb(21, 21, 21)"],
   ] as const) {
     await page.getByRole("button", { name: `Use ${label}` }).click();
-    await expect(page.locator(".cinder-theme").first()).toHaveAttribute("data-cinder-theme", theme);
-    await expect(page.locator(".cinder-theme").first()).toHaveCSS("background-color", background);
+    await expect(page.locator(".hashti-theme").first()).toHaveAttribute("data-hashti-theme", theme);
+    await expect(page.locator(".hashti-theme").first()).toHaveCSS("background-color", background);
     await expect(counter).toHaveCSS("border-radius", "8px");
     await expect(counter).toHaveCSS("font-weight", "500");
     await expect(page.getByRole("textbox", { name: "Email (required)", exact: true })).toHaveCSS(
@@ -1355,15 +1355,15 @@ createRoot(document.getElementById("root")!).render(<CompositionConsumer theme={
     await expect(pending).toHaveAttribute("aria-disabled", "true");
     await expect(pending.getByRole("progressbar", { name: "Saving" })).toBeVisible();
     await page.getByRole("button", { name: "Open details" }).click();
-    await expect(page.locator(".cinder-modal-overlay")).toHaveAttribute("data-cinder-theme", theme);
-    await expect(page.locator(".cinder-modal")).toHaveCSS("border-radius", "20px");
+    await expect(page.locator(".hashti-modal-overlay")).toHaveAttribute("data-hashti-theme", theme);
+    await expect(page.locator(".hashti-modal")).toHaveCSS("border-radius", "20px");
     await page.getByRole("button", { name: "Viewer Review role", exact: true }).click();
-    await expect(page.locator(".cinder-select-popover")).toHaveAttribute(
-      "data-cinder-theme",
+    await expect(page.locator(".hashti-select-popover")).toHaveAttribute(
+      "data-hashti-theme",
       theme,
     );
-    await expect(page.locator(".cinder-select-popover")).toHaveAttribute("data-cinder-layer", "1");
-    await expect(page.locator(".cinder-select-popover")).toHaveCSS("border-radius", "12px");
+    await expect(page.locator(".hashti-select-popover")).toHaveAttribute("data-hashti-layer", "1");
+    await expect(page.locator(".hashti-select-popover")).toHaveCSS("border-radius", "12px");
     await page.getByRole("option", { name: "Editor", exact: true }).click();
     await expect(
       page.getByRole("button", { name: "Editor Review role", exact: true }),

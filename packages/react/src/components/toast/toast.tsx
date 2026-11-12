@@ -57,10 +57,10 @@ export function InlineNotification({
       data-kind={kind}
       data-variant={resolvedVariant}
       data-low-contrast={lowContrast || undefined}
-      className={["hashti-notification cinder-notification", className].filter(Boolean).join(" ")}
+      className={["hashti-notification hashti-notification", className].filter(Boolean).join(" ")}
     >
       <Icon name={kind} size={20} />
-      <div className="hashti-notification-content cinder-notification-content">
+      <div className="hashti-notification-content hashti-notification-content">
         <strong>{title}</strong>
         {children && <div>{children}</div>}
         {action}
@@ -115,7 +115,7 @@ export function ActionableNotification({
   useEffect(() => {
     if (autoFocusAction && containerRef.current) {
       const btn = containerRef.current.querySelector<HTMLButtonElement>(
-        ".hashti-actionable-notification-actions button, .cinder-actionable-notification-actions button",
+        ".hashti-actionable-notification-actions button, .hashti-actionable-notification-actions button",
       );
       btn?.focus();
     }
@@ -129,13 +129,13 @@ export function ActionableNotification({
       aria-labelledby={titleId}
       aria-describedby={children ? descId : undefined}
       data-kind={kind}
-      className={cx("hashti-actionable-notification cinder-actionable-notification", className)}
+      className={cx("hashti-actionable-notification hashti-actionable-notification", className)}
     >
       <Icon name={kind} size={20} />
-      <div className="hashti-actionable-notification-content cinder-actionable-notification-content">
+      <div className="hashti-actionable-notification-content hashti-actionable-notification-content">
         <strong id={titleId}>{title}</strong>
         {children && <div id={descId}>{children}</div>}
-        <div className="hashti-actionable-notification-actions cinder-actionable-notification-actions">{action}</div>
+        <div className="hashti-actionable-notification-actions hashti-actionable-notification-actions">{action}</div>
       </div>
       {onDismiss && (
         <Button
@@ -175,12 +175,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       <ToastRegion
         queue={queue}
         {...theme}
-        className={classes("hashti-toast-region cinder-toast-region", appearanceClassName)}
+        className={classes("hashti-toast-region hashti-toast-region", appearanceClassName)}
       >
         {({ toast }) => (
           <RACToast
             toast={toast}
-            className="hashti-toast cinder-toast"
+            className="hashti-toast hashti-toast"
             data-kind={toast.content.kind ?? "info"}
             data-variant={toast.content.variant ?? "subtle"}
           >

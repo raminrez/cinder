@@ -34,7 +34,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Popover wraps RAC Popover, creating an anchored temporary surface for non-modal popups, menus, and selection pickers. Popover receives the portable Theme appearanceClassName and effective language across portals. Frame applies a 14px border-radius (var(--cinder-popover-radius)), a 1px subtle border, and a 0 8px 24px shadow without ambient backdrop darkening.",
+          "Popover wraps RAC Popover, creating an anchored temporary surface for non-modal popups, menus, and selection pickers. Popover receives the portable Theme appearanceClassName and effective language across portals. Frame applies a 14px border-radius (var(--hashti-popover-radius)), a 1px subtle border, and a 0 8px 24px shadow without ambient backdrop darkening.",
       },
     },
   },
@@ -88,7 +88,7 @@ export const Placements: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -97,7 +97,7 @@ export const Placements: Story = {
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector(".cinder-popover")).toBeNull();
+      expect(document.querySelector(".hashti-popover")).toBeNull();
     });
     await expect(trigger).toHaveFocus();
   },
@@ -148,7 +148,7 @@ function FilterMenuExample() {
                     Canary rollout
                   </Checkbox>
                 </div>
-                <div className="cinder-dialog-footer" style={{ marginTop: "1rem" }}>
+                <div className="hashti-dialog-footer" style={{ marginTop: "1rem" }}>
                   <Button variant="ghost" size="sm" onPress={() => setActiveFilters([])}>
                     Clear
                   </Button>
@@ -178,7 +178,7 @@ export const FilterMenu: Story = {
 
     await userEvent.click(trigger);
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -190,7 +190,7 @@ export const FilterMenu: Story = {
     await userEvent.click(applyBtn);
 
     await waitFor(() => {
-      expect(document.querySelector(".cinder-popover")).toBeNull();
+      expect(document.querySelector(".hashti-popover")).toBeNull();
     });
     await expect(output).toHaveTextContent("Filters: prod, stage");
     await waitFor(() => expect(trigger).toHaveFocus());
@@ -231,7 +231,7 @@ export const FocusManagement: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -244,7 +244,7 @@ export const FocusManagement: Story = {
     // Escape returns focus to trigger
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector(".cinder-popover")).toBeNull();
+      expect(document.querySelector(".hashti-popover")).toBeNull();
     });
     await expect(trigger).toHaveFocus();
   },
@@ -263,7 +263,7 @@ function CustomStylingAndRefsExample() {
               <>
                 <Heading slot="title">Ref verification</Heading>
                 <p>Verifies custom class name, inline styles, and element ref forwarding.</p>
-                <div className="cinder-dialog-footer">
+                <div className="hashti-dialog-footer">
                   <Button
                     variant="secondary"
                     size="sm"
@@ -296,7 +296,7 @@ export const CustomStylingAndRefs: Story = {
 
     await userEvent.click(trigger);
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -309,7 +309,7 @@ export const CustomStylingAndRefs: Story = {
     const doneBtn = within(popover).getByRole("button", { name: "Done" });
     await userEvent.click(doneBtn);
     await waitFor(() => {
-      expect(document.querySelector(".cinder-popover")).toBeNull();
+      expect(document.querySelector(".hashti-popover")).toBeNull();
     });
   },
 };
@@ -364,7 +364,7 @@ export const LongContentAndLocales: Story = {
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-popover");
+      const el = document.querySelector<HTMLElement>(".hashti-popover");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -372,7 +372,7 @@ export const LongContentAndLocales: Story = {
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector(".cinder-popover")).toBeNull();
+      expect(document.querySelector(".hashti-popover")).toBeNull();
     });
     await expect(trigger).toHaveFocus();
   },

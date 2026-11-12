@@ -29,16 +29,16 @@ export function EmptyState({
 }: EmptyStateProps) {
   const actionContent = action ?? actions;
   return (
-    <div {...props} ref={ref} className={cx("cinder-empty-state", className)}>
-      {icon && <div className="cinder-empty-state-icon">{icon}</div>}
-      {typeof title === "string" ? <h3 className="cinder-empty-state-title">{title}</h3> : title}
+    <div {...props} ref={ref} className={cx("hashti-empty-state", className)}>
+      {icon && <div className="hashti-empty-state-icon">{icon}</div>}
+      {typeof title === "string" ? <h3 className="hashti-empty-state-title">{title}</h3> : title}
       {description &&
         (typeof description === "string" ? (
-          <p className="cinder-empty-state-description">{description}</p>
+          <p className="hashti-empty-state-description">{description}</p>
         ) : (
           description
         ))}
-      {actionContent && <div className="cinder-empty-state-actions">{actionContent}</div>}
+      {actionContent && <div className="hashti-empty-state-actions">{actionContent}</div>}
       {children}
     </div>
   );

@@ -23,13 +23,13 @@ export function NativeSelect({
   const helpId = `${id}-help`;
   return (
     <div
-      className={["cinder-field cinder-native-select", className].filter(Boolean).join(" ")}
+      className={["hashti-field hashti-native-select", className].filter(Boolean).join(" ")}
       data-size={size}
       data-disabled={props.disabled || undefined}
       data-invalid={Boolean(errorMessage) || undefined}
     >
       <label htmlFor={id}>{label}</label>
-      <div className="cinder-native-select-control">
+      <div className="hashti-native-select-control">
         <select
           {...props}
           id={id}
@@ -43,7 +43,7 @@ export function NativeSelect({
         <Icon name="chevronDown" />
       </div>
       {(errorMessage || description) && (
-        <span id={helpId} className={errorMessage ? "cinder-error-message" : "cinder-description"}>
+        <span id={helpId} className={errorMessage ? "hashti-error-message" : "hashti-description"}>
           {errorMessage || description}
         </span>
       )}
@@ -91,7 +91,7 @@ export function Pagination({
     new Set([...pageSizes.filter((size) => size > 0 && Number.isInteger(size)), range.pageSize]),
   ).sort((a, b) => a - b);
   return (
-    <nav aria-label={label} className={["cinder-pagination", className].filter(Boolean).join(" ")}>
+    <nav aria-label={label} className={["hashti-pagination", className].filter(Boolean).join(" ")}>
       {onPageSizeChange && (
         <NativeSelect
           label="Items per page"
@@ -106,13 +106,13 @@ export function Pagination({
           ))}
         </NativeSelect>
       )}
-      <span className="cinder-pagination-count" aria-live="polite">
+      <span className="hashti-pagination-count" aria-live="polite">
         {range.start}–{range.end} of {range.total} items
       </span>
       <span>
         {range.page} of {range.pages} pages
       </span>
-      <div className="cinder-pagination-actions">
+      <div className="hashti-pagination-actions">
         <Button
           variant="ghost"
           size="md"

@@ -1,9 +1,10 @@
 /* Hashti Modern Aesthetic - Checkbox */
 @layer hashti.components {
   .hashti-checkbox,
-  .cinder-checkbox {
+  .hashti-checkbox {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
     gap: var(--hashti-spacing-03, 8px);
     cursor: pointer;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
@@ -11,7 +12,7 @@
   }
 
   .hashti-checkbox-control,
-  .cinder-checkbox-control {
+  .hashti-checkbox-control {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -25,26 +26,26 @@
   }
 
   .hashti-checkbox[data-selected] .hashti-checkbox-control,
-  .cinder-checkbox[data-selected] .cinder-checkbox-control,
+  .hashti-checkbox[data-selected] .hashti-checkbox-control,
   .hashti-checkbox[data-indeterminate] .hashti-checkbox-control,
-  .cinder-checkbox[data-indeterminate] .cinder-checkbox-control {
+  .hashti-checkbox[data-indeterminate] .hashti-checkbox-control {
     background-color: var(--hashti-primary, #08BDBA);
     border-color: var(--hashti-primary, #08BDBA);
   }
 
   .hashti-checkbox[data-pressed] .hashti-checkbox-control,
-  .cinder-checkbox[data-pressed] .cinder-checkbox-control {
+  .hashti-checkbox[data-pressed] .hashti-checkbox-control {
     transform: scale(0.92);
   }
 
   .hashti-checkbox[data-focus-visible] .hashti-checkbox-control,
-  .cinder-checkbox[data-focus-visible] .cinder-checkbox-control {
+  .hashti-checkbox[data-focus-visible] .hashti-checkbox-control {
     outline: none;
     box-shadow: 0 0 0 2px var(--hashti-background, #ffffff), 0 0 0 4px var(--hashti-focus, #0f62fe), 0 0 8px rgba(15, 98, 254, 0.35);
   }
 
   .hashti-checkbox[data-disabled],
-  .cinder-checkbox[data-disabled] {
+  .hashti-checkbox[data-disabled] {
     opacity: 0.5;
     cursor: not-allowed;
   }

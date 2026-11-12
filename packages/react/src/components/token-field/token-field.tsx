@@ -98,8 +98,8 @@ export function TokenFieldRoot<T extends TokenFieldValue = TokenFieldValue>({
         data-multiline={multiline || undefined}
         className={classes(
           cx(
-            "cinder-field cinder-token-field",
-            multiline ? "cinder-token-field--multiline" : undefined,
+            "hashti-field hashti-token-field",
+            multiline ? "hashti-token-field--multiline" : undefined,
           ),
           className,
         )}
@@ -145,8 +145,8 @@ export function TokenFieldInput<T extends TokenFieldValue = TokenFieldValue>({
       data-placeholder={resolvedPlaceholder}
       className={classes(
         cx(
-          "cinder-token-input react-aria-TokenInput",
-          multiline ? "cinder-token-input--multiline" : undefined,
+          "hashti-token-input react-aria-TokenInput",
+          multiline ? "hashti-token-input--multiline" : undefined,
         ),
         className,
       )}
@@ -186,18 +186,18 @@ export function TokenFieldToken({
       {...props}
       ref={ref}
       data-size={size}
-      className={classes("cinder-token react-aria-Token", className)}
+      className={classes("hashti-token react-aria-Token", className)}
     >
       {() => (
         <>
-          {icon && <span className="cinder-token__icon">{icon}</span>}
-          <span className="cinder-token__label">{children}</span>
+          {icon && <span className="hashti-token__icon">{icon}</span>}
+          <span className="hashti-token__label">{children}</span>
           {onRemove && !isDisabled && !isReadOnly && (
             <button
               type="button"
               tabIndex={-1}
               aria-label="Remove token"
-              className="cinder-token__remove"
+              className="hashti-token__remove"
               onPointerDown={(e) => {
                 e.stopPropagation();
                 e.preventDefault();

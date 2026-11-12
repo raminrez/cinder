@@ -91,7 +91,7 @@ test("package outputs defer HMR while story edits retain normal updates", () => 
 
 test("Vite resolves public CSS after a missing build output is restored", async () => {
   // Vite resolves symlinks in its root, so fixture paths and fs.allow must match.
-  const directory = await realpath(await mkdtemp(join(tmpdir(), "cinder-storybook-")));
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "hashti-storybook-")));
   const app = join(directory, "apps/storybook");
   const pkg = join(directory, "packages/react");
   const stylesheet = join(pkg, "dist/styles.css");

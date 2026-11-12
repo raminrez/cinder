@@ -37,7 +37,7 @@ export function Modal({
       lang={props.lang ?? theme.lang}
       ref={overlayRef}
       className={classes(
-        "hashti-modal-overlay cinder-modal-overlay",
+        "hashti-modal-overlay hashti-modal-overlay",
         classes(appearanceClassName ?? "", overlayClassName),
       )}
     >
@@ -45,7 +45,7 @@ export function Modal({
         ref={ref}
         dir={resolvedDir}
         data-size={size}
-        className={classes("hashti-modal cinder-modal", className)}
+        className={classes("hashti-modal hashti-modal", className)}
         style={modalStyle}
       >
         {children}

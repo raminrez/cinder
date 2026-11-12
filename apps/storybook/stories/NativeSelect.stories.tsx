@@ -24,7 +24,7 @@ function PlaygroundExample() {
   const [val, setVal] = useState("10");
   return (
     <div className="field-story-stack">
-      <div style={{ color: "var(--cinder-text-secondary)" }}>
+      <div style={{ color: "var(--hashti-text-secondary)" }}>
         Current page size: <strong>{val}</strong>
       </div>
       <NativeSelect

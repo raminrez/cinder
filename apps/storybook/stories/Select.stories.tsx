@@ -222,7 +222,7 @@ export const RichOptionsAndSections: Story = {
         >
           {(section) => (
             <ListBoxSection id={section.id}>
-              <Header className="cinder-select-section-header">{section.name}</Header>
+              <Header className="hashti-select-section-header">{section.name}</Header>
               <Collection items={section.children}>
                 {(item) => (
                   <ListBoxItem id={item.id} textValue={item.name}>

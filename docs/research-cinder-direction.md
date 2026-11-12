@@ -209,7 +209,7 @@ double-underscore/double-hyphen syntax.
 [HeroUI terminology](research-heroui.md#41-bem-parts-state-and-behavior-are-distinct-contracts),
 [Cinder selectors](research-cinder-baseline.md#32-selectors-layers-and-override-precedence).
 
-**Recommendation: retain the `cinder-` namespace and stabilize existing useful
+**Recommendation: retain the `hashti-` namespace and stabilize existing useful
 hooks.** Renaming every selector into strict BEM syntax creates migration work
 without making customization inherently better. Document block, part, variant,
 and state meaning consistently, including the present raw RAC exceptions.
@@ -334,7 +334,7 @@ cannot assume that changing a `fluid-*` scalar adds interpolation.
 **Proposed direction:** retain a top-level `cinder` layer and give its token,
 limited reset, and component rules deliberate internal ordering. Put generated
 token defaults in that documented cascade contract as well. Current generated
-tokens are unlayered, while component rules use `@layer cinder`; changing this is
+tokens are unlayered, while component rules use `@layer hashti`; changing this is
 a compatibility change requiring consumer proof.
 [Current layer mismatch](research-cinder-baseline.md#32-selectors-layers-and-override-precedence).
 

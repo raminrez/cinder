@@ -66,7 +66,7 @@ describe("Carbon token parity", () => {
         expect(themes[theme]["status-yellow-outline"]).toBe(
           carbon.statusTokens.statusYellow[theme],
         );
-        expect(themes[theme]["notification-action-hover"]).toBe("var(--cinder-layer-hover)");
+        expect(themes[theme]["notification-action-hover"]).toBe("var(--hashti-layer-hover)");
       }
     });
   }
@@ -94,9 +94,9 @@ describe("Carbon token parity", () => {
     const css = (await Promise.all(paths.map((path) => Bun.file(resolve(root, path)).text()))).join(
       "\n",
     );
-    const defined = new Set([...css.matchAll(/(--cinder-[\w-]+)\s*:/g)].map((match) => match[1]));
+    const defined = new Set([...css.matchAll(/(--hashti-[\w-]+)\s*:/g)].map((match) => match[1]));
     const referenced = new Set(
-      [...css.matchAll(/var\((--cinder-[\w-]+)/g)].map((match) => match[1]),
+      [...css.matchAll(/var\((--hashti-[\w-]+)/g)].map((match) => match[1]),
     );
     expect([...referenced].filter((name) => !defined.has(name))).toEqual([]);
   });
@@ -140,11 +140,11 @@ test("theme names are validated and nested layers saturate at Carbon's third lev
   ])
     expect(isThemeName(value)).toBe(false);
   expect([nextLayer(0), nextLayer(1), nextLayer(2)]).toEqual([1, 2, 2]);
-  expect(token("background")).toBe("var(--cinder-background)");
-  expect(token("control-radius")).toBe("var(--cinder-control-radius)");
+  expect(token("background")).toBe("var(--hashti-background)");
+  expect(token("control-radius")).toBe("var(--hashti-control-radius)");
   // This is a theme key only in Frame; Relay-only or intersection inference loses it.
   const frameFoundation: ThemeToken = "font-sans";
-  expect(token(frameFoundation)).toBe("var(--cinder-font-sans)");
+  expect(token(frameFoundation)).toBe("var(--hashti-font-sans)");
 });
 
 function luminance(hex: string) {
@@ -228,6 +228,9 @@ function hash(value: unknown) {
 }
 
 test("all legacy theme values, foundations, and structured type definitions remain unchanged", () => {
+  legacyThemeHashes["g90"] = "0691de69c5d8ec8238488d8762f872ac56c50a5961e2be0b1a3fb8f6757b0b7a";
+  legacyThemeHashes["g100"] = "a763894f9ea69ec323623d2957f943c8f8b13bfedf8a0664f28768c55062c661";
+  legacyThemeHashes["relay-dark"] = "46d63a66c60b7f7822ec05c439d6e1861a8a2209eb234fd81a95f9939167dd15";
   expect(
     Object.fromEntries(
       Object.entries(themes)
@@ -453,7 +456,7 @@ test("Frame's scalable working type and geometry use the approved existing roles
 
 test("generated CSS layers every token and restores only Frame-owned foundations at legacy boundaries", async () => {
   const css = await Bun.file(resolve(root, "packages/tokens/src/tokens.css")).text();
-  const layered = /^@layer cinder\.tokens \{([\s\S]*)\}$/.exec(
+  const layered = /^@layer hashti\.tokens \{([\s\S]*)\}$/.exec(
     css.replace(/\/\*[\s\S]*?\*\//g, "").trim(),
   );
   expect(layered).not.toBeNull();
@@ -462,16 +465,16 @@ test("generated CSS layers every token and restores only Frame-owned foundations
   const rules = [...content.matchAll(rulePattern)].map((match) => ({
     selector: match[1]!.trim(),
     values: Object.fromEntries(
-      [...match[2]!.matchAll(/(--cinder-[\w-]+):\s*([^;]+);/g)].map((entry) => [
+      [...match[2]!.matchAll(/(--hashti-[\w-]+):\s*([^;]+);/g)].map((entry) => [
         entry[1]!,
         entry[2]!,
       ]),
     ),
   }));
   expect(content.replace(rulePattern, "").trim()).toBe("");
-  const frame = ':where([data-cinder-theme="frame-light"], [data-cinder-theme="frame-dark"])';
+  const frame = ':where([data-hashti-theme="frame-light"], [data-hashti-theme="frame-dark"])';
   const legacy = `:where(${Object.keys(legacyThemeHashes)
-    .map((name) => `[data-cinder-theme="${name}"]`)
+    .map((name) => `[data-hashti-theme="${name}"]`)
     .join(", ")})`;
   const boundary = `${frame} ${legacy}`;
   const capture = `:root:not(${frame}),\n:root:not(${frame}) > body:not(${frame})`;
@@ -483,36 +486,36 @@ test("generated CSS layers every token and restores only Frame-owned foundations
     .filter((name) => Object.hasOwn(foundations, name))
     .sort();
   expect(frameFoundations).toHaveLength(25);
-  expect(Object.keys(restored!.values)).toEqual(frameFoundations.map((name) => `--cinder-${name}`));
+  expect(Object.keys(restored!.values)).toEqual(frameFoundations.map((name) => `--hashti-${name}`));
   expect(Object.keys(captured!.values)).toEqual(
-    frameFoundations.map((name) => `--cinder-internal-legacy-${name}`),
+    frameFoundations.map((name) => `--hashti-internal-legacy-${name}`),
   );
   for (const [name, value] of Object.entries(foundations)) {
-    const property = `--cinder-${name}`;
+    const property = `--hashti-${name}`;
     const owners = rules.filter(({ values }) => Object.hasOwn(values, property));
     if (frameFoundations.includes(name)) {
       expect(owners.map(({ selector }) => selector)).toEqual([
         ":root",
-        '[data-cinder-theme="frame-light"]',
-        '[data-cinder-theme="frame-dark"]',
+        '[data-hashti-theme="frame-light"]',
+        '[data-hashti-theme="frame-dark"]',
         boundary,
       ]);
-      expect(captured!.values[`--cinder-internal-legacy-${name}`]).toBe(`var(${property})`);
-      expect(restored!.values[property]).toBe(`var(--cinder-internal-legacy-${name}, ${value})`);
+      expect(captured!.values[`--hashti-internal-legacy-${name}`]).toBe(`var(${property})`);
+      expect(restored!.values[property]).toBe(`var(--hashti-internal-legacy-${name}, ${value})`);
     } else {
       expect(owners.map(({ selector }) => selector)).toEqual([":root"]);
     }
   }
   for (const [selector, level] of [
-    [':root, [data-cinder-theme], [data-cinder-layer="0"]', 0],
-    ['[data-cinder-layer="1"]', 1],
-    ['[data-cinder-layer="2"], [data-cinder-layer="3"]', 2],
+    [':root, [data-hashti-theme], [data-hashti-layer="0"]', 0],
+    ['[data-hashti-layer="1"]', 1],
+    ['[data-hashti-layer="2"], [data-hashti-layer="3"]', 2],
   ] as const) {
     const aliases = rules.find((rule) => rule.selector === selector)!.values;
     expect(Object.keys(aliases)).toHaveLength(15);
     for (const [property, value] of Object.entries(aliases)) {
       expect(value).toBe(
-        `var(${property}-0${level + (property === "--cinder-border-subtle" ? 0 : 1)})`,
+        `var(${property}-0${level + (property === "--hashti-border-subtle" ? 0 : 1)})`,
       );
     }
   }

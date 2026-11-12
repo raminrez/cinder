@@ -57,7 +57,7 @@ function PlaygroundExample() {
           </SideNav>
           <div className="layout-shell-content">
             <h4 style={{ margin: 0, fontSize: "1rem", fontWeight: 600 }}>Active Workspace View</h4>
-            <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+            <p style={{ margin: 0, fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
               Select an item from the side panel to inspect configuration telemetry.
             </p>
           </div>
@@ -110,7 +110,7 @@ function LongContentAndLocalesExample() {
               </Link>
             </SideNav>
             <div className="layout-shell-content">
-              <div style={{ fontSize: "0.875rem", color: "var(--cinder-text-secondary)" }}>
+              <div style={{ fontSize: "0.875rem", color: "var(--hashti-text-secondary)" }}>
                 محتوای انتخاب شده در پنل اصلی نمایش داده می‌شود.
               </div>
             </div>

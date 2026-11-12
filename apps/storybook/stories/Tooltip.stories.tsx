@@ -24,7 +24,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Tooltip wraps RAC Tooltip and OverlayArrow, providing contextual hints upon hover or keyboard focus without taking interaction focus. Tooltip carries the portable Theme appearanceClassName across portals. Frame applies a 10px border-radius (var(--cinder-control-radius)), high-contrast inverse background, and directional arrow alignment.",
+          "Tooltip wraps RAC Tooltip and OverlayArrow, providing contextual hints upon hover or keyboard focus without taking interaction focus. Tooltip carries the portable Theme appearanceClassName across portals. Frame applies a 10px border-radius (var(--hashti-control-radius)), high-contrast inverse background, and directional arrow alignment.",
       },
     },
   },
@@ -69,7 +69,7 @@ export const Placements: Story = {
     expect(trigger).toHaveFocus();
 
     const tooltip = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-tooltip");
+      const el = document.querySelector<HTMLElement>(".hashti-tooltip");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -80,7 +80,7 @@ export const Placements: Story = {
     await userEvent.tab();
     await waitFor(() => {
       // The first tooltip should hide or change
-      const el = document.querySelector<HTMLElement>('.cinder-tooltip[data-placement="top"]');
+      const el = document.querySelector<HTMLElement>('.hashti-tooltip[data-placement="top"]');
       expect(el).toBeNull();
     });
   },
@@ -122,7 +122,7 @@ export const IconActions: Story = {
     copyBtn.focus();
 
     const tooltip = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-tooltip");
+      const el = document.querySelector<HTMLElement>(".hashti-tooltip");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -151,7 +151,7 @@ export const FocusAndHover: Story = {
     trigger.focus();
 
     const tooltip = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-tooltip");
+      const el = document.querySelector<HTMLElement>(".hashti-tooltip");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -159,7 +159,7 @@ export const FocusAndHover: Story = {
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
-      expect(document.querySelector(".cinder-tooltip")).toBeNull();
+      expect(document.querySelector(".hashti-tooltip")).toBeNull();
     });
     await expect(trigger).toHaveFocus();
   },
@@ -199,7 +199,7 @@ export const CustomStylingAndRefs: Story = {
 
     trigger.focus();
     const tooltip = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-tooltip");
+      const el = document.querySelector<HTMLElement>(".hashti-tooltip");
       expect(el).not.toBeNull();
       return el!;
     });
@@ -250,7 +250,7 @@ export const LongContentAndLocales: Story = {
     persianTrigger.focus();
 
     const tooltip = await waitFor(() => {
-      const el = document.querySelector<HTMLElement>(".cinder-tooltip");
+      const el = document.querySelector<HTMLElement>(".hashti-tooltip");
       expect(el).not.toBeNull();
       return el!;
     });

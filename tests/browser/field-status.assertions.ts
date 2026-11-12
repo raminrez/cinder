@@ -16,12 +16,12 @@ export async function expectNoDanglingStatusDescriptions(page: Page) {
 
 export async function verifySelectStatusAdornment(page: Page) {
   const field = page.locator('[data-status-field="select"]');
-  const trigger = field.locator(".cinder-select-trigger");
-  const icon = trigger.locator(":scope > .cinder-field__status-icon");
-  const chevron = trigger.locator(":scope > svg:not(.cinder-field__status-icon)");
+  const trigger = field.locator(".hashti-select-trigger");
+  const icon = trigger.locator(":scope > .hashti-field__status-icon");
+  const chevron = trigger.locator(":scope > svg:not(.hashti-field__status-icon)");
   for (const type of ["warning", "error", "success"]) {
     await page.getByRole("button", { name: `Show ${type}`, exact: true }).click();
-    await expect(icon).toHaveAttribute("data-cinder-status", type);
+    await expect(icon).toHaveAttribute("data-hashti-status", type);
     const marker = await icon.boundingBox();
     const arrow = await chevron.boundingBox();
     const layout = await trigger.evaluate((node) => {
@@ -36,7 +36,7 @@ export async function verifySelectStatusAdornment(page: Page) {
     await expect(icon).toHaveCSS(
       "color",
       await field
-        .locator(".cinder-field__status > svg")
+        .locator(".hashti-field__status > svg")
         .evaluate((node) => getComputedStyle(node).color),
     );
   }
@@ -55,16 +55,16 @@ export async function verifyAppearanceOnlyStatus(page: Page) {
   for (const type of ["warning", "error", "success"]) {
     await page.getByRole("button", { name: `Show ${type}`, exact: true }).click();
     for (const field of await fields.all()) {
-      await expect(field).toHaveAttribute("data-cinder-status", type);
+      await expect(field).toHaveAttribute("data-hashti-status", type);
       await expect(field).not.toHaveAttribute("data-invalid");
-      const status = field.locator(".cinder-field__status");
+      const status = field.locator(".hashti-field__status");
       await expect(status).toHaveCount(1);
       await expect(status).toHaveText("Review this value before saving.");
       await expect(status).not.toHaveAttribute("slot", "description");
       const statusId = await status.getAttribute("id");
       expect(statusId).toBeTruthy();
       expect(statusId).not.toBe(
-        await field.locator(".cinder-field__description").getAttribute("id"),
+        await field.locator(".hashti-field__description").getAttribute("id"),
       );
       expect(
         await field.evaluate(
@@ -105,7 +105,7 @@ export async function verifyAppearanceOnlyStatus(page: Page) {
     "range-end": "2026-11-11",
   });
   await page.getByRole("button", { name: "Clear status", exact: true }).click();
-  await expect(fields.locator(".cinder-field__status, .cinder-field__status-icon")).toHaveCount(0);
+  await expect(fields.locator(".hashti-field__status, .hashti-field__status-icon")).toHaveCount(0);
   await expectNoDanglingStatusDescriptions(page);
 }
 
@@ -113,17 +113,17 @@ export async function verifyValidationStatusPrecedence(page: Page) {
   const field = page.getByTestId("status-validation");
   const input = field.getByRole("textbox", { name: "Email address (required)", exact: true });
   const saved = page.getByRole("status", { name: "Email submit count", exact: true });
-  await expect(field.locator(".cinder-field__status")).toHaveText("Address lookup completed.");
+  await expect(field.locator(".hashti-field__status")).toHaveText("Address lookup completed.");
   await page.getByRole("button", { name: "Submit email", exact: true }).click();
   await expect(input).toBeFocused();
   await expect(input).toHaveAttribute("aria-invalid", "true");
   await expect(saved).toHaveText("0");
-  await expect(field.locator(".cinder-field__status")).toHaveCount(0);
-  await expect(field.locator(".cinder-field__status-icon")).toHaveAttribute(
-    "data-cinder-status",
+  await expect(field.locator(".hashti-field__status")).toHaveCount(0);
+  await expect(field.locator(".hashti-field__status-icon")).toHaveAttribute(
+    "data-hashti-status",
     "error",
   );
-  await expect(field.locator(".cinder-field__error")).not.toHaveText("");
+  await expect(field.locator(".hashti-field__error")).not.toHaveText("");
   await expect(input).toHaveAccessibleDescription(/Enter an address you can receive mail at\./);
   await expect(input).not.toHaveAccessibleDescription(/Address lookup completed/);
   await expectNoDanglingStatusDescriptions(page);
@@ -131,33 +131,33 @@ export async function verifyValidationStatusPrecedence(page: Page) {
   await input.press("Tab");
   await page.getByRole("button", { name: "Submit email", exact: true }).click();
   await expect(saved).toHaveText("1");
-  await expect(field.locator(".cinder-field__status")).toBeVisible();
+  await expect(field.locator(".hashti-field__status")).toBeVisible();
   await page.getByRole("button", { name: "Reject email", exact: true }).click();
   await expect(input).toHaveAttribute("aria-invalid", "true");
-  await expect(field.locator(".cinder-field__error")).toHaveText("This address cannot be used.");
-  await expect(field.locator(".cinder-field__status")).toHaveCount(0);
+  await expect(field.locator(".hashti-field__error")).toHaveText("This address cannot be used.");
+  await expect(field.locator(".hashti-field__status")).toHaveCount(0);
   await expect(input).toHaveAccessibleDescription(/This address cannot be used\./);
   await page.getByRole("button", { name: "Clear server rejection", exact: true }).click();
   await expect(input).not.toHaveAttribute("aria-invalid", "true");
   await expect(input).toHaveValue("person@example.com");
-  await expect(field.locator(".cinder-field__status")).toBeVisible();
+  await expect(field.locator(".hashti-field__status")).toBeVisible();
   await expectNoDanglingStatusDescriptions(page);
 
   const form = page.getByRole("form", { name: "Appearance-only form", exact: true });
   const fields = form.locator("[data-status-field]");
   const draft = await form.evaluate((node) => [...new FormData(node as HTMLFormElement)]);
   const statusIds = await fields
-    .locator(".cinder-field__status")
+    .locator(".hashti-field__status")
     .evaluateAll((nodes) => nodes.map((node) => node.id));
   await page.getByRole("button", { name: "Toggle actual invalidity", exact: true }).click();
   for (const root of await fields.all()) {
     await expect(root).toHaveAttribute("data-invalid");
-    await expect(root.locator(".cinder-field__status")).toHaveCount(0);
-    await expect(root.locator(".cinder-field__error")).toHaveText(
+    await expect(root.locator(".hashti-field__status")).toHaveCount(0);
+    await expect(root.locator(".hashti-field__error")).toHaveText(
       "Correct this field before saving.",
     );
-    for (const icon of await root.locator(".cinder-field__status-icon").all())
-      await expect(icon).toHaveAttribute("data-cinder-status", "error");
+    for (const icon of await root.locator(".hashti-field__status-icon").all())
+      await expect(icon).toHaveAttribute("data-hashti-status", "error");
   }
   expect(
     await form.evaluate(
@@ -174,7 +174,7 @@ export async function verifyValidationStatusPrecedence(page: Page) {
   await page.getByRole("button", { name: "Toggle actual invalidity", exact: true }).click();
   for (const root of await fields.all()) {
     await expect(root).not.toHaveAttribute("data-invalid");
-    await expect(root.locator(".cinder-field__status")).toHaveText(
+    await expect(root.locator(".hashti-field__status")).toHaveText(
       "Review this value before saving.",
     );
   }
@@ -207,8 +207,8 @@ export async function verifyStatusNativeTransitions(page: Page) {
         .evaluate((form) => [...new FormData(form as HTMLFormElement)]);
       for (const status of ["error", "success", undefined, "warning"]) {
         await focused.press("Alt+s");
-        if (status) await expect(field).toHaveAttribute("data-cinder-status", status);
-        else await expect(field).not.toHaveAttribute("data-cinder-status");
+        if (status) await expect(field).toHaveAttribute("data-hashti-status", status);
+        else await expect(field).not.toHaveAttribute("data-hashti-status");
         await expect(focused).toBeFocused();
         if (isDate)
           expect(await input.locator(".react-aria-DateSegment").allTextContents()).toEqual(
@@ -243,7 +243,7 @@ export async function verifyComposedStatus(page: Page) {
   const field = page.getByTestId("status-composed");
   const input = field.getByRole("textbox", { name: "Composed name", exact: true });
   const node = await input.elementHandle();
-  await expect(field.locator(".cinder-field__status")).toHaveCount(0);
+  await expect(field.locator(".hashti-field__status")).toHaveCount(0);
   await expect(input).toHaveAccessibleDescription(
     "Composed guidance. External instructions remain associated.",
   );
@@ -254,7 +254,7 @@ export async function verifyComposedStatus(page: Page) {
   );
   await input.fill("Retained composed draft");
   await page.getByRole("button", { name: "Toggle composed status", exact: true }).click();
-  const status = field.locator(".cinder-field__status");
+  const status = field.locator(".hashti-field__status");
   await expect(status).toHaveClass(/consumer-status/);
   await expect(status).toHaveAttribute("data-consumer-status", "true");
   await expect(input).toHaveAccessibleDescription(

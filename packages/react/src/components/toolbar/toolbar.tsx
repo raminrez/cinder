@@ -65,7 +65,7 @@ export function ToolbarRoot({
             data-size={size}
             data-orientation={orientation}
             data-variant={variant}
-            className={classes("cinder-toolbar", className)}
+            className={classes("hashti-toolbar", className)}
           >
             {children}
           </RACToolbar>
@@ -92,7 +92,7 @@ export function ToolbarGroup({
     <RACGroup
       {...props}
       aria-label={ariaLabel ?? ariaLabelProp}
-      className={classes("cinder-toolbar-group", className)}
+      className={classes("hashti-toolbar-group", className)}
     >
       {children}
     </RACGroup>
@@ -111,7 +111,7 @@ export function ToolbarItem({
   return (
     <div
       {...props}
-      className={cx("cinder-toolbar-item", className)}
+      className={cx("hashti-toolbar-item", className)}
     >
       {children}
     </div>
@@ -136,7 +136,7 @@ export function ToolbarSeparator({
     <RACSeparator
       {...props}
       orientation={resolvedOrientation}
-      className={cx("cinder-toolbar-separator", className)}
+      className={cx("hashti-toolbar-separator", className)}
     />
   );
 }

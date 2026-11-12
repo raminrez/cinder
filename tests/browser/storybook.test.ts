@@ -140,8 +140,8 @@ for (const theme of ["frame-light", "frame-dark"]) {
           finished?.reporters.find(({ type }) => type === "a11y"),
           "Every story must complete the a11y afterEach check.",
         ).toMatchObject({ status: "passed", result: { violations: [] } });
-        await expect(page.locator("#storybook-root > [data-cinder-theme]")).toHaveAttribute(
-          "data-cinder-theme",
+        await expect(page.locator("#storybook-root > [data-hashti-theme]")).toHaveAttribute(
+          "data-hashti-theme",
           theme,
         );
       }, 60000);
