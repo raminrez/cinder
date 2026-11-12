@@ -9,7 +9,7 @@ test("getInitials handles Latin names", () => {
 
 test("getInitials handles Persian names grapheme-safely", () => {
   // رامین رضایی — first grapheme of each word, not a surrogate half
-  expect(getInitials("رامین رضایی")).toBe("را"[0] + "رض"[0]);
+  expect(getInitials("رامین رضایی")).toBe("را".charAt(0) + "رض".charAt(0));
   expect(getInitials("علی")).toBe("ع");
 });
 

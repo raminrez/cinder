@@ -59,6 +59,8 @@ const palettes = {
 const workingScale = {
   "font-sans":
     'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  "font-mono":
+    'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
   "size-md": "2.75rem",
   "body-01-font-size": "0.875rem",
   "body-01-font-weight": 400,
@@ -84,6 +86,11 @@ const workingScale = {
   "heading-03-font-weight": 600,
   "heading-03-line-height": 1.4,
   "heading-03-letter-spacing": 0,
+  // DESIGN.md documents a 30px headline above the title step; expose it as a token.
+  "headline-font-size": "1.875rem",
+  "headline-font-weight": 600,
+  "headline-line-height": 36 / 30,
+  "headline-letter-spacing": "-0.03em",
 };
 
 export const frameThemes = Object.fromEntries(

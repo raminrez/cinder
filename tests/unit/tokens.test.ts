@@ -230,7 +230,8 @@ function hash(value: unknown) {
 test("all legacy theme values, foundations, and structured type definitions remain unchanged", () => {
   legacyThemeHashes["g90"] = "0691de69c5d8ec8238488d8762f872ac56c50a5961e2be0b1a3fb8f6757b0b7a";
   legacyThemeHashes["g100"] = "a763894f9ea69ec323623d2957f943c8f8b13bfedf8a0664f28768c55062c661";
-  legacyThemeHashes["relay-dark"] = "46d63a66c60b7f7822ec05c439d6e1861a8a2209eb234fd81a95f9939167dd15";
+  legacyThemeHashes["relay-dark"] =
+    "46d63a66c60b7f7822ec05c439d6e1861a8a2209eb234fd81a95f9939167dd15";
   expect(
     Object.fromEntries(
       Object.entries(themes)
@@ -322,7 +323,7 @@ for (const [name, expected] of frameCases) {
     const values = themes[name];
     for (const key of Object.keys(themes.white)) expect(values).toHaveProperty(key);
     expect(Object.keys(values)).toEqual(Object.keys(themes["frame-light"]));
-    expect(Object.keys(values)).toHaveLength(346);
+    expect(Object.keys(values)).toHaveLength(351);
     expect(values).toMatchObject(expected);
     expect(values["button-tertiary"]).toBe(values["border-strong-01"]);
     expect(values["button-tertiary-hover"]).toBe(values["layer-02"]);
@@ -485,7 +486,7 @@ test("generated CSS layers every token and restores only Frame-owned foundations
   const frameFoundations = Object.keys(themes["frame-light"])
     .filter((name) => Object.hasOwn(foundations, name))
     .sort();
-  expect(frameFoundations).toHaveLength(25);
+  expect(frameFoundations).toHaveLength(26);
   expect(Object.keys(restored!.values)).toEqual(frameFoundations.map((name) => `--hashti-${name}`));
   expect(Object.keys(captured!.values)).toEqual(
     frameFoundations.map((name) => `--hashti-internal-legacy-${name}`),
