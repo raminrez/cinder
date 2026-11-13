@@ -6,7 +6,6 @@ import {
   TreeItem as RACTreeItem,
   TreeItemContent as RACTreeItemContent,
   Button as RACButton,
-  Checkbox as RACCheckbox,
   type TreeProps as RACTreeProps,
   type TreeItemProps as RACTreeItemProps,
   type TreeItemContentProps,
@@ -18,6 +17,7 @@ import {
   type CheckboxRenderProps,
 } from "react-aria-components";
 import { classes, cx } from "../../utils";
+import { Checkbox } from "../checkbox";
 import { Icon } from "../../icons";
 
 export interface TreeContextValue {
@@ -141,9 +141,9 @@ export interface TreeCheckboxProps extends Omit<RACCheckboxProps, "className"> {
 
 export function TreeCheckbox({ className, children, ...props }: TreeCheckboxProps) {
   return (
-    <RACCheckbox slot="selection" {...props} className={classes("hashti-tree-checkbox", className)}>
+    <Checkbox slot="selection" {...props} className={classes("hashti-tree-checkbox", className)}>
       {children}
-    </RACCheckbox>
+    </Checkbox>
   );
 }
 

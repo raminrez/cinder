@@ -20,6 +20,15 @@ codebase already does. `bun test tests/unit/css-architecture.test.ts` enforces t
 
 Never add a layer without adding it to that ordered list first. `!important` is not a layer.
 
+The order statement must be the **first** thing in the entry stylesheet. `styles.css` imports
+`layers.css` on line 1 for that reason: a component file that opens `@layer hashti.components`
+before the statement defines the order instead, and the reset ends up outranking components (this
+happened, and cost a week of tooltip-contrast confusion before anyone noticed).
+
+A portal that carries `data-hashti-theme` itself is both the `@scope` root and the `to (...)` limit,
+so scoped theme rules never reach it. Declare the few properties such a surface needs (surface and
+inverse ink) unscoped, from tokens, as the tooltip does.
+
 ## One file per component
 
 Component styling lives in `packages/react/src/components/<name>/<name>.css` and must be imported

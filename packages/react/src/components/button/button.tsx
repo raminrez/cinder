@@ -20,7 +20,7 @@ export interface ButtonProps extends RACButtonProps {
   /** Core choices: primary, secondary, ghost, danger. Additional existing variants remain supported. */
   variant?: ButtonVariant;
   /** Frame defaults to 44px; older themes default to 48px. Sizes are minimums. */
-  size?: ControlSize | "xl" | "2xl";
+  size?: ControlSize;
   /** Square target for an icon. Supply an accessible name on the Button. */
   iconOnly?: boolean;
   /** Progress label announced alongside the action while pending. Localize both. */

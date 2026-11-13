@@ -4,11 +4,14 @@ import { createContext, useContext, type ReactNode, type Ref } from "react";
 import {
   GridList as RACGridList,
   GridListItem as RACGridListItem,
+  GridListSection as RACGridListSection,
+  GridListHeader as RACGridListHeader,
   GridListLoadMoreItem as RACGridListLoadMoreItem,
   Button as RACButton,
-  Checkbox as RACCheckbox,
   type GridListProps as RACGridListProps,
   type GridListItemProps as RACGridListItemProps,
+  type GridListSectionProps as RACGridListSectionProps,
+  type GridListHeaderProps as RACGridListHeaderProps,
   type GridListLoadMoreItemProps as RACGridListLoadMoreItemProps,
   type GridListRenderProps,
   type GridListItemRenderProps,
@@ -18,6 +21,7 @@ import {
   type CheckboxRenderProps,
 } from "react-aria-components";
 import { classes, cx, type ControlSize } from "../../utils";
+import { Checkbox } from "../checkbox";
 import { Icon } from "../../icons";
 
 export interface GridListContextValue {
@@ -114,6 +118,42 @@ export function GridListItem<T extends object = object>({
   );
 }
 
+export interface GridListSectionProps<
+  T extends object = object,
+> extends RACGridListSectionProps<T> {
+  title?: ReactNode;
+  className?: string;
+}
+
+export function GridListSection<T extends object = object>({
+  className,
+  title,
+  children,
+  ...props
+}: GridListSectionProps<T>) {
+  return (
+    <RACGridListSection
+      {...props}
+      className={cx("react-aria-GridListSection", "hashti-grid-list-section", className)}
+    >
+      {title && <RACGridListHeader className="hashti-grid-list-header">{title}</RACGridListHeader>}
+      {children as any}
+    </RACGridListSection>
+  );
+}
+
+export interface GridListHeaderProps extends RACGridListHeaderProps {
+  className?: string;
+}
+
+export function GridListHeader({ className, children, ...props }: GridListHeaderProps) {
+  return (
+    <RACGridListHeader className={cx("hashti-grid-list-header", className)} {...props}>
+      {children as any}
+    </RACGridListHeader>
+  );
+}
+
 export interface GridListDragHandleProps extends Omit<RACButtonProps, "className"> {
   "aria-label"?: string;
   className?: string | ((values: ButtonRenderProps) => string);
@@ -143,13 +183,13 @@ export interface GridListCheckboxProps extends Omit<RACCheckboxProps, "className
 
 export function GridListCheckbox({ className, children, ...props }: GridListCheckboxProps) {
   return (
-    <RACCheckbox
+    <Checkbox
       slot="selection"
       {...props}
       className={classes("hashti-grid-list-checkbox", className)}
     >
       {children}
-    </RACCheckbox>
+    </Checkbox>
   );
 }
 
@@ -234,6 +274,8 @@ function GridListDefault<T extends object>(props: GridListProps<T>) {
 export const GridList = Object.assign(GridListDefault, {
   Root: GridListRoot,
   Item: GridListItem,
+  Section: GridListSection,
+  Header: GridListHeader,
   DragHandle: GridListDragHandle,
   Checkbox: GridListCheckbox,
   EmptyState: GridListEmptyState,

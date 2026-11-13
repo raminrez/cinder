@@ -78,7 +78,8 @@ export const SwatchPicker: Story = {
     const picker = canvas.getByRole("listbox", { name: "Brand swatches" });
     expect(picker).toBeInTheDocument();
 
-    const crimsonSwatch = canvas.getByRole("option", { name: "Crimson Red" });
+    // The swatch items mount a tick after the listbox; wait rather than race them.
+    const crimsonSwatch = await waitFor(() => canvas.getByRole("option", { name: /Crimson Red/ }));
     expect(crimsonSwatch).toBeInTheDocument();
     expect(crimsonSwatch).toHaveAttribute("aria-selected", "false");
 

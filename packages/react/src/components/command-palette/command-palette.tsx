@@ -12,9 +12,15 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import type { Key } from "react-aria-components";
+import {
+  Autocomplete,
+  Input as RACInput,
+  TextField as RACTextField,
+  type Key,
+} from "react-aria-components";
 import { Modal, type ModalProps } from "../modal";
 import { Dialog } from "../dialog";
+import { Button } from "../button";
 import { ListBox, type ListBoxItemProps } from "../list-box";
 import { Kbd } from "../kbd";
 import { Icon } from "../../icons";
@@ -122,6 +128,8 @@ export interface CommandPaletteDialogProps extends Omit<ModalProps, "children"> 
   children: ReactNode;
   "aria-label"?: string;
   dialogClassName?: string;
+  /** Hides the dialog's close button. */
+  hideCloseButton?: boolean;
 }
 
 export function CommandPaletteDialog({
@@ -130,6 +138,7 @@ export function CommandPaletteDialog({
   overlayClassName,
   dialogClassName,
   "aria-label": ariaLabel = "Command Palette",
+  hideCloseButton = false,
   ref,
   ...props
 }: CommandPaletteDialogProps) {
@@ -148,7 +157,20 @@ export function CommandPaletteDialog({
         aria-label={ariaLabel}
         className={cx("hashti-command-palette-dialog", dialogClassName)}
       >
-        {children}
+        {/* Autocomplete owns the arrow keys and the filtering between the input and the list. */}
+        <Autocomplete>{children}</Autocomplete>
+        {!hideCloseButton && (
+          <Button
+            variant="ghost"
+            size="sm"
+            iconOnly
+            aria-label="Close command palette"
+            className="hashti-command-palette__close"
+            onPress={() => setIsOpen(false)}
+          >
+            <Icon name="close" />
+          </Button>
+        )}
       </Dialog>
     </Modal>
   );
@@ -167,65 +189,43 @@ export interface CommandPaletteInputProps {
 export function CommandPaletteInput({
   placeholder = "Type a command or search...",
   value: propValue,
-  onChange: propOnChange,
+  onChange,
   className,
   autoFocus = true,
   ref,
-  ...props
 }: CommandPaletteInputProps) {
-  const { query, setQuery, setIsOpen } = useCommandPaletteContext();
+  const { query, setQuery } = useCommandPaletteContext();
   const currentQuery = propValue !== undefined ? propValue : query;
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Focused imperatively rather than with autoFocus: the palette mounts on every open, and
+  // autoFocus on a component input trips the a11y lint rule for sighted users.
   useEffect(() => {
-    if (autoFocus && inputRef.current) {
-      inputRef.current.focus();
-    }
+    if (autoFocus) inputRef.current?.focus();
   }, [autoFocus]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    propOnChange?.(e);
-    setQuery(e.target.value);
-  };
-
-  const handleClear = () => {
-    setQuery("");
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Escape" && currentQuery) {
-      e.stopPropagation();
-      setQuery("");
-    } else if (e.key === "Escape" && !currentQuery) {
-      setIsOpen(false);
-    }
-  };
-
   return (
-    <div className={cx("hashti-command-palette__input-wrapper", className)}>
+    <RACTextField
+      value={currentQuery}
+      onChange={setQuery}
+      className={cx("hashti-command-palette__input-wrapper", className)}
+    >
       <span className="hashti-command-palette__search-icon" aria-hidden="true">
         <Icon name="search" size={16} />
       </span>
-      <input
-        {...props}
-        ref={(node) => {
-          (inputRef as any).current = node;
-          if (typeof ref === "function") {
-            ref(node);
-          } else if (ref) {
-            (ref as any).current = node;
-          }
+      <RACInput
+        ref={(node: HTMLInputElement | null) => {
+          inputRef.current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) (ref as { current: HTMLInputElement | null }).current = node;
         }}
-        type="text"
-        role="searchbox"
+        type="search"
         aria-label="Search commands"
         autoComplete="off"
         autoCorrect="off"
-        spellCheck="false"
-        value={currentQuery}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        spellCheck={false}
         placeholder={placeholder}
+        onChange={onChange}
         className="hashti-command-palette__input"
       />
       {currentQuery ? (
@@ -233,14 +233,14 @@ export function CommandPaletteInput({
           type="button"
           aria-label="Clear search"
           className="hashti-command-palette__clear"
-          onClick={handleClear}
+          onClick={() => setQuery("")}
         >
           <Icon name="close" size={16} />
         </button>
       ) : (
         <Kbd keys={["esc"]} className="hashti-command-palette__input-kbd" />
       )}
-    </div>
+    </RACTextField>
   );
 }
 

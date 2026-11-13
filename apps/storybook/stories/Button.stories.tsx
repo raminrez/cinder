@@ -25,7 +25,7 @@ const meta = {
   },
   argTypes: {
     variant: { control: "select", options: variants },
-    size: { control: "select", options: [undefined, "sm", "md", "lg", "xl", "2xl"] },
+    size: { control: "select", options: [undefined, "sm", "md", "lg"] },
     children: { control: "text" },
     iconOnly: { control: "boolean" },
     isDisabled: { control: "boolean" },
@@ -98,7 +98,7 @@ export const CompatibilityVariants: Story = {
 export const Sizes: Story = {
   render: (args) => (
     <dl className="action-story-matrix">
-      {([undefined, "sm", "md", "lg", "xl", "2xl"] as const).map((size) => (
+      {([undefined, "sm", "md", "lg"] as const).map((size) => (
         <Fragment key={size ?? "default"}>
           <dt>
             <code>{size ?? "default (omitted)"}</code>

@@ -8,6 +8,7 @@ import {
   type ModalOverlayProps,
 } from "react-aria-components";
 import { Modal } from "../modal";
+import type { ModalBackdrop } from "../modal";
 import { Button } from "../button";
 import { Icon } from "../../icons";
 import { classes } from "../../utils";
@@ -38,6 +39,8 @@ export interface AlertDialogProps extends Omit<ModalOverlayProps, "children"> {
   onConfirm?: () => void;
   onCancel?: () => void;
   isPending?: boolean;
+  /** The scrim behind the dialog. Matches Modal: `dim` (default), `blur`, or `none`. */
+  backdrop?: ModalBackdrop;
   dir?: "ltr" | "rtl";
   ref?: Ref<HTMLDivElement>;
 }
