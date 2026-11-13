@@ -674,7 +674,7 @@
       .hashti-checkbox-control {
       background: var(--hashti-icon-secondary);
       border-color: var(--hashti-icon-secondary);
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
     }
     :is(
         .hashti-radio[data-color="secondary"],
@@ -2174,19 +2174,29 @@
     }
     .hashti-notification[data-variant="solid"] {
       background: var(--notification-color);
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
       border: 1px solid var(--notification-color);
     }
     .hashti-notification[data-variant="solid"] > svg {
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
     }
     .hashti-notification[data-variant="solid"] .hashti-button {
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
     }
     .hashti-notification[data-variant="bordered"] {
       background: var(--hashti-layer-01);
       border: 1px solid var(--notification-color);
       color: var(--hashti-text-primary);
+    }
+    /* Bordered frames its icon in the semantic tint so the neutral card still
+       carries the status without relying on colour alone. */
+    .hashti-notification[data-variant="bordered"] > svg,
+    .hashti-toast[data-variant="bordered"] > svg,
+    .hashti-actionable-notification[data-variant="bordered"] > svg {
+      box-sizing: content-box;
+      padding: var(--hashti-spacing-01);
+      border-radius: var(--hashti-control-radius);
+      background: var(--notification-bg);
     }
     .hashti-notification > .hashti-button {
       border-radius: var(--hashti-control-radius);
@@ -2341,17 +2351,17 @@
     }
     .hashti-toast[data-variant="solid"] {
       background: var(--notification-color);
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
       border: 1px solid var(--notification-color);
     }
     .hashti-toast[data-variant="solid"] > svg {
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
     }
     .hashti-toast[data-variant="solid"] [slot="description"] {
-      color: rgba(255, 255, 255, 0.88);
+      color: color-mix(in srgb, var(--hashti-text-on-color) 88%, transparent);
     }
     .hashti-toast[data-variant="solid"] .hashti-button {
-      color: var(--hashti-text-on-color, #ffffff);
+      color: var(--hashti-text-on-color);
     }
     .hashti-toast[data-variant="bordered"] {
       background: var(--hashti-layer-01);
@@ -3148,12 +3158,77 @@
     .hashti-actionable-notification {
       border-radius: var(--hashti-control-radius);
       background: var(--hashti-layer-01);
-      border: 1px solid var(--hashti-border-subtle);
+      border: 1px solid var(--notification-border, var(--hashti-border-subtle));
       overflow: hidden;
       padding: var(--hashti-spacing-04);
       gap: var(--hashti-spacing-03);
       display: flex;
       align-items: flex-start;
+    }
+    .hashti-actionable-notification > svg {
+      color: var(--notification-color);
+      flex-shrink: 0;
+    }
+    .hashti-actionable-notification[data-variant="subtle"] {
+      background: var(--notification-bg);
+      color: var(--hashti-text-primary);
+    }
+    .hashti-actionable-notification[data-variant="solid"] {
+      background: var(--notification-color);
+      border-color: var(--notification-color);
+      color: var(--hashti-text-on-color);
+    }
+    .hashti-actionable-notification[data-variant="solid"] > svg,
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-content
+      > strong,
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-content
+      > div,
+    .hashti-actionable-notification[data-variant="solid"] > .hashti-button {
+      color: var(--hashti-text-on-color);
+    }
+    .hashti-actionable-notification[data-variant="bordered"] {
+      background: var(--hashti-layer-01);
+      border-color: var(--notification-color);
+      color: var(--hashti-text-primary);
+    }
+    /* The action reads as the notification's own kind: a semantic outline in
+       subtle/bordered, an on-colour wash on the saturated fill. */
+    .hashti-actionable-notification-actions .hashti-button,
+    .hashti-actionable-notification-actions .hashti-button[data-variant] {
+      --frame-button-ink: var(--notification-color);
+      background: transparent;
+      border: 1px solid var(--notification-color);
+      color: var(--notification-color);
+    }
+    .hashti-actionable-notification-actions
+      .hashti-button:is([data-hovered], :hover):not([data-disabled]),
+    .hashti-actionable-notification-actions
+      .hashti-button[data-variant]:is([data-hovered], :hover):not([data-disabled]) {
+      background: var(--notification-bg);
+      border-color: var(--notification-color);
+      color: var(--notification-color);
+    }
+    .hashti-actionable-notification[data-variant="solid"] > .hashti-button,
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-actions
+      .hashti-button,
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-actions
+      .hashti-button[data-variant] {
+      --frame-button-ink: currentColor;
+      /* Transparent fill + ink outline: the saturated surface supplies the colour,
+         the action keeps the on-colour ink so the measured pair is the real one. */
+      background: transparent;
+      border-color: currentColor;
+      color: inherit;
+    }
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-actions
+      .hashti-button:is([data-hovered], :hover):not([data-disabled]) {
+      background: color-mix(in srgb, currentColor 16%, transparent);
+      border-color: currentColor;
     }
     .hashti-actionable-notification-content {
       flex: 1;
@@ -3648,19 +3723,49 @@
         0 8px 24px var(--hashti-shadow, rgba(0, 0, 0, 0.4));
     }
 
-    /* Dark mode solid notifications & toasts: use deep contrast fill with white text */
+    /* Dark mode solid notifications: the semantic colours are pale here, so the
+       solid fill flips to the light theme's saturated counterpart with white ink. */
     .hashti-notification[data-variant="solid"],
-    .hashti-toast[data-variant="solid"] {
+    .hashti-toast[data-variant="solid"],
+    .hashti-actionable-notification[data-variant="solid"] {
       background: var(--notification-color-inverse);
       border-color: var(--notification-color-inverse);
       color: #ffffff;
     }
     .hashti-notification[data-variant="solid"] [slot="description"],
-    .hashti-toast[data-variant="solid"] [slot="description"] {
+    .hashti-toast[data-variant="solid"] [slot="description"],
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-content
+      > strong,
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-content
+      > div {
       color: rgba(255, 255, 255, 0.92);
     }
     .hashti-notification[data-variant="solid"] svg,
-    .hashti-toast[data-variant="solid"] > svg {
+    .hashti-toast[data-variant="solid"] > svg,
+    .hashti-actionable-notification[data-variant="solid"] > svg,
+    .hashti-notification[data-variant="solid"] .hashti-button,
+    .hashti-toast[data-variant="solid"] .hashti-button,
+    .hashti-actionable-notification[data-variant="solid"] .hashti-button {
+      color: #ffffff;
+    }
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-actions
+      .hashti-button,
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-actions
+      .hashti-button[data-variant] {
+      --frame-button-ink: #ffffff;
+      background: transparent;
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+    .hashti-actionable-notification[data-variant="solid"]
+      .hashti-actionable-notification-actions
+      .hashti-button:is([data-hovered], :hover):not([data-disabled]) {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: #ffffff;
       color: #ffffff;
     }
   }

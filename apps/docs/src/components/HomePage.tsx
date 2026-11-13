@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import {
   Button,
-  Card,
-  CardBody,
   CodeSnippet,
   ContentSwitcher,
   Header,
@@ -143,27 +141,39 @@ export function HomePage() {
             </div>
 
             <Theme theme={demoTheme} className="home-live-stage">
-              <Card>
-                <CardBody>
-                  <Stack gap={4}>
-                    <TextField
-                      label="Workspace name"
-                      description="Used in the address bar of every preview."
-                      placeholder="Octagon Studio"
-                    />
-                    <div className="home-live-row">
-                      <Button variant="primary" size="md">
-                        Create workspace
-                      </Button>
-                      <Button variant="ghost" size="md">
-                        Cancel
-                      </Button>
-                    </div>
-                  </Stack>
-                </CardBody>
-              </Card>
+              <div className="home-live-card">
+                <Stack gap={4}>
+                  <TextField
+                    label="Workspace name"
+                    description="Used in the address bar of every preview."
+                    placeholder="Octagon Studio"
+                  />
+                  <div className="home-live-row">
+                    <Button variant="primary" size="md">
+                      Create workspace
+                    </Button>
+                    <Button variant="ghost" size="md">
+                      Cancel
+                    </Button>
+                  </div>
+                </Stack>
+              </div>
             </Theme>
           </Layer>
+        </section>
+
+        <section className="home-proof" aria-label="What is measured">
+          {[
+            ["44px", "minimum control height"],
+            ["4.5:1", "contrast, both themes"],
+            ["1", "stylesheet, no runtime"],
+            ["326", "stories swept every release"],
+          ].map(([value, label]) => (
+            <p key={label} className="home-proof-item">
+              <span className="home-proof-value">{value}</span>
+              <span className="home-proof-label">{label}</span>
+            </p>
+          ))}
         </section>
 
         <section className="home-section" aria-labelledby="transition-heading">
@@ -178,8 +188,11 @@ export function HomePage() {
           </Stack>
 
           <ol className="home-sequence">
-            {TRANSITION.map((room) => (
+            {TRANSITION.map((room, index) => (
               <li key={room.name} className="home-sequence-item">
+                <span className="home-room-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <span className="home-room-head">
                   <h3 className="home-room-name">{room.name}</h3>
                   <span className="home-room" lang="fa" dir="rtl">
@@ -272,6 +285,13 @@ export function HomePage() {
           justify-content: flex-end;
           display: none;
         }
+        .home-nav a {
+          color: var(--hashti-text-secondary);
+        }
+        .home-nav a:hover,
+        .home-nav a:focus-visible {
+          color: var(--hashti-text-primary);
+        }
         @media (min-width: 60rem) {
           .home-nav {
             display: flex;
@@ -338,10 +358,52 @@ export function HomePage() {
           font-weight: 600;
           margin: 0;
         }
+        /* Two surfaces, not three: the specimen sits directly on the panel. */
         .home-live-stage {
-          padding: var(--hashti-spacing-03);
+          padding: 0;
           border-radius: var(--hashti-group-radius);
-          background: var(--hashti-background);
+          background: transparent;
+        }
+        /* The specimen is a window, not a card: one hairline, no shadow, no second radius. */
+        .home-live-card {
+          background: var(--hashti-layer);
+          border: 1px solid var(--hashti-border-subtle);
+          border-radius: var(--hashti-control-radius);
+          padding: var(--hashti-spacing-05);
+        }
+        .home-proof {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0;
+          margin: 0;
+          border-block-start: 1px solid var(--hashti-border-subtle);
+          border-block-end: 1px solid var(--hashti-border-subtle);
+        }
+        @media (min-width: 48rem) {
+          .home-proof {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+          }
+        }
+        .home-proof-item {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          margin: 0;
+          padding: var(--hashti-spacing-04) var(--hashti-spacing-04) var(--hashti-spacing-04) 0;
+        }
+        .home-proof-item + .home-proof-item {
+          border-inline-start: 1px solid var(--hashti-border-subtle);
+          padding-inline-start: var(--hashti-spacing-04);
+        }
+        .home-proof-value {
+          font-size: var(--hashti-subheading-03-font-size, 1.5rem);
+          font-weight: 600;
+          letter-spacing: -0.02em;
+          font-variant-numeric: tabular-nums;
+        }
+        .home-proof-label {
+          font-size: var(--hashti-helper-text-01-font-size);
+          color: var(--hashti-text-secondary);
         }
         /* The theme swap is a state change on screen: crossfade the ink instead of snapping. */
         .home-live-stage,
@@ -381,9 +443,7 @@ export function HomePage() {
           padding: 0;
           display: grid;
           gap: 0;
-          border-radius: var(--hashti-group-radius);
-          background: var(--hashti-layer-02);
-          overflow: clip;
+          border-block-start: 1px solid var(--hashti-border-subtle);
         }
         @media (min-width: 60rem) {
           .home-sequence {
@@ -404,6 +464,12 @@ export function HomePage() {
             border-block-start: 0;
             border-inline-start: 1px solid var(--hashti-border-subtle);
           }
+        }
+        .home-room-index {
+          font-size: var(--hashti-helper-text-01-font-size);
+          font-variant-numeric: tabular-nums;
+          color: var(--hashti-text-secondary);
+          letter-spacing: 0.08em;
         }
         .home-room {
           font-size: var(--hashti-heading-03-font-size);

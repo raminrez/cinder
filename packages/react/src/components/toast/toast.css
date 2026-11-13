@@ -8,8 +8,6 @@
       border-color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
       color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
       box-shadow var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
-    border-inline-start-width: 4px;
-    border-inline-start-style: solid;
   }
   [data-hashti-theme] .hashti-toast[data-focus-visible],
   [data-hashti-theme] .hashti-toast[data-focus-visible] {

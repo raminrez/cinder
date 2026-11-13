@@ -87,6 +87,7 @@ export function Alert(props: AlertProps) {
 
 export interface ActionableNotificationProps extends Omit<ComponentPropsWithRef<"div">, "title"> {
   kind?: NotificationKind;
+  variant?: NotificationVariant;
   title: ReactNode;
   action: ReactNode;
   onDismiss?: () => void;
@@ -97,6 +98,7 @@ export interface ActionableNotificationProps extends Omit<ComponentPropsWithRef<
 
 export function ActionableNotification({
   kind = "info",
+  variant = "subtle",
   title,
   action,
   onDismiss,
@@ -132,6 +134,7 @@ export function ActionableNotification({
       aria-labelledby={titleId}
       aria-describedby={children ? descId : undefined}
       data-kind={kind}
+      data-variant={variant}
       className={cx("hashti-actionable-notification", className)}
     >
       <Icon name={kind} size={20} />
