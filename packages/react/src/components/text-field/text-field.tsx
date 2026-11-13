@@ -1,10 +1,9 @@
 "use client";
 
-import type { Ref } from "react";
+import type { ReactNode, Ref } from "react";
 import {
   TextField as RACTextField,
   TextFieldContext,
-  useSlottedContext,
   type TextFieldProps as RACTextFieldProps,
 } from "react-aria-components";
 import {
@@ -12,7 +11,8 @@ import {
   FieldInput,
   FieldTextArea,
   FieldControl,
-  useFieldPresentation,
+  useFieldAnatomy,
+  fieldClassName,
   fieldParts,
   type FieldContentProps,
   type FieldPresentationProps,
@@ -33,23 +33,18 @@ function TextFieldRoot({
   isOptional,
   ...props
 }: TextFieldRootProps) {
-  const context = useSlottedContext(TextFieldContext, props.slot);
-  const presentation = useFieldPresentation(
+  const anatomy = useFieldAnatomy(
     { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
+    TextFieldContext as Parameters<typeof useFieldAnatomy>[1],
   );
   return (
     <RACTextField
       {...props}
-      {...presentation.props}
+      {...anatomy.props}
       data-size={size}
-      className={classes(
-        "hashti-field hashti-text-field hashti-field hashti-text-field",
-        className,
-      )}
+      className={classes(fieldClassName("text-field"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children as ReactNode)}
     </RACTextField>
   );
 }
@@ -102,10 +97,12 @@ export const TextField = Object.assign(TextFieldDefault, {
 });
 
 export interface TextAreaRootProps extends RACTextFieldProps, FieldPresentationProps {
+  size?: ControlSize;
   ref?: Ref<HTMLDivElement>;
 }
 
 function TextAreaRoot({
+  size = "md",
   className,
   children,
   status,
@@ -113,19 +110,18 @@ function TextAreaRoot({
   isOptional,
   ...props
 }: TextAreaRootProps) {
-  const context = useSlottedContext(TextFieldContext, props.slot);
-  const presentation = useFieldPresentation(
+  const anatomy = useFieldAnatomy(
     { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
+    TextFieldContext as Parameters<typeof useFieldAnatomy>[1],
   );
   return (
     <RACTextField
       {...props}
-      {...presentation.props}
-      className={classes("hashti-field hashti-text-area hashti-field hashti-text-area", className)}
+      {...anatomy.props}
+      data-size={size}
+      className={classes(fieldClassName("text-area"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children as ReactNode)}
     </RACTextField>
   );
 }
@@ -143,6 +139,7 @@ function TextAreaDefault({
   errorMessage,
   placeholder,
   rows = 4,
+  size = "md",
   inputRef,
   className,
   children,
@@ -151,6 +148,7 @@ function TextAreaDefault({
   return (
     <TextAreaRoot
       {...props}
+      size={size}
       className={className}
       data-hashti-input-icon={children == null ? "" : undefined}
     >

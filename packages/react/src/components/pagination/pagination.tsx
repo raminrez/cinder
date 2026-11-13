@@ -1,7 +1,8 @@
 import { useId, type ComponentPropsWithRef, type ReactNode } from "react";
 import { Button } from "../button";
+import { Field } from "../field";
 import { Icon } from "../../icons";
-import type { ControlSize } from "../../utils";
+import { cx, type ControlSize } from "../../utils";
 
 export interface NativeSelectProps extends Omit<ComponentPropsWithRef<"select">, "size"> {
   label: ReactNode;
@@ -23,13 +24,17 @@ export function NativeSelect({
   const descriptionId = description ? `${id}-description` : undefined;
   const errorId = errorMessage ? `${id}-error` : undefined;
   return (
-    <div
-      className={["hashti-field hashti-native-select", className].filter(Boolean).join(" ")}
+    <Field
+      className={cx("hashti-native-select", className)}
       data-size={size}
       data-disabled={props.disabled || undefined}
       data-invalid={Boolean(errorMessage) || undefined}
     >
-      <label htmlFor={id}>{label}</label>
+      <Field.Label htmlFor={id}>{label}</Field.Label>
+      {/* Guidance stays visible while recovery is shown: it sits outside the help row. */}
+      {description != null && (
+        <Field.Description id={descriptionId}>{description}</Field.Description>
+      )}
       <div className="hashti-native-select-control">
         <select
           {...props}
@@ -42,18 +47,12 @@ export function NativeSelect({
         />
         <Icon name="chevronDown" />
       </div>
-      {/* Guidance stays visible while recovery is shown. */}
-      {description && (
-        <span id={descriptionId} className="hashti-description">
-          {description}
-        </span>
+      {errorMessage != null && (
+        <Field.Help>
+          <Field.ErrorMessage id={errorId}>{errorMessage}</Field.ErrorMessage>
+        </Field.Help>
       )}
-      {errorMessage && (
-        <span id={errorId} role="alert" className="hashti-error-message">
-          {errorMessage}
-        </span>
-      )}
-    </div>
+    </Field>
   );
 }
 

@@ -6,7 +6,6 @@ import {
   ComboBoxValue,
   ComboBoxContext,
   ComboBoxStateContext,
-  useSlottedContext,
   ListBox as RACListBox,
   type ComboBoxProps as RACComboBoxProps,
   type ListBoxProps,
@@ -18,7 +17,8 @@ import {
   FieldControl,
   FieldGroupInput,
   FieldButton,
-  useFieldPresentation,
+  useFieldAnatomy,
+  fieldClassName,
   fieldParts,
   type FieldContentProps,
   type FieldPresentationProps,
@@ -43,20 +43,15 @@ function ComboBoxRoot<T, M extends SelectionMode = "single">({
   isOptional,
   ...props
 }: ComboBoxRootProps<T, M>) {
-  const context = useSlottedContext(ComboBoxContext, props.slot);
-  const presentation = useFieldPresentation(
-    { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
-  );
+  const anatomy = useFieldAnatomy({ ...props, status, statusVariant, isOptional }, ComboBoxContext);
   return (
     <RACComboBox<T, M>
       {...props}
-      {...presentation.props}
+      {...anatomy.props}
       data-size={size}
-      className={classes("hashti-field hashti-combobox hashti-field hashti-combobox", className)}
+      className={classes(fieldClassName("combobox"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children)}
     </RACComboBox>
   );
 }
