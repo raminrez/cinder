@@ -1100,9 +1100,6 @@
     }
     :scope.hashti-tooltip {
       border-radius: var(--hashti-control-radius);
-      /* The portaled tooltip carries the theme attribute itself, so the reset rule for
-         theme roots would otherwise paint primary ink on the inverse surface. */
-      color: var(--hashti-text-inverse);
     }
 
     /* Frame Accordion */
