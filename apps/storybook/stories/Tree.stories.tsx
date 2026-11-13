@@ -59,7 +59,7 @@ export const Playground: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const tree = canvas.getByRole("tree", { name: "Project file explorer" });
+    const tree = canvas.getByRole("treegrid", { name: "Project file explorer" });
     expect(tree).toBeInTheDocument();
     expect(canvas.getByText("src")).toBeInTheDocument();
   },
@@ -106,9 +106,9 @@ export const MultiSelectWithCheckboxes: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const tree = canvas.getByRole("tree", { name: "Department permissions" });
+    const tree = canvas.getByRole("treegrid", { name: "Department permissions" });
     expect(tree).toBeInTheDocument();
-    const items = canvas.getAllByRole("treeitem");
+    const items = canvas.getAllByRole("row");
     expect(items.length).toBeGreaterThanOrEqual(2);
   },
 };

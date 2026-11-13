@@ -89,9 +89,10 @@ function MultiFileWithLimitsExample() {
         </div>
         <FileUploader
           label="Verification documents"
-          description="Attach up to 10 files (PDF, PNG, JPG). Maximum 25 MB per file."
+          description="Attach PDF, PNG, or JPG files. Maximum 25 MB per file."
           acceptedFileTypes={[".pdf", ".png", ".jpg", ".jpeg"]}
           allowsMultiple
+          maxSize={25 * 1024 * 1024}
           files={files}
           onFilesChange={setFiles}
         />

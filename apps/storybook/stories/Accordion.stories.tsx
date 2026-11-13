@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
+import { expect, waitFor, within } from "storybook/test";
 import { Accordion, AccordionItem, Button, Theme, useTheme, type Key } from "@hashti/react";
 import "./navigation.css";
 
@@ -108,7 +108,9 @@ export const Sizes: Story = {
     const smTrigger = canvas.getByRole("button", { name: "Summary overview" });
     await userEvent.click(smTrigger);
     expect(smTrigger).toHaveAttribute("aria-expanded", "true");
-    expect(canvas.getByText("Metrics aggregated across 12 pods.")).toBeVisible();
+    await waitFor(() =>
+      expect(canvas.getByText("Metrics aggregated across 12 pods.")).toBeVisible(),
+    );
   },
 };
 
@@ -146,7 +148,7 @@ export const AllowsMultipleExpanded: Story = {
     await userEvent.click(trigger2);
     expect(trigger1).toHaveAttribute("aria-expanded", "true");
     expect(trigger2).toHaveAttribute("aria-expanded", "true");
-    expect(canvas.getByText(/64 vCPUs, 256GB ECC RAM/)).toBeVisible();
+    await waitFor(() => expect(canvas.getByText(/64 vCPUs, 256GB ECC RAM/)).toBeVisible());
   },
 };
 
@@ -242,10 +244,10 @@ export const LongContentAndLocales: Story = {
     const canvas = within(canvasElement);
 
     const dbTrigger = canvas.getByRole("button", { name: "تنظیمات پایگاه داده" });
-    expect(dbTrigger).toBeVisible();
+    await waitFor(() => expect(dbTrigger).toBeVisible());
 
     await userEvent.click(dbTrigger);
     expect(dbTrigger).toHaveAttribute("aria-expanded", "true");
-    expect(canvas.getByText(/پیکربندی خوشه‌های توزیع‌شده/)).toBeVisible();
+    await waitFor(() => expect(canvas.getByText(/پیکربندی خوشه‌های توزیع‌شده/)).toBeVisible());
   },
 };

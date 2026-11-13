@@ -160,7 +160,7 @@ export const Playground: Story = {
       expect(el).not.toBeNull();
       return el!;
     });
-    expect(dialog).toBeVisible();
+    await waitFor(() => expect(dialog).toBeVisible());
 
     const input = within(dialog).getByRole("searchbox", { name: "Search commands" });
     expect(input).toBeInTheDocument();
@@ -192,12 +192,14 @@ function EmptyStateExample() {
       >
         <CommandPalette.Dialog aria-label="Empty State Commands">
           <CommandPalette.Input />
-          <CommandPalette.List>
-            <CommandPalette.Empty
-              title="No commands found"
-              description="No tools or documents match your query."
-            />
-          </CommandPalette.List>
+          <CommandPalette.List
+            emptyContent={
+              <CommandPalette.Empty
+                title="No commands found"
+                description="No tools or documents match your query."
+              />
+            }
+          />
           <CommandPalette.Footer />
         </CommandPalette.Dialog>
       </CommandPalette>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
+import { expect, waitFor, within } from "storybook/test";
 import { FilterTag, Tag, TagGroup, Theme, useTheme, type Selection } from "@hashti/react";
 import "./navigation.css";
 
@@ -89,10 +89,10 @@ export const StaticBadges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.getByText("Healthy (green)")).toBeVisible();
-    expect(canvas.getByText("Incident (red)")).toBeVisible();
-    expect(canvas.getByText("Small badge (sm)")).toBeVisible();
-    expect(canvas.getByText("Medium badge (md - default)")).toBeVisible();
+    await waitFor(() => expect(canvas.getByText("Healthy (green)")).toBeVisible());
+    await waitFor(() => expect(canvas.getByText("Incident (red)")).toBeVisible());
+    await waitFor(() => expect(canvas.getByText("Small badge (sm)")).toBeVisible());
+    await waitFor(() => expect(canvas.getByText("Medium badge (md - default)")).toBeVisible());
   },
 };
 
@@ -123,7 +123,7 @@ export const RemovableTags: Story = {
     const canvas = within(canvasElement);
 
     const regionTag = await canvas.findByRole("row", { name: /Region: US-East/ });
-    expect(regionTag).toBeVisible();
+    await waitFor(() => expect(regionTag).toBeVisible());
 
     const removeBtn = within(regionTag).getByRole("button", { name: /Remove/ });
     await userEvent.click(removeBtn);
@@ -176,6 +176,6 @@ export const LongContentAndLocales: Story = {
 
     await userEvent.click(secTag);
     expect(secTag).toHaveAttribute("aria-selected", "true");
-    expect(canvas.getByText("فعال")).toBeVisible();
+    await waitFor(() => expect(canvas.getByText("فعال")).toBeVisible());
   },
 };

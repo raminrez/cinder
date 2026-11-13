@@ -34,13 +34,13 @@ export const Introduction: StoryObj = {
           <h1 style={{ fontSize: "2rem", fontWeight: 800, margin: 0, letterSpacing: "-0.03em" }}>
             هشتی Hashti Design System
           </h1>
-          <p style={{ margin: 0, color: "#71717a", fontSize: "0.95rem" }}>
+          <p style={{ margin: 0, color: "var(--hashti-text-secondary)", fontSize: "0.95rem" }}>
             hashti-storybook.raminrez.dev • hashti.raminrez.dev
           </p>
         </div>
       </div>
 
-      <p style={{ fontSize: "1.1rem", color: "#3f3f46", marginBottom: "2rem" }}>
+      <p style={{ fontSize: "1.1rem", color: "var(--hashti-text-primary)", marginBottom: "2rem" }}>
         Hashti is an enterprise-grade React component library inspired by the spatial elegance and
         structural harmony of classical Persian architecture. Built on{" "}
         <strong>React Aria Components (RAC 1.22.1)</strong> and zero-runtime scoped CSS, Hashti
@@ -51,17 +51,17 @@ export const Introduction: StoryObj = {
       {/* Portal Architecture */}
       <div
         style={{
-          border: "1px solid #e4e4e7",
+          border: "1px solid var(--hashti-border-subtle)",
           borderRadius: "1rem",
           padding: "1.5rem",
-          background: "#fafafa",
+          background: "var(--hashti-layer-02)",
           marginBottom: "2rem",
         }}
       >
         <h2 style={{ fontSize: "1.3rem", fontWeight: 700, marginTop: 0, marginBottom: "0.75rem" }}>
           🏛️ The Iranian Architectural Portal Concept
         </h2>
-        <p style={{ margin: "0 0 1rem 0", color: "#52525b" }}>
+        <p style={{ margin: "0 0 1rem 0", color: "var(--hashti-text-secondary)" }}>
           In traditional Persian architecture (Isfahan, Yazd, Kashan, Shiraz), the{" "}
           <strong>Hashti (هشتی)</strong> is a vaulted octagonal transitional vestibule situated
           immediately behind the entrance portal (<em>Sar-Dar</em>).
@@ -69,8 +69,8 @@ export const Introduction: StoryObj = {
         <div
           style={{
             fontFamily: "monospace",
-            background: "#18181b",
-            color: "#22d3ee",
+            background: "var(--hashti-text-primary)",
+            color: "var(--hashti-support-info-inverse)",
             padding: "1rem",
             borderRadius: "0.5rem",
             fontSize: "0.85rem",
@@ -96,18 +96,23 @@ export const Introduction: StoryObj = {
       >
         <div
           style={{
-            border: "1px solid #e4e4e7",
+            border: "1px solid var(--hashti-border-subtle)",
             borderRadius: "0.75rem",
             padding: "1.25rem",
-            background: "#ffffff",
+            background: "var(--hashti-layer-01)",
           }}
         >
           <h3
-            style={{ fontSize: "1rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "#08BDBA" }}
+            style={{
+              fontSize: "1rem",
+              fontWeight: 700,
+              margin: "0 0 0.5rem 0",
+              color: "var(--hashti-support-success)",
+            }}
           >
             1. Universal Accessibility (RAC 1.22.1)
           </h3>
-          <p style={{ margin: 0, fontSize: "0.9rem", color: "#52525b" }}>
+          <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--hashti-text-secondary)" }}>
             Full WAI-ARIA compliance, roving tabindex, arrow navigation, escape stacks, and
             screen-reader announcements.
           </p>
@@ -115,18 +120,23 @@ export const Introduction: StoryObj = {
 
         <div
           style={{
-            border: "1px solid #e4e4e7",
+            border: "1px solid var(--hashti-border-subtle)",
             borderRadius: "0.75rem",
             padding: "1.25rem",
-            background: "#ffffff",
+            background: "var(--hashti-layer-01)",
           }}
         >
           <h3
-            style={{ fontSize: "1rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "#D97706" }}
+            style={{
+              fontSize: "1rem",
+              fontWeight: 700,
+              margin: "0 0 0.5rem 0",
+              color: "var(--hashti-support-warning)",
+            }}
           >
             2. Zero Carbon Squareness
           </h3>
-          <p style={{ margin: 0, fontSize: "0.9rem", color: "#52525b" }}>
+          <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--hashti-text-secondary)" }}>
             Pure monochrome #000000/#FFFFFF canvas, arched curves, tactile spring
             micro-interactions, and Persian turquoise/amber glazes.
           </p>
@@ -134,18 +144,23 @@ export const Introduction: StoryObj = {
 
         <div
           style={{
-            border: "1px solid #e4e4e7",
+            border: "1px solid var(--hashti-border-subtle)",
             borderRadius: "0.75rem",
             padding: "1.25rem",
-            background: "#ffffff",
+            background: "var(--hashti-layer-01)",
           }}
         >
           <h3
-            style={{ fontSize: "1rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "#08BDBA" }}
+            style={{
+              fontSize: "1rem",
+              fontWeight: 700,
+              margin: "0 0 0.5rem 0",
+              color: "var(--hashti-support-success)",
+            }}
           >
             3. Compound Ergonomics
           </h3>
-          <p style={{ margin: 0, fontSize: "0.9rem", color: "#52525b" }}>
+          <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--hashti-text-secondary)" }}>
             Direct subcomponent composition (&lt;Select.Trigger&gt;, &lt;Select.Value&gt;,
             &lt;Select.Popover&gt;) inspired by HeroUI v3.
           </p>
@@ -153,18 +168,23 @@ export const Introduction: StoryObj = {
 
         <div
           style={{
-            border: "1px solid #e4e4e7",
+            border: "1px solid var(--hashti-border-subtle)",
             borderRadius: "0.75rem",
             padding: "1.25rem",
-            background: "#ffffff",
+            background: "var(--hashti-layer-01)",
           }}
         >
           <h3
-            style={{ fontSize: "1rem", fontWeight: 700, margin: "0 0 0.5rem 0", color: "#D97706" }}
+            style={{
+              fontSize: "1rem",
+              fontWeight: 700,
+              margin: "0 0 0.5rem 0",
+              color: "var(--hashti-support-warning)",
+            }}
           >
             4. Bidirectional Typography
           </h3>
-          <p style={{ margin: 0, fontSize: "0.9rem", color: "#52525b" }}>
+          <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--hashti-text-secondary)" }}>
             First-class pairing of <strong>Vazirmatn</strong> (Persian Nastaliq digital geometry)
             and <strong>Satoshi</strong> (modern Latin sans).
           </p>

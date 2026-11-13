@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, within } from "storybook/test";
+import { expect, waitFor, within } from "storybook/test";
 import {
   ContentSwitcher,
   Icon,
@@ -66,11 +66,11 @@ export const Playground: Story = {
     await userEvent.click(cardsRadio);
     expect(cardsRadio).toHaveAttribute("aria-checked", "true");
     expect(tableRadio).toHaveAttribute("aria-checked", "false");
-    expect(canvas.getByText("cards")).toBeVisible();
+    await waitFor(() => expect(canvas.getByText("cards")).toBeVisible());
 
     await userEvent.click(kanbanRadio);
     expect(kanbanRadio).toHaveAttribute("aria-checked", "true");
-    expect(canvas.getByText("kanban")).toBeVisible();
+    await waitFor(() => expect(canvas.getByText("kanban")).toBeVisible());
   },
 };
 

@@ -82,9 +82,9 @@ export const Playground: Story = {
   render: () => <PlaygroundDemo />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const dropzone = canvas.getByRole("region", { name: "Upload dataset drop area" });
-    expect(dropzone).toBeInTheDocument();
-    expect(dropzone).toHaveAttribute("data-variant", "dashed");
+    // RAC DropZone renders its label on a visually hidden focusable button, not a region.
+    const dropzone = canvas.getByRole("button", { name: "Upload dataset drop area" });
+    expect(dropzone.closest(".hashti-dropzone")).toHaveAttribute("data-variant", "dashed");
 
     const browseBtn = canvas.getByRole("button", { name: "Browse Files" });
     expect(browseBtn).toBeInTheDocument();
@@ -126,9 +126,15 @@ export const Variants: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const dashed = canvas.getByRole("region", { name: "Dashed drop zone" });
-    const solid = canvas.getByRole("region", { name: "Solid drop zone" });
-    const card = canvas.getByRole("region", { name: "Card drop zone" });
+    const dashed = canvas
+      .getByRole("button", { name: "Dashed drop zone" })
+      .closest(".hashti-dropzone")!;
+    const solid = canvas
+      .getByRole("button", { name: "Solid drop zone" })
+      .closest(".hashti-dropzone")!;
+    const card = canvas
+      .getByRole("button", { name: "Card drop zone" })
+      .closest(".hashti-dropzone")!;
 
     expect(dashed).toHaveAttribute("data-variant", "dashed");
     expect(solid).toHaveAttribute("data-variant", "solid");

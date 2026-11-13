@@ -37,7 +37,7 @@ export const Contribution: StoryObj = {
       >
         Contributing to Hashti
       </h1>
-      <p style={{ color: "#71717a", marginBottom: "2rem" }}>
+      <p style={{ color: "var(--hashti-text-secondary)", marginBottom: "2rem" }}>
         Architectural standards and component authoring guidelines for Hashti Design System
         contributors.
       </p>
@@ -45,25 +45,31 @@ export const Contribution: StoryObj = {
       {/* Component Folder Architecture */}
       <div
         style={{
-          border: "1px solid #e4e4e7",
+          border: "1px solid var(--hashti-border-subtle)",
           borderRadius: "1rem",
           padding: "1.5rem",
-          background: "#fafafa",
+          background: "var(--hashti-layer-02)",
           marginBottom: "2rem",
         }}
       >
         <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginTop: 0, marginBottom: "0.5rem" }}>
           📦 HeroUI v3 Modular Component Structure
         </h2>
-        <p style={{ color: "#52525b", fontSize: "0.95rem", margin: "0 0 1rem 0" }}>
+        <p
+          style={{
+            color: "var(--hashti-text-secondary)",
+            fontSize: "0.95rem",
+            margin: "0 0 1rem 0",
+          }}
+        >
           Every component in <code>packages/react/src/components/</code> maintains its own isolated
           folder:
         </p>
         <div
           style={{
             fontFamily: "monospace",
-            background: "#18181b",
-            color: "#f4f4f5",
+            background: "var(--hashti-text-primary)",
+            color: "var(--hashti-text-inverse)",
             padding: "1rem",
             borderRadius: "0.5rem",
             fontSize: "0.85rem",
@@ -91,7 +97,13 @@ export const Contribution: StoryObj = {
       <h2 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "0.75rem" }}>
         ✅ Pull Request Verification Checklist
       </h2>
-      <ul style={{ paddingLeft: "1.25rem", color: "#52525b", fontSize: "0.95rem" }}>
+      <ul
+        style={{
+          paddingLeft: "1.25rem",
+          color: "var(--hashti-text-secondary)",
+          fontSize: "0.95rem",
+        }}
+      >
         <li style={{ marginBottom: "0.5rem" }}>
           <strong>Unit Testing:</strong> <code>bun test tests/unit</code> passes with 0 failures.
         </li>

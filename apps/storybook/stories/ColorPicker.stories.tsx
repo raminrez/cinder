@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 import {
   ColorPicker,
   ColorArea,
@@ -40,16 +40,18 @@ export const Playground: Story = {
     const label = canvas.getByText("Accent Theme Color");
     expect(label).toBeInTheDocument();
 
-    const area = canvas.getByRole("group", { name: /color picker/i });
-    expect(area).toBeInTheDocument();
+    // RAC labels the 2D slider inputs, not the ColorArea group.
+    const areaSlider = canvas.getByRole("slider", { name: "Color picker" });
+    expect(areaSlider).toHaveAttribute("aria-roledescription", "2D slider");
 
     const hexInput = canvas.getByRole("textbox", { name: "Hex color" });
     expect(hexInput).toBeInTheDocument();
-    expect(hexInput).toHaveValue("#0F62FEFF");
+    expect(hexInput).toHaveValue("#0F62FE");
 
     await userEvent.clear(hexInput);
     await userEvent.type(hexInput, "da1e28");
-    expect(hexInput).toHaveValue("#DA1E28FF");
+    await userEvent.tab();
+    await waitFor(() => expect(hexInput).toHaveValue("#DA1E28"));
   },
 };
 
@@ -78,10 +80,10 @@ export const SwatchPicker: Story = {
 
     const crimsonSwatch = canvas.getByRole("option", { name: "Crimson Red" });
     expect(crimsonSwatch).toBeInTheDocument();
-    expect(crimsonSwatch).toHaveAttribute("data-selected", "false");
+    expect(crimsonSwatch).toHaveAttribute("aria-selected", "false");
 
     await userEvent.click(crimsonSwatch);
-    expect(crimsonSwatch).toHaveAttribute("data-selected", "true");
+    await waitFor(() => expect(crimsonSwatch).toHaveAttribute("aria-selected", "true"));
   },
 };
 
@@ -109,10 +111,10 @@ export const CustomComposition: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const wheel = canvas.getByRole("slider", { name: "Hue" });
+    const wheel = canvas.getByRole("slider", { name: "Hue ring" });
     expect(wheel).toBeInTheDocument();
 
-    const swatch = canvas.getByRole("img", { name: "Active selection" });
+    const swatch = canvas.getByRole("img", { name: /Active selection/ });
     expect(swatch).toBeInTheDocument();
   },
 };
@@ -174,8 +176,9 @@ export const SwatchGallery: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByRole("img", { name: "Blue Small" })).toBeInTheDocument();
-    expect(canvas.getByRole("img", { name: "Blue Large" })).toBeInTheDocument();
-    expect(canvas.getByRole("img", { name: "Red Circle" })).toBeInTheDocument();
+    // ColorSwatch prefixes the generated color name to the supplied aria-label.
+    expect(canvas.getByRole("img", { name: "vibrant cyan blue, Blue Small" })).toBeInTheDocument();
+    expect(canvas.getByRole("img", { name: "vibrant cyan blue, Blue Large" })).toBeInTheDocument();
+    expect(canvas.getByRole("img", { name: "vibrant red, Red Circle" })).toBeInTheDocument();
   },
 };

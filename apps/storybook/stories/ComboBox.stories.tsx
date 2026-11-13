@@ -125,7 +125,7 @@ export const AsyncOptions: Story = {
     const canvas = within(canvasElement);
     const input = canvas.getByRole("combobox", { name: /Service from the API/ });
     await waitFor(() => expect(input).not.toBeDisabled());
-    expect(canvas.getByText(/mocked endpoint/)).toBeVisible();
+    await waitFor(() => expect(canvas.getByText(/mocked endpoint/)).toBeVisible());
   },
 };
 
@@ -137,7 +137,7 @@ export const Playground: Story = {
     const input = canvas.getByRole("combobox", { name: /Cloud infrastructure service/ });
     expect(input).toHaveValue("Kubernetes Engine (GKE)");
 
-    const trigger = canvas.getByRole("button", { name: /Show suggestions/ });
+    const trigger = canvas.getByRole("button", { name: /Open items list/ });
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
@@ -149,7 +149,7 @@ export const Playground: Story = {
     const functionsOption = await within(popover).findByRole("option", {
       name: /Cloud Functions/,
     });
-    expect(functionsOption).toBeVisible();
+    await waitFor(() => expect(functionsOption).toBeVisible());
 
     await userEvent.click(functionsOption);
     expect(input).toHaveValue("Cloud Functions (Serverless)");
@@ -207,9 +207,9 @@ export const SizesAndStatus: Story = {
     const mdInput = canvas.getByRole("combobox", { name: /Medium \(md - default\) service/ });
     const lgInput = canvas.getByRole("combobox", { name: /Large \(lg\) service/ });
 
-    expect(smInput).toBeVisible();
-    expect(mdInput).toBeVisible();
-    expect(lgInput).toBeVisible();
+    await waitFor(() => expect(smInput).toBeVisible());
+    await waitFor(() => expect(mdInput).toBeVisible());
+    await waitFor(() => expect(lgInput).toBeVisible());
   },
 };
 
@@ -254,7 +254,7 @@ export const SectionsAndGroups: Story = {
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
 
-    const trigger = canvas.getByRole("button", { name: /Show suggestions/ });
+    const trigger = canvas.getByRole("button", { name: /Open items list/ });
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
@@ -266,7 +266,7 @@ export const SectionsAndGroups: Story = {
     const spannerOption = await within(popover).findByRole("option", {
       name: "Cloud Spanner",
     });
-    expect(spannerOption).toBeVisible();
+    await waitFor(() => expect(spannerOption).toBeVisible());
 
     await userEvent.click(spannerOption);
     const input = canvas.getByRole("combobox", { name: /Service category/ });
@@ -344,7 +344,9 @@ export const DisabledAndInvalid: Story = {
     const disabledInput = canvas.getByRole("combobox", { name: /Cluster zone \(Disabled\)/ });
     expect(disabledInput).toBeDisabled();
 
-    expect(canvas.getByText("Please select a cluster zone before continuing.")).toBeVisible();
+    await waitFor(() =>
+      expect(canvas.getByText("Please select a cluster zone before continuing.")).toBeVisible(),
+    );
   },
 };
 
@@ -387,7 +389,7 @@ export const LongContentAndLocales: Story = {
     const input = canvas.getByRole("combobox", { name: /ناحیه رایانش ابری/ });
     expect(input).toHaveValue("تهران (مرکز داده آسیاتک)");
 
-    const trigger = canvas.getByRole("button", { name: /Show suggestions/ });
+    const trigger = canvas.getByRole("button", { name: /Open items list/ });
     await userEvent.click(trigger);
 
     const popover = await waitFor(() => {
@@ -399,7 +401,7 @@ export const LongContentAndLocales: Story = {
     const shirazOption = await within(popover).findByRole("option", {
       name: /شیراز/,
     });
-    expect(shirazOption).toBeVisible();
+    await waitFor(() => expect(shirazOption).toBeVisible());
 
     await userEvent.click(shirazOption);
     expect(input).toHaveValue("شیراز (مرکز داده پارس)");
