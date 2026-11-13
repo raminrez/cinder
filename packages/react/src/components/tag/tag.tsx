@@ -36,6 +36,7 @@ export function Tag({ color = "gray", size = "md", className, style, ...props }:
   return (
     <span
       {...props}
+      data-slot="tag"
       data-size={size}
       className={["hashti-tag", className].filter(Boolean).join(" ")}
       style={

@@ -18,7 +18,11 @@ export interface DialogProps extends RACDialogProps {
 
 export function Dialog({ className, ...props }: DialogProps) {
   return (
-    <RACDialog {...props} className={["hashti-dialog", className].filter(Boolean).join(" ")} />
+    <RACDialog
+      {...props}
+      data-slot="root"
+      className={["hashti-dialog", className].filter(Boolean).join(" ")}
+    />
   );
 }
 

@@ -38,6 +38,7 @@ export function Modal({
       )}
     >
       <RACModal
+        data-slot="root"
         ref={ref}
         dir={resolvedDir}
         data-size={size}

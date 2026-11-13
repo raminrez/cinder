@@ -179,6 +179,7 @@ export function FieldLabel({
   const optional = isOptional ?? presentation.isOptional;
   const label = (
     <Label
+      data-slot="label"
       {...props}
       className={["hashti-field__label react-aria-Label", className].filter(Boolean).join(" ")}
     >
@@ -309,6 +310,7 @@ export function FieldStatusIcon({ className, ...props }: FieldStatusIconProps) {
     <Icon
       {...props}
       name={type}
+      data-slot="icon"
       data-hashti-status={type}
       aria-hidden="true"
       className={["hashti-field__status-icon", className].filter(Boolean).join(" ")}
@@ -320,6 +322,7 @@ export type FieldDescriptionProps = ComponentProps<typeof Text>;
 export function FieldDescription({ className, ...props }: FieldDescriptionProps) {
   return (
     <Text
+      data-slot="description"
       slot="description"
       {...props}
       className={["hashti-field__description react-aria-Text", className].filter(Boolean).join(" ")}
@@ -331,6 +334,7 @@ export type FieldErrorMessageProps = ComponentProps<typeof FieldError>;
 export function FieldErrorMessage({ className, ...props }: FieldErrorMessageProps) {
   return (
     <FieldError
+      data-slot="error"
       {...props}
       className={classes("hashti-field__error react-aria-FieldError", className)}
     />
@@ -342,6 +346,7 @@ export function FieldHelp({ className, ...props }: FieldHelpProps) {
   return (
     <div
       {...props}
+      data-slot="help"
       className={["hashti-field__help hashti-field-help", className].filter(Boolean).join(" ")}
     />
   );
@@ -372,7 +377,11 @@ export type FieldControlProps = ComponentProps<typeof Group>;
 export function FieldControl({ className, children, ...props }: FieldControlProps) {
   const context = useSlottedContext(GroupContext, props.slot);
   return (
-    <Group {...props} className={classes("hashti-field__control hashti-input-group", className)}>
+    <Group
+      {...props}
+      data-slot="control"
+      className={classes("hashti-field__control hashti-input-group", className)}
+    >
       {composeRenderProps(children === undefined ? context?.children : children, (content) => (
         <>
           {content}
