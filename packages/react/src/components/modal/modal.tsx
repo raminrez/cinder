@@ -5,8 +5,17 @@ import { Modal as RACModal, ModalOverlay, type ModalOverlayProps } from "react-a
 import { classes } from "../../utils";
 import { useOverlayTheme } from "../../theme";
 
+export type ModalBackdrop = "dim" | "blur" | "none";
+
 export interface ModalProps extends ModalOverlayProps {
   size?: "xs" | "sm" | "md" | "lg";
+  /**
+   * The scrim behind the surface. `dim` is DESIGN's `rgb(18 22 32 / 50%)` token, `blur` adds a
+   * 6px blur on top of it, `none` leaves the page untouched for surfaces with their own scrim.
+   *
+   * @default "dim"
+   */
+  backdrop?: ModalBackdrop;
   ref?: Ref<HTMLDivElement>;
   overlayClassName?: ModalOverlayProps["className"];
   overlayRef?: Ref<HTMLDivElement>;
@@ -15,6 +24,7 @@ export interface ModalProps extends ModalOverlayProps {
 
 export function Modal({
   size = "md",
+  backdrop = "dim",
   children,
   className,
   ref,
@@ -32,6 +42,7 @@ export function Modal({
       dir={resolvedDir}
       lang={props.lang ?? theme.lang}
       ref={overlayRef}
+      data-backdrop={backdrop}
       className={classes(
         "hashti-modal-overlay",
         classes(appearanceClassName ?? "", overlayClassName),

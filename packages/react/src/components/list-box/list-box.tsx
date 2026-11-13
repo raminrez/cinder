@@ -14,7 +14,6 @@ import {
   ListBoxLoadMoreItem as RACListBoxLoadMoreItem,
   Header as RACHeader,
   Button as RACButton,
-  Checkbox as RACCheckbox,
   type ListBoxProps as RACListBoxProps,
   type ListBoxItemProps as RACListBoxItemProps,
   type ListBoxSectionProps as RACListBoxSectionProps,
@@ -27,6 +26,7 @@ import {
   type CheckboxRenderProps,
 } from "react-aria-components";
 import { classes, cx, type ControlSize } from "../../utils";
+import { Checkbox } from "../checkbox";
 import { Icon } from "../../icons";
 
 export interface ListBoxContextValue {
@@ -173,13 +173,9 @@ export interface ListBoxCheckboxProps extends Omit<RACCheckboxProps, "className"
 
 export function ListBoxCheckbox({ className, children, ...props }: ListBoxCheckboxProps) {
   return (
-    <RACCheckbox
-      slot="selection"
-      {...props}
-      className={classes("hashti-listbox-checkbox", className)}
-    >
+    <Checkbox slot="selection" {...props} className={classes("hashti-listbox-checkbox", className)}>
       {children as any}
-    </RACCheckbox>
+    </Checkbox>
   );
 }
 
