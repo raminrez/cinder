@@ -2386,6 +2386,14 @@
       padding: var(--hashti-spacing-03) var(--hashti-spacing-04);
       background: var(--hashti-layer-01);
       gap: var(--hashti-spacing-03);
+      /* Toasts enter from the edge they leave by, and the queue can interrupt them. */
+      transition:
+        opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
+        translate 200ms cubic-bezier(0.23, 1, 0.32, 1);
+      @starting-style {
+        opacity: 0;
+        translate: 0 var(--hashti-spacing-03);
+      }
     }
     .hashti-toast[data-variant="subtle"],
     .hashti-toast:not([data-variant]) {

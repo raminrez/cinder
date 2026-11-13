@@ -80,8 +80,19 @@ describe("Carbon token parity", () => {
     expect(foundations["size-lg"]).toBe(layout.sizeLg);
     expect(foundations["body-01-font-size"]).toBe(typography.body01.fontSize);
     expect(foundations["label-01-line-height"]).toBe(typography.label01.lineHeight);
-    expect(foundations["duration-fast-02"]).toBe(motion.durationFast02);
     expect(foundations["ease-entrance-productive"]).toBe(motion.easings.entrance.productive);
+  });
+
+  // Frame times motion on the Astryx ladder, not Carbon's 70ms first step.
+  test("the duration ladder is 130/175/230/310/410/730", () => {
+    expect([
+      foundations["duration-fast-01"],
+      foundations["duration-fast-02"],
+      foundations["duration-moderate-01"],
+      foundations["duration-moderate-02"],
+      foundations["duration-slow-01"],
+      foundations["duration-slow-02"],
+    ]).toEqual(["130ms", "175ms", "230ms", "310ms", "410ms", "730ms"]);
   });
 
   test("every literal Cinder CSS variable reference has a definition", async () => {
@@ -236,7 +247,7 @@ test("all legacy theme values, foundations, and structured type definitions rema
     ),
   ).toEqual(legacyThemeHashes);
   expect(hash(foundations)).toBe(
-    "442f1ce5571189852a79a8539fb0a85a5a96ad67580b67c2cb554609b7ab76b9",
+    "14eb58e4ce4b0a38a93818c2be442cced510c96daa2d28d566a7a8236f4c64e5",
   );
   expect(hash(typeStyles)).toBe("c53c5406bad7a0d70e0f434b805d6fb4d771dfe04d1395c9dea558565e2c734c");
 });

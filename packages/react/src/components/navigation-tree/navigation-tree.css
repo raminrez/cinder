@@ -22,7 +22,11 @@
     color: var(--hashti-text-secondary, #525252);
     text-decoration: none;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
-    transition: all 150ms ease;
+    transition:
+      background-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hashti-navigation-tree-item-content[data-hovered],

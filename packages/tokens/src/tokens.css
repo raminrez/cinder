@@ -183,12 +183,12 @@
   --hashti-legal-02-font-weight: 400;
   --hashti-legal-02-line-height: 1.28572;
   --hashti-legal-02-letter-spacing: 0.16px;
-  --hashti-duration-fast-01: 70ms;
-  --hashti-duration-fast-02: 110ms;
-  --hashti-duration-moderate-01: 150ms;
-  --hashti-duration-moderate-02: 240ms;
-  --hashti-duration-slow-01: 400ms;
-  --hashti-duration-slow-02: 700ms;
+  --hashti-duration-fast-01: 130ms;
+  --hashti-duration-fast-02: 175ms;
+  --hashti-duration-moderate-01: 230ms;
+  --hashti-duration-moderate-02: 310ms;
+  --hashti-duration-slow-01: 410ms;
+  --hashti-duration-slow-02: 730ms;
   --hashti-ease-standard-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
   --hashti-ease-standard-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
   --hashti-ease-entrance-productive: cubic-bezier(0, 0, 0.38, 0.9);
