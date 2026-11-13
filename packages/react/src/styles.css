@@ -2,14 +2,9 @@
 @import "./components/select/select.css";
 @import "./components/combobox/combobox.css";
 @import "./components/color/color.css";
-@import "./components/command-palette/command-palette.css";
 @import "./components/token-field/token-field.css";
-@import "./components/sheet/sheet.css";
-@import "./components/preview-trigger/preview-trigger.css";
 @import "./components/tree/tree.css";
 @import "./components/grid-list/grid-list.css";
-@import "./components/list-box/list-box.css";
-@import "./components/autocomplete/autocomplete.css";
 @import "./components/modal/modal.css";
 @import "./components/dialog/dialog.css";
 @import "./components/popover/popover.css";
@@ -38,7 +33,6 @@
 @import "./components/kbd/kbd.css";
 @import "./components/empty-state/empty-state.css";
 @import "./components/avatar/avatar.css";
-@import "./components/table/table.css";
 @import "./components/theme/theme.css";
 
 @import "./layers.css";

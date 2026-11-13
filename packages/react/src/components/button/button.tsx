@@ -42,6 +42,7 @@ export function Button({
   return (
     <RACButton
       {...props}
+      data-slot="root"
       // A disabled Toolbar disables its actions, matching its presentation.
       isDisabled={props.isDisabled ?? toolbar.isDisabled}
       className={classes("hashti-button", className)}
