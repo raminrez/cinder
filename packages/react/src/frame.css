@@ -255,15 +255,16 @@
       ) {
       background: var(--hashti-button-disabled);
       border-color: var(--hashti-border-disabled);
-      color: var(--hashti-text-disabled);
+      color: var(--hashti-text-secondary);
     }
     .hashti-field[data-disabled] > :is(.hashti-field__label, .react-aria-Label),
     .hashti-field[data-disabled] > .hashti-field__label-row > .hashti-field__label,
     .hashti-field[data-disabled] .react-aria-SelectValue {
       color: var(--hashti-text-disabled);
     }
-    .hashti-field[data-disabled] [slot="description"] {
-      color: var(--hashti-text-helper);
+    .hashti-field[data-disabled] [slot="description"],
+    .hashti-field[data-disabled] > .hashti-field__description {
+      color: var(--hashti-text-disabled);
     }
     .hashti-input-group > .react-aria-Input {
       min-height: 0;
@@ -3724,17 +3725,24 @@
 @layer hashti.dark-elevation {
   /* Dark mode elevation: subtle inner hairline highlight */
   @scope ([data-hashti-theme="frame-dark"]) to ([data-hashti-theme]) {
+    /* --hashti-shadow is a colour, so it can only be used inside a shadow value, never as one. */
     .hashti-card,
+    .hashti-code-snippet {
+      box-shadow: inset 0 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
     .hashti-modal,
-    .hashti-command-palette-modal,
+    .hashti-command-palette-modal {
+      box-shadow:
+        inset 0 0 1px 0 rgba(255, 255, 255, 0.2),
+        0 18px 48px rgba(0, 0, 0, 0.55);
+    }
     :scope.hashti-popover,
     .hashti-select-popover,
     .hashti-date-popover,
-    .hashti-toast,
-    .hashti-code-snippet {
+    .hashti-toast {
       box-shadow:
         inset 0 0 1px 0 rgba(255, 255, 255, 0.2),
-        var(--hashti-shadow, 0 0 0 0 transparent);
+        0 8px 24px rgba(0, 0, 0, 0.5);
     }
     .hashti-card[data-elevation="raised"] {
       box-shadow:

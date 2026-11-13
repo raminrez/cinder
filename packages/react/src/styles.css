@@ -77,6 +77,11 @@
     flex-shrink: 0;
     vertical-align: middle;
   }
+  /* Selection follows the Frame selection pair instead of the platform default. */
+  :where([data-hashti-theme]) ::selection {
+    background: var(--hashti-layer-selected);
+    color: var(--hashti-text-primary);
+  }
   :where([data-hashti-theme]) [hidden] {
     display: none !important;
   }
