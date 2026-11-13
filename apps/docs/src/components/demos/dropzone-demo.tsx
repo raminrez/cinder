@@ -1,5 +1,22 @@
 import { useState } from "react";
-import { DropZone, FileTrigger, Button } from "@hashti/react";
+import { DropZone, FileTrigger, Button, FileUploader } from "@hashti/react";
+
+export function FileUploaderLiveDemo() {
+  const [files, setFiles] = useState<File[]>([]);
+
+  return (
+    <div className="w-full max-w-sm">
+      <FileUploader
+        label="Server certificate bundle"
+        description="Only PEM, CRT, or CER formats up to 5 MB are supported."
+        acceptedFileTypes={[".crt", ".pem", ".cer"]}
+        maxSize={5 * 1024 * 1024}
+        files={files}
+        onFilesChange={setFiles}
+      />
+    </div>
+  );
+}
 
 export function DropZoneLiveDemo() {
   const [droppedFiles, setDroppedFiles] = useState<string[]>([]);

@@ -9,6 +9,10 @@ import {
   Drawer,
   PreviewTrigger,
   DialogTrigger,
+  Menu,
+  MenuItem,
+  MenuTrigger,
+  Separator,
 } from "@hashti/react";
 
 export function DialogLiveDemo() {
@@ -83,6 +87,29 @@ export function PopoverLiveDemo() {
         </div>
       </Popover>
     </DialogTrigger>
+  );
+}
+
+export function MenuLiveDemo() {
+  const [action, setAction] = useState("None");
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <MenuTrigger>
+        <Button variant="secondary">Repository actions</Button>
+        <Popover>
+          <Menu onAction={(key) => setAction(String(key))}>
+            <MenuItem id="view">View details</MenuItem>
+            <MenuItem id="duplicate">Duplicate repository</MenuItem>
+            <MenuItem id="archive">Archive repository</MenuItem>
+            <Separator />
+            <MenuItem id="delete" data-danger>
+              Delete repository
+            </MenuItem>
+          </Menu>
+        </Popover>
+      </MenuTrigger>
+      <span className="text-sm text-neutral-500">Last action: {action}</span>
+    </div>
   );
 }
 
