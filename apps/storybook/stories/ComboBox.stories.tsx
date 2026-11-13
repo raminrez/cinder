@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Header } from "react-aria-components";
 import { expect, waitFor, within } from "storybook/test";
 import { ComboBox, ListBoxItem, ListBoxSection, Theme, useTheme, type Key } from "@hashti/react";
+import { http, HttpResponse } from "msw";
 import "./fields.css";
 
 const meta = {
@@ -52,6 +53,81 @@ function PlaygroundExample() {
     </div>
   );
 }
+
+interface Service {
+  id: string;
+  name: string;
+}
+
+function AsyncComboBoxExample() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/services", { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json() as Promise<{ services: Service[] }>;
+      })
+      .then((payload) => {
+        setServices(payload.services);
+        setState("ready");
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setState("error");
+      });
+    return () => controller.abort();
+  }, []);
+
+  return (
+    <div className="field-story-stack">
+      <ComboBox
+        label="Service from the API"
+        description={
+          state === "loading"
+            ? "Loading services from /api/services..."
+            : state === "error"
+              ? "The service catalog could not be loaded."
+              : "Served by a mocked endpoint in this story."
+        }
+        isInvalid={state === "error"}
+        placeholder={state === "loading" ? "Loading..." : "Search services..."}
+        items={services}
+        isDisabled={state !== "ready"}
+      >
+        {(item: Service) => (
+          <ListBoxItem id={item.id} textValue={item.name}>
+            {item.name}
+          </ListBoxItem>
+        )}
+      </ComboBox>
+    </div>
+  );
+}
+
+export const AsyncOptions: Story = {
+  render: () => <AsyncComboBoxExample />,
+  beforeEach({ msw }) {
+    msw.use(
+      http.get("/api/services", () =>
+        HttpResponse.json({
+          services: [
+            { id: "vertex", name: "Vertex AI" },
+            { id: "bigquery", name: "BigQuery" },
+            { id: "spanner", name: "Cloud Spanner" },
+          ],
+        }),
+      ),
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("combobox", { name: /Service from the API/ });
+    await waitFor(() => expect(input).not.toBeDisabled());
+    expect(canvas.getByText(/mocked endpoint/)).toBeVisible();
+  },
+};
 
 export const Playground: Story = {
   render: () => <PlaygroundExample />,

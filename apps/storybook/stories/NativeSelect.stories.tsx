@@ -7,6 +7,7 @@ import "./fields.css";
 const meta = {
   title: "Fields/NativeSelect",
   component: NativeSelect,
+  tags: ["a11y:gap"],
   parameters: {
     docs: {
       description: {

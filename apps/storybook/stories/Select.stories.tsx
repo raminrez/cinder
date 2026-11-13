@@ -19,6 +19,8 @@ import "./fields.css";
 const meta = {
   title: "Fields/Select",
   component: Select,
+  // Multi-select chip remove targets are 16px and skipped by tab order.
+  tags: ["a11y:gap"],
   args: {
     label: "Workspace role",
     description: "Select the permission profile assigned to this teammate.",

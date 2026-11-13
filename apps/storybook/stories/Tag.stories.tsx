@@ -7,6 +7,7 @@ import "./navigation.css";
 const meta = {
   title: "Navigation/Tag",
   component: TagGroup,
+  tags: ["a11y:gap"],
   parameters: {
     docs: {
       description: {
