@@ -5130,6 +5130,20 @@
       transition: none !important;
       scroll-behavior: auto !important;
     }
+    /* Instant state changes still jump: drop the press and entry transforms too. */
+    :where([data-hashti-theme])
+      :is(
+        .hashti-button,
+        .hashti-toggle-button,
+        .hashti-tile--clickable,
+        .hashti-tile--selectable
+      ):active,
+    :where([data-hashti-theme]) .hashti-card[data-interactive]:active,
+    :where([data-hashti-theme]) .hashti-checkbox[data-pressed] .hashti-checkbox-control,
+    :where([data-hashti-theme]) .hashti-radio[data-pressed] .hashti-radio-control,
+    :where([data-hashti-theme]) .react-aria-CalendarCell[data-pressed] {
+      transform: none !important;
+    }
   }
   @media (forced-colors: active) {
     .hashti-field__status-icon {

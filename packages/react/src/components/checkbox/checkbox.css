@@ -19,7 +19,11 @@
     border-radius: 6px;
     border: 2px solid var(--hashti-border-strong, #8d8d8d);
     background-color: var(--hashti-field, #ffffff);
-    transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
     color: #ffffff;
   }
 
