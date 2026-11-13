@@ -143,19 +143,19 @@ export function HomePage() {
             <Theme theme={demoTheme} className="home-live-stage">
               <div className="home-live-card">
                 <Stack gap={4}>
-                    <TextField
-                      label="Workspace name"
-                      description="Used in the address bar of every preview."
-                      placeholder="Octagon Studio"
-                    />
-                    <div className="home-live-row">
-                      <Button variant="primary" size="md">
-                        Create workspace
-                      </Button>
-                      <Button variant="ghost" size="md">
-                        Cancel
-                      </Button>
-                    </div>
+                  <TextField
+                    label="Workspace name"
+                    description="Used in the address bar of every preview."
+                    placeholder="Octagon Studio"
+                  />
+                  <div className="home-live-row">
+                    <Button variant="primary" size="md">
+                      Create workspace
+                    </Button>
+                    <Button variant="ghost" size="md">
+                      Cancel
+                    </Button>
+                  </div>
                 </Stack>
               </div>
             </Theme>
