@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "storybook/test";
-import {
-  Disclosure,
-  DisclosureGroup,
-  Button,
-} from "@hashti/react";
+import { Disclosure, DisclosureGroup } from "@hashti/react";
 import "./navigation.css";
 
 const meta = {
@@ -33,8 +29,8 @@ export const Playground: Story = {
         </Disclosure.Trigger>
         <Disclosure.Panel>
           <p style={{ margin: 0 }}>
-            Strict Mutual TLS (mTLS) enforcement requires valid client certificates on every request.
-            Revocation lists are cached locally and refreshed every 15 minutes.
+            Strict Mutual TLS (mTLS) enforcement requires valid client certificates on every
+            request. Revocation lists are cached locally and refreshed every 15 minutes.
           </p>
         </Disclosure.Panel>
       </Disclosure>
@@ -178,7 +174,8 @@ export const Grouped: Story = {
             <Disclosure.Indicator />
           </Disclosure.Trigger>
           <Disclosure.Panel>
-            Billing cycles renew on the first calendar day of every month with pro-rated adjustments.
+            Billing cycles renew on the first calendar day of every month with pro-rated
+            adjustments.
           </Disclosure.Panel>
         </Disclosure>
 
@@ -197,7 +194,9 @@ export const Grouped: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const q1 = canvas.getByRole("button", { name: /How do billing cycles work\?/ });
-    const q2 = canvas.getByRole("button", { name: /Can I migrate across clusters with zero downtime\?/ });
+    const q2 = canvas.getByRole("button", {
+      name: /Can I migrate across clusters with zero downtime\?/,
+    });
 
     expect(q1).toHaveAttribute("aria-expanded", "true");
     expect(q2).toHaveAttribute("aria-expanded", "false");

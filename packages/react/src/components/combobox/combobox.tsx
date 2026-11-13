@@ -68,7 +68,7 @@ function ComboBoxValuePart<T>({
   return (
     <ComboBoxValue<T>
       {...props}
-      className={classes("hashti-combobox-values hashti-combobox-values react-aria-ComboBoxValue", className)}
+      className={classes("hashti-combobox-values react-aria-ComboBoxValue", className)}
     />
   );
 }
@@ -78,10 +78,7 @@ export interface ComboBoxCreateItemProps {
   className?: string;
 }
 
-export function ComboBoxCreateItem({
-  onCreateItem,
-  className,
-}: ComboBoxCreateItemProps) {
+export function ComboBoxCreateItem({ onCreateItem, className }: ComboBoxCreateItemProps) {
   const state = useContext(ComboBoxStateContext);
   if (!state) return null;
 
@@ -102,7 +99,7 @@ export function ComboBoxCreateItem({
       role="button"
       tabIndex={0}
       data-testid="combobox-create-item"
-      className={cx("hashti-combobox-create-item hashti-combobox-create-item", className)}
+      className={cx("hashti-combobox-create-item", className)}
       onClick={() => {
         onCreateItem?.(trimmed);
         state.close();
@@ -115,9 +112,7 @@ export function ComboBoxCreateItem({
         }
       }}
     >
-      <span className="hashti-combobox-create-item-text hashti-combobox-create-item-text">
-        Create &quot;{trimmed}&quot;
-      </span>
+      <span className="hashti-combobox-create-item-text">Create &quot;{trimmed}&quot;</span>
     </div>
   );
 }
@@ -174,8 +169,8 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
 
                   if (multipleDisplay === "badge") {
                     return (
-                      <span className="hashti-combobox-multi-badge-wrapper hashti-combobox-multi-badge-wrapper">
-                        <span className="hashti-badge hashti-badge" data-kind="info">
+                      <span className="hashti-combobox-multi-badge-wrapper">
+                        <span className="hashti-badge" data-kind="info">
                           {itemsList.length} selected
                         </span>
                       </span>
@@ -184,35 +179,28 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
 
                   if (multipleDisplay === "chips") {
                     return (
-                      <div className="hashti-combobox-chips-wrapper hashti-combobox-chips-wrapper">
+                      <div className="hashti-combobox-chips-wrapper">
                         {itemsList.map((item, idx) => {
-                          const text = item?.textValue ?? item?.name ?? item?.rendered ?? String(item?.id ?? item);
+                          const text =
+                            item?.textValue ??
+                            item?.name ??
+                            item?.rendered ??
+                            String(item?.id ?? item);
                           const key = item?.id ?? item?.key ?? idx;
                           return (
                             <span
                               key={key}
-                              className="hashti-tag hashti-tag hashti-combobox-chip hashti-combobox-chip"
+                              className="hashti-tag hashti-combobox-chip"
                               data-size="sm"
                               role="presentation"
                             >
                               <span>{text}</span>
                               <span
-                                role="button"
-                                tabIndex={-1}
-                                aria-label={`Remove ${text}`}
-                                className="hashti-combobox-chip-remove hashti-combobox-chip-remove"
+                                aria-hidden="true"
+                                className="hashti-combobox-chip-remove"
                                 onPointerDown={(e) => {
                                   e.stopPropagation();
                                   e.preventDefault();
-                                }}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter" || e.key === " ") {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    const currentKeys = new Set(state.selectionManager.selectedKeys);
-                                    currentKeys.delete(key);
-                                    state.selectionManager.setSelectedKeys(currentKeys);
-                                  }
                                 }}
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -236,8 +224,10 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
           </ComboBoxValuePart>
         )}
       </FieldLayout>
-      <Popover offset={6} className="hashti-combobox-popover hashti-combobox-popover">
-        <RACListBox items={items} className="hashti-combobox-listbox hashti-combobox-listbox react-aria-ListBox">{children}</RACListBox>
+      <Popover offset={6} className="hashti-combobox-popover">
+        <RACListBox items={items} className="hashti-combobox-listbox react-aria-ListBox">
+          {children}
+        </RACListBox>
         {allowCreateItem && <ComboBoxCreateItem onCreateItem={onCreateItem} />}
       </Popover>
     </ComboBoxRoot>

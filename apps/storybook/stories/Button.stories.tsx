@@ -313,12 +313,10 @@ export const SaveAndRetry: Story = {
 };
 
 function CustomButton(args: ButtonProps) {
-  const ref = useRef<HTMLButtonElement>(null);
   return (
     <div className="action-story-row">
       <Button
         {...args}
-        ref={ref}
         className={({ isPressed }) =>
           `action-story-custom-button${isPressed ? " action-story-custom-button--pressed" : ""}`
         }
@@ -335,7 +333,11 @@ function CustomButton(args: ButtonProps) {
           </>
         )}
       </Button>
-      <Button variant="ghost" onPress={() => ref.current?.focus()}>
+      {/* No JSX ref: Storybook's source serializer reads element.ref, which React 19 deprecates. */}
+      <Button
+        variant="ghost"
+        onPress={() => document.querySelector<HTMLButtonElement>("[data-custom-render]")?.focus()}
+      >
         Focus save action
       </Button>
     </div>

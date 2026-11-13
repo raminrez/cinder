@@ -19,6 +19,8 @@ import "./fields.css";
 const meta = {
   title: "Fields/Select",
   component: Select,
+  // Multi-select chip remove targets are 16px and skipped by tab order.
+  tags: ["a11y:gap"],
   args: {
     label: "Workspace role",
     description: "Select the permission profile assigned to this teammate.",
@@ -190,7 +192,7 @@ export const States: Story = {
 
     await userEvent.click(trigger);
     const option = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="editor"]');
+      const opt = document.querySelector<HTMLElement>('[role="option"][data-key="editor"]');
       expect(opt).not.toBeNull();
       return opt!;
     });
@@ -243,16 +245,14 @@ export const RichOptionsAndSections: Story = {
     await userEvent.click(trigger);
 
     const lockedOption = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>(
-        '.react-aria-ListBoxItem[data-key="prod-dr"]',
-      );
+      const opt = document.querySelector<HTMLElement>('[role="option"][data-key="prod-dr"]');
       expect(opt).not.toBeNull();
       return opt!;
     });
     await expect(lockedOption).toHaveAttribute("aria-disabled", "true");
 
     const liveOption = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="prod-1"]');
+      const opt = document.querySelector<HTMLElement>('[role="option"][data-key="prod-1"]');
       expect(opt).not.toBeNull();
       return opt!;
     });
@@ -324,7 +324,7 @@ export const ControlledAndUncontrolled: Story = {
     const trigger = canvas.getByRole("button", { name: /Managed workspace role/ });
     await userEvent.click(trigger);
     const viewerOption = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="viewer"]');
+      const opt = document.querySelector<HTMLElement>('[role="option"][data-key="viewer"]');
       expect(opt).not.toBeNull();
       return opt!;
     });
@@ -413,7 +413,7 @@ export const CompositionAndFormData: Story = {
     const roleTrigger = canvas.getByRole("button", { name: /Mandatory member role/ });
     await userEvent.click(roleTrigger);
     const editorOpt = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="editor"]');
+      const opt = document.querySelector<HTMLElement>('[role="option"][data-key="editor"]');
       expect(opt).not.toBeNull();
       return opt!;
     });
@@ -423,7 +423,7 @@ export const CompositionAndFormData: Story = {
     const teamTrigger = canvas.getByRole("button", { name: /Assigned development team/ });
     await userEvent.click(teamTrigger);
     const coreOpt = await waitFor(() => {
-      const opt = document.querySelector<HTMLElement>('.react-aria-ListBoxItem[data-key="core"]');
+      const opt = document.querySelector<HTMLElement>('[role="option"][data-key="core"]');
       expect(opt).not.toBeNull();
       return opt!;
     });
@@ -553,5 +553,56 @@ export const LongContentAndLocales: Story = {
     await waitFor(async () => {
       await expect(within(persianTrigger).getByText("ویرایشگر محتوا و گردش‌کار")).toBeVisible();
     });
+  },
+};
+
+function MultipleSelectionExample() {
+  const [selected, setSelected] = useState<Key[]>(["admin"]);
+  return (
+    <div className="field-story-stack">
+      <Select
+        label="Reviewer roles"
+        description="Remove a role with its chip or with Backspace."
+        selectionMode="multiple"
+        value={selected}
+        onChange={(keys) => setSelected(Array.isArray(keys) ? [...keys] : [])}
+        items={standardRoles}
+      >
+        {(item) => (
+          <ListBoxItem id={item.id} textValue={item.name}>
+            {item.name}
+          </ListBoxItem>
+        )}
+      </Select>
+      <output aria-label="Selected roles">{selected.join(", ") || "none"}</output>
+    </div>
+  );
+}
+
+export const MultipleSelection: Story = {
+  render: () => <MultipleSelectionExample />,
+  play: async ({ canvasElement, userEvent }) => {
+    const canvas = within(canvasElement);
+    const output = canvas.getByRole("status", { name: "Selected roles" });
+    const trigger = canvas.getByRole("button", { name: /Reviewer roles/ });
+
+    await userEvent.click(trigger);
+    const editor = await waitFor(() =>
+      within(document.body).getByRole("option", { name: /Editor/ }),
+    );
+    await userEvent.click(editor);
+    await userEvent.keyboard("{Escape}");
+    await waitFor(async () => await expect(output).toHaveTextContent("admin, editor"));
+
+    const chips = trigger.querySelectorAll<HTMLElement>(".hashti-select-chip");
+    await expect(chips).toHaveLength(2);
+    // The chip remove affordance is pointer-only by construction; the pointer path works.
+    await userEvent.click(chips[1]!.querySelector<HTMLElement>(".hashti-select-chip-remove")!);
+    await waitFor(async () => await expect(output).toHaveTextContent("admin"));
+
+    // And Backspace, the keyboard path, drops the last remaining chip.
+    await trigger.focus();
+    await userEvent.keyboard("{Backspace}");
+    await waitFor(async () => await expect(output).toHaveTextContent("none"));
   },
 };

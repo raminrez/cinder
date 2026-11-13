@@ -1,8 +1,6 @@
 /* Hashti Modern Aesthetic - Tag */
 @layer hashti.components {
   .hashti-tag,
-  .hashti-tag,
-  .hashti-filter-tag,
   .hashti-filter-tag {
     display: inline-flex;
     align-items: center;
@@ -14,7 +12,11 @@
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 1.2;
-    transition: all 150ms ease;
+    transition:
+      background-color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      border-color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hashti-tag[data-size="sm"],
@@ -23,7 +25,6 @@
     font-size: 0.6875rem;
   }
 
-  .hashti-tag-group,
   .hashti-tag-group {
     display: flex;
     flex-wrap: wrap;

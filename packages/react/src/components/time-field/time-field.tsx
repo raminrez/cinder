@@ -49,7 +49,10 @@ function DateFieldRoot<T extends DateValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-date-field hashti-field hashti-date-field", className)}
+      className={classes(
+        "hashti-field hashti-date-field hashti-field hashti-date-field",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACDateField>
@@ -124,7 +127,10 @@ function TimeFieldRoot<T extends TimeValue>({
       {...props}
       {...presentation.props}
       data-size={size}
-      className={classes("hashti-field hashti-time-field hashti-field hashti-date-field", className)}
+      className={classes(
+        "hashti-field hashti-time-field hashti-field hashti-date-field",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACTimeField>

@@ -136,7 +136,7 @@ export const Sizes: Story = {
       expect(el).not.toBeNull();
       return el!;
     });
-    await expect(dialog).toBeVisible();
+    await waitFor(() => expect(dialog).toBeVisible());
 
     const closeBtn = within(dialog).getByRole("button", { name: "Close size dialog" });
     await userEvent.click(closeBtn);
@@ -303,14 +303,14 @@ export const NestedSelect: Story = {
       expect(el).not.toBeNull();
       return el!;
     });
-    await expect(popover).toBeVisible();
+    await waitFor(() => expect(popover).toBeVisible());
 
     // First Escape: closes nested Select popover, modal remains open!
     await userEvent.keyboard("{Escape}");
     await waitFor(() => {
       expect(document.querySelector(".hashti-select-popover")).toBeNull();
     });
-    await expect(modal).toBeVisible();
+    await waitFor(() => expect(modal).toBeVisible());
     await waitFor(() => expect(selectTrigger).toHaveFocus());
 
     // Second Escape: closes Modal, focus returns to original trigger!
@@ -521,7 +521,9 @@ export const LongContentAndLocales: Story = {
       expect(el).not.toBeNull();
       return el!;
     });
-    await expect(within(modal).getByRole("heading", { name: "تأیید عملیات حساس" })).toBeVisible();
+    await waitFor(() =>
+      expect(within(modal).getByRole("heading", { name: "تأیید عملیات حساس" })).toBeVisible(),
+    );
 
     const cancelBtn = within(modal).getByRole("button", { name: "انصراف" });
     await userEvent.click(cancelBtn);

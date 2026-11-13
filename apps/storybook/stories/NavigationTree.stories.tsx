@@ -21,42 +21,24 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {
   render: () => (
     <div style={{ maxWidth: 320 }}>
-      <NavigationTree
-        aria-label="Docs Navigation"
-        selectedRoute="/docs/components/navigation-tree"
-      >
+      <NavigationTree aria-label="Docs Navigation" selectedRoute="/docs/components/navigation-tree">
         <NavigationTree.Section>
           <NavigationTree.Header>Getting Started</NavigationTree.Header>
-          <NavigationTree.Item
-            id="intro"
-            href="/docs/intro"
-            textValue="Introduction"
-          >
+          <NavigationTree.Item id="intro" href="/docs/intro" textValue="Introduction">
             <NavigationTree.Content>Introduction</NavigationTree.Content>
           </NavigationTree.Item>
-          <NavigationTree.Item
-            id="quickstart"
-            href="/docs/quickstart"
-            textValue="Quick Start"
-          >
+          <NavigationTree.Item id="quickstart" href="/docs/quickstart" textValue="Quick Start">
             <NavigationTree.Content>Quick Start</NavigationTree.Content>
           </NavigationTree.Item>
         </NavigationTree.Section>
         <NavigationTree.Section>
           <NavigationTree.Header>Components</NavigationTree.Header>
-          <NavigationTree.Item
-            id="collections"
-            textValue="Collections"
-          >
+          <NavigationTree.Item id="collections" textValue="Collections">
             <NavigationTree.Content>
               <NavigationTree.Indicator />
               <span>Collections</span>
             </NavigationTree.Content>
-            <NavigationTree.Item
-              id="listbox"
-              href="/docs/components/listbox"
-              textValue="ListBox"
-            >
+            <NavigationTree.Item id="listbox" href="/docs/components/listbox" textValue="ListBox">
               <NavigationTree.Content>ListBox</NavigationTree.Content>
             </NavigationTree.Item>
             <NavigationTree.Item

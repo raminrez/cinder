@@ -1,11 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within, userEvent } from "storybook/test";
-import {
-  TokenField,
-  TokenFieldValue,
-  Icon,
-} from "@hashti/react";
+import { TokenField, TokenFieldValue, Icon } from "@hashti/react";
 import "./fields.css";
 
 const meta = {
@@ -45,7 +41,9 @@ function PlaygroundExample() {
         value={value}
         onChange={setValue}
       />
-      <div style={{ marginTop: "1rem", fontSize: "0.8125rem", color: "var(--hashti-text-secondary)" }}>
+      <div
+        style={{ marginTop: "1rem", fontSize: "0.8125rem", color: "var(--hashti-text-secondary)" }}
+      >
         Current serialized value: <code>{value.toString()}</code>
       </div>
     </div>
@@ -99,7 +97,9 @@ function CompoundExample() {
             </TokenField.Token>
           )}
         </TokenField.Input>
-        <TokenField.Description>Click the remove button on any token to delete it.</TokenField.Description>
+        <TokenField.Description>
+          Click the remove button on any token to delete it.
+        </TokenField.Description>
         <TokenField.ErrorMessage />
       </TokenField.Root>
       <div data-testid="token-count" style={{ marginTop: "0.5rem", fontSize: "0.8125rem" }}>
@@ -167,31 +167,11 @@ export const SizesAndStates: Story = {
 
     return (
       <div className="field-story-stack" style={{ display: "grid", gap: "1.5rem" }}>
-        <TokenField
-          label="Small Size (sm)"
-          size="sm"
-          value={sampleVal}
-        />
-        <TokenField
-          label="Medium Size (md - default)"
-          size="md"
-          value={sampleVal}
-        />
-        <TokenField
-          label="Large Size (lg)"
-          size="lg"
-          value={sampleVal}
-        />
-        <TokenField
-          label="Disabled State"
-          isDisabled
-          value={sampleVal}
-        />
-        <TokenField
-          label="Read-Only State"
-          isReadOnly
-          value={sampleVal}
-        />
+        <TokenField label="Small Size (sm)" size="sm" value={sampleVal} />
+        <TokenField label="Medium Size (md - default)" size="md" value={sampleVal} />
+        <TokenField label="Large Size (lg)" size="lg" value={sampleVal} />
+        <TokenField label="Disabled State" isDisabled value={sampleVal} />
+        <TokenField label="Read-Only State" isReadOnly value={sampleVal} />
       </div>
     );
   },

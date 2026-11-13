@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  type ComponentProps,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { createContext, useContext, type ComponentProps, type ReactNode, type Ref } from "react";
 import {
   Sheet as RACSheet,
   SheetBackdrop as RACSheetBackdrop,
@@ -55,8 +49,8 @@ export function SheetOverlay({
         position={position}
         preventDismissal={preventDismissal}
         className={classes(
-          "hashti-sheet-overlay",
-          classes(appearanceClassName ?? "", className)
+          "react-aria-SheetOverlay hashti-sheet-overlay",
+          classes(appearanceClassName ?? "", className),
         )}
       >
         {children}
@@ -80,7 +74,7 @@ export function SheetBackdrop({
       {...props}
       ref={ref}
       swipeAnimation={swipeAnimation}
-      className={classes("hashti-sheet-backdrop", className)}
+      className={classes("react-aria-SheetBackdrop hashti-sheet-backdrop", className)}
     />
   );
 }
@@ -89,17 +83,12 @@ export interface SheetContentProps extends RACSheetContentProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export function SheetContent({
-  className,
-  children,
-  ref,
-  ...props
-}: SheetContentProps) {
+export function SheetContent({ className, children, ref, ...props }: SheetContentProps) {
   return (
     <RACSheetContent
       {...props}
       ref={ref}
-      className={cx("hashti-sheet-content", className)}
+      className={cx("react-aria-SheetContent", "hashti-sheet-content", className)}
     >
       {children}
     </RACSheetContent>
@@ -111,13 +100,7 @@ export interface SheetHandleProps extends ComponentProps<"div"> {
 }
 
 export function SheetHandle({ className, ...props }: SheetHandleProps) {
-  return (
-    <div
-      aria-hidden="true"
-      {...props}
-      className={cx("hashti-sheet-handle", className)}
-    />
-  );
+  return <div aria-hidden="true" {...props} className={cx("hashti-sheet-handle", className)} />;
 }
 
 export interface SheetRootProps extends RACSheetProps {
@@ -140,7 +123,7 @@ export function SheetRoot({
       ref={ref}
       overscrollPadding={overscrollPadding}
       stackAnimation={stackAnimation}
-      className={classes("hashti-sheet", className)}
+      className={classes("react-aria-Sheet hashti-sheet", className)}
     >
       {(renderProps) => (
         <>

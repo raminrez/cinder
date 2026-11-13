@@ -1,20 +1,14 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  type ReactNode,
-  type Ref,
-} from "react";
+import { createContext, useContext, type ReactNode, type Ref } from "react";
 import {
   DisclosureGroup,
-  Disclosure,
-  DisclosurePanel,
   Heading,
   type DisclosureGroupProps,
   type DisclosureProps,
 } from "react-aria-components";
 import { Button } from "../button";
+import { DisclosureRoot, DisclosurePanel } from "../disclosure";
 import { Icon } from "../../icons";
 import { classes, type ControlSize } from "../../utils";
 
@@ -31,7 +25,7 @@ export function Accordion({ size = "md", className, ...props }: AccordionProps) 
       <DisclosureGroup
         {...props}
         data-size={size}
-        className={classes("hashti-accordion hashti-accordion", className)}
+        className={classes("hashti-accordion", className)}
       />
     </AccordionSizeContext.Provider>
   );
@@ -53,21 +47,14 @@ export function AccordionItem({
 }: AccordionItemProps) {
   const size = useContext(AccordionSizeContext);
   return (
-    <Disclosure {...props} className={classes("hashti-accordion-item hashti-accordion-item", className)}>
+    <DisclosureRoot {...props} className={classes("hashti-accordion-item", className)}>
       <Heading level={headingLevel}>
-        <Button
-          slot="trigger"
-          variant="ghost"
-          size={size}
-          className="hashti-accordion-trigger hashti-accordion-trigger"
-        >
+        <Button slot="trigger" variant="ghost" size={size} className="hashti-accordion-trigger">
           <Icon name="chevronRight" />
           <span>{title}</span>
         </Button>
       </Heading>
-      <DisclosurePanel className="hashti-accordion-panel hashti-accordion-panel">
-        {children}
-      </DisclosurePanel>
-    </Disclosure>
+      <DisclosurePanel className="hashti-accordion-panel">{children}</DisclosurePanel>
+    </DisclosureRoot>
   );
 }

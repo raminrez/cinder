@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
+import { useListData } from "react-aria-components";
+import { useDragAndDrop } from "react-aria-components/useDragAndDrop";
 import { ListBox } from "@hashti/react";
 
 const meta = {
@@ -87,27 +89,7 @@ export const GroupedWithSections: Story = {
 };
 
 export const Reorderable: Story = {
-  render: () => (
-    <div style={{ maxWidth: 360 }}>
-      <ListBox aria-label="Prioritized backlog" selectionMode="multiple" variant="bordered">
-        <ListBox.Item id="item-1" textValue="High Priority Item">
-          <ListBox.DragHandle aria-label="Drag High Priority Item" />
-          <ListBox.Checkbox aria-label="Select High Priority Item" />
-          <span>High Priority Item</span>
-        </ListBox.Item>
-        <ListBox.Item id="item-2" textValue="Medium Priority Item">
-          <ListBox.DragHandle aria-label="Drag Medium Priority Item" />
-          <ListBox.Checkbox aria-label="Select Medium Priority Item" />
-          <span>Medium Priority Item</span>
-        </ListBox.Item>
-        <ListBox.Item id="item-3" textValue="Low Priority Item">
-          <ListBox.DragHandle aria-label="Drag Low Priority Item" />
-          <ListBox.Checkbox aria-label="Select Low Priority Item" />
-          <span>Low Priority Item</span>
-        </ListBox.Item>
-      </ListBox>
-    </div>
-  ),
+  render: () => <ReorderableExample />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const listbox = canvas.getByRole("listbox", { name: "Prioritized backlog" });
@@ -117,18 +99,60 @@ export const Reorderable: Story = {
   },
 };
 
+// The option is the list's single focus stop: React Aria reorders from it (Enter, then
+// arrows), so no second focusable drag button is nested inside it.
+function ReorderableExample() {
+  const list = useListData({
+    initialItems: [
+      { id: "item-1", name: "High Priority Item" },
+      { id: "item-2", name: "Medium Priority Item" },
+      { id: "item-3", name: "Low Priority Item" },
+    ],
+  });
+  const { dragAndDropHooks } = useDragAndDrop({
+    getItems: (keys, items: typeof list.items) =>
+      items.map((item) => ({ "text/plain": item.name })),
+    onReorder(event) {
+      if (event.target.dropPosition === "before") {
+        list.moveBefore(event.target.key, event.keys);
+      } else if (event.target.dropPosition === "after") {
+        list.moveAfter(event.target.key, event.keys);
+      }
+    },
+  });
+  return (
+    <div style={{ maxWidth: 360 }}>
+      <ListBox
+        aria-label="Prioritized backlog"
+        selectionMode="multiple"
+        variant="bordered"
+        items={list.items}
+        dragAndDropHooks={dragAndDropHooks}
+      >
+        {(item) => (
+          <ListBox.Item id={item.id} textValue={item.name}>
+            {item.name}
+          </ListBox.Item>
+        )}
+      </ListBox>
+    </div>
+  );
+}
+
 export const InfiniteScrollingLoadMore: Story = {
   render: () => (
     <div style={{ maxWidth: 360 }}>
       <ListBox aria-label="Infinite server logs" variant="bordered">
-        <ListBox.Item id="log-1" textValue="Log 1">Server initialized on port 3000</ListBox.Item>
-        <ListBox.Item id="log-2" textValue="Log 2">Connected to database pool</ListBox.Item>
-        <ListBox.Item id="log-3" textValue="Log 3">Loaded environment configuration</ListBox.Item>
-        <ListBox.LoadMore
-          id="load-more-logs"
-          isLoading={true}
-          label="Loading more logs…"
-        />
+        <ListBox.Item id="log-1" textValue="Log 1">
+          Server initialized on port 3000
+        </ListBox.Item>
+        <ListBox.Item id="log-2" textValue="Log 2">
+          Connected to database pool
+        </ListBox.Item>
+        <ListBox.Item id="log-3" textValue="Log 3">
+          Loaded environment configuration
+        </ListBox.Item>
+        <ListBox.LoadMore id="load-more-logs" isLoading={true} label="Loading more logs…" />
       </ListBox>
     </div>
   ),

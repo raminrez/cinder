@@ -29,14 +29,10 @@ export interface CheckboxProps extends RACCheckboxProps {
 
 export function Checkbox({ children, className, color, ...props }: CheckboxProps) {
   return (
-    <RACCheckbox
-      {...props}
-      data-color={color}
-      className={classes("hashti-checkbox hashti-checkbox", className)}
-    >
+    <RACCheckbox {...props} data-color={color} className={classes("hashti-checkbox", className)}>
       {composeRenderProps(children, (content, state) => (
         <>
-          <span className="hashti-checkbox-control hashti-checkbox-control" aria-hidden="true">
+          <span className="hashti-checkbox-control" aria-hidden="true">
             {state.isIndeterminate ? (
               <Icon name="minus" />
             ) : state.isSelected ? (
@@ -75,7 +71,10 @@ function CheckboxGroupRoot({
       {...props}
       {...presentation.props}
       data-color={color}
-      className={classes("hashti-field hashti-checkbox-group hashti-field hashti-checkbox-group", className)}
+      className={classes(
+        "hashti-field hashti-checkbox-group hashti-field hashti-checkbox-group",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACCheckboxGroup>

@@ -1,12 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import {
-  Loading,
-  InlineLoading,
-  Skeleton,
-  Theme,
-  useTheme,
-} from "@hashti/react";
+import { Loading, InlineLoading, Skeleton, Theme, useTheme } from "@hashti/react";
 import "./feedback.css";
 
 const meta = {
@@ -38,21 +32,37 @@ function PlaygroundExample() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
           <div>
-            <span style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.75rem", color: "var(--hashti-text-secondary)" }}>
+            <span
+              style={{
+                display: "block",
+                marginBottom: "0.5rem",
+                fontSize: "0.75rem",
+                color: "var(--hashti-text-secondary)",
+              }}
+            >
               Large Spinner
             </span>
             <Loading size="lg" label="Synchronizing cloud resources" />
           </div>
 
           <div>
-            <span style={{ display: "block", marginBottom: "0.5rem", fontSize: "0.75rem", color: "var(--hashti-text-secondary)" }}>
+            <span
+              style={{
+                display: "block",
+                marginBottom: "0.5rem",
+                fontSize: "0.75rem",
+                color: "var(--hashti-text-secondary)",
+              }}
+            >
               Small Spinner
             </span>
             <Loading size="sm" label="Fetching data" />
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "1rem" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "1rem" }}
+        >
           <InlineLoading status="active">Deploying changes to worker nodes…</InlineLoading>
           <InlineLoading status="success">Deployment finished successfully</InlineLoading>
           <InlineLoading status="error">Build process encountered an error</InlineLoading>
@@ -114,11 +124,15 @@ function LongContentAndLocalesExample() {
         <div dir="rtl" className="feedback-card">
           <div>
             <h4 className="feedback-card-title">نشانگرهای بارگذاری به زبان فارسی</h4>
-            <p className="feedback-card-description">نمایش وضعیت عملیات‌های در حال اجرا در محیط راست‌به‌چپ</p>
+            <p className="feedback-card-description">
+              نمایش وضعیت عملیات‌های در حال اجرا در محیط راست‌به‌چپ
+            </p>
           </div>
 
           <InlineLoading status="active">در حال دریافت اطلاعات از سرور مرکزی…</InlineLoading>
-          <InlineLoading status="success">اطلاعات حساب کاربری با موفقیت به‌روزرسانی شد</InlineLoading>
+          <InlineLoading status="success">
+            اطلاعات حساب کاربری با موفقیت به‌روزرسانی شد
+          </InlineLoading>
           <InlineLoading status="error">خطا در بارگذاری داده‌ها</InlineLoading>
         </div>
       </Theme>

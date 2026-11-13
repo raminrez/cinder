@@ -18,10 +18,7 @@ export interface DialogProps extends RACDialogProps {
 
 export function Dialog({ className, ...props }: DialogProps) {
   return (
-    <RACDialog
-      {...props}
-      className={["hashti-dialog hashti-dialog", className].filter(Boolean).join(" ")}
-    />
+    <RACDialog {...props} className={["hashti-dialog", className].filter(Boolean).join(" ")} />
   );
 }
 
@@ -60,18 +57,24 @@ export function AlertDialog({
   const bodyContent = children ?? description;
 
   return (
-    <Modal {...props} dir={dir} size="sm" isDismissable={false} className={classes("hashti-alert-modal hashti-alert-modal", className)}>
-      <Dialog role="alertdialog" className="hashti-alert-dialog hashti-alert-dialog" ref={ref}>
+    <Modal
+      {...props}
+      dir={dir}
+      size="sm"
+      isDismissable={false}
+      className={classes("hashti-alert-modal", className)}
+    >
+      <Dialog role="alertdialog" className="hashti-alert-dialog" ref={ref}>
         {({ close }) => (
           <>
-            <div className="hashti-alert-dialog-header hashti-alert-dialog-header" data-kind={kind}>
+            <div className="hashti-alert-dialog-header" data-kind={kind}>
               <Icon name={iconName} size={24} />
               <div>
                 <Heading slot="title">{title}</Heading>
               </div>
             </div>
-            {bodyContent && <div className="hashti-alert-dialog-body hashti-alert-dialog-body">{bodyContent}</div>}
-            <div className="hashti-alert-dialog-footer hashti-alert-dialog-footer">
+            {bodyContent && <div className="hashti-alert-dialog-body">{bodyContent}</div>}
+            <div className="hashti-alert-dialog-footer">
               <Button
                 variant="secondary"
                 onPress={() => {

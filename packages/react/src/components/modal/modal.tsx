@@ -1,11 +1,7 @@
 "use client";
 
 import type { Ref } from "react";
-import {
-  Modal as RACModal,
-  ModalOverlay,
-  type ModalOverlayProps,
-} from "react-aria-components";
+import { Modal as RACModal, ModalOverlay, type ModalOverlayProps } from "react-aria-components";
 import { classes } from "../../utils";
 import { useOverlayTheme } from "../../theme";
 
@@ -37,7 +33,7 @@ export function Modal({
       lang={props.lang ?? theme.lang}
       ref={overlayRef}
       className={classes(
-        "hashti-modal-overlay hashti-modal-overlay",
+        "hashti-modal-overlay",
         classes(appearanceClassName ?? "", overlayClassName),
       )}
     >
@@ -45,7 +41,7 @@ export function Modal({
         ref={ref}
         dir={resolvedDir}
         data-size={size}
-        className={classes("hashti-modal hashti-modal", className)}
+        className={classes("hashti-modal", className)}
         style={modalStyle}
       >
         {children}

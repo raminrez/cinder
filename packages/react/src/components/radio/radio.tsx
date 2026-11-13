@@ -45,7 +45,10 @@ function RadioGroupRoot({
       {...props}
       {...presentation.props}
       data-color={color}
-      className={classes("hashti-field hashti-radio-group hashti-field hashti-radio-group", className)}
+      className={classes(
+        "hashti-field hashti-radio-group hashti-field hashti-radio-group",
+        className,
+      )}
     >
       {presentation.wrap(children, context?.children)}
     </RACRadioGroup>
@@ -54,10 +57,7 @@ function RadioGroupRoot({
 
 function RadioOptions({ className, ...props }: ComponentProps<"div">) {
   return (
-    <div
-      {...props}
-      className={["hashti-radio-options hashti-radio-options", className].filter(Boolean).join(" ")}
-    />
+    <div {...props} className={["hashti-radio-options", className].filter(Boolean).join(" ")} />
   );
 }
 
@@ -98,14 +98,10 @@ export interface RadioProps extends RACRadioProps {
 
 export function Radio({ className, children, color, ...props }: RadioProps) {
   return (
-    <RACRadio
-      {...props}
-      data-color={color}
-      className={classes("hashti-radio hashti-radio", className)}
-    >
+    <RACRadio {...props} data-color={color} className={classes("hashti-radio", className)}>
       {composeRenderProps(children, (content) => (
         <>
-          <span className="hashti-radio-control hashti-radio-control" aria-hidden="true" />
+          <span className="hashti-radio-control" aria-hidden="true" />
           <span>{content}</span>
         </>
       ))}

@@ -68,14 +68,11 @@ export function CommandPaletteRoot({
 
   const setIsOpen = useCallback(
     (nextOpen: boolean | ((prev: boolean) => boolean)) => {
-      setUncontrolledIsOpen((current) => {
-        const actualCurrent = controlledIsOpen !== undefined ? controlledIsOpen : current;
-        const value = typeof nextOpen === "function" ? nextOpen(actualCurrent) : nextOpen;
-        onOpenChange?.(value);
-        return controlledIsOpen === undefined ? value : current;
-      });
+      const value = typeof nextOpen === "function" ? nextOpen(isOpen) : nextOpen;
+      onOpenChange?.(value);
+      if (controlledIsOpen === undefined) setUncontrolledIsOpen(value);
     },
-    [controlledIsOpen, onOpenChange],
+    [controlledIsOpen, isOpen, onOpenChange],
   );
 
   const [uncontrolledQuery, setUncontrolledQuery] = useState(defaultQuery);
@@ -316,8 +313,10 @@ export function CommandPaletteGroup({
   );
 }
 
-export interface CommandPaletteItemProps<T extends object = object>
-  extends Omit<ListBoxItemProps<T>, "children" | "onAction"> {
+export interface CommandPaletteItemProps<T extends object = object> extends Omit<
+  ListBoxItemProps<T>,
+  "children" | "onAction"
+> {
   icon?: ReactNode;
   shortcut?: string | string[];
   addon?: ReactNode;
@@ -354,18 +353,12 @@ export function CommandPaletteItem<T extends object = object>({
       : cx("hashti-command-palette__item", className);
 
   return (
-    <ListBox.Item
-      {...props}
-      onAction={handleAction}
-      className={resolvedClassName}
-    >
+    <ListBox.Item {...props} onAction={handleAction} className={resolvedClassName}>
       <div className="hashti-command-palette__item-content">
         {icon && <span className="hashti-command-palette__item-icon">{icon}</span>}
         <div className="hashti-command-palette__item-text">
           <span className="hashti-command-palette__item-title">{children}</span>
-          {description && (
-            <span className="hashti-command-palette__item-desc">{description}</span>
-          )}
+          {description && <span className="hashti-command-palette__item-desc">{description}</span>}
         </div>
       </div>
       {(shortcut || addon) && (
@@ -394,11 +387,7 @@ export function CommandPaletteEmpty({
   description,
 }: CommandPaletteEmptyProps) {
   if (children) {
-    return (
-      <div className={cx("hashti-command-palette__empty", className)}>
-        {children}
-      </div>
-    );
+    return <div className={cx("hashti-command-palette__empty", className)}>{children}</div>;
   }
 
   return (
@@ -406,12 +395,8 @@ export function CommandPaletteEmpty({
       <div className="hashti-command-palette__empty-icon" aria-hidden="true">
         {icon ?? <Icon name="search" size={24} />}
       </div>
-      <div className="hashti-command-palette__empty-title">
-        {title ?? "No results found"}
-      </div>
-      {description && (
-        <div className="hashti-command-palette__empty-desc">{description}</div>
-      )}
+      <div className="hashti-command-palette__empty-title">{title ?? "No results found"}</div>
+      {description && <div className="hashti-command-palette__empty-desc">{description}</div>}
     </div>
   );
 }
@@ -421,16 +406,9 @@ export interface CommandPaletteFooterProps {
   className?: string;
 }
 
-export function CommandPaletteFooter({
-  children,
-  className,
-}: CommandPaletteFooterProps) {
+export function CommandPaletteFooter({ children, className }: CommandPaletteFooterProps) {
   if (children) {
-    return (
-      <footer className={cx("hashti-command-palette__footer", className)}>
-        {children}
-      </footer>
-    );
+    return <footer className={cx("hashti-command-palette__footer", className)}>{children}</footer>;
   }
 
   return (

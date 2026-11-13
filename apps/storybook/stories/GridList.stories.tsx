@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
-import {
-  GridList,
-  Tag,
-} from "@hashti/react";
+import { GridList, Tag } from "@hashti/react";
 
 const meta = {
   title: "Collections/GridList",
@@ -85,9 +82,7 @@ export const EmptyState: Story = {
     <div style={{ maxWidth: 480 }}>
       <GridList
         aria-label="Empty task queue"
-        renderEmptyState={() => (
-          <GridList.EmptyState>No pending tasks found.</GridList.EmptyState>
-        )}
+        renderEmptyState={() => <GridList.EmptyState>No pending tasks found.</GridList.EmptyState>}
       >
         {[]}
       </GridList>
