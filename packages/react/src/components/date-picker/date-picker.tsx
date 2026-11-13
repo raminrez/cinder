@@ -15,7 +15,6 @@ import {
   DateSegment,
   DatePickerContext,
   DateRangePickerContext,
-  useSlottedContext,
   type CalendarProps as RACCalendarProps,
   type RangeCalendarProps as RACRangeCalendarProps,
   type DatePickerProps as RACDatePickerProps,
@@ -31,7 +30,8 @@ import {
   FieldControl,
   FieldButton,
   FieldGroupDateInput,
-  useFieldPresentation,
+  useFieldAnatomy,
+  fieldClassName,
   fieldParts,
   type FieldContentProps,
   type FieldPresentationProps,
@@ -82,10 +82,7 @@ export function RangeCalendar<T extends DateValue>({
   return (
     <RACRangeCalendar
       {...props}
-      className={classes(
-        "hashti-calendar hashti-range-calendar hashti-calendar hashti-range-calendar",
-        className,
-      )}
+      className={classes("hashti-calendar hashti-range-calendar", className)}
     >
       {children ?? <CalendarContent />}
     </RACRangeCalendar>
@@ -111,23 +108,18 @@ function DatePickerRoot<T extends DateValue>({
   isOptional,
   ...props
 }: DatePickerRootProps<T>) {
-  const context = useSlottedContext(DatePickerContext, props.slot);
-  const presentation = useFieldPresentation(
+  const anatomy = useFieldAnatomy(
     { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
+    DatePickerContext,
   );
   return (
     <RACDatePicker<T>
       {...props}
-      {...presentation.props}
+      {...anatomy.props}
       data-size={size}
-      className={classes(
-        "hashti-field hashti-date-picker hashti-field hashti-date-picker",
-        className,
-      )}
+      className={classes(fieldClassName("date-picker"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children)}
     </RACDatePicker>
   );
 }
@@ -201,23 +193,18 @@ function DateRangePickerRoot<T extends DateValue>({
   isOptional,
   ...props
 }: DateRangePickerRootProps<T>) {
-  const context = useSlottedContext(DateRangePickerContext, props.slot);
-  const presentation = useFieldPresentation(
+  const anatomy = useFieldAnatomy(
     { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
+    DateRangePickerContext,
   );
   return (
     <RACDateRangePicker<T>
       {...props}
-      {...presentation.props}
+      {...anatomy.props}
       data-size={size}
-      className={classes(
-        "hashti-field hashti-date-range-picker hashti-field hashti-date-range-picker",
-        className,
-      )}
+      className={classes(fieldClassName("date-range-picker"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children)}
     </RACDateRangePicker>
   );
 }

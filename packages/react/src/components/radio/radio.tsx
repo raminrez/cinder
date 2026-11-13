@@ -5,7 +5,6 @@ import {
   RadioGroup as RACRadioGroup,
   Radio as RACRadio,
   RadioGroupContext,
-  useSlottedContext,
   composeRenderProps,
   type RadioProps as RACRadioProps,
   type RadioGroupProps as RACRadioGroupProps,
@@ -13,7 +12,8 @@ import {
 import { classes } from "../../utils";
 import {
   FieldLayout,
-  useFieldPresentation,
+  fieldClassName,
+  useFieldAnatomy,
   fieldParts,
   type FieldContentProps,
   type FieldPresentationProps,
@@ -34,23 +34,19 @@ function RadioGroupRoot({
   color,
   ...props
 }: RadioGroupRootProps) {
-  const context = useSlottedContext(RadioGroupContext, props.slot);
-  const presentation = useFieldPresentation(
+  const anatomy = useFieldAnatomy(
     { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
+    RadioGroupContext,
     "detached",
   );
   return (
     <RACRadioGroup
       {...props}
-      {...presentation.props}
+      {...anatomy.props}
       data-color={color}
-      className={classes(
-        "hashti-field hashti-radio-group hashti-field hashti-radio-group",
-        className,
-      )}
+      className={classes(fieldClassName("radio-group"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children)}
     </RACRadioGroup>
   );
 }

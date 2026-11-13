@@ -11,13 +11,10 @@ import {
   type TokenInputProps as AriaTokenInputProps,
   type TokenProps as AriaTokenProps,
 } from "react-aria-components/TokenField";
-import { useSlottedContext } from "react-aria-components";
 import {
-  FieldLabel,
-  FieldDescription,
-  FieldErrorMessage,
-  FieldHelp,
-  useFieldPresentation,
+  useFieldAnatomy,
+  fieldClassName,
+  fieldParts,
   type FieldPresentationProps,
   FieldLayout,
   type FieldContentProps,
@@ -66,11 +63,9 @@ export function TokenFieldRoot<T extends TokenFieldValue = TokenFieldValue>({
   ref,
   ...props
 }: TokenFieldRootProps<T>) {
-  const context = useSlottedContext(AriaTokenFieldContext, props.slot);
-  const presentation = useFieldPresentation(
+  const anatomy = useFieldAnatomy(
     { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
+    AriaTokenFieldContext,
   );
   const resolvedAllowsNewlines = multiline || allowsNewlines;
 
@@ -86,20 +81,20 @@ export function TokenFieldRoot<T extends TokenFieldValue = TokenFieldValue>({
     >
       <AriaTokenField<T>
         {...props}
-        {...presentation.props}
+        {...anatomy.props}
         ref={ref}
         allowsNewlines={resolvedAllowsNewlines}
         data-size={size}
         data-multiline={multiline || undefined}
         className={classes(
           cx(
-            "hashti-field hashti-token-field",
+            fieldClassName("token-field"),
             multiline ? "hashti-token-field--multiline" : undefined,
           ),
           className,
         )}
       >
-        {(presentation.wrap as any)(children, context?.children)}
+        {anatomy.wrap(children, anatomy.slotted?.children)}
       </AriaTokenField>
     </TokenFieldContext.Provider>
   );
@@ -263,8 +258,5 @@ export const TokenField = Object.assign(TokenFieldDefault, {
   Root: TokenFieldRoot,
   Input: TokenFieldInput,
   Token: TokenFieldToken,
-  Label: FieldLabel,
-  Description: FieldDescription,
-  ErrorMessage: FieldErrorMessage,
-  Help: FieldHelp,
+  ...fieldParts,
 });

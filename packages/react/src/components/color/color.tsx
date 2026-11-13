@@ -13,7 +13,6 @@ import {
   ColorWheel as RACColorWheel,
   ColorWheelTrack as RACColorWheelTrack,
   Input,
-  Label,
   SliderOutput,
   SliderTrack,
   parseColor,
@@ -40,6 +39,7 @@ import {
   type ColorWheelTrackRenderProps,
 } from "react-aria-components";
 import { Icon } from "../../icons";
+import { Field } from "../field";
 import { classes, cx, type ControlSize } from "../../utils";
 
 function normalizeColor(color: string | Color | undefined): Color | undefined {
@@ -126,7 +126,7 @@ export function ColorSlider({
           <>
             {(label || showOutput) && (
               <div className="hashti-color-slider__header">
-                {label && <Label className="hashti-color-slider__label">{label}</Label>}
+                {label && <Field.Label className="hashti-color-slider__label">{label}</Field.Label>}
                 {showOutput && <SliderOutput className="hashti-color-slider__output" />}
               </div>
             )}
@@ -223,7 +223,7 @@ export function ColorField({ className, label, children, ref, ...props }: ColorF
         }
         return (
           <>
-            {label && <Label className="hashti-color-field__label">{label}</Label>}
+            {label && <Field.Label className="hashti-color-field__label">{label}</Field.Label>}
             <Input className="hashti-color-field__input" />
           </>
         );
@@ -394,7 +394,7 @@ export function ColorPickerConvenience({
         }
         return (
           <div className={cx("hashti-color-picker", className)}>
-            {label && <Label className="hashti-color-picker__label">{label}</Label>}
+            {label && <Field.Label className="hashti-color-picker__label">{label}</Field.Label>}
             <ColorArea
               colorSpace="hsb"
               xChannel="saturation"

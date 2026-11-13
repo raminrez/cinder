@@ -6,7 +6,6 @@ import {
   SelectStateContext,
   SelectValue,
   SelectContext,
-  useSlottedContext,
   ListBox as RACListBox,
   type SelectProps as RACSelectProps,
   type ListBoxProps,
@@ -17,7 +16,8 @@ import { Popover, type PopoverProps } from "../popover";
 import {
   FieldLayout,
   FieldStatusIcon,
-  useFieldPresentation,
+  useFieldAnatomy,
+  fieldClassName,
   fieldParts,
   type FieldContentProps,
   type FieldPresentationProps,
@@ -42,20 +42,15 @@ function SelectRoot<T, M extends SelectionMode = "single">({
   isOptional,
   ...props
 }: SelectRootProps<T, M>) {
-  const context = useSlottedContext(SelectContext, props.slot);
-  const presentation = useFieldPresentation(
-    { ...props, status, statusVariant, isOptional },
-    context?.["aria-describedby"],
-    "attached",
-  );
+  const anatomy = useFieldAnatomy({ ...props, status, statusVariant, isOptional }, SelectContext);
   return (
     <RACSelect<T, M>
       {...props}
-      {...presentation.props}
+      {...anatomy.props}
       data-size={size}
-      className={classes("hashti-field hashti-select hashti-field hashti-select", className)}
+      className={classes(fieldClassName("select"), className)}
     >
-      {presentation.wrap(children, context?.children)}
+      {anatomy.wrap(children, anatomy.slotted?.children)}
     </RACSelect>
   );
 }
@@ -94,10 +89,7 @@ function SelectTrigger({ className, children, size = "md", ref, ...props }: Butt
         else if (ref) ref.current = element;
       }}
       size={size}
-      className={classes(
-        "hashti-field__control hashti-select-trigger hashti-field__control hashti-select-trigger",
-        className,
-      )}
+      className={classes("hashti-field__control hashti-select-trigger", className)}
     >
       {composeTriggerContent(children)}
     </Button>
@@ -120,10 +112,7 @@ function SelectValuePart<T>({
   return (
     <SelectValue<T>
       {...props}
-      className={classes(
-        "hashti-select__value hashti-select__value react-aria-SelectValue",
-        className,
-      )}
+      className={classes("hashti-select__value react-aria-SelectValue", className)}
     />
   );
 }
@@ -141,10 +130,7 @@ function SelectListBox<T extends object>({
   return (
     <RACListBox<T>
       {...props}
-      className={classes(
-        "hashti-select__listbox hashti-select__listbox react-aria-ListBox",
-        className,
-      )}
+      className={classes("hashti-select__listbox react-aria-ListBox", className)}
     />
   );
 }
