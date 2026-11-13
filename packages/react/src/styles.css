@@ -2702,6 +2702,12 @@
     text-decoration: none;
   }
 
+  .hashti-table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    /* Keep the header readable while scrolling rows sideways on a phone. */
+    overscroll-behavior-x: contain;
+  }
   .hashti-table {
     border-collapse: collapse;
     border-spacing: 0;

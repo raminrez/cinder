@@ -30,7 +30,13 @@ export interface TableProps extends RACTableProps {
 }
 
 function TableDefault({ className, size = "lg", ...props }: TableProps) {
-  return <RACTable {...props} data-size={size} className={classes("hashti-table", className)} />;
+  // Wide tables cannot shrink below their columns, so the table scrolls inside its own
+  // container instead of being clipped by whatever card wraps it (DESIGN: fit the container).
+  return (
+    <div className="hashti-table-scroll">
+      <RACTable {...props} data-size={size} className={classes("hashti-table", className)} />
+    </div>
+  );
 }
 
 export interface TableLoadMoreProps extends Omit<
