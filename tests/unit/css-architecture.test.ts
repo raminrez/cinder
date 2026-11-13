@@ -38,16 +38,28 @@ const tsxSource = collectTsx(src)
   .map((file) => readFileSync(file, "utf8"))
   .join("\n");
 
+// Classes built by fieldClassName(), e.g. `hashti-${name}` in Field.
+const fieldClasses = new Set<string>();
+for (const match of tsxSource.matchAll(/fieldClassName\("([a-z0-9-]+)"\)/g)) {
+  fieldClasses.add(`hashti-${match[1]}`);
+}
+
 // Template-built classes such as `hashti-listbox-item--${size}` never appear
-// literally; match their fixed prefix instead.
+// literally; match their fixed prefix instead. A bare `hashti-` prefix would
+// make every class look rendered, so it is not a usable prefix.
 const tsxPrefixes = new Set<string>();
 for (const match of tsxSource.matchAll(/hashti-[a-z0-9-]*\$\{/g)) {
-  tsxPrefixes.add(match[0].replace(/\$\{$/, ""));
+  const prefix = match[0].replace(/\$\{$/, "");
+  if (prefix.length > "hashti-".length) tsxPrefixes.add(prefix);
 }
 
 function isRendered(className: string): boolean {
   if (allowlist.has(className)) return true;
-  if (tsxSource.includes(className)) return true;
+  if (fieldClasses.has(className)) return true;
+  // Boundary-aware: `.hashti-color` must not be satisfied by `hashti-color-area`,
+  // or a dead rule hides behind any class that extends its name.
+  const exact = new RegExp(`(?<![a-z0-9-])${className}(?![a-z0-9-])`);
+  if (exact.test(tsxSource)) return true;
   for (const prefix of tsxPrefixes) {
     if (className.startsWith(prefix)) return true;
   }

@@ -2,7 +2,6 @@
 @import "./components/button/button.css";
 @import "./components/select/select.css";
 @import "./components/combobox/combobox.css";
-@import "./components/color/color.css";
 @import "./components/token-field/token-field.css";
 @import "./components/tree/tree.css";
 @import "./components/grid-list/grid-list.css";
@@ -422,13 +421,18 @@
     --hashti-control-row: 1;
   }
   .hashti-field[data-hashti-input-icon]:has(
-      > :is(.hashti-field__label-row, .hashti-field__description)
+      > :is(
+        .hashti-field__label,
+        .react-aria-Label,
+        .hashti-field__label-row,
+        .hashti-field__description
+      )
     ) {
     --hashti-control-row: 2;
   }
-  .hashti-field[data-hashti-input-icon]:has(> :is(.hashti-field__label-row)):has(
-      > .hashti-field__description
-    ) {
+  .hashti-field[data-hashti-input-icon]:has(
+      > :is(.hashti-field__label, .react-aria-Label, .hashti-field__label-row)
+    ):has(> .hashti-field__description) {
     --hashti-control-row: 3;
   }
   .hashti-field[data-hashti-input-icon] > :is(.hashti-field__control, .hashti-field__status-icon) {
@@ -3017,25 +3021,47 @@
     color: var(--hashti-text-primary);
     border-inline-start: 3px solid var(--notification-color, var(--hashti-support-info));
   }
-  :where(.hashti-notification, .hashti-toast)[data-kind="info"] {
+  :where(.hashti-notification, .hashti-toast, .hashti-actionable-notification)[data-kind="info"] {
     --notification-bg: var(--hashti-notification-background-info);
     --notification-color: var(--hashti-support-info);
     --notification-color-inverse: var(--hashti-support-info-inverse);
   }
-  :where(.hashti-notification, .hashti-toast)[data-kind="success"] {
+  :where(
+    .hashti-notification,
+    .hashti-toast,
+    .hashti-actionable-notification
+  )[data-kind="success"] {
     --notification-bg: var(--hashti-notification-background-success);
     --notification-color: var(--hashti-support-success);
     --notification-color-inverse: var(--hashti-support-success-inverse);
   }
-  :where(.hashti-notification, .hashti-toast)[data-kind="warning"] {
+  :where(
+    .hashti-notification,
+    .hashti-toast,
+    .hashti-actionable-notification
+  )[data-kind="warning"] {
     --notification-bg: var(--hashti-notification-background-warning);
     --notification-color: var(--hashti-support-warning);
     --notification-color-inverse: var(--hashti-support-warning-inverse);
   }
-  :where(.hashti-notification, .hashti-toast)[data-kind="error"] {
+  :where(.hashti-notification, .hashti-toast, .hashti-actionable-notification)[data-kind="error"] {
     --notification-bg: var(--hashti-notification-background-error);
     --notification-color: var(--hashti-support-error);
     --notification-color-inverse: var(--hashti-support-error-inverse);
+  }
+  /* Subtle variant: the surface tint carries the meaning, so the border is a
+     quieter mix of the semantic edge and the neutral divider - full 1px, no
+     left accent. Bordered uses the full-strength edge instead. */
+  :where(
+    .hashti-notification,
+    .hashti-toast,
+    .hashti-actionable-notification
+  )[data-variant="subtle"] {
+    --notification-border: color-mix(
+      in srgb,
+      var(--notification-color) 35%,
+      var(--hashti-border-subtle)
+    );
   }
   .hashti-notification > svg,
   .hashti-toast > svg {
@@ -3071,51 +3097,42 @@
     outline-offset: -2px;
     box-shadow: none;
   }
-  .hashti-notification:not([data-low-contrast]) {
-    --notification-color: var(--notification-color-inverse);
-    background: var(--hashti-background-inverse);
-    color: var(--hashti-text-inverse);
-  }
-  .hashti-notification:not([data-low-contrast]) > .hashti-button {
-    --button-hover: var(--hashti-background-inverse-hover);
-    --button-active: var(--hashti-background-inverse-hover);
-  }
-  .hashti-notification:not([data-low-contrast]) > .hashti-button[data-focus-visible] {
-    outline-color: var(--hashti-focus-inverse);
-  }
-  .hashti-notification:not([data-low-contrast]) .hashti-link {
-    color: var(--hashti-link-inverse);
+  /* The variant attribute is the single source of surface treatment; lowContrast
+     only picks the default variant, it no longer paints its own inverse fill. */
+  .hashti-notification[data-variant] .hashti-link,
+  .hashti-toast[data-variant] .hashti-link {
+    color: inherit;
   }
 
   /* Rich feedback variants: subtle (default), solid, bordered */
   .hashti-notification[data-variant="subtle"],
   .hashti-toast[data-variant="subtle"] {
     background: var(--notification-bg);
-    border: 1px solid var(--notification-border, rgba(0, 0, 0, 0.08));
+    border: 1px solid var(--notification-border, var(--hashti-border-subtle));
     border-inline-start-width: 1px;
     color: var(--hashti-text-primary);
   }
   .hashti-notification[data-variant="solid"],
   .hashti-toast[data-variant="solid"] {
     background: var(--notification-color);
-    color: var(--hashti-text-on-color, #ffffff);
+    color: var(--hashti-text-on-color);
     border: 1px solid var(--notification-color);
     border-inline-start-width: 1px;
   }
   .hashti-notification[data-variant="solid"] > svg,
   .hashti-toast[data-variant="solid"] > svg {
-    color: var(--hashti-text-on-color, #ffffff);
+    color: var(--hashti-text-on-color);
   }
   .hashti-notification[data-variant="solid"] .hashti-button,
   .hashti-toast[data-variant="solid"] .hashti-button {
-    color: var(--hashti-text-on-color, #ffffff);
+    color: var(--hashti-text-on-color);
   }
   .hashti-toast[data-variant="solid"] [slot="description"] {
-    color: rgba(255, 255, 255, 0.88);
+    color: color-mix(in srgb, var(--hashti-text-on-color) 88%, transparent);
   }
   .hashti-notification[data-variant="bordered"],
   .hashti-toast[data-variant="bordered"] {
-    background: var(--hashti-layer-01, #ffffff);
+    background: var(--hashti-layer-01);
     border: 1px solid var(--notification-color);
     border-inline-start-width: 1px;
     color: var(--hashti-text-primary);
@@ -3245,7 +3262,8 @@
   }
   .hashti-loading {
     display: inline-flex;
-    color: var(--hashti-text-secondary);
+    /* The spinner paints with currentColor, so the parent surface controls ink. */
+    color: currentColor;
   }
   .hashti-loading[data-size="lg"] .hashti-spinner {
     width: 5.5rem;
@@ -3360,6 +3378,10 @@
   }
   .hashti-code-snippet--single pre {
     white-space: nowrap;
+    overflow-x: auto;
+  }
+  .hashti-code-snippet--multi:not(.hashti-code-snippet--wrap) pre {
+    white-space: pre;
     overflow-x: auto;
   }
   .hashti-code-snippet--inline {
@@ -4112,29 +4134,46 @@
     outline-offset: 2px;
   }
 
-  /* ActionableNotification base */
+  /* ActionableNotification base: same variant language as the other notifications. */
   .hashti-actionable-notification {
     border-radius: var(--hashti-control-radius, var(--hashti-control-radius, 12px));
     background: var(--hashti-layer-01);
     border: 1px solid var(--hashti-border-subtle);
-    border-inline-start-width: 4px;
     overflow: hidden;
     padding: var(--hashti-spacing-04);
     gap: var(--hashti-spacing-03);
     display: flex;
     align-items: flex-start;
   }
-  .hashti-actionable-notification[data-kind="error"] {
-    border-inline-start-color: var(--hashti-support-error);
+  .hashti-actionable-notification > svg {
+    color: var(--notification-color);
+    flex-shrink: 0;
+    margin-block-start: 1px;
   }
-  .hashti-actionable-notification[data-kind="warning"] {
-    border-inline-start-color: var(--hashti-support-warning);
+  .hashti-actionable-notification[data-variant="subtle"] {
+    background: var(--notification-bg);
+    border: 1px solid var(--notification-border, var(--hashti-border-subtle));
+    color: var(--hashti-text-primary);
   }
-  .hashti-actionable-notification[data-kind="success"] {
-    border-inline-start-color: var(--hashti-support-success);
+  .hashti-actionable-notification[data-variant="solid"] {
+    background: var(--notification-color);
+    border: 1px solid var(--notification-color);
+    color: var(--hashti-text-on-color);
   }
-  .hashti-actionable-notification[data-kind="info"] {
-    border-inline-start-color: var(--hashti-interactive);
+  .hashti-actionable-notification[data-variant="solid"] > svg,
+  .hashti-actionable-notification[data-variant="solid"]
+    .hashti-actionable-notification-content
+    > strong,
+  .hashti-actionable-notification[data-variant="solid"]
+    .hashti-actionable-notification-content
+    > div,
+  .hashti-actionable-notification[data-variant="solid"] > .hashti-button {
+    color: var(--hashti-text-on-color);
+  }
+  .hashti-actionable-notification[data-variant="bordered"] {
+    background: var(--hashti-layer-01);
+    border: 1px solid var(--notification-color);
+    color: var(--hashti-text-primary);
   }
   .hashti-actionable-notification-content {
     flex: 1;
