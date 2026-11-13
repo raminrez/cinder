@@ -12,6 +12,7 @@
     "@hashti/react": "workspace:*",
     "@hashti/tokens": "workspace:*",
     "@storybook/addon-a11y": "10.6.6",
+    "@storybook/addon-docs": "10.6.6",
     "@storybook/react-vite": "10.6.6",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

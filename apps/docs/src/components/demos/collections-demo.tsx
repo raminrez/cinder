@@ -156,7 +156,7 @@ export function StructuredListLiveDemo() {
         </StructuredListRow>
         <StructuredListRow>
           <span className="font-medium text-neutral-900 dark:text-white">Accent Glaze</span>
-          <span className="font-mono text-xs text-[#08BDBA]">#08BDBA (Turquoise)</span>
+          <span className="font-mono text-xs text-[var(--hashti-focus)]">#365CCB (Focus blue)</span>
         </StructuredListRow>
       </StructuredList>
     </div>

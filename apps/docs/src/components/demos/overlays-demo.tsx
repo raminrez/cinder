@@ -73,7 +73,7 @@ export function PopoverLiveDemo() {
       <Button variant="secondary">View Spatial Telemetry</Button>
       <Popover className="p-4 w-72 bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-xl">
         <div className="flex flex-col gap-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#08BDBA] font-mono">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--hashti-focus)] font-mono">
             Vestibule Optics
           </span>
           <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
@@ -131,14 +131,16 @@ export function PreviewTriggerLiveDemo() {
     <PreviewTrigger
       preview={
         <div className="p-3 max-w-xs text-xs bg-white dark:bg-neutral-900 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-800">
-          <strong className="block font-semibold text-[#08BDBA]">Isfahan Pavilion</strong>
+          <strong className="block font-semibold text-[var(--hashti-focus)]">
+            Isfahan Pavilion
+          </strong>
           <span className="text-neutral-500">
             Historical vaulted octagonal chamber with central zenithal skylight.
           </span>
         </div>
       }
     >
-      <span className="underline decoration-[#08BDBA] decoration-2 cursor-pointer font-medium">
+      <span className="underline decoration-[var(--hashti-focus)] decoration-2 cursor-pointer font-medium">
         Hover to preview Isfahan Pavilion
       </span>
     </PreviewTrigger>

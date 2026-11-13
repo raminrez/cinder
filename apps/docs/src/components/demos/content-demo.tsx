@@ -52,7 +52,7 @@ export function TileLiveDemo() {
         </span>
       </Tile>
       <ClickableTile href="#portal" className="p-4">
-        <span className="text-xs font-semibold text-[#08BDBA] uppercase tracking-wider block mb-1">
+        <span className="text-xs font-semibold text-[var(--hashti-focus)] uppercase tracking-wider block mb-1">
           Clickable Tile
         </span>
         <span className="text-sm font-medium text-neutral-900 dark:text-white">

@@ -24,10 +24,14 @@ const preview: Preview = {
     a11y: { test: "error" },
   },
   decorators: [
-    (Story, { globals }) => (
+    (Story, { globals, viewMode }) => (
       <Theme
         theme={globals.theme === "frame-dark" ? "frame-dark" : "frame-light"}
-        style={{ minHeight: "100vh", padding: "1.5rem", boxSizing: "border-box" }}
+        style={
+          viewMode === "docs"
+            ? { padding: "1rem" }
+            : { minHeight: "100vh", padding: "1.5rem", boxSizing: "border-box" }
+        }
       >
         <Story />
       </Theme>
