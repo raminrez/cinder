@@ -1,5 +1,16 @@
 /* Hashti Modern Aesthetic - DatePicker & Calendar */
 @layer hashti.components {
+  /* Start and end date inputs hug the separator instead of stretching across the group.
+     Overrides the shared `.hashti-input-group .react-aria-DateInput { flex: 1 }` (styles.css)
+     only inside the range control. */
+  .hashti-date-range-picker .hashti-input-group .react-aria-DateInput {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  .hashti-date-range-picker .hashti-input-group > span[aria-hidden="true"] {
+    margin-inline: var(--hashti-spacing-02);
+  }
+
   .hashti-date-picker,
   .hashti-date-range-picker {
     display: flex;
