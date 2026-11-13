@@ -343,6 +343,20 @@ export function HomePage() {
           border-radius: var(--hashti-group-radius);
           background: var(--hashti-background);
         }
+        /* The theme swap is a state change on screen: crossfade the ink instead of snapping. */
+        .home-live-stage,
+        .home-live-stage * {
+          transition:
+            background-color 180ms ease,
+            border-color 180ms ease,
+            color 180ms ease;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .home-live-stage,
+          .home-live-stage * {
+            transition: none;
+          }
+        }
         .home-live-row {
           display: flex;
           flex-wrap: wrap;

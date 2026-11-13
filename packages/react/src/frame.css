@@ -48,7 +48,7 @@
       color: var(--frame-button-ink);
       background: var(--button-bg);
     }
-    .hashti-button[data-variant="secondary"]:is([data-hovered], :hover) {
+    .hashti-button[data-variant="secondary"]:is([data-hovered], :hover):not([data-disabled]) {
       background: var(--button-hover);
       color: var(--frame-button-ink);
     }
@@ -287,9 +287,11 @@
       text-align: start;
       transform: none !important;
     }
+    /* A field is a surface, not a button: it answers a press with ink, not travel. */
     .hashti-select-trigger:active,
     .hashti-select-trigger[data-pressed] {
       transform: none !important;
+      background: var(--hashti-field-hover);
     }
     .hashti-field__help {
       display: flex;
@@ -469,6 +471,16 @@
     }
     .hashti-checkbox-control {
       border-radius: 0.3125rem;
+    }
+    /* Selection controls answer a press by shrinking their indicator, never the row. */
+    .hashti-checkbox-control,
+    .hashti-radio-control {
+      transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hashti-checkbox[data-pressed]:not([data-disabled], [data-readonly]) .hashti-checkbox-control,
+    .hashti-radio[data-pressed]:not([data-disabled], [data-readonly]) .hashti-radio-control {
+      transform: scale(0.9);
+      transition: transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-checkbox:is([data-selected], [data-indeterminate]) .hashti-checkbox-control {
       background: var(--hashti-focus);
@@ -971,8 +983,7 @@
       background: transparent;
       transition:
         background var(--hashti-duration-fast-01) ease,
-        color var(--hashti-duration-fast-01) ease,
-        box-shadow var(--hashti-duration-fast-01) ease;
+        color var(--hashti-duration-fast-01) ease;
     }
     .hashti-tabs[data-variant="contained"] .react-aria-Tab[data-hovered]:not([data-selected]) {
       color: var(--hashti-text-primary);
@@ -1040,9 +1051,11 @@
       text-decoration: none;
       transition: color var(--hashti-duration-fast-01) ease;
     }
-    .hashti-breadcrumbs a:hover {
-      color: var(--hashti-text-primary);
-      text-decoration: underline;
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-breadcrumbs a:hover {
+        color: var(--hashti-text-primary);
+        text-decoration: underline;
+      }
     }
     .hashti-breadcrumbs [aria-current="page"] {
       color: var(--hashti-text-primary);
@@ -1114,6 +1127,7 @@
     .hashti-accordion-trigger:active,
     .hashti-accordion-trigger[data-pressed] {
       transform: none !important;
+      background: var(--hashti-layer-hover);
     }
     .hashti-accordion-trigger > svg {
       transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -1197,6 +1211,7 @@
     .hashti-disclosure-trigger:active,
     .hashti-disclosure-trigger[data-pressed] {
       transform: none !important;
+      background: var(--hashti-layer-hover);
     }
     .hashti-disclosure-indicator {
       display: inline-flex;
@@ -1366,7 +1381,7 @@
       border-radius: 9999px;
       color: var(--hashti-text-secondary);
     }
-    .hashti-filter-tag .hashti-button:hover {
+    .hashti-filter-tag .hashti-button[data-hovered] {
       color: var(--hashti-text-primary);
     }
 
@@ -1756,7 +1771,7 @@
       color: var(--hashti-icon-primary);
       padding: 0;
     }
-    .hashti-code-snippet > .hashti-button:hover {
+    .hashti-code-snippet > .hashti-button[data-hovered] {
       background: var(--hashti-layer-hover);
     }
     .hashti-code-snippet--inline {
@@ -1801,9 +1816,11 @@
       text-decoration: none;
       display: block;
     }
-    .hashti-tile--clickable:hover {
-      background: var(--hashti-layer-hover);
-      border-color: var(--hashti-border-strong);
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-tile--clickable:hover {
+        background: var(--hashti-layer-hover);
+        border-color: var(--hashti-border-strong);
+      }
     }
     .hashti-tile--clickable:focus-visible {
       outline: var(--hashti-focus-width) solid var(--hashti-focus);
@@ -1829,8 +1846,10 @@
         background var(--hashti-duration-fast-01),
         border-color var(--hashti-duration-fast-01);
     }
-    .hashti-tile--selectable:hover {
-      background: var(--hashti-layer-hover);
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-tile--selectable:hover {
+        background: var(--hashti-layer-hover);
+      }
     }
     .hashti-tile--selectable[data-selected="true"],
     .hashti-tile--selectable.hashti-tile--selected {
@@ -2045,6 +2064,10 @@
     .hashti-calendar .react-aria-CalendarCell[data-hovered] {
       background: var(--hashti-layer-hover);
     }
+    .hashti-calendar .react-aria-CalendarCell[data-pressed],
+    .hashti-range-calendar .react-aria-CalendarCell[data-pressed] {
+      transform: scale(0.94);
+    }
     .hashti-calendar .react-aria-CalendarCell[data-selected] {
       background: var(--hashti-interactive);
       color: var(--hashti-text-on-color);
@@ -2140,11 +2163,16 @@
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     }
     .hashti-dropzone[data-drop-target],
-    .hashti-dropzone:hover,
-    .hashti-file-uploader .react-aria-DropZone[data-drop-target],
-    .hashti-file-uploader .react-aria-DropZone:hover {
+    .hashti-file-uploader .react-aria-DropZone[data-drop-target] {
       border-color: var(--hashti-interactive);
       background: var(--hashti-layer-hover);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-dropzone:hover,
+      .hashti-file-uploader .react-aria-DropZone:hover {
+        border-color: var(--hashti-interactive);
+        background: var(--hashti-layer-hover);
+      }
     }
     .hashti-dropzone[data-focus-visible],
     .hashti-file-uploader .react-aria-DropZone[data-focus-visible] {
@@ -2432,9 +2460,11 @@
         background 150ms ease,
         color 150ms ease;
     }
-    .hashti-header-name:hover {
-      background: var(--hashti-layer-hover);
-      color: var(--hashti-text-primary);
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-header-name:hover {
+        background: var(--hashti-layer-hover);
+        color: var(--hashti-text-primary);
+      }
     }
     .hashti-header-nav {
       display: flex;
@@ -2451,12 +2481,16 @@
       color: var(--hashti-text-secondary);
       text-decoration: none;
       border-radius: var(--hashti-control-radius);
-      transition: all 150ms ease;
+      transition:
+        background 150ms ease,
+        color 150ms ease;
       border-block-end: none;
     }
-    .hashti-header-nav .hashti-link:hover {
-      color: var(--hashti-text-primary);
-      background: var(--hashti-layer-hover);
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-header-nav .hashti-link:hover {
+        color: var(--hashti-text-primary);
+        background: var(--hashti-layer-hover);
+      }
     }
     .hashti-header-nav .hashti-link[aria-current="page"] {
       color: var(--hashti-text-primary);
@@ -2491,9 +2525,11 @@
         color 150ms ease;
       border-inline-start: none;
     }
-    .hashti-side-nav .hashti-link:hover {
-      background: var(--hashti-layer-hover);
-      color: var(--hashti-text-primary);
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-side-nav .hashti-link:hover {
+        background: var(--hashti-layer-hover);
+        color: var(--hashti-text-primary);
+      }
     }
     .hashti-side-nav .hashti-link[aria-current="page"] {
       background: var(--hashti-layer-selected);
@@ -2518,10 +2554,12 @@
     /*  Craftments: Micro-Interactions & Polish                            */
     /* ------------------------------------------------------------------ */
 
-    /* Size-compensated active press scaling */
-    .hashti-button[data-pressed]:not([data-disabled], [data-pending]),
-    .hashti-toggle-button[data-pressed]:not([data-disabled]),
+    /* Size-compensated active press scaling.
+       Toggle buttons keep data-pressed while selected, so their press tracks :active. */
+    .hashti-button:is([data-pressed], :active):not([data-disabled], [data-pending]),
+    .hashti-toggle-button:active:not([data-disabled]),
     .hashti-tile--clickable:active,
+    .hashti-tile--selectable:active,
     .hashti-filter-tag[data-pressed]:not([data-disabled]) {
       transform: scale(0.97);
       transition:
@@ -2529,21 +2567,25 @@
         background-color var(--hashti-duration-fast-01) var(--hashti-ease-standard-productive, ease),
         color var(--hashti-duration-fast-01) var(--hashti-ease-standard-productive, ease);
     }
-    .hashti-button[data-size="sm"][data-pressed]:not([data-disabled], [data-pending]),
-    .hashti-toggle-button[data-size="sm"][data-pressed]:not([data-disabled]),
+    .hashti-button[data-size="sm"]:is([data-pressed], :active):not([data-disabled], [data-pending]),
+    .hashti-toggle-button[data-size="sm"]:active:not([data-disabled]),
     .hashti-filter-tag[data-size="sm"][data-pressed]:not([data-disabled]) {
       transform: scale(0.98);
     }
-    .hashti-button[data-size="lg"][data-pressed]:not([data-disabled], [data-pending]),
-    .hashti-button[data-size="xl"][data-pressed]:not([data-disabled], [data-pending]),
-    .hashti-button[data-size="2xl"][data-pressed]:not([data-disabled], [data-pending]),
-    .hashti-toggle-button[data-size="lg"][data-pressed]:not([data-disabled]) {
+    .hashti-button[data-size="lg"]:is([data-pressed], :active):not([data-disabled], [data-pending]),
+    .hashti-button[data-size="xl"]:is([data-pressed], :active):not([data-disabled], [data-pending]),
+    .hashti-button[data-size="2xl"]:is([data-pressed], :active):not(
+        [data-disabled],
+        [data-pending]
+      ),
+    .hashti-toggle-button[data-size="lg"]:active:not([data-disabled]) {
       transform: scale(0.96);
     }
     /* Release spring-back */
-    .hashti-button:not([data-pressed], [data-disabled], [data-pending]),
-    .hashti-toggle-button:not([data-pressed], [data-disabled]),
+    .hashti-button:not([data-pressed], :active, [data-disabled], [data-pending]),
+    .hashti-toggle-button:not(:active, [data-disabled]),
     .hashti-tile--clickable:not(:active),
+    .hashti-tile--selectable:not(:active),
     .hashti-filter-tag:not([data-pressed], [data-disabled]) {
       transition:
         transform 300ms cubic-bezier(0.32, 0.72, 0, 1),
@@ -2573,6 +2615,25 @@
       }
       &[data-exiting] {
         animation: hashti-frame-overlay-out 100ms ease-in;
+      }
+    }
+
+    /* Overlays grow from the edge that touches their trigger, never from center. */
+    :scope.hashti-popover,
+    .hashti-select-popover,
+    .hashti-date-popover,
+    :scope.hashti-tooltip {
+      &[data-placement^="top"] {
+        transform-origin: center bottom;
+      }
+      &[data-placement^="bottom"] {
+        transform-origin: center top;
+      }
+      &[data-placement^="left"] {
+        transform-origin: right center;
+      }
+      &[data-placement^="right"] {
+        transform-origin: left center;
       }
     }
 
@@ -2910,9 +2971,14 @@
     .hashti-card[data-interactive] {
       cursor: pointer;
     }
-    .hashti-card[data-interactive]:hover {
-      box-shadow: 0 4px 12px var(--hashti-shadow, rgba(0, 0, 0, 0.12));
-      transform: translateY(-1px);
+    .hashti-card[data-interactive]:active {
+      transform: scale(0.99);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .hashti-card[data-interactive]:hover {
+        box-shadow: 0 4px 12px var(--hashti-shadow, rgba(0, 0, 0, 0.12));
+        transform: translateY(-1px);
+      }
     }
     .hashti-card[data-interactive]:focus-visible {
       outline: var(--hashti-focus-width) solid var(--hashti-focus);
@@ -3295,7 +3361,7 @@
       font-weight: 600;
     }
     .hashti-progress-circle[data-indeterminate] svg {
-      animation: hashti-frame-spin 1.2s linear infinite;
+      animation: hashti-frame-spin 0.8s linear infinite;
     }
 
     /* ------------------------------------------------------------------ */
@@ -3328,7 +3394,7 @@
     .hashti-ai-label[data-revert-active] {
       cursor: pointer;
     }
-    .hashti-ai-label[data-revert-active]:hover {
+    .hashti-ai-label[data-revert-active]:is([data-hovered], :hover) {
       opacity: 0.9;
     }
     .hashti-ai-label[data-revert-active]:focus-visible {
@@ -3416,7 +3482,7 @@
       --button-icon: currentColor;
       border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
     }
-    .hashti-table-batch-bar .hashti-button[data-variant="ghost"]:hover {
+    .hashti-table-batch-bar .hashti-button[data-variant="ghost"][data-hovered] {
       background: color-mix(in srgb, currentColor 15%, transparent);
       border-color: color-mix(in srgb, currentColor 70%, transparent);
     }
@@ -3443,9 +3509,7 @@
       font-variant-numeric: tabular-nums;
       color: var(--hashti-text-primary);
       caret-color: transparent;
-      transition:
-        border-color var(--hashti-duration-fast-01),
-        box-shadow var(--hashti-duration-fast-01);
+      transition: border-color var(--hashti-duration-fast-01) ease;
     }
     .hashti-input-otp-slot[data-focused] {
       border-color: var(--hashti-focus);
@@ -3470,9 +3534,7 @@
       border: 1px solid var(--hashti-border-subtle);
       border-radius: var(--hashti-control-radius, 0.5rem);
       background: var(--hashti-field);
-      transition:
-        border-color 150ms ease,
-        box-shadow 150ms ease;
+      transition: border-color 150ms ease;
     }
     .hashti-token-input:focus,
     .hashti-token-input[data-focused],
@@ -3581,7 +3643,7 @@
     }
     @keyframes hashti-frame-otp-bounce {
       from {
-        transform: translateY(4px) scale(0.85);
+        transform: translateY(3px) scale(0.92);
         opacity: 0;
       }
       to {
@@ -3595,6 +3657,90 @@
       }
       to {
         transform: translateY(0);
+      }
+    }
+    @keyframes hashti-frame-fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes hashti-frame-fade-out {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+@layer hashti.motion {
+  /* Reduced motion keeps the fades that explain state and drops travel and scale. */
+  @media (prefers-reduced-motion: reduce) {
+    @scope ([data-hashti-theme="frame-light"], [data-hashti-theme="frame-dark"]) to ([data-hashti-theme]) {
+      .hashti-button:is([data-pressed], :active):not([data-disabled], [data-pending]),
+      .hashti-toggle-button:active:not([data-disabled]),
+      .hashti-tile--clickable:active,
+      .hashti-tile--selectable:active,
+      .hashti-filter-tag[data-pressed]:not([data-disabled]),
+      .hashti-card[data-interactive]:active,
+      .hashti-checkbox[data-pressed] .hashti-checkbox-control,
+      .hashti-radio[data-pressed] .hashti-radio-control,
+      .hashti-calendar .react-aria-CalendarCell[data-pressed],
+      .hashti-range-calendar .react-aria-CalendarCell[data-pressed] {
+        transform: none;
+      }
+      .hashti-button,
+      .hashti-toggle-button,
+      .hashti-tile--clickable,
+      .hashti-filter-tag {
+        transition:
+          background-color var(--hashti-duration-fast-01) ease,
+          color var(--hashti-duration-fast-01) ease;
+      }
+      :scope.hashti-popover,
+      .hashti-select-popover,
+      .hashti-date-popover,
+      :scope.hashti-tooltip,
+      .hashti-modal,
+      .hashti-command-palette-modal {
+        &[data-entering] {
+          animation: hashti-frame-fade-in 150ms ease-out;
+        }
+        &[data-exiting] {
+          animation: hashti-frame-fade-out 100ms ease-out forwards;
+        }
+      }
+      .hashti-modal-overlay,
+      .hashti-drawer-overlay,
+      .hashti-command-palette-overlay {
+        &[data-entering] {
+          animation: hashti-frame-fade-in 150ms ease-out;
+        }
+        &[data-exiting] {
+          animation: hashti-frame-fade-out 100ms ease-out forwards;
+        }
+      }
+      .hashti-drawer {
+        &[data-entering] {
+          animation: hashti-frame-fade-in 150ms ease-out;
+        }
+        &[data-exiting] {
+          animation: hashti-frame-fade-out 100ms ease-out forwards;
+        }
+      }
+      .hashti-table-batch-bar {
+        animation: hashti-frame-fade-in 150ms ease-out;
+      }
+      .hashti-input-otp-slot[data-filled] > span {
+        animation: none;
+      }
+      .hashti-accordion-trigger > svg {
+        transition: none;
       }
     }
   }
