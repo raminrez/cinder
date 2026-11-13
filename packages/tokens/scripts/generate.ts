@@ -57,6 +57,14 @@ const semantic: Record<string, Record<string, string | number>> = Object.fromEnt
   }),
 );
 
+// Carbon's 40% placeholder ink lands at 2.52:1 on its own field surface; reuse its
+// secondary ink so placeholder text clears WCAG AA.
+for (const values of Object.values(semantic)) {
+  const placeholder = values["text-placeholder"];
+  if (typeof placeholder === "string" && placeholder.startsWith("rgba"))
+    values["text-placeholder"] = values["text-secondary"]!;
+}
+
 for (const [name, values] of Object.entries({ ...relayThemes, ...frameThemes })) {
   semantic[name] = {
     ...semantic[name.endsWith("-light") ? "white" : "g100"],

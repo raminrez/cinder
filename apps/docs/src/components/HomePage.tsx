@@ -447,6 +447,14 @@ export function HomePage() {
         .home-footer-note {
           color: var(--hashti-text-secondary);
         }
+        /* WCAG 2.5.8: standalone text links need a 24px hit area. */
+        .home-nav a,
+        .home-footer-links a,
+        .home-main a:not(.hashti-button) {
+          display: inline-flex;
+          align-items: center;
+          min-height: 1.5rem;
+        }
         .home ::selection {
           background: var(--hashti-highlight);
           color: var(--hashti-text-primary);

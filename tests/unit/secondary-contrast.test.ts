@@ -86,6 +86,13 @@ describe("Secondary colors contrast audit across all 8 themes", () => {
         expect(ratio, `${theme}: gray tag color on background`).toBeGreaterThanOrEqual(4.5);
       });
 
+      test("placeholder ink holds >= 4.5:1 on the field surface", () => {
+        const ink = t["text-placeholder"];
+        const ratio = contrast(ink, t["field-01"]);
+
+        expect(ratio, `${theme}: text-placeholder on field-01`).toBeGreaterThanOrEqual(4.5);
+      });
+
       test("table batch actions toolbar button ink on interactive background", () => {
         const ink = t["text-on-color"];
         const bg = t.interactive;

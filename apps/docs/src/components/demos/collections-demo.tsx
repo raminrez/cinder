@@ -49,7 +49,7 @@ const ARCH_ITEMS = [
 
 export function TableLiveDemo() {
   return (
-    <div className="w-full max-w-xl overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800">
+    <div className="w-full max-w-xl overflow-x-auto rounded-xl border border-neutral-200 dark:border-neutral-800">
       <Table aria-label="Architectural Components Table" selectionMode="multiple">
         <TableHeader>
           <Column isRowHeader>Element</Column>

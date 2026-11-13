@@ -536,7 +536,7 @@
   --hashti-text-inverse: #ffffff;
   --hashti-text-on-color: #ffffff;
   --hashti-text-on-color-disabled: #8d8d8d;
-  --hashti-text-placeholder: rgba(22, 22, 22, 0.4);
+  --hashti-text-placeholder: #525252;
   --hashti-text-primary: #161616;
   --hashti-text-secondary: #525252;
   --hashti-toggle-off: #8d8d8d;
@@ -852,7 +852,7 @@
   --hashti-text-inverse: #ffffff;
   --hashti-text-on-color: #ffffff;
   --hashti-text-on-color-disabled: #8d8d8d;
-  --hashti-text-placeholder: rgba(22, 22, 22, 0.4);
+  --hashti-text-placeholder: #525252;
   --hashti-text-primary: #161616;
   --hashti-text-secondary: #525252;
   --hashti-toggle-off: #8d8d8d;
@@ -1168,7 +1168,7 @@
   --hashti-text-inverse: #161616;
   --hashti-text-on-color: #ffffff;
   --hashti-text-on-color-disabled: rgba(255, 255, 255, 0.25);
-  --hashti-text-placeholder: rgba(244, 244, 244, 0.4);
+  --hashti-text-placeholder: #c6c6c6;
   --hashti-text-primary: #f4f4f4;
   --hashti-text-secondary: #c6c6c6;
   --hashti-toggle-off: #8d8d8d;
@@ -1484,7 +1484,7 @@
   --hashti-text-inverse: #161616;
   --hashti-text-on-color: #ffffff;
   --hashti-text-on-color-disabled: rgba(255, 255, 255, 0.25);
-  --hashti-text-placeholder: rgba(244, 244, 244, 0.4);
+  --hashti-text-placeholder: #c6c6c6;
   --hashti-text-primary: #f4f4f4;
   --hashti-text-secondary: #c6c6c6;
   --hashti-toggle-off: #6f6f6f;

@@ -146,7 +146,7 @@ export function ComponentPreview({
       </div>
 
       {/* Live Component Preview Arena */}
-      <div className="relative p-8 md:p-10 flex items-center justify-center min-h-[180px] bg-neutral-50/40 dark:bg-neutral-900/20 [background-image:radial-gradient(rgba(8,189,186,0.2)_1px,transparent_1px)] [background-size:16px_16px]">
+      <div className="relative p-5 sm:p-8 md:p-10 flex items-center justify-center min-h-[180px] bg-neutral-50/40 dark:bg-neutral-900/20 [background-image:radial-gradient(rgba(8,189,186,0.2)_1px,transparent_1px)] [background-size:16px_16px]">
         <div className="relative z-10 w-full flex items-center justify-center">{children}</div>
       </div>
 
