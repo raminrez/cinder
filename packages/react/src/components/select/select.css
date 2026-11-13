@@ -25,16 +25,6 @@
     border-color: var(--hashti-border-subtle, #525252);
   }
 
-  .hashti-select-trigger[data-focus-visible],
-  .hashti-select-trigger[data-focus-visible] {
-    outline: none;
-    border-color: var(--hashti-focus, #0f62fe);
-    box-shadow:
-      0 0 0 2px var(--hashti-background, #ffffff),
-      0 0 0 4px var(--hashti-focus, #0f62fe),
-      0 0 12px rgba(15, 98, 254, 0.35);
-  }
-
   .hashti-select-popover {
     border-radius: var(--hashti-surface-radius, 16px);
     border: 1px solid var(--hashti-border-subtle, #e0e0e0);

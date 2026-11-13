@@ -37,20 +37,4 @@
     box-sizing: border-box;
     resize: vertical;
   }
-
-  .hashti-text-field input:focus,
-  .hashti-text-field input:focus,
-  .hashti-field-input:focus,
-  .hashti-field-input:focus,
-  .hashti-text-area textarea:focus,
-  .hashti-text-area textarea:focus,
-  .hashti-field-textarea:focus,
-  .hashti-field-textarea:focus {
-    outline: none;
-    border-color: var(--hashti-focus, #0f62fe);
-    box-shadow:
-      0 0 0 2px var(--hashti-background, #ffffff),
-      0 0 0 4px var(--hashti-focus, #0f62fe),
-      0 0 12px rgba(15, 98, 254, 0.35);
-  }
 }

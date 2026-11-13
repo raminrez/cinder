@@ -3537,19 +3537,18 @@
       font-weight: 600;
     }
 
-    /* Frame TokenField */
+    /* Keyboard focus only, same paint as every other field: a ring outside the border. */
     .hashti-token-input {
       border: 1px solid var(--hashti-border-subtle);
       border-radius: var(--hashti-control-radius, 0.5rem);
       background: var(--hashti-field);
       transition: border-color 150ms ease;
     }
-    .hashti-token-input:focus,
-    .hashti-token-input[data-focused],
     .hashti-token-input[data-focus-visible] {
-      outline: none;
-      border-color: var(--hashti-focus);
-      box-shadow: 0 0 0 2px var(--hashti-focus);
+      outline: var(--hashti-focus-width, 2px) solid var(--hashti-focus);
+      outline-offset: var(--hashti-focus-offset, 2px);
+      border-color: var(--hashti-border-strong);
+      box-shadow: none;
     }
     .hashti-token {
       border-radius: 9999px;

@@ -17,14 +17,4 @@
   [data-hashti-theme] .hashti-autocomplete[data-pressed] {
     transform: scale(0.98);
   }
-  [data-hashti-theme] .hashti-autocomplete[data-focus-visible],
-  [data-hashti-theme] .hashti-autocomplete[data-focus-visible],
-  [data-hashti-theme] .hashti-autocomplete[data-focus-visible],
-  [data-hashti-theme] .hashti-autocomplete[data-focus-visible] {
-    outline: none;
-    box-shadow:
-      0 0 0 2px var(--hashti-background, var(--hashti-background, #ffffff)),
-      0 0 0 4px var(--hashti-focus, #0f62fe),
-      0 0 12px rgba(15, 98, 254, 0.35);
-  }
 }
