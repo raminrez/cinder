@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Loading, InlineLoading, and Skeleton components inform users of background asynchronous operations, state changes, and content layout placeholders.",
+          "Loading, InlineLoading, and Skeleton components inform users of background asynchronous operations, state changes, and content layout placeholders. The spinner follows the surface: it is painted with `currentColor`, so it takes the surrounding text colour — secondary ink by default, on-colour ink inside a filled button or banner. There is deliberately no `tone` prop; set `color` on the parent instead.",
       },
     },
   },
@@ -79,6 +79,59 @@ export const Playground: Story = {
     expect(canvas.getByText("Synchronizing cloud resources")).toBeInTheDocument();
     expect(canvas.getByText("Deploying changes to worker nodes…")).toBeInTheDocument();
     expect(canvas.getByText("Deployment finished successfully")).toBeInTheDocument();
+  },
+};
+
+function SpinnerFollowsInkExample() {
+  return (
+    <div className="feedback-story-stack">
+      <div className="feedback-card">
+        <div>
+          <h4 className="feedback-card-title">Spinner Ink Follows the Surface</h4>
+          <p className="feedback-card-description">
+            The spinner is drawn with currentColor, so every surface gets the right contrast without
+            a tone prop: secondary ink on a plain surface, on-colour ink on a filled banner.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              color: "var(--hashti-text-primary)",
+            }}
+          >
+            <Loading size="sm" label="Loading with primary ink" />
+            <span>Primary surface ink</span>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              padding: "0.5rem 1rem",
+              borderRadius: "var(--hashti-control-radius)",
+              background: "var(--hashti-button-primary)",
+              color: "var(--hashti-text-on-color)",
+            }}
+          >
+            <Loading size="sm" label="Loading with on-colour ink" />
+            <span>On-colour fill</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const SpinnerFollowsInk: Story = {
+  render: () => <SpinnerFollowsInkExample />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText("Spinner Ink Follows the Surface")).toBeInTheDocument();
+    expect(canvas.getByText("On-colour fill")).toBeInTheDocument();
   },
 };
 
