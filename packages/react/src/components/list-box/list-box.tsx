@@ -102,7 +102,9 @@ export function ListBoxItem<T extends object = object>({
       data-size={size}
       data-variant={variant}
       className={classes(
-        cx("hashti-listbox-item", size && `hashti-listbox-item--${size}`),
+        // RAC's own class carries the default item styling every stylesheet keys on;
+        // passing className alone would drop it.
+        cx("react-aria-ListBoxItem", "hashti-listbox-item", size && `hashti-listbox-item--${size}`),
         className,
       )}
     >
@@ -122,7 +124,10 @@ export function ListBoxSection<T extends object = object>({
   ...props
 }: ListBoxSectionProps<T>) {
   return (
-    <RACListBoxSection {...props} className={cx("hashti-listbox-section", className)}>
+    <RACListBoxSection
+      {...props}
+      className={cx("react-aria-ListBoxSection", "hashti-listbox-section", className)}
+    >
       {title && <RACHeader className="hashti-listbox-header">{title}</RACHeader>}
       {children as any}
     </RACListBoxSection>

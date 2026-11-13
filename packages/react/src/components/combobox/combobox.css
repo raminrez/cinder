@@ -28,9 +28,9 @@
     border-radius: 8px;
     cursor: pointer;
     font-size: var(--hashti-body-compact-01-font-size, 0.875rem);
-    color: var(--hashti-primary, #08bdba);
+    color: var(--hashti-focus);
     font-weight: 500;
-    transition: background-color 150ms ease;
+    transition: background-color var(--hashti-duration-fast-01) ease;
   }
 
   .hashti-combobox-create-item:hover,

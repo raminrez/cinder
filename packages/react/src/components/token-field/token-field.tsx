@@ -190,7 +190,6 @@ export function TokenFieldToken({
           {onRemove && !isDisabled && !isReadOnly && (
             <button
               type="button"
-              tabIndex={-1}
               aria-label="Remove token"
               className="hashti-token__remove"
               onPointerDown={(e) => {

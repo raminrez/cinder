@@ -110,7 +110,10 @@ export interface DisclosurePanelProps extends Omit<RACDisclosurePanelProps, "cla
 
 export function DisclosurePanel({ className, children, ...props }: DisclosurePanelProps) {
   return (
-    <RACDisclosurePanel {...props} className={classes("hashti-disclosure-panel", className)}>
+    <RACDisclosurePanel
+      {...props}
+      className={classes("react-aria-DisclosurePanel hashti-disclosure-panel", className)}
+    >
       <div className="hashti-disclosure-panel-inner">{children}</div>
     </RACDisclosurePanel>
   );

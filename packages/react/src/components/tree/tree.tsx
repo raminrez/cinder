@@ -50,7 +50,12 @@ export function TreeRoot<T extends object>({
         data-size={size}
         data-guide-lines={showGuideLines ? "true" : undefined}
         className={classes(
-          cx("hashti-tree", `hashti-tree--${size}`, showGuideLines && "hashti-tree--guidelines"),
+          cx(
+            "react-aria-Tree",
+            "hashti-tree",
+            `hashti-tree--${size}`,
+            showGuideLines && "hashti-tree--guidelines",
+          ),
           className,
         )}
       >
@@ -82,7 +87,10 @@ export function TreeItem<T extends object = object>({
       ref={ref}
       data-size={size}
       data-guide-lines={showGuideLines ? "true" : undefined}
-      className={classes(cx("hashti-tree-item", size && `hashti-tree-item--${size}`), className)}
+      className={classes(
+        cx("react-aria-TreeItem", "hashti-tree-item", size && `hashti-tree-item--${size}`),
+        className,
+      )}
     >
       {children}
     </RACTreeItem>

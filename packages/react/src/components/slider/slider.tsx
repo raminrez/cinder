@@ -10,7 +10,7 @@ import {
   Label,
   type SliderProps as RACSliderProps,
 } from "react-aria-components";
-import { classes } from "../../utils";
+import { classes, cx } from "../../utils";
 
 export interface SliderProps<T extends number | number[] = number> extends RACSliderProps<T> {
   label?: ReactNode;
@@ -41,15 +41,15 @@ export function Slider<T extends number | number[] = number>({
               }
             </SliderOutput>
           </div>
-          <SliderTrack className="hashti-slider-track">
+          <SliderTrack className={cx("react-aria-SliderTrack", "hashti-slider-track")}>
             {({ state }) => (
               <>
-                <SliderFill className="hashti-slider-fill" />
+                <SliderFill className={cx("react-aria-SliderFill", "hashti-slider-fill")} />
                 {state.values.map((_, index) => (
                   <SliderThumb
                     key={index}
                     index={index}
-                    className="hashti-slider-thumb"
+                    className={cx("react-aria-SliderThumb", "hashti-slider-thumb")}
                     aria-label={
                       thumbLabels?.[index] ??
                       (state.values.length > 1 ? (index === 0 ? "Minimum" : "Maximum") : undefined)

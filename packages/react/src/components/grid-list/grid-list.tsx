@@ -63,7 +63,12 @@ export function GridListRoot<T extends object>({
         data-size={size}
         data-variant={variant}
         className={classes(
-          cx("hashti-grid-list", `hashti-grid-list--${size}`, `hashti-grid-list--${variant}`),
+          cx(
+            "react-aria-GridList",
+            "hashti-grid-list",
+            `hashti-grid-list--${size}`,
+            `hashti-grid-list--${variant}`,
+          ),
           className,
         )}
       >
@@ -96,7 +101,11 @@ export function GridListItem<T extends object = object>({
       data-size={size}
       data-variant={variant}
       className={classes(
-        cx("hashti-grid-list-item", size && `hashti-grid-list-item--${size}`),
+        cx(
+          "react-aria-GridListItem",
+          "hashti-grid-list-item",
+          size && `hashti-grid-list-item--${size}`,
+        ),
         className,
       )}
     >

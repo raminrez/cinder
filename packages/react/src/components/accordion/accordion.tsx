@@ -3,13 +3,12 @@
 import { createContext, useContext, type ReactNode, type Ref } from "react";
 import {
   DisclosureGroup,
-  Disclosure,
-  DisclosurePanel,
   Heading,
   type DisclosureGroupProps,
   type DisclosureProps,
 } from "react-aria-components";
 import { Button } from "../button";
+import { DisclosureRoot, DisclosurePanel } from "../disclosure";
 import { Icon } from "../../icons";
 import { classes, type ControlSize } from "../../utils";
 
@@ -48,7 +47,7 @@ export function AccordionItem({
 }: AccordionItemProps) {
   const size = useContext(AccordionSizeContext);
   return (
-    <Disclosure {...props} className={classes("hashti-accordion-item", className)}>
+    <DisclosureRoot {...props} className={classes("hashti-accordion-item", className)}>
       <Heading level={headingLevel}>
         <Button slot="trigger" variant="ghost" size={size} className="hashti-accordion-trigger">
           <Icon name="chevronRight" />
@@ -56,6 +55,6 @@ export function AccordionItem({
         </Button>
       </Heading>
       <DisclosurePanel className="hashti-accordion-panel">{children}</DisclosurePanel>
-    </Disclosure>
+    </DisclosureRoot>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { type ReactNode, type Ref } from "react";
+import { type ReactNode, type Ref, useContext, useEffect, useRef } from "react";
 import {
   Select as RACSelect,
+  SelectStateContext,
   SelectValue,
   SelectContext,
   useSlottedContext,
@@ -59,11 +60,39 @@ function SelectRoot<T, M extends SelectionMode = "single">({
   );
 }
 
-function SelectTrigger({ className, children, size = "md", ...props }: ButtonProps) {
+function SelectTrigger({ className, children, size = "md", ref, ...props }: ButtonProps) {
+  const state = useContext(SelectStateContext);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  // A chip's remove affordance can never take focus: ARIA gives a button's children none.
+  // Backspace/Delete is the keyboard path, and it listens on the element because RAC's own
+  // select trigger replaces any key handler passed through props.
+  // shortcut: hand-rolled chips instead of the documented TagGroup-in-SelectValue pattern, so
+  // removal is unannounced and pointer-only; upgrade when the trigger becomes a Group (as in
+  // React Aria's Select and IntentUI's MultipleSelect).
+  useEffect(() => {
+    const element = triggerRef.current;
+    if (!element || state?.selectionManager.selectionMode !== "multiple") return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Backspace" && event.key !== "Delete") return;
+      const keys = [...state.selectionManager.selectedKeys];
+      if (keys.length === 0) return;
+      event.preventDefault();
+      state.selectionManager.setSelectedKeys(new Set(keys.slice(0, -1)));
+    };
+    element.addEventListener("keydown", handleKeyDown);
+    return () => element.removeEventListener("keydown", handleKeyDown);
+  }, [state]);
+
   return (
     <Button
       variant="ghost"
       {...props}
+      ref={(element) => {
+        triggerRef.current = element;
+        if (typeof ref === "function") ref(element);
+        else if (ref) ref.current = element;
+      }}
       size={size}
       className={classes(
         "hashti-field__control hashti-select-trigger hashti-field__control hashti-select-trigger",
@@ -200,24 +229,11 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
                               >
                                 <span>{text}</span>
                                 <span
-                                  role="button"
-                                  tabIndex={-1}
-                                  aria-label={`Remove ${text}`}
+                                  aria-hidden="true"
                                   className="hashti-select-chip-remove"
                                   onPointerDown={(e) => {
                                     e.stopPropagation();
                                     e.preventDefault();
-                                  }}
-                                  onKeyDown={(e) => {
-                                    if (e.key === "Enter" || e.key === " ") {
-                                      e.stopPropagation();
-                                      e.preventDefault();
-                                      const currentKeys = new Set(
-                                        state.selectionManager.selectedKeys,
-                                      );
-                                      currentKeys.delete(key);
-                                      state.selectionManager.setSelectedKeys(currentKeys);
-                                    }
                                   }}
                                   onClick={(e) => {
                                     e.stopPropagation();

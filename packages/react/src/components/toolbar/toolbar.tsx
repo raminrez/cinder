@@ -59,7 +59,7 @@ export function ToolbarRoot({
             data-size={size}
             data-orientation={orientation}
             data-variant={variant}
-            className={classes("hashti-toolbar", className)}
+            className={classes("react-aria-Toolbar hashti-toolbar", className)}
           >
             {children}
           </RACToolbar>
@@ -118,7 +118,7 @@ export function ToolbarSeparator({ orientation, className, ...props }: ToolbarSe
     <RACSeparator
       {...props}
       orientation={resolvedOrientation}
-      className={cx("hashti-toolbar-separator", className)}
+      className={cx("react-aria-Separator", "hashti-toolbar-separator", className)}
     />
   );
 }

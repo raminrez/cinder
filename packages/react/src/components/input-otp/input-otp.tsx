@@ -113,6 +113,7 @@ export function InputOTP({
             value={digit}
             disabled={isDisabled}
             aria-label={`Digit ${index + 1} of ${length}`}
+            aria-invalid={isInvalid || undefined}
             data-filled={digit ? "true" : undefined}
             data-invalid={isInvalid ? "true" : undefined}
             className="hashti-input-otp-slot"

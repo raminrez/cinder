@@ -196,24 +196,11 @@ function ComboBoxDefault<T extends object, M extends SelectionMode = "single">({
                             >
                               <span>{text}</span>
                               <span
-                                role="button"
-                                tabIndex={-1}
-                                aria-label={`Remove ${text}`}
+                                aria-hidden="true"
                                 className="hashti-combobox-chip-remove"
                                 onPointerDown={(e) => {
                                   e.stopPropagation();
                                   e.preventDefault();
-                                }}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter" || e.key === " ") {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                    const currentKeys = new Set(
-                                      state.selectionManager.selectedKeys,
-                                    );
-                                    currentKeys.delete(key);
-                                    state.selectionManager.setSelectedKeys(currentKeys);
-                                  }
                                 }}
                                 onClick={(e) => {
                                   e.stopPropagation();

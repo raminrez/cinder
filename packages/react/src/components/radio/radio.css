@@ -21,15 +21,15 @@
     background-color: var(--hashti-field, #ffffff);
     position: relative;
     transition:
-      background-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 150ms cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      background-color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      border-color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hashti-radio[data-selected] .hashti-radio-control,
   .hashti-radio[data-selected] .hashti-radio-control {
-    border-color: var(--hashti-primary, #08bdba);
+    border-color: var(--hashti-focus);
   }
 
   .hashti-radio[data-selected] .hashti-radio-control::after,
@@ -38,7 +38,7 @@
     width: 10px;
     height: 10px;
     border-radius: 9999px;
-    background-color: var(--hashti-primary, #08bdba);
+    background-color: var(--hashti-focus);
   }
 
   .hashti-radio[data-pressed] .hashti-radio-control,

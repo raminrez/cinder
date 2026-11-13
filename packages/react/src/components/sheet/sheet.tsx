@@ -48,7 +48,10 @@ export function SheetOverlay({
         ref={ref}
         position={position}
         preventDismissal={preventDismissal}
-        className={classes("hashti-sheet-overlay", classes(appearanceClassName ?? "", className))}
+        className={classes(
+          "react-aria-SheetOverlay hashti-sheet-overlay",
+          classes(appearanceClassName ?? "", className),
+        )}
       >
         {children}
       </RACSheetOverlay>
@@ -71,7 +74,7 @@ export function SheetBackdrop({
       {...props}
       ref={ref}
       swipeAnimation={swipeAnimation}
-      className={classes("hashti-sheet-backdrop", className)}
+      className={classes("react-aria-SheetBackdrop hashti-sheet-backdrop", className)}
     />
   );
 }
@@ -82,7 +85,11 @@ export interface SheetContentProps extends RACSheetContentProps {
 
 export function SheetContent({ className, children, ref, ...props }: SheetContentProps) {
   return (
-    <RACSheetContent {...props} ref={ref} className={cx("hashti-sheet-content", className)}>
+    <RACSheetContent
+      {...props}
+      ref={ref}
+      className={cx("react-aria-SheetContent", "hashti-sheet-content", className)}
+    >
       {children}
     </RACSheetContent>
   );
@@ -116,7 +123,7 @@ export function SheetRoot({
       ref={ref}
       overscrollPadding={overscrollPadding}
       stackAnimation={stackAnimation}
-      className={classes("hashti-sheet", className)}
+      className={classes("react-aria-Sheet hashti-sheet", className)}
     >
       {(renderProps) => (
         <>

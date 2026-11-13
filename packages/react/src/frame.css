@@ -475,12 +475,12 @@
     /* Selection controls answer a press by shrinking their indicator, never the row. */
     .hashti-checkbox-control,
     .hashti-radio-control {
-      transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-checkbox[data-pressed]:not([data-disabled], [data-readonly]) .hashti-checkbox-control,
     .hashti-radio[data-pressed]:not([data-disabled], [data-readonly]) .hashti-radio-control {
       transform: scale(0.9);
-      transition: transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-checkbox:is([data-selected], [data-indeterminate]) .hashti-checkbox-control {
       background: var(--hashti-focus);
@@ -1097,6 +1097,9 @@
     }
     :scope.hashti-tooltip {
       border-radius: var(--hashti-control-radius);
+      /* The portaled tooltip carries the theme attribute itself, so the reset rule for
+         theme roots would otherwise paint primary ink on the inverse surface. */
+      color: var(--hashti-text-inverse);
     }
 
     /* Frame Accordion */
@@ -1130,7 +1133,7 @@
       background: var(--hashti-layer-hover);
     }
     .hashti-accordion-trigger > svg {
-      transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform var(--hashti-duration-moderate-01) cubic-bezier(0.16, 1, 0.3, 1);
       color: var(--hashti-text-secondary);
     }
     :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl))
@@ -1221,7 +1224,7 @@
     }
     .hashti-disclosure-indicator > svg,
     .hashti-disclosure-trigger > svg {
-      transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform var(--hashti-duration-moderate-01) cubic-bezier(0.16, 1, 0.3, 1);
       color: var(--hashti-text-secondary);
     }
     :is(:scope[dir="rtl"], [dir="rtl"], [data-direction="rtl"], :dir(rtl))
@@ -1375,9 +1378,9 @@
     .hashti-filter-tag .hashti-button {
       margin-inline-start: 0.125rem;
       padding: 0;
-      width: 1rem;
-      height: 1rem;
-      min-height: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      min-height: 1.5rem;
       border-radius: 9999px;
       color: var(--hashti-text-secondary);
     }
@@ -2283,7 +2286,7 @@
     .hashti-meter-segment {
       height: 100%;
       flex-shrink: 0;
-      transition: width var(--hashti-duration-moderate-01, 200ms) ease;
+      transition: width var(--hashti-duration-moderate-01, var(--hashti-duration-moderate-01)) ease;
     }
     .hashti-meter[data-tone="neutral"] .hashti-meter-fill {
       background: var(--hashti-text-secondary);
@@ -2324,7 +2327,8 @@
       fill: none;
       stroke: var(--hashti-text-secondary);
       stroke-linecap: round;
-      transition: stroke-dashoffset var(--hashti-duration-moderate-01, 250ms) ease;
+      transition: stroke-dashoffset
+        var(--hashti-duration-moderate-01, var(--hashti-duration-moderate-01)) ease;
     }
     .hashti-meter-circle-container[data-tone="success"] .hashti-meter-circle-fill,
     .hashti-meter[data-tone="success"] .hashti-meter-circle-fill {
@@ -2388,8 +2392,8 @@
       gap: var(--hashti-spacing-03);
       /* Toasts enter from the edge they leave by, and the queue can interrupt them. */
       transition:
-        opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
-        translate 200ms cubic-bezier(0.23, 1, 0.32, 1);
+        opacity var(--hashti-duration-moderate-01) cubic-bezier(0.23, 1, 0.32, 1),
+        translate var(--hashti-duration-moderate-01) cubic-bezier(0.23, 1, 0.32, 1);
       @starting-style {
         opacity: 0;
         translate: 0 var(--hashti-spacing-03);
@@ -2465,8 +2469,8 @@
       border-radius: var(--hashti-control-radius);
       padding: 0.375rem 0.625rem;
       transition:
-        background 150ms ease,
-        color 150ms ease;
+        background var(--hashti-duration-fast-01) ease,
+        color var(--hashti-duration-fast-01) ease;
     }
     @media (hover: hover) and (pointer: fine) {
       .hashti-header-name:hover {
@@ -2490,8 +2494,8 @@
       text-decoration: none;
       border-radius: var(--hashti-control-radius);
       transition:
-        background 150ms ease,
-        color 150ms ease;
+        background var(--hashti-duration-fast-01) ease,
+        color var(--hashti-duration-fast-01) ease;
       border-block-end: none;
     }
     @media (hover: hover) and (pointer: fine) {
@@ -2529,8 +2533,8 @@
       border-radius: var(--hashti-control-radius);
       text-decoration: none;
       transition:
-        background 150ms ease,
-        color 150ms ease;
+        background var(--hashti-duration-fast-01) ease,
+        color var(--hashti-duration-fast-01) ease;
       border-inline-start: none;
     }
     @media (hover: hover) and (pointer: fine) {
@@ -2571,7 +2575,7 @@
     .hashti-filter-tag[data-pressed]:not([data-disabled]) {
       transform: scale(0.97);
       transition:
-        transform 150ms cubic-bezier(0.32, 0.72, 0, 1),
+        transform var(--hashti-duration-fast-01) cubic-bezier(0.32, 0.72, 0, 1),
         background-color var(--hashti-duration-fast-01) var(--hashti-ease-standard-productive, ease),
         color var(--hashti-duration-fast-01) var(--hashti-ease-standard-productive, ease);
     }
@@ -2596,14 +2600,14 @@
     .hashti-tile--selectable:not(:active),
     .hashti-filter-tag:not([data-pressed], [data-disabled]) {
       transition:
-        transform 300ms cubic-bezier(0.32, 0.72, 0, 1),
+        transform var(--hashti-duration-moderate-02) cubic-bezier(0.32, 0.72, 0, 1),
         background-color var(--hashti-duration-fast-01) var(--hashti-ease-standard-productive, ease),
         color var(--hashti-duration-fast-01) var(--hashti-ease-standard-productive, ease);
     }
 
     /* Accordion chevron rotation with expressive easing */
     .hashti-accordion-trigger > svg {
-      transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform var(--hashti-duration-moderate-01) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* Overlay spring entry animations (Popover, Menu, Tooltip) */
@@ -2611,18 +2615,20 @@
     .hashti-select-popover,
     .hashti-date-popover {
       &[data-entering] {
-        animation: hashti-frame-overlay-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+        animation: hashti-frame-overlay-in var(--hashti-duration-moderate-01)
+          cubic-bezier(0.16, 1, 0.3, 1);
       }
       &[data-exiting] {
-        animation: hashti-frame-overlay-out 120ms ease-in;
+        animation: hashti-frame-overlay-out var(--hashti-duration-fast-01) ease-in;
       }
     }
     :scope.hashti-tooltip {
       &[data-entering] {
-        animation: hashti-frame-overlay-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+        animation: hashti-frame-overlay-in var(--hashti-duration-fast-01)
+          cubic-bezier(0.16, 1, 0.3, 1);
       }
       &[data-exiting] {
-        animation: hashti-frame-overlay-out 100ms ease-in;
+        animation: hashti-frame-overlay-out var(--hashti-duration-fast-01) ease-in;
       }
     }
 
@@ -2650,18 +2656,19 @@
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       &[data-entering] {
-        animation: hashti-frame-backdrop-in 250ms ease-out;
+        animation: hashti-frame-backdrop-in var(--hashti-duration-moderate-01) ease-out;
       }
       &[data-exiting] {
-        animation: hashti-frame-backdrop-out 150ms ease-in forwards;
+        animation: hashti-frame-backdrop-out var(--hashti-duration-fast-01) ease-in forwards;
       }
     }
     .hashti-modal {
       &[data-entering] {
-        animation: hashti-frame-modal-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
+        animation: hashti-frame-modal-in var(--hashti-duration-moderate-02)
+          cubic-bezier(0.16, 1, 0.3, 1);
       }
       &[data-exiting] {
-        animation: hashti-frame-modal-out 150ms ease-in forwards;
+        animation: hashti-frame-modal-out var(--hashti-duration-fast-01) ease-in forwards;
       }
     }
 
@@ -3125,10 +3132,12 @@
       display: flex;
     }
     .hashti-drawer-overlay[data-entering] {
-      animation: hashti-frame-backdrop-in 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-frame-backdrop-in var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-drawer-overlay[data-exiting] {
-      animation: hashti-frame-backdrop-out 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: hashti-frame-backdrop-out var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .hashti-drawer {
       position: fixed;
@@ -3149,10 +3158,12 @@
       height: 100vh;
     }
     .hashti-drawer:is([data-placement="right"], [data-placement="end"])[data-entering] {
-      animation: hashti-drawer-slide-in-end 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-drawer-slide-in-end var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-drawer:is([data-placement="right"], [data-placement="end"])[data-exiting] {
-      animation: hashti-drawer-slide-out-end 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: hashti-drawer-slide-out-end var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .hashti-drawer:is([data-placement="left"], [data-placement="start"]) {
       top: 0;
@@ -3161,10 +3172,12 @@
       height: 100vh;
     }
     .hashti-drawer:is([data-placement="left"], [data-placement="start"])[data-entering] {
-      animation: hashti-drawer-slide-in-start 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-drawer-slide-in-start var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-drawer:is([data-placement="left"], [data-placement="start"])[data-exiting] {
-      animation: hashti-drawer-slide-out-start 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: hashti-drawer-slide-out-start var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .hashti-drawer[data-placement="top"] {
       top: 0;
@@ -3173,10 +3186,12 @@
       width: 100vw;
     }
     .hashti-drawer[data-placement="top"][data-entering] {
-      animation: hashti-drawer-slide-in-top 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-drawer-slide-in-top var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-drawer[data-placement="top"][data-exiting] {
-      animation: hashti-drawer-slide-out-top 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: hashti-drawer-slide-out-top var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .hashti-drawer[data-placement="bottom"] {
       bottom: 0;
@@ -3187,10 +3202,12 @@
       border-start-end-radius: var(--hashti-overlay-radius, 16px);
     }
     .hashti-drawer[data-placement="bottom"][data-entering] {
-      animation: hashti-drawer-slide-in-bottom 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-drawer-slide-in-bottom var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-drawer[data-placement="bottom"][data-exiting] {
-      animation: hashti-drawer-slide-out-bottom 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: hashti-drawer-slide-out-bottom var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .hashti-drawer:is(
         [data-placement="right"],
@@ -3332,7 +3349,7 @@
       fill: none;
       stroke: var(--hashti-interactive);
       stroke-linecap: round;
-      transition: stroke-dashoffset 300ms ease;
+      transition: stroke-dashoffset var(--hashti-duration-moderate-02) ease;
     }
     .hashti-progress-circle[data-status="success"] .hashti-progress-circle-fill {
       stroke: var(--hashti-support-success);
@@ -3471,7 +3488,8 @@
       color: var(--hashti-text-on-color);
       font-size: var(--hashti-body-compact-01-font-size);
       font-weight: 500;
-      animation: hashti-frame-batch-bar-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-frame-batch-bar-in var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-table-batch-bar > span {
       flex: 1;
@@ -3519,12 +3537,15 @@
       caret-color: transparent;
       transition: border-color var(--hashti-duration-fast-01) ease;
     }
-    .hashti-input-otp-slot[data-focused] {
+    /* Keyboard-only ring: a click on a digit paints no outline. */
+    .hashti-input-otp-slot:focus-visible {
       border-color: var(--hashti-focus);
-      box-shadow: 0 0 0 1px var(--hashti-focus);
+      outline: var(--hashti-focus-width, 2px) solid var(--hashti-focus);
+      outline-offset: 2px;
     }
     .hashti-input-otp-slot[data-filled] > span {
-      animation: hashti-frame-otp-bounce 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      animation: hashti-frame-otp-bounce var(--hashti-duration-moderate-01)
+        cubic-bezier(0.16, 1, 0.3, 1);
     }
     .hashti-input-otp-slot[data-invalid] {
       border-color: var(--hashti-support-error);
@@ -3542,7 +3563,7 @@
       border: 1px solid var(--hashti-border-subtle);
       border-radius: var(--hashti-control-radius, 0.5rem);
       background: var(--hashti-field);
-      transition: border-color 150ms ease;
+      transition: border-color var(--hashti-duration-fast-01) ease;
     }
     .hashti-token-input[data-focus-visible] {
       outline: var(--hashti-focus-width, 2px) solid var(--hashti-focus);

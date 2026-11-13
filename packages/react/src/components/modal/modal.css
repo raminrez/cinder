@@ -9,17 +9,6 @@
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(8px);
-    transition: opacity 200ms ease;
-  }
-
-  .hashti-modal-overlay[data-entering],
-  .hashti-modal-overlay[data-entering] {
-    opacity: 0;
-  }
-
-  .hashti-modal-overlay[data-exiting],
-  .hashti-modal-overlay[data-exiting] {
-    opacity: 0;
   }
 
   .hashti-modal {
@@ -32,9 +21,6 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     outline: none;
     overflow: hidden;
-    transition:
-      transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 200ms ease;
   }
 
   .hashti-modal[data-size="xs"],
@@ -55,17 +41,5 @@
   .hashti-modal[data-size="lg"],
   .hashti-modal[data-size="lg"] {
     max-width: 720px;
-  }
-
-  .hashti-modal[data-entering],
-  .hashti-modal[data-entering] {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-
-  .hashti-modal[data-exiting],
-  .hashti-modal[data-exiting] {
-    transform: scale(0.95);
-    opacity: 0;
   }
 }

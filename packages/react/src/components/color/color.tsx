@@ -58,7 +58,11 @@ export interface ColorThumbProps extends RACColorThumbProps {
 
 export function ColorThumb({ className, ref, ...props }: ColorThumbProps) {
   return (
-    <RACColorThumb {...props} ref={ref} className={classes("hashti-color-thumb", className)} />
+    <RACColorThumb
+      {...props}
+      ref={ref}
+      className={classes("react-aria-ColorThumb hashti-color-thumb", className)}
+    />
   );
 }
 
@@ -72,7 +76,11 @@ export interface ColorAreaProps extends RACColorAreaProps {
 
 export function ColorArea({ className, children, ref, ...props }: ColorAreaProps) {
   return (
-    <RACColorArea {...props} ref={ref} className={classes("hashti-color-area", className)}>
+    <RACColorArea
+      {...props}
+      ref={ref}
+      className={classes("react-aria-ColorArea hashti-color-area", className)}
+    >
       {(renderProps) => {
         if (typeof children === "function") {
           return children(renderProps);
@@ -102,7 +110,11 @@ export function ColorSlider({
   ...props
 }: ColorSliderProps) {
   return (
-    <RACColorSlider {...props} ref={ref} className={classes("hashti-color-slider", className)}>
+    <RACColorSlider
+      {...props}
+      ref={ref}
+      className={classes("react-aria-ColorSlider hashti-color-slider", className)}
+    >
       {(renderProps) => {
         if (typeof children === "function") {
           return children(renderProps);
@@ -141,7 +153,7 @@ export function ColorWheelTrack({ className, ref, ...props }: ColorWheelTrackPro
     <RACColorWheelTrack
       {...props}
       ref={ref}
-      className={classes("hashti-color-wheel-track", className)}
+      className={classes("react-aria-ColorWheelTrack hashti-color-wheel-track", className)}
     />
   );
 }
@@ -166,7 +178,7 @@ export function ColorWheel({
       innerRadius={innerRadius}
       outerRadius={outerRadius}
       ref={ref}
-      className={classes("hashti-color-wheel", className)}
+      className={classes("react-aria-ColorWheel hashti-color-wheel", className)}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -197,7 +209,11 @@ export interface ColorFieldProps extends RACColorFieldProps {
 
 export function ColorField({ className, label, children, ref, ...props }: ColorFieldProps) {
   return (
-    <RACColorField {...props} ref={ref} className={classes("hashti-color-field", className)}>
+    <RACColorField
+      {...props}
+      ref={ref}
+      className={classes("react-aria-ColorField hashti-color-field", className)}
+    >
       {(renderProps) => {
         if (typeof children === "function") {
           return children(renderProps);
@@ -241,6 +257,7 @@ export function ColorSwatch({
       data-shape={shape}
       className={classes(
         cx(
+          "react-aria-ColorSwatch",
           "hashti-color-swatch",
           `hashti-color-swatch--${size}`,
           shape === "circle" ? "hashti-color-swatch--circle" : "",
@@ -269,7 +286,10 @@ export function ColorSwatchPickerItem({
     <RACColorSwatchPickerItem
       {...props}
       ref={ref}
-      className={classes("hashti-color-swatch-picker-item", className)}
+      className={classes(
+        "react-aria-ColorSwatchPickerItem hashti-color-swatch-picker-item",
+        className,
+      )}
     >
       {(renderProps) => {
         if (typeof children === "function") {
@@ -310,6 +330,7 @@ export function ColorSwatchPicker({
       data-size={size}
       className={classes(
         cx(
+          "react-aria-ColorSwatchPicker",
           "hashti-color-swatch-picker",
           `hashti-color-swatch-picker--${layout}`,
           `hashti-color-swatch-picker--${size}`,
@@ -375,6 +396,7 @@ export function ColorPickerConvenience({
           <div className={cx("hashti-color-picker", className)}>
             {label && <Label className="hashti-color-picker__label">{label}</Label>}
             <ColorArea
+              colorSpace="hsb"
               xChannel="saturation"
               yChannel="brightness"
               className="hashti-color-picker__area"
@@ -382,7 +404,7 @@ export function ColorPickerConvenience({
             <div className="hashti-color-picker__controls">
               {showSwatch && <ColorSwatch className="hashti-color-picker__swatch" size="lg" />}
               <div className="hashti-color-picker__sliders">
-                <ColorSlider channel="hue" aria-label="Hue" />
+                <ColorSlider colorSpace="hsb" channel="hue" aria-label="Hue" />
                 {showAlpha && <ColorSlider channel="alpha" aria-label="Alpha" />}
               </div>
             </div>

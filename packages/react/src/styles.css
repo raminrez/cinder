@@ -50,9 +50,14 @@
 @layer hashti.reset {
   :where(.hashti-theme, [data-hashti-theme]) {
     font-family: var(--hashti-font-sans);
+    color: var(--hashti-text-primary);
+  }
+  /* The theme often sits on <html>. Setting body text there would shrink the root font size,
+     and every rem token with it, so the flow text is set one level down instead. */
+  :where(.hashti-theme, [data-hashti-theme]):not(:root),
+  :where([data-hashti-theme]) body {
     font-size: var(--hashti-body-01-font-size);
     line-height: var(--hashti-body-01-line-height);
-    color: var(--hashti-text-primary);
   }
   :where(.hashti-theme) {
     background: var(--hashti-background);
@@ -190,8 +195,8 @@
     position: relative;
     touch-action: manipulation;
     transition:
-      background-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      background-color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1),
+      color var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-button > svg:last-child {
     margin-inline-end: -3rem;
@@ -845,6 +850,18 @@
   .hashti-select-chip-remove:hover,
   .hashti-combobox-chip-remove:hover {
     opacity: 1;
+  }
+  /* The chip is 20px tall; the pointer target grows to 24px without moving the chip. */
+  .hashti-select-chip-remove,
+  .hashti-combobox-chip-remove {
+    position: relative;
+  }
+  .hashti-select-chip-remove::after,
+  .hashti-combobox-chip-remove::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
   }
   .hashti-select-multi-badge-wrapper,
   .hashti-combobox-multi-badge-wrapper {
@@ -1694,10 +1711,12 @@
     display: flex;
   }
   .hashti-drawer-overlay[data-entering] {
-    animation: hashti-frame-backdrop-in 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: hashti-frame-backdrop-in var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-drawer-overlay[data-exiting] {
-    animation: hashti-frame-backdrop-out 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hashti-frame-backdrop-out var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .hashti-drawer {
     position: fixed;
@@ -1718,10 +1737,12 @@
     height: 100vh;
   }
   .hashti-drawer:is([data-placement="right"], [data-placement="end"])[data-entering] {
-    animation: hashti-drawer-slide-in-end 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: hashti-drawer-slide-in-end var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-drawer:is([data-placement="right"], [data-placement="end"])[data-exiting] {
-    animation: hashti-drawer-slide-out-end 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hashti-drawer-slide-out-end var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .hashti-drawer:is([data-placement="left"], [data-placement="start"]) {
     top: 0;
@@ -1730,10 +1751,12 @@
     height: 100vh;
   }
   .hashti-drawer:is([data-placement="left"], [data-placement="start"])[data-entering] {
-    animation: hashti-drawer-slide-in-start 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: hashti-drawer-slide-in-start var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-drawer:is([data-placement="left"], [data-placement="start"])[data-exiting] {
-    animation: hashti-drawer-slide-out-start 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hashti-drawer-slide-out-start var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .hashti-drawer[data-placement="top"] {
     top: 0;
@@ -1742,10 +1765,12 @@
     width: 100vw;
   }
   .hashti-drawer[data-placement="top"][data-entering] {
-    animation: hashti-drawer-slide-in-top 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: hashti-drawer-slide-in-top var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-drawer[data-placement="top"][data-exiting] {
-    animation: hashti-drawer-slide-out-top 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hashti-drawer-slide-out-top var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .hashti-drawer[data-placement="bottom"] {
     bottom: 0;
@@ -1756,10 +1781,12 @@
     border-start-end-radius: var(--hashti-overlay-radius, 16px);
   }
   .hashti-drawer[data-placement="bottom"][data-entering] {
-    animation: hashti-drawer-slide-in-bottom 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: hashti-drawer-slide-in-bottom var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-drawer[data-placement="bottom"][data-exiting] {
-    animation: hashti-drawer-slide-out-bottom 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: hashti-drawer-slide-out-bottom var(--hashti-duration-moderate-01)
+      cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .hashti-drawer:is(
       [data-placement="right"],
@@ -2027,7 +2054,7 @@
       background: var(--hashti-border-strong-01, rgba(0, 0, 0, 0.2));
       position: absolute;
       z-index: 2;
-      transition: opacity var(--hashti-duration-fast-02, 150ms);
+      transition: opacity var(--hashti-duration-fast-02, var(--hashti-duration-fast-01));
     }
 
     &[data-swipe-direction="bottom"] .hashti-sheet-handle,
@@ -2192,7 +2219,7 @@
       0 2px 4px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     outline: none;
-    transition: transform var(--hashti-duration-fast-01, 70ms);
+    transition: transform var(--hashti-duration-fast-01, var(--hashti-duration-fast-01));
 
     &[data-dragging] {
       transform: translate(-50%, -50%) scale(1.15) !important;
@@ -2290,12 +2317,12 @@
       outline: none;
       box-sizing: border-box;
       width: 100%;
-      transition: border-color var(--hashti-duration-fast-01, 70ms);
+      transition: border-color var(--hashti-duration-fast-01, var(--hashti-duration-fast-01));
 
-      &:focus {
+      &:focus-visible {
         border-color: var(--hashti-focus);
         outline: 2px solid var(--hashti-focus);
-        outline-offset: -1px;
+        outline-offset: 2px;
       }
     }
   }
@@ -2364,7 +2391,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform var(--hashti-duration-fast-01, 70ms);
+    transition: transform var(--hashti-duration-fast-01, var(--hashti-duration-fast-01));
 
     &:hover {
       transform: scale(1.08);
@@ -2484,9 +2511,9 @@
     color: var(--hashti-text-secondary);
     background: transparent;
     transition:
-      background var(--hashti-duration-fast-01, 100ms) ease,
-      color var(--hashti-duration-fast-01, 100ms) ease,
-      box-shadow var(--hashti-duration-fast-01, 100ms) ease;
+      background var(--hashti-duration-fast-01, var(--hashti-duration-fast-01)) ease,
+      color var(--hashti-duration-fast-01, var(--hashti-duration-fast-01)) ease,
+      box-shadow var(--hashti-duration-fast-01, var(--hashti-duration-fast-01)) ease;
   }
   .hashti-tabs[data-variant="contained"] .react-aria-Tab[data-hovered]:not([data-selected]) {
     color: var(--hashti-text-primary);
@@ -2616,7 +2643,7 @@
   }
   .hashti-disclosure-indicator > svg,
   .hashti-disclosure-trigger > svg {
-    transition: transform var(--hashti-duration-fast-02, 150ms)
+    transition: transform var(--hashti-duration-fast-02, var(--hashti-duration-fast-01))
       var(--hashti-ease-standard-productive, cubic-bezier(0.2, 0, 0.38, 0.9));
   }
   :is([dir="rtl"], [data-direction="rtl"], :dir(rtl)) .hashti-disclosure-indicator > svg,
@@ -2638,14 +2665,11 @@
     transform: rotate(90deg);
   }
   .hashti-disclosure-panel {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows var(--hashti-duration-fast-02, 200ms)
-      cubic-bezier(0.2, 0, 0.38, 0.9);
-    overflow: hidden;
-  }
-  .hashti-disclosure[data-expanded] > .hashti-disclosure-panel[data-expanded] {
-    grid-template-rows: 1fr;
+    /* React Aria measures the panel and exposes its height; animating the variable is the
+       supported way to transition the disclosure. */
+    height: var(--disclosure-panel-height, auto);
+    overflow: clip;
+    transition: height var(--hashti-duration-moderate-01) cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hashti-disclosure-panel-inner {
     min-height: 0;
@@ -3306,7 +3330,7 @@
   .hashti-meter-segment {
     height: 100%;
     flex-shrink: 0;
-    transition: width 0.2s ease;
+    transition: width var(--hashti-duration-moderate-01) ease;
   }
   .hashti-meter[data-tone="neutral"] .hashti-meter-fill {
     background: var(--hashti-interactive);
@@ -3392,7 +3416,7 @@
     border-inline-end-color: transparent;
     border-radius: 50%;
     flex-shrink: 0;
-    animation: hashti-spin 700ms linear infinite;
+    animation: hashti-spin var(--hashti-duration-slow-02) linear infinite;
   }
   .hashti-loading {
     display: inline-flex;
@@ -4310,7 +4334,7 @@
     fill: none;
     stroke: var(--hashti-interactive);
     stroke-linecap: round;
-    transition: stroke-dashoffset 300ms ease;
+    transition: stroke-dashoffset var(--hashti-duration-moderate-02) ease;
   }
   .hashti-progress-circle[data-status="success"] .hashti-progress-circle-fill {
     stroke: var(--hashti-support-success);
@@ -4476,32 +4500,6 @@
     display: flex;
     gap: var(--hashti-spacing-02);
   }
-  .hashti-input-otp-slot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 3rem;
-    border: 1px solid var(--hashti-border-strong);
-    border-radius: var(--hashti-control-radius, var(--hashti-control-radius, 12px));
-    background: var(--hashti-field);
-    font-size: 1.25rem;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--hashti-text-primary);
-    text-align: center;
-    outline: none;
-    transition: border-color var(--hashti-duration-fast-01);
-  }
-  .hashti-input-otp-slot:focus {
-    border-color: var(--hashti-focus);
-    outline: 2px solid var(--hashti-focus);
-    outline-offset: -1px;
-  }
-  .hashti-input-otp-slot[data-invalid] {
-    border-color: var(--hashti-support-error);
-  }
-
   /* LoadMore for Collections (ListBox, GridList, Table) */
   .hashti-listbox-load-more,
   .hashti-grid-list-load-more,
@@ -4556,7 +4554,7 @@
     font-weight: 500;
     padding: 0.2rem 0.5rem;
     cursor: pointer;
-    transition: background-color var(--hashti-duration-fast-01, 70ms);
+    transition: background-color var(--hashti-duration-fast-01, var(--hashti-duration-fast-01));
   }
   .hashti-load-more-retry:hover {
     background: rgba(218, 30, 40, 0.1);
@@ -4598,7 +4596,7 @@
     text-decoration: none;
     color: var(--hashti-text-primary);
     cursor: pointer;
-    transition: background-color var(--hashti-duration-fast-01, 70ms);
+    transition: background-color var(--hashti-duration-fast-01, var(--hashti-duration-fast-01));
   }
   .hashti-navigation-tree-item[data-hovered] {
     background: var(--hashti-layer-hover);
@@ -4625,7 +4623,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform var(--hashti-duration-fast-02, 110ms);
+    transition: transform var(--hashti-duration-fast-02, var(--hashti-duration-fast-01));
   }
   .hashti-navigation-tree-item[data-expanded] .hashti-navigation-tree-indicator svg {
     transform: rotate(90deg);
@@ -4655,7 +4653,7 @@
     background: var(--hashti-layer-01);
     cursor: pointer;
     user-select: none;
-    transition: background-color var(--hashti-duration-fast-01, 70ms);
+    transition: background-color var(--hashti-duration-fast-01, var(--hashti-duration-fast-01));
   }
   .hashti-combobox-create-item:hover,
   .hashti-combobox-create-item:focus {
@@ -4814,9 +4812,9 @@
     border: 1px solid var(--hashti-border-subtle, transparent);
     box-sizing: border-box;
     transition:
-      background-color 150ms ease,
-      color 150ms ease,
-      outline 150ms ease;
+      background-color var(--hashti-duration-fast-01) ease,
+      color var(--hashti-duration-fast-01) ease,
+      outline var(--hashti-duration-fast-01) ease;
   }
 
   .hashti-token[data-size="sm"] {
@@ -4871,13 +4869,23 @@
     color: inherit;
     opacity: 0.7;
     transition:
-      opacity 120ms ease,
-      background-color 120ms ease;
+      opacity var(--hashti-duration-fast-01) ease,
+      background-color var(--hashti-duration-fast-01) ease;
   }
 
   .hashti-token__remove:hover {
     opacity: 1;
     background: rgba(0, 0, 0, 0.12);
+  }
+  /* The token is ~24px tall; the pointer target grows to 24px without moving the token. */
+  .hashti-token__remove {
+    position: relative;
+  }
+  .hashti-token__remove::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
   }
 
   /* ==========================================================================
@@ -5010,7 +5018,7 @@
     font-size: 0.875rem;
     user-select: none;
     outline: none;
-    transition: background 100ms ease;
+    transition: background var(--hashti-duration-fast-01) ease;
   }
 
   .hashti-command-palette__item[data-hovered],

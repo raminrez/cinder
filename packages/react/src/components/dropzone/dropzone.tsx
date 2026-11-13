@@ -50,7 +50,10 @@ export function DropZoneRoot({
       {...props}
       ref={ref}
       data-variant={variant}
-      className={classes(cx("hashti-dropzone", `hashti-dropzone--${variant}`), className)}
+      className={classes(
+        cx("react-aria-DropZone", "hashti-dropzone", `hashti-dropzone--${variant}`),
+        className,
+      )}
       onDrop={async (e) => {
         onDrop?.(e);
         if (onDropFiles) {
@@ -154,6 +157,7 @@ export function FileUploader({
   className,
 }: FileUploaderProps) {
   const id = useId();
+  const errorId = `${id}-error`;
   const [localFiles, setLocalFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
   const files = controlledFiles ?? localFiles;
@@ -187,7 +191,11 @@ export function FileUploader({
       )}
       <DropZoneRoot
         aria-labelledby={`${id}-label`}
-        aria-describedby={description ? `${id}-description` : undefined}
+        aria-describedby={
+          [description ? `${id}-description` : undefined, error ? errorId : undefined]
+            .filter(Boolean)
+            .join(" ") || undefined
+        }
         isDisabled={isDisabled}
         onDrop={async (event) => {
           const incoming = await Promise.all(
@@ -208,7 +216,7 @@ export function FileUploader({
         </FileTrigger>
       </DropZoneRoot>
       {error && (
-        <p role="alert" className="hashti-error-message">
+        <p id={errorId} role="alert" className="hashti-error-message">
           {error}
         </p>
       )}
@@ -219,9 +227,9 @@ export function FileUploader({
             <span>{file.name}</span>
             <span className="hashti-description">
               {new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(
-                file.size / 1024,
+                file.size >= 1024 * 1024 ? file.size / (1024 * 1024) : file.size / 1024,
               )}{" "}
-              KB
+              {file.size >= 1024 * 1024 ? "MB" : "KB"}
             </span>
             <Button
               variant="ghost"

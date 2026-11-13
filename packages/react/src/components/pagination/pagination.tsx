@@ -20,7 +20,8 @@ export function NativeSelect({
 }: NativeSelectProps) {
   const generatedId = useId();
   const id = providedId ?? generatedId;
-  const helpId = `${id}-help`;
+  const descriptionId = description ? `${id}-description` : undefined;
+  const errorId = errorMessage ? `${id}-error` : undefined;
   return (
     <div
       className={["hashti-field hashti-native-select", className].filter(Boolean).join(" ")}
@@ -35,16 +36,21 @@ export function NativeSelect({
           id={id}
           aria-invalid={props["aria-invalid"] ?? Boolean(errorMessage)}
           aria-describedby={
-            [props["aria-describedby"], (errorMessage || description) && helpId]
-              .filter(Boolean)
-              .join(" ") || undefined
+            [props["aria-describedby"], descriptionId, errorId].filter(Boolean).join(" ") ||
+            undefined
           }
         />
         <Icon name="chevronDown" />
       </div>
-      {(errorMessage || description) && (
-        <span id={helpId} className={errorMessage ? "hashti-error-message" : "hashti-description"}>
-          {errorMessage || description}
+      {/* Guidance stays visible while recovery is shown. */}
+      {description && (
+        <span id={descriptionId} className="hashti-description">
+          {description}
+        </span>
+      )}
+      {errorMessage && (
+        <span id={errorId} role="alert" className="hashti-error-message">
+          {errorMessage}
         </span>
       )}
     </div>

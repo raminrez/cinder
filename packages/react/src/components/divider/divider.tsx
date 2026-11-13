@@ -41,7 +41,7 @@ export function Divider({
       slot={slot}
       ref={ref}
       orientation={orientation}
-      className={cx("hashti-divider", className)}
+      className={cx("react-aria-Separator", "hashti-divider", className)}
     />
   );
 }

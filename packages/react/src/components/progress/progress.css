@@ -25,8 +25,8 @@
   .hashti-progress-fill {
     height: 100%;
     border-radius: 9999px;
-    background-color: var(--hashti-primary, #08bdba);
-    transition: width 200ms ease;
+    background-color: var(--hashti-focus);
+    transition: width var(--hashti-duration-moderate-01) ease;
   }
 
   .hashti-progress[data-status="success"] .hashti-progress-fill,
@@ -53,8 +53,8 @@
 
   .hashti-progress-circle-fill {
     fill: none;
-    stroke: var(--hashti-primary, #08bdba);
+    stroke: var(--hashti-focus);
     stroke-linecap: round;
-    transition: stroke-dashoffset 200ms ease;
+    transition: stroke-dashoffset var(--hashti-duration-moderate-01) ease;
   }
 }

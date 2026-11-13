@@ -11,8 +11,8 @@
     padding: var(--hashti-spacing-04, 12px);
     outline: none;
     transition:
-      opacity 150ms ease,
-      transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+      opacity var(--hashti-duration-fast-01) ease,
+      transform var(--hashti-duration-fast-01) cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hashti-popover[data-entering],

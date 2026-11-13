@@ -12,6 +12,7 @@ import {
   type ToggleButtonGroupProps as RACToggleButtonGroupProps,
 } from "react-aria-components";
 import { classes, type ControlSize } from "../../utils";
+import { ToolbarContext } from "../toolbar/toolbar";
 
 export type ButtonVariant =
   "primary" | "secondary" | "tertiary" | "ghost" | "danger" | "danger-tertiary" | "danger-ghost";
@@ -37,9 +38,12 @@ export function Button({
   ...props
 }: ButtonProps) {
   const size = requestedSize === undefined ? "lg" : requestedSize;
+  const toolbar = useContext(ToolbarContext);
   return (
     <RACButton
       {...props}
+      // A disabled Toolbar disables its actions, matching its presentation.
+      isDisabled={props.isDisabled ?? toolbar.isDisabled}
       className={classes("hashti-button", className)}
       data-variant={variant}
       data-size={size}
