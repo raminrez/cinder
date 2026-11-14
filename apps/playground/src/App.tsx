@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, ListBoxItem, Select, TextField, Theme } from "@hashti/react";
 import type { Key } from "react-aria-components";
-import { act, snapshot, useAgentSurface } from "@hashti/agent";
+import { act, snapshot } from "@hashti/agent";
 
 const REGIONS = [
   { value: "europe", label: "Europe" },
@@ -14,41 +14,6 @@ export default function App() {
   const [region, setRegion] = useState<Key>("europe");
   const [saved, setSaved] = useState<string | null>(null);
   const [page, setPage] = useState<string>("");
-
-  useAgentSurface({
-    component: "text-field",
-    label: "Project name",
-    value: name,
-    actions: {
-      setValue: ([value]) => setName(String(value)),
-      clear: () => setName(""),
-    },
-  });
-
-  useAgentSurface({
-    component: "select",
-    label: "Region",
-    value: region,
-    items: REGIONS,
-    actions: {
-      setValue: ([value]) => {
-        setRegion(String(value));
-        return String(value);
-      },
-    },
-  });
-
-  useAgentSurface({
-    component: "button",
-    label: "Save project",
-    actions: {
-      press: () => {
-        setSaved(`${name} · ${region}`);
-        return "saved";
-      },
-    },
-    mark: { confirm: "Saves the project" },
-  });
 
   return (
     <Theme className="playground">
@@ -68,7 +33,9 @@ export default function App() {
         ))}
       </Select>
 
-      <Button onPress={() => setSaved(`${name} · ${region}`)}>Save project</Button>
+      <Button agentConfirm="Saves the project" onPress={() => setSaved(`${name} · ${region}`)}>
+        Save project
+      </Button>
 
       {saved ? <p role="status">Saved {saved}</p> : null}
 

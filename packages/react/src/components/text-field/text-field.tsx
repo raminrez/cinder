@@ -1,6 +1,7 @@
 "use client";
 
-import type { ReactNode, Ref } from "react";
+import { useState, type ReactNode, type Ref } from "react";
+import { useAgentSurface } from "@hashti/agent";
 import {
   TextField as RACTextField,
   TextFieldContext,
@@ -66,9 +67,28 @@ function TextFieldDefault({
   children,
   ...props
 }: TextFieldProps) {
+  const [mirror, setMirror] = useState<string>(
+    props.value ?? props.defaultValue ?? "",
+  );
+  const handleChange = (value: string) => {
+    setMirror(value);
+    props.onChange?.(value);
+  };
+
+  useAgentSurface({
+    component: "text-field",
+    label: typeof label === "string" ? label : props["aria-label"],
+    value: props.value ?? mirror,
+    actions: {
+      setValue: ([value]) => handleChange(String(value)),
+      clear: () => handleChange(""),
+    },
+  });
+
   return (
     <TextFieldRoot
       {...props}
+      onChange={handleChange}
       size={size}
       className={className}
       data-hashti-input-icon={children == null ? "" : undefined}

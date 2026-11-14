@@ -2,6 +2,14 @@ import { mkdir, rm, copyFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { siteLicenses } from "./licenses";
 const root = resolve(import.meta.dir, "..");
+// Linked workspace packages resolve to source; keep them as imports so consumers
+// (and this app) share one copy of each registry.
+const workspaceExternal = {
+  name: "workspace-external",
+  setup(build: { onResolve: (options: { filter: RegExp }, callback: (args: { path: string }) => { path: string; external: boolean }) => void }) {
+    build.onResolve({ filter: /^@hashti\// }, (args) => ({ path: args.path, external: true }));
+  },
+};
 const run = async (...command: string[]) => {
   const process = Bun.spawn(command, { cwd: root, stdout: "inherit", stderr: "inherit" });
   if ((await process.exited) !== 0) throw new Error(`Build step failed: ${command.join(" ")}`);
@@ -20,7 +28,8 @@ for (const name of ["tokens", "react", "agent"]) {
     format: "esm",
     jsx: { runtime: "automatic", development: false },
     packages: "external",
-    external: ["@hashti/tokens"],
+    external: ["@hashti/tokens", "@hashti/agent"],
+    plugins: [workspaceExternal],
     sourcemap: "linked",
     minify: false,
     ...(name === "tokens" ? {} : { banner: '"use client";' }),

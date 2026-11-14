@@ -1,4 +1,5 @@
 import { createContext, useContext, type Ref } from "react";
+import { useAgentSurface } from "@hashti/agent";
 import {
   Button as RACButton,
   Link as RACLink,
@@ -25,6 +26,8 @@ export interface ButtonProps extends RACButtonProps {
   iconOnly?: boolean;
   /** Progress label announced alongside the action while pending. Localize both. */
   pendingLabel?: string;
+  /** A sentence that tells an agent this action changes something; it waits for a person. */
+  agentConfirm?: string;
   ref?: Ref<HTMLButtonElement>;
 }
 
@@ -33,12 +36,29 @@ export function Button({
   size: requestedSize,
   iconOnly = false,
   pendingLabel = "Pending",
+  agentConfirm,
   className,
   children,
   ...props
 }: ButtonProps) {
   const size = requestedSize === undefined ? "lg" : requestedSize;
   const toolbar = useContext(ToolbarContext);
+
+  const label = typeof children === "string" ? children : props["aria-label"];
+
+  useAgentSurface({
+    component: "button",
+    label,
+    actions: {
+      press: () => {
+        (props.onPress as (() => void) | undefined)?.();
+        (props.onClick as (() => void) | undefined)?.();
+      },
+    },
+    // An unnamed button is internal, like a Select's trigger: the Select surface owns it.
+    mark: { confirm: agentConfirm, hidden: !label },
+  });
+
   return (
     <RACButton
       {...props}

@@ -1,6 +1,7 @@
 "use client";
 
-import { type ReactNode, type Ref, useContext, useEffect, useRef } from "react";
+import { useState, type ReactNode, type Ref, useContext, useEffect, useRef, type Key } from "react";
+import { useAgentSurface } from "@hashti/agent";
 import {
   Select as RACSelect,
   SelectStateContext,
@@ -159,9 +160,32 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
   ...props
 }: SelectProps<T, M>) {
   const isMultiple = props.selectionMode === "multiple";
+  const [mirror, setMirror] = useState<Key | null>(
+    (props.selectedKey as Key) ?? (props.defaultSelectedKey as Key) ?? null,
+  );
+  const handleSelectionChange = (key: Key | null) => {
+    setMirror(key);
+    (props.onSelectionChange as ((key: Key | null) => void) | undefined)?.(key);
+  };
+
+  useAgentSurface({
+    component: "select",
+    label: typeof label === "string" ? label : props["aria-label"],
+    value: isMultiple ? undefined : ((props.selectedKey as Key) ?? mirror),
+    actions: {
+      setValue: ([key]) => handleSelectionChange(String(key) as Key),
+    },
+    mark: { hidden: isMultiple },
+  });
 
   return (
-    <SelectRoot<T, M> {...props} placeholder={placeholder} size={size} className={className}>
+    <SelectRoot<T, M>
+      {...props}
+      onSelectionChange={handleSelectionChange as never}
+      placeholder={placeholder}
+      size={size}
+      className={className}
+    >
       <FieldLayout
         label={label}
         labelTooltip={labelTooltip}

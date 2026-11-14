@@ -3,7 +3,7 @@
 Where Cinder's agent surface is prototyped, and where ui-sdk is evaluated on components Cinder
 does not ship.
 
-`@hashti/agent` is the contract described in
+The field slice registers itself through `@hashti/agent`, the contract described in
 [ADR 0001](../../docs/adr/0001-ui-sdk-and-hashti-agent-bridge.md): a registry, a `useAgentSurface`
 hook, and `snapshot` / `act` / `query` over it. This app wires the field slice to it.
 

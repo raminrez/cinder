@@ -28,7 +28,13 @@ as ui-sdk, so one model prompt works against both.
 
 - Change callbacks gain a second argument, `details` (`source`, `reason`, `cancel()`). Additive, but
   every component that reports a change must pass it.
-- The library stays framework-clean: no DOM observers or global registries inside `@hashti/react`.
+- Components import `useAgentSurface` from `@hashti/agent` and register themselves on mount. There is
+  no DOM observation and no bridge inside the library, but `@hashti/react` now depends on
+  `@hashti/agent`; that dependency stays external in the package build, because two copies mean two
+  registries and an empty snapshot.
+- Agent-driven changes reach the consumer's `onChange`. An uncontrolled component shows a new value
+  in the snapshot before it shows it on screen, so agent writes are reliable only on controlled
+  components until the library owns more of the state.
 - Two behavior engines coexist. `web.css` never enters the library; it is confined to `apps/playground`.
 - The `agent` surface in ui-sdk is documented as experimental, so the shared contract may change
   under us. The metadata hook and marks are ours and can outlive ui-sdk's shape.
