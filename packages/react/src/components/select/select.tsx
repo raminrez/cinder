@@ -195,7 +195,7 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
   useAgentSurface({
     component: "select",
     label: typeof label === "string" ? label : props["aria-label"],
-    value: isMultiple ? undefined : ((props.selectedKey as Key) ?? mirror),
+    value: isMultiple ? undefined : (props.selectedKey !== undefined ? (props.selectedKey as Key) : mirror),
     actions: {
       setValue: ([key]) =>
         handleSelectionChange(String(key) as Key, "agent", "setValue"),

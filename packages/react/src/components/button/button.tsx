@@ -1,4 +1,4 @@
-import { createContext, useContext, type Ref } from "react";
+import { createContext, isValidElement, useContext, type ReactNode, type Ref } from "react";
 import { useAgentSurface } from "@hashti/agent";
 import {
   Button as RACButton,
@@ -43,18 +43,23 @@ export function Button({
 }: ButtonProps) {
   const size = requestedSize === undefined ? "lg" : requestedSize;
   const toolbar = useContext(ToolbarContext);
-
-  const label = typeof children === "string" ? children : props["aria-label"];
+  const label =
+    props["aria-label"] ??
+    (typeof children === "function" ? undefined : textOf(children)) ??
+    undefined;
 
   useAgentSurface({
     component: "button",
     label,
-    actions: {
-      press: () => {
-        (props.onPress as (() => void) | undefined)?.();
-        (props.onClick as (() => void) | undefined)?.();
-      },
-    },
+    actions:
+      props.isDisabled || props.isPending
+        ? {}
+        : {
+            press: () => {
+              (props.onPress as (() => void) | undefined)?.();
+              (props.onClick as (() => void) | undefined)?.();
+            },
+          },
     // An unnamed button is internal, like a Select's trigger: the Select surface owns it.
     mark: { confirm: agentConfirm, hidden: !label },
   });
@@ -104,6 +109,16 @@ export interface ToggleButtonProps extends RACToggleButtonProps {
   ref?: Ref<HTMLButtonElement>;
 }
 const ContentSwitcherSizeContext = createContext<ControlSize>("md");
+
+/** The text a person sees on a button, so an agent can name it without an aria-label. */
+const textOf = (node: ReactNode): string =>
+  typeof node === "string" || typeof node === "number"
+    ? String(node)
+    : Array.isArray(node)
+      ? node.map(textOf).join(" ")
+      : isValidElement<{ children?: ReactNode }>(node)
+        ? textOf(node.props.children)
+        : "";
 
 export function ToggleButton({ className, size, ...props }: ToggleButtonProps) {
   const inheritedSize = useContext(ContentSwitcherSizeContext);

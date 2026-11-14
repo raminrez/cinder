@@ -132,3 +132,64 @@ describe("query", () => {
     });
   });
 });
+
+describe("targets", () => {
+  test("matches a label by whole words, not by substring", async () => {
+    registerSurface({ component: "text-field", label: "Region", actions: { setValue: () => "region" } });
+    registerSurface({
+      component: "text-field",
+      label: "Region code",
+      actions: { setValue: () => "code" },
+    });
+
+    const result = await act({ steps: [{ ref: "Region", action: "setValue" }] });
+    expect(result.ok).toBe(true);
+    expect(result.steps[0]?.value).toBe("region");
+
+    const partial = await act({ steps: [{ ref: "Regio", action: "setValue" }] });
+    expect(partial.ok).toBe(false);
+  });
+
+  test("hides a hidden surface from labels but keeps it reachable by ref", async () => {
+    const hidden = registerSurface({
+      component: "select",
+      label: "Region",
+      actions: { setValue: () => "changed" },
+      mark: { hidden: true },
+    });
+
+    const byLabel = await act({ steps: [{ ref: "Region", action: "setValue" }] });
+    expect(byLabel.ok).toBe(false);
+
+    const byRef = await act({ steps: [{ ref: hidden.ref, action: "setValue" }] });
+    expect(byRef.ok).toBe(true);
+  });
+
+  test("reports an action that throws instead of rejecting", async () => {
+    registerSurface({
+      component: "button",
+      label: "Save project",
+      actions: {
+        press: () => {
+          throw new Error("the network is down");
+        },
+      },
+    });
+
+    const result = await act({ steps: [{ ref: "Save project", action: "press" }] });
+    expect(result.ok).toBe(false);
+    expect(result.error).toBe("press failed: the network is down.");
+  });
+
+  test("drops a field the surface no longer provides", () => {
+    const select = registerSurface({
+      component: "select",
+      label: "Region",
+      items: [{ value: "europe", label: "Europe" }],
+      actions: {},
+    });
+
+    select.update({ items: undefined });
+    expect(query({ within: "Region" })).toEqual({ ref: select.ref, items: [], more: 0 });
+  });
+});

@@ -5,7 +5,7 @@ export type SurfaceMark = {
 };
 
 /** Who changed a component, and a way for the app to refuse the change. */
-export type ChangeSource = "user" | "agent" | "programmatic";
+export type ChangeSource = "user" | "agent";
 
 export type ChangeDetails = {
   source: ChangeSource;
@@ -51,15 +51,21 @@ const normalize = (text: string) =>
     .toLowerCase()
     .trim();
 
+const wordsOf = (text: string) =>
+  normalize(text)
+    .split(/\s+/)
+    .map((word) => word.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, ""))
+    .filter(Boolean);
+
 export function registerSurface(input: SurfaceInput) {
   const ref = `c${++nextRef}`;
-  const surface: Surface = { ...input, ref };
-  surfaces.set(ref, surface);
+  surfaces.set(ref, { ...input, ref });
 
   return {
     ref,
     update(next: Partial<SurfaceInput>) {
-      Object.assign(surface, next);
+      const previous = surfaces.get(ref);
+      if (previous) surfaces.set(ref, { ...previous, ...next, ref });
     },
     dispose() {
       surfaces.delete(ref);
@@ -90,22 +96,31 @@ export function snapshot() {
 }
 
 function find(step: AgentStep) {
-  if (step.ref && surfaces.has(step.ref)) {
-    return surfaces.get(step.ref);
-  }
-
   if (!step.ref) {
     return undefined;
   }
 
-  const words = normalize(step.ref).split(/\s+/);
-  const matches = [...surfaces.values()].filter(
-    (surface) =>
-      surface.label &&
-      words.every((word) => normalize(surface.label!).includes(word)),
+  // An exact ref reaches a hidden surface; a label never does.
+  if (surfaces.has(step.ref)) {
+    return surfaces.get(step.ref);
+  }
+
+  const words = wordsOf(step.ref);
+  const candidates = [...surfaces.values()].filter(
+    (surface) => !surface.mark?.hidden && surface.label,
   );
 
-  return matches.length === 1 ? matches[0] : undefined;
+  const exact = candidates.filter(
+    (surface) => wordsOf(surface.label!).join(" ") === words.join(" "),
+  );
+  if (exact.length === 1) return exact[0];
+
+  const partial = candidates.filter((surface) => {
+    const tokens = wordsOf(surface.label!);
+    return words.every((word) => tokens.includes(word));
+  });
+
+  return partial.length === 1 ? partial[0] : undefined;
 }
 
 function itemValue(surface: Surface, named: unknown) {
@@ -171,11 +186,15 @@ export async function act({
       };
     }
 
-    ran.push({
-      ref: target.ref,
-      action: step.action,
-      value: await action(request.args),
-    });
+    let value: unknown;
+    try {
+      value = await action(request.args);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return { ok: false, error: `${step.action} failed: ${message}.`, steps: ran };
+    }
+
+    ran.push({ ref: target.ref, action: step.action, value });
   }
 
   return { ok: true, steps: ran, values: snapshot() };

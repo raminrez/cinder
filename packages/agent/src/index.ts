@@ -1,6 +1,5 @@
 export {
   act,
-  clearSurfaces,
   createAgent,
   query,
   registerSurface,
@@ -10,7 +9,6 @@ export {
   type Allow,
   type ChangeDetails,
   type ChangeSource,
-  type Surface,
   type SurfaceAction,
   type SurfaceInput,
   type SurfaceMark,

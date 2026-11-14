@@ -15,6 +15,7 @@ export default function App() {
   const [saved, setSaved] = useState<string | null>(null);
   const [page, setPage] = useState<string>("");
   const [refuseAgents, setRefuseAgents] = useState(false);
+  const [token, setToken] = useState("sk-live-1234");
 
   const refuses = (details: { source: string; cancel: () => void }) => {
     if (refuseAgents && details.source === "agent") {
@@ -35,6 +36,13 @@ export default function App() {
           if (refuses(details)) return;
           setName(value);
         }}
+      />
+
+      <TextField
+        label="API token"
+        agentSecret
+        value={token}
+        onChange={setToken}
       />
 
       <Select
@@ -58,6 +66,10 @@ export default function App() {
 
       <Button agentConfirm="Saves the project" onPress={() => setSaved(`${name} · ${region}`)}>
         Save project
+      </Button>
+
+      <Button variant="secondary" isDisabled>
+        <span>Archive project</span>
       </Button>
 
       {saved ? <p role="status">Saved {saved}</p> : null}

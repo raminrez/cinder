@@ -53,6 +53,8 @@ function TextFieldRoot({
 export interface TextFieldProps extends Omit<TextFieldRootProps, "onChange">, FieldContentProps {
   placeholder?: string;
   inputRef?: Ref<HTMLInputElement>;
+  /** Keeps the value out of the agent's snapshot; set it on password and code fields. */
+  agentSecret?: boolean;
   /** `details.source` tells an agent's change from a person's; `details.cancel()` refuses it. */
   onChange?: (value: string, details: ChangeDetails) => void;
 }
@@ -67,6 +69,7 @@ function TextFieldDefault({
   inputRef,
   className,
   children,
+  agentSecret,
   ...props
 }: TextFieldProps) {
   const [mirror, setMirror] = useState<string>(
@@ -96,6 +99,7 @@ function TextFieldDefault({
       setValue: ([value]) => handleChange(String(value), "agent", "setValue"),
       clear: () => handleChange("", "agent", "clear"),
     },
+    mark: { secret: agentSecret ?? props.type === "password" },
   });
 
   return (
