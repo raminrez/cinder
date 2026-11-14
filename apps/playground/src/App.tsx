@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Button, ListBoxItem, Select, TextField, Theme } from "@hashti/react";
 import type { Key } from "react-aria-components";
-import { useAgentSurface } from "./agent/use-agent-surface";
-import { act, snapshot } from "./agent/registry";
+import { act, snapshot, useAgentSurface } from "@hashti/agent";
 
 const REGIONS = [
   { value: "europe", label: "Europe" },

@@ -36,7 +36,7 @@
     "typecheck:storybook": "bun run --cwd apps/storybook typecheck",
     "lint": "bun run --bun oxlint",
     "lint:fix": "bun run lint --fix",
-    "test": "bun test tests/unit packages/react/src ./apps/storybook/.storybook/watch-packages.test.ts",
+    "test": "bun test tests/unit packages/react/src packages/agent/src ./apps/storybook/.storybook/watch-packages.test.ts",
     "test:browser": "bun test --timeout 60000 tests/browser",
     "test:package": "bun scripts/verify-package.ts",
     "cleanup": "rimraf node_modules apps/*/node_modules packages/*/node_modules dist apps/*/dist packages/*/dist apps/docs/.astro apps/*/storybook-static playwright-report test-results apps/storybook/debug-storybook.log",

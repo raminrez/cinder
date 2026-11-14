@@ -57,7 +57,7 @@ describe("snapshot", () => {
       value: "Apollo",
       actions: ["setValue"],
     });
-    expect(page[2]).toMatchObject({ confirm: "Saves the project" });
+    expect(page[2]!).toMatchObject({ confirm: "Saves the project" });
   });
 
   test("leaves out hidden components and redacts secret values", () => {
@@ -66,7 +66,7 @@ describe("snapshot", () => {
 
     const page = snapshot();
     expect(page).toHaveLength(1);
-    expect(page[0].value).toBe("[redacted]");
+    expect(page[0]?.value).toBe("[redacted]");
   });
 });
 

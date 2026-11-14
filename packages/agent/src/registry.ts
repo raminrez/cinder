@@ -199,7 +199,7 @@ export function createAgent(options: { allow?: Allow } = {}) {
   return {
     snapshot,
     query,
-    act: (input: { steps: AgentStep[] }) =>
-      act({ steps: input.steps, allow: options.allow }),
+    act: (input: { steps: AgentStep[] }, allow?: Allow) =>
+      act({ steps: input.steps, allow: allow ?? options.allow }),
   };
 }

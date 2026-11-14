@@ -1,0 +1,23 @@
+{
+  "name": "@hashti/agent",
+  "version": "0.1.0",
+  "description": "Agent surface for Hashti components: snapshot, act and query over a page.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0 <20"
+  }
+}

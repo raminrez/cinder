@@ -47,6 +47,7 @@
       "name": "playground",
       "version": "0.0.0",
       "dependencies": {
+        "@hashti/agent": "workspace:*",
         "@hashti/react": "workspace:*",
         "@hashti/tokens": "workspace:*",
         "@ui-sdk/core": "^0.1.0-beta.1",
@@ -84,6 +85,13 @@
         "storybook": "10.6.6",
         "storybook-addon-tag-badges": "^3.1.0",
         "vite": "8.3.6",
+      },
+    },
+    "packages/agent": {
+      "name": "@hashti/agent",
+      "version": "0.1.0",
+      "peerDependencies": {
+        "react": ">=19.0.0 <20",
       },
     },
     "packages/react": {
@@ -327,6 +335,8 @@
     "@fumadocs/tailwind": ["@fumadocs/tailwind@0.1.5", "", { "peerDependencies": { "tailwindcss": "^4.0.0" }, "optionalPeers": ["tailwindcss"] }, "sha512-ohzmuLTfNNRvP6B/Xx31lWJ58xu40NcmI+6mc/jivYeOoofnmdxBKu5gCErTgOE/mUqyVv4GvYeqd9FhoLHphg=="],
 
     "@fumari/image-size": ["@fumari/image-size@0.1.1", "", {}, "sha512-iaiV2wyzJ4mW358NX4CX3yGit+WjKYzpaQ+rldK9BjL/5jFpeV6ruWnZVq7MEyMn3Gd0DLi8g/79NZAAQaGscw=="],
+
+    "@hashti/agent": ["@hashti/agent@workspace:packages/agent"],
 
     "@hashti/docs": ["@hashti/docs@workspace:apps/docs"],
 

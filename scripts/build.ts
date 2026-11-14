@@ -8,7 +8,7 @@ const run = async (...command: string[]) => {
 };
 
 await run("bun", "run", "build:tokens");
-for (const name of ["tokens", "react"]) {
+for (const name of ["tokens", "react", "agent"]) {
   const folder = `${root}/packages/${name}`;
   if (!process.argv.includes("--no-clean")) {
     await rm(`${folder}/dist`, { recursive: true, force: true });
@@ -23,7 +23,7 @@ for (const name of ["tokens", "react"]) {
     external: ["@hashti/tokens"],
     sourcemap: "linked",
     minify: false,
-    ...(name === "react" ? { banner: '"use client";' } : {}),
+    ...(name === "tokens" ? {} : { banner: '"use client";' }),
   });
   if (!result.success) throw new AggregateError(result.logs, `Could not build ${name}`);
   await run("bunx", "--bun", "tsc", "-p", `packages/${name}/tsconfig.build.json`);
@@ -36,7 +36,7 @@ for (const name of ["tokens", "react"]) {
         copyFile(`${folder}/src/${file}`, `${folder}/dist/${file}`),
       ),
     );
-  } else {
+  } else if (name === "react") {
     const css = await Bun.build({
       entrypoints: [`${folder}/src/styles.css`],
       outdir: `${folder}/dist`,
