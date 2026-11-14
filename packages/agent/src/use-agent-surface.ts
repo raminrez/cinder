@@ -2,12 +2,11 @@ import { useEffect, useRef } from "react";
 import { registerSurface, type SurfaceInput } from "./registry";
 
 export function useAgentSurface(input: SurfaceInput) {
-  const latest = useRef(input);
-  latest.current = input;
+  const initial = useRef(input);
   const handle = useRef<ReturnType<typeof registerSurface> | null>(null);
 
   useEffect(() => {
-    handle.current = registerSurface(latest.current);
+    handle.current = registerSurface(initial.current);
     return () => {
       handle.current?.dispose();
       handle.current = null;
@@ -15,6 +14,6 @@ export function useAgentSurface(input: SurfaceInput) {
   }, []);
 
   useEffect(() => {
-    handle.current?.update(latest.current);
+    handle.current?.update(input);
   });
 }

@@ -33,10 +33,14 @@ const dependencies: Record<string, string> = {
 };
 for (const archive of archives)
   dependencies[archive.name] = `file:${join(root, "dist/packages", archive.filename)}`;
+// Cross-package versions point at the registry; local tarballs stand in for it.
+const overrides = Object.fromEntries(
+  archives.map((archive) => [archive.name, `file:${join(root, "dist/packages", archive.filename)}`]),
+);
 
 await Bun.write(
   join(consumer, "package.json"),
-  `${JSON.stringify({ name: "hashti-consumer", private: true, type: "module", dependencies }, null, 2)}\n`,
+  `${JSON.stringify({ name: "hashti-consumer", private: true, type: "module", dependencies, overrides }, null, 2)}\n`,
 );
 const install = Bun.spawnSync(["bun", "install"], { cwd: consumer });
 assert.equal(install.exitCode, 0, `bun install failed:\n${install.stderr.toString()}`);
@@ -50,7 +54,7 @@ for (const name of archives.map((archive) => archive.name)) {
   );
 }
 const installed = await readdir(join(consumer, "node_modules/@hashti"));
-assert.deepEqual(installed.sort(), ["react", "tokens"]);
+assert.deepEqual(installed.sort(), ["agent", "react", "tokens"]);
 
 const reactCss = await Bun.file(Bun.resolveSync("@hashti/react/styles.css", consumer)).text();
 const tokenCss = await Bun.file(Bun.resolveSync("@hashti/tokens/tokens.css", consumer)).text();
