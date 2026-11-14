@@ -1,32 +1,16 @@
-# React + TypeScript + Vite
+# Playground
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Where Cinder's agent surface is prototyped, and where ui-sdk is evaluated on components Cinder
+does not ship.
 
-Currently, two official plugins are available:
+`src/agent/` is a prototype of the contract described in
+[ADR 0001](../../docs/adr/0001-ui-sdk-and-hashti-agent-bridge.md): a registry, a `useAgentSurface`
+hook, and `snapshot` / `act` / `query` over it.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+bun run dev        # http://localhost:5173
+bun test src/agent # contract tests
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+`window.agent` exists in the page's own console. Automation that reads it through a scripted
+console runs in an isolated world and will not see it; drive the demo buttons instead.
