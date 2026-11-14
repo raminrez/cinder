@@ -8,6 +8,8 @@ export {
   type AgentRequest,
   type AgentStep,
   type Allow,
+  type ChangeDetails,
+  type ChangeSource,
   type Surface,
   type SurfaceAction,
   type SurfaceInput,

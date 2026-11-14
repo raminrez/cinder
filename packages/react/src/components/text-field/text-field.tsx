@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode, type Ref } from "react";
-import { useAgentSurface } from "@hashti/agent";
+import { useAgentSurface, type ChangeDetails, type ChangeSource } from "@hashti/agent";
 import {
   TextField as RACTextField,
   TextFieldContext,
@@ -50,9 +50,11 @@ function TextFieldRoot({
   );
 }
 
-export interface TextFieldProps extends TextFieldRootProps, FieldContentProps {
+export interface TextFieldProps extends Omit<TextFieldRootProps, "onChange">, FieldContentProps {
   placeholder?: string;
   inputRef?: Ref<HTMLInputElement>;
+  /** `details.source` tells an agent's change from a person's; `details.cancel()` refuses it. */
+  onChange?: (value: string, details: ChangeDetails) => void;
 }
 
 function TextFieldDefault({
@@ -70,9 +72,20 @@ function TextFieldDefault({
   const [mirror, setMirror] = useState<string>(
     props.value ?? props.defaultValue ?? "",
   );
-  const handleChange = (value: string) => {
-    setMirror(value);
-    props.onChange?.(value);
+  const handleChange = (
+    value: string,
+    source: ChangeSource = "user",
+    reason?: string,
+  ) => {
+    let cancelled = false;
+    props.onChange?.(value, {
+      source,
+      reason,
+      cancel: () => {
+        cancelled = true;
+      },
+    });
+    if (!cancelled) setMirror(value);
   };
 
   useAgentSurface({
@@ -80,8 +93,8 @@ function TextFieldDefault({
     label: typeof label === "string" ? label : props["aria-label"],
     value: props.value ?? mirror,
     actions: {
-      setValue: ([value]) => handleChange(String(value)),
-      clear: () => handleChange(""),
+      setValue: ([value]) => handleChange(String(value), "agent", "setValue"),
+      clear: () => handleChange("", "agent", "clear"),
     },
   });
 

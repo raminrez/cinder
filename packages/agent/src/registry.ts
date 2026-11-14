@@ -4,6 +4,15 @@ export type SurfaceMark = {
   hidden?: boolean;
 };
 
+/** Who changed a component, and a way for the app to refuse the change. */
+export type ChangeSource = "user" | "agent" | "programmatic";
+
+export type ChangeDetails = {
+  source: ChangeSource;
+  reason?: string;
+  cancel: () => void;
+};
+
 export type SurfaceAction = (args: unknown[]) => unknown;
 
 export interface SurfaceInput {

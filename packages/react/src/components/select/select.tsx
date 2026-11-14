@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode, type Ref, useContext, useEffect, useRef, type Key } from "react";
-import { useAgentSurface } from "@hashti/agent";
+import { useAgentSurface, type ChangeDetails, type ChangeSource } from "@hashti/agent";
 import {
   Select as RACSelect,
   SelectStateContext,
@@ -136,13 +136,22 @@ function SelectListBox<T extends object>({
   );
 }
 
+type WithChangeDetails<F> = F extends (...args: infer A) => infer R
+  ? (...args: [...A, ChangeDetails]) => R
+  : never;
+
 export interface SelectProps<T extends object, M extends SelectionMode = "single">
-  extends Omit<SelectRootProps<T, M>, "children">, FieldContentProps {
+  extends Omit<SelectRootProps<T, M>, "children" | "onSelectionChange">,
+    FieldContentProps {
   items?: Iterable<T>;
   children: ListBoxProps<T>["children"];
   placeholder?: string;
   renderValue?: (selectedItems: T[]) => ReactNode;
   multipleDisplay?: "chips" | "badge" | "text";
+  /** `details.source` tells an agent's change from a person's; `details.cancel()` refuses it. */
+  onSelectionChange?: WithChangeDetails<
+    NonNullable<SelectRootProps<T, M>["onSelectionChange"]>
+  >;
 }
 
 function SelectDefault<T extends object, M extends SelectionMode = "single">({
@@ -163,9 +172,24 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
   const [mirror, setMirror] = useState<Key | null>(
     (props.selectedKey as Key) ?? (props.defaultSelectedKey as Key) ?? null,
   );
-  const handleSelectionChange = (key: Key | null) => {
-    setMirror(key);
-    (props.onSelectionChange as ((key: Key | null) => void) | undefined)?.(key);
+  const handleSelectionChange = (
+    value: Key | null,
+    source: ChangeSource = "user",
+    reason?: string,
+  ) => {
+    let cancelled = false;
+    (
+      props.onSelectionChange as
+        | ((value: Key | null, details: ChangeDetails) => void)
+        | undefined
+    )?.(value, {
+      source,
+      reason,
+      cancel: () => {
+        cancelled = true;
+      },
+    });
+    if (!cancelled) setMirror(value);
   };
 
   useAgentSurface({
@@ -173,7 +197,8 @@ function SelectDefault<T extends object, M extends SelectionMode = "single">({
     label: typeof label === "string" ? label : props["aria-label"],
     value: isMultiple ? undefined : ((props.selectedKey as Key) ?? mirror),
     actions: {
-      setValue: ([key]) => handleSelectionChange(String(key) as Key),
+      setValue: ([key]) =>
+        handleSelectionChange(String(key) as Key, "agent", "setValue"),
     },
     mark: { hidden: isMultiple },
   });

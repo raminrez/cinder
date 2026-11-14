@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, ListBoxItem, Select, TextField, Theme } from "@hashti/react";
+import { Button, Checkbox, ListBoxItem, Select, TextField, Theme } from "@hashti/react";
 import type { Key } from "react-aria-components";
 import { act, snapshot } from "@hashti/agent";
 
@@ -14,17 +14,36 @@ export default function App() {
   const [region, setRegion] = useState<Key>("europe");
   const [saved, setSaved] = useState<string | null>(null);
   const [page, setPage] = useState<string>("");
+  const [refuseAgents, setRefuseAgents] = useState(false);
+
+  const refuses = (details: { source: string; cancel: () => void }) => {
+    if (refuseAgents && details.source === "agent") {
+      details.cancel();
+      return true;
+    }
+    return false;
+  };
 
   return (
     <Theme className="playground">
       <h1>Agent contract</h1>
 
-      <TextField label="Project name" value={name} onChange={setName} />
+      <TextField
+        label="Project name"
+        value={name}
+        onChange={(value, details) => {
+          if (refuses(details)) return;
+          setName(value);
+        }}
+      />
 
       <Select
         label="Region"
         selectedKey={region}
-        onSelectionChange={(key) => setRegion(key ?? "europe")}
+        onSelectionChange={(key, details) => {
+          if (refuses(details)) return;
+          setRegion(key ?? "europe");
+        }}
       >
         {REGIONS.map((item) => (
           <ListBoxItem key={item.value} id={item.value}>
@@ -32,6 +51,10 @@ export default function App() {
           </ListBoxItem>
         ))}
       </Select>
+
+      <Checkbox isSelected={refuseAgents} onChange={setRefuseAgents}>
+        Refuse agent edits
+      </Checkbox>
 
       <Button agentConfirm="Saves the project" onPress={() => setSaved(`${name} · ${region}`)}>
         Save project
@@ -58,6 +81,23 @@ export default function App() {
         }
       >
         Agent: set name to Atlas
+      </Button>
+
+      <Button
+        variant="secondary"
+        onPress={async () =>
+          setPage(
+            JSON.stringify(
+              await act({
+                steps: [{ ref: "Region", action: "setValue", args: ["asia-pacific"] }],
+              }),
+              null,
+              2,
+            ),
+          )
+        }
+      >
+        Agent: choose Asia Pacific
       </Button>
 
       <Button

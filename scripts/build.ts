@@ -16,7 +16,7 @@ const run = async (...command: string[]) => {
 };
 
 await run("bun", "run", "build:tokens");
-for (const name of ["tokens", "react", "agent"]) {
+for (const name of ["tokens", "agent", "react"]) {
   const folder = `${root}/packages/${name}`;
   if (!process.argv.includes("--no-clean")) {
     await rm(`${folder}/dist`, { recursive: true, force: true });
