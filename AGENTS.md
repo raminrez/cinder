@@ -112,3 +112,9 @@ Routing that follows from it:
 Cross-check vision findings before acting on them: three models independently reported an accordion
 "disconnected panel" defect that was an artefact of a downscaled contact sheet, while the one claim
 that survived measurement (a 19px body indent) was reported with an exact number.
+
+## ui-sdk
+
+Before using ui-sdk, follow the ui-sdk skill if it is installed, and read
+`node_modules/@ui-sdk/react/docs/llms.txt`. To build a new component, also search
+`node_modules/@ui-sdk/react/docs/core.md` by heading, and read `rendering.md` next to it.
